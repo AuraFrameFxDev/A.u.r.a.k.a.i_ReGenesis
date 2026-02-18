@@ -51,7 +51,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import kotlin.math.PI
@@ -76,7 +78,13 @@ enum class NodeType {
 fun AgentAdvancementScreen(
     agentName: String = "Genesis",
     onBack: () -> Unit = {},
-    viewModel: AgentViewModel = hiltViewModel()
+    viewModel: AgentViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     var selectedAgentName by remember { mutableStateOf(agentName) }
     val allAgents by viewModel.allAgents.collectAsState()

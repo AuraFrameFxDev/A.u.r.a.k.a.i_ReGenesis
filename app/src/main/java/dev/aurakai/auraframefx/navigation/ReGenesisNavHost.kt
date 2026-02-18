@@ -10,8 +10,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import collabcanvas.ui.CanvasScreen
-import dev.aurakai.auraframefx.datavein.ui.SimpleDataVeinScreen
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
+
+// Core Imports (kept from your list for screen definitions)
 import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
 import dev.aurakai.auraframefx.config.GateAssetLoadout
@@ -563,6 +569,13 @@ fun ReGenesisNavHost(
 
         composable(ReGenesisNavHost.InstantColorPicker.route) {
             InstantColorPickerScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisNavHost.LiveSupportChat.route) {
+            LiveSupportChatScreen(
+                viewModel = hiltViewModel(),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.UISettings.route) {

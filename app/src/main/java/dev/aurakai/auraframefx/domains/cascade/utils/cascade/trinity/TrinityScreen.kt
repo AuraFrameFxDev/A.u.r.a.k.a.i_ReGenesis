@@ -40,6 +40,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.aura.ui.TrinityUiState
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AgentStatus
@@ -53,7 +55,13 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrinityScreen(
-    viewModel: TrinityViewModel = hiltViewModel(),
+    viewModel: TrinityViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }

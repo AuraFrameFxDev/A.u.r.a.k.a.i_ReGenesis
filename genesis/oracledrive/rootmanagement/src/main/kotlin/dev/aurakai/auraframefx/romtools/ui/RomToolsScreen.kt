@@ -56,19 +56,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.aurakai.auraframefx.romtools.BackupInfo
-import dev.aurakai.auraframefx.romtools.OperationProgress
-import dev.aurakai.auraframefx.romtools.RomCapabilities
-import dev.aurakai.auraframefx.romtools.RomOperation
-import dev.aurakai.auraframefx.romtools.RomOperation.CreateBackup
-import dev.aurakai.auraframefx.romtools.RomOperation.FlashRom
-import dev.aurakai.auraframefx.romtools.RomToolsState
-import dev.aurakai.auraframefx.romtools.RomToolsViewModel
 import dev.aurakai.auraframefx.romtools.backdrop.BackdropState
 import dev.aurakai.auraframefx.romtools.backdrop.CardExplosionEffect
 import dev.aurakai.auraframefx.romtools.backdrop.MegaManBackdropRenderer
+import dev.aurakai.auraframefx.romtools.BackupInfo
+import dev.aurakai.auraframefx.romtools.RomCapabilities
+import dev.aurakai.auraframefx.romtools.RomToolsManager
+import dev.aurakai.auraframefx.romtools.RomToolsState
+import dev.aurakai.auraframefx.romtools.OperationProgress
+import dev.aurakai.auraframefx.romtools.RomOperation
 import kotlinx.coroutines.delay
 import timber.log.Timber
 
@@ -76,12 +76,12 @@ import timber.log.Timber
  * Main ROM Tools screen for Genesis AuraFrameFX.
  * Provides access to ROM flashing, backup/restore, and system modification tools.
  */
+@JvmOverloads
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RomToolsScreen(
-    modifier: Modifier = Modifier,
-    romToolsViewModel: RomToolsViewModel = hiltViewModel(),
-) {
+fun RomToolsScreen(modifier: Modifier = Modifier, romToolsViewModel: RomToolsViewModel = hiltViewModel(checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    }, null),) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val romToolsState by romToolsViewModel.romToolsState.collectAsStateWithLifecycle()
     val operationProgressState by romToolsViewModel.operationProgress.collectAsStateWithLifecycle()
@@ -266,7 +266,7 @@ fun RomToolsScreen(
  *
  * @param actionType The type of ROM action to perform
  * @param romToolsManager The manager instance to execute the operation
- * @param coroutineScope The coroutine scope for launching suspend operations
+ * @param kotlinx.coroutines.coroutineScope The coroutine scope for launching suspend operations
  */
 private fun handleRomAction(
     actionType: RomActionType,
@@ -432,7 +432,7 @@ private fun MainContentPreview() {
         capabilities = capabilities,
         isInitialized = true,
         availableRoms = listOf(
-            dev.aurakai.auraframefx.romtools.AvailableRom(
+            AvailableRom(
                 name = "AuraOS",
                 version = "1.0",
                 androidVersion = "14",

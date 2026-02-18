@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import kotlinx.coroutines.delay
 
 /**
@@ -58,7 +60,13 @@ import kotlinx.coroutines.delay
  */
 @Composable
 fun UIRecoveryBlackoutScreen(
-    viewModel: UIRecoveryViewModel = hiltViewModel(),
+    viewModel: UIRecoveryViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
     onNavigateToRoute: (String) -> Unit = {}
 ) {
     val recoveryState by viewModel.recoveryState.collectAsState()

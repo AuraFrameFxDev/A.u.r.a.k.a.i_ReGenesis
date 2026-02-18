@@ -41,7 +41,7 @@ import kotlin.math.sin
 
 /**
  * 🎨 CHROMACORE ENHANCED
- * 
+ *
  * Advanced Material You color engine with:
  * - Proper WCAG AA contrast ratios
  * - Neon glow effects with layer blur
@@ -142,15 +142,11 @@ object ChromaCoreEnhanced {
 
     private fun relativeLuminance(color: Color): Float {
         val r =
-            if (color.red <= 0.03928f) color.red / 12.92f else ((color.red + 0.055) / 1.055).pow(
-                2.4
-            ).toFloat()
-        val g =
-            if (color.green <= 0.03928f) color.green / 12.92f else ((color.green + 0.055) / 1.055)
-                .pow(2.4).toFloat()
-        val b = if (color.blue <= 0.03928f) color.blue / 12.92f else ((color.blue + 0.055) / 1.055)
+            if (color.red <= 0.03928f) color.red / 12.92f else ((color.red + 0.055) / 1.055).pow(2.4).toFloat()
+        val g = if (color.green <= 0.03928f) color.green / 12.92f else ((color.green + 0.055) / 1.055)
             .pow(2.4).toFloat()
-
+        val b = if (color.blue <= 0.03928f) color.blue / 12.92f else ((color.blue + 0.055) / 1.055)
+            .pow( 2.4).toFloat()
         return 0.2126f * r + 0.7152f * g + 0.0722f * b
     }
 
@@ -174,7 +170,7 @@ object ChromaCoreEnhanced {
 
 /**
  * 🌟 NEON GLOW EFFECT
- * 
+ *
  * Creates a glowing orb with:
  * - Layer blur for authentic neon effect
  * - Pulsating animation
@@ -307,7 +303,7 @@ fun Modifier.NeonGlowOrb(
 
 /**
  * 🎨 ANIMATED GRADIENT ORB FIELD
- * 
+ *
  * Multiple floating orbs with staggered animations
  */
 @Composable

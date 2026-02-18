@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 interface BootloaderSafetyManager {
     val safetyStatus: StateFlow<BootloaderSafetyStatus>
-    
+
     suspend fun performPreFlightChecks(operation: BootloaderOperation): SafetyCheckResult
     suspend fun monitorOperationState(): StateMonitoringResult
     suspend fun createSafetyCheckpoint(): String
@@ -40,7 +40,7 @@ interface BootloaderSafetyManager {
  */
 @Singleton
 class BootloaderSafetyManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @field:ApplicationContext private val context: Context
 ) : BootloaderSafetyManager {
 
     private val _safetyStatus = MutableStateFlow(BootloaderSafetyStatus())
@@ -337,10 +337,10 @@ class BootloaderSafetyManagerImpl @Inject constructor(
         return try {
             val lastKmsg = java.io.File("/proc/last_kmsg")
             val pstore = java.io.File("/sys/fs/pstore")
-            
+
             val hasLastKmsg = lastKmsg.exists() && lastKmsg.length() > 0
             val hasPstore = pstore.exists() && (pstore.listFiles()?.isNotEmpty() ?: false)
-            
+
             hasLastKmsg || hasPstore
         } catch (e: Exception) {
             false

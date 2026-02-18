@@ -60,14 +60,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.aura.aura.ui.verticalScrollbar
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel
 import androidx.compose.runtime.collectAsState as collectAsState1
 
 /**
  * SETTINGS SCREEN - The Nexus Configuration Core
- * 
+ *
  * Aesthetic: Refractive Neon Brutalism
  * Features global preferences for Haptics, AI Ethics, Sync, and Security.
  */
@@ -76,7 +76,13 @@ import androidx.compose.runtime.collectAsState as collectAsState1
 @Composable
 fun SettingsScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     // Sync overlay state when screen becomes visible (in case user returned from permission settings)
     LaunchedEffect(Unit) {

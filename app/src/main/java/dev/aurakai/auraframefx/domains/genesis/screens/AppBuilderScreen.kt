@@ -51,10 +51,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import kotlinx.coroutines.delay
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.aurakai.auraframefx.domains.genesis.fusion.ForgeState
 import dev.aurakai.auraframefx.domains.genesis.fusion.InterfaceForgeViewModel
 import kotlinx.coroutines.delay
@@ -68,7 +69,13 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBuilderScreen(
-    viewModel: InterfaceForgeViewModel = hiltViewModel(),
+    viewModel: InterfaceForgeViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
     onNavigateBack: () -> Unit = {}
 ) {
     var step by remember { mutableIntStateOf(1) }
