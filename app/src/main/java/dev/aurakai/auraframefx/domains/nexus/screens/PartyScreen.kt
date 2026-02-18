@@ -24,13 +24,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 
 /**
  * 👥 PARTY SCREEN (Digital Council)
- * 
+ *
  * Part of the Nexus domain. Interface for selecting and managing the active
  * "party" of AI agents that will collaborate on complex system tasks.
  */
@@ -38,7 +40,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 @Composable
 fun PartyScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: PartyViewModel = hiltViewModel()
+    viewModel: PartyViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val selectedAgents by viewModel.selectedAgents.collectAsState()
     val synergy by viewModel.synergyLevel.collectAsState()
@@ -86,9 +94,9 @@ fun PartyScreen(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.weight(1f))
-                
+
                 Button(
                     onClick = { /* Deploy Mission */ },
                     modifier = Modifier.fillMaxWidth().height(60.dp),
@@ -151,7 +159,7 @@ fun AgentPartyCard(
             .fillMaxWidth()
             .clickable { onClick() }
             .border(
-                if(isSelected) 2.dp else 1.dp, 
+                if(isSelected) 2.dp else 1.dp,
                 if(isSelected) color else color.copy(alpha = 0.2f),
                 RoundedCornerShape(16.dp)
             ),

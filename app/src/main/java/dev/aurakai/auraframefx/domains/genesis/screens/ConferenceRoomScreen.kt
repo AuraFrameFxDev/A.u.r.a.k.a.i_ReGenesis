@@ -58,7 +58,9 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
 import dev.aurakai.auraframefx.domains.aura.ui.theme.ChessFontFamily
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -82,7 +84,13 @@ fun ConferenceRoomScreen(
     onNavigateBack: () -> Unit = {},
     onNavigateToChat: () -> Unit = {},
     onNavigateToAgents: () -> Unit = {},
-    viewModel: ConferenceRoomViewModel = hiltViewModel()
+    viewModel: ConferenceRoomViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val messages by viewModel.messages.collectAsState()
     val isRecording by viewModel.isRecording.collectAsState()

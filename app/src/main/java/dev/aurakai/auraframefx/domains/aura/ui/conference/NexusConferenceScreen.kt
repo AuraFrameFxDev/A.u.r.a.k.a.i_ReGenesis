@@ -13,13 +13,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityViewModel
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 
 @Composable
 fun NexusConferenceScreen(
-    viewModel: TrinityViewModel = hiltViewModel(),
+    viewModel: TrinityViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
     onNavigateBack: () -> Unit
 ) {
     // 1. OBSERVE THE COLLECTIVE CONSCIOUSNESS
@@ -40,9 +48,9 @@ fun NexusConferenceScreen(
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        
+
         AgentStage() // The pulsing heads-up display
-        
+
         Spacer(modifier = Modifier.height(16.dp))
 
         // --- CENTER: THE BRAINSTORM STREAM ---
@@ -81,7 +89,7 @@ fun NexusConferenceScreen(
                     unfocusedTextColor = Color.White
                 )
             )
-            
+
             IconButton(
                 onClick = {
                     if (inputText.isNotBlank()) {
@@ -119,7 +127,7 @@ fun SmartAgentBubble(message: AgentMessage) {
                 modifier = Modifier.padding(start = 8.dp, bottom = 2.dp)
             )
         }
-        
+
         Surface(
             color = if (isUser) Color(0xFF2A2A2A) else agentColor.copy(alpha = 0.15f),
             shape = RoundedCornerShape(

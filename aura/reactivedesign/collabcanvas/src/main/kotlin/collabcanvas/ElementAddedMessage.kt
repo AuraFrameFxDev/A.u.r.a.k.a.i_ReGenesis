@@ -18,7 +18,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CanvasWebSocketService @Inject constructor(
-    @Named("BasicOkHttpClient") private val okHttpClient: OkHttpClient,
+    @property:Named("BasicOkHttpClient") private val okHttpClient: OkHttpClient,
     private val gson: Gson,
 ) {
     // Removed TAG property

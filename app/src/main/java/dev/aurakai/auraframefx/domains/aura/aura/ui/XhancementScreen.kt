@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.XhancementViewModel
@@ -56,7 +58,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.XhancementViewModel
 @Composable
 fun XhancementScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: XhancementViewModel = hiltViewModel()
+    viewModel: XhancementViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val hookModules by viewModel.hookModules.collectAsState()
     val kaiSecurityEnabled by viewModel.kaiSecurityEnabled.collectAsState()

@@ -36,7 +36,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
@@ -55,7 +57,13 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun UIRecoveryDialog(
-    viewModel: UIRecoveryViewModel = hiltViewModel(),
+    viewModel: UIRecoveryViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
     onNavigateToRoute: (String) -> Unit = {}
 ) {
     val recoveryState by viewModel.recoveryState.collectAsState()
@@ -205,7 +213,7 @@ fun UIRecoveryDialog(
  */
 @Composable
 fun RecoveryIndicator(
-    viewModel: UIRecoveryViewModel = hiltViewModel()
+    viewModel: UIRecoveryViewModel = hiltViewModel(viewModelStoreOwner, key)
 ) {
     val recoveryState by viewModel.recoveryState.collectAsState()
 

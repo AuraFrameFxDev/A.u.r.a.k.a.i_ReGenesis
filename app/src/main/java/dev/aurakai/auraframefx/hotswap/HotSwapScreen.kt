@@ -19,7 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 
 /**
@@ -37,7 +39,13 @@ import androidx.navigation.NavController
 @Composable
 fun HotSwapScreen(
     navController: NavController,
-    viewModel: HotSwapViewModel = hiltViewModel()
+    viewModel: HotSwapViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val gateConfigs by viewModel.gateConfigs.collectAsState()
     val assetBundles by viewModel.assetBundles.collectAsState()

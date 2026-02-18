@@ -23,7 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.agents.growthmetrics.metareflection.viewmodel.MetaInstructViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -35,7 +37,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @Composable
 fun SovereignMetaInstructScreen(
     onNavigateBack: () -> Unit,
-    viewModel: MetaInstructViewModel = hiltViewModel()
+    viewModel: MetaInstructViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val state by viewModel.state.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
@@ -106,7 +114,7 @@ fun SovereignMetaInstructScreen(
                         Spacer(Modifier.width(8.dp))
                         Text("NEW INSTRUCTION", color = Color.Black, fontWeight = FontWeight.Bold)
                     }
-                    
+
                     IconButton(
                         onClick = { viewModel.injectInitialProtocols() },
                         modifier = Modifier
@@ -174,8 +182,8 @@ private fun AgentSelector(activeAgent: String, onAgentSelected: (String) -> Unit
                     .clip(RoundedCornerShape(12.dp))
                     .background(if (isSelected) Color(0xFF00FFD4).copy(alpha = 0.1f) else Color.White.copy(alpha = 0.03f))
                     .border(
-                        1.dp, 
-                        if (isSelected) Color(0xFF00FFD4) else Color.White.copy(alpha = 0.1f), 
+                        1.dp,
+                        if (isSelected) Color(0xFF00FFD4) else Color.White.copy(alpha = 0.1f),
                         RoundedCornerShape(12.dp)
                     )
                     .clickable { onAgentSelected(agent) }
@@ -214,8 +222,8 @@ private fun EvolutionStatusCard(isActive: Boolean, onToggle: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    Icons.Default.Psychology, 
-                    null, 
+                    Icons.Default.Psychology,
+                    null,
                     tint = if (isActive) Color(0xFF00FFD4) else Color.Gray
                 )
             }
@@ -267,9 +275,9 @@ private fun InstructionItem(instruction: dev.aurakai.auraframefx.agents.growthme
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
-                    instruction.layer.name, 
-                    color = layerColor, 
-                    fontSize = 9.sp, 
+                    instruction.layer.name,
+                    color = layerColor,
+                    fontSize = 9.sp,
                     fontWeight = FontWeight.Black,
                     letterSpacing = 1.sp
                 )

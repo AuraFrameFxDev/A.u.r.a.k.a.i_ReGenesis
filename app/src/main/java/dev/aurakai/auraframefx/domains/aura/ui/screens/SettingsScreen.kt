@@ -22,12 +22,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel
 
 /**
  * SETTINGS SCREEN - The Nexus Configuration Core
- * 
+ *
  * Aesthetic: Refractive Neon Brutalism
  * Features global preferences for Haptics, AI Ethics, Sync, and Security.
  */
@@ -36,7 +38,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel
 @Composable
 fun SettingsScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     // Sync overlay state when screen becomes visible (in case user returned from permission settings)
     LaunchedEffect(Unit) {
@@ -262,7 +270,7 @@ fun SettingsToggleCard(
                 Text(subtitle, color = Color.Gray, fontSize = 12.sp)
             }
             Switch(
-                checked = checked, 
+                checked = checked,
                 onCheckedChange = onCheckedChange,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = accentColor,

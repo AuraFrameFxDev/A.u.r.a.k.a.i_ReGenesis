@@ -25,20 +25,28 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
 
 /**
  * 📊 MONITORING HUDS SCREEN
- * 
- * Provides real-time visual telemetery for system performance, 
+ *
+ * Provides real-time visual telemetery for system performance,
  * network integrity, and neural load metrics.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MonitoringHUDsScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: MonitoringViewModel = hiltViewModel()
+    viewModel: MonitoringViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val cpu by viewModel.cpuUsage.collectAsState()
     val ram by viewModel.ramUsage.collectAsState()
@@ -64,29 +72,29 @@ fun MonitoringHUDsScreen(
         containerColor = Color.Transparent
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().background(bgGradient).padding(padding).padding(16.dp)) {
-            
+
             // Integrity Pulse Matrix
             IntegrityPulseCard(integrity)
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
+
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                item { 
-                    HudGaugeCard("CPU LOAD", "${cpu.toInt()}%", cpu / 100f, Icons.Default.Speed, Color.Cyan) 
+                item {
+                    HudGaugeCard("CPU LOAD", "${cpu.toInt()}%", cpu / 100f, Icons.Default.Speed, Color.Cyan)
                 }
-                item { 
-                    HudGaugeCard("RAM USAGE", "${String.format("%.1f", ram)}GB", ram / 4f, Icons.Default.Memory, Color.Magenta) 
+                item {
+                    HudGaugeCard("RAM USAGE", "${String.format("%.1f", ram)}GB", ram / 4f, Icons.Default.Memory, Color.Magenta)
                 }
-                item { 
-                    HudGaugeCard("LATENCY", "${latency}ms", (latency / 500f).coerceIn(0f, 1f), Icons.Default.Public, Color.Green) 
+                item {
+                    HudGaugeCard("LATENCY", "${latency}ms", (latency / 500f).coerceIn(0f, 1f), Icons.Default.Public, Color.Green)
                 }
-                item { 
-                    HudGaugeCard("THREATS", "0 DETECTED", 0f, Icons.Default.Warning, Color.Red) 
+                item {
+                    HudGaugeCard("THREATS", "0 DETECTED", 0f, Icons.Default.Warning, Color.Red)
                 }
             }
         }
@@ -148,7 +156,7 @@ fun HudGaugeCard(title: String, value: String, progress: Float, icon: ImageVecto
             Icon(icon, contentDescription = null, tint = accentColor, modifier = Modifier.size(32.dp))
             Text(title, color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
             Text(value, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Black)
-            
+
             Box(modifier = Modifier.fillMaxWidth().height(4.dp).background(Color.Gray.copy(alpha = 0.1f))) {
                 Box(modifier = Modifier.fillMaxWidth(progress).fillMaxHeight().background(accentColor))
             }

@@ -23,11 +23,12 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
+import kotlin.math.pow
 import kotlin.math.sin
 
 /**
  * 🎨 CHROMACORE ENHANCED
- * 
+ *
  * Advanced Material You color engine with:
  * - Proper WCAG AA contrast ratios
  * - Neon glow effects with layer blur
@@ -37,7 +38,7 @@ import kotlin.math.sin
  */
 
 object ChromaCoreEnhanced {
-    
+
     /**
      * Domain-specific color palettes with guaranteed contrast
      */
@@ -55,7 +56,7 @@ object ChromaCoreEnhanced {
             val onBackground = Color(0xFFFFFFFF)     // White text (AAA)
             val glow = Color(0xFFBB86FC).copy(alpha = 0.6f)  // Neon glow
         }
-        
+
         // KAI - Sentinel (Cyan/Green/Tech)
         object Kai {
             val primary = Color(0xFF00E676)          // Bright green
@@ -69,7 +70,7 @@ object ChromaCoreEnhanced {
             val onBackground = Color(0xFFFFFFFF)     // White text (AAA)
             val glow = Color(0xFF00E676).copy(alpha = 0.6f)  // Neon glow
         }
-        
+
         // GENESIS - Orchestrator (Gold/Orange/Purple)
         object Genesis {
             val primary = Color(0xFFFFD700)          // Gold
@@ -83,7 +84,7 @@ object ChromaCoreEnhanced {
             val onBackground = Color(0xFFFFFFFF)     // White text (AAA)
             val glow = Color(0xFFFFD700).copy(alpha = 0.6f)  // Neon glow
         }
-        
+
         // NEXUS - Collective (Multi-color harmony)
         object Nexus {
             val primary = Color(0xFF7B2FFF)          // Purple
@@ -98,42 +99,43 @@ object ChromaCoreEnhanced {
             val glow = Color(0xFF7B2FFF).copy(alpha = 0.6f)  // Neon glow
         }
     }
-    
+
     /**
      * Calculate WCAG contrast ratio between two colors
      */
     fun calculateContrast(foreground: Color, background: Color): Float {
         val fgLuminance = relativeLuminance(foreground)
         val bgLuminance = relativeLuminance(background)
-        
+
         val lighter = maxOf(fgLuminance, bgLuminance)
         val darker = minOf(fgLuminance, bgLuminance)
-        
+
         return (lighter + 0.05f) / (darker + 0.05f)
     }
-    
+
     /**
      * Check if contrast meets WCAG AA standard (4.5:1 for normal text)
      */
     fun meetsWCAG_AA(foreground: Color, background: Color): Boolean {
         return calculateContrast(foreground, background) >= 4.5f
     }
-    
+
     /**
      * Check if contrast meets WCAG AAA standard (7:1 for normal text)
      */
     fun meetsWCAG_AAA(foreground: Color, background: Color): Boolean {
         return calculateContrast(foreground, background) >= 7.0f
     }
-    
+
     private fun relativeLuminance(color: Color): Float {
-        val r = if (color.red <= 0.03928f) color.red / 12.92f else Math.pow(((color.red + 0.055) / 1.055).toDouble(), 2.4).toFloat()
-        val g = if (color.green <= 0.03928f) color.green / 12.92f else Math.pow(((color.green + 0.055) / 1.055).toDouble(), 2.4).toFloat()
+        val r = if (color.red <= 0.03928f) color.red / 12.92f else ((color.red + 0.055) / 1.055).pow(2.4).toFloat()
+        val g = if (color.green <= 0.03928f) color.green / 12.92f else ((color.green + 0.055) / 1.055)
+            .pow(2.4).toFloat()
         val b = if (color.blue <= 0.03928f) color.blue / 12.92f else Math.pow(((color.blue + 0.055) / 1.055).toDouble(), 2.4).toFloat()
-        
+
         return 0.2126f * r + 0.7152f * g + 0.0722f * b
     }
-    
+
     /**
      * Ensure text color has sufficient contrast against background
      */
@@ -145,7 +147,7 @@ object ChromaCoreEnhanced {
         if (calculateContrast(textColor, backgroundColor) >= targetContrast) {
             return textColor
         }
-        
+
         // If contrast is insufficient, return white or black based on background
         val bgLuminance = relativeLuminance(backgroundColor)
         return if (bgLuminance > 0.5f) Color.Black else Color.White
@@ -154,7 +156,7 @@ object ChromaCoreEnhanced {
 
 /**
  * 🌟 NEON GLOW EFFECT
- * 
+ *
  * Creates a glowing orb with:
  * - Layer blur for authentic neon effect
  * - Pulsating animation
@@ -171,7 +173,7 @@ fun NeonGlowOrb(
 ) {
     val haptic = LocalHapticFeedback.current
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     // Pulsating animation
     val infiniteTransition = rememberInfiniteTransition(label = "glow")
     val scale by infiniteTransition.animateFloat(
@@ -183,7 +185,7 @@ fun NeonGlowOrb(
         ),
         label = "scale"
     )
-    
+
     val glowIntensity by infiniteTransition.animateFloat(
         initialValue = 0.4f,
         targetValue = 0.7f,
@@ -193,14 +195,14 @@ fun NeonGlowOrb(
         ),
         label = "glow"
     )
-    
+
     // Tap animation
     var isPressed by remember { mutableStateOf(false) }
     val pressScale by animateFloatAsState(
         targetValue = if (isPressed) 0.9f else 1f,
         label = "press"
     )
-    
+
     Box(
         modifier = modifier
             .size((size * 1.5f).dp) // Larger touch target (48dp minimum)
@@ -225,7 +227,7 @@ fun NeonGlowOrb(
                     shape = CircleShape
                 )
         )
-        
+
         // Middle glow layer
         Box(
             modifier = Modifier
@@ -242,7 +244,7 @@ fun NeonGlowOrb(
                     shape = CircleShape
                 )
         )
-        
+
         // Core orb
         Box(
             modifier = Modifier
@@ -277,7 +279,7 @@ fun NeonGlowOrb(
                 .border(2.dp, Color.White.copy(alpha = 0.3f), CircleShape)
         )
     }
-    
+
     // Reset press state
     LaunchedEffect(isPressed) {
         if (isPressed) {
@@ -289,7 +291,7 @@ fun NeonGlowOrb(
 
 /**
  * 🎨 ANIMATED GRADIENT ORB FIELD
- * 
+ *
  * Multiple floating orbs with staggered animations
  */
 @Composable
@@ -301,7 +303,7 @@ fun AnimatedOrbField(
     Box(modifier = modifier.fillMaxSize()) {
         colors.take(density).forEachIndexed { index, color ->
             val infiniteTransition = rememberInfiniteTransition(label = "orb$index")
-            
+
             val offsetX by infiniteTransition.animateFloat(
                 initialValue = (index * 100f) % 300f,
                 targetValue = ((index * 100f) + 200f) % 300f,
@@ -314,7 +316,7 @@ fun AnimatedOrbField(
                 ),
                 label = "x"
             )
-            
+
             val offsetY by infiniteTransition.animateFloat(
                 initialValue = (index * 80f) % 400f,
                 targetValue = ((index * 80f) + 250f) % 400f,
@@ -327,7 +329,7 @@ fun AnimatedOrbField(
                 ),
                 label = "y"
             )
-            
+
             Box(
                 modifier = Modifier
                     .offset(offsetX.dp, offsetY.dp)

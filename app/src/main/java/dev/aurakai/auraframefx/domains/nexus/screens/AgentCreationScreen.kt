@@ -28,13 +28,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentCreationViewModel
 
 /**
  * 🥚 AGENT CREATION SCREEN
- * 
+ *
  * Part of the Nexus domain. Allows the user to synthesize new AI agents
  * for specialized tasks within the ReGenesis collective.
  */
@@ -42,7 +44,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentCreationViewModel
 @Composable
 fun AgentCreationScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: AgentCreationViewModel = hiltViewModel()
+    viewModel: AgentCreationViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val agentName by viewModel.agentName
     val selectedDomain by viewModel.selectedDomain
@@ -104,7 +112,7 @@ fun AgentCreationScreen(
                     ),
                     label = "pulse"
                 )
-                
+
                 Icon(
                     imageVector = Icons.Default.AutoAwesome,
                     contentDescription = null,
@@ -139,7 +147,7 @@ fun AgentCreationScreen(
                 color = Color.White.copy(alpha = 0.6f),
                 modifier = Modifier.align(Alignment.Start)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyRow(
@@ -164,7 +172,7 @@ fun AgentCreationScreen(
                 color = Color.White.copy(alpha = 0.6f),
                 modifier = Modifier.align(Alignment.Start)
             )
-            
+
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 PermissionRow("Read Nexus Stream", true)
                 PermissionRow("Generate Code (Aura Forge)", selectedDomain == AgentType.AURA)
@@ -223,7 +231,7 @@ fun DomainChip(
     onClick: () -> Unit
 ) {
     val color = domainColor(domain)
-    
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))

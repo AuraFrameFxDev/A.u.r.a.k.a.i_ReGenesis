@@ -78,7 +78,9 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.customization.ComponentEditor
 import dev.aurakai.auraframefx.domains.aura.ui.customization.ComponentType
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationState
@@ -112,7 +114,10 @@ fun GyroscopeCustomizationScreen(
     // Provide an explicit type to help the compiler resolve injected ViewModel members unambiguously
 
 
-    val viewModel: CustomizationViewModel = hiltViewModel()
+    val viewModel: CustomizationViewModel =
+        hiltViewModel(checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
+                    "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+                }, null)
     val customizationState by viewModel.customizationState.collectAsState()
     val rotationAngles by viewModel.rotationAngles.collectAsState()
     val aiResponse by viewModel.aiResponse.collectAsState()
