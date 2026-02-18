@@ -113,10 +113,7 @@ fun GyroscopeCustomizationScreen(
     // Provide an explicit type to help the compiler resolve injected ViewModel members unambiguously
 
 
-    val viewModel: CustomizationViewModel =
-        hiltViewModel(checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
-                    "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-                }, null)
+    val viewModel: CustomizationViewModel = hiltViewModel()
     val customizationState by viewModel.customizationState.collectAsState()
     val rotationAngles by viewModel.rotationAngles.collectAsState()
     val aiResponse by viewModel.aiResponse.collectAsState()
