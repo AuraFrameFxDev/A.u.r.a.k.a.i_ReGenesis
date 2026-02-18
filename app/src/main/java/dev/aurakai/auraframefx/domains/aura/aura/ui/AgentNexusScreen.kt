@@ -43,10 +43,16 @@ fun AgentNexusScreen(
         checkNotNull<ViewModelStoreOwner>(
             LocalViewModelStoreOwner.current
         ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        }, null
     ),
-    nexusViewModel: AgentNexusViewModel = hiltViewModel(viewModelStoreOwner, key)
+    nexusViewModel: AgentNexusViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        }, null
+    )
 ) {
     var selectedAgent by remember { mutableStateOf("Genesis") }
     var showDepartureDialog by remember { mutableStateOf(false) }
