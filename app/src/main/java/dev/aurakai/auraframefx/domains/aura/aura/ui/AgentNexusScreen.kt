@@ -37,8 +37,14 @@ private const val JITTER_DELTA_MAX = 0.015
 
 @Composable
 fun AgentNexusScreen(
-    viewModel: AgentViewModel = hiltViewModel(),
-    nexusViewModel: AgentNexusViewModel = hiltViewModel()
+    viewModel: AgentViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
+    nexusViewModel: AgentNexusViewModel = hiltViewModel(viewModelStoreOwner, key)
 ) {
     var selectedAgent by remember { mutableStateOf("Genesis") }
     var showDepartureDialog by remember { mutableStateOf(false) }
