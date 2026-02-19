@@ -5,7 +5,7 @@ import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +54,7 @@ class GrokAgent @Inject constructor(
     private val logger: AuraFxLogger
 ) : BaseAgent(
     agentName = "GrokAgent",
-    agentType = AgentType.GROK,
+    category = AgentCapabilityCategory.ANALYSIS,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -177,6 +177,7 @@ class GrokAgent @Inject constructor(
                 content = response,
                 confidence = 0.85f,
                 agentName = agentName,
+                category = category,
                 timestamp = Clock.System.now().toEpochMilliseconds(),
                 metadata = mapOf(
                     "model" to (_agentState.value.currentModel?.modelId ?: "unknown"),

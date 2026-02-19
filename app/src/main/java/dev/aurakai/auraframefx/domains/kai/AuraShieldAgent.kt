@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -47,7 +47,7 @@ class AuraShieldAgent @Inject constructor(
     secureChannel: SecureChannel
 ) : BaseAgent(
     agentName = "AuraShield",
-    agentType = AgentType.AURA_SHIELD,
+    category = AgentCapabilityCategory.SECURITY,
     contextManager = contextManager,
     memoryManager = memoryManager,
     secureChannel = secureChannel

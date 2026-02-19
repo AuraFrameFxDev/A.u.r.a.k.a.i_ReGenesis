@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
@@ -22,7 +22,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  */
 @Composable
 fun AssistantBubbleOverlay(
-    activeAgent: AgentType,
+    activeCategory: AgentCapabilityCategory,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -42,11 +42,11 @@ fun AssistantBubbleOverlay(
             Box(
                 modifier = Modifier
                     .size(8.dp)
-                    .background(getAgentColor(activeAgent), CircleShape)
+                    .background(getCategoryColor(activeCategory), CircleShape)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "AUTHORITY: ${activeAgent.name}",
+                text = "AUTHORITY: ${activeCategory.name}",
                 fontFamily = LEDFontFamily,
                 color = Color.White.copy(alpha = 0.8f),
                 fontSize = 10.sp,
@@ -56,12 +56,12 @@ fun AssistantBubbleOverlay(
     }
 }
 
-private fun getAgentColor(agent: AgentType): Color {
-    return when (agent) {
-        AgentType.GENESIS -> Color(0xFF00E5FF)
-        AgentType.KAI -> Color(0xFF39FF14)
-        AgentType.AURA -> Color(0xFFFF1493)
-        AgentType.CASCADE -> Color(0xFF7B2FFF)
+private fun getCategoryColor(category: AgentCapabilityCategory): Color {
+    return when (category) {
+        AgentCapabilityCategory.COORDINATION -> Color(0xFF00E5FF)
+        AgentCapabilityCategory.ANALYSIS -> Color(0xFF39FF14)
+        AgentCapabilityCategory.CREATIVE -> Color(0xFFFF1493)
+        AgentCapabilityCategory.SPECIALIZED -> Color(0xFF7B2FFF)
         else -> Color.Gray
     }
 }

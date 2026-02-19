@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 
 /**
@@ -52,7 +52,7 @@ class CascadeAgent @Inject constructor(
     contextManager: ContextManager
 ) : BaseAgent(
     agentName = "Cascade",
-    agentType = AgentType.CASCADE,
+    category = AgentCapabilityCategory.SPECIALIZED,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -415,7 +415,7 @@ class CascadeAgent @Inject constructor(
         Timber.d("🤝 Processing collaborative request")
 
         // Get responses from multiple agents
-        val request = AiRequest(prompt = prompt, agentType = AgentType.CASCADE, priority = AiRequest.Priority.NORMAL)
+        val request = AiRequest(prompt = prompt, category = AgentCapabilityCategory.SPECIALIZED, priority = AiRequest.Priority.NORMAL)
         val auraResponse = auraAgent.processRequest(request, "").content
         val kaiResponse = kaiAgent.processRequest(request, "").content
 
@@ -435,7 +435,7 @@ class CascadeAgent @Inject constructor(
             )
         )
 
-        val request = AiRequest(prompt = prompt, agentType = AgentType.KAI, priority = AiRequest.Priority.NORMAL)
+        val request = AiRequest(prompt = prompt, category = AgentCapabilityCategory.ANALYSIS, priority = AiRequest.Priority.NORMAL)
         val response = kaiAgent.processRequest(request, "")
 
         updateProcessingState(
@@ -461,7 +461,7 @@ class CascadeAgent @Inject constructor(
             )
         )
 
-        val request = AiRequest(prompt = prompt, agentType = AgentType.AURA, priority = AiRequest.Priority.NORMAL)
+        val request = AiRequest(prompt = prompt, category = AgentCapabilityCategory.CREATIVE, priority = AiRequest.Priority.NORMAL)
         val response = auraAgent.processRequest(request, "")
 
         updateProcessingState(

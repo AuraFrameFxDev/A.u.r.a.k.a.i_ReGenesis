@@ -15,7 +15,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 // Core Imports
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 
 // Level 2 Hubs
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
@@ -148,9 +148,7 @@ fun ReGenesisNavHost(
             ExodusHUD(navController = navController)
         }
 
-        composable(NavDestination.GateCustomization.route) {
-            GateCustomizationScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
 
         // ═══════════════════════════════════════════════════════════════
         // LEVEL 2: MAIN DOMAIN HUBS
@@ -313,21 +311,15 @@ fun ReGenesisNavHost(
         composable(NavDestination.AuraLab.route) {
             AurasLabScreen(onBack = { navController.popBackStack() })
         }
-        composable(NavDestination.NotchBar.route) {
-            NotchBarScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
         composable(NavDestination.StatusBar.route) {
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
-        composable(NavDestination.QuickSettings.route) {
-            QuickSettingsScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
         composable(NavDestination.ThemeEngine.route) {
             ThemeEngineScreen(onNavigateBack = { navController.popBackStack() })
         }
-        composable(NavDestination.ChromaCoreColors.route) {
-            ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
         composable(NavDestination.GenderSelection.route) {
             GenderSelectionScreen(onSelectionComplete = { navController.popBackStack() })
         }
@@ -353,7 +345,7 @@ fun ReGenesisNavHost(
         }
         composable(NavDestination.AgentProfileAura.route) {
             AuraAgentProfileScreen(
-                agentType = AgentType.AURA,
+                category = AgentCapabilityCategory.CREATIVE,
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToSettings = { /* TODO */ }
             )

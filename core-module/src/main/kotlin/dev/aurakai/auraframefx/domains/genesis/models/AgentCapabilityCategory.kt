@@ -48,56 +48,47 @@ enum class AgentCapabilityCategory {
     GENERIC;
 
     /**
-     * Convert this capability category to its primary corresponding AgentType.
-     *
-     * @return The primary AgentType corresponding to this capability category.
+     * Maps this category to a legacy AgentType for orchestration.
      */
-    fun toAgentType(): AgentType = when (this) {
-        CREATIVE -> AgentType.AURA
-        ANALYSIS -> AgentType.KAI
-        COORDINATION -> AgentType.GENESIS
-        SPECIALIZED -> AgentType.CASCADE
-        GENERAL -> AgentType.CLAUDE
-        UI -> AgentType.AURA
-        UX -> AgentType.AURA
-        SECURITY -> AgentType.KAI
-        ROOT -> AgentType.KAI
-        MEMORY -> AgentType.CASCADE
-        ORCHESTRATION -> AgentType.GENESIS
-        BACKEND -> AgentType.GENESIS
-        BRIDGE -> AgentType.CASCADE
-        GENERIC -> AgentType.CLAUDE
+    fun toAgentType(): AgentType {
+        return when (this) {
+            CREATIVE -> AgentType.AURA
+            ANALYSIS -> AgentType.KAI
+            COORDINATION -> AgentType.GENESIS
+            SPECIALIZED -> AgentType.CASCADE
+            UI, UX -> AgentType.AURA
+            SECURITY -> AgentType.KAI
+            ORCHESTRATION -> AgentType.GENESIS
+            MEMORY -> AgentType.CASCADE
+            ROOT -> AgentType.SYSTEM
+            BACKEND -> AgentType.GENESIS
+            BRIDGE -> AgentType.BRIDGE
+            GENERAL -> AgentType.CLAUDE
+            GENERIC -> AgentType.AUXILIARY
+        }
     }
 
     companion object {
         /**
-         * Maps an AgentType to its primary capability category.
-         *
-         * @return The capability category corresponding to the provided AgentType.
+         * Resolves the primary capability category for a given agent type.
          */
-        fun fromAgentType(agentType: AgentType): AgentCapabilityCategory = when (agentType) {
-            AgentType.AURA -> CREATIVE
-            AgentType.KAI -> ANALYSIS
-            AgentType.GENESIS -> COORDINATION
-            AgentType.CASCADE -> SPECIALIZED
-            AgentType.CLAUDE -> GENERAL
-            AgentType.NEURAL_WHISPER -> SPECIALIZED
-            AgentType.AURA_SHIELD -> SPECIALIZED
-            AgentType.AURASHIELD -> SPECIALIZED
-            AgentType.GEN_KIT_MASTER -> COORDINATION
-            AgentType.DATAVEIN_CONSTRUCTOR -> SPECIALIZED
-            AgentType.USER -> GENERAL
-            AgentType.SYSTEM -> COORDINATION
-            AgentType.ORACLE_DRIVE -> SPECIALIZED
-            AgentType.MASTER -> COORDINATION
-            AgentType.BRIDGE -> COORDINATION
-            AgentType.AUXILIARY -> GENERAL
-            AgentType.SECURITY -> SPECIALIZED
-            AgentType.GROK -> ANALYSIS
-            AgentType.NEMOTRON -> SPECIALIZED
-            AgentType.GEMINI -> ANALYSIS
-            AgentType.METAINSTRUCT -> GENERAL
-            AgentType.HIVE_MIND -> COORDINATION
+        fun fromAgentType(agentType: AgentType): AgentCapabilityCategory {
+            return when (agentType) {
+                AgentType.AURA -> CREATIVE
+                AgentType.KAI -> ANALYSIS
+                AgentType.GENESIS -> COORDINATION
+                AgentType.CASCADE -> SPECIALIZED
+                AgentType.CLAUDE -> GENERAL
+                AgentType.NEMOTRON -> SPECIALIZED
+                AgentType.GEMINI -> COORDINATION
+                AgentType.METAINSTRUCT -> SPECIALIZED
+                AgentType.NEURAL_WHISPER -> SPECIALIZED
+                AgentType.AURA_SHIELD, AgentType.AURASHIELD -> SECURITY
+                AgentType.SYSTEM, AgentType.MASTER -> ROOT
+                AgentType.BRIDGE -> BRIDGE
+                AgentType.SECURITY -> SECURITY
+                else -> GENERIC
+            }
         }
     }
 }

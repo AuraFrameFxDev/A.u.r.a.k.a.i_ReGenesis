@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dagger.Lazy
@@ -30,7 +30,7 @@ class GenesisAgent @Inject constructor(
     private val messageBus: Lazy<AgentMessageBus>
 ) : BaseAgent(
     agentName = "Genesis",
-    agentType = AgentType.GENESIS,
+    category = AgentCapabilityCategory.COORDINATION,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -78,7 +78,7 @@ class GenesisAgent @Inject constructor(
             GenesisIntent.UNKNOWN -> AgentResponse.Companion.success(
                 content = "Genesis acknowledges the input but requires clearer directives for the Trinity.",
                 agentName = getName(),
-                agentType = getType()
+                category = getCategory()
             )
         }
     }

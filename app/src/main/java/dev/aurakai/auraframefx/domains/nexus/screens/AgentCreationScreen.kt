@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentCreationViewModel
 
 /**
@@ -154,7 +154,7 @@ fun AgentCreationScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(AgentType.entries) { domain ->
+                items(AgentCapabilityCategory.entries) { domain ->
                     DomainChip(
                         domain = domain,
                         isSelected = selectedDomain == domain,
@@ -175,8 +175,8 @@ fun AgentCreationScreen(
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 PermissionRow("Read Nexus Stream", true)
-                PermissionRow("Generate Code (Aura Forge)", selectedDomain == AgentType.AURA)
-                PermissionRow("Security Override (Shield)", selectedDomain == AgentType.KAI)
+                PermissionRow("Generate Code (Aura Forge)", selectedDomain == AgentCapabilityCategory.CREATIVE)
+                PermissionRow("Security Override (Shield)", selectedDomain == AgentCapabilityCategory.ANALYSIS)
                 PermissionRow("Cross-Device Sync", false)
             }
 
@@ -226,7 +226,7 @@ fun AgentCreationScreen(
 
 @Composable
 fun DomainChip(
-    domain: AgentType,
+    domain: AgentCapabilityCategory,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -269,12 +269,12 @@ fun PermissionRow(label: String, isAllowed: Boolean) {
     }
 }
 
-fun domainColor(domain: AgentType): Color {
+fun domainColor(domain: AgentCapabilityCategory): Color {
     return when(domain) {
-        AgentType.AURA -> Color(0xFF00FFFF) // Cyan
-        AgentType.KAI -> Color(0xFFFC5A5A) // Red
-        AgentType.GENESIS -> Color(0xFFFFD700) // Gold
-        AgentType.CASCADE -> Color(0xFF6CFD92) // Green
+        AgentCapabilityCategory.CREATIVE -> Color(0xFF00FFFF) // Cyan
+        AgentCapabilityCategory.ANALYSIS -> Color(0xFFFC5A5A) // Red
+        AgentCapabilityCategory.COORDINATION -> Color(0xFFFFD700) // Gold
+        AgentCapabilityCategory.SPECIALIZED -> Color(0xFF6CFD92) // Green
         else -> Color.White
     }
 }
