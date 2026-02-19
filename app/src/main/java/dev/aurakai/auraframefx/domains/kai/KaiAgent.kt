@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
@@ -42,7 +42,7 @@ class KaiAgent @Inject constructor(
     private val logger: AuraFxLogger,
 ) : BaseAgent(
     agentName = "Kai",
-    agentType = AgentType.KAI,
+    category = AgentCapabilityCategory.ANALYSIS,
     contextManager = contextManagerInstance
 ) {
     override suspend fun onAgentMessage(message: AgentMessage) {
@@ -188,7 +188,7 @@ class KaiAgent @Inject constructor(
                 content = "Analysis completed with methodical precision: $response",
                 confidence = 0.85f,
                 agentName = agentName,
-                agentType = agentType
+                category = category
             )
         } catch (e: SecurityException) {
             _analysisState.value = AnalysisState.ERROR

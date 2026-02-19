@@ -33,7 +33,6 @@ sealed class NavDestination(val route: String) {
     data object DataflowAnalysis : NavDestination("dataflow_analysis")
     data object LsposedQuickToggles : NavDestination("lsposed_quick_toggles")
     data object LdoCatalystDevelopment : NavDestination("ldo_catalyst_development")
-    data object GateCustomization : NavDestination("gate_customization")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 2: DOMAIN HUBS (Main Management Frameworks)
@@ -109,10 +108,7 @@ sealed class NavDestination(val route: String) {
     data object UISettings : NavDestination("ui_settings")
     data object UserPreferences : NavDestination("user_preferences")
     data object ThemeEngine : NavDestination("theme_engine")
-    data object ChromaCoreColors : NavDestination("chroma_core_colors")
-    data object NotchBar : NavDestination("notch_bar")
     data object StatusBar : NavDestination("status_bar")
-    data object QuickSettings : NavDestination("quick_settings")
     data object ChromaCoreHub : NavDestination("aura/chroma_core/hub")
     data object ChromaStatusBar : NavDestination("aura/chroma_core/statusbar")
     data object ChromaLauncher : NavDestination("aura/chroma_core/launcher")
@@ -241,5 +237,4 @@ sealed class NavDestination(val route: String) {
     data object Documentation : NavDestination("documentation")
     data object FAQBrowser : NavDestination("faq_browser")
     data object TutorialVideos : NavDestination("tutorial_videos")
-    data object Settings : NavDestination("settings")
 }

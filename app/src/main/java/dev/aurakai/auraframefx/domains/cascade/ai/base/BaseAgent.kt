@@ -4,8 +4,8 @@ import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.flow
  */
 abstract class BaseAgent(
     override val agentName: String,
-    protected val agentType: AgentType,
+    protected val category: AgentCapabilityCategory,
     protected val contextManager: ContextManager? = null,
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
@@ -27,7 +27,7 @@ abstract class BaseAgent(
 
     override fun getName(): String = agentName
 
-    override fun getType(): AgentType = agentType
+    override fun getCategory(): AgentCapabilityCategory = category
 
     /**
      * Abstract method for processing requests - must be implemented by concrete agents
@@ -111,7 +111,7 @@ abstract class BaseAgent(
     protected open fun getAgentConfig(): Map<String, Any> {
         return mapOf(
             "name" to agentName,
-            "type" to agentType,
+            "category" to category,
             "version" to "1.0.0"
         )
     }
@@ -141,7 +141,7 @@ abstract class BaseAgent(
             content = content,
             agentName = agentName,
             metadata = metadata + getAgentConfig(),
-            agentType = agentType
+            category = category
         )
     }
 
@@ -216,7 +216,7 @@ abstract class BaseAgent(
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
-        agentType: AgentType
+        category: AgentCapabilityCategory
     ): AgentResponse {
         // Delegates to the two-argument version
         return processRequest(request, context)

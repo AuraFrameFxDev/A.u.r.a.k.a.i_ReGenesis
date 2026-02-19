@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.ai.base
 
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 
 import kotlinx.coroutines.flow.Flow
@@ -16,9 +16,9 @@ interface Agent {
     fun getName(): String?
 
     /**
-     * Returns the type or model of the agent.
+     * Returns the capability category of the agent.
      */
-    fun getType(): AgentType
+    fun getCategory(): AgentCapabilityCategory
 
     /**
      * Process a request and return a response

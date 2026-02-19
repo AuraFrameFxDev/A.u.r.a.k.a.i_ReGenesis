@@ -37,7 +37,7 @@ object AnySerializer : KSerializer<Any> {
 
     /**
      * Encodes the given value as a string by calling `toString()` and writing it to the encoder.
-     *
+     */.
      * The original runtime type is not preserved; deserializing this value yields the string produced by `toString()`.
      *
      * @param value The value to serialize; its `toString()` result is encoded.

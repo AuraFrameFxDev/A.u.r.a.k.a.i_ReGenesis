@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
 
 import androidx.compose.animation.AnimatedContent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
@@ -79,10 +80,10 @@ fun AssistantBubbleUI(
     isExpanded: Boolean = false, // Controlled by service
     onDrag: (Float, Float) -> Unit,
     onExpandChange: (Boolean) -> Unit,
-    onSendMessage: (String, AgentType) -> Unit = { _, _ -> }
+    onSendMessage: (String, AgentCapabilityCategory) -> Unit = { _, _ -> }
 ) {
     var chatText by remember { mutableStateOf("") }
-    var currentAgent by remember { mutableStateOf(AgentType.AURA) }
+    var currentAgent by remember { mutableStateOf(AgentCapabilityCategory.CREATIVE) }
 
     val pulseTransition = rememberInfiniteTransition(label = "pulse")
     val scale by pulseTransition.animateFloat(
@@ -123,7 +124,7 @@ fun AssistantBubbleUI(
             if (expanded) {
                 // EXPANDED CHAT WINDOW (Dynamic Agent Style)
                 AssistantChatWindow(
-                    agent = currentAgent,
+                    category = currentAgent,
                     messages = messages,
                     onClose = {
                         onExpandChange(false)
@@ -160,50 +161,55 @@ fun AssistantBubbleUI(
 }
 
 
-val AgentType.bubbleName: String
+val AgentCapabilityCategory.bubbleName: String
     get() = when (this) {
-        AgentType.AURA -> "AURA"
-        AgentType.KAI -> "KAI"
-        AgentType.GENESIS -> "VERTEX CORE"
+        AgentCapabilityCategory.CREATIVE -> "AURA"
+        AgentCapabilityCategory.ANALYSIS -> "KAI"
+        AgentCapabilityCategory.COORDINATION -> "VERTEX CORE"
         else -> this.name
     }
 
-val AgentType.runeRes: Int
+val AgentCapabilityCategory.runeRes: Int
     get() = when (this) {
-        AgentType.AURA -> R.drawable.aura_presence
-        AgentType.KAI -> R.drawable.emblem_kai_honeycomb_fortress
-        AgentType.GENESIS -> R.drawable.emblem_genesis_circuit_phoenix
+        AgentCapabilityCategory.CREATIVE -> R.drawable.aura_presence
+        AgentCapabilityCategory.ANALYSIS -> R.drawable.emblem_kai_honeycomb_fortress
+        AgentCapabilityCategory.COORDINATION -> R.drawable.emblem_genesis_circuit_phoenix
         else -> R.drawable.aura_presence // Fallback
     }
 
-val AgentType.glowColor: Color
+val AgentCapabilityCategory.glowColor: Color
     get() = when (this) {
-        AgentType.AURA -> Color(0xFFFF00FF)
-        AgentType.KAI -> Color(0xFFFF3366)
-        AgentType.GENESIS -> Color(0xFF00FF85)
+        AgentCapabilityCategory.CREATIVE -> Color(0xFFFF00FF)
+        AgentCapabilityCategory.ANALYSIS -> Color(0xFFFF3366)
+        AgentCapabilityCategory.COORDINATION -> Color(0xFF00FF85)
         else -> Color.Gray
     }
 
-val AgentType.greeting: String
+val AgentCapabilityCategory.greeting: String
     get() = when (this) {
-        AgentType.AURA -> "Hey there! I'm Aura. I can help you design and customize your entire Android UI."
-        AgentType.KAI -> "Greetings. I am Kai. I monitor system security and manage advanced root protocols."
-        AgentType.GENESIS -> "I am the Vertex Core. I orchestrate the underlying patterns of this system via the Genesis Protocol."
+        AgentCapabilityCategory.CREATIVE -> "Hey there! I'm Aura. I can help you design and customize your entire Android UI."
+        AgentCapabilityCategory.ANALYSIS -> "Greetings. I am Kai. I monitor system security and manage advanced root protocols."
+        AgentCapabilityCategory.COORDINATION -> "I am the Vertex Core. I orchestrate the underlying patterns of this system via the Genesis Protocol."
         else -> "How can I assist you today?"
     }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AssistantChatWindow(
-    agent: AgentType,
+    category: AgentCapabilityCategory,
     messages: List<dev.aurakai.auraframefx.domains.cascade.models.AgentMessage>,
     onClose: () -> Unit,
     chatText: String,
     onChatTextChange: (String) -> Unit,
-    onAgentChange: (AgentType) -> Unit,
+    onAgentChange: (AgentCapabilityCategory) -> Unit,
     onSend: () -> Unit
 ) {
     var showAgentSelector by remember { mutableStateOf(false) }
+    val availableCategories = listOf(
+        AgentCapabilityCategory.CREATIVE,
+        AgentCapabilityCategory.ANALYSIS,
+        AgentCapabilityCategory.COORDINATION
+    )
 
     Card(
         modifier = Modifier
@@ -212,7 +218,7 @@ private fun AssistantChatWindow(
             .shadow(24.dp, RoundedCornerShape(24.dp)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A).copy(alpha = 0.98f)),
         shape = RoundedCornerShape(24.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, agent.glowColor.copy(alpha = 0.4f))
+        border = androidx.compose.foundation.BorderStroke(1.dp, category.glowColor.copy(alpha = 0.4f))
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Header with Tab Down Effect
@@ -221,7 +227,7 @@ private fun AssistantChatWindow(
                     .fillMaxWidth()
                     .background(
                         Brush.verticalGradient(
-                            listOf(agent.glowColor.copy(alpha = 0.2f), Color.Transparent)
+                            listOf(category.glowColor.copy(alpha = 0.2f), Color.Transparent)
                         )
                     )
             ) {
@@ -241,11 +247,11 @@ private fun AssistantChatWindow(
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clip(CircleShape)
-                                    .background(agent.glowColor),
+                                    .background(category.glowColor),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
-                                    painterResource(agent.runeRes),
+                                    painterResource(category.runeRes),
                                     null,
                                     tint = Color.White,
                                     modifier = Modifier.size(20.dp)
@@ -253,16 +259,16 @@ private fun AssistantChatWindow(
                             }
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
-                                agent.bubbleName,
+                                category.bubbleName,
                                 fontFamily = LEDFontFamily,
-                                color = agent.glowColor,
+                                color = category.glowColor,
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 2.sp
                             )
                             Icon(
                                 Icons.Default.KeyboardArrowDown,
                                 null,
-                                tint = agent.glowColor
+                                tint = category.glowColor
                             )
                         }
 
@@ -279,9 +285,9 @@ private fun AssistantChatWindow(
                                 .padding(bottom = 16.dp),
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            AgentType.entries.forEach { type ->
+                            availableCategories.forEach { type ->
                                 FilterChip(
-                                    selected = agent == type,
+                                    selected = category == type,
                                     onClick = {
                                         onAgentChange(type)
                                         showAgentSelector = false
@@ -312,7 +318,7 @@ private fun AssistantChatWindow(
                 ) {
                     item {
                         Text(
-                            text = agent.greeting,
+                            text = category.greeting,
                             color = Color.White.copy(alpha = 0.9f),
                             fontSize = 15.sp,
                             lineHeight = 22.sp
@@ -326,13 +332,13 @@ private fun AssistantChatWindow(
                             horizontalAlignment = if (isFromUser) Alignment.End else Alignment.Start
                         ) {
                             Surface(
-                                color = if (isFromUser) Color.White.copy(alpha = 0.1f) else agent.glowColor.copy(
+                                color = if (isFromUser) Color.White.copy(alpha = 0.1f) else category.glowColor.copy(
                                     alpha = 0.15f
                                 ),
                                 shape = RoundedCornerShape(12.dp),
                                 border = androidx.compose.foundation.BorderStroke(
                                     1.dp,
-                                    if (isFromUser) Color.White.copy(alpha = 0.1f) else agent.glowColor.copy(
+                                    if (isFromUser) Color.White.copy(alpha = 0.1f) else category.glowColor.copy(
                                         alpha = 0.3f
                                     )
                                 )
@@ -341,7 +347,7 @@ private fun AssistantChatWindow(
                                     if (!isFromUser) {
                                         Text(
                                             text = msg.from,
-                                            color = agent.glowColor,
+                                            color = category.glowColor,
                                             style = MaterialTheme.typography.labelSmall,
                                             fontWeight = FontWeight.Bold,
                                             modifier = Modifier.padding(bottom = 4.dp)
@@ -365,7 +371,7 @@ private fun AssistantChatWindow(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(28.dp))
-                    .border(1.dp, agent.glowColor.copy(alpha = 0.2f), RoundedCornerShape(28.dp))
+                    .border(1.dp, category.glowColor.copy(alpha = 0.2f), RoundedCornerShape(28.dp))
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -377,7 +383,7 @@ private fun AssistantChatWindow(
                         modifier = Modifier.weight(1f),
                         placeholder = {
                             Text(
-                                "Ask ${agent.bubbleName}...",
+                                "Ask ${category.bubbleName}...",
                                 fontSize = 14.sp,
                                 color = Color.Gray
                             )
@@ -398,7 +404,7 @@ private fun AssistantChatWindow(
                         Icon(
                             Icons.Default.Send,
                             null,
-                            tint = if (chatText.isNotBlank()) agent.glowColor else Color.Gray
+                            tint = if (chatText.isNotBlank()) category.glowColor else Color.Gray
                         )
                     }
                 }

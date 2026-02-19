@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 // Core Imports
 import dev.aurakai.auraframefx.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 
 // Level 2 Hubs
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
@@ -321,9 +321,7 @@ fun ReGenesisNavHost(
             ExodusHUD(navController = navController)
         }
 
-        composable(NavDestination.GateCustomization.route) {
-            GateCustomizationScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
 
         composable(ReGenesisNavHost.NotchBarCustomization.route) {
             NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
@@ -503,155 +501,15 @@ fun ReGenesisNavHost(
         composable(NavDestination.AuraLab.route) {
             AurasLabScreen(onBack = { navController.popBackStack() })
         }
-        composable(NavDestination.NotchBar.route) {
-            NotchBarScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
         composable(NavDestination.StatusBar.route) {
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
-        composable(NavDestination.QuickSettings.route) {
-            QuickSettingsScreen(onNavigateBack = { navController.popBackStack() })
-        }
+
         composable(NavDestination.ThemeEngine.route) {
             ThemeEngineScreen(onNavigateBack = { navController.popBackStack() })
         }
-        // TODO: Wire AnimationPicker with proper params (currentAnimation, onAnimationSelected)
-        // composable("aura/animations") { AnimationPicker(...) }
-
-        // --- LEVEL 3: KAI TOOLS ---
-        composable(ReGenesisNavHost.ROMFlasher.route) {
-            ROMFlasherScreen()
-        }
-        composable(ReGenesisNavHost.Bootloader.route) {
-            BootloaderManagerScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.ModuleManager.route) {
-            ModuleManagerScreen()
-        }
-        composable(ReGenesisNavHost.RecoveryTools.route) {
-            RecoveryToolsScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.RootTools.route) {
-            RootToolsTogglesScreen(navController = navController)
-        }
-        composable(ReGenesisNavHost.SecurityCenter.route) {
-            SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.LSPosedHub.route) {
-            LSPosedSubmenuScreen(navController = navController)
-        }
-        composable(ReGenesisNavHost.LSPosedModules.route) {
-            LSPosedModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        // --- LEVEL 3: GENESIS TOOLS ---
-        composable(ReGenesisNavHost.NeuralNetwork.route) {
-            NeuralArchiveScreen(navController = navController)
-        }
-        composable(ReGenesisNavHost.AgentBridgeHub.route) {
-            AgentBridgeHubScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.OracleCloudStorage.route) {
-            OracleCloudInfiniteStorageScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.Terminal.route) {
-            TerminalScreen()
-        }
-        composable(ReGenesisNavHost.ConferenceRoom.route) {
-            ConferenceRoomScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.InterfaceForge.route) {
-            AppBuilderScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.HotSwap.route) {
-            HotSwapScreen(navController = navController)
-        }
-        composable(ReGenesisNavHost.Trinity.route) {
-            TrinityScreen()
-        }
-        composable(ReGenesisNavHost.DataVeinSphere.route) {
-            SimpleDataVeinScreen(
-                onLaunchSphereGrid = { navController.navigate(ReGenesisNavHost.SphereGrid.route) }
-            )
-        }
-
-        composable(ReGenesisNavHost.SphereGrid.route) {
-            SimpleDataVeinScreen(
-                onLaunchSphereGrid = { /* Already here */ }
-            )
-        }
-        composable(ReGenesisNavHost.SovereignBootloader.route) {
-            SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.SovereignRecovery.route) {
-            SovereignRecoveryScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.SovereignShield.route) {
-            SovereignShieldScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.SentinelFortress.route) {
-            KaiSentinelHubScreen(navController = navController)
-        }
-
-        // --- LEVEL 3: HELP & SUPPORT ---
-        composable(ReGenesisNavHost.HelpDeskSubmenu.route) {
-            HelpDeskSubmenuScreen(navController = navController)
-        }
-        composable(ReGenesisNavHost.DirectChat.route) {
-            DirectChatScreen(navController = navController)
-        }
-        composable(ReGenesisNavHost.Documentation.route) {
-            DocumentationScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.FAQBrowser.route) {
-            FAQBrowserScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisNavHost.TutorialVideos.route) {
-            TutorialVideosScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-
-        // ═══════════════════════════════════════════════════════════════
-        // ADDITIONAL NEXUS SCREENS (Recently discovered!)
-        // ═══════════════════════════════════════════════════════════════
-        composable(ReGenesisNavHost.EvolutionTree.route) {
-            EvolutionTreeScreen()
-        }
-
-        composable(ReGenesisNavHost.Party.route) {
-            PartyScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisNavHost.MonitoringHUDs.route) {
-            MonitoringHUDsScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisNavHost.DataStreamMonitoring.route) {
-            DataStreamMonitoringScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisNavHost.ModuleCreation.route) {
-            ModuleCreationScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisNavHost.AgentNeuralExplorer.route) {
-            AgentNeuralExplorerScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisNavHost.AgentHubSubmenu.route) {
-            AgentHubSubmenuScreen(navController = navController)
-        }
-
-        composable(ReGenesisNavHost.AgentProfileNexus.route) {
-            NexusAgentProfileScreen(
-                onNavigateBack = { navController.popBackStack() }
-            )
-        }
-
-        // ═══════════════════════════════════════════════════════════════
-        // ADDITIONAL AURA SCREENS (UI/UX Mastery!)
-        // ═══════════════════════════════════════════════════════════════
-        composable(ReGenesisNavHost.ChromaCoreColors.route) {
+        composable(NavDestination.ChromaCoreColors.route) {
             ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(NavDestination.GenderSelection.route) {
@@ -677,7 +535,7 @@ fun ReGenesisNavHost(
         }
         composable(NavDestination.AgentProfileAura.route) {
             AuraAgentProfileScreen(
-                agentType = AgentType.AURA,
+                category = AgentCapabilityCategory.CREATIVE,
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToSettings = { /* TODO */ }
             )

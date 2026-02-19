@@ -24,6 +24,11 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+
 /**
  * Genesis-OS Cascade Agent
  *
@@ -49,7 +54,7 @@ class CascadeAgent @Inject constructor(
     contextManager: ContextManager
 ) : BaseAgent(
     agentName = "Cascade",
-    agentType = AgentType.CASCADE,
+    category = AgentCapabilityCategory.SPECIALIZED,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -422,7 +427,7 @@ class CascadeAgent @Inject constructor(
         // Get responses from multiple agents
         val request = AiRequest(
             prompt = prompt,
-            agentType = AgentType.CASCADE,
+            category = AgentCapabilityCategory.SPECIALIZED,
             priority = AiRequest.Priority.NORMAL
         )
         val auraResponse = auraAgent.processRequest(request, "").content
@@ -446,7 +451,7 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
-            agentType = AgentType.KAI,
+            category = AgentCapabilityCategory.ANALYSIS,
             priority = AiRequest.Priority.NORMAL
         )
         val response = kaiAgent.processRequest(request, "")
@@ -476,7 +481,7 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
-            agentType = AgentType.AURA,
+            category = AgentCapabilityCategory.CREATIVE,
             priority = AiRequest.Priority.NORMAL
         )
         val response = auraAgent.processRequest(request, "")

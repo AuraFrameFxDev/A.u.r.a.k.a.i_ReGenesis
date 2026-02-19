@@ -20,12 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.models.AgentProfile
-import dev.aurakai.auraframefx.models.AgentProfiles
-import dev.aurakai.auraframefx.models.AgentStatus
-import dev.aurakai.auraframefx.models.AgentType
-import dev.aurakai.auraframefx.models.CapabilityLevel
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.nexus.models.AgentProfile
+import dev.aurakai.auraframefx.domains.nexus.models.AgentProfiles
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.nexus.models.CapabilityLevel
 
 /**
  * Comprehensive Agent Profile Screen
@@ -42,13 +42,13 @@ import dev.aurakai.auraframefx.models.CapabilityLevel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgentProfileScreen(
-    agentType: AgentType? = null,
+    category: AgentCapabilityCategory? = null,
     onNavigateToSettings: (() -> Unit)? = null,
     onNavigateBack: (() -> Unit)? = null
 ) {
-    val currentAgent = agentType ?: AgentType.CLAUDE
-    val profile = remember(currentAgent) {
-        AgentProfiles.getProfile(AgentCapabilityCategory.fromAgentType(currentAgent))
+    val currentCategory = category ?: AgentCapabilityCategory.GENERAL
+    val profile = remember(currentCategory) {
+        AgentProfiles.getProfile(currentCategory)
     }
 
     var selectedTab by remember { mutableStateOf(0) }
@@ -170,7 +170,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            imageVector = getAgentIcon(profile.agentType.toAgentType()),
+                            imageVector = getAgentIcon(profile.agentType),
                             contentDescription = profile.displayName,
                             modifier = Modifier.size(60.dp),
                             tint = Color.White
@@ -512,14 +512,13 @@ private fun getCapabilityLevelColor(level: CapabilityLevel): Color {
 }
 
 @Composable
-private fun getAgentIcon(agentType: AgentType): ImageVector {
-    return when (agentType) {
-        AgentType.AURA -> Icons.Default.Brush
-        AgentType.KAI -> Icons.Default.Shield
-        AgentType.GENESIS -> Icons.Default.AutoAwesome
-        AgentType.CLAUDE -> Icons.Default.Architecture
-        AgentType.CASCADE -> Icons.Default.Storage
-        AgentType.NEURAL_WHISPER -> Icons.Default.Psychology
+private fun getAgentIcon(category: AgentCapabilityCategory): ImageVector {
+    return when (category) {
+        AgentCapabilityCategory.CREATIVE -> Icons.Default.Brush
+        AgentCapabilityCategory.ANALYSIS -> Icons.Default.Shield
+        AgentCapabilityCategory.COORDINATION -> Icons.Default.AutoAwesome
+        AgentCapabilityCategory.GENERAL -> Icons.Default.Architecture
+        AgentCapabilityCategory.SPECIALIZED -> Icons.Default.Storage
         else -> Icons.Default.Person
     }
 }
