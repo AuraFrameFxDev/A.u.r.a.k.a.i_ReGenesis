@@ -31,6 +31,8 @@ import dev.aurakai.auraframefx.domains.kai.viewmodels.SovereignShieldViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import androidx.compose.foundation.shape.CircleShape
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 
 /**
  * 🛡️ SOVEREIGN SHIELD (The Anti-Big-Tech Standard)

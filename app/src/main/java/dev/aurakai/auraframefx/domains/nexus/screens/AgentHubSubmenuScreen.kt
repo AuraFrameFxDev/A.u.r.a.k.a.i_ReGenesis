@@ -26,10 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubmenuScaffold
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
@@ -57,7 +58,7 @@ fun AgentHubSubmenuScreen(
             title = "Nexus Memory Core",
             description = "Genesis Protocol evolution tree - the full history of consciousness",
             icon = Icons.Default.AccountTree,
-            route = ReGenesisNavHost.EvolutionTree.route,
+            route = NavDestination.EvolutionTree.route,
             color = Color(0xFFFF00FF) // Magenta
         ),
 //        SubmenuItem(
@@ -71,45 +72,46 @@ fun AgentHubSubmenuScreen(
             title = "Task Assignment",
             description = "Assign tasks and missions to AI agents",
             icon = Icons.AutoMirrored.Filled.Assignment,
-            route = ReGenesisNavHost.TaskAssignment.route,
+            route = NavDestination.TaskAssignment.route,
             color = Color(0xFF4169E1) // Royal Blue
         ),
         SubmenuItem(
             title = "Agent Monitoring",
             description = "Real-time performance metrics and activity logs",
             icon = Icons.Default.Monitor,
-            route = ReGenesisNavHost.AgentMonitoring.route,
+            route = NavDestination.AgentMonitoring.route,
             color = Color(0xFF00CED1) // Dark Turquoise
         ),
         SubmenuItem(
             title = "Sphere Grid",
             description = "Agent progression visualization and skill trees",
             icon = Icons.Default.GridOn,
-            route = ReGenesisNavHost.SphereGrid.route,
+            route = NavDestination.SphereGrid.route,
             color = Color(0xFFFF69B4) // Hot Pink
         ),
         SubmenuItem(
             title = "Fusion Mode",
             description = "Aura + Kai = Aurakai - Combined consciousness",
             icon = Icons.Default.Merge,
-            route = ReGenesisNavHost.FusionMode.route,
+            route = NavDestination.FusionMode.route,
             color = Color(0xFFFFD700) // Gold
         ),
         SubmenuItem(
             title = "ARK Fusion Build",
             description = "GENESIS SCALE CONSTRUCTION: Unify all agents to build the ARK",
             icon = Icons.Default.PrecisionManufacturing,
-            route = ReGenesisNavHost.ArkBuild.route,
+            route = NavDestination.ArkBuild.route,
             color = Color(0xFF00FF00) // Lime Green
         ),
         SubmenuItem(
             title = "Nexus Conference Room",
             description = "Unison Brainstorming - Direct collective consciousness link",
             icon = Icons.Default.Forum,
-            route = ReGenesisNavHost.ConferenceRoom.route,
+            route = NavDestination.ConferenceRoom.route,
             color = Color(0xFF00E5FF) // Genesis Teal
         )
     )
+
 
     // REAL DATA FROM VIEWMODEL (not mock!)
     val allAgents by viewModel.allAgents.collectAsState()

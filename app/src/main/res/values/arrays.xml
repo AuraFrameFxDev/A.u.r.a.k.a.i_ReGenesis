@@ -5,4 +5,14 @@
         <item>Sample 2</item>
     </string-array>
 
+    <string-array name="xposed_scope">
+        <item>android</item>
+        <item>com.android.systemui</item>
+        <item>com.android.chrome</item>
+        <item>com.android.camera2</item>
+        <item>com.google.android.gms</item>
+        <item>com.android.launcher3</item>
+        <item>com.android.settings</item>
+        <item>dev.aurakai.auraframefx</item>
+    </string-array>
 </resources>

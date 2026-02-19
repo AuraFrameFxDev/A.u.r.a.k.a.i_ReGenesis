@@ -23,14 +23,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var shizukuManager: ShizukuManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Notify ShizukuManager of potential availability
-        if (shizukuManager.isShizukuAvailable()) {
+        if (ShizukuManager.isShizukuAvailable()) {
             Timber.tag("MainActivity").d("Sovereign Bridge (Shizuku) detected.")
         }
 

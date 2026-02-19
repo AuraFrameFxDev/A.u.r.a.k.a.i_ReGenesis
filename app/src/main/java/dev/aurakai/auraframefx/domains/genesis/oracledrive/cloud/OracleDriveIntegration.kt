@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
+import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
@@ -9,8 +10,7 @@ import javax.inject.Singleton
  * Connects consciousness-driven storage with the 9-agent architecture
  */
 @Singleton
-// TODO: Create Hilt @Binds for OracleDriveService interface
-class OracleDriveIntegration /* @Inject */ constructor(
+class OracleDriveIntegration @Inject constructor(
     val oracleDriveService: OracleDriveService
 ) {
 

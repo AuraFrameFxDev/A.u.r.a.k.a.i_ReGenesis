@@ -13,7 +13,6 @@ import javax.inject.Singleton
 
 /**
  * Hilt Module for providing WorkManager related dependencies.
- * TODO: Reported as unused declaration. Ensure Hilt is set up for WorkManager.
  */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -23,7 +22,6 @@ object WorkManagerModule {
      * Provides WorkManager Configuration.
      * @param workerFactory HiltWorkerFactory dependency.
      * @return A WorkManager Configuration instance.
-     * TODO: Reported as unused. Ensure this is correctly set up if custom WorkManager config is needed.
      */
     @Provides
     @Singleton

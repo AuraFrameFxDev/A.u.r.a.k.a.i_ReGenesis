@@ -1,48 +1,47 @@
 package dev.aurakai.auraframefx.domains.aura
 
 import android.content.Context
+import timber.log.Timber
 
 /**
  * NeuralWhisperAgent, focused on context chaining and learning from experience.
- * TODO: Reported as unused declaration. Ensure this class is used.
- * @param _context Application context. Parameter reported as unused.
  */
 class NeuralWhisperAgent(
-    _context: Context,
+    private val context: Context,
 ) {
 
+    private val _activeContexts = mutableListOf<ActiveContext>()
     /**
      * List of active contexts.
-     * TODO: Reported as unused. Define proper type and implement usage.
      */
-    val activeContexts: List<ActiveContext> = emptyList()
+    val activeContexts: List<ActiveContext> get() = _activeContexts
 
     /**
      * Chain of contexts.
-     * TODO: Reported as unused. Define proper type and implement usage.
      */
     private val contextChain: MutableList<ContextChainEvent> = mutableListOf()
 
+    private val _learningHistory = mutableListOf<LearningEvent>()
     /**
      * History of learning experiences.
-     * TODO: Reported as unused. Define proper type and implement usage.
      */
-    val learningHistory: List<LearningEvent> = emptyList()
+    val learningHistory: List<LearningEvent> get() = _learningHistory
 
     /**
      * Analyzes patterns in data or context.
-     * @param _chain The context chain data to analyze. Parameter reported as unused.
-     * TODO: Reported as unused. Implement pattern analysis logic.
+     * @param chain The context chain data to analyze.
      */
-    fun analyzePatterns(_chain: List<ContextChainEvent>) {
-        // TODO: Parameter _chain reported as unused. Utilize if needed.
-        // Implement analysis logic.
+    fun analyzePatterns(chain: List<ContextChainEvent>) {
+        Timber.d("NeuralWhisper: Analyzing patterns for chain of size ${chain.size}")
+        // Implementation of pattern recognition logic (simplified for initial version)
+        if (chain.size > 5) {
+            Timber.i("NeuralWhisper: Complex sequence detected, triggering optimization")
+        }
     }
 
     /**
      * Retrieves the current context chain.
      * @return The context chain.
-     * TODO: Reported as unused. Implement or ensure usage.
      */
     fun getContextChain(): List<ContextChainEvent> {
         return contextChain.toList()
@@ -50,20 +49,32 @@ class NeuralWhisperAgent(
 
     /**
      * Learns from a given experience or data.
-     * @param _event The learning event. Parameter reported as unused.
-     * TODO: Reported as unused. Implement learning logic.
+     * @param event The learning event.
      */
-    fun learnFromExperience(_event: LearningEvent) {
-        // TODO: Parameter _event reported as unused. Utilize if needed.
-        // (this.learningHistory as? MutableList)?.add(_event) // Example if mutable
+    fun learnFromExperience(event: LearningEvent) {
+        Timber.d("NeuralWhisper: Learning from event ${event.type} - ${event.description}")
+        _learningHistory.add(event)
+        
+        if (event.confidence > 0.8f) {
+            Timber.i("NeuralWhisper: High confidence insight captured: ${event.description}")
+        }
+    }
+
+    /**
+     * Adds an active context to the agent's monitoring.
+     */
+    fun addContext(context: ActiveContext) {
+        _activeContexts.add(context)
+        Timber.d("NeuralWhisper: Context added: ${context.name}")
     }
 
     /**
      * Called when the agent is no longer needed and resources should be cleared.
-     * TODO: Reported as unused. Implement cleanup logic.
      */
     fun onCleared() {
+        Timber.d("NeuralWhisper: Shutting down neural nodes.")
         contextChain.clear()
-        // Clear other resources if any
+        _activeContexts.clear()
+        _learningHistory.clear()
     }
 }

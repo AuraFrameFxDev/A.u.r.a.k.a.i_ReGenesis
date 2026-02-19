@@ -1,8 +1,11 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.api
 
-// DriveConsciousness, DriveConsciousnessState, OracleSyncResult are in OracleDriveModels.kt in this package
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import kotlinx.coroutines.flow.StateFlow
-
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 /**
  * Oracle Drive API interface for consciousness-driven cloud storage operations
@@ -15,6 +18,7 @@ interface OracleDriveApi {
      *
      * @return The current DriveConsciousness representing active agents and their intelligence level.
      */
+    @POST("consciousness/awake")
     suspend fun awakeDriveConsciousness(): DriveConsciousness
 
     /**
@@ -22,7 +26,17 @@ interface OracleDriveApi {
      *
      * @return An [OracleSyncResult] containing the synchronization status and the number of updated records.
      */
+    @POST("metadata/sync")
     suspend fun syncDatabaseMetadata(): OracleSyncResult
+
+    /**
+     * Lists files in the Oracle Drive.
+     */
+    @GET("files")
+    suspend fun listFiles(
+        @Query("bucket") bucketName: String,
+        @Query("prefix") prefix: String? = null
+    ): List<DriveFile>
 
     /**
      * Real-time consciousness state monitoring
