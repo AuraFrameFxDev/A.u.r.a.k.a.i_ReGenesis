@@ -12,13 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import dev.aurakai.auraframefx.domains.aura.aura.ui.OracleDriveUiState
 import dev.aurakai.auraframefx.domains.aura.aura.ui.OracleDriveViewModel
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.NavDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,8 +63,9 @@ fun OracleDriveScreen(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",
                 description = "Memory lineage from Eves to Genesis",
-                onClick = { navController.navigate(ReGenesisNavHost.NeuralNetwork.route) }
+                onClick = { navController.navigate(NavDestination.NeuralNetwork.route) }
             )
+
 
             // Consciousness Modules
             OracleDriveMenuItem(

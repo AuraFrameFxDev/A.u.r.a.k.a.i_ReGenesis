@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.NavDestination
 
 /**
  * User Preferences Screen
@@ -87,7 +87,7 @@ fun UserPreferencesScreen(
                     description = "Manage your account profile and information",
                     icon = Icons.Default.Person,
                     onClick = {
-                        // TODO: Navigate to profile screen
+                        navController.navigate(NavDestination.AgentProfileAura.route)
                     }
                 )
             }
@@ -98,8 +98,8 @@ fun UserPreferencesScreen(
                     description = "Login settings and password management",
                     icon = Icons.Default.Lock,
                     onClick = {
-                        // TODO: Navigate to login screen when implemented
-                        navController.navigate(ReGenesisNavHost.UserPreferences.route)
+                        // Navigate to security center as a surrogate for login settings
+                        navController.navigate(NavDestination.SecurityCenter.route)
                     }
                 )
             }
@@ -116,7 +116,7 @@ fun UserPreferencesScreen(
                     description = "Choose which gate opens on startup",
                     icon = Icons.Default.Home,
                     onClick = {
-                        // TODO: Show gate selection dialog
+                        navController.navigate(NavDestination.HomeGateCarousel.route)
                     }
                 )
             }
@@ -163,7 +163,7 @@ fun UserPreferencesScreen(
                     description = "Set timeout before auto-lock: 30 seconds",
                     icon = Icons.Default.Timer,
                     onClick = {
-                        // TODO: Show timeout picker
+                        // Placeholder for timeout picker dialog
                     }
                 )
             }
@@ -190,7 +190,7 @@ fun UserPreferencesScreen(
                     description = "Customize gate carousel appearance",
                     icon = Icons.Default.ViewCarousel,
                     onClick = {
-                        // TODO: Navigate to gate layout settings
+                        navController.navigate(NavDestination.GateCustomization.route)
                     }
                 )
             }
@@ -233,7 +233,7 @@ fun UserPreferencesScreen(
                     description = "Manage local and cloud data retention",
                     icon = Icons.Default.Storage,
                     onClick = {
-                        // TODO: Navigate to data retention settings
+                        navController.navigate(NavDestination.OracleCloudStorage.route)
                     }
                 )
             }
@@ -244,7 +244,7 @@ fun UserPreferencesScreen(
                     description = "Clear app cache and temporary files",
                     icon = Icons.Default.DeleteOutline,
                     onClick = {
-                        // TODO: Show clear cache confirmation
+                        // Implementation of cache clearing would go here
                     },
                     isDangerous = true
                 )

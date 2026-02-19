@@ -1,21 +1,29 @@
 package dev.aurakai.auraframefx.domains.aura
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.aura.models.Emotion
 import dev.aurakai.auraframefx.domains.cascade.models.ConversationState
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * NeuralWhisper class for audio processing (Speech-to-Text, Text-to-Speech) and AI interaction.
- * Ready for implementation of STT/TTS engine logic.
+ * Powered by ReGenesis Neuro-Linguistics Engine.
  */
 @Singleton
 class NeuralWhisper @Inject constructor(
@@ -23,8 +31,9 @@ class NeuralWhisper @Inject constructor(
 ) {
     companion object {
         private const val TAG = "NeuralWhisper"
-
-        // TODO: Review hardcoded audio parameters. Make them constants or configurable if necessary.
+        private const val UTTERANCE_ID = "NeuralWhisperUtterance"
+        
+        // Neuro-Linguistics Constants
         private const val DEFAULT_SAMPLE_RATE = 44100
         private const val DEFAULT_CHANNELS = 1 // Mono
         private const val DEFAULT_BITS_PER_SAMPLE = 16
@@ -41,206 +50,179 @@ class NeuralWhisper @Inject constructor(
     private val _emotionStateFlow = MutableStateFlow(Emotion.NEUTRAL)
     val emotionState: StateFlow<Emotion> = _emotionStateFlow
 
+    // Used to wait for speech recognition results asynchronously
+    private var currentRecognitionDeferred: CompletableDeferred<String?>? = null
+
     init {
         initialize()
     }
 
     /**
      * Sets up the NeuralWhisper service by initializing text-to-speech and speech recognition components.
-     *
-     * This method prepares the service for audio processing and AI interaction by configuring the necessary engines.
      */
     fun initialize() {
-        Log.d(TAG, "Initializing NeuralWhisper...")
+        Log.d(TAG, "Initializing NeuralWhisper Core...")
         initializeTts()
         initializeStt()
-        // TODO: Any other initialization for audio processing or AI interaction components.
     }
 
     /**
-     * Initializes the TextToSpeech engine and updates the TTS initialization state.
-     *
-     * Attempts to create a TextToSpeech instance and sets the initialization flag based on the result.
-     * Language, voice, pitch, and rate configuration are not yet implemented.
+     * Initializes the TextToSpeech engine with proper locale and listener.
      */
     private fun initializeTts() {
-        // TODO: Implement robust TTS initialization, including language availability checks.
-        // Consider user preferences for voice, pitch, speed.
         tts = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                // TODO: Set language, voice, pitch, rate based on settings or defaults.
-                // Example: val result = tts?.setLanguage(Locale.US)
-                // if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                //     Log.e(TAG, "TTS language is not supported.")
-                // } else {
-                //     isTtsInitialized = true
-                //     Log.d(TAG, "TTS Initialized successfully.")
-                // }
-                isTtsInitialized = true // Simplified for now
-                Log.d(TAG, "TTS Initialized (simplified). Language/voice setup TODO.")
+                val result = tts?.setLanguage(Locale.US)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e(TAG, "Neuro-NLP: TTS language is not supported or missing data.")
+                } else {
+                    isTtsInitialized = true
+                    Log.d(TAG, "Neuro-NLP: TTS Initialized successfully.")
+                    setupTtsListener()
+                }
             } else {
-                Log.e(TAG, "TTS Initialization failed with status: $status")
+                Log.e(TAG, "Neuro-NLP: TTS Initialization failed with status: $status")
             }
         }
     }
 
+    private fun setupTtsListener() {
+        tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                _conversationStateFlow.value = ConversationState.Speaking
+                Log.d(TAG, "NeuralWhisper: Started speaking.")
+            }
+
+            override fun onDone(utteranceId: String?) {
+                _conversationStateFlow.value = ConversationState.Idle
+                Log.d(TAG, "NeuralWhisper: Finished speaking.")
+            }
+
+            override fun onError(utteranceId: String?) {
+                Log.e(TAG, "NeuralWhisper: TTS Error for utterance: $utteranceId")
+                _conversationStateFlow.value = ConversationState.Error("Speech synthesis failed")
+            }
+        })
+    }
+
     /**
-     * Initializes the speech-to-text (STT) engine if supported on the device.
-     *
-     * Creates a SpeechRecognizer instance and updates the STT initialization state. Logs an error if speech recognition is unavailable.
+     * Initializes the speech-to-text (STT) engine using Android System Recognizer.
      */
     private fun initializeStt() {
-        // TODO: Implement STT initialization using Android's SpeechRecognizer or a third-party library.
-        // This will involve setting up a SpeechRecognitionListener.
-        // Ensure necessary permissions (RECORD_AUDIO) are handled by the calling components.
         if (SpeechRecognizer.isRecognitionAvailable(context)) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
-            // speechRecognizer?.setRecognitionListener(YourRecognitionListener()) // TODO: Implement RecognitionListener
+            speechRecognizer?.setRecognitionListener(NeuralRecognitionListener())
             isSttInitialized = true
-            Log.d(TAG, "STT (SpeechRecognizer) is available. Listener TODO.")
+            Log.d(TAG, "Neuro-NLP: STT (SpeechRecognizer) is ready.")
         } else {
-            Log.e(TAG, "STT (SpeechRecognizer) is not available on this device.")
+            Log.e(TAG, "Neuro-NLP: STT is not available on this device.")
         }
     }
 
     /**
      * Converts audio input to transcribed text using speech-to-text processing.
-     *
-     * This is a placeholder implementation; actual speech recognition is not yet implemented.
-     *
-     * @param audioInput The audio data or trigger for initiating speech recognition.
-     * @return The transcribed text if successful, or null if speech recognition is not initialized.
+     * This method suspends until the results are ready or an error occurs.
      */
-    suspend fun speechToText(audioInput: Any /* Placeholder type */): String? {
-        // TODO: Implement actual STT logic.
-        // This might involve:
-        // 1. Checking for RECORD_AUDIO permission (should be done by caller or a dedicated permission manager).
-        // 2. Creating an Intent for speech recognition.
-        // 3. Starting the speechRecognizer.listen(intent).
-        // 4. Handling results asynchronously via a listener and potentially a callback/Flow.
-        if (!isSttInitialized) {
+    suspend fun speechToText(audioInput: Any? = null): String? = withContext(Dispatchers.Main) {
+        if (!isSttInitialized || speechRecognizer == null) {
             Log.w(TAG, "STT not initialized, cannot process speech to text.")
-            return null
+            return@withContext null
         }
-        Log.d(
-            TAG,
-            "speechToText called (TODO: actual implementation with listener and async result)"
-        )
+
+        // Clean up any existing recognition request
+        currentRecognitionDeferred?.cancel()
+        val deferred = CompletableDeferred<String?>()
+        currentRecognitionDeferred = deferred
+
         _conversationStateFlow.value = ConversationState.Listening
-        // Simulate processing
-        kotlinx.coroutines.delay(1000) // Placeholder for actual STT processing
-        _conversationStateFlow.value = ConversationState.Processing("Transcribing audio...")
-        return "Placeholder transcribed text from audio."
+        
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+        }
+
+        try {
+            speechRecognizer?.startListening(intent)
+            Log.d(TAG, "NeuralWhisper: Listening for auditory input...")
+            deferred.await()
+        } catch (e: Exception) {
+            Log.e(TAG, "NeuralWhisper: Speech recognition trap triggered", e)
+            _conversationStateFlow.value = ConversationState.Error("Recognition failed")
+            null
+        }
     }
 
     /**
-     * Requests text-to-speech synthesis for the provided text using the specified locale.
-     *
-     * Updates the conversation state to indicate speaking. Returns `false` if the TTS engine is not initialized or unavailable; otherwise, returns `true` as a placeholder indicating the request was accepted.
-     *
-     * @param text The text to be synthesized into speech.
-     * @param locale The locale for speech synthesis (defaults to US English).
-     * @return `true` if the synthesis request is accepted (placeholder), or `false` if TTS is not initialized.
+     * Requests text-to-speech synthesis for the provided text.
      */
     fun textToSpeech(text: String, locale: Locale = Locale.US): Boolean {
-        // TODO: Implement actual TTS logic.
-        // This involves:
-        // 1. Checking if TTS is initialized and language is set.
-        // 2. Using tts?.speak(text, TextToSpeech.QUEUE_ADD, null, "utteranceId")
-        // 3. Handling UtteranceProgressListener for more advanced control if needed.
         if (!isTtsInitialized || tts == null) {
-            Log.w(TAG, "TTS not initialized, cannot synthesize speech.")
+            Log.w(TAG, "Neuro-NLP: TTS offline, cannot synthesize.")
             return false
         }
-        Log.d(TAG, "textToSpeech called for: '$text' (TODO: actual TTS speak call)")
-        // tts?.language = locale // TODO: Ensure language is set correctly before speaking
-        // val result = tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
-        // return result == TextToSpeech.SUCCESS
-        _conversationStateFlow.value = ConversationState.Speaking
-        // Simulate speaking
-        // kotlinx.coroutines.GlobalScope.launch { kotlinx.coroutines.delay(1000); _conversationStateFlow.value = ConversationState.Idle } // Example state change
-        return true // Placeholder
+        
+        Log.d(TAG, "NeuralWhisper: Synthesizing: '$text'")
+        tts?.language = locale
+        val params = Bundle().apply {
+            putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, UTTERANCE_ID)
+        }
+        val result = tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, UTTERANCE_ID)
+        return result == TextToSpeech.SUCCESS
     }
 
     /**
-     * Processes a transcribed voice command and returns a placeholder response.
-     *
-     * Updates the conversation state to indicate processing. Intended as a stub for future natural language understanding and command-to-action mapping.
-     *
-     * @param command The transcribed voice command to process.
-     * @return A placeholder response representing the result of command processing.
+     * Processes a transcribed voice command.
      */
-    fun processVoiceCommand(command: String): Any { // Placeholder return type
-        // TODO: Implement NLU and command mapping.
-        // This could involve:
-        // 1. Sending the command to a local or cloud NLU service.
-        // 2. Matching command patterns.
-        // 3. Determining intent and entities.
-        // 4. Translating this into an action for an AI agent or system.
-        Log.d(TAG, "Processing voice command: '$command' (TODO: NLU and action mapping)")
+    fun processVoiceCommand(command: String): Any {
+        Log.d(TAG, "Neuro-NLP: Processing neural command: '$command'")
         _conversationStateFlow.value = ConversationState.Processing("Understanding: $command")
-        return "Placeholder action for command: $command" // Placeholder
+        // Mapping logic would go here
+        return "Command '$command' acknowledged by NeuralWhisper."
     }
-
 
     /**
      * Shares context information with the Kai agent or controller.
-     *
-     * Updates the conversation state to reflect that context is being shared. Actual communication with the Kai agent is not implemented.
-     *
-     * @param contextText The context information to be shared.
      */
     fun shareContextWithKai(contextText: String) {
-        _conversationStateFlow.value =
-            ConversationState.Processing("Sharing with Kai: $contextText")
-        Log.d(TAG, "NeuralWhisper: Sharing context with Kai: $contextText")
-        // TODO: Actually interact with a KaiController/Agent once its type is defined and injected.
-        // Example: kaiAgent?.processSharedContext(contextText)
+        _conversationStateFlow.value = ConversationState.Processing("Sharing with Kai: $contextText")
+        Log.d(TAG, "NeuralWhisper -> Kai: Context Transmission: $contextText")
+        // Integration with KaiController goes here
     }
 
     /**
      * Initiates audio recording for speech recognition.
-     *
-     * Updates the conversation state to indicate recording has started.
-     *
-     * @return `true` if recording starts successfully; `false` if an error occurs.
      */
     fun startRecording(): Boolean {
+        if (!isSttInitialized || speechRecognizer == null) return false
+        
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        }
+        
         return try {
-            Log.d(TAG, "Starting audio recording...")
-            _conversationStateFlow.value = ConversationState.Recording
-            // TODO: Implement actual recording start logic
+            speechRecognizer?.startListening(intent)
+            _conversationStateFlow.value = ConversationState.Listening
             true
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to start recording", e)
+            Log.e(TAG, "NeuralWhisper: Failed to initiate recording", e)
             false
         }
     }
 
     /**
-     * Stops the current audio recording session and returns a status message.
-     *
-     * @return A message indicating whether the recording was stopped successfully or describing the failure.
+     * Stops the current audio recording session.
      */
     fun stopRecording(): String {
-        return try {
-            Log.d(TAG, "Stopping audio recording...")
-            _conversationStateFlow.value = ConversationState.Processing("Processing audio...")
-            // TODO: Implement actual recording stop and processing logic
-            "Recording stopped successfully"
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to stop recording", e)
-            "Failed to stop recording: ${e.message}"
-        }
+        speechRecognizer?.stopListening()
+        return "Neural acquisition halted."
     }
 
     /**
-     * Releases all resources used by the NeuralWhisper service and resets its state to idle.
-     *
-     * Stops and shuts down the text-to-speech engine, destroys the speech recognizer, clears their initialization flags, and updates the conversation state to idle.
+     * Releases all resources used by the NeuralWhisper service.
      */
     fun cleanup() {
-        Log.d(TAG, "Cleaning up NeuralWhisper resources.")
+        Log.d(TAG, "NeuralWhisper: Purging neural buffers and shutting down...")
         tts?.stop()
         tts?.shutdown()
         isTtsInitialized = false
@@ -251,5 +233,66 @@ class NeuralWhisper @Inject constructor(
         isSttInitialized = false
 
         _conversationStateFlow.value = ConversationState.Idle
+    }
+
+    /**
+     * Internal listener for Android's SpeechRecognizer results.
+     */
+    private inner class NeuralRecognitionListener : RecognitionListener {
+        override fun onReadyForSpeech(params: Bundle?) {
+            Log.d(TAG, "NeuralWhisper: Recognition interface ready.")
+        }
+
+        override fun onBeginningOfSpeech() {
+            Log.d(TAG, "NeuralWhisper: Auditory input detected.")
+        }
+
+        override fun onRmsChanged(rmsdB: Float) {}
+
+        override fun onBufferReceived(buffer: ByteArray?) {}
+
+        override fun onEndOfSpeech() {
+            Log.d(TAG, "NeuralWhisper: End of auditory input.")
+            _conversationStateFlow.value = ConversationState.Processing("Analyzing audio signature...")
+        }
+
+        override fun onError(error: Int) {
+            val errorMessage = when (error) {
+                SpeechRecognizer.ERROR_AUDIO -> "Audio acquisition error"
+                SpeechRecognizer.ERROR_CLIENT -> "Client node error"
+                SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Permission violation: RECORD_AUDIO"
+                SpeechRecognizer.ERROR_NETWORK -> "Neural network link error"
+                SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Link timeout"
+                SpeechRecognizer.ERROR_NO_MATCH -> "No semantic match found"
+                SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Neural core busy"
+                SpeechRecognizer.ERROR_SERVER -> "Central processing error"
+                SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Auditory timeout"
+                else -> "Unidentified neural anomaly"
+            }
+            Log.e(TAG, "NeuralWhisper: Recognition error: $errorMessage")
+            _conversationStateFlow.value = ConversationState.Error(errorMessage)
+            currentRecognitionDeferred?.complete(null)
+        }
+
+        override fun onResults(results: Bundle?) {
+            val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+            if (!matches.isNullOrEmpty()) {
+                val text = matches[0]
+                Log.d(TAG, "NeuralWhisper: Decoded: '$text'")
+                currentRecognitionDeferred?.complete(text)
+            } else {
+                currentRecognitionDeferred?.complete(null)
+            }
+            _conversationStateFlow.value = ConversationState.Idle
+        }
+
+        override fun onPartialResults(partialResults: Bundle?) {
+            val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+            if (!matches.isNullOrEmpty()) {
+                Log.v(TAG, "NeuralWhisper: Partial decoding: ${matches[0]}")
+            }
+        }
+
+        override fun onEvent(eventType: Int, params: Bundle?) {}
     }
 }

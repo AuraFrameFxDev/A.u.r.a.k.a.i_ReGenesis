@@ -40,7 +40,7 @@ interface BootloaderSafetyManager {
  */
 @Singleton
 class BootloaderSafetyManagerImpl @Inject constructor(
-    @field:ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context
 ) : BootloaderSafetyManager {
 
     private val _safetyStatus = MutableStateFlow(BootloaderSafetyStatus())

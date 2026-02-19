@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.models.Emotion
 import dev.aurakai.auraframefx.domains.aura.ui.theme.DarkBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.ErrorColor
@@ -177,7 +177,7 @@ fun AuraFrameFXTheme(
                 "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
             }, null
     ),
-    themeViewModel: ThemeViewModel = hiltViewModel(viewModelStoreOwner, key),
+    themeViewModel: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
     val mood by moodViewModel.moodState.collectAsState()

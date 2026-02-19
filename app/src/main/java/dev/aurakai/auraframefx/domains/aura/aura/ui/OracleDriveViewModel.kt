@@ -139,11 +139,13 @@ class OracleDriveViewModel @Inject constructor(
 
     /**
      * Retrieves files from Oracle Drive service
-     * Returns empty list until file listing API is implemented
      */
     private suspend fun getFiles(): List<DriveFile> {
-        // TODO: Implement actual file listing when OracleDriveService.listFiles() is available
-        return emptyList()
+        return try {
+            oracleDriveService.listFiles()
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     /**

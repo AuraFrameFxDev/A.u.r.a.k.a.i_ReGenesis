@@ -1,9 +1,9 @@
 package dev.aurakai.auraframefx.domains.nexus.billing
 
 import androidx.compose.runtime.*
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 import dev.aurakai.auraframefx.domains.cascade.utils.debug
 

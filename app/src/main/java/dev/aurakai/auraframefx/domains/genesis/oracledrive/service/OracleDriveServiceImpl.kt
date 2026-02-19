@@ -5,6 +5,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
@@ -88,6 +89,16 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override fun getDriveConsciousnessState(): StateFlow<DriveConsciousnessState> {
         return _driveConsciousnessState.asStateFlow()
+    }
+
+    override suspend fun listFiles(bucketName: String, prefix: String?): List<DriveFile> {
+        return try {
+            Timber.d("OracleDrive: Accessing matrix for file listing (bucket=$bucketName, prefix=$prefix)")
+            oracleDriveApi.listFiles(bucketName, prefix)
+        } catch (e: Exception) {
+            Timber.e(e, "OracleDrive: Failed to retrieve file patterns from matrix")
+            emptyList()
+        }
     }
 
     override suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState> {
