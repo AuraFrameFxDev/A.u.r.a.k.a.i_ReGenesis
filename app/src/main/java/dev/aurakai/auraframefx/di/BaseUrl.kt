@@ -1,5 +1,10 @@
 package dev.aurakai.auraframefx.di.qualifiers
 
-import dev.aurakai.auraframefx.domains.genesis.BaseUrl
+import javax.inject.Qualifier
 
-typealias BaseUrl = BaseUrl
+/**
+ * Qualifier for the platform's base API URL.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BaseUrl

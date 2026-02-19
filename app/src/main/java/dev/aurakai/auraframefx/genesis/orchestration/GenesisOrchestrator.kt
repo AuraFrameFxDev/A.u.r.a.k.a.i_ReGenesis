@@ -1,8 +1,9 @@
+
 package dev.aurakai.auraframefx.genesis.orchestration
 
 import android.util.Log
-import dev.aurakai.auraframefx.agent.BaseAgent
 import dev.aurakai.auraframefx.common.orchestration.OrchestratableAgent
+import dev.aurakai.auraframefx.agent.BaseAgent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,10 +26,10 @@ class GenesisOrchestrator : OrchestratableAgent, BaseAgent() {
     // Existing OrchestratableAgent implementation (simplified for context)
     override suspend fun initialize(scope: CoroutineScope) {
         Log.i(TAG, "GenesisOrchestrator: initialize() called.")
-        if (!isOrchestratorInitialized) {
+        if (!BaseAgent.isOrchestratorInitialized) {
             this.agentScope = scope
             // Actual orchestration initialization logic
-            isOrchestratorInitialized = true
+            BaseAgent.isOrchestratorInitialized = true
             Log.d(TAG, "GenesisOrchestrator: Orchestrator initialized.")
         } else {
             Log.i(TAG, "GenesisOrchestrator: Orchestrator already initialized. Skipping.")
@@ -37,16 +38,13 @@ class GenesisOrchestrator : OrchestratableAgent, BaseAgent() {
 
     override suspend fun start() {
         Log.i(TAG, "GenesisOrchestrator: start() called.")
-        if (isOrchestratorInitialized) {
+        if (BaseAgent.isOrchestratorInitialized) {
             agentScope?.launch(Dispatchers.Default) {
                 Log.i(TAG, "GenesisOrchestrator: Starting orchestration processing.")
                 // Actual orchestration processing start logic
             } ?: Log.e(TAG, "GenesisOrchestrator: agentScope is null. Cannot start processing.")
         } else {
-            Log.w(
-                TAG,
-                "GenesisOrchestrator: Orchestrator not initialized. Cannot start processing."
-            )
+            Log.w(TAG, "GenesisOrchestrator: Orchestrator not initialized. Cannot start processing.")
         }
     }
 
@@ -62,16 +60,13 @@ class GenesisOrchestrator : OrchestratableAgent, BaseAgent() {
 
     override suspend fun shutdown() {
         Log.i(TAG, "GenesisOrchestrator: shutdown() called.")
-        if (isOrchestratorInitialized) {
+        if (BaseAgent.isOrchestratorInitialized) {
             // Actual orchestration shutdown logic
             agentScope = null
-            isOrchestratorInitialized = false
+            BaseAgent.isOrchestratorInitialized = false
             Log.d(TAG, "GenesisOrchestrator: Orchestrator shut down.")
         } else {
-            Log.i(
-                TAG,
-                "GenesisOrchestrator: Orchestrator not initialized. Skipping shutdown logic."
-            )
+            Log.i(TAG, "GenesisOrchestrator: Orchestrator not initialized. Skipping shutdown logic.")
         }
     }
 

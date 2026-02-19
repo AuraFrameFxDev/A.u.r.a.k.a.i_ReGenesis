@@ -1,8 +1,11 @@
+
 package dev.aurakai.auraframefx.genesis
 
 import android.util.Log
 import de.robv.android.xposed.IXposedHookLoadPackage
+import de.robv.android.xposed.IXposedHookInitPackageResources
 import de.robv.android.xposed.callbacks.XC_LoadPackage
+import de.robv.android.xposed.callbacks.XC_InitPackageResources
 
 // Assuming YukiHook API specific interfaces or a custom entry point
 // For simplicity, we'll use IXposedHookLoadPackage and add a basic onInit for logging

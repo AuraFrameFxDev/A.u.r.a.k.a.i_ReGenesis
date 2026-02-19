@@ -109,6 +109,7 @@ extensions.configure<ApplicationExtension> {
 // Enable modern Kotlin features (Experimental/New in 2.2+)
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
         freeCompilerArgs.addAll(
             "-Xcontext-parameters",
             "-Xannotation-default-target=param-property"
@@ -152,7 +153,8 @@ extensions.configure<ApplicationExtension> {
     // ═══════════════════════════════════════════════════════════════════════════
     sourceSets {
         getByName("main") {
-            res.mutableset(
+            java.srcDirs("src/main/java")
+            res.srcDirs(
                 "src/main/res",
                 "src/main/res/drawable/Gatescenes/Aura",
                 "src/main/res/drawable/Gatescenes/Kai",
@@ -163,6 +165,15 @@ extensions.configure<ApplicationExtension> {
             )
         }
     }
+}
+
+// Ensure Kotlin and KSP complete before Java compilation
+tasks.matching { it.name == "compileDebugJavaWithJavac" }.configureEach {
+    dependsOn("kspDebugKotlin")
+}
+
+tasks.matching { it.name == "compileReleaseJavaWithJavac" }.configureEach {
+    dependsOn("kspReleaseKotlin")
 }
 
 private fun AndroidSourceDirectorySet.mutableset(
