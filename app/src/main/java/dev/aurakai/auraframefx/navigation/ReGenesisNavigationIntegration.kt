@@ -34,24 +34,24 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     // ICONIFY ROUTES
     // ========================================
 
-    composable(ReGenesisNavHost.IconifyPicker.route) {
+    composable(NavDestination.IconifyPicker.route) {
         IconifyPickerScreen(
             onNavigateBack = onNavigateBack,
             onNavigateToCategory = { category ->
-                navController.navigate(ReGenesisNavHost.IconifyCategory.createRoute(category))
+                navController.navigate(NavDestination.IconifyCategory.createRoute(category))
             }
         )
     }
 
     composable(
-        route = ReGenesisNavHost.IconifyCategory.route
+        route = NavDestination.IconifyCategory.route
     ) { backStackEntry ->
         val category = backStackEntry.arguments?.getString("category") ?: "Icon Packs"
         IconifyCategoryDetailScreen(
             categoryName = category,
             onNavigateBack = onNavigateBack,
             onNavigateToPicker = { cat ->
-                navController.navigate(ReGenesisNavHost.IconPicker.createRoute(cat))
+                navController.navigate(NavDestination.IconPicker.createRoute(cat))
             }
         )
     }
@@ -60,7 +60,7 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     // COLORBLENDR ROUTES
     // ========================================
 
-    composable(ReGenesisNavHost.ColorBlendr.route) {
+    composable(NavDestination.ColorBlendr.route) {
         ColorBlendrScreen(
             onNavigateBack = onNavigateBack
         )
@@ -70,13 +70,13 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     // PIXEL LAUNCHER ENHANCED ROUTES
     // ========================================
 
-    composable(ReGenesisNavHost.PixelLauncherEnhanced.route) {
+    composable(NavDestination.PixelLauncherEnhanced.route) {
         PixelLauncherEnhancedScreen(
             onNavigateBack = onNavigateBack
         )
     }
 
-    composable(ReGenesisNavHost.IconPicker.route) { backStackEntry ->
+    composable(NavDestination.IconPicker.route) { backStackEntry ->
         val category = backStackEntry.arguments?.getString("category") ?: ""
         IconPickerScreen(
             category = category,
@@ -104,9 +104,9 @@ object AuraSubGates {
         val name: String = "ChromaCore",
         val description: String = "Material You Color Engine",
         val routes: List<String> = listOf(
-            ReGenesisNavHost.ColorBlendr.route,
-            ReGenesisNavHost.ColorBlendrMonet.route,
-            ReGenesisNavHost.ColorBlendrPalette.route
+            NavDestination.ColorBlendr.route,
+            NavDestination.ColorBlendrMonet.route,
+            NavDestination.ColorBlendrPalette.route
         ),
         val settingsCount: Int = 16  // ColorBlendr total
     )
@@ -119,7 +119,7 @@ object AuraSubGates {
         val name: String = "Theme Engine",
         val description: String = "Iconify UI Customization",
         val routes: List<String> = listOf(
-            ReGenesisNavHost.IconifyPicker.route
+            NavDestination.IconifyPicker.route
         ),
         val categories: List<String> = listOf(
             "Icon Packs",
@@ -146,11 +146,11 @@ object AuraSubGates {
         val name: String = "CollabCanvas",
         val description: String = "Pixel Launcher Enhanced",
         val routes: List<String> = listOf(
-            ReGenesisNavHost.PixelLauncherEnhanced.route,
-            ReGenesisNavHost.PLEIcons.route,
-            ReGenesisNavHost.PLEHomeScreen.route,
-            ReGenesisNavHost.PLEAppDrawer.route,
-            ReGenesisNavHost.PLERecents.route
+            NavDestination.PixelLauncherEnhanced.route,
+            NavDestination.PLEIcons.route,
+            NavDestination.PLEHomeScreen.route,
+            NavDestination.PLEAppDrawer.route,
+            NavDestination.PLERecents.route
         ),
         val categories: List<String> = listOf(
             "Icon Customization",
