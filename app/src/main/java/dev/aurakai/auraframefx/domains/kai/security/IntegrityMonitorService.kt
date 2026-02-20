@@ -357,8 +357,8 @@ class IntegrityMonitorService : Service() {
 
             criticalThreats.forEach { threat ->
                 val alertPacket = DataPacket(
-                    sourceAgent = AgentCapabilityCategory.SECURITY,  // Kai (Security Sentinel) sends alerts
-                    targetAgents = null,  // Broadcast to all
+                    sourceCategory = AgentCapabilityCategory.SECURITY,  // Kai (Security Sentinel) sends alerts
+                    targetCategories = null,  // Broadcast to all
                     payload = DataPayload.HealthAlert(
                         severity = "critical",
                         message = "INTEGRITY VIOLATION: ${threat.type} - ${threat.description}"
