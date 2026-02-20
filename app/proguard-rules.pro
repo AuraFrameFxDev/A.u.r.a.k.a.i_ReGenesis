@@ -33,7 +33,7 @@
 
 # Keep the main Application class, which is the entry point.
 # This is essential to prevent ClassNotFoundException at startup.
--keep public class dev.aurakai.auraframefx.aura.ui.AurakaiApplication { *; }
+-keep public class dev.aurakai.auraframefx.app.ReGenesisApplication { *; }
 
 # Keep all classes that are referenced in the AndroidManifest.xml,
 # such as Activities, Services, BroadcastReceivers, and ContentProviders.
