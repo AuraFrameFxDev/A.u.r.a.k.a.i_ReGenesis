@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 // Removed: import com.google.firebase.vertexai.type.content
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,7 +50,7 @@ class RomToolsViewModel @Inject constructor(
                 _lastResponse.value = AgentResponse.error(
                     message = e.message ?: "Unknown error",
                     agentName = "RomTools",
-                    agentType = AgentType.GENESIS
+                    category = AgentCapabilityCategory.COORDINATION
                 )
             }
         }

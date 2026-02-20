@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
@@ -104,7 +104,7 @@ open class TrinityRepository @Inject constructor(
     /**
      * Process a direct user message targeting a specific agent.
      */
-    suspend fun processUserMessage(message: String, targetAgent: AgentType) = withContext(Dispatchers.IO) {
+    suspend fun processUserMessage(message: String, targetAgent: AgentCapabilityCategory) = withContext(Dispatchers.IO) {
         // 1. Emit user message to UI
         emitChat(ChatMessage(role = "user", content = message, sender = "User"))
 
@@ -121,21 +121,21 @@ open class TrinityRepository @Inject constructor(
         // 3. Route to the correct SINGLETON Agent for direct response
         val response = try {
             when(targetAgent) {
-                AgentType.AURA -> {
+                AgentCapabilityCategory.CREATIVE -> {
                     val interaction = EnhancedInteractionData(
                         content = message,
                         context = buildJsonObject { put("mode", "chat") }.toString()
                     )
                     auraAgent.handleCreativeInteraction(interaction).content
                 }
-                AgentType.KAI -> {
+                AgentCapabilityCategory.ANALYSIS -> {
                     val interaction = EnhancedInteractionData(
                         content = message,
                         context = buildJsonObject { put("mode", "security") }.toString()
                     )
                     kaiAgent.handleSecurityInteraction(interaction).content
                 }
-                AgentType.GENESIS -> {
+                AgentCapabilityCategory.COORDINATION -> {
                     val request = AiRequest(
                         query = message,
                         type = AiRequestType.CHAT,

@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.helpers.InstantSerializer
 import kotlinx.serialization.Serializable
 import kotlin.time.Clock
@@ -10,7 +10,7 @@ import kotlin.time.Instant
 data class TaskExecution(
     val id: String = "exec_${Clock.System.now().toEpochMilliseconds()}",
     val taskId: String,
-    val agent: AgentType,
+    val category: AgentCapabilityCategory,
     val type: String,
     val data: Map<String, String> = emptyMap(),
     val priority: TaskPriority = TaskPriority.NORMAL,

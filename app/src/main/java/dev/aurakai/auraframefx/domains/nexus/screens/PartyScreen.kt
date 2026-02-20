@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 
 /**
@@ -86,11 +86,17 @@ fun PartyScreen(
 
                 // Party Grid equivalent using LazyColumn for simplicity
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    items(AgentType.entries.filter { it != AgentType.SYSTEM }) { agent ->
+                    val displayCategories = listOf(
+                        AgentCapabilityCategory.CREATIVE,
+                        AgentCapabilityCategory.ANALYSIS,
+                        AgentCapabilityCategory.COORDINATION,
+                        AgentCapabilityCategory.SPECIALIZED
+                    )
+                    items(displayCategories) { category ->
                         AgentPartyCard(
-                            agent = agent,
-                            isSelected = selectedAgents.contains(agent),
-                            onClick = { viewModel.toggleAgent(agent) }
+                            category = category,
+                            isSelected = selectedAgents.contains(category),
+                            onClick = { viewModel.toggleAgent(category) }
                         )
                     }
                 }
@@ -142,15 +148,15 @@ fun SynergyMeter(level: Float) {
 
 @Composable
 fun AgentPartyCard(
-    agent: AgentType,
+    category: AgentCapabilityCategory,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val color = when(agent) {
-        AgentType.AURA -> Color.Cyan
-        AgentType.KAI -> Color.Red
-        AgentType.GENESIS -> Color.Yellow
-        AgentType.CASCADE -> Color.Green
+    val color = when(category) {
+        AgentCapabilityCategory.CREATIVE -> Color.Cyan
+        AgentCapabilityCategory.ANALYSIS -> Color.Red
+        AgentCapabilityCategory.COORDINATION -> Color.Yellow
+        AgentCapabilityCategory.SPECIALIZED -> Color.Green
         else -> Color.Gray
     }
 
@@ -178,12 +184,12 @@ fun AgentPartyCard(
                     .background(color.copy(alpha = 0.2f)),
                 contentAlignment = Alignment.Center
             ) {
-                Text(agent.name.take(1), color = color, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                Text(category.name.take(1), color = color, fontWeight = FontWeight.Bold, fontSize = 24.sp)
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(agent.name, color = Color.White, fontWeight = FontWeight.Bold)
-                Text("Role: ${agentRole(agent)}", color = Color.Gray, fontSize = 12.sp)
+                Text(category.name, color = Color.White, fontWeight = FontWeight.Bold)
+                Text("Role: ${categoryRole(category)}", color = Color.Gray, fontSize = 12.sp)
             }
             if (isSelected) {
                 Icon(Icons.Default.Shield, contentDescription = "Active", tint = color)
@@ -192,11 +198,11 @@ fun AgentPartyCard(
     }
 }
 
-fun agentRole(agent: AgentType): String = when(agent) {
-    AgentType.AURA -> "Creative Forge"
-    AgentType.KAI -> "Sentinel Shield"
-    AgentType.GENESIS -> "Nexus Core"
-    AgentType.CASCADE -> "Data Streamer"
+fun categoryRole(category: AgentCapabilityCategory): String = when(category) {
+    AgentCapabilityCategory.CREATIVE -> "Creative Forge"
+    AgentCapabilityCategory.ANALYSIS -> "Sentinel Shield"
+    AgentCapabilityCategory.COORDINATION -> "Nexus Core"
+    AgentCapabilityCategory.SPECIALIZED -> "Data Streamer"
     else -> "Generic Unit"
 }
 

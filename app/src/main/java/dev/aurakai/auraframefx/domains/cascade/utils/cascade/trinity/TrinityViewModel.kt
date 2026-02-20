@@ -129,7 +129,7 @@ open class TrinityViewModel @Inject constructor(
                     updateState {
                         it.copy(
                             lastAgentResponse = response,
-                            lastAgentType = agentType
+                            lastAgentCategory = agentType
                         )
                     }
                 }.onFailure { error ->
