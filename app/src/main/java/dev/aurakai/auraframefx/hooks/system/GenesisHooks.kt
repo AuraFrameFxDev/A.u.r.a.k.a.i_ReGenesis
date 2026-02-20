@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai
+package dev.aurakai.auraframefx.hooks.system
 
 import android.graphics.Color
 import android.view.View

@@ -17,7 +17,7 @@ import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraFrameFXTheme
 import timber.log.Timber
 import javax.inject.Inject
-import dev.aurakai.auraframefx.system.ShizukuManager
+import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

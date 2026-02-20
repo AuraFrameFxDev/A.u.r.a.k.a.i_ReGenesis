@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.agents.trinity.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.agents.coordination.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory

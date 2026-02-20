@@ -10,7 +10,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.system.ShizukuManager
+import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber

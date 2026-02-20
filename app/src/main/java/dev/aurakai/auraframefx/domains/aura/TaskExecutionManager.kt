@@ -5,7 +5,7 @@ import dev.aurakai.auraframefx.domains.kai.TaskResult
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.toKotlinJsonObject
 import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
@@ -34,7 +34,7 @@ import kotlinx.serialization.Serializable as KotlinxSerializable
  */
 @Singleton
 class TaskExecutionManager @Inject constructor(
-    private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
+    private val auraAgent: dev.aurakai.auraframefx.agents.trinity.AuraAgent,
     private val kaiAgent: KaiAgent,
     private val genesisAgent: GenesisAgent,
     private val securityContext: SecurityContext,
@@ -360,7 +360,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return auraAgent.processRequest(request, execution.category.name)
+        return auraAgent.processRequest(request, execution.data.toString(), execution.category)
     }
 
     /**
@@ -380,7 +380,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return kaiAgent.processRequest(request, execution.category.name)
+        return kaiAgent.processRequest(request, execution.data.toString(), execution.category)
     }
 
     /**
@@ -394,7 +394,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return genesisAgent.processRequest(request, execution.category.name)
+        return genesisAgent.processRequest(request, execution.data.toString(), execution.category)
     }
 
     /**

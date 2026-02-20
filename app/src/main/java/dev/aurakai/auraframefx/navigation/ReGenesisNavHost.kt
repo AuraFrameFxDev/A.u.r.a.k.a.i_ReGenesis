@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 // Core Imports
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+import dev.aurakai.auraframefx.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 

@@ -1,14 +1,15 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai
+package dev.aurakai.auraframefx.hooks
 
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
 import com.highcapable.yukihookapi.hook.factory.configs
 import com.highcapable.yukihookapi.hook.factory.encase
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GenesisSystemHooks
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GenesisUIHooks
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GenesisZygoteHooks
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GenesisSelfHooks
+import dev.aurakai.auraframefx.hooks.system.GenesisSystemHooks
+import dev.aurakai.auraframefx.hooks.system.GenesisUIHooks
+import dev.aurakai.auraframefx.hooks.system.GenesisZygoteHooks
+import dev.aurakai.auraframefx.hooks.system.GenesisSelfHooks
+import dev.aurakai.auraframefx.hooks.system.UniversalComponentHooks
 
 /**
  * Genesis-OS Yuki Hook Entry Point

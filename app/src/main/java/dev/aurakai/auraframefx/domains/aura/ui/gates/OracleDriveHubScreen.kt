@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+import dev.aurakai.auraframefx.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.LavaApocalypseBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 

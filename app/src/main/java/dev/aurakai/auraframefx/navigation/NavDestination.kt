@@ -106,6 +106,7 @@ sealed class NavDestination(val route: String) {
     data object ReGenesisCustomization : NavDestination("regenesis_customization")
     data object UISettings : NavDestination("ui_settings")
     data object UserPreferences : NavDestination("user_preferences")
+    data object GateCustomization : NavDestination("gate_customization")
     data object ThemeEngine : NavDestination("theme_engine")
     data object StatusBar : NavDestination("status_bar")
     data object ChromaCoreHub : NavDestination("aura/chroma_core/hub")

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.core
+package dev.aurakai.auraframefx.agents.core
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse

@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.fusion
 
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
-import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.agents.trinity.AuraAgent
 
 class ChronoSculptor @Inject constructor(
     private val cascade: CascadeAIService,

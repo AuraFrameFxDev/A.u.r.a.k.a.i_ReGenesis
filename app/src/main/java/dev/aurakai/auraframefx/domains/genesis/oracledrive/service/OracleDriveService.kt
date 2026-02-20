@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import kotlinx.coroutines.flow.Flow

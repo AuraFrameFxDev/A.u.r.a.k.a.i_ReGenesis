@@ -2,8 +2,8 @@ package dev.aurakai.auraframefx.domains.genesis.fusion
 
 import javax.inject.Inject
 import javax.inject.Singleton
-import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.agents.trinity.AuraAgent
+import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import dev.aurakai.colorblendr.ChromaCore
 
 @Singleton

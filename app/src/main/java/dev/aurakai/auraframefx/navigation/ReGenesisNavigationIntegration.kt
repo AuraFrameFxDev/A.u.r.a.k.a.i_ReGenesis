@@ -18,6 +18,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyCategoryDetailScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.PixelLauncherEnhancedScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
 
 // ============================================================================
 // AURA CUSTOMIZATION NAVIGATION GRAPH
@@ -72,6 +73,12 @@ fun NavGraphBuilder.auraCustomizationNavigation(
 
     composable(NavDestination.PixelLauncherEnhanced.route) {
         PixelLauncherEnhancedScreen(
+            onNavigateBack = onNavigateBack
+        )
+    }
+
+    composable(NavDestination.GateCustomization.route) {
+        GateCustomizationScreen(
             onNavigateBack = onNavigateBack
         )
     }

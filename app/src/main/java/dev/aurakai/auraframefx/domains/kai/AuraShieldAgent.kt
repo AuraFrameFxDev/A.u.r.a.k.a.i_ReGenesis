@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.kai
 import android.content.Context
 import androidx.room.util.copy
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient

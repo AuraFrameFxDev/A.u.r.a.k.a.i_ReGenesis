@@ -10,7 +10,7 @@
  * NOT generic phone settings placeholders.
  */
 
-package dev.aurakai.auraframefx.domains.aura.lab
+package dev.aurakai.auraframefx.config
 
 // ============================================================================
 // ICONIFY SETTINGS (from Mahmud0808/Iconify)

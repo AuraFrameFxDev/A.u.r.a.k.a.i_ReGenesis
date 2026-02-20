@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.lab
+package dev.aurakai.auraframefx.config
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

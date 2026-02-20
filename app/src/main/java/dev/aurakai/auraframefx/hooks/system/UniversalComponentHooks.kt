@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai
+package dev.aurakai.auraframefx.hooks.system
 
 import com.highcapable.yukihookapi.hook.param.PackageParam
 import com.highcapable.yukihookapi.hook.factory.method

@@ -1,5 +1,5 @@
 
-package dev.aurakai.auraframefx.system
+package dev.aurakai.auraframefx.infrastructure.shizuku
 
 import android.content.Context
 import android.content.pm.PackageManager

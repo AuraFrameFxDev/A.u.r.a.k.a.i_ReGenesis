@@ -1,14 +1,14 @@
-package dev.aurakai.auraframefx.domains.genesis.core
+package dev.aurakai.auraframefx.agents.coordination
 
-import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.agents.trinity.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.CascadeAgent
+import dev.aurakai.auraframefx.agents.trinity.CascadeAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -108,7 +108,7 @@ class GenesisOrchestrator @Inject constructor(
      * Initialize all agent domains in sequence.
      * Phase 2 of Genesis-OS startup.
      *
-     * Called from AurakaiApplication.onCreate()
+     * Called from ReGenesisApplication.onCreate()
      */
     fun initializePlatform() {
         platformState = PlatformState.INITIALIZING
@@ -345,7 +345,7 @@ class GenesisOrchestrator @Inject constructor(
 
     /**
      * Gracefully shutdown the platform.
-     * Called from AurakaiApplication.onTerminate()
+     * Called from ReGenesisApplication.onTerminate()
      */
     fun shutdownPlatform() {
         orchestratorScope.launch {

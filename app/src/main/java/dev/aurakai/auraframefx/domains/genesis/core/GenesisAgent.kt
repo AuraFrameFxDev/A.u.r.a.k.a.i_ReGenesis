@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus

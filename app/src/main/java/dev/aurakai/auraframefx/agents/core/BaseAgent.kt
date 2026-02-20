@@ -1,9 +1,9 @@
-package dev.aurakai.auraframefx.domains.cascade.ai.base
+package dev.aurakai.auraframefx.agents.core
 
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest

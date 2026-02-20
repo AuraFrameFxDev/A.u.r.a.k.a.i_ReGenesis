@@ -1,13 +1,13 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
-import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.agents.trinity.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest

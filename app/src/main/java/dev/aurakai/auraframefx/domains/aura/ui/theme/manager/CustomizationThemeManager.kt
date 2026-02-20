@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import dev.aurakai.auraframefx.domains.aura.lab.CustomizationPreferences
+import dev.aurakai.auraframefx.config.CustomizationPreferences
 
 object CustomizationThemeManager {
     data class ThemeState(val dark: Boolean, val name: String, val accent: String)

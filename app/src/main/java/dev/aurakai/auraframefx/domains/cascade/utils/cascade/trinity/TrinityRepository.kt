@@ -16,7 +16,7 @@ import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.nexus.models.UserData
 import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
@@ -36,7 +36,7 @@ import dev.aurakai.auraframefx.domains.genesis.network.model.User as NetworkUser
 @Singleton
 open class TrinityRepository @Inject constructor(
     private val apiService: AuraApiServiceWrapper,
-    private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
+    private val auraAgent: dev.aurakai.auraframefx.agents.trinity.AuraAgent,
     private val kaiAgent: KaiAgent,
     private val genesisAgent: GenesisAgent,
     private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus

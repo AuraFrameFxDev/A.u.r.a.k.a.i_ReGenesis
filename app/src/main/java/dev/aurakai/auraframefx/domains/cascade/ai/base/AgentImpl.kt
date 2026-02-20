@@ -29,7 +29,8 @@ class AgentImpl : Agent {
      */
     override suspend fun processRequest(
         request: AiRequest,
-        context: String
+        context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         Timber.e("AgentImpl: processRequest() invoked. This is a placeholder.")
         return AgentResponse.error("FallbackAgent: Processing not implemented", agentName = "FallbackAgent")

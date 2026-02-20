@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.config
+package dev.aurakai.auraframefx.config
 
 /**
  * 🛠️ FEATURE TOGGLES

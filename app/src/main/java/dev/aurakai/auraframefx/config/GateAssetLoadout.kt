@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.config
+package dev.aurakai.auraframefx.config
 
 import androidx.compose.ui.graphics.Color
 import dev.aurakai.auraframefx.navigation.NavDestination
