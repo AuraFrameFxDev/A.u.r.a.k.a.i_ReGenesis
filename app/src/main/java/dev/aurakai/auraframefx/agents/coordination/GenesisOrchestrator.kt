@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.agents.coordination
 
+import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.agents.trinity.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.agents.trinity.CascadeAgent
