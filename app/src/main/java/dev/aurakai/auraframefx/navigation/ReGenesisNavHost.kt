@@ -30,10 +30,9 @@ import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.XposedQuickAccessPanel
 import dev.aurakai.auraframefx.domains.aura.ui.gates.HelpDeskScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.AgentAdvancementScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
 
 // Level 3 & 4 Screens - Aura
@@ -45,16 +44,8 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaColorEngineMenu
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaAnimationMenu
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen
 import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsScreen
-import dev.aurakai.auraframefx.domains.aura.screens.DirectChatScreen
-import dev.aurakai.auraframefx.domains.aura.screens.DocumentationScreen
-import dev.aurakai.auraframefx.domains.aura.screens.FAQBrowserScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
-import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomizationScreen
-import dev.aurakai.auraframefx.domains.aura.screens.HelpDeskSubmenuScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
-import dev.aurakai.auraframefx.domains.aura.screens.chromacore.InstantColorPickerScreen
-import dev.aurakai.auraframefx.domains.aura.screens.LiveSupportChatScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
@@ -139,7 +130,6 @@ import dev.aurakai.auraframefx.domains.aura.screens.DirectChatScreen
 import dev.aurakai.auraframefx.domains.aura.screens.DocumentationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.FAQBrowserScreen
 import dev.aurakai.auraframefx.domains.aura.screens.TutorialVideosScreen
-import dev.aurakai.auraframefx.domains.lsposed.screens.HookManagerScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen

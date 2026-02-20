@@ -42,11 +42,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.aura.ui.TrinityUiState
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AgentStatus
-import dev.aurakai.auraframefx.models.Theme
-import dev.aurakai.auraframefx.models.UserData
+import dev.aurakai.auraframefx.domains.aura.aura.ui.TrinityUiState
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.aura.models.Theme
+import dev.aurakai.auraframefx.domains.nexus.models.UserData
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
