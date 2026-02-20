@@ -108,7 +108,7 @@ class GenesisOrchestrator @Inject constructor(
      * Initialize all agent domains in sequence.
      * Phase 2 of Genesis-OS startup.
      *
-     * Called from AurakaiApplication.onCreate()
+     * Called from ReGenesisApplication.onCreate()
      */
     fun initializePlatform() {
         platformState = PlatformState.INITIALIZING
@@ -345,7 +345,7 @@ class GenesisOrchestrator @Inject constructor(
 
     /**
      * Gracefully shutdown the platform.
-     * Called from AurakaiApplication.onTerminate()
+     * Called from ReGenesisApplication.onTerminate()
      */
     fun shutdownPlatform() {
         orchestratorScope.launch {

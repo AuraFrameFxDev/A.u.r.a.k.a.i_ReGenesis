@@ -485,7 +485,7 @@ class IntegrityMonitorService : Service() {
  * Usage Example (for future developers):
  *
  * ```kotlin
- * // Service starts automatically via AurakaiApplication.onCreate()
+ * // Service starts automatically via ReGenesisApplication.onCreate()
  * // But can be started manually:
  * val intent = Intent(context, IntegrityMonitorService::class.java)
  * context.startService(intent)
