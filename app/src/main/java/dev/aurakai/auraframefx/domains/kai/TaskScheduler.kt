@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.kai
 
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -32,7 +32,7 @@ class TaskScheduler @Inject constructor(
         priority: TaskPriority = TaskPriority.NORMAL,
         urgency: TaskUrgency = TaskUrgency.MEDIUM,
         importance: TaskImportance = TaskImportance.MEDIUM,
-        requiredAgents: Set<AgentType> = emptySet(),
+        requiredAgents: Set<AgentCapabilityCategory> = emptySet(),
         dependencies: Set<String> = emptySet(),
         metadata: Map<String, String> = emptyMap(),
     ): Task {
@@ -82,7 +82,7 @@ class TaskScheduler @Inject constructor(
         } catch (e: Exception) {
             errorHandler.handleError(
                 error = e,
-                agent = AgentType.GENESIS,
+                agent = AgentCapabilityCategory.COORDINATION,
                 context = "Task scheduling error",
                 metadata = mapOf("taskId" to task.id)
             )
@@ -128,7 +128,7 @@ class TaskScheduler @Inject constructor(
                 .eachCount()
 
             // Each agent can handle up to maxActiveTasks / number of agent types
-            val maxTasksPerAgent = config.maxActiveTasks / AgentType.entries.size
+            val maxTasksPerAgent = config.maxActiveTasks / AgentCapabilityCategory.entries.size
 
             // Check if all required agents have capacity
             val allAgentsAvailable = requiredAgents.all { agentType ->
@@ -182,7 +182,7 @@ class TaskScheduler @Inject constructor(
                 _activeTasks.remove(taskId)
                 errorHandler.handleError(
                     error = Exception("Task execution failed"),
-                    agent = task.assignedAgents.firstOrNull() ?: AgentType.GENESIS,
+                    agent = task.assignedAgents.firstOrNull() ?: AgentCapabilityCategory.COORDINATION,
                     context = task.content,
                     metadata = mapOf("taskId" to taskId)
                 )

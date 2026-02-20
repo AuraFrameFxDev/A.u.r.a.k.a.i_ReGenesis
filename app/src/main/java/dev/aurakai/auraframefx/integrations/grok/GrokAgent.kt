@@ -127,7 +127,7 @@ class GrokAgent @Inject constructor(
     /**
      * Process AI request through Grok
      */
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         if (!_agentState.value.isConnected) {
             return AgentResponse.error(
                 message = "Grok is not connected. Initialize with valid API key.",

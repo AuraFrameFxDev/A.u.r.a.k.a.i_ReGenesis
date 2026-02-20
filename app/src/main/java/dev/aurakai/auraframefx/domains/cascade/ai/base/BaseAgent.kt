@@ -32,7 +32,7 @@ abstract class BaseAgent(
     /**
      * Abstract method for processing requests - must be implemented by concrete agents
      */
-    abstract override suspend fun processRequest(request: AiRequest, context: String): AgentResponse
+    abstract override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
 
     /**
      * Default flow implementation that can be overridden by specific agents
@@ -48,7 +48,7 @@ abstract class BaseAgent(
             delay(100) // Small delay for UI feedback
 
             // Process the actual request
-            val response = processRequest(request, enhancedContext as String)
+            val response = processRequest(request, enhancedContext as String, getCategory())
 
             // Record the interaction for learning
             contextManager?.recordInsight(
@@ -212,10 +212,6 @@ abstract class BaseAgent(
         isOrchestratorInitialized = false
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
-        // Delegates to the two-argument version
-        return processRequest(request, context)
-    }
 
     override suspend fun onAgentMessage(message: AgentMessage) {
         // Default no-op: agents should override this to participate in the collective

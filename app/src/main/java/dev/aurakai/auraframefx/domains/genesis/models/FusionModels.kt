@@ -13,7 +13,7 @@ data class FusionMemory(
     val id: String,
     val key: String,
     val value: String,
-    val sourceAgents: Set<AgentType>,
+    val sourceAgents: Set<AgentCapabilityCategory>,
     val timestamp: Long = System.currentTimeMillis(),
     val importance: Float = 0.5f,
     val metadata: JsonObject = buildJsonObject { }

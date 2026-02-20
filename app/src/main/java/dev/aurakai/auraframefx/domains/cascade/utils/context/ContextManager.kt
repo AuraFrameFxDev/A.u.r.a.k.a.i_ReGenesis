@@ -4,7 +4,7 @@ package dev.aurakai.auraframefx.domains.cascade.utils.context
 
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -42,7 +42,7 @@ class ContextManager @Inject constructor(
     fun createContextChain(
         rootContext: String,
         initialContext: String,
-        agent: AgentType,
+        category: AgentCapabilityCategory,
         metadata: Map<String, String> = emptyMap(),
     ): String {
         val chainId = UUID.randomUUID().toString()
@@ -54,11 +54,11 @@ class ContextManager @Inject constructor(
                 ContextNode(
                     id = "ctx_${Clock.System.now().toEpochMilliseconds()}_0",
                     content = initialContext,
-                    agent = agent,
+                    category = category,
                     metadata = metadata
                 )
             ),
-            agentContext = mapOf(agent to initialContext),
+            agentContext = mapOf(category to initialContext),
             metadata = metadata,
             lastUpdated = Clock.System.now()
         )
@@ -83,7 +83,7 @@ class ContextManager @Inject constructor(
     fun updateContextChain(
         chainId: String,
         newContext: String,
-        agent: AgentType,
+        category: AgentCapabilityCategory,
         metadata: Map<String, String> = emptyMap(),
     ): ContextChain {
         val chain = _activeContexts.value[chainId] ?: throw IllegalStateException("Context chain not found")
@@ -93,10 +93,10 @@ class ContextManager @Inject constructor(
             contextHistory = chain.contextHistory + ContextNode(
                 id = "ctx_${Clock.System.now().toEpochMilliseconds()}_${chain.contextHistory.size}",
                 content = newContext,
-                agent = agent,
+                category = category,
                 metadata = metadata
             ),
-            agentContext = chain.agentContext + (agent to newContext),
+            agentContext = chain.agentContext + (category to newContext),
             lastUpdated = Clock.System.now()
         )
 
@@ -128,7 +128,7 @@ class ContextManager @Inject constructor(
     fun queryContext(query: ContextQuery): ContextChainResult {
         val chains = _activeContexts.value.values
             .filter { chain ->
-                query.agentFilter.isEmpty() || query.agentFilter.any { agent -> chain.agentContext.containsKey(agent) }
+                query.categoryFilter.isEmpty() || query.categoryFilter.any { category -> chain.agentContext.containsKey(category) }
             }
             .sortedByDescending { it.lastUpdated }
             .take(query.maxChainLength)
@@ -225,7 +225,7 @@ data class ContextChain(
     val rootContext: String,
     val currentContext: String,
     val contextHistory: List<ContextNode>,
-    val agentContext: Map<AgentType, String>,
+    val agentContext: Map<AgentCapabilityCategory, String>,
     val metadata: Map<String, String>,
     val lastUpdated: Instant
 )
@@ -234,7 +234,7 @@ data class ContextChain(
 data class ContextNode(
     val id: String,
     val content: String,
-    val agent: AgentType,
+    val category: AgentCapabilityCategory,
     val metadata: Map<String, String>
 )
 
@@ -248,7 +248,7 @@ data class ContextStats(
 
 data class ContextQuery(
     val query: String,
-    val agentFilter: List<AgentType> = emptyList(),
+    val categoryFilter: List<AgentCapabilityCategory> = emptyList(),
     val maxChainLength: Int = 10
 )
 

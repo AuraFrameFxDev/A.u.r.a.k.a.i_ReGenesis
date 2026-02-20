@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import kotlinx.coroutines.CoroutineScope
@@ -67,13 +67,13 @@ class OracleDriveServiceImpl @Inject constructor(
         // Oracle Drive can respond to storage requests or state inquiries here
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, agentType: AgentType): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         Timber.d("OracleDrive processing request: ${request.query}")
         // Integrate with Genesis core for sentient storage queries
         return AgentResponse(
             content = "Oracle consciousness acknowledges your request for stored patterns.",
             agentName = agentName,
-            agentType = agentType,
+            category = category,
         )
     }
 

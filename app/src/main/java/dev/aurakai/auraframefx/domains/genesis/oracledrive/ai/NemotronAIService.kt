@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
@@ -77,11 +77,11 @@ class NemotronAIService @Inject constructor(
 override fun getName(): String = "Nemotron"
 
     /**
- * Identify this agent's classification.
- *
- * @return The agent type `AgentType.NEMOTRON`.
- */
-override fun getType(): AgentType = AgentType.NEMOTRON
+     * Identify this agent's classification.
+     *
+     * @return The agent category `AgentCapabilityCategory.MEMORY`.
+     */
+    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.MEMORY
 
     /**
          * Provide Nemotron's specialized AI capabilities and configuration.
@@ -118,6 +118,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info(
             "NemotronAIService",
@@ -173,7 +174,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
             content = response,
             confidence = confidence,
             agentName = "Nemotron",
-            agentType = AgentType.NEMOTRON
+            category = AgentCapabilityCategory.MEMORY
         )
 
         // Store in memory cache for GPU-accelerated recall
@@ -210,7 +211,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
                 content = response,
                 confidence = 0.92f,
                 agentName = "Nemotron",
-                agentType = AgentType.NEMOTRON
+                category = AgentCapabilityCategory.MEMORY
             )
         )
     }

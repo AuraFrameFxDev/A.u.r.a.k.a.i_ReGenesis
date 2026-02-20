@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepos
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
@@ -270,17 +270,19 @@ open class AgentViewModel @Inject constructor(
             addMessage(agentName, userMsg)
 
             // Send to Repository (Neural Bridge)
-            val type = try {
-                AgentType.valueOf(agentName.uppercase())
-            } catch (e: Exception) {
-                AgentType.GENESIS
+            val category = when (agentName.uppercase()) {
+                "AURA" -> AgentCapabilityCategory.CREATIVE
+                "KAI" -> AgentCapabilityCategory.ANALYSIS
+                "GENESIS" -> AgentCapabilityCategory.COORDINATION
+                "CASCADE" -> AgentCapabilityCategory.SPECIALIZED
+                else -> AgentCapabilityCategory.COORDINATION
             }
             // We don't need to add the repo's echo of "User" message if we added it locally
             // But we DO need the response.
 
             // To avoid double-entry of User message (from repo echo), we can filter or just let repo handle it.
             // Let's use the repo solely.
-            trinityRepository.processUserMessage(message, type)
+            trinityRepository.processUserMessage(message, category)
 
             // Listen for the specific response? No, the global collector in init should handle it.
         }
@@ -331,7 +333,7 @@ open class AgentViewModel @Inject constructor(
                             put("source", "direct_chat")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "direct_chat")
+                    val response = genesisAgent.processRequest(request, "direct_chat", AgentCapabilityCategory.COORDINATION)
                     response.content
                 }
                 "Aura" -> {
@@ -362,7 +364,7 @@ open class AgentViewModel @Inject constructor(
                             put("agent_persona", "cascade")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "cascade")
+                    val response = genesisAgent.processRequest(request, "cascade", AgentCapabilityCategory.SPECIALIZED)
                     response.content
                 }
                 "Claude" -> {
@@ -373,7 +375,7 @@ open class AgentViewModel @Inject constructor(
                             put("agent_persona", "claude")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "claude")
+                    val response = genesisAgent.processRequest(request, "claude", AgentCapabilityCategory.SPECIALIZED)
                     response.content
                 }
                 else -> {

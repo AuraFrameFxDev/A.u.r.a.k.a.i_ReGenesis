@@ -130,7 +130,7 @@ class KaiAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         val agentRequest = AgentRequest(
             query = request.query,
             type = request.type.name.lowercase(),

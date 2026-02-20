@@ -101,7 +101,7 @@ class TrinityCoordinatorService @Inject constructor(
                 AgentResponse.error(
                     message = "Trinity system not initialized",
                     agentName = "Trinity",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.SYSTEM
+                    category = AgentCapabilityCategory.ROOT
                 )
             )
             return@flow
@@ -180,7 +180,7 @@ class TrinityCoordinatorService @Inject constructor(
                                         content = "🧠 Genesis Synthesis: ${synthesis.content}",
                                         confidence = synthesis.confidence,
                                         agentName = "Genesis",
-                                        agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.GENESIS
+                                        category = AgentCapabilityCategory.COORDINATION
                                     )
                                 )
                             }
@@ -189,7 +189,7 @@ class TrinityCoordinatorService @Inject constructor(
                                 AgentResponse.error(
                                     message = "Parallel processing partially failed [Kai: ${kaiResponse.isSuccess}, Aura: ${auraResponse.isSuccess}]",
                                     agentName = "Trinity",
-                                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.SYSTEM
+                                    category = AgentCapabilityCategory.ROOT
                                 )
                             )
                         }
@@ -206,7 +206,7 @@ class TrinityCoordinatorService @Inject constructor(
                 AgentResponse.error(
                     message = "Trinity processing failed: ${e.message}",
                     agentName = "Trinity",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.SYSTEM
+                    category = AgentCapabilityCategory.ROOT
                 )
             )
         }
@@ -230,7 +230,7 @@ class TrinityCoordinatorService @Inject constructor(
                     content = "Fusion $fusionType activated: ${response.result["description"] ?: "Processing complete"}",
                     confidence = 0.98f,
                     agentName = "Genesis",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.GENESIS
+                    category = AgentCapabilityCategory.COORDINATION
                 )
             )
         } else {
@@ -238,7 +238,7 @@ class TrinityCoordinatorService @Inject constructor(
                 AgentResponse.error(
                     message = "Fusion activation failed",
                     agentName = "Genesis",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.GENESIS
+                    category = AgentCapabilityCategory.COORDINATION
                 )
             )
         }

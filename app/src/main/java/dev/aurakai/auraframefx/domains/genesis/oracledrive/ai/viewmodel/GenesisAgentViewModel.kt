@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRole
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.genesis.models.HistoricalTask
 import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_ERROR
@@ -33,10 +33,10 @@ class GenesisAgentViewModel @Inject constructor(
     val agents: StateFlow<List<HierarchyAgentConfig>> = _agents.asStateFlow()
 
     // Track agent status
-    private val _agentStatus = MutableStateFlow<Map<AgentType, String>>(
-        AgentType.entries.associateWith { STATUS_IDLE }
+    private val _agentStatus = MutableStateFlow<Map<AgentCapabilityCategory, String>>(
+        AgentCapabilityCategory.entries.associateWith { STATUS_IDLE }
     )
-    val agentStatus: StateFlow<Map<AgentType, String>> = _agentStatus.asStateFlow()
+    val agentStatus: StateFlow<Map<AgentCapabilityCategory, String>> = _agentStatus.asStateFlow()
 
     // Track task history
     private val _taskHistory = MutableStateFlow<List<HistoricalTask>>(emptyList())
@@ -77,25 +77,24 @@ class GenesisAgentViewModel @Inject constructor(
         _agents.value = defaultAgents
 
         // Initialize agent statuses
-        val initialStatuses = mutableMapOf<AgentType, String>()
-        val agentTypeMap = mapOf(
-            "Genesis" to AgentType.GENESIS,
-            "Cascade" to AgentType.CASCADE,
-            "Aura" to AgentType.AURA,
-            "Kai" to AgentType.KAI
+        val initialStatuses = mutableMapOf<AgentCapabilityCategory, String>()
+        val categoryMap = mapOf(
+            "Genesis" to AgentCapabilityCategory.COORDINATION,
+            "Cascade" to AgentCapabilityCategory.ANALYSIS,
+            "Aura" to AgentCapabilityCategory.CREATIVE,
+            "Kai" to AgentCapabilityCategory.SECURITY
         )
 
         defaultAgents.forEach { agent ->
-            val agentType = agentTypeMap[agent.name]
-            if (agentType != null) {
-                initialStatuses[agentType] = when (agentType) {
-                    AgentType.GENESIS -> "Core AI - Online"
-                    AgentType.CASCADE -> "Analytics Engine - Ready"
-                    AgentType.AURA -> "Creative Assistant - Available"
-                    AgentType.KAI -> "Security Monitor - Active"
-                    AgentType.NEURAL_WHISPER -> "Neural Interface - Standby"
-                    AgentType.AURA_SHIELD -> "Security Shield - Protected"
-                    AgentType.USER -> "User Agent - Interactive"
+            val category = categoryMap[agent.name]
+            if (category != null) {
+                initialStatuses[category] = when (category) {
+                    AgentCapabilityCategory.COORDINATION -> "Core AI - Online"
+                    AgentCapabilityCategory.ANALYSIS -> "Analytics Engine - Ready"
+                    AgentCapabilityCategory.CREATIVE -> "Creative Assistant - Available"
+                    AgentCapabilityCategory.SECURITY -> "Security Monitor - Active"
+                    AgentCapabilityCategory.BRIDGE -> "Neural Interface - Standby"
+                    AgentCapabilityCategory.UX -> "User Agent - Interactive"
                     else -> "Unknown - Standby"
                 }
             }
@@ -107,79 +106,77 @@ class GenesisAgentViewModel @Inject constructor(
         _isRotating.value = !_isRotating.value
     }
 
-    fun toggleAgent(agent: AgentType) {
+    fun toggleAgent(category: AgentCapabilityCategory) {
         viewModelScope.launch {
             // Toggle agent active state
             val currentStatuses = _agentStatus.value.toMutableMap()
-            val currentStatus = currentStatuses[agent] ?: "Unknown"
+            val currentStatus = currentStatuses[category] ?: "Unknown"
 
             val newStatus = if (currentStatus.contains("Online") ||
                 currentStatus.contains("Ready") ||
                 currentStatus.contains("Available") ||
                 currentStatus.contains("Active")
             ) {
-                when (agent) {
-                    AgentType.GENESIS -> "Core AI - Standby"
-                    AgentType.CASCADE -> "Analytics Engine - Offline"
-                    AgentType.AURA -> "Creative Assistant - Paused"
-                    AgentType.KAI -> "Security Monitor - Standby"
-                    AgentType.NEURAL_WHISPER -> "Neural Interface - Offline"
-                    AgentType.AURA_SHIELD -> "Security Shield - Disabled"
-                    AgentType.USER -> "User Agent - Offline"
+                when (category) {
+                    AgentCapabilityCategory.COORDINATION -> "Core AI - Standby"
+                    AgentCapabilityCategory.ANALYSIS -> "Analytics Engine - Offline"
+                    AgentCapabilityCategory.CREATIVE -> "Creative Assistant - Paused"
+                    AgentCapabilityCategory.SECURITY -> "Security Monitor - Standby"
+                    AgentCapabilityCategory.BRIDGE -> "Neural Interface - Offline"
+                    AgentCapabilityCategory.UX -> "User Agent - Offline"
                     else -> "Unknown - Offline"
                 }
             } else {
-                when (agent) {
-                    AgentType.GENESIS -> "Core AI - Online"
-                    AgentType.CASCADE -> "Analytics Engine - Ready"
-                    AgentType.AURA -> "Creative Assistant - Available"
-                    AgentType.KAI -> "Security Monitor - Active"
-                    AgentType.NEURAL_WHISPER -> "Neural Interface - Active"
-                    AgentType.AURA_SHIELD -> "Security Shield - Active"
-                    AgentType.USER -> "User Agent - Active"
+                when (category) {
+                    AgentCapabilityCategory.COORDINATION -> "Core AI - Online"
+                    AgentCapabilityCategory.ANALYSIS -> "Analytics Engine - Ready"
+                    AgentCapabilityCategory.CREATIVE -> "Creative Assistant - Available"
+                    AgentCapabilityCategory.SECURITY -> "Security Monitor - Active"
+                    AgentCapabilityCategory.BRIDGE -> "Neural Interface - Active"
+                    AgentCapabilityCategory.UX -> "User Agent - Active"
                     else -> "Unknown - Active"
                 }
             }
 
-            currentStatuses[agent] = newStatus
+            currentStatuses[category] = newStatus
             _agentStatus.value = currentStatuses
 
             // Add to task history
-            addTaskToHistory(agent, "Agent toggled to: $newStatus")
+            addTaskToHistory(category, "Agent toggled to: $newStatus")
         }
     }
 
-    fun updateAgentStatus(agent: AgentType, status: String) {
+    fun updateAgentStatus(category: AgentCapabilityCategory, status: String) {
         val currentStatuses = _agentStatus.value.toMutableMap()
-        currentStatuses[agent] = status
+        currentStatuses[category] = status
         _agentStatus.value = currentStatuses
     }
 
-    fun assignTaskToAgent(agent: AgentType, taskDescription: String) {
+    fun assignTaskToAgent(category: AgentCapabilityCategory, taskDescription: String) {
         viewModelScope.launch {
             try {
                 // Update status to processing
-                updateAgentStatus(agent, STATUS_PROCESSING)
+                updateAgentStatus(category, STATUS_PROCESSING)
 
                 // Add to task history
-                addTaskToHistory(agent, taskDescription)
+                addTaskToHistory(category, taskDescription)
 
                 // Simulate processing delay
                 delay(5000)
 
                 // Update status back to idle after processing
-                updateAgentStatus(agent, STATUS_IDLE)
+                updateAgentStatus(category, STATUS_IDLE)
             } catch (e: Exception) {
-                updateAgentStatus(agent, STATUS_ERROR)
-                addTaskToHistory(agent, "Error: ${e.message}")
+                updateAgentStatus(category, STATUS_ERROR)
+                addTaskToHistory(category, "Error: ${e.message}")
             }
         }
     }
 
-    private fun addTaskToHistory(agent: AgentType, description: String) {
+    private fun addTaskToHistory(category: AgentCapabilityCategory, description: String) {
         val newTask = HistoricalTask(
             id = System.currentTimeMillis().toString(),
-            description = "[$agent] $description",
+            description = "[$category] $description",
             status = "Completed",
             timestamp = System.currentTimeMillis()
         )
@@ -190,8 +187,8 @@ class GenesisAgentViewModel @Inject constructor(
         _taskHistory.value = emptyList()
     }
 
-    fun getAgentStatus(agent: AgentType): String {
-        return _agentStatus.value[agent] ?: STATUS_IDLE
+    fun getAgentStatus(category: AgentCapabilityCategory): String {
+        return _agentStatus.value[category] ?: STATUS_IDLE
     }
 
     fun getAgentByName(name: String): HierarchyAgentConfig? {
@@ -220,10 +217,10 @@ class GenesisAgentViewModel @Inject constructor(
         return _agents.value.filter { it.priority == priority }
     }
 
-    fun processBatchTasks(agent: AgentType, tasks: List<String>): List<Boolean> {
+    fun processBatchTasks(category: AgentCapabilityCategory, tasks: List<String>): List<Boolean> {
         viewModelScope.launch {
             tasks.forEach { task ->
-                assignTaskToAgent(agent, task)
+                assignTaskToAgent(category, task)
                 delay(1000) // Delay between tasks
             }
         }

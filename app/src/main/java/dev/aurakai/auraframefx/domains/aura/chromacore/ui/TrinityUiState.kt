@@ -33,13 +33,13 @@ sealed interface TrinityUiState {
      * @property agentStatus A map of agent types to their statuses.
      * @property availableThemes The list of available themes.
      * @property lastAgentResponse The last response from an agent.
-     * @property lastAgentType The type of the last agent that responded.
+     * @property lastAgentCategory The category of the last agent that responded.
      */
     data class Success(
         val user: UserData? = null,
         val agentStatus: Map<String, AgentStatus> = emptyMap(),
         val availableThemes: List<Theme> = emptyList(),
         val lastAgentResponse: AgentResponse? = null,
-        val lastAgentType: String? = null,
+        val lastAgentCategory: String? = null,
     ) : TrinityUiState
 }

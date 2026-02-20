@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,12 +20,12 @@ class DefaultErrorHandler @Inject constructor(
         private const val TAG = "DefaultErrorHandler"
     }
 
-    override fun handleError(error: Throwable, agent: AgentType, context: String) {
+    override fun handleError(error: Throwable, agent: AgentCapabilityCategory, context: String) {
         logger.error(TAG, "Error from agent $agent in context: $context", error)
         handleCriticalActions(error)
     }
 
-    override fun handleError(error: Throwable, agent: AgentType, context: String, metadata: Map<String, String>) {
+    override fun handleError(error: Throwable, agent: AgentCapabilityCategory, context: String, metadata: Map<String, String>) {
         logger.error(TAG, "Error from agent $agent in context: $context (Metadata: $metadata)", error)
         handleCriticalActions(error)
     }

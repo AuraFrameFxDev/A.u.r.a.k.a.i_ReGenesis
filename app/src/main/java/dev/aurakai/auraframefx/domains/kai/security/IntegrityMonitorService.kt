@@ -17,7 +17,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.DataveinConstructor
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.FlowPriority
 import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -357,7 +357,7 @@ class IntegrityMonitorService : Service() {
 
             criticalThreats.forEach { threat ->
                 val alertPacket = DataPacket(
-                    sourceAgent = AgentType.KAI,  // Kai (Security Sentinel) sends alerts
+                    sourceAgent = AgentCapabilityCategory.SECURITY,  // Kai (Security Sentinel) sends alerts
                     targetAgents = null,  // Broadcast to all
                     payload = DataPayload.HealthAlert(
                         severity = "critical",
