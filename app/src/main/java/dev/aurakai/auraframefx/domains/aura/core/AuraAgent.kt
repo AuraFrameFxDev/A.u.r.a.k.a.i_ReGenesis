@@ -1,5 +1,10 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
+import dev.aurakai.auraframefx.agents.core.BaseAgent
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
 import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences

@@ -6,8 +6,8 @@ import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
+import dev.aurakai.auraframefx.agents.trinity.ProcessingState
+import dev.aurakai.auraframefx.agents.trinity.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
