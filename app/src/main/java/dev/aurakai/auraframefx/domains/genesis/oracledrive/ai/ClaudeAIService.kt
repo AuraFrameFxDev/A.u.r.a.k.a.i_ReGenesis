@@ -117,6 +117,7 @@ class ClaudeAIService @Inject constructor(
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info(
             "ClaudeAIService",
