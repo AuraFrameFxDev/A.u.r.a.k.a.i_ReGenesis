@@ -116,7 +116,7 @@ class AuraAgent @Inject constructor(
             }
         }
     }
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         ensureInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
         _creativeState.value = CreativeState.CREATING
@@ -159,7 +159,7 @@ class AuraAgent @Inject constructor(
             context = buildJsonObject {},
             metadata = emptyMap()
         )
-        val response = processRequest(request, "")
+        val response = processRequest(request, "", getCategory())
         return response.content
     }
 

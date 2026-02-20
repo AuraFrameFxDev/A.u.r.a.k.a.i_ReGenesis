@@ -66,6 +66,7 @@ class MetaInstructAIService @Inject constructor(
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info("MetaInstructAIService", "Processing request: ${request.query}")
 

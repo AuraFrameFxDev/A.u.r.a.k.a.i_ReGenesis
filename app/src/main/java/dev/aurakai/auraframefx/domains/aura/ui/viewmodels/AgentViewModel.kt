@@ -333,7 +333,7 @@ open class AgentViewModel @Inject constructor(
                             put("source", "direct_chat")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "direct_chat")
+                    val response = genesisAgent.processRequest(request, "direct_chat", AgentCapabilityCategory.COORDINATION)
                     response.content
                 }
                 "Aura" -> {
@@ -364,7 +364,7 @@ open class AgentViewModel @Inject constructor(
                             put("agent_persona", "cascade")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "cascade")
+                    val response = genesisAgent.processRequest(request, "cascade", AgentCapabilityCategory.SPECIALIZED)
                     response.content
                 }
                 "Claude" -> {
@@ -375,7 +375,7 @@ open class AgentViewModel @Inject constructor(
                             put("agent_persona", "claude")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "claude")
+                    val response = genesisAgent.processRequest(request, "claude", AgentCapabilityCategory.SPECIALIZED)
                     response.content
                 }
                 else -> {

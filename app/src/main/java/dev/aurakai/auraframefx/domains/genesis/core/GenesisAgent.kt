@@ -64,7 +64,7 @@ class GenesisAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         Timber.Forest.tag("Genesis").d("Processing request: ${request.prompt}")
 
         // 1. Meta-Analysis (The Core)

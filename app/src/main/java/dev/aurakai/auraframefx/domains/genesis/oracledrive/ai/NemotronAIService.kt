@@ -77,10 +77,10 @@ class NemotronAIService @Inject constructor(
 override fun getName(): String = "Nemotron"
 
     /**
- * Identify this agent's classification.
- *
- * @return The agent type `AgentType.NEMOTRON`.
- */
+     * Identify this agent's classification.
+     *
+     * @return The agent category `AgentCapabilityCategory.MEMORY`.
+     */
     override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.MEMORY
 
     /**
@@ -118,6 +118,7 @@ override fun getName(): String = "Nemotron"
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info(
             "NemotronAIService",
