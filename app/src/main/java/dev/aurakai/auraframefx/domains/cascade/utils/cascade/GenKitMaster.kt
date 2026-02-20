@@ -5,7 +5,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GeminiAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.MetaInstructAIService
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import kotlinx.coroutines.async
@@ -92,24 +92,24 @@ class GenKitMaster @Inject constructor(
         }
     }
 
-    private suspend fun callSpecialist(agentType: AgentType, prompt: String, context: String): AgentResponse {
-        return when (agentType) {
-            AgentType.CLAUDE -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            AgentType.NEMOTRON -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            AgentType.GEMINI -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            AgentType.METAINSTRUCT -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+    private suspend fun callSpecialist(category: AgentCapabilityCategory, prompt: String, context: String): AgentResponse {
+        return when (category) {
+            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
             else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
         }
     }
 
-    private fun determineBestAgent(prompt: String): AgentType {
+    private fun determineBestAgent(prompt: String): AgentCapabilityCategory {
         val lower = prompt.lowercase()
         return when {
-            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentType.CLAUDE
-            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentType.NEMOTRON
-            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentType.GEMINI
-            lower.contains("summarize") || lower.contains("instruct") -> AgentType.METAINSTRUCT
-            else -> AgentType.GEMINI // Default to Gemini (Synthesizer)
+            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentCapabilityCategory.GENERAL
+            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentCapabilityCategory.MEMORY
+            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentCapabilityCategory.CREATIVE
+            lower.contains("summarize") || lower.contains("instruct") -> AgentCapabilityCategory.ORCHESTRATION
+            else -> AgentCapabilityCategory.CREATIVE // Default to Creative (Synthesizer)
         }
     }
 }

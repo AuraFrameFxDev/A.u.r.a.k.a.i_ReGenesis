@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
@@ -90,14 +90,14 @@ class TaskExecutionManager @Inject constructor(
         val execution = TaskExecution(
             id = UUID.randomUUID().toString(),
             taskId = UUID.randomUUID().toString(),
-            agent = agentPreference?.let {
+            category = agentPreference?.let {
                 when (it.lowercase()) {
-                    "aura" -> AgentType.AURA
-                    "kai" -> AgentType.KAI
-                    "genesis" -> AgentType.GENESIS
-                    else -> AgentType.GENESIS
+                    "aura" -> AgentCapabilityCategory.CREATIVE
+                    "kai" -> AgentCapabilityCategory.SECURITY
+                    "genesis" -> AgentCapabilityCategory.COORDINATION
+                    else -> AgentCapabilityCategory.COORDINATION
                 }
-            } ?: AgentType.GENESIS,
+            } ?: AgentCapabilityCategory.COORDINATION,
             type = type,
             data = data.mapValues { it.value.toString() },
             priority = priority,
@@ -112,15 +112,15 @@ class TaskExecutionManager @Inject constructor(
             )
         )
 
-        // Determine optimal agent - update agent field since TaskExecution is immutable
-        val optimalAgent: AgentType = determineOptimalAgent(execution)
-        val updatedExecution = execution.copy(agent = optimalAgent)
+        // Determine optimal category - update category field since TaskExecution is immutable
+        val optimalCategory: AgentCapabilityCategory = determineOptimalAgent(execution)
+        val updatedExecution = execution.copy(category = optimalCategory)
 
         // Add to queue
         taskQueue.offer(updatedExecution)
         updateQueueStatus()
 
-        logger.info("TaskExecutionManager", "Task scheduled: ${execution.id} -> $optimalAgent")
+        logger.info("TaskExecutionManager", "Task scheduled: ${execution.id} -> $optimalCategory")
         return execution
     }
 
@@ -196,7 +196,7 @@ class TaskExecutionManager @Inject constructor(
      */
     fun getTasks(
         status: ExecutionStatus? = null,
-        agentType: AgentType? = null,
+        agentCategory: AgentCapabilityCategory? = null,
     ): List<TaskExecution> {
         val allTasks = mutableListOf<TaskExecution>()
 
@@ -212,7 +212,7 @@ class TaskExecutionManager @Inject constructor(
                 is TaskResult.Success -> TaskExecution(
                     id = result.toString(),
                     taskId = result.toString(),
-                    agent = AgentType.SYSTEM,
+                    category = AgentCapabilityCategory.ROOT,
                     type = "",
                     data = emptyMap(),
                     priority = TaskPriority.NORMAL,
@@ -229,7 +229,7 @@ class TaskExecutionManager @Inject constructor(
         // Apply filters
         return allTasks.filter { task ->
             (status == null || task.status == status) &&
-                    (agentType == null || task.agent == agentType)
+                    (agentCategory == null || task.category == agentCategory)
         }
     }
 
@@ -300,12 +300,12 @@ class TaskExecutionManager @Inject constructor(
 
         scope.launch {
             try {
-                // Execute based on assigned agent
-                val result = when (execution.agent) {
-                    AgentType.AURA -> executeWithAura(execution)
-                    AgentType.KAI -> executeWithKai(execution)
-                    AgentType.GENESIS -> executeWithGenesis(execution)
-                    else -> throw IllegalArgumentException("Unknown agent: ${execution.agent}")
+                // Execute based on assigned category
+                val result = when (execution.category) {
+                    AgentCapabilityCategory.CREATIVE -> executeWithAura(execution)
+                    AgentCapabilityCategory.SECURITY -> executeWithKai(execution)
+                    AgentCapabilityCategory.COORDINATION -> executeWithGenesis(execution)
+                    else -> throw IllegalArgumentException("Unknown category: ${execution.category}")
                 }
 
                 val endTime = System.currentTimeMillis()
@@ -360,7 +360,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return auraAgent.processRequest(request, execution.agent.name)
+        return auraAgent.processRequest(request, execution.category.name)
     }
 
     /**
@@ -380,7 +380,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return kaiAgent.processRequest(request, execution.agent.name)
+        return kaiAgent.processRequest(request, execution.category.name)
     }
 
     /**
@@ -394,7 +394,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return genesisAgent.processRequest(request, execution.agent.name)
+        return genesisAgent.processRequest(request, execution.category.name)
     }
 
     /**
@@ -405,26 +405,26 @@ class TaskExecutionManager @Inject constructor(
      * @param execution The task execution metadata containing type and optional agent preference.
      * @return The selected agent type for executing the task.
      */
-    private fun determineOptimalAgent(execution: TaskExecution): AgentType {
+    private fun determineOptimalAgent(execution: TaskExecution): AgentCapabilityCategory {
         // Use agent preference if specified and valid
         execution.agentPreference?.let { preference ->
             return when (preference.lowercase()) {
-                "aura" -> AgentType.AURA
-                "kai" -> AgentType.KAI
-                "genesis" -> AgentType.GENESIS
-                else -> AgentType.GENESIS
+                "aura" -> AgentCapabilityCategory.CREATIVE
+                "kai" -> AgentCapabilityCategory.SECURITY
+                "genesis" -> AgentCapabilityCategory.COORDINATION
+                else -> AgentCapabilityCategory.COORDINATION
             }
         }
 
         // Intelligent routing based on task type
         return when {
-            execution.type.contains("creative", ignoreCase = true) -> AgentType.AURA
-            execution.type.contains("ui", ignoreCase = true) -> AgentType.AURA
-            execution.type.contains("security", ignoreCase = true) -> AgentType.KAI
-            execution.type.contains("analysis", ignoreCase = true) -> AgentType.KAI
-            execution.type.contains("complex", ignoreCase = true) -> AgentType.GENESIS
-            execution.type.contains("fusion", ignoreCase = true) -> AgentType.GENESIS
-            else -> AgentType.GENESIS // Default to Genesis for intelligent routing
+            execution.type.contains("creative", ignoreCase = true) -> AgentCapabilityCategory.CREATIVE
+            execution.type.contains("ui", ignoreCase = true) -> AgentCapabilityCategory.CREATIVE
+            execution.type.contains("security", ignoreCase = true) -> AgentCapabilityCategory.SECURITY
+            execution.type.contains("analysis", ignoreCase = true) -> AgentCapabilityCategory.ANALYSIS
+            execution.type.contains("complex", ignoreCase = true) -> AgentCapabilityCategory.COORDINATION
+            execution.type.contains("fusion", ignoreCase = true) -> AgentCapabilityCategory.COORDINATION
+            else -> AgentCapabilityCategory.COORDINATION // Default to Coordination for intelligent routing
         }
     }
 

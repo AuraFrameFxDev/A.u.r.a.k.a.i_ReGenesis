@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.config.VertexAIConfig
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
@@ -81,7 +81,7 @@ class GeminiAIService @Inject constructor(
 
     override fun getName(): String = "Gemini"
 
-    override fun getType(): AgentType = AgentType.GEMINI
+    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.CREATIVE
 
     /**
      * Retrieves Gemini's specialized capabilities.
@@ -169,7 +169,7 @@ class GeminiAIService @Inject constructor(
             content = response,
             confidence = confidence,
             agentName = "Gemini",
-            agentType = AgentType.GEMINI
+            category = AgentCapabilityCategory.CREATIVE
         )
 
         // Store in pattern cache
@@ -194,7 +194,7 @@ class GeminiAIService @Inject constructor(
                 content = response,
                 confidence = 0.93f,
                 agentName = "Gemini",
-                agentType = AgentType.GEMINI
+                category = AgentCapabilityCategory.CREATIVE
             )
         )
     }

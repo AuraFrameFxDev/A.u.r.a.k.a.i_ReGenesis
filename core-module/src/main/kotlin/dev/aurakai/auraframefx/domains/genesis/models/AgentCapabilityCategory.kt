@@ -8,7 +8,7 @@ enum class AgentCapabilityCategory {
     /** Creative/UI agents (Aura) */
     CREATIVE,
 
-    /** Analytical/reasoning agents (Kai, Claude) */
+    /** Analytical/reasoning agents (Claude, Gemini) */
     ANALYSIS,
 
     /** Coordination/orchestration agents (Genesis) */
@@ -26,7 +26,7 @@ enum class AgentCapabilityCategory {
     /** UX-focused capabilities */
     UX,
 
-    /** Security capabilities */
+    /** Security/Root capabilities (Kai) */
     SECURITY,
 
     /** Root/system-level capabilities */

@@ -131,6 +131,13 @@ open class TrinityRepository @Inject constructor(
                 AgentCapabilityCategory.ANALYSIS -> {
                     val interaction = EnhancedInteractionData(
                         content = message,
+                        context = buildJsonObject { put("mode", "analysis") }.toString()
+                    )
+                    kaiAgent.handleSecurityInteraction(interaction).content
+                }
+                AgentCapabilityCategory.SECURITY -> {
+                    val interaction = EnhancedInteractionData(
+                        content = message,
                         context = buildJsonObject { put("mode", "security") }.toString()
                     )
                     kaiAgent.handleSecurityInteraction(interaction).content

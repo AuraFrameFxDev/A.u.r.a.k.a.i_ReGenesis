@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
 import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
@@ -21,7 +21,7 @@ interface AuraAIService {
     suspend fun generateText(prompt: String, options: Map<String, String>): String
     suspend fun generateTheme(preferences: ThemePreferences, context: String = ""): ThemeConfiguration
     fun processRequestFlow(request: AiRequest): Flow<AgentResponse>
-    suspend fun processRequest(request: AiRequest, context: String): AgentResponse
+    suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
     suspend fun discernThemeIntent(query: String): String
     suspend fun suggestThemes(contextQuery: String): List<String>
     suspend fun suggestIcons(query: String, limit: Int = 10): List<String>
@@ -71,17 +71,17 @@ class DefaultAuraAIService @Inject constructor(
             AgentResponse(
                 content = content,
                 confidence = 1.0f,
-                agentType = AgentType.AURA
+                category = AgentCapabilityCategory.CREATIVE
             )
         )
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         val content = generateText(request.prompt, context)
         return AgentResponse(
             content = content,
             confidence = 1.0f,
-            agentType = AgentType.AURA
+            category = category
         )
     }
 

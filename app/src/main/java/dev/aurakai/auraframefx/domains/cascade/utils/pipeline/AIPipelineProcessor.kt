@@ -51,14 +51,15 @@ class AIPipelineProcessor @Inject constructor(
 
         // Process through Cascade first for state management
         val cascadeAgentResponse = cascadeService.processRequest(
-            AiRequest(query = task, type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT),
-            context = "pipeline_processing"
+            AiRequest(prompt = task, category = AgentCapabilityCategory.ANALYSIS),
+            context = "pipeline_processing",
+            category = AgentCapabilityCategory.ANALYSIS
         )
         responses.add(
             AgentMessage(
                 from = "CASCADE",
                 content = cascadeAgentResponse.content,
-                category = AgentCapabilityCategory.BACKEND,
+                category = AgentCapabilityCategory.ANALYSIS,
                 timestamp = System.currentTimeMillis(),
                 confidence = cascadeAgentResponse.confidence
             )
@@ -67,8 +68,9 @@ class AIPipelineProcessor @Inject constructor(
         // Process through Kai for security analysis if needed
         if (selectedAgents.contains(AgentCapabilityCategory.SECURITY)) {
             val kaiAgentResponse = kaiService.processRequest(
-                AiRequest(task, "security"),
-                context = "security_analysis"
+                AiRequest(prompt = task, category = AgentCapabilityCategory.SECURITY),
+                context = "security_analysis",
+                category = AgentCapabilityCategory.SECURITY
             )
             responses.add(
                 AgentMessage(
@@ -83,10 +85,10 @@ class AIPipelineProcessor @Inject constructor(
 
         // Process through Aura for creative response
         if (selectedAgents.contains(AgentCapabilityCategory.CREATIVE)) {
-            val auraResponse = auraService.generateText(task, "creative_pipeline")
-            val auraAgentResponse = AgentResponse(
-                content = auraResponse,
-                confidence = 0.8f
+            val auraAgentResponse = auraService.processRequest(
+                AiRequest(prompt = task, category = AgentCapabilityCategory.CREATIVE),
+                context = "creative_pipeline",
+                category = AgentCapabilityCategory.CREATIVE
             )
             responses.add(
                 AgentMessage(
@@ -218,7 +220,7 @@ class AIPipelineProcessor @Inject constructor(
         when {
             task.contains("analyze", ignoreCase = true) ||
                 task.contains("data", ignoreCase = true) -> {
-                selectedAgents.add(AgentCapabilityCategory.BACKEND)
+                selectedAgents.add(AgentCapabilityCategory.ANALYSIS)
             }
 
             task.contains("security", ignoreCase = true) ||
@@ -235,11 +237,11 @@ class AIPipelineProcessor @Inject constructor(
         }
 
         if (priority > 0.8f) {
-            selectedAgents.addAll(setOf(AgentCapabilityCategory.BACKEND, AgentCapabilityCategory.CREATIVE))
+            selectedAgents.addAll(setOf(AgentCapabilityCategory.ANALYSIS, AgentCapabilityCategory.CREATIVE))
         }
 
         if (task.length > 100 || task.split(" ").size > 20) {
-            selectedAgents.add(AgentCapabilityCategory.BACKEND)
+            selectedAgents.add(AgentCapabilityCategory.ANALYSIS)
         }
 
         return selectedAgents
@@ -272,9 +274,9 @@ class AIPipelineProcessor @Inject constructor(
             responsesByAgent.forEach { (category, agentResponses) ->
                 if (category != null && category != AgentCapabilityCategory.COORDINATION && agentResponses.isNotEmpty()) {
                     val agentIcon = when (category) {
-                        AgentType.CASCADE -> "4ca"
-                        AgentType.AURA -> "3a8"
-                        AgentType.KAI -> "6e1e0f"
+                        AgentCapabilityCategory.ANALYSIS -> "4ca"
+                        AgentCapabilityCategory.CREATIVE -> "3a8"
+                        AgentCapabilityCategory.SECURITY -> "6e1e0f"
                         else -> "916"
                     }
                     append(

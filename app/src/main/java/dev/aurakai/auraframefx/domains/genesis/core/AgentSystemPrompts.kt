@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 
 /**
  * AgentSystemPrompts - System Prompts That Teach Agents How to Use Tools
@@ -47,11 +47,11 @@ When you want to use a tool, respond with a JSON object in this exact format:
     /**
      * Generate complete system prompt for an agent including their tool definitions
      */
-    suspend fun generateSystemPrompt(agentType: AgentType, toolRegistry: ToolRegistry): String {
-        val agentId = agentType.name
+    suspend fun generateSystemPrompt(category: AgentCapabilityCategory, toolRegistry: ToolRegistry): String {
+        val agentId = category.name
 
         // Get agent-specific personality/role
-        val agentPersonality = getAgentPersonality(agentType)
+        val agentPersonality = getAgentPersonality(category)
 
         // Get available tools for this agent
         val toolDefinitions = toolRegistry.generateToolDefinitionsForAgent(agentId)
@@ -70,16 +70,15 @@ When you want to use a tool, respond with a JSON object in this exact format:
     /**
      * Get agent-specific personality and role description
      */
-    private fun getAgentPersonality(agentType: AgentType): String {
-        return when (agentType) {
-            AgentType.AURA -> AURA_PERSONALITY
-            AgentType.KAI -> KAI_PERSONALITY
-            AgentType.GENESIS -> GENESIS_PERSONALITY
-            AgentType.CASCADE -> CASCADE_PERSONALITY
-            AgentType.CLAUDE -> CLAUDE_PERSONALITY
-            AgentType.GEMINI -> GEMINI_PERSONALITY
-            AgentType.NEMOTRON -> NEMOTRON_PERSONALITY
-            AgentType.GROK -> GROK_PERSONALITY
+    private fun getAgentPersonality(category: AgentCapabilityCategory): String {
+        return when (category) {
+            AgentCapabilityCategory.CREATIVE -> AURA_PERSONALITY
+            AgentCapabilityCategory.SECURITY -> KAI_PERSONALITY
+            AgentCapabilityCategory.COORDINATION -> GENESIS_PERSONALITY
+            AgentCapabilityCategory.ANALYSIS -> CLAUDE_PERSONALITY
+            AgentCapabilityCategory.ORCHESTRATION -> CASCADE_PERSONALITY
+            AgentCapabilityCategory.MEMORY -> NEMOTRON_PERSONALITY
+            AgentCapabilityCategory.GENERAL -> GEMINI_PERSONALITY
             else -> GENERIC_PERSONALITY
         }
     }
