@@ -170,7 +170,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            imageVector = getAgentIcon(profile.agentType),
+                            imageVector = getAgentIcon(profile.category),
                             contentDescription = profile.displayName,
                             modifier = Modifier.size(60.dp),
                             tint = Color.White

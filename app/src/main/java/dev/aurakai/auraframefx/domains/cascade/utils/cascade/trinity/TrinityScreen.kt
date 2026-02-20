@@ -179,7 +179,7 @@ fun TrinityScreen(
                     state.lastAgentResponse?.let { response ->
                         item {
                             LastAgentResponse(
-                                agentType = state.lastAgentType ?: "Unknown",
+                                agentType = state.lastAgentCategory ?: "Unknown",
                                 response = response
                             )
                         }

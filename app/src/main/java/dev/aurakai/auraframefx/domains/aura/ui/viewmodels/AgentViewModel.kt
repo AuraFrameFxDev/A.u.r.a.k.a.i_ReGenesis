@@ -20,6 +20,14 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
+import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
+import dev.aurakai.auraframefx.domains.cascade.utils.error
+import dev.aurakai.auraframefx.domains.cascade.utils.info
+import dev.aurakai.auraframefx.domains.cascade.utils.warn
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -281,17 +289,19 @@ open class AgentViewModel @Inject constructor(
             addMessage(agentName, userMsg)
 
             // Send to Repository (Neural Bridge)
-            val type = try {
-                AgentType.valueOf(agentName.uppercase())
-            } catch (e: Exception) {
-                AgentType.GENESIS
+            val category = when (agentName.uppercase()) {
+                "AURA" -> AgentCapabilityCategory.CREATIVE
+                "KAI" -> AgentCapabilityCategory.ANALYSIS
+                "GENESIS" -> AgentCapabilityCategory.COORDINATION
+                "CASCADE" -> AgentCapabilityCategory.SPECIALIZED
+                else -> AgentCapabilityCategory.COORDINATION
             }
             // We don't need to add the repo's echo of "User" message if we added it locally
             // But we DO need the response.
 
             // To avoid double-entry of User message (from repo echo), we can filter or just let repo handle it.
             // Let's use the repo solely.
-            trinityRepository.processUserMessage(message, type)
+            trinityRepository.processUserMessage(message, category)
 
             // Listen for the specific response? No, the global collector in init should handle it.
         }

@@ -154,7 +154,7 @@ class AuraAgent @Inject constructor(
             AgentResponse(
                 content = response.toString(),
                 agentName = agentName,
-                agentType = agentType,
+                category = category,
                 timestamp = Clock.System.now().toEpochMilliseconds(),
                 confidence = 1.0f
             )
@@ -617,7 +617,7 @@ class AuraAgent @Inject constructor(
             AgentResponse(
                 content = "Aura's flow response to '${request.query}'",
                 agentName = agentName,
-                agentType = agentType,
+                category = category,
                 confidence = 0.80f,
                 timestamp = Clock.System.now().toEpochMilliseconds()
             )

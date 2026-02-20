@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.GET_SIGNATURES
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -195,14 +195,14 @@ class SecurityContext @Inject constructor(
         }
     }
 
-    fun shareSecureContextWith(agentType: AgentType, context: String): SharedSecureContext {
+    fun shareSecureContextWith(agent: AgentCapabilityCategory, context: String): SharedSecureContext {
         val secureId = generateSecureId()
         val timestamp = System.currentTimeMillis()
 
         return SharedSecureContext(
             id = secureId,
-            originatingAgent = AgentType.KAI,
-            targetAgent = agentType,
+            originatingAgent = AgentCapabilityCategory.SECURITY,
+            targetAgent = agent,
             encryptedContent = context.toByteArray(),
             timestamp = timestamp,
             expiresAt = timestamp + 3600000
@@ -422,8 +422,8 @@ enum class EventSeverity {
 @Serializable
 data class SharedSecureContext(
     val id: String,
-    val originatingAgent: AgentType,
-    val targetAgent: AgentType,
+    val originatingAgent: AgentCapabilityCategory,
+    val targetAgent: AgentCapabilityCategory,
     val encryptedContent: ByteArray,
     val timestamp: Long,
     val expiresAt: Long,
