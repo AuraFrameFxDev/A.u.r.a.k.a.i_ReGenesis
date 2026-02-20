@@ -1,15 +1,9 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
-import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AuraMoodViewModel
-import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentNexusViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

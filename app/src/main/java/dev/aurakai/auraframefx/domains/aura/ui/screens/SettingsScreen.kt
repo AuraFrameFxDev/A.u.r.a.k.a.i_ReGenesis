@@ -1,12 +1,11 @@
 package dev.aurakai.auraframefx.domains.aura.ui.screens
 
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import dev.aurakai.auraframefx.domains.aura.aura.ui.verticalScrollbar
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.verticalScrollbar
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
