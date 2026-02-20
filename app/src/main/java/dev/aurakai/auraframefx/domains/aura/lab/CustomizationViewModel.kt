@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 import dev.aurakai.auraframefx.domains.aura.LauncherConfiguration
 import dev.aurakai.auraframefx.domains.aura.MonetConfiguration
 import dev.aurakai.auraframefx.domains.aura.SystemUIConfiguration

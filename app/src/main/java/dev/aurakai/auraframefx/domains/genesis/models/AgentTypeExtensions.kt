@@ -17,9 +17,20 @@ fun AgentType.toCapabilityCategory(): AgentCapabilityCategory {
         AgentType.GEMINI -> AgentCapabilityCategory.ANALYSIS
         AgentType.NEMOTRON -> AgentCapabilityCategory.MEMORY
         AgentType.GROK -> AgentCapabilityCategory.ANALYSIS
+        AgentType.METAINSTRUCT -> AgentCapabilityCategory.ORCHESTRATION
+        AgentType.NEURAL_WHISPER -> AgentCapabilityCategory.SPECIALIZED
+        AgentType.AURA_SHIELD -> AgentCapabilityCategory.SECURITY
+        AgentType.AURASHIELD -> AgentCapabilityCategory.SECURITY
+        AgentType.GEN_KIT_MASTER -> AgentCapabilityCategory.COORDINATION
+        AgentType.DATAVEIN_CONSTRUCTOR -> AgentCapabilityCategory.BACKEND
+        AgentType.ORACLE_DRIVE -> AgentCapabilityCategory.BACKEND
+        AgentType.MASTER -> AgentCapabilityCategory.COORDINATION
+        AgentType.BRIDGE -> AgentCapabilityCategory.BRIDGE
+        AgentType.AUXILIARY -> AgentCapabilityCategory.GENERAL
+        AgentType.SECURITY -> AgentCapabilityCategory.SECURITY
+        AgentType.HIVE_MIND -> AgentCapabilityCategory.COORDINATION
         AgentType.SYSTEM -> AgentCapabilityCategory.COORDINATION
         AgentType.USER -> AgentCapabilityCategory.GENERIC
-        AgentType.ALL -> AgentCapabilityCategory.COORDINATION
     }
 }
 
