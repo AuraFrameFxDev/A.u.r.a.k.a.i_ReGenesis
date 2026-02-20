@@ -790,14 +790,9 @@ fun ReGenesisNavHost(
             StubScreen("Settings (Beta)", "settings_beta", navController, "Legacy settings — use UISettings or UserPreferences")
         }
         composable(NavDestination.GateCustomization.route) {
-            StubScreen("Gate Customization", "gate_customization", navController, "Customize gate cards and hub layouts")
+            StubScreen("Gate Customization", "gate_customization", navController, "Customize gate cards and hub layouts — awaiting Stitch conversion")
         }
-        composable(NavDestination.ModuleCreation.route) {
-            ModuleCreationScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(NavDestination.AgentCreation.route) {
-            AgentCreationScreen(onNavigateBack = { navController.popBackStack() })
-        }
+        // Note: ModuleCreation + AgentCreation are wired above under NEXUS TOOLS
 
         // ═══════════════════════════════════════════════════════════════
         // L4: THIRD-PARTY SUB-GRAPHS (Iconify / ColorBlendr / PLE)
