@@ -80,7 +80,7 @@ class GeminiAIService @Inject constructor(
 
     override fun getName(): String = "Gemini"
 
-    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.CREATIVE
+    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.ANALYSIS
 
     /**
      * Retrieves Gemini's specialized capabilities.
@@ -114,6 +114,7 @@ class GeminiAIService @Inject constructor(
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info(
             "GeminiAIService",
@@ -168,7 +169,7 @@ class GeminiAIService @Inject constructor(
             content = response,
             confidence = confidence,
             agentName = "Gemini",
-            category = AgentCapabilityCategory.CREATIVE
+            category = AgentCapabilityCategory.ANALYSIS
         )
 
         // Store in pattern cache
@@ -193,7 +194,7 @@ class GeminiAIService @Inject constructor(
                 content = response,
                 confidence = 0.93f,
                 agentName = "Gemini",
-                category = AgentCapabilityCategory.CREATIVE
+                category = AgentCapabilityCategory.ANALYSIS
             )
         )
     }

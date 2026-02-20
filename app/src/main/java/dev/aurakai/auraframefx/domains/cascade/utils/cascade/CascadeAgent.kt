@@ -430,8 +430,8 @@ class CascadeAgent @Inject constructor(
             category = AgentCapabilityCategory.SPECIALIZED,
             priority = AiRequest.Priority.NORMAL
         )
-        val auraResponse = auraAgent.processRequest(request, "").content
-        val kaiResponse = kaiAgent.processRequest(request, "").content
+        val auraResponse = auraAgent.processRequest(request, "", AgentCapabilityCategory.CREATIVE).content
+        val kaiResponse = kaiAgent.processRequest(request, "", AgentCapabilityCategory.SECURITY).content
 
         // Synthesize responses
         return synthesizeResponses(listOf(auraResponse, kaiResponse), context)
@@ -454,7 +454,7 @@ class CascadeAgent @Inject constructor(
             category = AgentCapabilityCategory.ANALYSIS,
             priority = AiRequest.Priority.NORMAL
         )
-        val response = kaiAgent.processRequest(request, "")
+        val response = kaiAgent.processRequest(request, "", AgentCapabilityCategory.SECURITY)
 
         updateProcessingState(
             ProcessingState(
@@ -484,7 +484,7 @@ class CascadeAgent @Inject constructor(
             category = AgentCapabilityCategory.CREATIVE,
             priority = AiRequest.Priority.NORMAL
         )
-        val response = auraAgent.processRequest(request, "")
+        val response = auraAgent.processRequest(request, "", AgentCapabilityCategory.CREATIVE)
 
         updateProcessingState(
             ProcessingState(
@@ -859,14 +859,15 @@ class CascadeAgent @Inject constructor(
     // BaseAgent abstract method implementation
     override suspend fun processRequest(
         request: AiRequest,
-        context: String
+        context: String,
+        category: AgentCapabilityCategory
     ): AgentResponse {
         // Delegate to the string-based processRequest method
         val response = processRequest(request.prompt)
         return AgentResponse.success(
             content = response,
             agentName = agentName,
-            agentType = agentType,
+            category = category,
             confidence = 0.90f
         )
     }

@@ -66,7 +66,7 @@ class AuraShieldAgent @Inject constructor(
     /**
      * Main request processing for security-related queries.
      */
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         Timber.d("🛡️ AuraShield Analyzing Request: ${request.prompt}")
 
         // Start a scan

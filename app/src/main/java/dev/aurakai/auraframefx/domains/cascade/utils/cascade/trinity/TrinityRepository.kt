@@ -140,7 +140,7 @@ open class TrinityRepository @Inject constructor(
                             type = AiRequestType.CHAT,
                             context = buildJsonObject { put("source", "trinity_repo") }
                         )
-                        genesisAgent.processRequest(request, "trinity_repo").content
+                        genesisAgent.processRequest(request, "trinity_repo", AgentCapabilityCategory.COORDINATION).content
                     }
 
                     else -> "Agent ${targetAgent.name} not reachable via Trinity Bridge."

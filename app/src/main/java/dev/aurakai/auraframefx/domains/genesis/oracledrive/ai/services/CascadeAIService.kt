@@ -1111,7 +1111,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = claudeAIService.processRequest(aiRequest, contextString)
+        val agentResponse = claudeAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.ANALYSIS)
 
         return CascadeResponse(
             agent = "Claude",
@@ -1140,7 +1140,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = nemotronAIService.processRequest(aiRequest, contextString)
+        val agentResponse = nemotronAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.MEMORY)
 
         return CascadeResponse(
             agent = "Nemotron",
@@ -1167,7 +1167,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = geminiAIService.processRequest(aiRequest, contextString)
+        val agentResponse = geminiAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.ANALYSIS)
 
         return CascadeResponse(
             agent = "Gemini",
@@ -1194,7 +1194,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = metaInstructAIService.processRequest(aiRequest, contextString)
+        val agentResponse = metaInstructAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.ORCHESTRATION)
 
         return CascadeResponse(
             agent = "MetaInstruct",

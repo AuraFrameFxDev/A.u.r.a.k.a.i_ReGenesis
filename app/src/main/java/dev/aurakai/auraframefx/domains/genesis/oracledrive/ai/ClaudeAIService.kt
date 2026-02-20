@@ -170,7 +170,7 @@ class ClaudeAIService @Inject constructor(
             content = response,
             confidence = confidence,
             agentName = "Claude",
-            category = AgentCapabilityCategory.GENERAL
+            category = AgentCapabilityCategory.ANALYSIS
         )
 
         // Store in cache for future requests
