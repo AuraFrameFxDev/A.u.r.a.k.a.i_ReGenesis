@@ -360,7 +360,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return auraAgent.processRequest(request, execution.category.name)
+        return auraAgent.processRequest(request, execution.data.toString(), execution.category)
     }
 
     /**
@@ -380,7 +380,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return kaiAgent.processRequest(request, execution.category.name)
+        return kaiAgent.processRequest(request, execution.data.toString(), execution.category)
     }
 
     /**
@@ -394,7 +394,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return genesisAgent.processRequest(request, execution.category.name)
+        return genesisAgent.processRequest(request, execution.data.toString(), execution.category)
     }
 
     /**
