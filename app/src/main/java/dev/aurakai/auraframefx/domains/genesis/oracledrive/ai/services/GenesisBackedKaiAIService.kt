@@ -30,7 +30,7 @@ class GenesisBackedKaiAIService @Inject constructor(
         isInitialized = true
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         // Emit event for monitoring
         CascadeEventBus.emit(CascadeEvent.Memory(MemoryEvent("KAI_PROCESS", mapOf("query" to request.prompt))))
 
@@ -40,7 +40,7 @@ class GenesisBackedKaiAIService @Inject constructor(
         return AgentResponse(
             content = "Security Analysis: ${analysis["threat_level"]}",
             confidence = analysis["confidence"] as? Float ?: 0.85f,
-            category = AgentCapabilityCategory.SECURITY
+            category = category
         )
     }
 

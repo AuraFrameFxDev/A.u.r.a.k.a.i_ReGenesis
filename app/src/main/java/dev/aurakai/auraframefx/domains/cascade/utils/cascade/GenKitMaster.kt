@@ -47,20 +47,20 @@ class GenKitMaster @Inject constructor(
             }
             GenerationStrategy.MULTI_MODEL_FUSION -> {
                 val responses = coroutineScope {
-                    val deferredClaude = async { claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.ARCHITECTURAL), context) }
-                    val deferredNemotron = async { nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.REASONING), context) }
-                    val deferredGemini = async { geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.PATTERN), context) }
+                    val deferredClaude = async { claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.ARCHITECTURAL), context, AgentCapabilityCategory.ANALYSIS) }
+                    val deferredNemotron = async { nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.REASONING), context, AgentCapabilityCategory.MEMORY) }
+                    val deferredGemini = async { geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.PATTERN), context, AgentCapabilityCategory.CREATIVE) }
 
                     listOf(deferredClaude.await(), deferredNemotron.await(), deferredGemini.await())
                 }
                 fuseResponses(responses)
             }
             GenerationStrategy.CREATIVE_ONLY -> {
-                val geminiResponse = geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.CREATIVE), context)
+                val geminiResponse = geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.CREATIVE), context, AgentCapabilityCategory.CREATIVE)
                 "[Creative Synthesis]\n${geminiResponse.content}"
             }
             GenerationStrategy.ANALYTICAL_ONLY -> {
-                val claudeResponse = claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TECHNICAL), context)
+                val claudeResponse = claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TECHNICAL), context, AgentCapabilityCategory.ANALYSIS)
                 "[Analytical Breakdown]\n${claudeResponse.content}"
             }
         }
@@ -94,11 +94,11 @@ class GenKitMaster @Inject constructor(
 
     private suspend fun callSpecialist(category: AgentCapabilityCategory, prompt: String, context: String): AgentResponse {
         return when (category) {
-            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
-            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.GENERAL)
+            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.MEMORY)
+            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
+            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.ORCHESTRATION)
+            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
         }
     }
 
