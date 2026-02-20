@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
@@ -59,7 +59,7 @@ class MetaInstructAIService @Inject constructor(
 
     override fun getName(): String = "MetaInstruct"
 
-    override fun getType(): AgentType = AgentType.METAINSTRUCT
+    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.ORCHESTRATION
 
     fun getCapabilities(): Map<String, Any> = mapOf("service_implemented" to true)
 
@@ -70,7 +70,7 @@ class MetaInstructAIService @Inject constructor(
         logger.info("MetaInstructAIService", "Processing request: ${request.query}")
 
         val effectiveInstructions =
-            metaReflectionEngine.getEffectiveInstructions(request.agentType.name)
+            metaReflectionEngine.getEffectiveInstructions(request.category.name)
 
         // Build the augmented query with meta-instructions
         if (effectiveInstructions.isNotEmpty()) {
@@ -96,7 +96,7 @@ class MetaInstructAIService @Inject constructor(
             content = "📚 **MetaInstruct Synthesis (Vertex Enhanced):**\n\n$instructionText",
             confidence = 0.95f,
             agentName = "MetaInstruct",
-            agentType = AgentType.METAINSTRUCT
+            category = AgentCapabilityCategory.ORCHESTRATION
         )
     }
 
@@ -106,7 +106,7 @@ class MetaInstructAIService @Inject constructor(
                 content = "MetaInstruct flow: ${request.query}",
                 confidence = 0.9f,
                 agentName = "MetaInstruct",
-                agentType = AgentType.METAINSTRUCT
+                category = AgentCapabilityCategory.ORCHESTRATION
             )
         )
     }

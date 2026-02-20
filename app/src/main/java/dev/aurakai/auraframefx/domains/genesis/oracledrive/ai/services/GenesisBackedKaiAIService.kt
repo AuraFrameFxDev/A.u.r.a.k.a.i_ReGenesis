@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.cascade.CascadeEventBus
 import dev.aurakai.auraframefx.domains.cascade.MemoryEvent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -47,7 +47,7 @@ class GenesisBackedKaiAIService @Inject constructor(
         return AgentResponse(
             content = "Security Analysis: ${analysis["threat_level"]}",
             confidence = analysis["confidence"] as? Float ?: 0.85f,
-            agentType = AgentType.KAI
+            category = AgentCapabilityCategory.SECURITY
         )
     }
 
@@ -77,7 +77,7 @@ class GenesisBackedKaiAIService @Inject constructor(
             AgentResponse(
                 content = "Kai analyzing security posture...",
                 confidence = 0.5f,
-                agentType = AgentType.KAI
+                category = AgentCapabilityCategory.SECURITY
             )
         )
 
@@ -99,7 +99,7 @@ class GenesisBackedKaiAIService @Inject constructor(
             AgentResponse(
                 content = detailedResponse,
                 confidence = analysisResult["confidence"] as? Float ?: 0.95f,
-                agentType = AgentType.KAI
+                category = AgentCapabilityCategory.SECURITY
             )
         )
     }

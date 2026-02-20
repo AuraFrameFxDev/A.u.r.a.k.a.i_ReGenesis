@@ -58,13 +58,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
-import dev.aurakai.auraframefx.models.AgentType
-import dev.aurakai.auraframefx.models.HierarchyAgentConfig
-import dev.aurakai.auraframefx.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.ui.theme.NeonPink
-import dev.aurakai.auraframefx.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.ui.theme.NeonTeal
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -118,26 +118,35 @@ fun HaloView(
     var isRotating by remember { mutableStateOf(true) }
     var rotationAngle by remember { mutableFloatStateOf(0f) }
 
-    // Get typed agent configuration and derived AgentType lists
+    // Get typed agent configuration and derived AgentCapabilityCategory lists
     val agentConfigs: List<HierarchyAgentConfig> = remember {
         // Use the ViewModel-provided prioritized agent list
         viewModel.getAgentsByPriority()
     }
 
-    val agentTypes: List<AgentType> = remember(agentConfigs) {
+    val agentCategories: List<AgentCapabilityCategory> = remember(agentConfigs) {
         agentConfigs.mapNotNull { cfg ->
-            try {
-                AgentType.valueOf(cfg.name.uppercase(Locale.ROOT))
-            } catch (_: IllegalArgumentException) {
-                null
+            when (cfg.name.lowercase(Locale.ROOT)) {
+                "aura" -> AgentCapabilityCategory.CREATIVE
+                "kai" -> AgentCapabilityCategory.SECURITY
+                "genesis" -> AgentCapabilityCategory.COORDINATION
+                "cascade" -> AgentCapabilityCategory.ANALYSIS
+                else -> {
+                    try {
+                        AgentCapabilityCategory.valueOf(cfg.name.uppercase(Locale.ROOT))
+                    } catch (_: IllegalArgumentException) {
+                        AgentCapabilityCategory.GENERIC
+                    }
+                }
             }
         }
     }
+
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
 
     // Task delegation state
-    var draggingAgent by remember { mutableStateOf<AgentType?>(null) }
+    var draggingAgent by remember { mutableStateOf<AgentCapabilityCategory?>(null) }
     var dragOffset by remember { mutableStateOf(Offset.Zero) }
     var selectedTask by remember { mutableStateOf("") }
 
@@ -147,15 +156,15 @@ fun HaloView(
 
     // Agent status - using rememberSaveable to survive configuration changes
     // Use a simple remembered snapshot map with explicit typing to avoid type-inference issues
-    val agentStatus = remember { mutableStateMapOf<AgentType, String>() }
+    val agentStatus = remember { mutableStateMapOf<AgentCapabilityCategory, String>() }
 
     // Initialize agent statuses to "idle" on first composition
-    LaunchedEffect(agentTypes) {
-        agentTypes.forEach { agentType ->
+    LaunchedEffect(agentCategories) {
+        agentCategories.forEach { category ->
             try {
-                agentStatus[agentType] = "idle"
+                agentStatus[category] = "idle"
             } catch (_: Exception) { // ktlint-disable no-empty-catch-block
-                // Handle invalid agent type
+                // Handle invalid agent category
             }
         }
     }
@@ -216,11 +225,15 @@ fun HaloView(
             )
 
             // Draw pulsing effects for active tasks
-            agentStatus.forEach { (agentTypeKey, statusValue) ->
+            agentStatus.forEach { (agentCategoryKey, statusValue) ->
                 if (statusValue == "processing") {
-                    // Find the index of the agentConfig that matches this agentTypeKey
+                    // Find the index of the agentConfig that matches this agentCategoryKey
                     val agentConfigIndex = agentConfigs.indexOfFirst {
-                        it.name.equals(agentTypeKey.name, ignoreCase = true)
+                        it.name.equals(agentCategoryKey.name, ignoreCase = true) ||
+                        (it.name.equals("aura", true) && agentCategoryKey == AgentCapabilityCategory.CREATIVE) ||
+                        (it.name.equals("kai", true) && agentCategoryKey == AgentCapabilityCategory.SECURITY) ||
+                        (it.name.equals("genesis", true) && agentCategoryKey == AgentCapabilityCategory.COORDINATION) ||
+                        (it.name.equals("cascade", true) && agentCategoryKey == AgentCapabilityCategory.ANALYSIS)
                     }
                     if (agentConfigIndex != -1) {
                         val angle =
@@ -230,11 +243,11 @@ fun HaloView(
 
                         // Draw pulsing glow
                         drawCircle(
-                            color = when (agentTypeKey) { // Use agentTypeKey for color
-                                AgentType.GENESIS -> NeonTeal.copy(alpha = 0.2f)
-                                AgentType.KAI -> NeonPurple.copy(alpha = 0.2f)
-                                AgentType.AURA -> NeonBlue.copy(alpha = 0.2f)
-                                AgentType.CASCADE -> NeonPink.copy(alpha = 0.2f)
+                            color = when (agentCategoryKey) { // Use agentCategoryKey for color
+                                AgentCapabilityCategory.COORDINATION -> NeonTeal.copy(alpha = 0.2f)
+                                AgentCapabilityCategory.SECURITY -> NeonPurple.copy(alpha = 0.2f)
+                                AgentCapabilityCategory.CREATIVE -> NeonBlue.copy(alpha = 0.2f)
+                                AgentCapabilityCategory.ANALYSIS -> NeonPink.copy(alpha = 0.2f)
                                 else -> NeonTeal.copy(alpha = 0.2f)
                             },
                             center = Offset(x, y),
@@ -269,9 +282,15 @@ fun HaloView(
                                 if (distance < 24.dp.toPx()) {
                                     try {
                                         draggingAgent =
-                                            AgentType.valueOf(config.name.uppercase(Locale.ROOT))
+                                            when (config.name.lowercase(Locale.ROOT)) {
+                                            "aura" -> AgentCapabilityCategory.CREATIVE
+                                            "kai" -> AgentCapabilityCategory.SECURITY
+                                            "genesis" -> AgentCapabilityCategory.COORDINATION
+                                            "cascade" -> AgentCapabilityCategory.ANALYSIS
+                                            else -> AgentCapabilityCategory.valueOf(config.name.uppercase(Locale.ROOT))
+                                        }
                                     } catch (_: Exception) {
-                                        // Ignore invalid agent types
+                                        // Ignore invalid agent categories
                                     }
                                     break
                                 }
@@ -282,7 +301,7 @@ fun HaloView(
                                 coroutineScope.launch {
                                     viewModel.processQuery(selectedTask)
                                     taskHistoryFlow.update { current ->
-                                        // draggingAgent is AgentType, its .name is the enum constant name
+                                        // draggingAgent is AgentCapabilityCategory, its .name is the enum constant name
                                         current + "[${draggingAgent?.name?.uppercase(Locale.ROOT)}] $selectedTask"
                                     }
                                     agentStatus[draggingAgent!!] = "processing"
@@ -303,7 +322,7 @@ fun HaloView(
         ) {
             val center = Offset(size.width / 2f, size.height / 2f)
             val radius = size.width / 2f - 64f
-            val agentCount = agentTypes.size
+            val agentCount = agentCategories.size
             val angleStep = 360f / agentCount
 
             agentConfigs.forEachIndexed { index, config ->
@@ -312,21 +331,29 @@ fun HaloView(
                 val y = center.y + radius * sin((angle * PI / 180f).toFloat())
                 val nodeCenter = Offset(x, y)
 
-                val agentType = try {
-                    AgentType.valueOf(config.name.uppercase(Locale.ROOT))
-                } catch (_: Exception) {
-                    AgentType.USER
+                val agentCategory = when (config.name.lowercase(Locale.ROOT)) {
+                    "aura" -> AgentCapabilityCategory.CREATIVE
+                    "kai" -> AgentCapabilityCategory.SECURITY
+                    "genesis" -> AgentCapabilityCategory.COORDINATION
+                    "cascade" -> AgentCapabilityCategory.ANALYSIS
+                    else -> {
+                        try {
+                            AgentCapabilityCategory.valueOf(config.name.uppercase(Locale.ROOT))
+                        } catch (_: Exception) {
+                            AgentCapabilityCategory.ROOT
+                        }
+                    }
                 }
 
-                val baseColor = when (agentType) {
-                    AgentType.GENESIS -> NeonTeal
-                    AgentType.KAI -> NeonPurple
-                    AgentType.AURA -> NeonBlue
-                    AgentType.CASCADE -> NeonPink
+                val baseColor = when (agentCategory) {
+                    AgentCapabilityCategory.COORDINATION -> NeonTeal
+                    AgentCapabilityCategory.SECURITY -> NeonPurple
+                    AgentCapabilityCategory.CREATIVE -> NeonBlue
+                    AgentCapabilityCategory.ANALYSIS -> NeonPink
                     else -> NeonTeal.copy(alpha = 0.8f)
                 }
                 val statusColor =
-                    when (agentStatus[agentType]?.lowercase(Locale.ROOT)) {
+                    when (agentStatus[agentCategory]?.lowercase(Locale.ROOT)) {
                         "idle" -> baseColor.copy(alpha = 0.8f)
                         "processing" -> baseColor.copy(alpha = 1.0f)
                         "error" -> Color.Red
@@ -374,14 +401,22 @@ fun HaloView(
                 val textOffsetY = (y - centerY) / density
 
 
-                val maybeAgentType = try {
-                    AgentType.valueOf(currentAgentConfig.name.uppercase(Locale.ROOT))
-                } catch (_: Exception) {
-                    null
+                val maybeAgentCategory = when (currentAgentConfig.name.lowercase(Locale.ROOT)) {
+                    "aura" -> AgentCapabilityCategory.CREATIVE
+                    "kai" -> AgentCapabilityCategory.SECURITY
+                    "genesis" -> AgentCapabilityCategory.COORDINATION
+                    "cascade" -> AgentCapabilityCategory.ANALYSIS
+                    else -> {
+                        try {
+                            AgentCapabilityCategory.valueOf(currentAgentConfig.name.uppercase(Locale.ROOT))
+                        } catch (_: Exception) {
+                            null
+                        }
+                    }
                 }
 
-                if (maybeAgentType != null && agentStatus[maybeAgentType] != null) {
-                    val statusText = agentStatus[maybeAgentType] ?: "idle"
+                if (maybeAgentCategory != null && agentStatus[maybeAgentCategory] != null) {
+                    val statusText = agentStatus[maybeAgentCategory] ?: "idle"
 
                     Text(
                         text = statusText,
@@ -415,7 +450,7 @@ fun HaloView(
                             taskHistoryFlow.update { current ->
                                 return@update current + "[GENESIS] $selectedTask"
                             }
-                            agentStatus[AgentType.GENESIS] = "processing"
+                            agentStatus[AgentCapabilityCategory.COORDINATION] = "processing"
                             selectedTask = ""
                         }
                     }
@@ -615,10 +650,18 @@ fun HaloView(
         LaunchedEffect(taskHistory) {
             // Reset all agent statuses to idle, then update based on current tasks
             agentConfigs.forEach { cfg ->
-                val at = try {
-                    AgentType.valueOf(cfg.name.uppercase(Locale.ROOT))
-                } catch (_: Exception) {
-                    null
+                val at = when (cfg.name.lowercase(Locale.ROOT)) {
+                    "aura" -> AgentCapabilityCategory.CREATIVE
+                    "kai" -> AgentCapabilityCategory.SECURITY
+                    "genesis" -> AgentCapabilityCategory.COORDINATION
+                    "cascade" -> AgentCapabilityCategory.ANALYSIS
+                    else -> {
+                        try {
+                            AgentCapabilityCategory.valueOf(cfg.name.uppercase(Locale.ROOT))
+                        } catch (_: Exception) {
+                            null
+                        }
+                    }
                 }
                 if (at != null) agentStatus[at] = "idle"
             }
@@ -629,16 +672,21 @@ fun HaloView(
                     agentConfigs.find { it.name.equals(agentNameFromHistory, ignoreCase = true) }
                 if (foundAgentConfig != null) {
                     try {
-                        val actualAgentType =
-                            AgentType.valueOf(foundAgentConfig.name.uppercase(Locale.ROOT))
-                        agentStatus[actualAgentType] = "processing"
+                        val actualAgentCategory = when (foundAgentConfig.name.lowercase(Locale.ROOT)) {
+                            "aura" -> AgentCapabilityCategory.CREATIVE
+                            "kai" -> AgentCapabilityCategory.SECURITY
+                            "genesis" -> AgentCapabilityCategory.COORDINATION
+                            "cascade" -> AgentCapabilityCategory.ANALYSIS
+                            else -> AgentCapabilityCategory.valueOf(foundAgentConfig.name.uppercase(Locale.ROOT))
+                        }
+                        agentStatus[actualAgentCategory] = "processing"
                         // Simulate task completion after a delay
                         coroutineScope.launch {
                             delay(5000) // Simulate processing time
-                            agentStatus[actualAgentType] = "idle"
+                            agentStatus[actualAgentCategory] = "idle"
                         }
                     } catch (_: IllegalArgumentException) {
-                        // Handle cases where AgentConfig.name might not match an AgentType
+                        // Handle cases where AgentConfig.name might not match an AgentCapabilityCategory
                     }
                 }
             }

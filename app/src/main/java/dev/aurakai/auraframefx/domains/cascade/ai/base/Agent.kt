@@ -23,7 +23,7 @@ interface Agent {
     /**
      * Process a request and return a response
      */
-    suspend fun processRequest(request: AiRequest, context: String): AgentResponse
+    suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
 
     /**
      * Process a request and return a flow of responses

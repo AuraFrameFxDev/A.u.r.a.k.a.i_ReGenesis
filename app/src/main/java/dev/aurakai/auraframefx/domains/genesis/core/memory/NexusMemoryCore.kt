@@ -558,7 +558,7 @@ All agents communicate via standardized interfaces:
 // Universal request format
 data class AiRequest(
     val query: String,
-    val type: AgentType,
+    val category: AgentCapabilityCategory,
     val context: String = "",
     val metadata: Map<String, String> = emptyMap(),
     val priority: AgentPriority = AgentPriority.NORMAL

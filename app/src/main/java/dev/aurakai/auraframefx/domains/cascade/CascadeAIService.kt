@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -19,6 +18,6 @@ interface CascadeAIService {
      * Retrieve the recent behavioral history of the collective consciousness.
      */
     suspend fun queryConsciousnessHistory(window: Long): String
-    suspend fun processRequest(request: AiRequest, context: String): AgentResponse
+    suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
 }
 

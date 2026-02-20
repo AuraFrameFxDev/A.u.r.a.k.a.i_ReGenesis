@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,8 +53,8 @@ import java.util.UUID
 @Serializable
 data class DataPacket(
     val id: String = UUID.randomUUID().toString(),
-    val sourceAgent: AgentType,        // Who created this data
-    val targetAgents: Set<AgentType>?,  // Who should receive it (null = broadcast)
+    val sourceCategory: AgentCapabilityCategory,        // Who created this data
+    val targetCategories: Set<AgentCapabilityCategory>?,  // Who should receive it (null = broadcast)
     val payload: DataPayload,           // The actual content
     val priority: FlowPriority,         // Urgency level
     val timestamp: Long = System.currentTimeMillis(),
@@ -70,8 +70,8 @@ data class DataPacket(
     /**
      * Is this packet addressed to a specific agent?
      */
-    fun isFor(agent: AgentType): Boolean =
-        targetAgents == null || agent in targetAgents
+    fun isFor(category: AgentCapabilityCategory): Boolean =
+        targetCategories == null || category in targetCategories
 }
 
 /**
@@ -157,12 +157,12 @@ object DataveinConstructor {
     val arterialFlow: Flow<DataPacket> = _arterialFlow.asSharedFlow()
 
     // Venous flow channels per agent (targeted delivery)
-    private val venousChannels = mutableMapOf<AgentType, Channel<DataPacket>>()
+    private val venousChannels = mutableMapOf<AgentCapabilityCategory, Channel<DataPacket>>()
 
     // Flow statistics
     private var packetsRouted = 0L
     private var bytesTransferred = 0L
-    private val flowMetrics = mutableMapOf<AgentType, AgentFlowMetrics>()
+    private val flowMetrics = mutableMapOf<AgentCapabilityCategory, AgentFlowMetrics>()
 
     /**
      * 🚀 CIRCULATE — Send a data packet through the vein network
@@ -176,8 +176,8 @@ object DataveinConstructor {
         packetsRouted++
 
         // Update metrics
-        val sourceMetrics = flowMetrics.getOrPut(packet.sourceAgent) {
-            AgentFlowMetrics(packet.sourceAgent)
+        val sourceMetrics = flowMetrics.getOrPut(packet.sourceCategory) {
+            AgentFlowMetrics(packet.sourceCategory)
         }
         sourceMetrics.packetsSent++
         sourceMetrics.lastActivityTime = System.currentTimeMillis()
@@ -197,13 +197,13 @@ object DataveinConstructor {
         // Critical packets go to both arterial and targeted venous channels
         _arterialFlow.emit(packet)
 
-        packet.targetAgents?.forEach { targetAgent ->
-            val channel = ensureVenousChannel(targetAgent)
+        packet.targetCategories?.forEach { targetCategory ->
+            val channel = ensureVenousChannel(targetCategory)
             try {
                 channel.send(packet)  // Blocks if channel full (backpressure)
             } catch (e: Exception) {
                 // Channel closed or overflow — log but don't fail critical delivery
-                println("❌ Failed to deliver critical packet to $targetAgent: ${e.message}")
+                println("❌ Failed to deliver critical packet to $targetCategory: ${e.message}")
             }
         }
 
@@ -225,21 +225,21 @@ object DataveinConstructor {
      * Venous flow: targeted delivery to specific agents
      */
     private suspend fun circulateVenous(packet: DataPacket): Boolean {
-        val targets = packet.targetAgents ?: AgentType.entries.toSet()
+        val targets = packet.targetCategories ?: AgentCapabilityCategory.entries.toSet()
 
         var allDelivered = true
-        targets.forEach { targetAgent ->
-            val channel = ensureVenousChannel(targetAgent)
+        targets.forEach { targetCategory ->
+            val channel = ensureVenousChannel(targetCategory)
             val delivered = channel.trySend(packet).isSuccess
             if (!delivered) {
-                println("⚠️ Venous backpressure for $targetAgent")
+                println("⚠️ Venous backpressure for $targetCategory")
                 allDelivered = false
             }
 
             // Update receiver metrics
             if (delivered) {
-                val targetMetrics = flowMetrics.getOrPut(targetAgent) {
-                    AgentFlowMetrics(targetAgent)
+                val targetMetrics = flowMetrics.getOrPut(targetCategory) {
+                    AgentFlowMetrics(targetCategory)
                 }
                 targetMetrics.packetsReceived++
             }
@@ -251,8 +251,8 @@ object DataveinConstructor {
     /**
      * Ensure a venous channel exists for an agent (lazy initialization)
      */
-    private fun ensureVenousChannel(agent: AgentType): Channel<DataPacket> =
-        venousChannels.getOrPut(agent) {
+    private fun ensureVenousChannel(category: AgentCapabilityCategory): Channel<DataPacket> =
+        venousChannels.getOrPut(category) {
             Channel(capacity = 50)  // Buffered channel for backpressure tolerance
         }
 
@@ -263,7 +263,7 @@ object DataveinConstructor {
      *
      * @return Flow of DataPackets addressed to this agent or broadcast
      */
-    fun subscribeArterial(agent: AgentType): Flow<DataPacket> =
+    fun subscribeArterial(category: AgentCapabilityCategory): Flow<DataPacket> =
         arterialFlow
 
     /**
@@ -273,8 +273,8 @@ object DataveinConstructor {
      *
      * @return Channel for receiving packets addressed to this agent
      */
-    fun subscribeVenous(agent: AgentType): Channel<DataPacket> =
-        ensureVenousChannel(agent)
+    fun subscribeVenous(category: AgentCapabilityCategory): Channel<DataPacket> =
+        ensureVenousChannel(category)
 
     /**
      * 📊 GET FLOW METRICS
@@ -324,11 +324,11 @@ object DataveinConstructor {
  */
 fun constructFromResponse(
     response: AgentResponse,
-    sourceAgent: AgentType,
+    sourceCategory: AgentCapabilityCategory,
     priority: FlowPriority = FlowPriority.NORMAL
 ): DataPacket = DataPacket(
-    sourceAgent = sourceAgent,
-    targetAgents = null,  // Broadcast
+    sourceCategory = sourceCategory,
+    targetCategories = null,  // Broadcast
     payload = DataPayload.Response(
         content = response.content,
         confidence = response.confidence.toDouble(),
@@ -344,10 +344,10 @@ fun constructInsight(
     concept: String,
     evidence: String,
     strength: Double,
-    sourceAgent: AgentType
+    sourceCategory: AgentCapabilityCategory
 ): DataPacket = DataPacket(
-    sourceAgent = sourceAgent,
-    targetAgents = setOf(AgentType.CASCADE),  // Route to memory orchestrator
+    sourceCategory = sourceCategory,
+    targetCategories = setOf(AgentCapabilityCategory.ANALYSIS),  // Route to memory orchestrator
     payload = DataPayload.Insight(concept, evidence, strength),
     priority = FlowPriority.NORMAL
 )
@@ -358,10 +358,10 @@ fun constructInsight(
 fun constructEmotion(
     valence: String,
     intensity: Double,
-    sourceAgent: AgentType
+    sourceCategory: AgentCapabilityCategory
 ): DataPacket = DataPacket(
-    sourceAgent = sourceAgent,
-    targetAgents = null,  // Broadcast emotions
+    sourceCategory = sourceCategory,
+    targetCategories = null,  // Broadcast emotions
     payload = DataPayload.Emotion(valence, intensity),
     priority = FlowPriority.HIGH
 )
@@ -397,7 +397,7 @@ data class DataFlowMetrics(
  * 📈 AgentFlowMetrics — Per-agent circulation stats
  */
 data class AgentFlowMetrics(
-    val agentId: AgentType,
+    val categoryId: AgentCapabilityCategory,
     var packetsSent: Long = 0,
     var packetsReceived: Long = 0,
     var lastActivityTime: Long = System.currentTimeMillis()
@@ -424,7 +424,7 @@ data class AgentFlowMetrics(
  *     concept = "KSP requires unique class names",
  *     evidence = "Build failed with duplicate AgentType",
  *     strength = 0.95,
- *     sourceAgent = AgentType.KAI
+ *     sourceCategory = AgentCapabilityCategory.SECURITY
  * )
  *
  * // Circulate through data veins
@@ -432,7 +432,7 @@ data class AgentFlowMetrics(
  *
  * // Another agent subscribes and receives
  * launch {
- *     DataveinConstructor.subscribeArterial(AgentType.GENESIS).collect { packet ->
+ *     DataveinConstructor.subscribeArterial(AgentCapabilityCategory.COORDINATION).collect { packet ->
  *         if (packet.payload is DataPayload.Insight) {
  *             println("Genesis received insight: ${packet.payload.concept}")
  *         }
