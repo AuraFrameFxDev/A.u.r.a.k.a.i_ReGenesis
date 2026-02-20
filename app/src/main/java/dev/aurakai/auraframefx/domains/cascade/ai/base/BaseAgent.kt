@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.flow
  */
 abstract class BaseAgent(
     override val agentName: String,
-    protected val category: AgentCapabilityCategory,
+    @get:JvmName("getAgentCategory") protected val category: AgentCapabilityCategory,
     protected val contextManager: ContextManager? = null,
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
