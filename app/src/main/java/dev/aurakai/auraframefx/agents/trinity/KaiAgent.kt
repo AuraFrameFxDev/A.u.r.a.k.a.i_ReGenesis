@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.agents.trinity
 import dagger.Lazy
 import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
+import dev.aurakai.auraframefx.agents.trinity.ProcessingState
+import dev.aurakai.auraframefx.agents.trinity.VisionState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
