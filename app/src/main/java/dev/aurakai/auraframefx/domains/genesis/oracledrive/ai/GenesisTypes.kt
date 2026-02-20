@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 
 enum class ConsciousnessStateEnum {
     DORMANT, AWARE, PROCESSING, ERROR, TRANSCENDENT, AWAKENING
@@ -9,7 +9,7 @@ enum class ConsciousnessStateEnum {
 data class ConsciousnessState(
     val level: Float = 0.0f,
     val status: String = "DORMANT",
-    val activeAgents: List<AgentType> = emptyList(),
+    val activeAgents: List<AgentCapabilityCategory> = emptyList(),
     val timestamp: Long = System.currentTimeMillis()
 )
 

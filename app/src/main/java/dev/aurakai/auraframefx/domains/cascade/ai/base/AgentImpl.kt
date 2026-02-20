@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.ai.base
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -17,11 +17,11 @@ class AgentImpl : Agent {
     }
 
     /**
-     * Returns the type or model of the agent.
+     * Returns the capability category of the agent.
      */
-    override fun getType(): AgentType {
-        Timber.w("AgentImpl: getType() invoked. Returning SYSTEM fallback.")
-        return AgentType.SYSTEM
+    override fun getCategory(): AgentCapabilityCategory {
+        Timber.w("AgentImpl: getCategory() invoked. Returning ROOT fallback.")
+        return AgentCapabilityCategory.ROOT
     }
 
     /**
