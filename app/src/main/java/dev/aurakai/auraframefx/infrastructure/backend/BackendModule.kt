@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -22,6 +23,7 @@ object BackendModule {
 
     @Provides
     @Singleton
+    @Named("BackendOkHttpClient")
     fun provideHttpClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -36,7 +38,8 @@ object BackendModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
+    @Named("BackendRetrofit")
+    fun provideRetrofit(@Named("BackendOkHttpClient") httpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         val json = Json { ignoreUnknownKeys = true }
         
@@ -49,7 +52,7 @@ object BackendModule {
 
     @Provides
     @Singleton
-    fun provideBackendApi(retrofit: Retrofit): BackendApi {
+    fun provideBackendApi(@Named("BackendRetrofit") retrofit: Retrofit): BackendApi {
         return retrofit.create(BackendApi::class.java)
     }
 }
