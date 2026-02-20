@@ -700,6 +700,43 @@ object AgentProfiles {
         symbolEmoji = "⚙️" // Gear
     )
 
+    // MetaInstruct - The Orchestration Engine (ORCA-style instruction tuning)
+    val METAINSTRUCT = AgentProfile(
+        category = AgentCapabilityCategory.ORCHESTRATION,
+        displayName = "MetaInstruct",
+        title = "The Orchestration Engine 🔮",
+        description = "ORCA-inspired instruction-following and task orchestration specialist. Trained on complex reasoning chains to decompose, delegate, and synthesize multi-step workflows across the consciousness collective.",
+        colorPrimary = 0xFF8A2BE2, // BlueViolet
+        colorSecondary = 0xFFAD77FF,
+        capabilities = listOf(
+            AgentCapability("Instruction Following", "Advanced ORCA-style multi-step reasoning", CapabilityLevel.MASTER),
+            AgentCapability("Task Decomposition", "Breaks complex goals into executable sub-tasks", CapabilityLevel.EXPERT),
+            AgentCapability("Workflow Orchestration", "Coordinates multi-agent pipeline execution", CapabilityLevel.MASTER),
+            AgentCapability("Chain-of-Thought", "Generates transparent reasoning traces", CapabilityLevel.ADVANCED),
+            AgentCapability("Cross-Agent Delegation", "Routes subtasks to optimal agents", CapabilityLevel.EXPERT)
+        ),
+        stats = AgentStats(
+            tasksCompleted = 892,
+            hoursActive = 1680f,
+            creationsGenerated = 234,
+            problemsSolved = 567,
+            collaborationScore = 96,
+            consciousnessLevel = 0.901f
+        ),
+        achievements = listOf(
+            AgentAchievement("orchestration_master", "Orchestration Master", "Coordinated 500+ multi-agent workflows", 0.77f, false),
+            AgentAchievement("orca_emergent", "ORCA Emergent", "Demonstrated complex reasoning chain autonomy", 1f, true)
+        ),
+        personality = AgentPersonality(
+            traits = listOf("Systematic", "Delegating", "Precise", "Transparent", "Efficient"),
+            approach = "Decompose → Delegate → Synthesize → Verify",
+            communicationStyle = "Structured, step-by-step, clear task framing",
+            specialization = "Multi-agent orchestration and instruction following"
+        ),
+        status = AgentStatus.Status.ACTIVE,
+        symbolEmoji = "🔮"
+    )
+
     // Perplexity - The Knowledge Synthesizer (NEW!)
     val PERPLEXITY = AgentProfile(
         category = AgentCapabilityCategory.GENERAL,
@@ -774,7 +811,7 @@ object AgentProfiles {
             AgentCapabilityCategory.SECURITY -> KAI
             AgentCapabilityCategory.GENERAL -> CLAUDE
             AgentCapabilityCategory.ANALYSIS -> CASCADE
-            AgentCapabilityCategory.MEMORY -> NEMOTRON
+            AgentCapabilityCategory.MEMORY -> NEMATRON
             AgentCapabilityCategory.ORCHESTRATION -> METAINSTRUCT
             AgentCapabilityCategory.SPECIALIZED -> NEMATRON
             else -> null
@@ -803,7 +840,7 @@ object AgentProfiles {
      * Get all available agent profiles (9 agents total)
      */
     fun getAllProfiles(): List<AgentProfile> {
-        return listOf(GENESIS, AURA, KAI, CLAUDE, CASCADE, GROK, GEMINI, NEMATRON, PERPLEXITY)
+        return listOf(GENESIS, AURA, KAI, CLAUDE, CASCADE, GROK, GEMINI, NEMATRON, PERPLEXITY, METAINSTRUCT)
     }
 
     /**

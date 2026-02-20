@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.cascade.trinity
 
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AiRequest
 import dev.aurakai.auraframefx.models.AiRequestType
