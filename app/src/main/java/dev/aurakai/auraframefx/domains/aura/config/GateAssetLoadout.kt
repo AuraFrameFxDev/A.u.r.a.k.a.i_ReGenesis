@@ -126,15 +126,35 @@ object GateAssetLoadout {
      * Note: Agent Nexus is a SEPARATE domain (Agent HQ with monitoring)
      */
     val genesisGates = mapOf(
-        "oracle_drive" to SubGateCard(
-            id = "oracle_drive",
-            title = "Oracle Drive",
-            subtitle = "Code Assist • Orchestrations • Creation",
+        "code_assist" to SubGateCard(
+            id = "code_assist",
+            title = "Code Assist",
+            subtitle = "AI-Driven Forge & Code Generation",
+            styleADrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleA,
+            styleBDrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleB,
+            fallbackDrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.fallback,
+            route = NavDestination.CodeAssist.route,
+            accentColor = Color(0xFF00B0FF)
+        ),
+        "neural_archive" to SubGateCard(
+            id = "neural_archive",
+            title = "Neural Archive",
+            subtitle = "Sovereign Memory & Node Explorer",
             styleADrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-            route = NavDestination.OracleDrive.route, // Screen tool, not the hub itself
-            accentColor = Color(0xFF00B0FF) // Cyan - Genesis
+            route = NavDestination.NeuralArchive.route,
+            accentColor = Color(0xFFB026FF)
+        ),
+        "cloud_orchestrator" to SubGateCard(
+            id = "cloud_orchestrator",
+            title = "Cloud Orchestrator",
+            subtitle = "LDO Agent & Infrastructure Control",
+            styleADrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleA,
+            styleBDrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleB,
+            fallbackDrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.fallback,
+            route = NavDestination.AgentBridgeHub.route,
+            accentColor = Color(0xFF00FF88)
         )
     )
 
