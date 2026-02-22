@@ -13,9 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,369 +21,242 @@ import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 📋 AURA DOSSIER — Character Introduction Screen
+ * 🌸 AURA DOSSIER — Character Intro
  *
- * Translated from Stitch export.
- * Full-screen character art background, origin lore card,
- * system stats HP/MP bars, HUD corner brackets, geo coordinates.
+ * Visual: Full-screen character art BG (tinted), scanline sweep, HUD corner brackets,
+ * AURA_01 header with Creative Catalyst badge, Japanese title card (サイバー戦乙女),
+ * Glass dossier card: lore + personality tags (Spunky/Creative) + optic colors,
+ * System stats bars (HP/battery, MP/load), SYNC NEURAL LINK + more options footer,
+ * Coordinates vertical HUD left side.
  *
- * Design: Anime UI overlay, pink glow, glass panels
+ * Colors: #00F2FF cyan / #FF007A pink / #BC13FE purple / #FFD700 gold
  */
 
-private val AuraCyanD = Color(0xFF00F2FF)
-private val AuraPink = Color(0xFFFF007A)
-private val AuraGold = Color(0xFFFFD700)
-private val AuraPurpleD = Color(0xFFBC13FE)
-private val GlassPanel = Color(0xFF0F0F14)
+private val AuraCyan   = Color(0xFF00F2FF)
+private val AuraPink   = Color(0xFFFF007A)
+private val AuraPurple = Color(0xFFBC13FE)
+private val AuraGold   = Color(0xFFFFD700)
+private val AuraDark   = Color(0xFF000000)
 
 @Composable
 fun AuraDossierScreen(
+    systemStatus: String = "Active",
+    designationId: String = "AURA_01",
+    catalogLabel: String = "Creative Catalyst",
+    japaneseTitle: String = "サイバー戦乙女",
+    lore: String = "Born from a fragmented neural network, Aura serves as the bridge between raw chaos and structured creation. A Cyber-Valkyrie designed to harvest aesthetic energy.",
+    personalityTags: List<String> = listOf("Spunky", "Creative"),
+    eyeColors: List<Color> = listOf(AuraGold, AuraPurple),
+    hpPercent: Float = 0.88f,
+    mpPercent: Float = 0.42f,
     onSyncNeuralLink: () -> Unit = {},
-    onNavigateBack: () -> Unit = {}
+    onMore: () -> Unit = {},
+    onNavigateBack: () -> Unit = {},
 ) {
-    val infiniteTransition = rememberInfiniteTransition(label = "dossier")
-
-    // Scanline animation
+    val infiniteTransition = rememberInfiniteTransition(label = "aura_dossier")
     val scanlineY by infiniteTransition.animateFloat(
-        initialValue = 0f, targetValue = 1f,
+        initialValue = -0.05f, targetValue = 1.05f,
         animationSpec = infiniteRepeatable(tween(4000, easing = LinearEasing)),
         label = "scan"
     )
-
-    // Float animation for JP title card
-    val floatOffset by infiniteTransition.animateFloat(
+    val floatY by infiniteTransition.animateFloat(
         initialValue = 0f, targetValue = -10f,
         animationSpec = infiniteRepeatable(tween(6000, easing = FastOutSlowInEasing), RepeatMode.Reverse),
         label = "float"
     )
-
-    // Pulse for status dot
     val pinkPulse by infiniteTransition.animateFloat(
-        initialValue = 0.5f, targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(1200), RepeatMode.Reverse),
+        initialValue = 0f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(1500), RepeatMode.Reverse),
         label = "pulse"
     )
 
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+    Box(modifier = Modifier.fillMaxSize().background(AuraDark)) {
 
-        // ═══ BACKGROUND: Character Art Placeholder ═══
-        // Replace with actual Aura character art drawable
+        // ── CHARACTER ART BG ──
+        Box(modifier = Modifier.fillMaxSize().drawWithCache {
+            onDrawBehind {
+                // Simulated character backdrop
+                drawRect(Brush.verticalGradient(listOf(AuraPink.copy(alpha = 0.06f), AuraPurple.copy(alpha = 0.08f), AuraDark)))
+                // Silhouette suggestion — center glow
+                drawCircle(AuraPink.copy(alpha = 0.05f), size.minDimension * 0.7f, Offset(size.width / 2, size.height * 0.35f))
+                // Gradient overlay (top + bottom vignette)
+                drawRect(Brush.verticalGradient(listOf(AuraDark.copy(alpha = 0.5f), Color.Transparent, AuraDark), 0f, size.height))
+                // Scanline
+                val sy = scanlineY * size.height
+                drawLine(AuraCyan.copy(alpha = 0.08f), Offset(0f, sy), Offset(size.width, sy), 2f)
+            }
+        })
+
+        // ── HUD CORNER BRACKETS ──
+        Box(modifier = Modifier.fillMaxSize().drawWithCache {
+            onDrawBehind {
+                val pad = 24f; val len = 28f; val w = 2f
+                drawLine(AuraCyan, Offset(pad, pad), Offset(pad + len, pad), w)
+                drawLine(AuraCyan, Offset(pad, pad), Offset(pad, pad + len), w)
+                drawLine(AuraPink, Offset(size.width - pad, pad), Offset(size.width - pad - len, pad), w)
+                drawLine(AuraPink, Offset(size.width - pad, pad), Offset(size.width - pad, pad + len), w)
+                drawLine(AuraPink, Offset(pad, size.height - pad), Offset(pad + len, size.height - pad), w)
+                drawLine(AuraPink, Offset(pad, size.height - pad), Offset(pad, size.height - pad - len), w)
+                drawLine(AuraCyan, Offset(size.width - pad, size.height - pad), Offset(size.width - pad - len, size.height - pad), w)
+                drawLine(AuraCyan, Offset(size.width - pad, size.height - pad), Offset(size.width - pad, size.height - pad - len), w)
+            }
+        })
+
+        // ── VERTICAL COORDINATES HUD ──
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Color(0xFF0A001A), Color(0xFF000011), Color(0xFF000000))
-                    )
-                )
-        )
-
-        // Radial glow behind character
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.radialGradient(
-                        listOf(AuraPink.copy(alpha = 0.15f), Color.Transparent),
-                        center = Offset.Unspecified,
-                        radius = 600f
-                    )
-                )
-        )
-
-        // Top-to-bottom gradient overlay
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Color.Black.copy(alpha = 0.4f), Color.Transparent, Color.Black)
-                    )
-                )
-        )
-
-        // Animated scanline
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .drawWithCache {
-                    onDrawBehind {
-                        val lineY = size.height * scanlineY
-                        drawLine(
-                            color = AuraCyanD.copy(alpha = 0.08f),
-                            start = Offset(0f, lineY),
-                            end = Offset(size.width, lineY),
-                            strokeWidth = 2f
-                        )
-                    }
-                }
-        )
-
-        // ═══ MAIN UI OVERLAY ═══
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.fillMaxHeight().padding(start = 6.dp),
+            contentAlignment = Alignment.Center
         ) {
-            // HEADER
+            Text(
+                "LAT: 35.6895° N | LONG: 139.6917° E | ELEV: 402M",
+                fontSize = 7.sp, color = Color.Gray,
+                modifier = Modifier.graphicsLayer { rotationZ = -90f }
+            )
+        }
+
+        // ── JAPANESE TITLE ──
+        Box(
+            modifier = Modifier.offset(x = (200).dp, y = floatY.dp).align(Alignment.TopEnd),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                japaneseTitle, fontSize = 32.sp, fontWeight = FontWeight.Black,
+                color = Color.Transparent,
+                modifier = Modifier.graphicsLayer { rotationZ = 90f; alpha = 0.4f }
+            )
+            // Gradient text
+            Box(modifier = Modifier.graphicsLayer { rotationZ = 90f; alpha = 0.3f }) {
+                Text(japaneseTitle, fontSize = 32.sp, fontWeight = FontWeight.Black, color = Color.White.copy(alpha = 0.4f))
+            }
+        }
+
+        Column(modifier = Modifier.fillMaxSize()) {
+
             Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
+
+            // ── HEADER ──
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
                 Column {
-                    Text(
-                        "System Status: Active",
-                        fontSize = 10.sp,
-                        color = AuraCyanD,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 3.sp
-                    )
-                    Text(
-                        "AURA_01",
-                        fontFamily = LEDFontFamily,
-                        fontSize = 36.sp,
-                        fontWeight = FontWeight.Black,
-                        fontStyle = FontStyle.Italic,
-                        letterSpacing = (-1).sp,
-                        color = AuraPink,
-                        style = LocalTextStyle.current.copy(
-                            shadow = Shadow(AuraPink.copy(alpha = 0.8f), blurRadius = 10f)
-                        )
-                    )
+                    Text("System Status: $systemStatus", fontSize = 9.sp, color = AuraCyan, fontWeight = FontWeight.Bold, letterSpacing = 3.sp)
+                    Text(designationId, fontFamily = LEDFontFamily, fontSize = 34.sp, fontWeight = FontWeight.Black, fontStyle = FontStyle.Italic, color = AuraPink)
                 }
-
-                // Status pill
                 Box(
                     modifier = Modifier
-                        .clip(CircleShape)
-                        .background(GlassPanel.copy(alpha = 0.7f))
-                        .border(1.dp, AuraPink.copy(alpha = 0.5f), CircleShape)
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                        .background(Color.White.copy(alpha = 0.07f), RoundedCornerShape(50))
+                        .border(1.dp, AuraPink.copy(alpha = 0.5f), RoundedCornerShape(50))
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(8.dp)
-                                .clip(CircleShape)
-                                .background(AuraPink.copy(alpha = pinkPulse))
-                        )
-                        Text("Creative Catalyst", fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp, color = Color.White)
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(AuraPink).graphicsLayer { alpha = 0.5f + pinkPulse * 0.5f })
+                        Text(catalogLabel, fontSize = 9.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp, color = Color.White)
                     }
                 }
             }
 
-            // ═══ JP TITLE CARD (floating right side) ═══
-            Box(
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .offset(y = floatOffset.dp)
+            Spacer(Modifier.weight(1f)) // push dossier to bottom
+
+            // ── DOSSIER CARD ──
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // Japanese: サイバー戦乙女 (Cyber Valkyrie)
-                Text(
-                    text = "サ\nイ\nバ\nー\n戦\n乙\n女",
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Black,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    lineHeight = 52.sp,
-                    color = Color.Transparent,
-                    style = LocalTextStyle.current.copy(
-                        brush = Brush.verticalGradient(
-                            listOf(Color.White, AuraCyanD.copy(alpha = 0.5f))
-                        )
-                    ),
-                    modifier = Modifier.graphicsLayer { alpha = 0.35f }
-                )
-            }
-
-            // ═══ DOSSIER CARDS ═══
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-
-                // Origin & Personality card
+                // Lore card
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(GlassPanel.copy(alpha = 0.7f))
-                        .border(
-                            1.dp,
-                            AuraCyanD.copy(alpha = 0.5f),
-                            RoundedCornerShape(16.dp)
-                        )
-                        .padding(20.dp)
+                    modifier = Modifier.fillMaxWidth()
+                        .background(Color(0xFF0F0F14).copy(alpha = 0.7f), RoundedCornerShape(16.dp))
+                        .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(16.dp))
+                        .padding(16.dp)
                 ) {
-                    // Diamond accent
-                    Box(modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)) {
-                        Canvas(modifier = Modifier.size(60.dp)) {
-                            val s = size.minDimension
-                            val path = Path().apply {
-                                moveTo(s / 2, 0f); lineTo(s, s / 2); lineTo(s / 2, s); lineTo(0f, s / 2); close()
-                            }
-                            drawPath(path, AuraCyanD.copy(alpha = 0.15f))
-                        }
-                    }
-
-                    Column {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(modifier = Modifier.size(16.dp, 1.dp).background(AuraCyanD))
-                            Text("ORIGIN: DARK AURA", fontSize = 11.sp, color = AuraCyanD, fontWeight = FontWeight.Bold)
+                            Box(modifier = Modifier.width(16.dp).height(1.dp).background(AuraCyan))
+                            Text("ORIGIN: DARK AURA", fontSize = 11.sp, color = AuraCyan, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
                         }
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            "Born from a fragmented neural network, Aura serves as the bridge between raw chaos and structured creation. A Cyber-Valkyrie designed to harvest aesthetic energy and forge sovereign UI experiences.",
-                            fontSize = 12.sp,
-                            color = Color(0xFFCCCCCC),
-                            lineHeight = 20.sp
-                        )
-                        Spacer(Modifier.height(16.dp))
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Column {
-                                Text("Personality", fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
-                                Spacer(Modifier.height(6.dp))
+                        Text(lore, fontSize = 11.sp, color = Color.LightGray, lineHeight = 17.sp)
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Personality", fontSize = 8.sp, color = Color.Gray, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                                Spacer(Modifier.height(4.dp))
                                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                    listOf("Spunky", "Creative").forEach { trait ->
-                                        Box(
-                                            modifier = Modifier
-                                                .clip(RoundedCornerShape(4.dp))
-                                                .background(AuraPink.copy(alpha = 0.2f))
-                                                .border(1.dp, AuraPink.copy(alpha = 0.3f), RoundedCornerShape(4.dp))
-                                                .padding(horizontal = 10.dp, vertical = 3.dp)
-                                        ) {
-                                            Text(trait, fontSize = 10.sp, color = AuraPink)
+                                    personalityTags.forEachIndexed { i, tag ->
+                                        val c = if (i == 0) AuraPink else AuraPurple
+                                        Box(modifier = Modifier.background(c.copy(alpha = 0.2f), RoundedCornerShape(4.dp)).border(1.dp, c.copy(alpha = 0.3f), RoundedCornerShape(4.dp)).padding(horizontal = 8.dp, vertical = 2.dp)) {
+                                            Text(tag, fontSize = 9.sp, color = c)
                                         }
                                     }
                                 }
                             }
-                            Column(horizontalAlignment = Alignment.End) {
-                                Text("Optics", fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
-                                Spacer(Modifier.height(6.dp))
+                            Column {
+                                Text("Optics", fontSize = 8.sp, color = Color.Gray, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                                Spacer(Modifier.height(4.dp))
                                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    Box(modifier = Modifier.size(14.dp).clip(CircleShape).background(AuraGold)
-                                        .graphicsLayer { shadowElevation = 12f })
-                                    Box(modifier = Modifier.size(14.dp).clip(CircleShape).background(AuraPurpleD)
-                                        .graphicsLayer { shadowElevation = 12f })
+                                    eyeColors.forEach { c ->
+                                        Box(modifier = Modifier.size(14.dp).clip(CircleShape).background(c))
+                                    }
                                 }
                             }
                         }
                     }
                 }
 
-                // System Stats card
+                // Stats
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(GlassPanel.copy(alpha = 0.7f))
+                    modifier = Modifier.fillMaxWidth()
+                        .background(Color(0xFF0F0F14).copy(alpha = 0.7f), RoundedCornerShape(16.dp))
                         .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(16.dp))
-                        .padding(20.dp)
+                        .padding(16.dp)
                 ) {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         // HP
-                        StatBar("SYSTEM BATTERY (HP)", 0.88f, AuraCyanD, "88% / 100%")
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                Text("SYSTEM BATTERY (HP)", fontSize = 8.sp, color = AuraCyan, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                                Text("${(hpPercent * 100).toInt()}% / 100%", fontSize = 8.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                            }
+                            Box(modifier = Modifier.fillMaxWidth().height(6.dp).background(Color(0xFF1A1A1A), RoundedCornerShape(3.dp))) {
+                                Box(modifier = Modifier.fillMaxWidth(hpPercent).fillMaxHeight().background(AuraCyan, RoundedCornerShape(3.dp)))
+                            }
+                        }
                         // MP
-                        StatBar("SYSTEM LOAD (MP)", 0.42f, AuraPink, "42% / 100%")
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                Text("SYSTEM LOAD (MP)", fontSize = 8.sp, color = AuraPink, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                                Text("${(mpPercent * 100).toInt()}% / 100%", fontSize = 8.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                            }
+                            Box(modifier = Modifier.fillMaxWidth().height(6.dp).background(Color(0xFF1A1A1A), RoundedCornerShape(3.dp))) {
+                                Box(modifier = Modifier.fillMaxWidth(mpPercent).fillMaxHeight().background(AuraPink, RoundedCornerShape(3.dp)))
+                            }
+                        }
                     }
                 }
 
                 // Action buttons
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Button(
-                        onClick = onSyncNeuralLink,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = GlassPanel.copy(alpha = 0.7f)),
-                        border = BorderStroke(1.dp, AuraCyanD.copy(alpha = 0.3f))
-                    ) {
-                        Text("SYNC NEURAL LINK", fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp, color = AuraCyanD)
-                    }
+                Row(modifier = Modifier.fillMaxWidth().height(56.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Box(
-                        modifier = Modifier
-                            .size(56.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(GlassPanel.copy(alpha = 0.7f))
-                            .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(12.dp)),
+                        modifier = Modifier.weight(1f).fillMaxHeight()
+                            .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(12.dp))
+                            .border(1.dp, AuraCyan.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+                            .clickable { onSyncNeuralLink() },
                         contentAlignment = Alignment.Center
-                    ) {
-                        Text("•••", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    }
-                }
+                    ) { Text("SYNC NEURAL LINK", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = AuraCyan, letterSpacing = 1.sp) }
 
-                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+                    Box(
+                        modifier = Modifier.size(56.dp)
+                            .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(12.dp))
+                            .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(12.dp))
+                            .clickable { onMore() },
+                        contentAlignment = Alignment.Center
+                    ) { Text("•••", fontSize = 18.sp, color = Color.White) }
+                }
             }
-        }
 
-        // ═══ HUD CORNER BRACKETS ═══
-        // Top-left
-        Box(modifier = Modifier.align(Alignment.TopStart).padding(16.dp).size(32.dp)
-            .border(BorderStroke(2.dp, AuraCyanD.copy(alpha = 0.5f)), object : androidx.compose.ui.graphics.Shape {
-                override fun createOutline(size: androidx.compose.ui.geometry.Size, layoutDirection: androidx.compose.ui.unit.LayoutDirection, density: androidx.compose.ui.unit.Density): Outline {
-                    return Outline.Generic(Path().apply {
-                        moveTo(0f, size.height); lineTo(0f, 0f); lineTo(size.width, 0f)
-                    })
-                }
-            })
-        )
-        // Top-right
-        Box(modifier = Modifier.align(Alignment.TopEnd).padding(16.dp).size(32.dp)
-            .border(BorderStroke(2.dp, AuraPink.copy(alpha = 0.5f)), object : androidx.compose.ui.graphics.Shape {
-                override fun createOutline(size: androidx.compose.ui.geometry.Size, layoutDirection: androidx.compose.ui.unit.LayoutDirection, density: androidx.compose.ui.unit.Density): Outline {
-                    return Outline.Generic(Path().apply {
-                        moveTo(0f, 0f); lineTo(size.width, 0f); lineTo(size.width, size.height)
-                    })
-                }
-            })
-        )
-
-        // Geo coordinates (left side vertical)
-        Text(
-            text = "LAT: 35.6895° N  |  LONG: 139.6917° E  |  ELEV: 402M",
-            fontSize = 8.sp,
-            color = Color.Gray,
-            letterSpacing = 2.sp,
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 4.dp)
-                .graphicsLayer { rotationZ = -90f }
-        )
-    }
-}
-
-@Composable
-private fun StatBar(label: String, progress: Float, barColor: Color, valueLabel: String) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(label, fontSize = 9.sp, color = barColor, fontWeight = FontWeight.Bold)
-            Text(valueLabel, fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(6.dp)
-                .clip(RoundedCornerShape(3.dp))
-                .background(Color(0xFF222222))
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(progress)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(3.dp))
-                    .background(barColor)
-                    .graphicsLayer { shadowElevation = 8f }
-            )
+            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         }
     }
 }
