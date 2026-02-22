@@ -330,5 +330,4 @@ fun AuraLabChromaCoreScreen(
     }
 }
 
-@Composable
 private fun Float.toMutableStateOf() = mutableFloatStateOf(this)
