@@ -8,11 +8,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -363,17 +362,14 @@ private fun DrawScope.drawHexNode(cx: Float, cy: Float, size: Float, color: Colo
     else drawPath(path, color, style = Stroke(1.5f))
 }
 
-// Extension to add border only on start edge
 @Composable
-private fun Modifier.border(start: BorderStroke, shape: Shape): Modifier = this.then(
-    Modifier.drawWithCache {
-        onDrawBehind {
-            drawLine(
-                brush = if (start.brush != null) start.brush!! else SolidColor(Color.Transparent),
-                start = Offset(0f, 0f),
-                end = Offset(0f, size.height),
-                strokeWidth = start.width.toPx()
-            )
-        }
+private fun Modifier.border(start: BorderStroke, shape: Shape): Modifier = this.drawWithCache {
+    onDrawBehind {
+        drawLine(
+            brush = start.brush,
+            start = Offset(0f, 0f),
+            end = Offset(0f, size.height),
+            strokeWidth = start.width.toPx()
+        )
     }
-)
+}

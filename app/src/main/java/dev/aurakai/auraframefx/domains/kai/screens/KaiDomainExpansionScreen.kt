@@ -10,8 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.input.pointer.pointerInput
@@ -109,8 +109,10 @@ fun KaiDomainExpansionScreen(
             label = "scan"
         )
         Box(modifier = Modifier.fillMaxSize().drawWithCache {
+            val h = size.height
+            val w = size.width
             onDrawBehind {
-                drawLine(Color.White.copy(alpha = 0.06f), Offset(0f, size.height * scanY), Offset(size.width, size.height * scanY), 2f)
+                drawLine(Color.White.copy(alpha = 0.06f), Offset(0f, h * scanY), Offset(w, h * scanY), 2f)
             }
         })
 
@@ -149,7 +151,8 @@ fun KaiDomainExpansionScreen(
         // Expanding sphere
         Canvas(modifier = Modifier.size(280.dp)) {
             val cx = size.width / 2; val cy = size.height / 2
-            val r = (sphereRadius + if (domainActive) 500f else 0f).coerceAtMost(size.minDimension / 2)
+            val minDim = size.minDimension
+            val r = (sphereRadius + if (domainActive) 500f else 0f).coerceAtMost(minDim / 2)
             if (r > 0) {
                 val gradient = Brush.radialGradient(
                     listOf(Color.Black, Color.Black, KaiRed),

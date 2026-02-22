@@ -23,6 +23,7 @@ import dev.aurakai.auraframefx.navigation.NavDestination
 @Composable
 fun OracleDriveScreen(
     navController: NavHostController,
+    onNavigateBack: () -> Unit = {},
     viewModel: OracleDriveViewModel = hiltViewModel(
         checkNotNull<ViewModelStoreOwner>(
             LocalViewModelStoreOwner.current
@@ -37,6 +38,15 @@ fun OracleDriveScreen(
         containerColor = Color(0xFF000000), // Dark background
         topBar = {
             CenterAlignedTopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFF00FFFF)
+                        )
+                    }
+                },
                 title = {
                     Text(
                         text = "Oracle Drive",

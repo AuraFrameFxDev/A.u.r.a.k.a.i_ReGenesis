@@ -147,7 +147,10 @@ fun KaiSentinelHubScreen(
                 Spacer(Modifier.height(8.dp))
 
                 // Style toggle FORTRESS ↔ CYBER SENTINEL
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, alignment = Alignment.CenterHorizontally)
+                ) {
                     HubStyle.entries.forEach { style ->
                         val active = hubStyle == style
                         Box(

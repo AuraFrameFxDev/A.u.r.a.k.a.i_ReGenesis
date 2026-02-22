@@ -46,7 +46,7 @@ object SovereignRegistry {
             description = "Control bootloader, flash ROMs, manage LSPosed modules, and secure your device. Kai's domain for system-level access, root tools, and fortress-grade security.",
             assetProvider = { GateAssetConfig.MainGates.SENTINELS_FORTRESS.current() },
             fallbackDrawable = "gate_sentinelsfortress_final",
-            hubRoute = NavDestination.RomToolsHub.route,
+            hubRoute = NavDestination.KaiSentinelHub.route,
             color = Color(0xFF00FF85) // Kai Green
         ),
         "03" to GateInfo(

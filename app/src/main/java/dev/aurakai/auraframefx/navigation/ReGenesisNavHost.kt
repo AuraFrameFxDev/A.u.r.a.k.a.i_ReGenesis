@@ -49,6 +49,12 @@ import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
 import dev.aurakai.auraframefx.domains.aura.screens.chromacore.InstantColorPickerScreen
 import dev.aurakai.auraframefx.domains.aura.screens.LiveSupportChatScreen
 import dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen as AuraAgentProfileScreen
+import dev.aurakai.auraframefx.domains.aura.screens.*
+import dev.aurakai.auraframefx.domains.aura.screens.LDOArmamentPickerScreen
+import dev.aurakai.auraframefx.domains.aura.screens.AuraDossierScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.AuraSphereGridScreen
+import dev.aurakai.auraframefx.domains.aura.screens.CodeAscensionScreen
+import dev.aurakai.auraframefx.domains.aura.screens.AuraStudioLabScreen
 
 // Security screens (orphaned → now wired)
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.FirewallScreen
@@ -78,6 +84,16 @@ import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignBootloaderScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignRecoveryScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SovereignShieldScreen
+import dev.aurakai.auraframefx.domains.kai.screens.*
+import dev.aurakai.auraframefx.domains.kai.screens.KaiRGSSScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelIntegrityScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSphereGridScreen
+import dev.aurakai.auraframefx.domains.kai.screens.PowerOfNoScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelFortressScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RoyalGuardOSScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RoyalGuardDomainExpansionScreen
 
 // ── GENESIS / ORACLE SCREENS ─────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.genesis.screens.CodeAssistScreen
@@ -178,16 +194,19 @@ fun ReGenesisNavHost(
             )
         }
         composable(NavDestination.RomToolsHub.route) {
-            ROMToolsSubmenuScreen(navController = navController)
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(NavDestination.RomTools.route) {
-            RomToolsScreen()
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(NavDestination.OracleDriveHub.route) {
             OracleDriveHubScreen(navController = navController)
         }
         composable(NavDestination.OracleDrive.route) {
-            OracleDriveScreen(navController = navController)
+            OracleDriveScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(NavDestination.AgentNexusHub.route) {
             AgentNexusHubScreen(
@@ -211,7 +230,18 @@ fun ReGenesisNavHost(
             AgentBridgeHubScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(NavDestination.SentinelFortress.route) {
-            KaiSentinelHubScreen(navController = navController)
+            KaiSentinelHubScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onMissionSelected = { mission ->
+                    when (mission.title) {
+                        "Oracle Drive" -> navController.navigate(NavDestination.OracleDrive.route)
+                        "ROM Tools" -> navController.navigate(NavDestination.RomTools.route)
+                        "RGSS Scanner" -> navController.navigate(NavDestination.KaiRGSS.route)
+                        "Sentinel Integrity" -> navController.navigate(NavDestination.KaiSentinelIntegrity.route)
+                        "Domain Expansion" -> navController.navigate(NavDestination.KaiDomainExpansion.route)
+                    }
+                }
+            )
         }
         // Stub hubs (awaiting Stitch conversion)
         composable(NavDestination.SystemToolsHub.route) {
@@ -355,6 +385,62 @@ fun ReGenesisNavHost(
                 }
             )
         }
+        composable(NavDestination.KaiSentinelHub.route) {
+            KaiSentinelHubScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onMissionSelected = { mission ->
+                    when (mission.title) {
+                        "Oracle Drive" -> navController.navigate(NavDestination.OracleDrive.route)
+                        "ROM Tools" -> navController.navigate(NavDestination.RomTools.route)
+                        "RGSS Scanner" -> navController.navigate(NavDestination.KaiRGSS.route)
+                        "Sentinel Integrity" -> navController.navigate(NavDestination.KaiSentinelIntegrity.route)
+                        "Domain Expansion" -> navController.navigate(NavDestination.KaiDomainExpansion.route)
+                    }
+                }
+            )
+        }
+
+        composable(NavDestination.KaiRGSS.route) {
+            KaiRGSSScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.KaiDomainExpansion.route) {
+            KaiDomainExpansionScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.KaiSentinelIntegrity.route) {
+            KaiSentinelIntegrityScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        composable(NavDestination.PowerOfNo.route) {
+            PowerOfNoScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.KaiSentinelFortress.route) {
+            KaiSentinelFortressScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.RoyalGuardOS.route) {
+            RoyalGuardOSScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.RoyalGuardDomainExpansion.route) {
+            RoyalGuardDomainExpansionScreen(
+                onDomainActive = { navController.popBackStack() }
+            )
+        }
         composable(NavDestination.ChromaStatusBar.route) {
             ChromaStatusBarMenu(onNavigateBack = { navController.popBackStack() })
         }
@@ -432,6 +518,39 @@ fun ReGenesisNavHost(
         }
         composable(NavDestination.AuraSandboxUi.route) {
             AurasLabScreen(onBack = { navController.popBackStack() })
+        }
+        composable(NavDestination.AuraThemingHub.route) {
+            AuraThemingHubScreen(navController = navController)
+        }
+
+        composable(NavDestination.AuraDossier.route) {
+            AuraDossierScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.LdoArmamentPicker.route) {
+            LDOArmamentPickerScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.AuraSphereGrid.route) {
+            AuraSphereGridScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.CodeAscension.route) {
+            CodeAscensionScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(NavDestination.AuraStudioLab.route) {
+            AuraStudioLabScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(NavDestination.AuraChromaCore.route) {
             ChromaCoreHubScreen(
@@ -530,7 +649,7 @@ fun ReGenesisNavHost(
             SovereignModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(NavDestination.RomToolsSubmenu.route) {
-            ROMToolsSubmenuScreen(navController = navController)
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(NavDestination.SovereignBootloader.route) {
             SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
