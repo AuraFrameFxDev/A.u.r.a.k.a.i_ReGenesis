@@ -117,6 +117,13 @@ sealed class NavDestination(val route: String) {
     data object ChromaAnimations : NavDestination("aura/chroma_core/animations")
     data object ModuleCreation : NavDestination("module_creation")
     data object AgentCreation : NavDestination("agent_creation")
+    
+    // --- New Aura Domain Screens ---
+    data object LdoArmamentPicker : NavDestination("ldo_armament_picker")
+    data object AuraDossier : NavDestination("aura_dossier")
+    data object AuraSphereGrid : NavDestination("aura_sphere_grid")
+    data object CodeAscension : NavDestination("code_ascension")
+    data object AuraStudioLab : NavDestination("aura_studio_lab")
 
     // --- Aliases for User Plan parity ---
     data object AuraCollabCanvas : NavDestination("aura_collab_canvas")
@@ -160,6 +167,16 @@ sealed class NavDestination(val route: String) {
     data object LogsViewer : NavDestination("logs_viewer")
     data object SovereignModuleManager : NavDestination("sovereign_module_manager")
     data object RomToolsSubmenu : NavDestination("rom_tools_submenu")
+    
+    // --- New Kai Domain Screens ---
+    data object KaiRGSS : NavDestination("kai_rgss")
+    data object KaiDomainExpansion : NavDestination("kai_domain_expansion")
+    data object KaiSentinelIntegrity : NavDestination("kai_sentinel_integrity")
+    data object PowerOfNo : NavDestination("power_of_no")
+    data object KaiSentinelFortress : NavDestination("kai_sentinel_fortress")
+    data object KaiSentinelHub : NavDestination("kai_sentinel_hub")
+    data object RoyalGuardOS : NavDestination("royal_guard_os")
+    data object RoyalGuardDomainExpansion : NavDestination("royal_guard_domain_expansion")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: AI & ORCHESTRATION TOOLS

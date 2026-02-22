@@ -79,9 +79,15 @@ import timber.log.Timber
 @JvmOverloads
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RomToolsScreen(modifier: Modifier = Modifier, romToolsViewModel: RomToolsViewModel = hiltViewModel(checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    }, null),) {
+fun RomToolsScreen(
+    modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit = {},
+    romToolsViewModel: RomToolsViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        }, null
+    )
+) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val romToolsState by romToolsViewModel.romToolsState.collectAsStateWithLifecycle()
     val operationProgressState by romToolsViewModel.operationProgress.collectAsStateWithLifecycle()
@@ -198,6 +204,15 @@ fun RomToolsScreen(modifier: Modifier = Modifier, romToolsViewModel: RomToolsVie
         ) {
             // Top App Bar
             TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        androidx.compose.material3.Icon(
+                            imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFFFF6B35)
+                        )
+                    }
+                },
                 title = {
                     Text(
                         text = "ROM Tools",
