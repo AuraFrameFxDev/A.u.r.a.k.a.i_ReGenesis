@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -201,7 +202,7 @@ fun RomToolsScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         androidx.compose.material3.Icon(
-                            imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color(0xFFFF6B35)
                         )

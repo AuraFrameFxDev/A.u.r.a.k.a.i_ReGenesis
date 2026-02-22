@@ -490,8 +490,7 @@ testing = [
     "androidx-rules",
     "truth",
     "robolectric",
-]
-
+    ]
 system-root = [
     "libsu-core",
     "libsu-nio",
