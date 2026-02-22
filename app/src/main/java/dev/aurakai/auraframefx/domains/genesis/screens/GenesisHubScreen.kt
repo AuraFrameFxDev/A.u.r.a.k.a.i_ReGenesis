@@ -121,8 +121,8 @@ fun GenesisHubScreen(
                 drawPath(
                     Path().apply {
                         moveTo(0f, size.height * 0.2f)
-                        quadraticBezierTo(size.width * 0.25f, size.height * 0.25f, size.width * 0.5f, size.height * 0.2f)
-                        quadraticBezierTo(size.width * 0.75f, size.height * 0.15f, size.width, size.height * 0.2f)
+                        quadraticTo(size.width * 0.25f, size.height * 0.25f, size.width * 0.5f, size.height * 0.2f)
+                        quadraticTo(size.width * 0.75f, size.height * 0.15f, size.width, size.height * 0.2f)
                     },
                     GenPurple.copy(alpha = 0.2f),
                     style = Stroke(2f)
@@ -130,8 +130,8 @@ fun GenesisHubScreen(
                 drawPath(
                     Path().apply {
                         moveTo(0f, size.height * 0.65f)
-                        quadraticBezierTo(size.width * 0.3f, size.height * 0.60f, size.width * 0.6f, size.height * 0.65f)
-                        quadraticBezierTo(size.width * 0.85f, size.height * 0.68f, size.width, size.height * 0.65f)
+                        quadraticTo(size.width * 0.3f, size.height * 0.60f, size.width * 0.6f, size.height * 0.65f)
+                        quadraticTo(size.width * 0.85f, size.height * 0.68f, size.width, size.height * 0.65f)
                     },
                     GenCyan.copy(alpha = 0.12f),
                     style = Stroke(1f)
