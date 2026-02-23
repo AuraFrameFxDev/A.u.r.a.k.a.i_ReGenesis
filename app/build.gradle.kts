@@ -4,27 +4,22 @@
 // Uses com.android.build.api.dsl.ApplicationExtension (modern DSL)
 // Plugins are versioned in the root build.gradle.kts
 
-import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.api.dsl.ApplicationExtension
+import org.gradle.kotlin.dsl.ksp as ksp1
 
 plugins {
-    // Core Android and Kotlin plugins
     id("com.android.application")
     id("com.google.dagger.hilt.android")
-    // Compose and serialization
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
-
-    // Dependency injection and code generation
-
     id("com.google.devtools.ksp")
-
-    // Firebase and analytics
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
 
-// AGP 9.0: Using extensions.configure for modern DSL compatibility
+// ═══════════════════════════════════════════════════════════════════════════
+// ANDROID CONFIG
+// ═══════════════════════════════════════════════════════════════════════════
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
@@ -100,13 +95,35 @@ extensions.configure<ApplicationExtension> {
     }
 
     compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_25
-            targetCompatibility = JavaVersion.VERSION_25
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
+    }
+
+    lint {
+        baseline = file("lint-baseline.xml")
+        abortOnError = false
+        checkReleaseBuilds = false
+    }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+        viewBinding = true
+        aidl = true
     }
 }
 
-// Enable modern Kotlin features (Experimental/New in 2.2+)
+// ═══════════════════════════════════════════════════════════════════════════
+// KSP — Project-level (NOT inside ApplicationExtension)
+// ═══════════════════════════════════════════════════════════════════════════
+ksp1 {
+    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// KOTLIN COMPILE OPTIONS
+// ═══════════════════════════════════════════════════════════════════════════
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
@@ -130,118 +147,44 @@ tasks.configureEach {
     }
 }
 
-extensions.configure<ApplicationExtension> {
-    lint {
-        baseline = file("lint-baseline.xml")
-        abortOnError = false
-        checkReleaseBuilds = false
-    }
-
-    buildFeatures {
-        buildConfig = true
-        compose = true
-        viewBinding = true
-        aidl = true
-    }
-
-    ksp {
-        arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // DEDUPLICATION: Exclude duplicate files to fix compile collisions
-    // ═══════════════════════════════════════════════════════════════════════════
-    sourceSets {
-        getByName("main") {
-            java.srcDirs("src/main/java")
-            res.srcDirs(
-                "src/main/res",
-                "src/main/res/drawable/Gatescenes/Aura",
-                "src/main/res/drawable/Gatescenes/Kai",
-                "src/main/res/drawable/Gatescenes/Genesis",
-                "src/main/res/drawable/Gatescenes/Nexus",
-                "src/main/res/drawable/Gatescenes/Cascade",
-                "src/main/res/drawable/Gatescenes/Vessels"
-            )
-        }
-    }
-}
-
-// Ensure Kotlin and KSP complete before Java compilation
-tasks.matching { it.name == "compileDebugJavaWithJavac" }.configureEach {
-    dependsOn("kspDebugKotlin")
-}
-
-tasks.matching { it.name == "compileReleaseJavaWithJavac" }.configureEach {
-    dependsOn("kspReleaseKotlin")
-}
-
-private fun AndroidSourceDirectorySet.mutableset(
-    string: String,
-    string2: String,
-    string3: String,
-    string4: String,
-    string5: String,
-    string6: String,
-    string7: String
-) {
-}
-
+// ═══════════════════════════════════════════════════════════════════════════
+// DEPENDENCIES
+// ═══════════════════════════════════════════════════════════════════════════
 dependencies {
-    // ═══════════════════════════════════════════════════════════════════════════
-    // AUTO-PROVIDED by genesis.android.application:
-    // ═══════════════════════════════════════════════════════════════════════════
-    // ✅ Hilt Android + Compiler (with KSP)
-    // ✅ Compose BOM + UI (ui, ui-graphics, ui-tooling-preview, material3, ui-tooling[debug])
-    // ✅ Core Android (core-ktx, appcompat, activity-compose)
-    // ✅ Lifecycle (runtime-ktx, viewmodel-compose)
-    // ✅ Kotlin Coroutines (core + android)
-    // ✅ Kotlin Serialization JSON
-    // ✅ Timber (logging)
-    // ✅ Core library desugaring (Java 25 APIs)
-    // ✅ Firebase BOM
-    // ✅ Xposed API (compileOnly) + EzXHelper
-    //
-    // ⚠️ ONLY declare module-specific dependencies below!
-    // ═══════════════════════════════════════════════════════════════════════════
+    // Core desugar
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
-    // Hilt Dependency Injection (MUST be added before afterEvaluate)
+    // Hilt
     implementation(libs.hilt.android)
-    implementation(libs.androidx.navigation.common.ktx)
-    implementation(libs.androidx.animation)
-    implementation(libs.androidx.compose.ui.geometry)
-    implementation(libs.androidx.compose.material3)
-    testImplementation(libs.jupiter.junit.jupiter)
-    ksp(libs.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
 
-    // Core Android
+    // Kotlin / Coroutines
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+
+    // AndroidX Core
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
-
-    // MultiDex support for 64K+ methods (Removed: redundant for minSdk 34)
-
-    // Compose BOM & UI
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.graphics)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.animation)
-    implementation(libs.compose.material.icons.extended)
-    debugImplementation(libs.compose.ui.tooling)
-
-    // Compose Extras (Navigation, Animation)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Lifecycle
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose)
+    // Compose BOM
+    val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // Room Database
+    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
@@ -274,12 +217,12 @@ dependencies {
         exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
     }
 
-    // YukiHook: ONLY use api for runtime (contains all needed classes)
-    // ksp-xposed is ONLY for annotation processing at compile time
-    implementation("com.highcapable.yukihookapi:api:1.3.1") {
+    // YukiHook API
+    compileOnly(libs.yukihookapi.api) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-    ksp("com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+    ksp(libs.yukihookapi.ksp)
+
     // Force resolution of conflicting dependencies
     configurations.all {
          resolutionStrategy {
@@ -300,64 +243,22 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
-
-    // Networking - Ktor Client
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.client.logging)
-
-    // Kotlin Serialization
-    implementation(libs.kotlinx.serialization.json)
-
-    // Moshi (JSON - for Retrofit)
-    implementation(libs.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
+    implementation("com.jakewharton.retrofit2:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("io.ktor:ktor-client-android:3.4.0")
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
-    // Gson (JSON processing)
-    implementation(libs.gson)
-
-    // Kotlin DateTime & Coroutines
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Image Loading
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
-    implementation(libs.coil.network.okhttp)
-
-    // Animations
-    implementation(libs.lottie.compose)
-
-    // Logging
-    implementation(libs.timber)
-
-    // Memory Leak Detection
-    debugImplementation(libs.leakcanary.android)
-
-    // Android API JARs (Xposed)
-    compileOnly(files("$projectDir/libs/api-82.jar"))
-    compileOnly(files("$projectDir/libs/api-82-sources.jar"))
-
-    // AI & ML - Google Generative AI SDK
-    implementation(libs.generativeai)
-
-    // Core Library Desugaring (Java 25 APIs)
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Firebase Ecosystem
-    // ═══════════════════════════════════════════════════════════════════════════
-    implementation(platform(libs.firebase.bom))
+    // Firebase BOM
+    val firebaseBom = platform("com.google.firebase:firebase-bom:33.14.0")
+    implementation(firebaseBom)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.messaging)
-    implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-    implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.config)
 
@@ -373,55 +274,23 @@ dependencies {
     implementation(project(":aura:reactivedesign:collabcanvas"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:customization"))
-    implementation(project(":extendsysa"))
-    implementation(project(":extendsysb"))
-    implementation(project(":extendsysc"))
-    implementation(project(":extendsysd"))
-    implementation(project(":extendsyse"))
-    implementation(project(":extendsysf"))
 
-    // Kai → SentinelsFortress (Security & Threat Monitoring)
-    implementation(project(":kai:sentinelsfortress:security"))
-    implementation(project(":kai:sentinelsfortress:systemintegrity"))
-    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+    // Vertex AI / Gemini
+    implementation(libs.generativeai)
 
-    // Genesis → OracleDrive (System & Root Management)
-    implementation(project(":genesis:oracledrive"))
-    implementation(project(":genesis:oracledrive:rootmanagement"))
-    implementation(project(":genesis:oracledrive:datavein"))
+    // YukiHookAPI (Xposed)
+    implementation(libs.yukihookapi.api)
+    ksp(libs.yukihookapi.ksp)
 
-    // Cascade → DataStream (Data Routing & Delivery)
-    implementation(project(":cascade:datastream:routing"))
-    implementation(project(":cascade:datastream:delivery"))
-    implementation(project(":cascade:datastream:taskmanager"))
+    // LeakCanary (debug)
+    debugImplementation(libs.leakcanary.android)
 
-    // Agents → GrowthMetrics (AI Agent Evolution)
-    implementation(project(":agents:growthmetrics:metareflection"))
-    implementation(project(":agents:growthmetrics:nexusmemory"))
-    implementation(project(":agents:growthmetrics:spheregrid"))
-    implementation(project(":agents:growthmetrics:identity"))
-    implementation(project(":agents:growthmetrics:progression"))
-    implementation(project(":agents:growthmetrics:tasker"))
-
-    // Central Core Module
-    implementation(project(":core-module"))
-}
-
-// Force a single annotations artifact and exclude YukiHook KSP from runtime to avoid duplicate-class errors
-configurations.all {
-    // Skip androidTest configurations to avoid issues with local JARs
-    if (name.contains("AndroidTest")) {
-        return@all
-    }
-
-    // Exclude YukiHook KSP processor from runtime classpaths to prevent collisions with the API
-    if (name.contains("RuntimeClasspath", ignoreCase = true)) {
-        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
-
-    resolutionStrategy {
-        force("org.jetbrains:annotations:26.0.2-1")
-    }
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(composeBom)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
