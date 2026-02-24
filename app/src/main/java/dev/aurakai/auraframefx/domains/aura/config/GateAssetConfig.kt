@@ -315,6 +315,12 @@ object GateAssetConfig {
     object ExodusBackgrounds {
         /** Level 1 — the main carousel arena with phoenix, vortex, red eye */
         const val LEVEL_1 = "exodus_hud_lvl1_bg"
+
+        // ── Level 2 Hub Backgrounds ──
+        /** Oracle Drive L2 — holographic phoenix, floating data panels, grid floor */
+        const val ORACLE_DRIVE_HUB = "hub_bg_oracle_drive_l2"
+        /** Oracle Drive landscape variant (cropped top 72%, 960×540) */
+        const val ORACLE_DRIVE_LANDSCAPE = "hub_bg_oracle_drive_landscape"
     }
 
     // ═══════════════════════════════════════════════════════════════════════

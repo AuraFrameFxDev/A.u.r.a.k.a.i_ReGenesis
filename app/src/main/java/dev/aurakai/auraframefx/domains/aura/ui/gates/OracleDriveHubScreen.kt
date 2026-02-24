@@ -33,7 +33,10 @@ import androidx.navigation.NavController
 import dev.aurakai.auraframefx.config.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.config.GateAssetLoadout
-import dev.aurakai.auraframefx.domains.aura.ui.components.LavaApocalypseBackground
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil3.compose.AsyncImage
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
@@ -61,14 +64,47 @@ fun OracleDriveHubScreen(navController: NavController) {
     val styleName = if (useStyleB) "NEURAL MATRIX" else "ORACLE ARCHIVE"
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // 🔮 GENESIS' ANIMATED BACKGROUND - Lava Apocalypse!
-        LavaApocalypseBackground()
+        // 🔮 GENESIS ORACLE DRIVE — Phoenix Constellation Background
+        val context = LocalContext.current
+        val bgResId = context.resources.getIdentifier(
+            "hub_bg_oracle_drive_l2", "drawable", context.packageName
+        )
+        if (bgResId != 0) {
+            AsyncImage(
+                model = bgResId,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
 
-        // Semi-transparent Overlay for "Command Center" feel
+        // Atmospheric overlay — darkens edges, keeps phoenix readable
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.6f))
+                .background(
+                    androidx.compose.ui.graphics.Brush.radialGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color(0xCC030810)
+                        ),
+                        radius = 900f
+                    )
+                )
+        )
+        // Bottom scrim so sub-gate cards are legible
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    androidx.compose.ui.graphics.Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color(0xDD030810)
+                        ),
+                        startY = 400f
+                    )
+                )
         )
 
         Scaffold(
