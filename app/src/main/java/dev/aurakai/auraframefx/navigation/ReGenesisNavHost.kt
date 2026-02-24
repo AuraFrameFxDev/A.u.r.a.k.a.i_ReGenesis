@@ -15,11 +15,10 @@ import dev.aurakai.auraframefx.datavein.ui.SimpleDataVeinScreen
 import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
 import dev.aurakai.auraframefx.config.GateAssetLoadout
-import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel // kept once
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaLauncherMenu
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaStatusBarMenu
-import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.screens.DirectChatScreen
 import dev.aurakai.auraframefx.domains.aura.screens.DocumentationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.FAQBrowserScreen
@@ -38,8 +37,14 @@ import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCus
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen as DomainOracleDriveHubScreen
+import dev.aurakai.auraframefx.ui.gates.CascadeHubScreen
+import dev.aurakai.auraframefx.ui.gates.HelpDeskScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AgentBridgeHubScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AppBuilderScreen
@@ -318,6 +323,49 @@ fun ReGenesisNavHost(
             AgentAdvancementScreen(onBack = { navController.popBackStack() })
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // GATE HUB SCREENS — These are the 8 sovereign gate destinations
+        // ═══════════════════════════════════════════════════════════════
+
+        // Gate 01: UXUI Design Studio → Aura Theming Hub
+        composable(ReGenesisNavHost.AuraThemingHub.route) {
+            AuraThemingHubScreen(navController = navController)
+        }
+
+        // Gate 02: Sentinel Fortress → Kai's ROM Tools Hub (already registered as RomToolsHub)
+        // Gate 02 alias so both routes work
+        composable(ReGenesisNavHost.SentinelFortress.route) {
+            KaiSentinelHubScreen(navController = navController)
+        }
+
+        // Gate 03: Oracle Drive → Genesis Hub
+        composable(ReGenesisNavHost.OracleDriveHub.route) {
+            DomainOracleDriveHubScreen(navController = navController)
+        }
+
+        // Gate 04: Agent Nexus Hub
+        composable(ReGenesisNavHost.AgentNexusHub.route) {
+            AgentNexusHubScreen(
+                navController = navController,
+                getNexusSubGates = { GateAssetLoadout.getNexusSubGates() }
+            )
+        }
+
+        // Gate 05: LSPosed Quick Toggles → LSPosed Submenu
+        composable(ReGenesisNavHost.LsposedQuickToggles.route) {
+            LSPosedSubmenuScreen(navController = navController)
+        }
+
+        // Gate 06: Help Services
+        composable(ReGenesisNavHost.HelpDesk.route) {
+            HelpDeskScreen(navController = navController)
+        }
+
+        // Gate 07: Dataflow Analysis → Cascade Hub
+        composable(ReGenesisNavHost.DataflowAnalysis.route) {
+            CascadeHubScreen(navController = navController)
+        }
+
         // CONSOLIDATED: CodeAssist uses CodeAssistScreen, AppBuilder is separate.
         composable(ReGenesisNavHost.CodeAssist.route) {
             CodeAssistScreen(navController = navController)
@@ -448,9 +496,6 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.NeuralNetwork.route) {
             NeuralArchiveScreen(navController = navController)
         }
-        composable(ReGenesisNavHost.AgentBridgeHub.route) {
-            AgentBridgeHubScreen(onNavigateBack = { navController.popBackStack() })
-        }
         composable(ReGenesisNavHost.OracleCloudStorage.route) {
             OracleCloudInfiniteStorageScreen(onNavigateBack = { navController.popBackStack() })
         }
@@ -549,9 +594,6 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         // ADDITIONAL AURA SCREENS (UI/UX Mastery!)
         // ═══════════════════════════════════════════════════════════════
-        composable(ReGenesisNavHost.ChromaCoreColors.route) {
-            ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() })
-        }
 
         composable(ReGenesisNavHost.GenderSelection.route) {
             GenderSelectionScreen(onSelectionComplete = { /* TODO: Handle selection */ })
