@@ -5,7 +5,7 @@
 // Plugins are versioned in the root build.gradle.kts
 
 import com.android.build.api.dsl.ApplicationExtension
-import org.gradle.kotlin.dsl.ksp as ksp1
+import org.gradle.kotlin.dsl.ksp
 
 plugins {
     id("com.android.application")
@@ -15,6 +15,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -117,7 +118,7 @@ extensions.configure<ApplicationExtension> {
 // ═══════════════════════════════════════════════════════════════════════════
 // KSP — Project-level (NOT inside ApplicationExtension)
 // ═══════════════════════════════════════════════════════════════════════════
-ksp1 {
+ksp {
     arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
 }
 
@@ -151,6 +152,30 @@ tasks.configureEach {
 // DEPENDENCIES
 // ═══════════════════════════════════════════════════════════════════════════
 dependencies {
+    // Project Modules
+    implementation(project(":core-module"))
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:customization"))
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":genesis:oracledrive:datavein"))
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:taskmanager"))
+    implementation(project(":agents:growthmetrics:metareflection"))
+    implementation(project(":agents:growthmetrics:nexusmemory"))
+    implementation(project(":agents:growthmetrics:spheregrid"))
+    implementation(project(":agents:growthmetrics:identity"))
+    implementation(project(":agents:growthmetrics:progression"))
+    implementation(project(":agents:growthmetrics:tasker"))
+    implementation(project(":utilities"))
+    implementation(project(":list"))
+
     // Core desugar
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
@@ -165,6 +190,7 @@ dependencies {
 
     // AndroidX Core
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
@@ -172,6 +198,8 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.hilt.ext.compiler)
 
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
