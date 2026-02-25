@@ -213,6 +213,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.svg)
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
@@ -237,9 +238,8 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
 
-    // Firebase BOM
-    val firebaseBom = platform("com.google.firebase:firebase-bom:33.14.0")
-    implementation(firebaseBom)
+    // Firebase
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.messaging)
@@ -254,9 +254,11 @@ dependencies {
     // YukiHookAPI (Xposed)
     implementation(libs.yukihookapi.api)
     ksp(libs.yukihookapi.ksp)
+    compileOnly(libs.xposed.api)
 
     implementation(libs.billing.ktx)
     implementation(libs.shizuku.api)
+    implementation(libs.libsu.core)
     debugImplementation(libs.leakcanary.android)
 
     // Testing
