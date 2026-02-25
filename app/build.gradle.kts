@@ -187,6 +187,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
 
     // AndroidX Core
     implementation(libs.androidx.core.ktx)
@@ -195,11 +196,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.security.crypto)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
-    ksp(libs.hilt.work.compiler)  // androidx.hilt:hilt-work-compiler (WorkManager integration)
+    ksp(libs.hilt.ext.compiler)  // androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
 
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
@@ -209,6 +211,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
@@ -274,11 +278,13 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
+    implementation(libs.timber)
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
 
     // Firebase BOM
     val firebaseBom = platform("com.google.firebase:firebase-bom:33.14.0")
@@ -288,20 +294,6 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
-    implementation(libs.firebase.config)
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Internal Project Modules - Core
-    // ═══════════════════════════════════════════════════════════════════════════
-
-    // Material Icons Extended
-    implementation(libs.compose.material.icons.extended)
-
-    // Aura → ReactiveDesign (Creative UI & Collaboration)
-    implementation(project(":aura:reactivedesign:auraslab"))
-    implementation(project(":aura:reactivedesign:collabcanvas"))
-    implementation(project(":aura:reactivedesign:chromacore"))
-    implementation(project(":aura:reactivedesign:customization"))
 
     // Vertex AI / Gemini
     implementation(libs.generativeai)
@@ -310,7 +302,8 @@ dependencies {
     implementation(libs.yukihookapi.api)
     ksp(libs.yukihookapi.ksp)
 
-    // LeakCanary (debug)
+    implementation(libs.billing.ktx)
+    implementation(libs.shizuku.api)
     debugImplementation(libs.leakcanary.android)
 
     // Testing
