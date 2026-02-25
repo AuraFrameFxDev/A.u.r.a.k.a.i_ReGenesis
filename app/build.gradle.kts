@@ -199,7 +199,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
-    ksp(libs.hilt.ext.compiler)
+    ksp(libs.hilt.work.compiler)  // androidx.hilt:hilt-work-compiler (WorkManager integration)
 
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
@@ -275,8 +275,8 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
-    implementation("com.jakewharton.retrofit2:retrofit2-kotlinx-serialization-converter:1.0.0")
-    implementation("io.ktor:ktor-client-android:3.4.0")
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
 
