@@ -68,7 +68,7 @@ leakcanary = "2.14"
 lottie = "6.7.1"
 material = "1.13.0"
 timber = "5.0.1"
-libsu = "6.0.0"
+libsu = "5.2.2"
 xposed = "82"
 xposed-bridge = "1.3.1"
 ndk = "29.0.14206865"
@@ -122,7 +122,7 @@ androidx-compose-material-icons-extended = { module = "androidx.compose.material
 androidx-compose-material3-window-size-class1 = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "runtimeLivedata" }
 androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
-androidx-core = { module = "androidx.test:core", version.ref = "core" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 # androidx-multidex removed - redundant for minSdk 34
 androidx-rules = { module = "androidx.test:rules", version.ref = "core" }
@@ -222,14 +222,14 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 # Firebase (via BOM - KTX merged into main modules)
 # ============================================================================
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "23.0.0" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.4" }
-firebase-auth = { module = "com.google.firebase:firebase-auth", version = "24.0.1" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "26.1.0" }
-firebase-database = { module = "com.google.firebase:firebase-database", version = "22.0.1" }
-firebase-storage = { module = "com.google.firebase:firebase-storage", version = "22.0.1" }
-firebase-config = { module = "com.google.firebase:firebase-config", version = "23.0.1" }
-firebase-messaging = { module = "com.google.firebase:firebase-messaging", version = "25.0.1" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-database = { module = "com.google.firebase:firebase-database" }
+firebase-storage = { module = "com.google.firebase:firebase-storage" }
+firebase-config = { module = "com.google.firebase:firebase-config" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 
 # ============================================================================
 # Google AI & ML
@@ -487,7 +487,7 @@ testing = [
     "junit-jupiter-api",
     "mockk",
     "androidx-junit",
-    "androidx-core",
+    "androidx-test-core",
     "androidx-runner",
     "androidx-rules",
     "truth",
