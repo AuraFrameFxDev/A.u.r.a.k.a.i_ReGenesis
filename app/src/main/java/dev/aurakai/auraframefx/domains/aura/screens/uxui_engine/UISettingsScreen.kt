@@ -27,34 +27,35 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-
+import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
 /**
- * UI Settings screen for toggling various UI components
+ * UI Settings screen — Aura controls every visibility toggle.
+ * State comes from AuraUIControlViewModel (DataStore-backed). No local mutableState.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UISettingsScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    onBack: () -> Unit = { navController.navigateUp() }
+    onBack: () -> Unit = { navController.navigateUp() },
+    viewModel: AuraUIControlViewModel = hiltViewModel()
 ) {
-    // State for UI toggles
-    var isSidebarVisible by remember { mutableStateOf(true) }
-    var isNotchbarVisible by remember { mutableStateOf(true) }
-    var isStatusBarVisible by remember { mutableStateOf(true) }
-    var isBottomNavVisible by remember { mutableStateOf(true) }
-    var isGlowEffectsEnabled by remember { mutableStateOf(true) }
-    var isPixelArtEnabled by remember { mutableStateOf(true) }
-    var isDarkMode by remember { mutableStateOf(true) }
+    val state by viewModel.uiSettingsState.collectAsState()
+    val isSidebarVisible = state.isSidebarVisible
+    val isNotchbarVisible = state.isNotchbarVisible
+    val isStatusBarVisible = state.isStatusBarVisible
+    val isBottomNavVisible = state.isBottomNavVisible
+    val isGlowEffectsEnabled = state.isGlowEffectsEnabled
+    val isPixelArtEnabled = state.isPixelArtEnabled
+    val isDarkMode = state.isDarkMode
 
     Scaffold(
         topBar = {
@@ -94,28 +95,28 @@ fun UISettingsScreen(
                     title = "Sidebar",
                     subtitle = "Show/hide the main sidebar",
                     isChecked = isSidebarVisible,
-                    onCheckedChange = { isSidebarVisible = it }
+                    onCheckedChange = { viewModel.setSidebarVisible(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Notch Bar",
                     subtitle = "Show/hide the top notch bar",
                     isChecked = isNotchbarVisible,
-                    onCheckedChange = { isNotchbarVisible = it }
+                    onCheckedChange = { viewModel.setNotchbarVisible(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Status Bar",
                     subtitle = "Show/hide the system status bar",
                     isChecked = isStatusBarVisible,
-                    onCheckedChange = { isStatusBarVisible = it }
+                    onCheckedChange = { viewModel.setStatusBarVisible(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Bottom Navigation",
                     subtitle = "Show/hide the bottom navigation bar",
                     isChecked = isBottomNavVisible,
-                    onCheckedChange = { isBottomNavVisible = it }
+                    onCheckedChange = { viewModel.setBottomNavVisible(it) }
                 )
             }
 
@@ -125,14 +126,14 @@ fun UISettingsScreen(
                     title = "Glow Effects",
                     subtitle = "Enable/disable UI glow and bloom effects",
                     isChecked = isGlowEffectsEnabled,
-                    onCheckedChange = { isGlowEffectsEnabled = it }
+                    onCheckedChange = { viewModel.setGlowEffects(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Pixel Art Mode",
                     subtitle = "Enable retro pixel art styling",
                     isChecked = isPixelArtEnabled,
-                    onCheckedChange = { isPixelArtEnabled = it }
+                    onCheckedChange = { viewModel.setPixelArt(it) }
                 )
             }
 
@@ -163,14 +164,13 @@ fun UISettingsScreen(
             // Reset Button
             Button(
                 onClick = {
-                    // Reset all toggles to default
-                    isSidebarVisible = true
-                    isNotchbarVisible = true
-                    isStatusBarVisible = true
-                    isBottomNavVisible = true
-                    isGlowEffectsEnabled = true
-                    isPixelArtEnabled = true
-                    isDarkMode = true
+                    viewModel.setSidebarVisible(true)
+                    viewModel.setNotchbarVisible(true)
+                    viewModel.setStatusBarVisible(true)
+                    viewModel.setBottomNavVisible(true)
+                    viewModel.setGlowEffects(true)
+                    viewModel.setPixelArt(true)
+                    viewModel.setDarkMode(true)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

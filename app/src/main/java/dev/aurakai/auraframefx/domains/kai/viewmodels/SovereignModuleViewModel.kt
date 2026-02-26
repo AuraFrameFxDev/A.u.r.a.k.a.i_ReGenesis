@@ -1,21 +1,61 @@
 package dev.aurakai.auraframefx.domains.kai.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.kai.ModuleStatus
 import dev.aurakai.auraframefx.domains.kai.ModuleType
 import dev.aurakai.auraframefx.domains.kai.SovereignModule
+import dev.aurakai.auraframefx.system.ShizukuManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SovereignModuleViewModel @Inject constructor() : ViewModel() {
-    private val _modules = MutableStateFlow(initialModules())
+
+    private val _modules = MutableStateFlow(seedModules())
     val modules: StateFlow<List<SovereignModule>> = _modules.asStateFlow()
 
-    private fun initialModules() = listOf(
+    init {
+        syncLiveStatuses()
+    }
+
+    /** Probe real system services and update module statuses accordingly. */
+    private fun syncLiveStatuses() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val shizukuActive = ShizukuManager.isShizukuAvailable()
+            _modules.value = _modules.value.map { module ->
+                when (module.id) {
+                    "shizuku-service" -> module.copy(
+                        status = if (shizukuActive) ModuleStatus.ACTIVE else ModuleStatus.INACTIVE
+                    )
+                    else -> module
+                }
+            }
+        }
+    }
+
+    fun toggleModule(id: String) {
+        _modules.value = _modules.value.map { module ->
+            if (module.id == id) {
+                val newStatus =
+                    if (module.status == ModuleStatus.ACTIVE) ModuleStatus.INACTIVE else ModuleStatus.ACTIVE
+                module.copy(status = newStatus)
+            } else module
+        }
+        // Re-sync live statuses after any toggle so we don't override real state
+        if (id == "shizuku-service") syncLiveStatuses()
+    }
+
+    fun refresh() {
+        syncLiveStatuses()
+    }
+
+    private fun seedModules() = listOf(
         SovereignModule(
             id = "aura-themer",
             name = "Aura Engine Core",
@@ -60,17 +100,7 @@ class SovereignModuleViewModel @Inject constructor() : ViewModel() {
             version = "13.1.5",
             author = "Rikka",
             type = ModuleType.SHIZUKU,
-            status = ModuleStatus.ACTIVE
+            status = ModuleStatus.INACTIVE  // real status set in syncLiveStatuses()
         )
     )
-
-    fun toggleModule(id: String) {
-        _modules.value = _modules.value.map {
-            if (it.id == id) {
-                val newStatus =
-                    if (it.status == ModuleStatus.ACTIVE) ModuleStatus.INACTIVE else ModuleStatus.ACTIVE
-                it.copy(status = newStatus)
-            } else it
-        }
-    }
 }
