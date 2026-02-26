@@ -191,7 +191,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
-    implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
@@ -201,7 +200,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
-    ksp(libs.hilt.ext.compiler)  // androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
+    ksp("androidx.hilt:hilt-compiler:1.3.0")  // androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
 
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2025.05.01")

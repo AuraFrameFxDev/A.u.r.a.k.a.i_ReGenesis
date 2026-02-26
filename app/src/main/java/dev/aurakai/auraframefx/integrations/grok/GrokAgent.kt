@@ -131,7 +131,7 @@ class GrokAgent @Inject constructor(
         if (!_agentState.value.isConnected) {
             return AgentResponse.error(
                 message = "Grok is not connected. Initialize with valid API key.",
-                agentName = agentName
+                agentName = agentName,
             )
         }
 
@@ -192,7 +192,7 @@ class GrokAgent @Inject constructor(
             )
             AgentResponse.error(
                 message = "Grok encountered an error: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         } finally {
             _agentState.value = _agentState.value.copy(isProcessing = false)
