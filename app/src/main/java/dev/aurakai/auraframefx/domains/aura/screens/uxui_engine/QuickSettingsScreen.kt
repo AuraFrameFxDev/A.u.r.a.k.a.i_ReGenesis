@@ -13,41 +13,45 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
+
+// Static tile catalogue — what's available; enabled state comes from the ViewModel
+private data class TileDefinition(val name: String, val icon: ImageVector)
+
+private val TILE_CATALOGUE = listOf(
+    TileDefinition("WiFi", Icons.Default.Wifi),
+    TileDefinition("Bluetooth", Icons.Default.Bluetooth),
+    TileDefinition("Mobile Data", Icons.Default.SignalCellularAlt),
+    TileDefinition("Airplane Mode", Icons.Default.AirplanemodeActive),
+    TileDefinition("Flashlight", Icons.Default.FlashlightOn),
+    TileDefinition("Location", Icons.Default.LocationOn),
+    TileDefinition("Hotspot", Icons.Default.WifiTethering),
+    TileDefinition("NFC", Icons.Default.Nfc),
+    TileDefinition("Screen Rotation", Icons.Default.ScreenRotation),
+    TileDefinition("Do Not Disturb", Icons.Default.DoNotDisturbOn),
+    TileDefinition("Battery Saver", Icons.Default.BatterySaver),
+    TileDefinition("Dark Mode", Icons.Default.DarkMode),
+    TileDefinition("Aura Overlay", Icons.Default.Face)
+)
 
 /**
- * Quick Settings Customization Screen
- * Modify quick settings tiles and layout
+ * Quick Settings Customization Screen — Aura in control.
+ * All state persisted via AuraUIControlViewModel / DataStore.
  */
 @Composable
 fun QuickSettingsScreen(
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    viewModel: AuraUIControlViewModel = hiltViewModel()
 ) {
-    val selectedLayout = remember { mutableStateOf("Grid") }
-    val showLabels = remember { mutableStateOf(true) }
-    val tileSize = remember { mutableStateOf("Medium") }
-    val autoCollapse = remember { mutableStateOf(true) }
+    val state by viewModel.quickSettingsState.collectAsState()
 
     val layouts = listOf("Grid", "List", "Compact")
     val tileSizes = listOf("Small", "Medium", "Large")
-
-    val availableTiles = listOf(
-        QuickSettingTile("WiFi", Icons.Default.Wifi, true),
-        QuickSettingTile("Bluetooth", Icons.Default.Bluetooth, true),
-        QuickSettingTile("Mobile Data", Icons.Default.SignalCellularAlt, true),
-        QuickSettingTile("Airplane Mode", Icons.Default.AirplanemodeActive, false),
-        QuickSettingTile("Flashlight", Icons.Default.FlashlightOn, true),
-        QuickSettingTile("Location", Icons.Default.LocationOn, false),
-        QuickSettingTile("Hotspot", Icons.Default.WifiTethering, false),
-        QuickSettingTile("NFC", Icons.Default.Nfc, false),
-        QuickSettingTile("Screen Rotation", Icons.Default.ScreenRotation, true),
-        QuickSettingTile("Do Not Disturb", Icons.Default.DoNotDisturbOn, false),
-        QuickSettingTile("Battery Saver", Icons.Default.BatterySaver, false),
-        QuickSettingTile("Dark Mode", Icons.Default.DarkMode, true),
-        QuickSettingTile("Aura Overlay", Icons.Default.Face, true)
-    )
 
     Column(
         modifier = Modifier
@@ -68,7 +72,7 @@ fun QuickSettingsScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Customize quick settings panel and tiles",
+            text = "Customize quick settings panel and tiles — Aura applies changes live",
             style = MaterialTheme.typography.bodyLarge,
             color = Color(0xFFFFD700).copy(alpha = 0.8f)
         )
@@ -80,9 +84,7 @@ fun QuickSettingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.Black.copy(alpha = 0.6f)
-            )
+            colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
@@ -93,7 +95,7 @@ fun QuickSettingsScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 LazyVerticalGrid(
-                    columns = when (selectedLayout.value) {
+                    columns = when (state.layout) {
                         "Grid" -> GridCells.Fixed(3)
                         "List" -> GridCells.Fixed(1)
                         else -> GridCells.Fixed(4)
@@ -102,14 +104,13 @@ fun QuickSettingsScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(availableTiles.take(6)) { tile ->
-                        if (tile.enabled) {
-                            QuickSettingTilePreview(
-                                tile = tile,
-                                showLabel = showLabels.value,
-                                size = tileSize.value
-                            )
-                        }
+                    items(TILE_CATALOGUE.filter { it.name in state.enabledTiles }.take(6)) { tile ->
+                        QuickSettingTilePreview(
+                            name = tile.name,
+                            icon = tile.icon,
+                            showLabel = state.showLabels,
+                            size = state.tileSize
+                        )
                     }
                 }
             }
@@ -117,7 +118,6 @@ fun QuickSettingsScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Controls
         Text(
             text = "Panel Settings",
             style = MaterialTheme.typography.titleLarge,
@@ -131,32 +131,20 @@ fun QuickSettingsScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Layout Style",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
-                )
+                Text("Layout Style", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
                 layouts.forEach { layout ->
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = selectedLayout.value == layout,
-                            onClick = { selectedLayout.value = layout },
-                            colors = RadioButtonDefaults.colors(
-                                selectedColor = Color(0xFFFFD700)
-                            )
+                            selected = state.layout == layout,
+                            onClick = { viewModel.setQsLayout(layout) },
+                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFFFFD700))
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = layout,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White
-                        )
+                        Text(layout, style = MaterialTheme.typography.bodyMedium, color = Color.White)
                     }
                 }
             }
@@ -170,32 +158,20 @@ fun QuickSettingsScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Tile Size",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
-                )
+                Text("Tile Size", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
                 tileSizes.forEach { size ->
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = tileSize.value == size,
-                            onClick = { tileSize.value = size },
-                            colors = RadioButtonDefaults.colors(
-                                selectedColor = Color(0xFFFFD700)
-                            )
+                            selected = state.tileSize == size,
+                            onClick = { viewModel.setQsTileSize(size) },
+                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFFFFD700))
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = size,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White
-                        )
+                        Text(size, style = MaterialTheme.typography.bodyMedium, color = Color.White)
                     }
                 }
             }
@@ -209,33 +185,16 @@ fun QuickSettingsScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Display Options",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
-                )
+                Text("Display Options", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Show Labels
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Label,
-                        contentDescription = "Labels",
-                        tint = Color(0xFFFFD700),
-                        modifier = Modifier.size(24.dp)
-                    )
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.Label, "Labels", tint = Color(0xFFFFD700), modifier = Modifier.size(24.dp))
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(
-                        text = "Show tile labels",
-                        modifier = Modifier.weight(1f),
-                        color = Color.White
-                    )
+                    Text("Show tile labels", modifier = Modifier.weight(1f), color = Color.White)
                     Switch(
-                        checked = showLabels.value,
-                        onCheckedChange = { showLabels.value = it },
+                        checked = state.showLabels,
+                        onCheckedChange = { viewModel.setQsShowLabels(it) },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color(0xFFFFD700),
                             checkedTrackColor = Color(0xFFFFD700).copy(alpha = 0.5f)
@@ -245,26 +204,13 @@ fun QuickSettingsScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Auto Collapse
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ExpandLess,
-                        contentDescription = "Auto Collapse",
-                        tint = Color(0xFFFFD700),
-                        modifier = Modifier.size(24.dp)
-                    )
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Default.ExpandLess, "Auto Collapse", tint = Color(0xFFFFD700), modifier = Modifier.size(24.dp))
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(
-                        text = "Auto-collapse after use",
-                        modifier = Modifier.weight(1f),
-                        color = Color.White
-                    )
+                    Text("Auto-collapse after use", modifier = Modifier.weight(1f), color = Color.White)
                     Switch(
-                        checked = autoCollapse.value,
-                        onCheckedChange = { autoCollapse.value = it },
+                        checked = state.autoCollapse,
+                        onCheckedChange = { viewModel.setQsAutoCollapse(it) },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color(0xFFFFD700),
                             checkedTrackColor = Color(0xFFFFD700).copy(alpha = 0.5f)
@@ -282,36 +228,26 @@ fun QuickSettingsScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Available Tiles",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
-                )
+                Text("Available Tiles", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
 
-                availableTiles.chunked(2).forEach { row ->
+                TILE_CATALOGUE.chunked(2).forEach { row ->
                     Row(modifier = Modifier.fillMaxWidth()) {
                         row.forEach { tile ->
                             Row(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(vertical = 4.dp),
+                                modifier = Modifier.weight(1f).padding(vertical = 4.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Checkbox(
-                                    checked = tile.enabled,
-                                    onCheckedChange = { tile.enabled = it },
+                                    checked = tile.name in state.enabledTiles,
+                                    onCheckedChange = { viewModel.toggleQsTile(tile.name) },
                                     colors = CheckboxDefaults.colors(
                                         checkedColor = Color(0xFFFFD700),
                                         uncheckedColor = Color.White.copy(alpha = 0.6f)
                                     )
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = tile.name,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = Color.White
-                                )
+                                Text(tile.name, style = MaterialTheme.typography.bodySmall, color = Color.White)
                             }
                         }
                     }
@@ -321,25 +257,22 @@ fun QuickSettingsScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Apply Button
+        // Changes are auto-persisted on every toggle
         Button(
-            onClick = { /* Apply quick settings changes */ },
+            onClick = { /* Aura applies changes automatically on each toggle */ },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFFFD700)
-            )
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
+            enabled = false
         ) {
-            Text("Apply Changes", color = Color.Black)
+            Text("Changes Applied Automatically", color = Color.Black)
         }
     }
 }
 
-/**
- * Quick setting tile preview component
- */
 @Composable
 private fun QuickSettingTilePreview(
-    tile: QuickSettingTile,
+    name: String,
+    icon: ImageVector,
     showLabel: Boolean,
     size: String
 ) {
@@ -355,27 +288,17 @@ private fun QuickSettingTilePreview(
     ) {
         Card(
             modifier = Modifier.size(tileSize),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White.copy(alpha = 0.1f)
-            ),
+            colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.1f)),
             shape = RoundedCornerShape(16.dp)
         ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = tile.icon,
-                    contentDescription = tile.name,
-                    tint = Color.White,
-                    modifier = Modifier.size(tileSize * 0.5f)
-                )
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Icon(icon, name, tint = Color.White, modifier = Modifier.size(tileSize * 0.5f))
             }
         }
         if (showLabel) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = tile.name,
+                text = name,
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.7f),
                 fontSize = 10.sp,
@@ -384,13 +307,3 @@ private fun QuickSettingTilePreview(
         }
     }
 }
-
-/**
- * Data class for quick setting tiles
- */
-data class QuickSettingTile(
-    val name: String,
-    val icon: androidx.compose.ui.graphics.vector.ImageVector,
-    var enabled: Boolean
-)
-
