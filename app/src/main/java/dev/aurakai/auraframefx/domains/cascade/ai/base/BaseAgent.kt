@@ -3,10 +3,14 @@ package dev.aurakai.auraframefx.domains.cascade.ai.base
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/cascade/ai/base/BaseAgent.kt
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+========
+>>>>>>>> 75ff10eb (fix(deps): Downgrade Retrofit and align dependencies):app/src/main/java/dev/aurakai/auraframefx/agents/core/BaseAgent.kt
 import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +24,6 @@ import kotlinx.coroutines.flow.flow
  */
 abstract class BaseAgent(
     override val agentName: String,
-    @get:JvmName("getAgentCategory") protected val category: AgentCapabilityCategory,
     protected val contextManager: ContextManager? = null,
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
@@ -28,12 +31,10 @@ abstract class BaseAgent(
 
     override fun getName(): String = agentName
 
-    override fun getCategory(): AgentCapabilityCategory = category
 
     /**
      * Abstract method for processing requests - must be implemented by concrete agents
      */
-    abstract override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
 
     /**
      * Default flow implementation that can be overridden by specific agents
@@ -49,7 +50,6 @@ abstract class BaseAgent(
             delay(100) // Small delay for UI feedback
 
             // Process the actual request
-            val response = processRequest(request, enhancedContext as String, getCategory())
 
             // Record the interaction for learning
             contextManager?.recordInsight(
@@ -62,7 +62,7 @@ abstract class BaseAgent(
             emit(response)
 
         } catch (e: Exception) {
-            emit(AgentResponse.error("Error in ${agentName}: ${e.message}"))
+            emit(AgentResponse.error("Error in ${agentName}: ${e.message}",))
         }
     }
 
@@ -112,7 +112,6 @@ abstract class BaseAgent(
     protected open fun getAgentConfig(): Map<String, Any> {
         return mapOf(
             "name" to agentName,
-            "category" to category,
             "version" to "1.0.0"
         )
     }
@@ -128,7 +127,7 @@ abstract class BaseAgent(
             else -> "Unexpected error: ${error.message}"
         }
 
-        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}")
+        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}",)
     }
 
     /**
@@ -141,6 +140,7 @@ abstract class BaseAgent(
         return AgentResponse.success(
             content = content,
             agentName = agentName,
+            agentType = agentType,
             metadata = metadata + getAgentConfig(),
             category = category
         )
@@ -214,7 +214,6 @@ abstract class BaseAgent(
         isOrchestratorInitialized = false
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         // Delegates to the two-argument version
         return processRequest(request, context)
     }

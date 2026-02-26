@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.core
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.CoroutineScope
 
@@ -52,8 +53,8 @@ interface OrchestratableAgent {
     suspend fun processRequest(
         request: AiRequest,
         context: String,
-        category: AgentCapabilityCategory
     ): AgentResponse
+
     /**
      * Handle an incoming message from the inter-agent communication bus.
      */

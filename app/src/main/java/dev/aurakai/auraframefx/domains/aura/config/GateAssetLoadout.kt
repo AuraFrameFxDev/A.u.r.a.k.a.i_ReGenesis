@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.config
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 
@@ -28,7 +29,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.fallback,
-            route = NavDestination.AuraLab.route,
             accentColor = Color(0xFFBB86FC)
         ),
         "chromacore" to SubGateCard(
@@ -38,7 +38,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.CHROMA_CORE.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.CHROMA_CORE.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.CHROMA_CORE.fallback,
-            route = NavDestination.ChromaCore.route,
             accentColor = Color(0xFF6200EE)
         ),
         "collab_canvas" to SubGateCard(
@@ -48,7 +47,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.fallback,
-            route = NavDestination.CollabCanvas.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "themes" to SubGateCard(
@@ -58,7 +56,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
-            route = NavDestination.ThemeEngine.route,
             accentColor = Color(0xFFFF6F00)
         ),
         "uxui_engine" to SubGateCard(
@@ -68,7 +65,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
-            route = NavDestination.ReGenesisCustomization.route,
             accentColor = Color(0xFFFFD700)
         ),
         "aura_dossier" to SubGateCard(
@@ -114,7 +110,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
-            route = NavDestination.SecurityCenter.route, // Monitors genesis_ethical_governor.py
             accentColor = Color(0xFFFFD700) // Gold for guardian
         ),
         "security_shield" to SubGateCard(
@@ -124,7 +119,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
-            route = NavDestination.SovereignShield.route,
             accentColor = Color(0xFF00E676)
         ),
         "bootloader" to SubGateCard(
@@ -134,7 +128,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.BOOTLOADER.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.BOOTLOADER.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.BOOTLOADER.fallback,
-            route = NavDestination.Bootloader.route,
             accentColor = Color(0xFF2979FF)
         ),
         "rom_tools" to SubGateCard(
@@ -144,7 +137,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
-            route = NavDestination.ROMFlasher.route, // Can be ROM hub later
             accentColor = Color(0xFFFF3D00)
         ),
         "kai_rgss" to SubGateCard(
@@ -185,35 +177,9 @@ object GateAssetLoadout {
      * Note: Agent Nexus is a SEPARATE domain (Agent HQ with monitoring)
      */
     val genesisGates = mapOf(
-        "code_assist" to SubGateCard(
-            id = "code_assist",
-            title = "Code Assist",
-            subtitle = "AI-Driven Forge & Code Generation",
-            styleADrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleA,
-            styleBDrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleB,
-            fallbackDrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.fallback,
-            route = NavDestination.CodeAssist.route,
-            accentColor = Color(0xFF00B0FF)
-        ),
-        "neural_archive" to SubGateCard(
-            id = "neural_archive",
-            title = "Neural Archive",
-            subtitle = "Sovereign Memory & Node Explorer",
             styleADrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-            route = NavDestination.NeuralArchive.route,
-            accentColor = Color(0xFFB026FF)
-        ),
-        "cloud_orchestrator" to SubGateCard(
-            id = "cloud_orchestrator",
-            title = "Cloud Orchestrator",
-            subtitle = "LDO Agent & Infrastructure Control",
-            styleADrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleA,
-            styleBDrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleB,
-            fallbackDrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.fallback,
-            route = NavDestination.AgentBridgeHub.route,
-            accentColor = Color(0xFF00FF88)
         )
     )
 
@@ -229,7 +195,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.MONITORING.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.MONITORING.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.MONITORING.fallback,
-            route = NavDestination.AgentMonitoring.route,
             accentColor = Color(0xFF7B2FFF)
         ),
         "sphere_grid" to SubGateCard(
@@ -239,7 +204,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.fallback,
-            route = NavDestination.DataVeinSphere.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "fusion_mode" to SubGateCard(
@@ -249,7 +213,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.FUSION_MODE.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.FUSION_MODE.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.FUSION_MODE.fallback,
-            route = NavDestination.FusionMode.route,
             accentColor = Color(0xFFFF00DE)
         ),
         "task_assignment" to SubGateCard(
@@ -259,7 +222,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.fallback,
-            route = NavDestination.TaskAssignment.route,
             accentColor = Color(0xFF00FF88)
         ),
         "meta_instruct" to SubGateCard(
@@ -269,7 +231,6 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.META_INSTRUCT.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.META_INSTRUCT.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.META_INSTRUCT.fallback,
-            route = NavDestination.MetaInstruct.route,
             accentColor = Color(0xFFFFD700)
         )
     )

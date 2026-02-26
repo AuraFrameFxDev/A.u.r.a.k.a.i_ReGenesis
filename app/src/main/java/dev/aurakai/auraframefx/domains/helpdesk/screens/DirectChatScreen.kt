@@ -58,13 +58,6 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 @Composable
 fun DirectChatScreen(
     navController: NavController,
-    viewModel: AgentViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
 ) {
     val agents = remember { AgentRepository.getAllAgents() }
     val selectedAgent = remember { mutableStateOf(agents.firstOrNull()) }

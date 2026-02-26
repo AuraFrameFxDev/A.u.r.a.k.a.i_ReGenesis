@@ -5,7 +5,6 @@ import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.CascadeAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
@@ -112,7 +111,6 @@ class GenesisOrchestrator @Inject constructor(
      * Initialize all agent domains in sequence.
      * Phase 2 of Genesis-OS startup.
      *
-     * Called from ReGenesisApplication.onCreate()
      */
     fun initializePlatform() {
         platformState = PlatformState.INITIALIZING
@@ -230,7 +228,6 @@ class GenesisOrchestrator @Inject constructor(
             val response = auraAgent.processRequest(
                 request = request,
                 context = "agent_to_agent",
-                category = AgentCapabilityCategory.CREATIVE
             )
             Timber.i("✓ Aura processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -248,7 +245,6 @@ class GenesisOrchestrator @Inject constructor(
             val response = kaiAgent.processRequest(
                 request = request,
                 context = "agent_to_agent",
-                category = AgentCapabilityCategory.SECURITY
             )
             Timber.i("✓ Kai processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -266,7 +262,6 @@ class GenesisOrchestrator @Inject constructor(
             val response = cascadeAgent.processRequest(
                 request = request,
                 context = "agent_to_agent",
-                category = AgentCapabilityCategory.ANALYSIS
             )
             Timber.i("✓ Cascade processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -284,7 +279,6 @@ class GenesisOrchestrator @Inject constructor(
             val response = oracleDriveService.processRequest(
                 request = request,
                 context = "agent_to_agent",
-                category = AgentCapabilityCategory.COORDINATION
             )
             Timber.i("✓ OracleDrive processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -355,7 +349,6 @@ class GenesisOrchestrator @Inject constructor(
 
     /**
      * Gracefully shutdown the platform.
-     * Called from ReGenesisApplication.onTerminate()
      */
     fun shutdownPlatform() {
         orchestratorScope.launch {

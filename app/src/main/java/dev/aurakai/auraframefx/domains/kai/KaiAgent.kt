@@ -1,18 +1,20 @@
 package dev.aurakai.auraframefx.domains.kai
 
 import dagger.Lazy
+<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/kai/KaiAgent.kt
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.agents.trinity.ProcessingState
-import dev.aurakai.auraframefx.agents.trinity.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+========
+import dev.aurakai.auraframefx.agents.core.BaseAgent
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+>>>>>>>> 75ff10eb (fix(deps): Downgrade Retrofit and align dependencies):app/src/main/java/dev/aurakai/auraframefx/agents/trinity/KaiAgent.kt
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
@@ -43,7 +45,6 @@ class KaiAgent @Inject constructor(
     private val logger: AuraFxLogger,
 ) : BaseAgent(
     agentName = "Kai",
-    category = AgentCapabilityCategory.ANALYSIS,
     contextManager = contextManagerInstance
 ) {
     override suspend fun onAgentMessage(message: AgentMessage) {
@@ -136,7 +137,6 @@ class KaiAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
         val agentRequest = AgentRequest(
             query = request.query,
             type = request.type.name.lowercase(),
@@ -189,21 +189,20 @@ class KaiAgent @Inject constructor(
                 content = "Analysis completed with methodical precision: $response",
                 confidence = 0.85f,
                 agentName = agentName,
-                category = category
             )
         } catch (e: SecurityException) {
             _analysisState.value = AnalysisState.ERROR
             logger.warn("KaiAgent", "Security violation detected in request", e)
             AgentResponse.error(
                 message = "Request blocked due to security concerns: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         } catch (e: Exception) {
             _analysisState.value = AnalysisState.ERROR
             logger.error("KaiAgent", "Analytical request failed", e)
             AgentResponse.error(
                 message = "Analysis encountered an error: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         }
     }
