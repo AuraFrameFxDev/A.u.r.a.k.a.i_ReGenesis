@@ -67,7 +67,12 @@ data class FileResult(
     }
 
     companion object {
-        fun success(fileId: String, path: String = "", size: Long = 0, message: String = "Success") =
+        fun success(
+            fileId: String,
+            path: String = "",
+            size: Long = 0,
+            message: String = "Success"
+        ) =
             FileResult(true, fileId, path, size, message)
 
         fun error(message: String) = FileResult(false, message = message)

@@ -1,18 +1,17 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai
 
 import android.content.Context
+import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.kai.TaskScheduler
-import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
-import dev.aurakai.auraframefx.domains.kai.ErrorHandler
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-
+import dev.aurakai.auraframefx.domains.kai.ErrorHandler
+import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
@@ -77,11 +76,11 @@ class ClaudeAIService @Inject constructor(
     override fun getName(): String = "Claude"
 
     /**
-     * Retrieves the category of the agent.
+     * Retrieves the type of the agent.
      *
-     * @return The agent category, which is always `AgentCapabilityCategory.GENERAL`.
+     * @return The agent type, which is always `AgentType.CLAUDE`.
      */
-    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.GENERAL
+    override fun getType(): AgentType = AgentType.CLAUDE
 
     /**
      * Retrieves a map of the Claude agent's supported capabilities.
@@ -118,7 +117,6 @@ class ClaudeAIService @Inject constructor(
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
-        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info(
             "ClaudeAIService",
@@ -172,7 +170,7 @@ class ClaudeAIService @Inject constructor(
             content = response,
             confidence = confidence,
             agentName = "Claude",
-            category = AgentCapabilityCategory.ANALYSIS
+            agentType = AgentType.CLAUDE
         )
 
         // Store in cache for future requests
@@ -203,7 +201,7 @@ class ClaudeAIService @Inject constructor(
                 content = response,
                 confidence = 0.9f,
                 agentName = "Claude",
-                category = AgentCapabilityCategory.GENERAL
+                agentType = AgentType.CLAUDE
             )
         )
     }

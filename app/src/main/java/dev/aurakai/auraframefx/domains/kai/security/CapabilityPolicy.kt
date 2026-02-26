@@ -62,8 +62,8 @@ data class CapabilityPolicy(
                 SCOPE_AUTH_MANAGE
             ),
             allowedCollections = setOf(
-                "security/audit",
-                "security/incidents",
+                "dev/aurakai/auraframefx/security/audit",
+                "dev/aurakai/auraframefx/security/incidents",
                 "users"
             ),
             allowedStoragePaths = setOf(

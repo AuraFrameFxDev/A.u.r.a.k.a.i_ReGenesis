@@ -32,6 +32,7 @@ fun Any?.toJsonElement(): JsonElement {
             @Suppress("UNCHECKED_CAST")
             (this as Map<String, Any?>).toKotlinJsonObject()
         }
+
         is List<*> -> JsonArray(this.map { it.toJsonElement() })
         else -> JsonPrimitive(this.toString())
     }

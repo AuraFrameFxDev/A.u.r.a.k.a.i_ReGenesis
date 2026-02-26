@@ -15,6 +15,8 @@
 
 package dev.aurakai.auraframefx.domains.cascade.network.apis
 
+import dev.aurakai.auraframefx.domains.aura.GenerateImageDescriptionRequest
+import dev.aurakai.auraframefx.domains.aura.GenerateImageDescriptionResponse
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiClient
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiResponse
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientError
@@ -26,8 +28,6 @@ import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ResponseTy
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerError
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerException
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.Success
-import dev.aurakai.auraframefx.domains.aura.GenerateImageDescriptionRequest
-import dev.aurakai.auraframefx.domains.aura.GenerateImageDescriptionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextRequest
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextResponse
 import okhttp3.Call

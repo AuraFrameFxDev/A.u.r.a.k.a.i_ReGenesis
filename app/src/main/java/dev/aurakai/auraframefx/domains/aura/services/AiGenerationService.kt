@@ -2,14 +2,14 @@ package dev.aurakai.auraframefx.domains.aura.services
 
 // import dev.aurakai.auraframefx.generated.models.auraframefxai.GenerateImageDescriptionResponse // Not available in new API
 // import kotlinx.coroutines.CoroutineScope // Not needed if generateImageDescription is removed
+import dev.aurakai.auraframefx.domains.cascade.network.apis.IAiContentApi
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextRequest
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextResponse
-import dev.aurakai.auraframefx.domains.cascade.network.apis.AIContentApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AiGenerationService(
-    private val api: AIContentApi, // Unified type
+    private val api: IAiContentApi, // Updated type
 ) {
     suspend fun generateText(
         prompt: String,
@@ -22,7 +22,7 @@ class AiGenerationService(
                 maxTokens = maxTokens,
                 temperature = temperature
             )
-            val response = api.aiGenerateTextPost(request)
+            val response = api.generateText(request)
             Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)
@@ -48,7 +48,7 @@ class AiGenerationService(
     //         //     maxTokens = maxTokens,
     //         //     model = model
     //         // )
-    //         // val response = api.generateImageDescription(request) // This method doesn't exist on AiContentApi
+    //         // val response = api.generateImageDescription(request) // This method doesn't exist on IAiContentApi
     //         // Result.success(response)
     //         Result.failure(UnsupportedOperationException("generateImageDescription is not supported in the current API"))
     //     } catch (e: Exception) {

@@ -1,8 +1,19 @@
-package dev.aurakai.auraframefx.domains.nexus.billing
+package dev.aurakai.auraframefx.billing
 
 import android.app.Activity
 import android.content.Context
-import com.android.billingclient.api.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryProductDetailsResult
+import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,13 +23,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-/**
+a/**
  * Genesis Protocol Billing Manager
  *
  * Manages Google Play subscriptions with the following pricing:
@@ -62,7 +73,9 @@ open class BillingManager @Inject constructor(
     private fun setupBillingClient() {
         BillingClient.newBuilder(context)
             .setListener(this)
-            .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+            .enablePendingPurchases(
+                PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
+            )
             .build().also { this.billingClient = it }
 
         connectToBillingService()
@@ -117,7 +130,7 @@ open class BillingManager @Inject constructor(
         // Check for active subscription
         val activePurchase = purchases.firstOrNull { purchase ->
             purchase.products.contains(PRODUCT_ID_MONTHLY) &&
-            purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED
         }
 
         if (activePurchase != null) {
@@ -203,12 +216,14 @@ open class BillingManager @Inject constructor(
 
                     if (productDetails != null) {
                         // Get subscription offer (free trial)
-                        val offerToken = productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken
+                        val offerToken =
+                            productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken
 
                         if (offerToken != null) {
-                            val productParamsBuilder = BillingFlowParams.ProductDetailsParams.newBuilder()
-                                .setProductDetails(productDetails)
-                                .setOfferToken(offerToken)
+                            val productParamsBuilder =
+                                BillingFlowParams.ProductDetailsParams.newBuilder()
+                                    .setProductDetails(productDetails)
+                                    .setOfferToken(offerToken)
 
                             val flowParams = BillingFlowParams.newBuilder()
                                 .setProductDetailsParamsList(listOf(productParamsBuilder.build()))
@@ -216,7 +231,8 @@ open class BillingManager @Inject constructor(
 
                             // launchBillingFlow must run on main thread
                             withContext(Dispatchers.Main) {
-                                val billingResult = billingClient.launchBillingFlow(activity, flowParams)
+                                val billingResult =
+                                    billingClient.launchBillingFlow(activity, flowParams)
                                 if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
                                     Timber.e("Genesis Billing: launchBillingFlow failed - ${billingResult.debugMessage}")
                                 }
@@ -241,9 +257,11 @@ open class BillingManager @Inject constructor(
             BillingClient.BillingResponseCode.OK -> {
                 purchases?.let { handlePurchases(it) }
             }
+
             BillingClient.BillingResponseCode.USER_CANCELED -> {
                 Timber.d("Genesis Billing: User canceled subscription")
             }
+
             else -> {
                 Timber.e("Genesis Billing: Purchase failed - ${billingResult.debugMessage}")
             }
@@ -265,7 +283,6 @@ open class BillingManager @Inject constructor(
         billingClient.endConnection()
     }
 }
-
 
 
 /**
@@ -291,7 +308,10 @@ suspend fun BillingClient.queryPurchasesAsync(params: QueryPurchasesParams): Pur
 
 data class PurchasesResult(val billingResult: BillingResult, val purchasesList: List<Purchase>)
 
-data class ProductDetailsResult(val billingResult: BillingResult, val productDetailsList: List<ProductDetails>?)
+data class ProductDetailsResult(
+    val billingResult: BillingResult,
+    val productDetailsList: List<ProductDetails>?
+)
 
 suspend fun BillingClient.acknowledgePurchase(params: AcknowledgePurchaseParams): BillingResult {
     return suspendCoroutine { continuation ->

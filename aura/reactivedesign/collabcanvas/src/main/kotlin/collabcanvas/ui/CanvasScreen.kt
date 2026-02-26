@@ -267,6 +267,13 @@ fun CanvasScreen(
                 }
             },
             actions = {
+                // Export/Import buttons for multi-user ChromaCore/SandboxUI Figma integration
+                IconButton(onClick = { /* TODO: Upload to SandboxUI / ChromaCore */ }) {
+                    Icon(Icons.Default.CloudUpload, "Export to SandboxUI")
+                }
+                IconButton(onClick = { /* TODO: Download from SandboxUI / ChromaCore */ }) {
+                    Icon(Icons.Default.CloudDownload, "Import from SandboxUI")
+                }
                 // Undo/Redo buttons
                 IconButton(
                     onClick = {

@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import dev.aurakai.auraframefx.domains.aura.ui.HapticFeedbackConfig
+import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
+import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
 
 /**
  * Configuration for lock screen customization
@@ -25,7 +25,6 @@ data class ClockConfig(
     val showSeconds: Boolean = false,
     val fontStyle: String = "default"
 )
-
 
 
 /**

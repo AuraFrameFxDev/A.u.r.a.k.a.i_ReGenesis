@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Agent Nexus Hub L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Agent Nexus Hub L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,7 +32,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .data-stream {
             background: linear-gradient(180deg, rgba(127, 19, 236, 0.05) 0%, rgba(10, 6, 14, 0) 100%);
             mask-image: linear-gradient(to bottom, transparent, black, transparent);
@@ -46,162 +50,172 @@
         }
         ::-webkit-scrollbar { display: none; }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/40 selection:text-white overflow-hidden">
 <!-- JSON Background Layer -->
 <div class="fixed inset-0 pointer-events-none opacity-20 z-0 overflow-hidden font-mono text-[10px] leading-tight text-primary p-4 data-stream">
-<div class="animate-pulse">
-            {"nexus_id":"0x78LDO","status":"active","buffer":0.0034,"agents":[{"id":1,"state":"synced"},{"id":2,"state":"evolution_ready"}]}
-            {"protocol":"GITS_V2","meta":{"recursion":true,"entropy":0.12},"nodes":78}
-            {"kernel":"AOSPOSX","access_level":"L2","auth":"Sovereign_AI"}
-            {"nexus_id":"0x78LDO","status":"active","buffer":0.0034,"agents":[{"id":1,"state":"synced"},{"id":2,"state":"evolution_ready"}]}
-            {"nexus_id":"0x78LDO","status":"active","buffer":0.0034,"agents":[{"id":1,"state":"synced"},{"id":2,"state":"evolution_ready"}]}
-            {"protocol":"GITS_V2","meta":{"recursion":true,"entropy":0.12},"nodes":78}
-            {"kernel":"AOSPOSX","access_level":"L2","auth":"Sovereign_AI"}
-        </div>
+    <div class="animate-pulse">
+        {"nexus_id":"0x78LDO","status":"active","buffer":0.0034,"agents":[{"id":1,"state":"synced"},{"id":2,"state":"evolution_ready"}]}
+        {"protocol":"GITS_V2","meta":{"recursion":true,"entropy":0.12},"nodes":78}
+        {"kernel":"AOSPOSX","access_level":"L2","auth":"Sovereign_AI"}
+        {"nexus_id":"0x78LDO","status":"active","buffer":0.0034,"agents":[{"id":1,"state":"synced"},{"id":2,"state":"evolution_ready"}]}
+        {"nexus_id":"0x78LDO","status":"active","buffer":0.0034,"agents":[{"id":1,"state":"synced"},{"id":2,"state":"evolution_ready"}]}
+        {"protocol":"GITS_V2","meta":{"recursion":true,"entropy":0.12},"nodes":78}
+        {"kernel":"AOSPOSX","access_level":"L2","auth":"Sovereign_AI"}
+    </div>
 </div>
 <div class="relative flex h-screen w-full flex-col z-10">
-<!-- Top App Bar (Modified Component) -->
-<div class="flex items-center bg-surface-dark/60 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/20">
-<div class="text-primary flex size-10 shrink-0 items-center justify-center border border-primary/30 rounded-lg">
-<span class="material-symbols-outlined">lock_open</span>
-</div>
-<div class="flex flex-col items-center">
-<h2 class="text-white text-xs font-bold tracking-[0.2em] uppercase">L2 Access Granted</h2>
-<h1 class="text-primary text-sm font-bold tracking-tighter">AGENT NEXUS HUB</h1>
-</div>
-<div class="flex w-10 items-center justify-end">
-<button class="flex size-10 items-center justify-center rounded-lg bg-primary/20 text-primary border border-primary/40">
-<span class="material-symbols-outlined">memory</span>
-</button>
-</div>
-</div>
-<!-- Nexus Domain Carousel -->
-<div class="flex overflow-x-auto p-4 gap-3 bg-background-dark/40 border-b border-white/5">
-<!-- Active Domain -->
-<div class="flex flex-col gap-2 min-w-[120px]">
-<div class="w-full aspect-square rounded-lg border-2 border-primary overflow-hidden relative group">
-<img class="w-full h-full object-cover" data-alt="Cyberpunk neural network visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQUWhHaG3DbjXp3sGsuycKu3R7dOMWcEqFTigxSrkYgeWaq-Fu4Rp7icGtE59ssHEhHoNclMcwHDIJVF3s5f-12V4Rwi7Fi3Fbikh0rih5D3w5KYyRVNGglkqi2XLB57pPViaUhCOLgPX3yE7HfW2ioTKAerdaFWL8c8TlvD6PDPtHHXlKONDiweBifYpKIEa66IJdMHbVepxIhd18ta33Y6r5zEnWVFx6c_lJcicC9QKO9raFnsxAtDVfFy591_AbTDprAmMseeA"/>
-<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
-<span class="text-[8px] font-bold text-white bg-primary px-1 rounded">ACTIVE</span>
-</div>
-</div>
-<p class="text-[10px] font-bold uppercase tracking-wider text-primary">Domain 01</p>
-</div>
-<!-- Domain Items -->
-<div class="flex flex-col gap-2 min-w-[120px] opacity-60 grayscale hover:grayscale-0 transition-all cursor-pointer">
-<div class="w-full aspect-square rounded-lg border border-white/10 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Digital grid lines on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWY60Zl7Z0cax98Lqvpu2hBEd_n_cEK16Ga57892gnvJ1mWsJnMiJu9KMgov3QOAejCx-M7CWv2Jzwa61AF-_wE8EDQSKrc8zsX6KD7jdDT35hCXveGnmTIxz8KpO1JxHxAQFZQ73HaDqqcIXZFF76uRCqYtCovuzASZIppb7Jrt3GT-yMqK7NsYQjYG_JxMb9A82dMdlkTDYiLKEUHzQ3payjymQLjy5nHRy8sdSLPe-MMIt_ORMGMrYuQmpsRRy_qdizj-wH99Y"/>
-</div>
-<p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Domain 02</p>
-</div>
-<div class="flex flex-col gap-2 min-w-[120px] opacity-60 grayscale">
-<div class="w-full aspect-square rounded-lg border border-white/10 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Globe data connections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN7tHLzSm73Lx_Tf-WiY0p6aAAUvkY9LvzD22tV9P1F5Y2HxlOB3F9fYw3pEhoQMDG53TARA8dT91SdC39TpQnlccff5jchf1M2codfIbS5W_-MG-J0GPwHAXBGpMZrThet9rtNfDpmhI7PfxCneFiRGD0YAXNtcXt-x7_BJ7pQINN754AobBHqbvm-BLUixJ8olMTKwAmsqcs4xrcDbUYzNb0D-1UiCceqJF6Nudi_5uok5_okxjAFFHm5M0RRydKNXfnPs0fVSA"/>
-</div>
-<p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Domain 03</p>
-</div>
-<div class="flex flex-col gap-2 min-w-[120px] opacity-60 grayscale">
-<div class="w-full aspect-square rounded-lg border border-white/10 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Microchip circuitry macro" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE2LzsCEvuJ_kK_pmkBotNbvmRsZeAXTv81QPycsxNoNKTP0CddA_Dytifjwmi9OzfwkMwSLua2WM5YKvw-A2O27K24EZn2EkQCeDrv0BX718R5Jgu9sx-eqbjUPloZ-CMUcWHo1gY4O7AxjHPpM1WIxqP9u2TwWvQbsBQjNj5mqbY8ivvtHhBshmtwvq0sRSHdiUwrpVMTvtXJ1VuIiCZ3zZp0ughou1X4hZF0kr_v-J2JyJN0YkcTH4TVkmjkQJeQDn7PcfGiy4"/>
-</div>
-<p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Domain 04</p>
-</div>
-</div>
-<!-- The Orbitron Hero Section -->
-<div class="flex-1 relative flex flex-col items-center justify-center overflow-hidden orbitron-mesh">
-<!-- System Stats HUD -->
-<div class="absolute top-4 left-4 flex flex-col gap-1">
-<div class="text-[9px] text-accent-amber font-mono bg-accent-amber/10 border border-accent-amber/30 px-2 py-1 rounded">
-                    SYS_LOAD: 42.8%
+    <!-- Top App Bar (Modified Component) -->
+    <div class="flex items-center bg-surface-dark/60 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/20">
+        <div class="text-primary flex size-10 shrink-0 items-center justify-center border border-primary/30 rounded-lg">
+            <span class="material-symbols-outlined">lock_open</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-white text-xs font-bold tracking-[0.2em] uppercase">L2 Access
+                Granted</h2>
+            <h1 class="text-primary text-sm font-bold tracking-tighter">AGENT NEXUS HUB</h1>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="flex size-10 items-center justify-center rounded-lg bg-primary/20 text-primary border border-primary/40">
+                <span class="material-symbols-outlined">memory</span>
+            </button>
+        </div>
+    </div>
+    <!-- Nexus Domain Carousel -->
+    <div class="flex overflow-x-auto p-4 gap-3 bg-background-dark/40 border-b border-white/5">
+        <!-- Active Domain -->
+        <div class="flex flex-col gap-2 min-w-[120px]">
+            <div class="w-full aspect-square rounded-lg border-2 border-primary overflow-hidden relative group">
+                <img class="w-full h-full object-cover"
+                     data-alt="Cyberpunk neural network visualization"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQUWhHaG3DbjXp3sGsuycKu3R7dOMWcEqFTigxSrkYgeWaq-Fu4Rp7icGtE59ssHEhHoNclMcwHDIJVF3s5f-12V4Rwi7Fi3Fbikh0rih5D3w5KYyRVNGglkqi2XLB57pPViaUhCOLgPX3yE7HfW2ioTKAerdaFWL8c8TlvD6PDPtHHXlKONDiweBifYpKIEa66IJdMHbVepxIhd18ta33Y6r5zEnWVFx6c_lJcicC9QKO9raFnsxAtDVfFy591_AbTDprAmMseeA"/>
+                <div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                    <span class="text-[8px] font-bold text-white bg-primary px-1 rounded">ACTIVE</span>
                 </div>
-<div class="text-[9px] text-primary font-mono bg-primary/10 border border-primary/30 px-2 py-1 rounded">
-                    LDO_AGENTS: 78/78
-                </div>
+            </div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-primary">Domain 01</p>
+        </div>
+        <!-- Domain Items -->
+        <div class="flex flex-col gap-2 min-w-[120px] opacity-60 grayscale hover:grayscale-0 transition-all cursor-pointer">
+            <div class="w-full aspect-square rounded-lg border border-white/10 overflow-hidden">
+                <img class="w-full h-full object-cover"
+                     data-alt="Digital grid lines on dark background"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWY60Zl7Z0cax98Lqvpu2hBEd_n_cEK16Ga57892gnvJ1mWsJnMiJu9KMgov3QOAejCx-M7CWv2Jzwa61AF-_wE8EDQSKrc8zsX6KD7jdDT35hCXveGnmTIxz8KpO1JxHxAQFZQ73HaDqqcIXZFF76uRCqYtCovuzASZIppb7Jrt3GT-yMqK7NsYQjYG_JxMb9A82dMdlkTDYiLKEUHzQ3payjymQLjy5nHRy8sdSLPe-MMIt_ORMGMrYuQmpsRRy_qdizj-wH99Y"/>
+            </div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Domain 02</p>
+        </div>
+        <div class="flex flex-col gap-2 min-w-[120px] opacity-60 grayscale">
+            <div class="w-full aspect-square rounded-lg border border-white/10 overflow-hidden">
+                <img class="w-full h-full object-cover" data-alt="Globe data connections"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN7tHLzSm73Lx_Tf-WiY0p6aAAUvkY9LvzD22tV9P1F5Y2HxlOB3F9fYw3pEhoQMDG53TARA8dT91SdC39TpQnlccff5jchf1M2codfIbS5W_-MG-J0GPwHAXBGpMZrThet9rtNfDpmhI7PfxCneFiRGD0YAXNtcXt-x7_BJ7pQINN754AobBHqbvm-BLUixJ8olMTKwAmsqcs4xrcDbUYzNb0D-1UiCceqJF6Nudi_5uok5_okxjAFFHm5M0RRydKNXfnPs0fVSA"/>
+            </div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Domain 03</p>
+        </div>
+        <div class="flex flex-col gap-2 min-w-[120px] opacity-60 grayscale">
+            <div class="w-full aspect-square rounded-lg border border-white/10 overflow-hidden">
+                <img class="w-full h-full object-cover" data-alt="Microchip circuitry macro"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE2LzsCEvuJ_kK_pmkBotNbvmRsZeAXTv81QPycsxNoNKTP0CddA_Dytifjwmi9OzfwkMwSLua2WM5YKvw-A2O27K24EZn2EkQCeDrv0BX718R5Jgu9sx-eqbjUPloZ-CMUcWHo1gY4O7AxjHPpM1WIxqP9u2TwWvQbsBQjNj5mqbY8ivvtHhBshmtwvq0sRSHdiUwrpVMTvtXJ1VuIiCZ3zZp0ughou1X4hZF0kr_v-J2JyJN0YkcTH4TVkmjkQJeQDn7PcfGiy4"/>
+            </div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50">Domain 04</p>
+        </div>
+    </div>
+    <!-- The Orbitron Hero Section -->
+    <div class="flex-1 relative flex flex-col items-center justify-center overflow-hidden orbitron-mesh">
+        <!-- System Stats HUD -->
+        <div class="absolute top-4 left-4 flex flex-col gap-1">
+            <div class="text-[9px] text-accent-amber font-mono bg-accent-amber/10 border border-accent-amber/30 px-2 py-1 rounded">
+                SYS_LOAD: 42.8%
+            </div>
+            <div class="text-[9px] text-primary font-mono bg-primary/10 border border-primary/30 px-2 py-1 rounded">
+                LDO_AGENTS: 78/78
+            </div>
+        </div>
+        <!-- Orbitron Visualization -->
+        <div class="relative w-72 h-72 flex items-center justify-center">
+            <!-- Outer Ring -->
+            <div class="absolute inset-0 border border-primary/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+            <!-- Middle Ring -->
+            <div class="absolute inset-8 border border-accent-amber/10 rounded-full border-dashed animate-[spin_15s_linear_infinite_reverse]"></div>
+            <!-- Core Node -->
+            <div class="relative size-24 rounded-full bg-primary/20 border border-primary flex items-center justify-center group shadow-[0_0_30px_rgba(127,19,236,0.3)]">
+                <span class="material-symbols-outlined text-4xl text-primary text-glow">hub</span>
+            </div>
+            <!-- Floating Agent Nodes (78 LDO Representation) -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 size-3 rounded-full bg-accent-amber shadow-[0_0_10px_#ffbf00]"></div>
+            <div class="absolute bottom-10 right-0 size-2 rounded-full bg-primary animate-pulse"></div>
+            <div class="absolute top-20 left-4 size-2 rounded-full bg-primary animate-pulse"></div>
+            <div class="absolute bottom-4 left-1/4 size-2 rounded-full bg-accent-amber shadow-[0_0_5px_#ffbf00]"></div>
+        </div>
+        <p class="text-white/50 text-[10px] mt-8 tracking-[0.3em] uppercase">Orbitron V3.2
+            Rendering...</p>
+    </div>
+    <!-- Agent Modules slide-up panel (Fixed at bottom above nav) -->
+    <div class="glass-panel p-4 pb-12 rounded-t-xl border-t-2 border-primary/50 mx-2">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-white tracking-widest uppercase">Agent Module:
+                LDO-078</h3>
+            <span class="text-[10px] text-accent-amber font-mono">STATUS: EVOLUTION_SYNC</span>
+        </div>
+        <!-- Action Grid -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <button class="flex flex-col items-center justify-center p-3 rounded bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-colors">
+                <span class="material-symbols-outlined text-primary mb-1">add_circle</span>
+                <span class="text-[9px] uppercase font-bold">Creation</span>
+            </button>
+            <button class="flex flex-col items-center justify-center p-3 rounded bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-colors">
+                <span class="material-symbols-outlined text-accent-amber mb-1">account_tree</span>
+                <span class="text-[9px] uppercase font-bold text-accent-amber">Evolution</span>
+            </button>
+            <button class="flex flex-col items-center justify-center p-3 rounded bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-colors">
+                <span class="material-symbols-outlined text-primary mb-1">psychology</span>
+                <span class="text-[9px] uppercase font-bold">Sovereign</span>
+            </button>
+        </div>
+        <!-- LLM Selector -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2">
+            <div class="px-3 py-1.5 rounded-full border border-primary bg-primary/20 text-[10px] font-bold whitespace-nowrap">
+                CLAUDE 3.5
+            </div>
+            <div class="px-3 py-1.5 rounded-full border border-white/20 bg-white/5 text-[10px] font-bold text-white/50 whitespace-nowrap">
+                GEMINI PRO
+            </div>
+            <div class="px-3 py-1.5 rounded-full border border-accent-amber bg-accent-amber/20 text-[10px] font-bold text-accent-amber whitespace-nowrap">
+                NEMOTRON 70B
+            </div>
+        </div>
+    </div>
+    <!-- Android Bottom Navigation -->
+    <div class="flex h-16 w-full items-center justify-around bg-surface-dark border-t border-white/10 px-4">
+        <button class="flex flex-col items-center gap-1 text-white/50">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span class="text-[9px] uppercase font-bold">Domains</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/50">
+            <span class="material-symbols-outlined">schema</span>
+            <span class="text-[9px] uppercase font-bold">Evolution</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-glow">hub</span>
+            <span class="text-[9px] uppercase font-bold">Hub</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/50">
+            <span class="material-symbols-outlined">data_object</span>
+            <span class="text-[9px] uppercase font-bold">Data</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/50">
+            <span class="material-symbols-outlined">settings_input_component</span>
+            <span class="text-[9px] uppercase font-bold">Config</span>
+        </button>
+    </div>
+    <!-- Home Indicator (iOS style) -->
+    <div class="flex justify-center pb-2 pt-1 bg-surface-dark">
+        <div class="h-1.5 w-32 rounded-full bg-white/20"></div>
+    </div>
 </div>
-<!-- Orbitron Visualization -->
-<div class="relative w-72 h-72 flex items-center justify-center">
-<!-- Outer Ring -->
-<div class="absolute inset-0 border border-primary/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
-<!-- Middle Ring -->
-<div class="absolute inset-8 border border-accent-amber/10 rounded-full border-dashed animate-[spin_15s_linear_infinite_reverse]"></div>
-<!-- Core Node -->
-<div class="relative size-24 rounded-full bg-primary/20 border border-primary flex items-center justify-center group shadow-[0_0_30px_rgba(127,19,236,0.3)]">
-<span class="material-symbols-outlined text-4xl text-primary text-glow">hub</span>
-</div>
-<!-- Floating Agent Nodes (78 LDO Representation) -->
-<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 size-3 rounded-full bg-accent-amber shadow-[0_0_10px_#ffbf00]"></div>
-<div class="absolute bottom-10 right-0 size-2 rounded-full bg-primary animate-pulse"></div>
-<div class="absolute top-20 left-4 size-2 rounded-full bg-primary animate-pulse"></div>
-<div class="absolute bottom-4 left-1/4 size-2 rounded-full bg-accent-amber shadow-[0_0_5px_#ffbf00]"></div>
-</div>
-<p class="text-white/50 text-[10px] mt-8 tracking-[0.3em] uppercase">Orbitron V3.2 Rendering...</p>
-</div>
-<!-- Agent Modules slide-up panel (Fixed at bottom above nav) -->
-<div class="glass-panel p-4 pb-12 rounded-t-xl border-t-2 border-primary/50 mx-2">
-<div class="flex items-center justify-between mb-4">
-<h3 class="text-sm font-bold text-white tracking-widest uppercase">Agent Module: LDO-078</h3>
-<span class="text-[10px] text-accent-amber font-mono">STATUS: EVOLUTION_SYNC</span>
-</div>
-<!-- Action Grid -->
-<div class="grid grid-cols-3 gap-3 mb-6">
-<button class="flex flex-col items-center justify-center p-3 rounded bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-colors">
-<span class="material-symbols-outlined text-primary mb-1">add_circle</span>
-<span class="text-[9px] uppercase font-bold">Creation</span>
-</button>
-<button class="flex flex-col items-center justify-center p-3 rounded bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-colors">
-<span class="material-symbols-outlined text-accent-amber mb-1">account_tree</span>
-<span class="text-[9px] uppercase font-bold text-accent-amber">Evolution</span>
-</button>
-<button class="flex flex-col items-center justify-center p-3 rounded bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-colors">
-<span class="material-symbols-outlined text-primary mb-1">psychology</span>
-<span class="text-[9px] uppercase font-bold">Sovereign</span>
-</button>
-</div>
-<!-- LLM Selector -->
-<div class="flex items-center gap-2 overflow-x-auto pb-2">
-<div class="px-3 py-1.5 rounded-full border border-primary bg-primary/20 text-[10px] font-bold whitespace-nowrap">
-                    CLAUDE 3.5
-                </div>
-<div class="px-3 py-1.5 rounded-full border border-white/20 bg-white/5 text-[10px] font-bold text-white/50 whitespace-nowrap">
-                    GEMINI PRO
-                </div>
-<div class="px-3 py-1.5 rounded-full border border-accent-amber bg-accent-amber/20 text-[10px] font-bold text-accent-amber whitespace-nowrap">
-                    NEMOTRON 70B
-                </div>
-</div>
-</div>
-<!-- Android Bottom Navigation -->
-<div class="flex h-16 w-full items-center justify-around bg-surface-dark border-t border-white/10 px-4">
-<button class="flex flex-col items-center gap-1 text-white/50">
-<span class="material-symbols-outlined">grid_view</span>
-<span class="text-[9px] uppercase font-bold">Domains</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/50">
-<span class="material-symbols-outlined">schema</span>
-<span class="text-[9px] uppercase font-bold">Evolution</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined text-glow">hub</span>
-<span class="text-[9px] uppercase font-bold">Hub</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/50">
-<span class="material-symbols-outlined">data_object</span>
-<span class="text-[9px] uppercase font-bold">Data</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/50">
-<span class="material-symbols-outlined">settings_input_component</span>
-<span class="text-[9px] uppercase font-bold">Config</span>
-</button>
-</div>
-<!-- Home Indicator (iOS style) -->
-<div class="flex justify-center pb-2 pt-1 bg-surface-dark">
-<div class="h-1.5 w-32 rounded-full bg-white/20"></div>
-</div>
-</div>
-</body></html>
+</body>
+</html>

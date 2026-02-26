@@ -42,11 +42,11 @@ data class VertexAIConfig(
 ) {
     companion object {
         /**
- * Create a VertexAIConfig populated with the library's standard default values.
- *
- * @return A VertexAIConfig instance populated with the standard default values for all configuration fields.
- */
-fun default(): VertexAIConfig = VertexAIConfig()
+         * Create a VertexAIConfig populated with the library's standard default values.
+         *
+         * @return A VertexAIConfig instance populated with the standard default values for all configuration fields.
+         */
+        fun default(): VertexAIConfig = VertexAIConfig()
 
         /**
          * Builds a VertexAIConfig by reading configuration from environment variables.

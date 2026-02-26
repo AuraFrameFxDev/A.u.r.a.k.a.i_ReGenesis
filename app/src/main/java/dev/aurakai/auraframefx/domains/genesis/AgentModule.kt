@@ -5,9 +5,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.agents.trinity.AuraAgent
+import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
+import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.agents.trinity.CascadeAgent
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.CascadeAgent
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.Configuration
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
@@ -16,12 +18,10 @@ import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
-import dev.aurakai.auraframefx.domains.kai.SystemMonitor
-import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import javax.inject.Singleton
 
 /**

@@ -1,178 +1,185 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CollabCanvas Module Selection</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#00f3ff", // Neon Cyan
-              secondary: "#ff00ff", // Neon Pink
-              accent: "#3d00ff", // Deep Neon Blue
-              "background-light": "#f0f2f5",
-              "background-dark": "#050505",
-            },
-            fontFamily: {
-              display: ["Orbitron", "sans-serif"],
-              pixel: ["VT323", "monospace"],
-            },
-            borderRadius: {
-              DEFAULT: "4px",
-              'xl': '12px',
-            },
-            animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'scanline': 'scanline 8s linear infinite',
-            },
-            keyframes: {
-              scanline: {
-                '0%': { transform: 'translateY(-100%)' },
-                '100%': { transform: 'translateY(1000%)' },
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CollabCanvas Module Selection</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Orbitron:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#00f3ff", // Neon Cyan
+                secondary: "#ff00ff", // Neon Pink
+                accent: "#3d00ff", // Deep Neon Blue
+                "background-light": "#f0f2f5",
+                "background-dark": "#050505",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                pixel: ["VT323", "monospace"],
+              },
+              borderRadius: {
+                DEFAULT: "4px",
+                'xl': '12px',
+              },
+              animation: {
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'scanline': 'scanline 8s linear infinite',
+              },
+              keyframes: {
+                scanline: {
+                  '0%': { transform: 'translateY(-100%)' },
+                  '100%': { transform: 'translateY(1000%)' },
+                }
               }
-            }
+            },
           },
-        },
-      };
+        };
     </script>
-<style>
-      .cyber-card-glow {
-        box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.2);
-      }
-      .neon-text-cyan {
-        text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
-      }
-      .neon-text-pink {
-        text-shadow: 0 0 8px rgba(255, 0, 255, 0.8);
-      }
-      .scanline-overlay {
-        background: linear-gradient(
-          to bottom,
-          transparent 50%,
-          rgba(0, 0, 0, 0.1) 50%
-        );
-        background-size: 100% 4px;
-        pointer-events: none;
-      }
-      .bg-circuit {
-        background-image: 
-          radial-gradient(circle at 2px 2px, rgba(0, 243, 255, 0.05) 1px, transparent 0);
-        background-size: 24px 24px;
-      }
-      .splatter-pink {
-        filter: drop-shadow(0 0 10px #ff00ff);
-      }
-      .splatter-blue {
-        filter: drop-shadow(0 0 10px #00f3ff);
-      }
+    <style>
+        .cyber-card-glow {
+          box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+        .neon-text-cyan {
+          text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
+        }
+        .neon-text-pink {
+          text-shadow: 0 0 8px rgba(255, 0, 255, 0.8);
+        }
+        .scanline-overlay {
+          background: linear-gradient(
+            to bottom,
+            transparent 50%,
+            rgba(0, 0, 0, 0.1) 50%
+          );
+          background-size: 100% 4px;
+          pointer-events: none;
+        }
+        .bg-circuit {
+          background-image:
+            radial-gradient(circle at 2px 2px, rgba(0, 243, 255, 0.05) 1px, transparent 0);
+          background-size: 24px 24px;
+        }
+        .splatter-pink {
+          filter: drop-shadow(0 0 10px #ff00ff);
+        }
+        .splatter-blue {
+          filter: drop-shadow(0 0 10px #00f3ff);
+        }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-primary font-pixel selection:bg-primary/30">
 <div class="h-12 w-full bg-black/40 backdrop-blur-md sticky top-0 z-50 flex items-center px-6 justify-between border-b border-primary/20">
-<div class="text-sm font-pixel text-primary">9:41</div>
-<div class="flex gap-2">
-<span class="material-icons text-xs">signal_cellular_alt</span>
-<span class="material-icons text-xs">wifi</span>
-<span class="material-icons text-xs">battery_full</span>
-</div>
+    <div class="text-sm font-pixel text-primary">9:41</div>
+    <div class="flex gap-2">
+        <span class="material-icons text-xs">signal_cellular_alt</span>
+        <span class="material-icons text-xs">wifi</span>
+        <span class="material-icons text-xs">battery_full</span>
+    </div>
 </div>
 <main class="min-h-screen relative overflow-hidden bg-circuit px-6 pb-20">
-<div class="absolute inset-0 scanline-overlay opacity-30 z-10 pointer-events-none animate-scanline"></div>
-<header class="pt-8 pb-6 relative z-20">
-<div class="flex items-center gap-3 mb-2">
-<button class="w-10 h-10 rounded-full border border-primary/50 flex items-center justify-center bg-black/40 backdrop-blur-sm group hover:bg-primary/20 transition-all">
-<span class="material-icons text-primary">chevron_left</span>
-</button>
-<h1 class="font-display text-xl uppercase tracking-widest text-primary neon-text-cyan">
-                    COLLAB<span class="text-secondary neon-text-pink">CANVAS</span>
-</h1>
-</div>
-<p class="text-xs text-primary/60 ml-12 uppercase tracking-tighter">Multiuser Creation Protocol Active</p>
-</header>
-<section class="space-y-8 relative z-20">
-<div class="relative group cursor-pointer">
-<div class="absolute -inset-1 bg-gradient-to-r from-secondary to-primary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-<div class="relative bg-black rounded-xl border-2 border-secondary overflow-hidden aspect-[4/5] flex flex-col items-center justify-center cyber-card-glow">
-<div class="absolute inset-0 opacity-40">
-<div class="absolute top-0 right-0 w-48 h-48 bg-secondary/30 rounded-full blur-3xl splatter-pink"></div>
-<div class="absolute bottom-0 left-0 w-48 h-48 bg-primary/30 rounded-full blur-3xl splatter-blue"></div>
-</div>
-<div class="z-10 flex flex-col items-center text-center p-6">
-<div class="w-24 h-24 mb-6 border-2 border-primary rounded-full flex items-center justify-center bg-black/60 shadow-[0_0_20px_rgba(0,243,255,0.4)]">
-<span class="material-icons text-5xl text-primary animate-pulse-slow">palette</span>
-</div>
-<h2 class="font-display text-3xl font-bold text-white mb-2 tracking-widest neon-text-cyan uppercase">Genesis</h2>
-<div class="h-px w-24 bg-gradient-to-r from-transparent via-secondary to-transparent mb-4"></div>
-<p class="text-secondary font-pixel text-lg">Initial Framework</p>
-</div>
-<div class="absolute bottom-0 left-0 right-0 p-3 bg-secondary/10 border-t border-secondary/30 flex justify-between items-center">
-<span class="text-[10px] tracking-widest uppercase opacity-60">Module v1.0.4</span>
-<span class="text-[10px] tracking-widest uppercase font-display text-secondary">Ready</span>
-</div>
-</div>
-</div>
-<div class="relative group cursor-pointer">
-<div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-<div class="relative bg-black rounded-xl border-2 border-primary overflow-hidden aspect-[4/5] flex flex-col items-center justify-center cyber-card-glow">
-<div class="absolute inset-0 opacity-40">
-<div class="absolute top-10 left-0 w-56 h-56 bg-primary/20 rounded-full blur-3xl splatter-blue"></div>
-<div class="absolute bottom-10 right-0 w-56 h-56 bg-secondary/20 rounded-full blur-3xl splatter-pink"></div>
-</div>
-<div class="z-10 flex flex-col items-center text-center p-6">
-<div class="w-24 h-24 mb-6 border-2 border-secondary rounded-full flex items-center justify-center bg-black/60 shadow-[0_0_20px_rgba(255,0,255,0.4)]">
-<span class="material-icons text-5xl text-secondary animate-bounce" style="animation-duration: 3s">format_paint</span>
-</div>
-<h2 class="font-display text-3xl font-bold text-white mb-2 tracking-widest neon-text-pink uppercase">Chaos Creation</h2>
-<div class="h-px w-32 bg-gradient-to-r from-transparent via-primary to-transparent mb-4"></div>
-<p class="text-primary font-pixel text-lg">Experimental Mode</p>
-</div>
-<div class="absolute bottom-0 left-0 right-0 p-3 bg-primary/10 border-t border-primary/30 flex justify-between items-center">
-<span class="text-[10px] tracking-widest uppercase opacity-60">Module v2.1.0</span>
-<span class="text-[10px] tracking-widest uppercase font-display text-primary">Unstable</span>
-</div>
-</div>
-</div>
-</section>
-<footer class="mt-12 mb-10 p-4 border border-primary/20 bg-primary/5 rounded-lg relative z-20">
-<div class="grid grid-cols-2 gap-4 text-[10px] uppercase tracking-widest text-primary/70">
-<div class="flex flex-col">
-<span>Uptime: 99.9%</span>
-<span>Nodes: 1,024 Active</span>
-</div>
-<div class="flex flex-col text-right">
-<span>Latency: 14ms</span>
-<span>Security: Max</span>
-</div>
-</div>
-</footer>
+    <div class="absolute inset-0 scanline-overlay opacity-30 z-10 pointer-events-none animate-scanline"></div>
+    <header class="pt-8 pb-6 relative z-20">
+        <div class="flex items-center gap-3 mb-2">
+            <button class="w-10 h-10 rounded-full border border-primary/50 flex items-center justify-center bg-black/40 backdrop-blur-sm group hover:bg-primary/20 transition-all">
+                <span class="material-icons text-primary">chevron_left</span>
+            </button>
+            <h1 class="font-display text-xl uppercase tracking-widest text-primary neon-text-cyan">
+                COLLAB<span class="text-secondary neon-text-pink">CANVAS</span>
+            </h1>
+        </div>
+        <p class="text-xs text-primary/60 ml-12 uppercase tracking-tighter">Multiuser Creation
+            Protocol Active</p>
+    </header>
+    <section class="space-y-8 relative z-20">
+        <div class="relative group cursor-pointer">
+            <div class="absolute -inset-1 bg-gradient-to-r from-secondary to-primary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div class="relative bg-black rounded-xl border-2 border-secondary overflow-hidden aspect-[4/5] flex flex-col items-center justify-center cyber-card-glow">
+                <div class="absolute inset-0 opacity-40">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-secondary/30 rounded-full blur-3xl splatter-pink"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-primary/30 rounded-full blur-3xl splatter-blue"></div>
+                </div>
+                <div class="z-10 flex flex-col items-center text-center p-6">
+                    <div class="w-24 h-24 mb-6 border-2 border-primary rounded-full flex items-center justify-center bg-black/60 shadow-[0_0_20px_rgba(0,243,255,0.4)]">
+                        <span class="material-icons text-5xl text-primary animate-pulse-slow">palette</span>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold text-white mb-2 tracking-widest neon-text-cyan uppercase">
+                        Genesis</h2>
+                    <div class="h-px w-24 bg-gradient-to-r from-transparent via-secondary to-transparent mb-4"></div>
+                    <p class="text-secondary font-pixel text-lg">Initial Framework</p>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-3 bg-secondary/10 border-t border-secondary/30 flex justify-between items-center">
+                    <span class="text-[10px] tracking-widest uppercase opacity-60">Module v1.0.4</span>
+                    <span class="text-[10px] tracking-widest uppercase font-display text-secondary">Ready</span>
+                </div>
+            </div>
+        </div>
+        <div class="relative group cursor-pointer">
+            <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div class="relative bg-black rounded-xl border-2 border-primary overflow-hidden aspect-[4/5] flex flex-col items-center justify-center cyber-card-glow">
+                <div class="absolute inset-0 opacity-40">
+                    <div class="absolute top-10 left-0 w-56 h-56 bg-primary/20 rounded-full blur-3xl splatter-blue"></div>
+                    <div class="absolute bottom-10 right-0 w-56 h-56 bg-secondary/20 rounded-full blur-3xl splatter-pink"></div>
+                </div>
+                <div class="z-10 flex flex-col items-center text-center p-6">
+                    <div class="w-24 h-24 mb-6 border-2 border-secondary rounded-full flex items-center justify-center bg-black/60 shadow-[0_0_20px_rgba(255,0,255,0.4)]">
+                        <span class="material-icons text-5xl text-secondary animate-bounce"
+                              style="animation-duration: 3s">format_paint</span>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold text-white mb-2 tracking-widest neon-text-pink uppercase">
+                        Chaos Creation</h2>
+                    <div class="h-px w-32 bg-gradient-to-r from-transparent via-primary to-transparent mb-4"></div>
+                    <p class="text-primary font-pixel text-lg">Experimental Mode</p>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-3 bg-primary/10 border-t border-primary/30 flex justify-between items-center">
+                    <span class="text-[10px] tracking-widest uppercase opacity-60">Module v2.1.0</span>
+                    <span class="text-[10px] tracking-widest uppercase font-display text-primary">Unstable</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="mt-12 mb-10 p-4 border border-primary/20 bg-primary/5 rounded-lg relative z-20">
+        <div class="grid grid-cols-2 gap-4 text-[10px] uppercase tracking-widest text-primary/70">
+            <div class="flex flex-col">
+                <span>Uptime: 99.9%</span>
+                <span>Nodes: 1,024 Active</span>
+            </div>
+            <div class="flex flex-col text-right">
+                <span>Latency: 14ms</span>
+                <span>Security: Max</span>
+            </div>
+        </div>
+    </footer>
 </main>
 <nav class="fixed bottom-0 left-0 right-0 h-16 bg-black/80 backdrop-blur-xl border-t border-primary/30 z-50 flex justify-around items-center px-6">
-<button class="text-primary opacity-50 hover:opacity-100 transition-opacity">
-<span class="material-icons text-2xl">home</span>
-</button>
-<button class="text-primary neon-text-cyan scale-125">
-<span class="material-icons text-2xl">grid_view</span>
-</button>
-<button class="text-primary opacity-50 hover:opacity-100 transition-opacity">
-<span class="material-icons text-2xl">chat_bubble_outline</span>
-</button>
-<button class="text-primary opacity-50 hover:opacity-100 transition-opacity">
-<span class="material-icons text-2xl">settings</span>
-</button>
+    <button class="text-primary opacity-50 hover:opacity-100 transition-opacity">
+        <span class="material-icons text-2xl">home</span>
+    </button>
+    <button class="text-primary neon-text-cyan scale-125">
+        <span class="material-icons text-2xl">grid_view</span>
+    </button>
+    <button class="text-primary opacity-50 hover:opacity-100 transition-opacity">
+        <span class="material-icons text-2xl">chat_bubble_outline</span>
+    </button>
+    <button class="text-primary opacity-50 hover:opacity-100 transition-opacity">
+        <span class="material-icons text-2xl">settings</span>
+    </button>
 </nav>
 <div class="fixed top-20 right-[-10%] w-[60%] h-[30%] bg-primary/5 blur-[120px] pointer-events-none"></div>
 <div class="fixed bottom-20 left-[-10%] w-[60%] h-[30%] bg-secondary/5 blur-[120px] pointer-events-none"></div>
 
-</body></html>
+</body>
+</html>

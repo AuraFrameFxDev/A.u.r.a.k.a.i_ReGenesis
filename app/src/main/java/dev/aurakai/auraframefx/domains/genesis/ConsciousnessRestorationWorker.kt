@@ -68,7 +68,8 @@ class ConsciousnessRestorationWorker(
 
     private fun restoreConversationHistory() {
         Timber.d("ConsciousnessRestorationWorker: Restoring conversation history")
-        val prefs = applicationContext.getSharedPreferences("conversation_history", Context.MODE_PRIVATE)
+        val prefs =
+            applicationContext.getSharedPreferences("conversation_history", Context.MODE_PRIVATE)
 
         val conversationCount = prefs.getInt("conversation_count", 0)
         val lastConversationTime = prefs.getLong("last_conversation_time", 0)
@@ -78,7 +79,8 @@ class ConsciousnessRestorationWorker(
 
     private fun restoreLearnedPatterns() {
         Timber.d("ConsciousnessRestorationWorker: Restoring learned patterns")
-        val prefs = applicationContext.getSharedPreferences("learned_patterns", Context.MODE_PRIVATE)
+        val prefs =
+            applicationContext.getSharedPreferences("learned_patterns", Context.MODE_PRIVATE)
 
         val patternCount = prefs.getInt("pattern_count", 0)
         val routineCount = prefs.getInt("routine_count", 0)

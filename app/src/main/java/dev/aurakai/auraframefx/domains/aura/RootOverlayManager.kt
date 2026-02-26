@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.animations.OverlayAnimation
-import dev.aurakai.auraframefx.domains.aura.animations.OverlayTransition
+import dev.aurakai.auraframefx.domains.aura.aura.animations.OverlayAnimation
+import dev.aurakai.auraframefx.domains.aura.aura.animations.OverlayTransition
 import dev.aurakai.auraframefx.domains.aura.ui.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
@@ -40,7 +40,8 @@ class RootOverlayManager @Inject constructor() : SystemOverlayManager {
     override fun applyShape(shape: OverlayShape) {
         Timber.d("Applying system shape: ${shape.name}")
         // Typically targets config_buttonCornerRadius etc.
-        val command = "cmd overlay fabricate --target android --name aura_shape --res dimen/config_buttonCornerRadius --type 0x05 --value ${shape.ordinal} && cmd overlay enable com.android.shell:aura_shape"
+        val command =
+            "cmd overlay fabricate --target android --name aura_shape --res dimen/config_buttonCornerRadius --type 0x05 --value ${shape.ordinal} && cmd overlay enable com.android.shell:aura_shape"
         runShellCommand(command)
     }
 
@@ -69,7 +70,8 @@ class RootOverlayManager @Inject constructor() : SystemOverlayManager {
         }
 
         // Target common AOSP accent resource
-        val command = "cmd overlay fabricate --target android --name aura_accent --res color/accent_device_default --type 0x1c --value 0x$cleanHex && cmd overlay enable com.android.shell:aura_accent"
+        val command =
+            "cmd overlay fabricate --target android --name aura_accent --res color/accent_device_default --type 0x1c --value 0x$cleanHex && cmd overlay enable com.android.shell:aura_accent"
 
         return runShellCommand(command)
     }

@@ -2,20 +2,43 @@ package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Extension
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 /**
  * Module Creation Screen
@@ -31,9 +54,21 @@ fun ModuleCreationScreen(
     val isGenerating = remember { mutableStateOf(false) }
     val generationProgress = remember { mutableStateOf(0f) }
 
-    val moduleTypes = listOf("UI Component", "Data Repository", "Network Service", "Security Module", "AI Agent", "System Utility")
+    val moduleTypes =
+        listOf(
+            "UI Component",
+            "Data Repository",
+            "Network Service",
+            "Security Module",
+            "AI Agent",
+            "System Utility"
+        )
     val templates = listOf(
-        ModuleTemplate("Basic UI Card", "Simple card component with customizable content", "UI Component"),
+        ModuleTemplate(
+            "Basic UI Card",
+            "Simple card component with customizable content",
+            "UI Component"
+        ),
         ModuleTemplate("Data Repository", "CRUD operations with local storage", "Data Repository"),
         ModuleTemplate("API Service", "RESTful API client with error handling", "Network Service"),
         ModuleTemplate("Authentication", "Secure login and session management", "Security Module"),
@@ -193,7 +228,8 @@ fun ModuleCreationScreen(
                     template = template,
                     isSelected = selectedTemplate.value == template.name,
                     onClick = {
-                        selectedTemplate.value = if (selectedTemplate.value == template.name) null else template.name
+                        selectedTemplate.value =
+                            if (selectedTemplate.value == template.name) null else template.name
                     }
                 )
             }

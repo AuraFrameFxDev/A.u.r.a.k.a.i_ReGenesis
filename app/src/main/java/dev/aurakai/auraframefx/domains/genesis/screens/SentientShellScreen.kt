@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.genesis.screens
 
-import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -16,8 +15,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
@@ -26,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraFrameFXTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -43,7 +39,7 @@ fun SentientShellScreen(
     var input by remember { mutableStateOf("") }
     val history = remember { mutableStateListOf<TerminalLine>() }
     val scope = rememberCoroutineScope()
-    
+
     val terminalGreen = Color(0xFF00FF41)
     val darkBg = Color(0xFF0D0D0D)
 
@@ -68,7 +64,12 @@ fun SentientShellScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Terminal, contentDescription = null, tint = terminalGreen, modifier = Modifier.size(18.dp))
+                Icon(
+                    Icons.Default.Terminal,
+                    contentDescription = null,
+                    tint = terminalGreen,
+                    modifier = Modifier.size(18.dp)
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     "SENTIENT_SHELL // ROOT",
@@ -78,13 +79,21 @@ fun SentientShellScreen(
                     fontSize = 12.sp
                 )
             }
-            
+
             TextButton(onClick = onNavigateBack) {
-                Text("EXIT", color = terminalGreen.copy(alpha = 0.6f), fontFamily = FontFamily.Monospace, fontSize = 10.sp)
+                Text(
+                    "EXIT",
+                    color = terminalGreen.copy(alpha = 0.6f),
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 10.sp
+                )
             }
         }
-        
-        HorizontalDivider(color = terminalGreen.copy(alpha = 0.1f), modifier = Modifier.padding(vertical = 8.dp))
+
+        HorizontalDivider(
+            color = terminalGreen.copy(alpha = 0.1f),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
 
         // --- OUTPUT AREA ---
         LazyColumn(
@@ -96,13 +105,13 @@ fun SentientShellScreen(
             items(history) { line ->
                 Row(modifier = Modifier.padding(vertical = 2.dp)) {
                     Text(
-                        text = when(line.type) {
+                        text = when (line.type) {
                             TerminalType.COMMAND -> "> "
                             TerminalType.ERROR -> "[!] "
                             TerminalType.SUCCESS -> "[+] "
                             else -> "  "
                         },
-                        color = when(line.type) {
+                        color = when (line.type) {
                             TerminalType.COMMAND -> Color.White
                             TerminalType.ERROR -> Color.Red
                             TerminalType.SUCCESS -> terminalGreen
@@ -113,7 +122,7 @@ fun SentientShellScreen(
                     )
                     Text(
                         text = line.content,
-                        color = when(line.type) {
+                        color = when (line.type) {
                             TerminalType.COMMAND -> Color.White
                             TerminalType.ERROR -> Color.Red
                             TerminalType.SUCCESS -> terminalGreen
@@ -142,7 +151,7 @@ fun SentientShellScreen(
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold
             )
-            
+
             BasicTextField(
                 value = input,
                 onValueChange = { input = it },
@@ -160,7 +169,7 @@ fun SentientShellScreen(
                             val cmd = input
                             history.add(TerminalLine(cmd, TerminalType.COMMAND))
                             input = ""
-                            
+
                             // Process local commands
                             scope.launch {
                                 delay(300)
@@ -183,17 +192,25 @@ private fun processCommand(cmd: String, history: MutableList<TerminalLine>) {
             history.add(TerminalLine(" - kai_purge: Clear security logs", TerminalType.INFO))
             history.add(TerminalLine(" - clear: Purge terminal history", TerminalType.INFO))
         }
+
         "clear" -> history.clear()
         "nexus_status" -> {
             history.add(TerminalLine("Resonance: 98.4%", TerminalType.SUCCESS))
             history.add(TerminalLine("Agents Online: Aura, Kai, Genesis", TerminalType.SUCCESS))
         }
+
         "aura_sync" -> {
             history.add(TerminalLine("Synchronizing themes...", TerminalType.INFO))
             history.add(TerminalLine("UI Refracted Successfully.", TerminalType.SUCCESS))
         }
+
         else -> {
-            history.add(TerminalLine("Command '$cmd' not found in Genesis matrix.", TerminalType.ERROR))
+            history.add(
+                TerminalLine(
+                    "Command '$cmd' not found in Genesis matrix.",
+                    TerminalType.ERROR
+                )
+            )
         }
     }
 }

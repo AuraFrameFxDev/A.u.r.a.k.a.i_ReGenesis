@@ -3,8 +3,6 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 import android.content.Context
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleDriveFile
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleCloudApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,15 +21,15 @@ open class OracleDriveRepositoryImpl @Inject constructor(
 ) : OracleDriveRepository {
 
     /**
-         * Retrieve the objects in the specified bucket as a list of OracleDriveFile.
-         *
-         * The result is mapped from the API response objects; if the bucket contains no objects the returned list will be empty.
-         *
-         * @param bucketName The name of the bucket to list.
-         * @param prefix Optional object key prefix to filter results.
-         * @return A list of OracleDriveFile representing the objects in the bucket; empty if none are found.
-         * @throws OracleDriveException If the API response is unsuccessful or an error occurs while listing files.
-         */
+     * Retrieve the objects in the specified bucket as a list of OracleDriveFile.
+     *
+     * The result is mapped from the API response objects; if the bucket contains no objects the returned list will be empty.
+     *
+     * @param bucketName The name of the bucket to list.
+     * @param prefix Optional object key prefix to filter results.
+     * @return A list of OracleDriveFile representing the objects in the bucket; empty if none are found.
+     * @throws OracleDriveException If the API response is unsuccessful or an error occurs while listing files.
+     */
     override suspend fun listFiles(bucketName: String, prefix: String?): List<OracleDriveFile> =
         withContext(Dispatchers.IO) {
             try {
@@ -102,7 +100,10 @@ open class OracleDriveRepositoryImpl @Inject constructor(
             )
 
             if (!response.isSuccessful) {
-                Log.e(TAG, "Upload failed. Code: ${response.code()}, Message: ${response.message()}")
+                Log.e(
+                    TAG,
+                    "Upload failed. Code: ${response.code()}, Message: ${response.message()}"
+                )
                 return@withContext false
             }
 
@@ -142,10 +143,14 @@ open class OracleDriveRepositoryImpl @Inject constructor(
         try {
             Log.d(TAG, "Downloading file: $bucketName/$objectName to $destinationPath")
 
-            val response = oracleCloudApi.downloadFile(bucketName = bucketName, objectName = objectName)
+            val response =
+                oracleCloudApi.downloadFile(bucketName = bucketName, objectName = objectName)
 
             if (!response.isSuccessful) {
-                Log.e(TAG, "Download failed. Code: ${response.code()}, Message: ${response.message()}")
+                Log.e(
+                    TAG,
+                    "Download failed. Code: ${response.code()}, Message: ${response.message()}"
+                )
                 return@withContext null
             }
 
@@ -207,7 +212,10 @@ open class OracleDriveRepositoryImpl @Inject constructor(
                 )
 
                 if (!response.isSuccessful) {
-                    Log.e(TAG, "Delete failed. Code: ${response.code()}, Message: ${response.message()}")
+                    Log.e(
+                        TAG,
+                        "Delete failed. Code: ${response.code()}, Message: ${response.message()}"
+                    )
                     return@withContext false
                 }
 

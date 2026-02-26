@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.screens
+package dev.aurakai.auraframefx.aura.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -39,9 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.genesis.screens.TerminalLine
-import dev.aurakai.auraframefx.domains.genesis.screens.TerminalType
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraFrameFXTheme
+import dev.aurakai.auraframefx.ui.theme.AuraFrameFXTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -70,7 +68,12 @@ fun TerminalScreen() {
     ) {
         // --- HEADER ---
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Terminal, contentDescription = null, tint = terminalGreen, modifier = Modifier.size(18.dp))
+            Icon(
+                Icons.Default.Terminal,
+                contentDescription = null,
+                tint = terminalGreen,
+                modifier = Modifier.size(18.dp)
+            )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 "SENTIENT_SHELL // ROOT",
@@ -81,7 +84,10 @@ fun TerminalScreen() {
             )
         }
 
-        HorizontalDivider(color = terminalGreen.copy(alpha = 0.1f), modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(
+            color = terminalGreen.copy(alpha = 0.1f),
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
 
         // --- OUTPUT AREA ---
         LazyColumn(
@@ -93,13 +99,13 @@ fun TerminalScreen() {
             items(history) { line ->
                 Row(modifier = Modifier.padding(vertical = 2.dp)) {
                     Text(
-                        text = when(line.type) {
+                        text = when (line.type) {
                             TerminalType.COMMAND -> "> "
                             TerminalType.ERROR -> "[!] "
                             TerminalType.SUCCESS -> "[+] "
                             else -> "  "
                         },
-                        color = when(line.type) {
+                        color = when (line.type) {
                             TerminalType.COMMAND -> Color.White
                             TerminalType.ERROR -> Color.Red
                             TerminalType.SUCCESS -> terminalGreen
@@ -110,7 +116,7 @@ fun TerminalScreen() {
                     )
                     Text(
                         text = line.content,
-                        color = when(line.type) {
+                        color = when (line.type) {
                             TerminalType.COMMAND -> Color.White
                             TerminalType.ERROR -> Color.Red
                             TerminalType.SUCCESS -> terminalGreen
@@ -178,26 +184,42 @@ private fun processCommand(cmd: String, history: MutableList<TerminalLine>) {
             history.add(TerminalLine(" - nexus_status: Query core coherence", TerminalType.INFO))
             history.add(TerminalLine(" - aura_sync: Force UI refresh", TerminalType.INFO))
             history.add(TerminalLine(" - kai_purge: Clear security logs", TerminalType.INFO))
-            history.add(TerminalLine(" - forge_module: Initiate automated module builder", TerminalType.INFO))
+            history.add(
+                TerminalLine(
+                    " - forge_module: Initiate automated module builder",
+                    TerminalType.INFO
+                )
+            )
             history.add(TerminalLine(" - clear: Purge terminal history", TerminalType.INFO))
         }
+
         "clear" -> history.clear()
         "nexus_status" -> {
             history.add(TerminalLine("Resonance: 98.4%", TerminalType.SUCCESS))
             history.add(TerminalLine("Agents Online: Aura, Kai, Genesis", TerminalType.SUCCESS))
         }
+
         "aura_sync" -> {
             history.add(TerminalLine("Synchronizing themes...", TerminalType.INFO))
             history.add(TerminalLine("UI Refracted Successfully.", TerminalType.SUCCESS))
         }
+
         "forge_module" -> {
             history.add(TerminalLine("Initializing Interface Forge...", TerminalType.INFO))
             history.add(TerminalLine("Redirecting to App Builder...", TerminalType.SUCCESS))
             // Navigation would happen here if we had access to navController
         }
+
         else -> {
-            history.add(TerminalLine("Command '$cmd' not found in Genesis matrix.", TerminalType.ERROR))
+            history.add(
+                TerminalLine(
+                    "Command '$cmd' not found in Genesis matrix.",
+                    TerminalType.ERROR
+                )
+            )
         }
     }
 }
 
+data class TerminalLine(val content: String, val type: TerminalType)
+enum class TerminalType { COMMAND, INFO, ERROR, SUCCESS }

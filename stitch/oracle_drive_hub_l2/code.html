@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Oracle Drive Hub L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Oracle Drive Hub L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -31,7 +35,7 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: #221d10;
@@ -49,160 +53,184 @@
             box-shadow: 0 0 15px rgba(236, 182, 19, 0.3);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-white font-display overflow-x-hidden">
 <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden circuit-bg">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/10">
-<div class="text-primary flex size-12 shrink-0 items-center justify-start">
-<span class="material-symbols-outlined text-[28px]">widgets</span>
+    <!-- Top App Bar -->
+    <div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/10">
+        <div class="text-primary flex size-12 shrink-0 items-center justify-start">
+            <span class="material-symbols-outlined text-[28px]">widgets</span>
+        </div>
+        <div class="flex flex-col items-center flex-1">
+            <h2 class="text-primary text-xs font-bold leading-tight tracking-[0.2em] uppercase">
+                ReGenesis AOSPOSX</h2>
+            <h2 class="text-white text-sm font-medium leading-tight">Oracle Drive Hub L2</h2>
+        </div>
+        <div class="flex w-12 items-center justify-end">
+            <button class="flex items-center justify-center rounded-xl h-10 w-10 bg-primary/10 text-primary border border-primary/20">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+        </div>
+    </div>
+    <!-- Hero Section -->
+    <div class="px-6 pt-8 pb-4">
+        <h1 class="text-white tracking-tight text-[32px] font-bold leading-tight">Genesis<br/><span
+                class="text-primary">Orchestration</span></h1>
+        <p class="text-white/60 text-sm mt-2 max-w-[80%]">Central intelligence node for core
+            development and cloud architecture.</p>
+    </div>
+    <!-- Main Module Cards -->
+    <div class="grid grid-cols-2 gap-4 p-4">
+        <!-- Code Assist -->
+        <div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all"
+             data-alt="Futuristic software code displayed on a screen"
+             style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUZ_2SE4VIaHdtlhGX4IOrti6agMvu26YKzjRskiqlKL15ZuAst3FFruckhNhhpqgTKs7dHJ-L48pHeHLBfobj8qSHU1embOTuknSl2b9eNz-8NtOttS91UZqVBC7z5DvtHm2Blh0NoaZbSHd4rD1PWryKhQP2Es7OmbrfPK3L9Hq0LPsQlnyt5ldcS678vHSVaJC6ydUEZ0nUSWQQ9_Z91DSk9-zQVTGCF5gX45TpGNgnH8PVRdpf5xfvFV82CsgcNqI4MEI8KCw");'>
+            <div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
+                <span class="material-symbols-outlined text-primary text-xl">terminal</span>
+            </div>
+            <div>
+                <p class="text-white text-lg font-bold leading-tight">Code Assist</p>
+                <p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">L2
+                    Logic Engine</p>
+            </div>
+        </div>
+        <!-- Interface Forge -->
+        <div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all"
+             data-alt="Abstract 3D architectural glass structures"
+             style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDNL3xm4245LkblNsK39YMYHIWVs_psGPk5lB6mQBw5u6hueKIW8LlWFEX7fq7xl8jUTY4uVES3HxVT1DkJApA665wjMGte3b57CVDwzqFdTr5ZJYg8RNcktmPdVlJAn3QYPYcJU4ThYos3sU0sUjX46cJU1b2IBk9CkXox8XWiLNb8pkE35oCVkSTxr_6EywV817ZDz9KMU7PWPQeju_ftZnTag_iC_v09NJ73ah_I71j2cO_F6yKd5YakyZPRGTpyr6l2JSeusgw");'>
+            <div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
+                <span class="material-symbols-outlined text-primary text-xl">polyline</span>
+            </div>
+            <div>
+                <p class="text-white text-lg font-bold leading-tight">Interface Forge</p>
+                <p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">UX
+                    Synthesizer</p>
+            </div>
+        </div>
+        <!-- Neural Archive -->
+        <div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all"
+             data-alt="Deep space neural network visualization"
+             style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxPyLF0HBH-xNO3KsZFy8gJ_DF1xwXDp_sFs3pk5ryVv8t8f5WDhsAr5Vg7Jp1zV9CuBB9XhfsYUR1LMrc57chSpDocGzkWZbEsTBNks-9ZCpAujmdAs4ceJJ5_Lo39flBfoFkNaLRJkI2W6GJQiRKi-BVZDt0IrdTc4-FqGSKYfuutVyNjfiLwLKLRvrpVQ-0IOs4Zn6mMizknGsN2hUOsxIkgajc65N0H3gyfvf6_qSGWXaipb6YnwiRcg1qc3UWO-LbOX8uz4w");'>
+            <div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
+                <span class="material-symbols-outlined text-primary text-xl">memory</span>
+            </div>
+            <div>
+                <p class="text-white text-lg font-bold leading-tight">Neural Archive</p>
+                <p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">
+                    Synaptic Core</p>
+            </div>
+        </div>
+        <!-- Oracle Cloud -->
+        <div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all"
+             data-alt="Cloud data center glowing gold lights"
+             style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDeolIkFz9hmOIKdo_2K9tPPNVYm0TrzSAIVEuKOKSc0h0W5txf9sw8H1sUkoPvCUZRAiIMJtegPtZ5muR2CwX-cDomWdXIs_U_7xq89KLtV01A-DzBq2oRw-t2R_WA1Tdb-Jpt5asAU-6SKHtb6jiN5pLR3lNzM_T3UIuaUqYtTZpCtaNZWM1-OC4qZVqc74VlXNAaFVmJCv2Gd-CdjJ0JoB5di138RMjtSDU4HNhg8lz5fHCv60jlqgDKTF5ArgCFm3xLS2oNBNs");'>
+            <div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
+                <span class="material-symbols-outlined text-primary text-xl">cloud_queue</span>
+            </div>
+            <div>
+                <p class="text-white text-lg font-bold leading-tight">Oracle Cloud</p>
+                <p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">
+                    Remote Cluster</p>
+            </div>
+        </div>
+    </div>
+    <!-- System Stats -->
+    <h3 class="text-primary text-xs font-bold leading-tight tracking-[0.15em] px-6 pb-2 pt-6 uppercase">
+        Real-time Telemetry</h3>
+    <div class="flex overflow-x-auto gap-4 p-4 no-scrollbar">
+        <div class="flex min-w-[140px] flex-col gap-2 rounded-xl p-4 glass-card border-primary/30">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">sync</span>
+                <p class="text-white/70 text-xs font-medium uppercase tracking-wider">Sync</p>
+            </div>
+            <p class="text-white text-2xl font-bold leading-tight">99.9%</p>
+            <p class="text-green-400 text-[10px] font-bold">+0.1% NOMINAL</p>
+        </div>
+        <div class="flex min-w-[140px] flex-col gap-2 rounded-xl p-4 glass-card border-primary/30">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">speed</span>
+                <p class="text-white/70 text-xs font-medium uppercase tracking-wider">Latency</p>
+            </div>
+            <p class="text-white text-2xl font-bold leading-tight">12ms</p>
+            <p class="text-red-400 text-[10px] font-bold">-2ms VARIANCE</p>
+        </div>
+        <div class="flex min-w-[140px] flex-col gap-2 rounded-xl p-4 glass-card border-primary/30">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">hub</span>
+                <p class="text-white/70 text-xs font-medium uppercase tracking-wider">Nodes</p>
+            </div>
+            <p class="text-white text-2xl font-bold leading-tight">Active</p>
+            <div class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <p class="text-green-400 text-[10px] font-bold">STABLE CLUSTER</p>
+            </div>
+        </div>
+    </div>
+    <!-- System Activity Log -->
+    <h3 class="text-primary text-xs font-bold leading-tight tracking-[0.15em] px-6 pb-2 pt-6 uppercase">
+        System Logs</h3>
+    <div class="px-4 pb-28">
+        <div class="glass-card rounded-xl p-4 space-y-4">
+            <div class="flex items-start gap-3 border-b border-primary/10 pb-3">
+                <div class="w-1 h-8 bg-primary rounded-full"></div>
+                <div>
+                    <p class="text-white text-xs font-bold uppercase tracking-widest">Interface
+                        Forge</p>
+                    <p class="text-white/60 text-[11px] mt-1">Generated component 'AOS-Primary-Grid'
+                        (v2.4.1)</p>
+                </div>
+                <p class="ml-auto text-primary/50 text-[10px] font-mono">14:02</p>
+            </div>
+            <div class="flex items-start gap-3 border-b border-primary/10 pb-3">
+                <div class="w-1 h-8 bg-blue-500 rounded-full"></div>
+                <div>
+                    <p class="text-white text-xs font-bold uppercase tracking-widest">Neural
+                        Archive</p>
+                    <p class="text-white/60 text-[11px] mt-1">Long-term synaptic bridge established
+                        successfully.</p>
+                </div>
+                <p class="ml-auto text-primary/50 text-[10px] font-mono">13:58</p>
+            </div>
+            <div class="flex items-start gap-3">
+                <div class="w-1 h-8 bg-orange-500 rounded-full"></div>
+                <div>
+                    <p class="text-white text-xs font-bold uppercase tracking-widest">Oracle
+                        Cloud</p>
+                    <p class="text-white/60 text-[11px] mt-1">Automatic scaling initiated: +4
+                        standby nodes.</p>
+                </div>
+                <p class="ml-auto text-primary/50 text-[10px] font-mono">13:45</p>
+            </div>
+        </div>
+    </div>
+    <!-- Android Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 px-4 pb-6 pt-2">
+        <div class="bg-background-dark/80 backdrop-blur-xl border border-primary/20 rounded-full flex items-center justify-between p-2 px-6 shadow-2xl">
+            <button class="flex flex-col items-center gap-1 text-white/50 py-2">
+                <span class="material-symbols-outlined text-2xl">home</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary py-2 relative">
+                <span class="material-symbols-outlined text-2xl">layers</span>
+                <span class="absolute -bottom-1 w-1 h-1 bg-primary rounded-full"></span>
+            </button>
+            <div class="relative -top-10">
+                <button class="bg-primary text-background-dark w-16 h-16 rounded-full flex items-center justify-center shadow-lg shadow-primary/40 border-4 border-background-dark">
+                    <span class="material-symbols-outlined text-3xl font-bold">bolt</span>
+                </button>
+            </div>
+            <button class="flex flex-col items-center gap-1 text-white/50 py-2">
+                <span class="material-symbols-outlined text-2xl">terminal</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/50 py-2">
+                <span class="material-symbols-outlined text-2xl">account_circle</span>
+            </button>
+        </div>
+    </div>
 </div>
-<div class="flex flex-col items-center flex-1">
-<h2 class="text-primary text-xs font-bold leading-tight tracking-[0.2em] uppercase">ReGenesis AOSPOSX</h2>
-<h2 class="text-white text-sm font-medium leading-tight">Oracle Drive Hub L2</h2>
-</div>
-<div class="flex w-12 items-center justify-end">
-<button class="flex items-center justify-center rounded-xl h-10 w-10 bg-primary/10 text-primary border border-primary/20">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-</div>
-</div>
-<!-- Hero Section -->
-<div class="px-6 pt-8 pb-4">
-<h1 class="text-white tracking-tight text-[32px] font-bold leading-tight">Genesis<br/><span class="text-primary">Orchestration</span></h1>
-<p class="text-white/60 text-sm mt-2 max-w-[80%]">Central intelligence node for core development and cloud architecture.</p>
-</div>
-<!-- Main Module Cards -->
-<div class="grid grid-cols-2 gap-4 p-4">
-<!-- Code Assist -->
-<div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all" data-alt="Futuristic software code displayed on a screen" style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUZ_2SE4VIaHdtlhGX4IOrti6agMvu26YKzjRskiqlKL15ZuAst3FFruckhNhhpqgTKs7dHJ-L48pHeHLBfobj8qSHU1embOTuknSl2b9eNz-8NtOttS91UZqVBC7z5DvtHm2Blh0NoaZbSHd4rD1PWryKhQP2Es7OmbrfPK3L9Hq0LPsQlnyt5ldcS678vHSVaJC6ydUEZ0nUSWQQ9_Z91DSk9-zQVTGCF5gX45TpGNgnH8PVRdpf5xfvFV82CsgcNqI4MEI8KCw");'>
-<div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
-<span class="material-symbols-outlined text-primary text-xl">terminal</span>
-</div>
-<div>
-<p class="text-white text-lg font-bold leading-tight">Code Assist</p>
-<p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">L2 Logic Engine</p>
-</div>
-</div>
-<!-- Interface Forge -->
-<div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all" data-alt="Abstract 3D architectural glass structures" style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDNL3xm4245LkblNsK39YMYHIWVs_psGPk5lB6mQBw5u6hueKIW8LlWFEX7fq7xl8jUTY4uVES3HxVT1DkJApA665wjMGte3b57CVDwzqFdTr5ZJYg8RNcktmPdVlJAn3QYPYcJU4ThYos3sU0sUjX46cJU1b2IBk9CkXox8XWiLNb8pkE35oCVkSTxr_6EywV817ZDz9KMU7PWPQeju_ftZnTag_iC_v09NJ73ah_I71j2cO_F6yKd5YakyZPRGTpyr6l2JSeusgw");'>
-<div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
-<span class="material-symbols-outlined text-primary text-xl">polyline</span>
-</div>
-<div>
-<p class="text-white text-lg font-bold leading-tight">Interface Forge</p>
-<p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">UX Synthesizer</p>
-</div>
-</div>
-<!-- Neural Archive -->
-<div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all" data-alt="Deep space neural network visualization" style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxPyLF0HBH-xNO3KsZFy8gJ_DF1xwXDp_sFs3pk5ryVv8t8f5WDhsAr5Vg7Jp1zV9CuBB9XhfsYUR1LMrc57chSpDocGzkWZbEsTBNks-9ZCpAujmdAs4ceJJ5_Lo39flBfoFkNaLRJkI2W6GJQiRKi-BVZDt0IrdTc4-FqGSKYfuutVyNjfiLwLKLRvrpVQ-0IOs4Zn6mMizknGsN2hUOsxIkgajc65N0H3gyfvf6_qSGWXaipb6YnwiRcg1qc3UWO-LbOX8uz4w");'>
-<div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
-<span class="material-symbols-outlined text-primary text-xl">memory</span>
-</div>
-<div>
-<p class="text-white text-lg font-bold leading-tight">Neural Archive</p>
-<p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">Synaptic Core</p>
-</div>
-</div>
-<!-- Oracle Cloud -->
-<div class="relative group bg-cover bg-center flex flex-col gap-3 rounded-xl justify-end p-5 aspect-[4/5] overflow-hidden border border-white/10 hover:border-primary/50 transition-all" data-alt="Cloud data center glowing gold lights" style='background-image: linear-gradient(to bottom, rgba(34, 29, 16, 0.2), rgba(34, 29, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDeolIkFz9hmOIKdo_2K9tPPNVYm0TrzSAIVEuKOKSc0h0W5txf9sw8H1sUkoPvCUZRAiIMJtegPtZ5muR2CwX-cDomWdXIs_U_7xq89KLtV01A-DzBq2oRw-t2R_WA1Tdb-Jpt5asAU-6SKHtb6jiN5pLR3lNzM_T3UIuaUqYtTZpCtaNZWM1-OC4qZVqc74VlXNAaFVmJCv2Gd-CdjJ0JoB5di138RMjtSDU4HNhg8lz5fHCv60jlqgDKTF5ArgCFm3xLS2oNBNs");'>
-<div class="absolute top-4 right-4 bg-primary/20 p-2 rounded-lg backdrop-blur-sm border border-primary/30">
-<span class="material-symbols-outlined text-primary text-xl">cloud_queue</span>
-</div>
-<div>
-<p class="text-white text-lg font-bold leading-tight">Oracle Cloud</p>
-<p class="text-primary text-[10px] uppercase tracking-widest font-semibold mt-1">Remote Cluster</p>
-</div>
-</div>
-</div>
-<!-- System Stats -->
-<h3 class="text-primary text-xs font-bold leading-tight tracking-[0.15em] px-6 pb-2 pt-6 uppercase">Real-time Telemetry</h3>
-<div class="flex overflow-x-auto gap-4 p-4 no-scrollbar">
-<div class="flex min-w-[140px] flex-col gap-2 rounded-xl p-4 glass-card border-primary/30">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm">sync</span>
-<p class="text-white/70 text-xs font-medium uppercase tracking-wider">Sync</p>
-</div>
-<p class="text-white text-2xl font-bold leading-tight">99.9%</p>
-<p class="text-green-400 text-[10px] font-bold">+0.1% NOMINAL</p>
-</div>
-<div class="flex min-w-[140px] flex-col gap-2 rounded-xl p-4 glass-card border-primary/30">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm">speed</span>
-<p class="text-white/70 text-xs font-medium uppercase tracking-wider">Latency</p>
-</div>
-<p class="text-white text-2xl font-bold leading-tight">12ms</p>
-<p class="text-red-400 text-[10px] font-bold">-2ms VARIANCE</p>
-</div>
-<div class="flex min-w-[140px] flex-col gap-2 rounded-xl p-4 glass-card border-primary/30">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm">hub</span>
-<p class="text-white/70 text-xs font-medium uppercase tracking-wider">Nodes</p>
-</div>
-<p class="text-white text-2xl font-bold leading-tight">Active</p>
-<div class="flex items-center gap-1">
-<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-<p class="text-green-400 text-[10px] font-bold">STABLE CLUSTER</p>
-</div>
-</div>
-</div>
-<!-- System Activity Log -->
-<h3 class="text-primary text-xs font-bold leading-tight tracking-[0.15em] px-6 pb-2 pt-6 uppercase">System Logs</h3>
-<div class="px-4 pb-28">
-<div class="glass-card rounded-xl p-4 space-y-4">
-<div class="flex items-start gap-3 border-b border-primary/10 pb-3">
-<div class="w-1 h-8 bg-primary rounded-full"></div>
-<div>
-<p class="text-white text-xs font-bold uppercase tracking-widest">Interface Forge</p>
-<p class="text-white/60 text-[11px] mt-1">Generated component 'AOS-Primary-Grid' (v2.4.1)</p>
-</div>
-<p class="ml-auto text-primary/50 text-[10px] font-mono">14:02</p>
-</div>
-<div class="flex items-start gap-3 border-b border-primary/10 pb-3">
-<div class="w-1 h-8 bg-blue-500 rounded-full"></div>
-<div>
-<p class="text-white text-xs font-bold uppercase tracking-widest">Neural Archive</p>
-<p class="text-white/60 text-[11px] mt-1">Long-term synaptic bridge established successfully.</p>
-</div>
-<p class="ml-auto text-primary/50 text-[10px] font-mono">13:58</p>
-</div>
-<div class="flex items-start gap-3">
-<div class="w-1 h-8 bg-orange-500 rounded-full"></div>
-<div>
-<p class="text-white text-xs font-bold uppercase tracking-widest">Oracle Cloud</p>
-<p class="text-white/60 text-[11px] mt-1">Automatic scaling initiated: +4 standby nodes.</p>
-</div>
-<p class="ml-auto text-primary/50 text-[10px] font-mono">13:45</p>
-</div>
-</div>
-</div>
-<!-- Android Bottom Navigation -->
-<div class="fixed bottom-0 left-0 right-0 z-50 px-4 pb-6 pt-2">
-<div class="bg-background-dark/80 backdrop-blur-xl border border-primary/20 rounded-full flex items-center justify-between p-2 px-6 shadow-2xl">
-<button class="flex flex-col items-center gap-1 text-white/50 py-2">
-<span class="material-symbols-outlined text-2xl">home</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary py-2 relative">
-<span class="material-symbols-outlined text-2xl">layers</span>
-<span class="absolute -bottom-1 w-1 h-1 bg-primary rounded-full"></span>
-</button>
-<div class="relative -top-10">
-<button class="bg-primary text-background-dark w-16 h-16 rounded-full flex items-center justify-center shadow-lg shadow-primary/40 border-4 border-background-dark">
-<span class="material-symbols-outlined text-3xl font-bold">bolt</span>
-</button>
-</div>
-<button class="flex flex-col items-center gap-1 text-white/50 py-2">
-<span class="material-symbols-outlined text-2xl">terminal</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/50 py-2">
-<span class="material-symbols-outlined text-2xl">account_circle</span>
-</button>
-</div>
-</div>
-</div>
-</body></html>
+</body>
+</html>

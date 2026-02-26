@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class AgentResponse(
     val content: String,
     val agentName: String = "System",
-    val category: AgentCapabilityCategory = AgentCapabilityCategory.GENERIC,
+    val agentType: AgentType = AgentType.GENESIS,
     val confidence: Float = 1.0f,
     val status: Status = Status.SUCCESS,
     val timestamp: Long = System.currentTimeMillis(),
@@ -27,13 +27,13 @@ data class AgentResponse(
         fun success(
             content: String,
             agentName: String,
-            category: AgentCapabilityCategory = AgentCapabilityCategory.GENERIC,
+            agentType: AgentType = AgentType.GENESIS,
             confidence: Float = 1.0f,
             metadata: Map<String, Any> = emptyMap()
         ) = AgentResponse(
             content = content,
             agentName = agentName,
-            category = category,
+            agentType = agentType,
             confidence = confidence,
             metadata = metadata.mapValues { it.value.toString() },
             status = Status.SUCCESS
@@ -42,12 +42,12 @@ data class AgentResponse(
         fun error(
             message: String,
             agentName: String = "System",
-            category: AgentCapabilityCategory = AgentCapabilityCategory.GENERIC,
+            agentType: AgentType = AgentType.GENESIS,
             error: String? = message
         ) = AgentResponse(
             content = message,
             agentName = agentName,
-            category = category,
+            agentType = agentType,
             confidence = 0.0f,
             status = Status.ERROR,
             error = error
@@ -56,11 +56,11 @@ data class AgentResponse(
         fun processing(
             message: String,
             agentName: String = "System",
-            category: AgentCapabilityCategory = AgentCapabilityCategory.GENERIC
+            agentType: AgentType = AgentType.GENESIS
         ) = AgentResponse(
             content = message,
             agentName = agentName,
-            category = category,
+            agentType = agentType,
             confidence = 0.0f,
             status = Status.PROCESSING
         )

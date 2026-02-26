@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.conference
+package dev.aurakai.auraframefx.ui.conference
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,20 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityViewModel
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.cascade.trinity.TrinityViewModel
+import dev.aurakai.auraframefx.models.AgentMessage
 
 @Composable
 fun NexusConferenceScreen(
-    viewModel: TrinityViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: TrinityViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
     // 1. OBSERVE THE COLLECTIVE CONSCIOUSNESS
@@ -107,7 +99,7 @@ fun NexusConferenceScreen(
 @Composable
 fun SmartAgentBubble(message: AgentMessage) {
     val isUser = message.from.equals("User", ignoreCase = true)
-    val agentColor = when(message.from) {
+    val agentColor = when (message.from) {
         "Aura" -> AuraPurple
         "Kai" -> KaiRed
         "Genesis" -> GenesisTeal
@@ -136,7 +128,10 @@ fun SmartAgentBubble(message: AgentMessage) {
                 bottomStart = if (isUser) 16.dp else 4.dp, // Tail effect
                 bottomEnd = if (isUser) 4.dp else 16.dp
             ),
-            border = if (!isUser) androidx.compose.foundation.BorderStroke(1.dp, agentColor.copy(alpha = 0.3f)) else null
+            border = if (!isUser) androidx.compose.foundation.BorderStroke(
+                1.dp,
+                agentColor.copy(alpha = 0.3f)
+            ) else null
         ) {
             Text(
                 text = message.content,

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Neural Link: Memoria Link v2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Link: Memoria Link v2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,7 +30,7 @@
             },
         };
     </script>
-<style type="text/tailwindcss">
+    <style type="text/tailwindcss">
         :root {
             --liquid-metal: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 25%, #94a3b8 50%, #cbd5e1 75%, #f8fafc 100%);
             --holographic-shine: linear-gradient(45deg, transparent 25%, rgba(168, 85, 247, 0.2) 50%, transparent 75%);
@@ -83,125 +85,140 @@
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-[#020204] flex items-center justify-center min-h-screen p-4">
 <div class="relative w-[390px] h-[844px] bg-black rounded-[55px] border-[8px] border-[#1a1a1e] shadow-2xl overflow-hidden">
-<div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-50 text-white/90">
-<span class="text-sm font-semibold">9:41</span>
-<div class="flex gap-1.5 items-center">
-<span class="material-symbols-outlined text-[18px]">signal_cellular_alt</span>
-<span class="material-symbols-outlined text-[18px]">wifi</span>
-<span class="material-symbols-outlined text-[18px]">battery_full</span>
-</div>
-</div>
-<div class="absolute inset-0 bg-[#08080a]">
-<div class="absolute inset-0 flex flex-col items-center justify-center opacity-30">
-<div class="mb-8 p-10 border border-white/10 rounded-full flex flex-col items-center">
-<h2 class="font-display text-white/40 text-2xl tracking-widest italic">ORACLE</h2>
-<div class="w-16 h-16 border border-white/5 rounded-full mt-4 flex items-center justify-center animate-spin-slow">
-<div class="w-12 h-12 border-t border-accent rounded-full"></div>
-</div>
-</div>
-</div>
-<div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 h-16 bg-white/5 backdrop-blur-md rounded-2xl flex items-center justify-around px-6">
-<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/40">home</span></div>
-<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/40">search</span></div>
-<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/40">apps</span></div>
-<div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-white/40">settings</span></div>
-</div>
-</div>
-<svg class="absolute inset-0 z-20 pointer-events-none w-full h-full" viewBox="0 0 390 844">
-<path class="spiritual-chain" d="M380 320 Q280 320 195 422" fill="none"></path>
-<path class="spiritual-chain" d="M380 405 Q280 405 195 422" fill="none"></path>
-<path class="spiritual-chain" d="M380 490 Q280 490 195 422" fill="none"></path>
-<path class="spiritual-chain" d="M380 575 Q280 575 195 422" fill="none"></path>
-<path class="spiritual-chain" d="M380 660 Q280 660 195 422" fill="none"></path>
-<circle cx="195" cy="422" fill="#a855f7" r="4"></circle>
-<circle cx="195" cy="422" fill="none" r="10" stroke="#a855f7" stroke-width="0.5"></circle>
-</svg>
-<div class="absolute top-0 right-0 h-full w-[380px] glassmorphic z-40 flex flex-col px-10 pt-24 pb-12">
-<div class="absolute top-16 right-8 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center overflow-hidden shadow-lg group">
-<img alt="Gemini" class="w-14 h-14 object-cover pixelated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB72uZ2zD6yaEj0GuDRWrchoArucykY1wcq46JrzKoJMQrX5-e2Ml_3BxekjdZUwWtVn7_JB0ISkqfKM7t01CsIEoFeObasgNn71AGkWftPTMYU763igkZWfEd0jYhQ-ts_gWql_2p5bayDpDEKkhv3cGb3zBm-i9_ydT6Ow5uqL0_vMRslYb5ntoYtKX6dDVE32Dwzd7cUKuNsnDMZoULwgkgD4fVpa5e223weIltYZ5hZu6f-_IjvSHEElsrXhXk-TtABYDQQHww"/>
-<div class="absolute inset-0 bg-gradient-to-tr from-accent/20 to-transparent"></div>
-</div>
-<div class="mb-12">
-<h1 class="font-display text-white text-2xl tracking-[0.15em] font-light">MEMORIA LINK</h1>
-<p class="font-display text-accent text-[9px] tracking-[0.4em] font-medium opacity-80 uppercase mt-1">System Core / v2.0.2</p>
-<div class="w-24 h-[1px] bg-gradient-to-r from-accent/60 to-transparent mt-4"></div>
-</div>
-<div class="flex flex-col gap-4 relative">
-<div class="relative">
-<div class="crystal-shard top-0 left-[-15px] animate-drift opacity-60"></div>
-<button class="liquid-metal-btn w-full flex items-center justify-between p-4 rounded-xl group hover:scale-[1.02] transition-transform">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/80 border border-white/20">
-<span class="material-symbols-outlined text-secondary text-xl">mic</span>
-</div>
-<span class="font-display text-slate-800 text-xs font-bold tracking-[0.2em] uppercase">Voice</span>
-</div>
-<span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
-</button>
-</div>
-<div class="relative">
-<div class="crystal-shard bottom-0 left-[-25px] animate-drift opacity-40" style="animation-delay: -2s"></div>
-<button class="liquid-metal-btn w-full flex items-center justify-between p-4 rounded-xl group hover:scale-[1.02] transition-transform">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/80 border border-white/20">
-<span class="material-symbols-outlined text-secondary text-xl">share_reviews</span>
-</div>
-<span class="font-display text-slate-800 text-xs font-bold tracking-[0.2em] uppercase">Connect</span>
-</div>
-<span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
-</button>
-</div>
-<button class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-white/10">
-<span class="material-symbols-outlined text-accent/70 text-xl">person_search</span>
-</div>
-<span class="font-display text-white/80 text-xs tracking-[0.2em] uppercase">Assign</span>
-</div>
-</button>
-<button class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-white/10">
-<span class="material-symbols-outlined text-accent/70 text-xl">polyline</span>
-</div>
-<span class="font-display text-white/80 text-xs tracking-[0.2em] uppercase">Design</span>
-</div>
-</button>
-<button class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-white/10">
-<span class="material-symbols-outlined text-accent/70 text-xl">token</span>
-</div>
-<span class="font-display text-white/80 text-xs tracking-[0.2em] uppercase">Create</span>
-</div>
-</button>
-</div>
-<div class="mt-auto border-t border-white/5 pt-8">
-<p class="text-[10px] text-white/30 leading-relaxed font-sans tracking-tight">
+    <div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-50 text-white/90">
+        <span class="text-sm font-semibold">9:41</span>
+        <div class="flex gap-1.5 items-center">
+            <span class="material-symbols-outlined text-[18px]">signal_cellular_alt</span>
+            <span class="material-symbols-outlined text-[18px]">wifi</span>
+            <span class="material-symbols-outlined text-[18px]">battery_full</span>
+        </div>
+    </div>
+    <div class="absolute inset-0 bg-[#08080a]">
+        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-30">
+            <div class="mb-8 p-10 border border-white/10 rounded-full flex flex-col items-center">
+                <h2 class="font-display text-white/40 text-2xl tracking-widest italic">ORACLE</h2>
+                <div class="w-16 h-16 border border-white/5 rounded-full mt-4 flex items-center justify-center animate-spin-slow">
+                    <div class="w-12 h-12 border-t border-accent rounded-full"></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 h-16 bg-white/5 backdrop-blur-md rounded-2xl flex items-center justify-around px-6">
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span
+                    class="material-symbols-outlined text-white/40">home</span></div>
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span
+                    class="material-symbols-outlined text-white/40">search</span></div>
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span
+                    class="material-symbols-outlined text-white/40">apps</span></div>
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><span
+                    class="material-symbols-outlined text-white/40">settings</span></div>
+        </div>
+    </div>
+    <svg class="absolute inset-0 z-20 pointer-events-none w-full h-full" viewBox="0 0 390 844">
+        <path class="spiritual-chain" d="M380 320 Q280 320 195 422" fill="none"></path>
+        <path class="spiritual-chain" d="M380 405 Q280 405 195 422" fill="none"></path>
+        <path class="spiritual-chain" d="M380 490 Q280 490 195 422" fill="none"></path>
+        <path class="spiritual-chain" d="M380 575 Q280 575 195 422" fill="none"></path>
+        <path class="spiritual-chain" d="M380 660 Q280 660 195 422" fill="none"></path>
+        <circle cx="195" cy="422" fill="#a855f7" r="4"></circle>
+        <circle cx="195" cy="422" fill="none" r="10" stroke="#a855f7" stroke-width="0.5"></circle>
+    </svg>
+    <div class="absolute top-0 right-0 h-full w-[380px] glassmorphic z-40 flex flex-col px-10 pt-24 pb-12">
+        <div class="absolute top-16 right-8 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center overflow-hidden shadow-lg group">
+            <img alt="Gemini" class="w-14 h-14 object-cover pixelated"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuB72uZ2zD6yaEj0GuDRWrchoArucykY1wcq46JrzKoJMQrX5-e2Ml_3BxekjdZUwWtVn7_JB0ISkqfKM7t01CsIEoFeObasgNn71AGkWftPTMYU763igkZWfEd0jYhQ-ts_gWql_2p5bayDpDEKkhv3cGb3zBm-i9_ydT6Ow5uqL0_vMRslYb5ntoYtKX6dDVE32Dwzd7cUKuNsnDMZoULwgkgD4fVpa5e223weIltYZ5hZu6f-_IjvSHEElsrXhXk-TtABYDQQHww"/>
+            <div class="absolute inset-0 bg-gradient-to-tr from-accent/20 to-transparent"></div>
+        </div>
+        <div class="mb-12">
+            <h1 class="font-display text-white text-2xl tracking-[0.15em] font-light">MEMORIA
+                LINK</h1>
+            <p class="font-display text-accent text-[9px] tracking-[0.4em] font-medium opacity-80 uppercase mt-1">
+                System Core / v2.0.2</p>
+            <div class="w-24 h-[1px] bg-gradient-to-r from-accent/60 to-transparent mt-4"></div>
+        </div>
+        <div class="flex flex-col gap-4 relative">
+            <div class="relative">
+                <div class="crystal-shard top-0 left-[-15px] animate-drift opacity-60"></div>
+                <button class="liquid-metal-btn w-full flex items-center justify-between p-4 rounded-xl group hover:scale-[1.02] transition-transform">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/80 border border-white/20">
+                            <span class="material-symbols-outlined text-secondary text-xl">mic</span>
+                        </div>
+                        <span class="font-display text-slate-800 text-xs font-bold tracking-[0.2em] uppercase">Voice</span>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+                </button>
+            </div>
+            <div class="relative">
+                <div class="crystal-shard bottom-0 left-[-25px] animate-drift opacity-40"
+                     style="animation-delay: -2s"></div>
+                <button class="liquid-metal-btn w-full flex items-center justify-between p-4 rounded-xl group hover:scale-[1.02] transition-transform">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/80 border border-white/20">
+                            <span class="material-symbols-outlined text-secondary text-xl">share_reviews</span>
+                        </div>
+                        <span class="font-display text-slate-800 text-xs font-bold tracking-[0.2em] uppercase">Connect</span>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+                </button>
+            </div>
+            <button class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-white/10">
+                        <span class="material-symbols-outlined text-accent/70 text-xl">person_search</span>
+                    </div>
+                    <span class="font-display text-white/80 text-xs tracking-[0.2em] uppercase">Assign</span>
+                </div>
+            </button>
+            <button class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-white/10">
+                        <span class="material-symbols-outlined text-accent/70 text-xl">polyline</span>
+                    </div>
+                    <span class="font-display text-white/80 text-xs tracking-[0.2em] uppercase">Design</span>
+                </div>
+            </button>
+            <button class="flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-white/10">
+                        <span class="material-symbols-outlined text-accent/70 text-xl">token</span>
+                    </div>
+                    <span class="font-display text-white/80 text-xs tracking-[0.2em] uppercase">Create</span>
+                </div>
+            </button>
+        </div>
+        <div class="mt-auto border-t border-white/5 pt-8">
+            <p class="text-[10px] text-white/30 leading-relaxed font-sans tracking-tight">
                 A bridge between user intent and agent execution. Ethereal data stream synchronized.
             </p>
-<div class="mt-6 flex items-center justify-between">
-<div class="flex -space-x-1.5">
-<div class="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] text-accent/60 font-display">Γ</div>
-<div class="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] text-accent/60 font-display">Δ</div>
-<div class="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] text-accent/60 font-display">Ω</div>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></div>
-<span class="text-[9px] text-white/20 uppercase tracking-[0.2em]">Nodes Active</span>
-</div>
-</div>
-</div>
-</div>
-<div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/10 rounded-full z-50"></div>
+            <div class="mt-6 flex items-center justify-between">
+                <div class="flex -space-x-1.5">
+                    <div class="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] text-accent/60 font-display">
+                        Γ
+                    </div>
+                    <div class="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] text-accent/60 font-display">
+                        Δ
+                    </div>
+                    <div class="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-[10px] text-accent/60 font-display">
+                        Ω
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></div>
+                    <span class="text-[9px] text-white/20 uppercase tracking-[0.2em]">Nodes Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/10 rounded-full z-50"></div>
 </div>
 
-</body></html>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens
+package dev.aurakai.auraframefx.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

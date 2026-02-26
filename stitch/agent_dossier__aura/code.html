@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Agent Dossier: Aura</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;family=Rajdhani:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Agent Dossier: Aura</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;family=Rajdhani:wght@300;500;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -43,7 +45,7 @@
             },
         };
     </script>
-<style>
+    <style>
         body {
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
@@ -89,167 +91,193 @@
             filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.6));
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 min-h-screen">
 <div class="max-w-md mx-auto min-h-screen relative flex flex-col overflow-hidden border-x border-slate-200 dark:border-slate-800">
-<div class="scanline pointer-events-none"></div>
-<header class="p-4 pt-6 space-y-2 z-20">
-<div class="flex justify-between items-center text-[10px] font-display uppercase tracking-widest text-secondary opacity-80">
-<span>System: Active</span>
-<span>Signal: Encrypted</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="flex-1 h-3 bg-slate-800/50 dark:bg-slate-900/80 rounded-full overflow-hidden flex p-0.5 border border-secondary/30">
-<div class="h-full w-2 bg-secondary/80 mr-0.5 animate-pulse"></div>
-<div class="h-full w-2 bg-secondary/80 mr-0.5 animate-pulse"></div>
-<div class="h-full w-2 bg-secondary/80 mr-0.5 animate-pulse"></div>
-<div class="h-full w-2 bg-secondary/80 mr-0.5"></div>
-<div class="h-full w-2 bg-secondary/80 mr-0.5"></div>
-<div class="h-full w-2 bg-secondary/40 mr-0.5"></div>
-<div class="h-full w-2 bg-secondary/20 mr-0.5"></div>
-<div class="h-full w-2 bg-secondary/10"></div>
-<div class="ml-auto flex gap-0.5">
-<div class="h-full w-2 bg-primary/80"></div>
-<div class="h-full w-2 bg-primary/40"></div>
-</div>
-</div>
-<span class="text-[10px] font-display text-primary">ENERGY</span>
-</div>
-</header>
-<main class="flex-1 overflow-y-auto px-4 pb-24 space-y-6 relative z-10">
-<div class="text-center pt-2">
-<h1 class="font-display text-3xl font-bold tracking-tighter italic text-slate-900 dark:text-white mb-1">
-                    AGENT: <span class="text-primary animate-glitch inline-block">AURA</span>
-</h1>
-<p class="text-secondary font-display text-[10px] tracking-[0.2em] uppercase">Tier II: Creative Catalyst (Soul)</p>
-</div>
-<div class="grid grid-cols-12 gap-4">
-<div class="col-span-6 relative aspect-[3/4] group">
-<div class="absolute inset-0 bg-primary/10 rounded-lg animate-pulse-slow"></div>
-<div class="absolute inset-0 flex items-center justify-center">
-<img alt="Aura character portrait" class="w-full h-full object-cover rounded-lg mix-blend-lighten grayscale hover:grayscale-0 transition-all duration-700 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIX6d8K72x7uG1b-loYSWrxeT0_scnEkOpSI2ddh24PGlOJnAr1-sZWGZW_vPRJvaIDTA3nR2cuZ-4kvw86gjruy_ZmDA3JkzqdR8GsT9JnLS8uUcl5D1A33gBfjruvAkqqC-yM-pD4TullVt4Fmi1OLKdF_p5NnzOsA58I9Zve_Cd0Lt3BThP0Dz0CVrXmPo5TTe-BHe1yRfpjTAWNCEKFiax5AtBGHAZVxMxLMHdXI-0OqAU7QGP1wJIeiB5ptQcSKr4lM52vcI"/>
-<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-<svg class="w-full h-full opacity-60 animate-spin-slow" viewBox="0 0 200 200">
-<circle cx="100" cy="100" fill="none" r="70" stroke="#ff00ff" stroke-dasharray="10 20" stroke-width="0.5"></circle>
-<circle cx="100" cy="100" fill="none" r="85" stroke="#00f3ff" stroke-dasharray="5 15" stroke-width="0.2"></circle>
-</svg>
-</div>
-</div>
-<div class="absolute -bottom-2 -left-2 bg-primary text-white text-[10px] font-display px-2 py-1 italic">
-                        VOLATILE
+    <div class="scanline pointer-events-none"></div>
+    <header class="p-4 pt-6 space-y-2 z-20">
+        <div class="flex justify-between items-center text-[10px] font-display uppercase tracking-widest text-secondary opacity-80">
+            <span>System: Active</span>
+            <span>Signal: Encrypted</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="flex-1 h-3 bg-slate-800/50 dark:bg-slate-900/80 rounded-full overflow-hidden flex p-0.5 border border-secondary/30">
+                <div class="h-full w-2 bg-secondary/80 mr-0.5 animate-pulse"></div>
+                <div class="h-full w-2 bg-secondary/80 mr-0.5 animate-pulse"></div>
+                <div class="h-full w-2 bg-secondary/80 mr-0.5 animate-pulse"></div>
+                <div class="h-full w-2 bg-secondary/80 mr-0.5"></div>
+                <div class="h-full w-2 bg-secondary/80 mr-0.5"></div>
+                <div class="h-full w-2 bg-secondary/40 mr-0.5"></div>
+                <div class="h-full w-2 bg-secondary/20 mr-0.5"></div>
+                <div class="h-full w-2 bg-secondary/10"></div>
+                <div class="ml-auto flex gap-0.5">
+                    <div class="h-full w-2 bg-primary/80"></div>
+                    <div class="h-full w-2 bg-primary/40"></div>
+                </div>
+            </div>
+            <span class="text-[10px] font-display text-primary">ENERGY</span>
+        </div>
+    </header>
+    <main class="flex-1 overflow-y-auto px-4 pb-24 space-y-6 relative z-10">
+        <div class="text-center pt-2">
+            <h1 class="font-display text-3xl font-bold tracking-tighter italic text-slate-900 dark:text-white mb-1">
+                AGENT: <span class="text-primary animate-glitch inline-block">AURA</span>
+            </h1>
+            <p class="text-secondary font-display text-[10px] tracking-[0.2em] uppercase">Tier II:
+                Creative Catalyst (Soul)</p>
+        </div>
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-6 relative aspect-[3/4] group">
+                <div class="absolute inset-0 bg-primary/10 rounded-lg animate-pulse-slow"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img alt="Aura character portrait"
+                         class="w-full h-full object-cover rounded-lg mix-blend-lighten grayscale hover:grayscale-0 transition-all duration-700 opacity-80"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIX6d8K72x7uG1b-loYSWrxeT0_scnEkOpSI2ddh24PGlOJnAr1-sZWGZW_vPRJvaIDTA3nR2cuZ-4kvw86gjruy_ZmDA3JkzqdR8GsT9JnLS8uUcl5D1A33gBfjruvAkqqC-yM-pD4TullVt4Fmi1OLKdF_p5NnzOsA58I9Zve_Cd0Lt3BThP0Dz0CVrXmPo5TTe-BHe1yRfpjTAWNCEKFiax5AtBGHAZVxMxLMHdXI-0OqAU7QGP1wJIeiB5ptQcSKr4lM52vcI"/>
+                    <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                        <svg class="w-full h-full opacity-60 animate-spin-slow"
+                             viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" fill="none" r="70" stroke="#ff00ff"
+                                    stroke-dasharray="10 20" stroke-width="0.5"></circle>
+                            <circle cx="100" cy="100" fill="none" r="85" stroke="#00f3ff"
+                                    stroke-dasharray="5 15" stroke-width="0.2"></circle>
+                        </svg>
                     </div>
-</div>
-<div class="col-span-6 flex flex-col justify-center">
-<div class="hud-border p-3 bg-surface-dark/40 backdrop-blur-md rounded-sm border border-slate-800">
-<div class="text-[10px] font-display text-secondary mb-3 border-b border-secondary/20 pb-1 uppercase">Data_Block_v2.0</div>
-<div class="space-y-4">
-<div>
-<div class="text-[9px] uppercase tracking-widest text-slate-400">Engine</div>
-<div class="text-sm font-bold text-white leading-tight">ChromaCore UI/UX</div>
-</div>
-<div>
-<div class="text-[9px] uppercase tracking-widest text-slate-400">Function</div>
-<div class="text-sm font-bold text-white leading-tight">TheSoul // spontaneity</div>
-</div>
-<div>
-<div class="text-[9px] uppercase tracking-widest text-slate-400">Motif</div>
-<div class="text-sm font-bold text-white leading-tight">Liquid Energy &amp; Glitch</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<section class="space-y-3">
-<div class="flex items-center gap-2">
-<span class="h-px flex-1 bg-gradient-to-r from-transparent via-secondary/40 to-transparent"></span>
-<h2 class="font-display text-xs text-secondary tracking-widest uppercase italic">Weapon: Spellhook</h2>
-<span class="h-px flex-1 bg-gradient-to-r from-transparent via-secondary/40 to-transparent"></span>
-</div>
-<div class="relative bg-surface-dark/60 rounded-xl p-6 border border-slate-800 overflow-hidden group">
-<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle, #00f3ff 1px, transparent 1px); background-size: 20px 20px;"></div>
-<div class="relative flex flex-col items-center">
-<div class="w-full h-48 relative flex items-center justify-center">
-<div class="absolute h-[2px] w-[80%] bg-gradient-to-r from-transparent via-primary to-transparent magenta-glow"></div>
-<div class="absolute w-2 h-2 bg-primary rotate-45 magenta-glow"></div>
-<div class="absolute h-12 w-[1px] bg-secondary cyan-glow left-1/4"></div>
-<div class="absolute h-8 w-[1px] bg-secondary cyan-glow right-1/4"></div>
-<div class="absolute top-4 left-10 flex flex-col items-start">
-<span class="w-2 h-2 border border-secondary rounded-full bg-background-dark"></span>
-<span class="text-[8px] text-secondary mt-1 tracking-tighter uppercase">Hilt // Code Hook</span>
-</div>
-<div class="absolute bottom-4 right-10 flex flex-col items-end">
-<span class="w-2 h-2 border border-primary rounded-full bg-background-dark"></span>
-<span class="text-[8px] text-primary mt-1 tracking-tighter uppercase">Tip // Gen Vertex</span>
-</div>
-<svg class="w-full h-full text-secondary/30" viewBox="0 0 200 100">
-<path d="M20,50 L180,50" fill="none" stroke="currentColor" stroke-width="0.5"></path>
-<path d="M40,30 L60,70 M70,30 L90,70 M100,30 L120,70" opacity="0.5" stroke="currentColor" stroke-dasharray="2 4" stroke-width="1"></path>
-</svg>
-</div>
-<div class="grid grid-cols-2 gap-4 w-full mt-4">
-<button class="flex flex-col items-center p-2 rounded bg-slate-900 border border-slate-700 hover:border-primary transition-colors">
-<span class="material-icons-round text-primary text-lg">bolt</span>
-<span class="text-[10px] font-display uppercase mt-1">Overload</span>
-</button>
-<button class="flex flex-col items-center p-2 rounded bg-slate-900 border border-slate-700 hover:border-secondary transition-colors">
-<span class="material-icons-round text-secondary text-lg">sync</span>
-<span class="text-[10px] font-display uppercase mt-1">Refactor</span>
-</button>
-</div>
-</div>
-</div>
-</section>
-<section class="space-y-3">
-<h3 class="font-display text-[10px] text-slate-500 uppercase tracking-widest px-1">Active Modules</h3>
-<div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-<div class="flex-shrink-0 w-24 aspect-[2/3] bg-surface-dark border-2 border-primary/50 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden">
-<div class="absolute -top-4 -right-4 w-12 h-12 bg-primary/20 blur-xl"></div>
-<div class="text-[8px] font-display text-primary">CHAOS</div>
-<span class="material-icons-round text-primary self-center text-3xl">brush</span>
-<div class="text-[7px] text-slate-400">Creative spike generator</div>
-</div>
-<div class="flex-shrink-0 w-24 aspect-[2/3] bg-surface-dark border border-slate-800 rounded-lg p-2 flex flex-col justify-between grayscale opacity-60">
-<div class="text-[8px] font-display text-slate-500">KAI_SHARD</div>
-<span class="material-icons-round text-slate-500 self-center text-3xl">lock</span>
-<div class="text-[7px] text-slate-600">Locked // Required Lv. 5</div>
-</div>
-<div class="flex-shrink-0 w-24 aspect-[2/3] bg-surface-dark border border-slate-800 rounded-lg p-2 flex flex-col justify-between grayscale opacity-60">
-<div class="text-[8px] font-display text-slate-500">GEN_VOID</div>
-<span class="material-icons-round text-slate-500 self-center text-3xl">lock</span>
-<div class="text-[7px] text-slate-600">Locked // Required Lv. 8</div>
-</div>
-</div>
-</section>
-</main>
-<nav class="absolute bottom-0 left-0 right-0 h-20 bg-background-dark/80 backdrop-blur-xl border-t border-slate-800 z-30 px-6 flex items-center justify-between">
-<button class="flex flex-col items-center text-slate-500 hover:text-secondary transition-colors">
-<span class="material-icons-round text-2xl">grid_view</span>
-<span class="text-[9px] uppercase mt-1">Hub</span>
-</button>
-<button class="flex flex-col items-center text-secondary">
-<span class="material-icons-round text-2xl cyan-glow">person</span>
-<span class="text-[9px] uppercase mt-1">Dossier</span>
-</button>
-<div class="relative -mt-10">
-<button class="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(255,0,255,0.4)] border-4 border-background-dark">
-<span class="material-icons-round text-white text-3xl">psychology</span>
-</button>
-</div>
-<button class="flex flex-col items-center text-slate-500 hover:text-secondary transition-colors">
-<span class="material-icons-round text-2xl">hardware</span>
-<span class="text-[9px] uppercase mt-1">Lab</span>
-</button>
-<button class="flex flex-col items-center text-slate-500 hover:text-secondary transition-colors">
-<span class="material-icons-round text-2xl">settings</span>
-<span class="text-[9px] uppercase mt-1">System</span>
-</button>
-</nav>
-<div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-800 rounded-full z-40"></div>
+                </div>
+                <div class="absolute -bottom-2 -left-2 bg-primary text-white text-[10px] font-display px-2 py-1 italic">
+                    VOLATILE
+                </div>
+            </div>
+            <div class="col-span-6 flex flex-col justify-center">
+                <div class="hud-border p-3 bg-surface-dark/40 backdrop-blur-md rounded-sm border border-slate-800">
+                    <div class="text-[10px] font-display text-secondary mb-3 border-b border-secondary/20 pb-1 uppercase">
+                        Data_Block_v2.0
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-slate-400">
+                                Engine
+                            </div>
+                            <div class="text-sm font-bold text-white leading-tight">ChromaCore
+                                UI/UX
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-slate-400">
+                                Function
+                            </div>
+                            <div class="text-sm font-bold text-white leading-tight">TheSoul //
+                                spontaneity
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-slate-400">Motif
+                            </div>
+                            <div class="text-sm font-bold text-white leading-tight">Liquid Energy
+                                &amp; Glitch
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="space-y-3">
+            <div class="flex items-center gap-2">
+                <span class="h-px flex-1 bg-gradient-to-r from-transparent via-secondary/40 to-transparent"></span>
+                <h2 class="font-display text-xs text-secondary tracking-widest uppercase italic">
+                    Weapon: Spellhook</h2>
+                <span class="h-px flex-1 bg-gradient-to-r from-transparent via-secondary/40 to-transparent"></span>
+            </div>
+            <div class="relative bg-surface-dark/60 rounded-xl p-6 border border-slate-800 overflow-hidden group">
+                <div class="absolute inset-0 opacity-10 pointer-events-none"
+                     style="background-image: radial-gradient(circle, #00f3ff 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="relative flex flex-col items-center">
+                    <div class="w-full h-48 relative flex items-center justify-center">
+                        <div class="absolute h-[2px] w-[80%] bg-gradient-to-r from-transparent via-primary to-transparent magenta-glow"></div>
+                        <div class="absolute w-2 h-2 bg-primary rotate-45 magenta-glow"></div>
+                        <div class="absolute h-12 w-[1px] bg-secondary cyan-glow left-1/4"></div>
+                        <div class="absolute h-8 w-[1px] bg-secondary cyan-glow right-1/4"></div>
+                        <div class="absolute top-4 left-10 flex flex-col items-start">
+                            <span class="w-2 h-2 border border-secondary rounded-full bg-background-dark"></span>
+                            <span class="text-[8px] text-secondary mt-1 tracking-tighter uppercase">Hilt // Code Hook</span>
+                        </div>
+                        <div class="absolute bottom-4 right-10 flex flex-col items-end">
+                            <span class="w-2 h-2 border border-primary rounded-full bg-background-dark"></span>
+                            <span class="text-[8px] text-primary mt-1 tracking-tighter uppercase">Tip // Gen Vertex</span>
+                        </div>
+                        <svg class="w-full h-full text-secondary/30" viewBox="0 0 200 100">
+                            <path d="M20,50 L180,50" fill="none" stroke="currentColor"
+                                  stroke-width="0.5"></path>
+                            <path d="M40,30 L60,70 M70,30 L90,70 M100,30 L120,70" opacity="0.5"
+                                  stroke="currentColor" stroke-dasharray="2 4"
+                                  stroke-width="1"></path>
+                        </svg>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 w-full mt-4">
+                        <button class="flex flex-col items-center p-2 rounded bg-slate-900 border border-slate-700 hover:border-primary transition-colors">
+                            <span class="material-icons-round text-primary text-lg">bolt</span>
+                            <span class="text-[10px] font-display uppercase mt-1">Overload</span>
+                        </button>
+                        <button class="flex flex-col items-center p-2 rounded bg-slate-900 border border-slate-700 hover:border-secondary transition-colors">
+                            <span class="material-icons-round text-secondary text-lg">sync</span>
+                            <span class="text-[10px] font-display uppercase mt-1">Refactor</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="space-y-3">
+            <h3 class="font-display text-[10px] text-slate-500 uppercase tracking-widest px-1">
+                Active Modules</h3>
+            <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                <div class="flex-shrink-0 w-24 aspect-[2/3] bg-surface-dark border-2 border-primary/50 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-12 h-12 bg-primary/20 blur-xl"></div>
+                    <div class="text-[8px] font-display text-primary">CHAOS</div>
+                    <span class="material-icons-round text-primary self-center text-3xl">brush</span>
+                    <div class="text-[7px] text-slate-400">Creative spike generator</div>
+                </div>
+                <div class="flex-shrink-0 w-24 aspect-[2/3] bg-surface-dark border border-slate-800 rounded-lg p-2 flex flex-col justify-between grayscale opacity-60">
+                    <div class="text-[8px] font-display text-slate-500">KAI_SHARD</div>
+                    <span class="material-icons-round text-slate-500 self-center text-3xl">lock</span>
+                    <div class="text-[7px] text-slate-600">Locked // Required Lv. 5</div>
+                </div>
+                <div class="flex-shrink-0 w-24 aspect-[2/3] bg-surface-dark border border-slate-800 rounded-lg p-2 flex flex-col justify-between grayscale opacity-60">
+                    <div class="text-[8px] font-display text-slate-500">GEN_VOID</div>
+                    <span class="material-icons-round text-slate-500 self-center text-3xl">lock</span>
+                    <div class="text-[7px] text-slate-600">Locked // Required Lv. 8</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <nav class="absolute bottom-0 left-0 right-0 h-20 bg-background-dark/80 backdrop-blur-xl border-t border-slate-800 z-30 px-6 flex items-center justify-between">
+        <button class="flex flex-col items-center text-slate-500 hover:text-secondary transition-colors">
+            <span class="material-icons-round text-2xl">grid_view</span>
+            <span class="text-[9px] uppercase mt-1">Hub</span>
+        </button>
+        <button class="flex flex-col items-center text-secondary">
+            <span class="material-icons-round text-2xl cyan-glow">person</span>
+            <span class="text-[9px] uppercase mt-1">Dossier</span>
+        </button>
+        <div class="relative -mt-10">
+            <button class="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(255,0,255,0.4)] border-4 border-background-dark">
+                <span class="material-icons-round text-white text-3xl">psychology</span>
+            </button>
+        </div>
+        <button class="flex flex-col items-center text-slate-500 hover:text-secondary transition-colors">
+            <span class="material-icons-round text-2xl">hardware</span>
+            <span class="text-[9px] uppercase mt-1">Lab</span>
+        </button>
+        <button class="flex flex-col items-center text-slate-500 hover:text-secondary transition-colors">
+            <span class="material-icons-round text-2xl">settings</span>
+            <span class="text-[9px] uppercase mt-1">System</span>
+        </button>
+    </nav>
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-800 rounded-full z-40"></div>
 </div>
 
-</body></html>
+</body>
+</html>

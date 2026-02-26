@@ -1,7 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.engine.hooks
 
-import android.view.View
-import android.widget.ImageView
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
@@ -15,14 +13,14 @@ class ChromaCoreHooker : YukiBaseHooker() {
 
     override fun onHook() {
         // Load the shared preferences synchronized by ChromaCoreManager
-        val prefs = prefs("chromacore_xposed_prefs")
+        prefs("chromacore_xposed_prefs")
 
         // --- STATUS BAR HOOKS (Iconify) ---
         hookStatusbarLogo()
-        
+
         // --- LAUNCHER HOOKS (Pixel Launcher Enhanced) ---
         hookLauncherGrid()
-        
+
         // --- COLOR ENGINE HOOKS (ColorBlendr) ---
         hookDynamicColors()
     }

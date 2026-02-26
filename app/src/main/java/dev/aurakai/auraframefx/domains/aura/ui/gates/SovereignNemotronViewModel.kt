@@ -5,9 +5,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
 import javax.inject.Inject
 
+/**
+ * 🧠 SOVEREIGN NEMOTRON VIEWMODEL
+ * Manages state and interactions for the Nemotron AI screen
+ */
 @HiltViewModel
 class SovereignNemotronViewModel @Inject constructor(
     val nemotronService: NemotronAIService
-) : ViewModel()
-
-
+) : ViewModel() {
+    // ViewModel logic for Nemotron screen
+}

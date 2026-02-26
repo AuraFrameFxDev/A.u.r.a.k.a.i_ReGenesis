@@ -1,7 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.models
 
-import android.graphics.Bitmap
-
 /**
  * Represents the state of an AI image generation operation.
  *

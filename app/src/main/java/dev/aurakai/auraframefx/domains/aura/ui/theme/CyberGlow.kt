@@ -1,5 +1,4 @@
-
-                             package dev.aurakai.auraframefx.domains.aura.ui.theme
+package dev.aurakai.auraframefx.domains.aura.ui.theme
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color

@@ -1,13 +1,19 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -106,7 +112,9 @@ fun ModuleCard(
                 Text(
                     text = module.description,
                     fontSize = 13.sp,
-                    color = if (module.enabled) Color.White.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.3f),
+                    color = if (module.enabled) Color.White.copy(alpha = 0.7f) else Color.White.copy(
+                        alpha = 0.3f
+                    ),
                     lineHeight = 16.sp
                 )
 
@@ -172,7 +180,9 @@ fun CompactModuleCard(
             Text(
                 text = module.description,
                 fontSize = 11.sp,
-                color = if (module.enabled) Color.White.copy(alpha = 0.6f) else Color.White.copy(alpha = 0.3f),
+                color = if (module.enabled) Color.White.copy(alpha = 0.6f) else Color.White.copy(
+                    alpha = 0.3f
+                ),
                 maxLines = 2,
                 lineHeight = 13.sp
             )

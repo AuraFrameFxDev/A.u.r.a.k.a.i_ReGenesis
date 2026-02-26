@@ -79,7 +79,8 @@ class SovereignBridgeRepository @Inject constructor() {
     fun toggleConnector(id: String) {
         _connectors.value = _connectors.value.map {
             if (it.id == id) {
-                val newStatus = if (it.status == ConnectorStatus.OFFLINE) ConnectorStatus.ACTIVE else ConnectorStatus.OFFLINE
+                val newStatus =
+                    if (it.status == ConnectorStatus.OFFLINE) ConnectorStatus.ACTIVE else ConnectorStatus.OFFLINE
                 it.copy(status = newStatus)
             } else it
         }

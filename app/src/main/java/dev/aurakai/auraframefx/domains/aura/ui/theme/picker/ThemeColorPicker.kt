@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import dev.aurakai.auraframefx.domains.genesis.network.model.Theme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.ColorSchemeManager
-import dev.aurakai.auraframefx.domains.aura.ui.theme.picker.ColorBlendrPicker
 
 /**
  * SpectraCode ReGen - Advanced color customization system for AuraFrameFX

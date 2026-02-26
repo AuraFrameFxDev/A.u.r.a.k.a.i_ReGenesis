@@ -3,17 +3,23 @@ package dev.aurakai.auraframefx.domains.aura.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.SupportMessageEntity
-import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.MessageStatus
+import dev.aurakai.auraframefx.domains.aura.models.SupportMessage
 import dev.aurakai.auraframefx.domains.genesis.SupportRepository
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.MessageStatus
+import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.SupportMessageEntity
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
-
-import dev.aurakai.auraframefx.domains.aura.models.SupportMessage
 
 @HiltViewModel
 open class SupportChatViewModel @Inject constructor(
@@ -73,5 +79,5 @@ open class SupportChatViewModel @Inject constructor(
     fun clearStatusMessage() {
         // Placeholder if needed
     }
- }
+}
 

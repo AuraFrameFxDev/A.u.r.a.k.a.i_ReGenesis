@@ -1,19 +1,19 @@
 package dev.aurakai.auraframefx.domains.aura
 
- import android.app.Service
- import android.content.Intent
- import android.net.Uri
- import android.os.Bundle
- import android.os.IBinder
- import android.os.Process
- import com.google.firebase.crashlytics.FirebaseCrashlytics
- import dagger.hilt.android.AndroidEntryPoint
- import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveService
- import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.SecureFileManager
- import dev.aurakai.auraframefx.ipc.IAuraDriveCallback
- import timber.log.Timber
- import java.io.File
- import javax.inject.Inject
+import android.app.Service
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.os.IBinder
+import android.os.Process
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import dagger.hilt.android.AndroidEntryPoint
+import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.SecureFileManager
+import dev.aurakai.auraframefx.ipc.IAuraDriveCallback
+import timber.log.Timber
+import java.io.File
+import javax.inject.Inject
 
 /**
  * AuraDriveService - Oracle Drive Backend
@@ -48,6 +48,7 @@ class AuraDriveService : Service() {
                 "Error: ${e.message}"
             }
         }
+
         /**
          * Return the current Oracle Drive status string including the caller UID.
          *
@@ -57,8 +58,10 @@ class AuraDriveService : Service() {
          * @return A short status message containing the active state, R.G.S.F. health, and caller UID.
          */
         override fun getOracleDriveStatus(): String {
-            FirebaseCrashlytics.getInstance().log("Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
-            Timber.tag(TAG).d("Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
+            FirebaseCrashlytics.getInstance()
+                .log("Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
+            Timber.tag(TAG)
+                .d("Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
             return "Oracle Drive Active - R.G.S.F. Nominal (UID: ${Process.myUid()}) "
         }
 
@@ -151,7 +154,8 @@ class AuraDriveService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        Timber.tag(TAG).d("AuraDriveService bound. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
+        Timber.tag(TAG)
+            .d("AuraDriveService bound. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
         return binder as IBinder
     }
 

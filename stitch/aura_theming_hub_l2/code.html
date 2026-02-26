@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Aura Theming Hub L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Theming Hub L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -31,7 +35,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .chaos-bg {
             background: radial-gradient(circle at 20% 30%, rgba(244, 37, 175, 0.15) 0%, transparent 50%),
                         radial-gradient(circle at 80% 70%, rgba(244, 37, 175, 0.1) 0%, transparent 50%),
@@ -52,134 +56,142 @@
             pointer-events: none;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white overflow-hidden h-screen flex flex-col">
 <!-- Background Chaos Elements -->
 <div class="fixed inset-0 chaos-bg -z-10"></div>
 <div class="fixed top-20 left-10 code-float">void init_aura() { chaos: max; }</div>
 <div class="fixed top-1/2 right-4 code-float rotate-90">color_hex: #f425af;</div>
-<div class="fixed bottom-32 left-8 code-float opacity-20">if(aura_active) { inject_magenta(); }</div>
+<div class="fixed bottom-32 left-8 code-float opacity-20">if(aura_active) { inject_magenta(); }
+</div>
 <!-- Top Navigation / Breadcrumb -->
 <div class="flex items-center bg-transparent p-6 pb-2 justify-between shrink-0">
-<div class="flex items-center gap-2">
-<div class="text-primary size-10 shrink-0 flex items-center justify-center bg-primary/10 rounded-full border border-primary/20">
-<span class="material-symbols-outlined">chevron_left</span>
-</div>
-<div class="flex flex-col">
-<span class="text-[10px] uppercase tracking-widest text-primary font-bold opacity-70">ReGenesis AOSPOSX</span>
-<h2 class="text-white text-lg font-bold leading-tight tracking-tight">Exodus &gt; Aura</h2>
-</div>
-</div>
-<div class="text-white/50 text-xs font-mono">L2_VER_8.1.1</div>
+    <div class="flex items-center gap-2">
+        <div class="text-primary size-10 shrink-0 flex items-center justify-center bg-primary/10 rounded-full border border-primary/20">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </div>
+        <div class="flex flex-col">
+            <span class="text-[10px] uppercase tracking-widest text-primary font-bold opacity-70">ReGenesis AOSPOSX</span>
+            <h2 class="text-white text-lg font-bold leading-tight tracking-tight">Exodus &gt;
+                Aura</h2>
+        </div>
+    </div>
+    <div class="text-white/50 text-xs font-mono">L2_VER_8.1.1</div>
 </div>
 <!-- Header Area -->
 <header class="px-6 pt-8 pb-4">
-<h1 class="text-white tracking-tighter text-[42px] font-bold leading-[0.9] text-left">
-            Aura <span class="text-primary">Theming</span> Hub
-        </h1>
-<p class="text-white/60 text-sm mt-2 max-w-[280px]">Hyper-personalized aesthetics engine for the cognitive explorer.</p>
+    <h1 class="text-white tracking-tighter text-[42px] font-bold leading-[0.9] text-left">
+        Aura <span class="text-primary">Theming</span> Hub
+    </h1>
+    <p class="text-white/60 text-sm mt-2 max-w-[280px]">Hyper-personalized aesthetics engine for the
+        cognitive explorer.</p>
 </header>
 <!-- Chaotic Grid Layout -->
 <main class="flex-1 overflow-y-auto px-6 pb-24 relative">
-<div class="grid grid-cols-2 gap-4 mt-6">
-<!-- Module: ChromaCore -->
-<div class="glass-card rounded-xl p-5 aspect-square flex flex-col justify-between relative overflow-hidden -rotate-2 group">
-<div class="absolute -top-4 -right-4 size-16 bg-primary/20 blur-2xl group-hover:bg-primary/40 transition-all"></div>
-<div class="flex flex-col">
-<span class="material-symbols-outlined text-primary mb-2 text-3xl">palette</span>
-<h3 class="text-white font-bold text-xl leading-tight">Chroma<br/>Core</h3>
-</div>
-<p class="text-[10px] text-white/50 uppercase tracking-tighter font-mono">Deep Color Science</p>
-</div>
-<!-- Module: Aura Lab -->
-<div class="glass-card rounded-xl p-5 aspect-[4/5] flex flex-col justify-between relative overflow-hidden rotate-1 mt-4 border-white/10">
-<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#f425af 0.5px, transparent 0.5px); background-size: 8px 8px;"></div>
-<div class="flex flex-col z-10">
-<span class="material-symbols-outlined text-white mb-2 text-3xl">science</span>
-<h3 class="text-white font-bold text-xl leading-tight">Aura Lab</h3>
-</div>
-<div class="z-10">
-<p class="text-[10px] text-primary font-bold uppercase tracking-tighter">BETA_EXPERIMENTAL</p>
-<div class="w-full h-1 bg-primary/20 mt-1 rounded-full overflow-hidden">
-<div class="w-2/3 h-full bg-primary"></div>
-</div>
-</div>
-</div>
-<!-- Module: Theme Engine -->
-<div class="glass-card rounded-xl p-5 col-span-1 flex flex-col justify-between relative overflow-hidden -mt-8 rotate-3 neon-glow bg-primary/5 border-primary/50">
-<div class="flex flex-col">
-<span class="material-symbols-outlined text-primary mb-2 text-3xl">settings_input_component</span>
-<h3 class="text-white font-bold text-xl leading-tight">Theme Engine</h3>
-</div>
-<div class="flex gap-1">
-<div class="size-2 rounded-full bg-primary"></div>
-<div class="size-2 rounded-full bg-white/20"></div>
-<div class="size-2 rounded-full bg-white/20"></div>
-</div>
-</div>
-<!-- Module: Instant Color Picker -->
-<div class="glass-card rounded-xl p-5 aspect-square flex flex-col justify-between relative overflow-hidden -rotate-1 group">
-<div class="absolute inset-0 opacity-20 pointer-events-none" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(244,37,175,0.1) 10px, rgba(244,37,175,0.1) 11px);"></div>
-<div class="flex flex-col z-10">
-<span class="material-symbols-outlined text-white group-hover:text-primary transition-colors mb-2 text-3xl">colorize</span>
-<h3 class="text-white font-bold text-xl leading-tight">Instant Picker</h3>
-</div>
-<div class="bg-primary/20 border border-primary/30 rounded px-2 py-1 z-10">
-<p class="text-[9px] text-primary font-mono font-bold">#F425AF</p>
-</div>
-</div>
-<!-- Secondary List Modules -->
-<div class="col-span-2 space-y-3 mt-4">
-<div class="flex items-center glass-card p-4 rounded-xl border-dashed border-primary/20">
-<div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary shrink-0">
-<span class="material-symbols-outlined">auto_fix_high</span>
-</div>
-<div class="ml-4 flex-1">
-<h4 class="text-white font-bold text-sm">Chaos Paint Textures</h4>
-<p class="text-white/40 text-[10px]">Procedural organic noise overlays</p>
-</div>
-<span class="material-symbols-outlined text-white/30">chevron_right</span>
-</div>
-<div class="flex items-center glass-card p-4 rounded-xl border-dashed border-primary/20">
-<div class="size-10 bg-white/5 rounded-lg flex items-center justify-center text-white/60 shrink-0">
-<span class="material-symbols-outlined">animation</span>
-</div>
-<div class="ml-4 flex-1">
-<h4 class="text-white font-bold text-sm">Flow States</h4>
-<p class="text-white/40 text-[10px]">Manage UI kinetic energy levels</p>
-</div>
-<span class="material-symbols-outlined text-white/30">chevron_right</span>
-</div>
-</div>
-</div>
+    <div class="grid grid-cols-2 gap-4 mt-6">
+        <!-- Module: ChromaCore -->
+        <div class="glass-card rounded-xl p-5 aspect-square flex flex-col justify-between relative overflow-hidden -rotate-2 group">
+            <div class="absolute -top-4 -right-4 size-16 bg-primary/20 blur-2xl group-hover:bg-primary/40 transition-all"></div>
+            <div class="flex flex-col">
+                <span class="material-symbols-outlined text-primary mb-2 text-3xl">palette</span>
+                <h3 class="text-white font-bold text-xl leading-tight">Chroma<br/>Core</h3>
+            </div>
+            <p class="text-[10px] text-white/50 uppercase tracking-tighter font-mono">Deep Color
+                Science</p>
+        </div>
+        <!-- Module: Aura Lab -->
+        <div class="glass-card rounded-xl p-5 aspect-[4/5] flex flex-col justify-between relative overflow-hidden rotate-1 mt-4 border-white/10">
+            <div class="absolute inset-0 opacity-10"
+                 style="background-image: radial-gradient(#f425af 0.5px, transparent 0.5px); background-size: 8px 8px;"></div>
+            <div class="flex flex-col z-10">
+                <span class="material-symbols-outlined text-white mb-2 text-3xl">science</span>
+                <h3 class="text-white font-bold text-xl leading-tight">Aura Lab</h3>
+            </div>
+            <div class="z-10">
+                <p class="text-[10px] text-primary font-bold uppercase tracking-tighter">
+                    BETA_EXPERIMENTAL</p>
+                <div class="w-full h-1 bg-primary/20 mt-1 rounded-full overflow-hidden">
+                    <div class="w-2/3 h-full bg-primary"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Module: Theme Engine -->
+        <div class="glass-card rounded-xl p-5 col-span-1 flex flex-col justify-between relative overflow-hidden -mt-8 rotate-3 neon-glow bg-primary/5 border-primary/50">
+            <div class="flex flex-col">
+                <span class="material-symbols-outlined text-primary mb-2 text-3xl">settings_input_component</span>
+                <h3 class="text-white font-bold text-xl leading-tight">Theme Engine</h3>
+            </div>
+            <div class="flex gap-1">
+                <div class="size-2 rounded-full bg-primary"></div>
+                <div class="size-2 rounded-full bg-white/20"></div>
+                <div class="size-2 rounded-full bg-white/20"></div>
+            </div>
+        </div>
+        <!-- Module: Instant Color Picker -->
+        <div class="glass-card rounded-xl p-5 aspect-square flex flex-col justify-between relative overflow-hidden -rotate-1 group">
+            <div class="absolute inset-0 opacity-20 pointer-events-none"
+                 style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(244,37,175,0.1) 10px, rgba(244,37,175,0.1) 11px);"></div>
+            <div class="flex flex-col z-10">
+                <span class="material-symbols-outlined text-white group-hover:text-primary transition-colors mb-2 text-3xl">colorize</span>
+                <h3 class="text-white font-bold text-xl leading-tight">Instant Picker</h3>
+            </div>
+            <div class="bg-primary/20 border border-primary/30 rounded px-2 py-1 z-10">
+                <p class="text-[9px] text-primary font-mono font-bold">#F425AF</p>
+            </div>
+        </div>
+        <!-- Secondary List Modules -->
+        <div class="col-span-2 space-y-3 mt-4">
+            <div class="flex items-center glass-card p-4 rounded-xl border-dashed border-primary/20">
+                <div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary shrink-0">
+                    <span class="material-symbols-outlined">auto_fix_high</span>
+                </div>
+                <div class="ml-4 flex-1">
+                    <h4 class="text-white font-bold text-sm">Chaos Paint Textures</h4>
+                    <p class="text-white/40 text-[10px]">Procedural organic noise overlays</p>
+                </div>
+                <span class="material-symbols-outlined text-white/30">chevron_right</span>
+            </div>
+            <div class="flex items-center glass-card p-4 rounded-xl border-dashed border-primary/20">
+                <div class="size-10 bg-white/5 rounded-lg flex items-center justify-center text-white/60 shrink-0">
+                    <span class="material-symbols-outlined">animation</span>
+                </div>
+                <div class="ml-4 flex-1">
+                    <h4 class="text-white font-bold text-sm">Flow States</h4>
+                    <p class="text-white/40 text-[10px]">Manage UI kinetic energy levels</p>
+                </div>
+                <span class="material-symbols-outlined text-white/30">chevron_right</span>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- Android Bottom Navigation (Cyberpunk Styled) -->
 <nav class="fixed bottom-0 inset-x-0 bg-background-dark/80 backdrop-blur-2xl border-t border-white/5 px-8 pt-4 pb-8 flex items-center justify-between z-50">
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-white/40 group-hover:text-primary transition-colors">grid_view</span>
-<span class="text-[10px] text-white/20 group-hover:text-primary uppercase font-bold tracking-widest">Sys</span>
-</button>
-<button class="flex flex-col items-center gap-1 group relative">
-<div class="absolute -top-8 size-14 bg-primary/20 blur-xl rounded-full"></div>
-<span class="material-symbols-outlined text-primary scale-125">fluorescent</span>
-<span class="text-[10px] text-primary uppercase font-bold tracking-widest">Aura</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-white/40 group-hover:text-primary transition-colors">account_circle</span>
-<span class="text-[10px] text-white/20 group-hover:text-primary uppercase font-bold tracking-widest">User</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-white/40 group-hover:text-primary transition-colors">bolt</span>
-<span class="text-[10px] text-white/20 group-hover:text-primary uppercase font-bold tracking-widest">Log</span>
-</button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined text-white/40 group-hover:text-primary transition-colors">grid_view</span>
+        <span class="text-[10px] text-white/20 group-hover:text-primary uppercase font-bold tracking-widest">Sys</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group relative">
+        <div class="absolute -top-8 size-14 bg-primary/20 blur-xl rounded-full"></div>
+        <span class="material-symbols-outlined text-primary scale-125">fluorescent</span>
+        <span class="text-[10px] text-primary uppercase font-bold tracking-widest">Aura</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined text-white/40 group-hover:text-primary transition-colors">account_circle</span>
+        <span class="text-[10px] text-white/20 group-hover:text-primary uppercase font-bold tracking-widest">User</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined text-white/40 group-hover:text-primary transition-colors">bolt</span>
+        <span class="text-[10px] text-white/20 group-hover:text-primary uppercase font-bold tracking-widest">Log</span>
+    </button>
 </nav>
 <!-- Floating UI Glitch Decorations -->
 <div class="fixed bottom-32 right-12 size-2 bg-primary rounded-full animate-pulse blur-[1px]"></div>
 <div class="fixed top-1/3 left-4 w-px h-12 bg-primary/30"></div>
 <div class="fixed top-1/4 left-3 w-px h-6 bg-primary/20"></div>
-</body></html>
+</body>
+</html>

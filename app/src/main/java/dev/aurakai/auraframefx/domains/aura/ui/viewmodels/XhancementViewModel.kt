@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -127,7 +127,8 @@ class XhancementViewModel @Inject constructor(
                                 module.copy(isKaiBlocked = true, isEnabled = false)
                             } else module
                         }
-                        _errorMessage.value = "Kai Security: Module '$moduleId' blocked - potential threat detected"
+                        _errorMessage.value =
+                            "Kai Security: Module '$moduleId' blocked - potential threat detected"
                         logger.warn("XhancementVM", "Kai VETO: Blocked $moduleId activation")
                         return@launch
                     }

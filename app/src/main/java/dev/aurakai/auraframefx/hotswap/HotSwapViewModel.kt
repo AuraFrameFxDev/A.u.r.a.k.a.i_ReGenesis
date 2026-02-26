@@ -105,18 +105,6 @@ class HotSwapViewModel @Inject constructor(
     // IMPORT/EXPORT
     // ═══════════════════════════════════════════════════════════════════════════
 
-    fun toggleQuickAccess() {
-        viewModelScope.launch {
-            hotSwapManager.toggleQuickAccess()
-        }
-    }
-
-    fun updateQuickAccessPosition(position: String) {
-        viewModelScope.launch {
-            hotSwapManager.updateQuickAccessPosition(position)
-        }
-    }
-
     fun exportConfiguration() {
         viewModelScope.launch {
             val json = hotSwapManager.exportConfiguration()

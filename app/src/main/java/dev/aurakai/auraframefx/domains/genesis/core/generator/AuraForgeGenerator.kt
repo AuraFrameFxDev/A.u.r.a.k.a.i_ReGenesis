@@ -1,12 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.core.generator
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +20,7 @@ class AuraForgeGenerator @Inject constructor(
      */
     suspend fun generateSpelhook(description: String): SpelhookResult {
         logger.info("AuraForge", "Forging new Spelhook: $description")
-        
+
         val prompt = """
             As Aura's Forge, generate a Kotlin 'Spelhook' for the ReGenesis OS.
             Description: $description
@@ -61,7 +56,7 @@ class AuraForgeGenerator @Inject constructor(
             val description: String,
             val metadata: Map<String, String>
         ) : SpelhookResult()
-        
+
         data class Error(val message: String) : SpelhookResult()
     }
 }

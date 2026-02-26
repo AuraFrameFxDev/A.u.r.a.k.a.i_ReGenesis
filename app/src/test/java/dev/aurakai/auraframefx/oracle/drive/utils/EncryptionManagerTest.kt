@@ -67,7 +67,7 @@ class EncryptionManagerTest {
     }
 
     // Various Data Types Tests
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test encrypt with string data`() {
         val text = "Hello, World!"
         val data = text.toByteArray(StandardCharsets.UTF_8)
@@ -124,7 +124,7 @@ class EncryptionManagerTest {
         assertArrayEquals("Multiple encryptions should be consistent", result1, result2)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test multiple decrypt operations on same data`() {
         val data = "test".toByteArray()
         val result1 = encryptionManager.decrypt(data)
@@ -178,7 +178,7 @@ class EncryptionManagerTest {
         assertArrayEquals(singleByte, encrypted)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test all zero bytes`() {
         val zeros = ByteArray(100) { 0 }
         val encrypted = encryptionManager.encrypt(zeros)
@@ -187,7 +187,7 @@ class EncryptionManagerTest {
         assertArrayEquals(zeros, decrypted)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test all 0xFF bytes`() {
         val maxBytes = ByteArray(100) { 0xFF.toByte() }
         val encrypted = encryptionManager.encrypt(maxBytes)

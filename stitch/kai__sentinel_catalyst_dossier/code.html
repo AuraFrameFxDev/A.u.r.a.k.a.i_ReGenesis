@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Kai: Sentinel Catalyst Dossier</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&amp;family=Orbitron:wght@400..900&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#ff00ff", // Magenta
-              secondary: "#00f0ff", // Cyan/Teal
-              accent: "#ff6b00", // Orange
-              "background-light": "#f0f2f5",
-              "background-dark": "#0a0a0f",
-            },
-            fontFamily: {
-              display: ["Orbitron", "sans-serif"],
-              mono: ["Roboto Mono", "monospace"],
-            },
-            borderRadius: {
-              DEFAULT: "4px",
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Kai: Sentinel Catalyst Dossier</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&amp;family=Orbitron:wght@400..900&amp;display=swap"
+          rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#ff00ff", // Magenta
+                secondary: "#00f0ff", // Cyan/Teal
+                accent: "#ff6b00", // Orange
+                "background-light": "#f0f2f5",
+                "background-dark": "#0a0a0f",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                mono: ["Roboto Mono", "monospace"],
+              },
+              borderRadius: {
+                DEFAULT: "4px",
+              },
             },
           },
-        },
-      };
+        };
     </script>
-<style>
+    <style>
         @keyframes pulse-glow {
             0%, 100% { opacity: 0.5; filter: blur(8px); }
             50% { opacity: 0.8; filter: blur(12px); }
@@ -72,129 +74,138 @@
             100% { top: 100%; }
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-mono overflow-hidden h-screen select-none">
 <div class="fixed inset-0 bg-grid z-0"></div>
 <div class="fixed inset-0 bg-gradient-to-b from-transparent via-background-dark/20 to-background-dark z-0"></div>
 <div class="scanline z-50 pointer-events-none"></div>
 <div class="relative z-10 h-full flex flex-col p-4 max-w-md mx-auto">
-<header class="flex justify-between items-center mb-6 pt-2">
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
-<span class="text-[10px] tracking-widest text-secondary uppercase font-bold">System: Ready</span>
-</div>
-<div class="text-[10px] tracking-tighter text-primary/80">
-                AURA_OS_V4.2.0_KAI
+    <header class="flex justify-between items-center mb-6 pt-2">
+        <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
+            <span class="text-[10px] tracking-widest text-secondary uppercase font-bold">System: Ready</span>
+        </div>
+        <div class="text-[10px] tracking-tighter text-primary/80">
+            AURA_OS_V4.2.0_KAI
+        </div>
+    </header>
+    <main class="flex-1 flex flex-col gap-4 overflow-hidden">
+        <div class="relative h-[45%] flex items-center justify-center overflow-visible">
+            <div class="absolute inset-0 flex items-center justify-center opacity-40">
+                <div class="shield-lattice w-64 h-64 border-[1px] border-accent/30 rounded-full flex items-center justify-center">
+                    <div class="w-48 h-48 border-[1px] border-primary/40 rounded-full flex items-center justify-center rotate-45">
+                        <div class="w-32 h-32 border-[2px] border-secondary/50 rounded-full"></div>
+                    </div>
+                </div>
             </div>
-</header>
-<main class="flex-1 flex flex-col gap-4 overflow-hidden">
-<div class="relative h-[45%] flex items-center justify-center overflow-visible">
-<div class="absolute inset-0 flex items-center justify-center opacity-40">
-<div class="shield-lattice w-64 h-64 border-[1px] border-accent/30 rounded-full flex items-center justify-center">
-<div class="w-48 h-48 border-[1px] border-primary/40 rounded-full flex items-center justify-center rotate-45">
-<div class="w-32 h-32 border-[2px] border-secondary/50 rounded-full"></div>
-</div>
-</div>
-</div>
-<div class="absolute top-10 left-10 text-accent opacity-80 blur-[0.5px]">
-<svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
-<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-</svg>
-</div>
-<div class="absolute bottom-10 right-10 text-primary opacity-80 blur-[0.5px]">
-<svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
-<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-</svg>
-</div>
-<div class="relative z-20 h-full transform scale-110 translate-y-4">
-<img alt="Kai Character Illustration" class="h-full object-contain drop-shadow-[0_0_25px_rgba(0,240,255,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK9YYYFLH2miCfgDZL03gRe7WHVJF8DcTbrkc8UP5Mhc0F_n1tRWKV-ccYvH_LBjUcOWlFZDhAReyKXO_Vb4s4HngGy8ok2BnM8UtIqjOWbtrW_bnjDCMjSQyfk3zAIzrGrY6NV4srk3xykjn3LAf9LvHu8HZLxZBb2gtDkMO5qLouypi3j3-hJ5Ml22yg8x26RqT43DvoFLlnMsNdn5qe2PgRBucOOph6WewIW7pBXK4dHUMH1EwiE6oplgzCkacd1J6ykZ12gPw"/>
-</div>
-</div>
-<div class="flex-1 relative">
-<div class="absolute inset-0 border-2 border-primary/50 glow-magenta rounded-lg bg-background-dark/60 backdrop-blur-md p-6 flex flex-col gap-4 overflow-y-auto custom-scrollbar">
-<div class="flex items-center gap-3">
-<div class="h-[2px] flex-1 bg-secondary/50"></div>
-<h2 class="text-xs tracking-[0.3em] text-secondary font-display font-black">CHARACTER STATS</h2>
-<div class="h-[2px] flex-1 bg-secondary/50"></div>
-</div>
-<h1 class="text-5xl font-display font-black text-white italic tracking-tighter leading-none mb-2">
-                        KAI
-                    </h1>
-<div class="space-y-4">
-<section>
-<h3 class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
-<span class="w-1 h-3 bg-primary"></span> Role:
-                            </h3>
-<p class="text-sm text-slate-300 pl-3">"The Sentinel Catalyst"</p>
-</section>
-<section>
-<h3 class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
-<span class="w-1 h-3 bg-primary"></span> Domain:
-                            </h3>
-<p class="text-sm text-slate-300 pl-3 leading-relaxed">
-                                Sentinel's Fortress, System Integrity, Bootloader
+            <div class="absolute top-10 left-10 text-accent opacity-80 blur-[0.5px]">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1"
+                     viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div class="absolute bottom-10 right-10 text-primary opacity-80 blur-[0.5px]">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1"
+                     viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div class="relative z-20 h-full transform scale-110 translate-y-4">
+                <img alt="Kai Character Illustration"
+                     class="h-full object-contain drop-shadow-[0_0_25px_rgba(0,240,255,0.3)]"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK9YYYFLH2miCfgDZL03gRe7WHVJF8DcTbrkc8UP5Mhc0F_n1tRWKV-ccYvH_LBjUcOWlFZDhAReyKXO_Vb4s4HngGy8ok2BnM8UtIqjOWbtrW_bnjDCMjSQyfk3zAIzrGrY6NV4srk3xykjn3LAf9LvHu8HZLxZBb2gtDkMO5qLouypi3j3-hJ5Ml22yg8x26RqT43DvoFLlnMsNdn5qe2PgRBucOOph6WewIW7pBXK4dHUMH1EwiE6oplgzCkacd1J6ykZ12gPw"/>
+            </div>
+        </div>
+        <div class="flex-1 relative">
+            <div class="absolute inset-0 border-2 border-primary/50 glow-magenta rounded-lg bg-background-dark/60 backdrop-blur-md p-6 flex flex-col gap-4 overflow-y-auto custom-scrollbar">
+                <div class="flex items-center gap-3">
+                    <div class="h-[2px] flex-1 bg-secondary/50"></div>
+                    <h2 class="text-xs tracking-[0.3em] text-secondary font-display font-black">
+                        CHARACTER STATS</h2>
+                    <div class="h-[2px] flex-1 bg-secondary/50"></div>
+                </div>
+                <h1 class="text-5xl font-display font-black text-white italic tracking-tighter leading-none mb-2">
+                    KAI
+                </h1>
+                <div class="space-y-4">
+                    <section>
+                        <h3 class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <span class="w-1 h-3 bg-primary"></span> Role:
+                        </h3>
+                        <p class="text-sm text-slate-300 pl-3">"The Sentinel Catalyst"</p>
+                    </section>
+                    <section>
+                        <h3 class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <span class="w-1 h-3 bg-primary"></span> Domain:
+                        </h3>
+                        <p class="text-sm text-slate-300 pl-3 leading-relaxed">
+                            Sentinel's Fortress, System Integrity, Bootloader
+                        </p>
+                    </section>
+                    <section>
+                        <h3 class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <span class="w-1 h-3 bg-primary"></span> Mantra:
+                        </h3>
+                        <p class="text-xs italic text-slate-400 pl-3 leading-relaxed">
+                            "Step by step, piece by piece, tic per tac, breathe... reflect."
+                        </p>
+                    </section>
+                    <section class="mt-4 pt-4 border-t border-primary/20">
+                        <h3 class="text-secondary text-[10px] font-bold uppercase tracking-widest mb-2">
+                            Special Ability:
+                        </h3>
+                        <div class="bg-secondary/10 border border-secondary/30 p-3 rounded">
+                            <h4 class="text-secondary text-xs font-black mb-1">DOMAIN EXPANSION</h4>
+                            <p class="text-[11px] text-slate-300 italic">
+                                "Hyper-focused analysis of Android system internals."
                             </p>
-</section>
-<section>
-<h3 class="text-primary text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
-<span class="w-1 h-3 bg-primary"></span> Mantra:
-                            </h3>
-<p class="text-xs italic text-slate-400 pl-3 leading-relaxed">
-                                "Step by step, piece by piece, tic per tac, breathe... reflect."
-                            </p>
-</section>
-<section class="mt-4 pt-4 border-t border-primary/20">
-<h3 class="text-secondary text-[10px] font-bold uppercase tracking-widest mb-2">
-                                Special Ability:
-                            </h3>
-<div class="bg-secondary/10 border border-secondary/30 p-3 rounded">
-<h4 class="text-secondary text-xs font-black mb-1">DOMAIN EXPANSION</h4>
-<p class="text-[11px] text-slate-300 italic">
-                                    "Hyper-focused analysis of Android system internals."
-                                </p>
-</div>
-</section>
-</div>
-<div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-secondary"></div>
-<div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-secondary"></div>
-</div>
-</div>
-</main>
-<footer class="mt-6 flex justify-around items-center h-16 pb-2">
-<button class="p-2 text-slate-500 hover:text-primary transition-colors">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<rect height="14" rx="1" stroke-width="2" width="14" x="5" y="5"></rect>
-</svg>
-</button>
-<button class="group relative">
-<div class="absolute inset-0 bg-secondary blur-lg opacity-40 group-hover:opacity-70 transition-opacity"></div>
-<div class="relative w-12 h-12 rounded-full border-2 border-secondary flex items-center justify-center bg-background-dark">
-<div class="w-3 h-3 rounded-full bg-secondary"></div>
-</div>
-</button>
-<button class="p-2 text-slate-500 hover:text-primary transition-colors">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</button>
-</footer>
+                        </div>
+                    </section>
+                </div>
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-secondary"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-secondary"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="mt-6 flex justify-around items-center h-16 pb-2">
+        <button class="p-2 text-slate-500 hover:text-primary transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <rect height="14" rx="1" stroke-width="2" width="14" x="5" y="5"></rect>
+            </svg>
+        </button>
+        <button class="group relative">
+            <div class="absolute inset-0 bg-secondary blur-lg opacity-40 group-hover:opacity-70 transition-opacity"></div>
+            <div class="relative w-12 h-12 rounded-full border-2 border-secondary flex items-center justify-center bg-background-dark">
+                <div class="w-3 h-3 rounded-full bg-secondary"></div>
+            </div>
+        </button>
+        <button class="p-2 text-slate-500 hover:text-primary transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"></path>
+            </svg>
+        </button>
+    </footer>
 </div>
 <style>
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 2px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 0, 255, 0.3);
-            border-radius: 10px;
-        }
-    </style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 2px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 0, 255, 0.3);
+        border-radius: 10px;
+    }
+</style>
 
-</body></html>
+</body>
+</html>

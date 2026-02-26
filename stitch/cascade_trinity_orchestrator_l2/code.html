@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Cascade Trinity Orchestrator L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Cascade Trinity Orchestrator L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -26,7 +30,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .glass-node {
             background: rgba(37, 89, 244, 0.05);
             backdrop-filter: blur(12px);
@@ -45,142 +49,156 @@
             background-size: 40px 40px;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white overflow-hidden select-none">
 <!-- Main Container -->
 <div class="relative flex h-screen w-full flex-col overflow-hidden">
-<!-- Top App Bar -->
-<div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between z-20 border-b border-white/5">
-<div class="text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
-<span class="material-symbols-outlined">chevron_left</span>
-</div>
-<div class="flex flex-col items-center">
-<h2 class="text-white text-xs font-bold tracking-[0.2em] opacity-60">REGENESIS AOSPOSX</h2>
-<h2 class="text-white text-base font-bold leading-tight tracking-[-0.015em]">CASCADE TRINITY // L2</h2>
-</div>
-<div class="flex w-12 items-center justify-end">
-<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 bg-primary/20 text-primary">
-<span class="material-symbols-outlined">monitoring</span>
-</button>
-</div>
-</div>
-<!-- System Status Bar -->
-<div class="bg-primary/10 border-y border-primary/20 py-1 z-10">
-<h4 class="text-primary text-[10px] font-bold leading-normal tracking-[0.3em] text-center">ORCHESTRATION: ACTIVE</h4>
-</div>
-<!-- Main Viewport: 3D Trinity Stack -->
-<div class="relative flex-1 technical-grid overflow-hidden">
-<!-- Technical Sidebar (Left) -->
-<div class="absolute left-4 top-8 flex flex-col gap-3 z-30 w-32">
-<div class="flex flex-col gap-1 rounded-lg p-3 bg-background-dark/60 border border-white/5 backdrop-blur-sm">
-<p class="text-white/50 text-[10px] uppercase font-medium tracking-wider">Throughput</p>
-<p class="text-white text-lg font-bold">42.5k <span class="text-[10px] font-normal opacity-60">TPS</span></p>
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px] text-green-400">trending_up</span>
-<p class="text-green-400 text-[10px] font-medium">+1.2%</p>
-</div>
-</div>
-<div class="flex flex-col gap-1 rounded-lg p-3 bg-background-dark/60 border border-white/5 backdrop-blur-sm">
-<p class="text-white/50 text-[10px] uppercase font-medium tracking-wider">Latency</p>
-<p class="text-white text-lg font-bold">0.04<span class="text-[10px] font-normal opacity-60">ms</span></p>
-<p class="text-orange-400 text-[10px] font-medium">-0.01ms</p>
-</div>
-<div class="flex flex-col gap-1 rounded-lg p-3 bg-background-dark/60 border border-white/5 backdrop-blur-sm">
-<p class="text-white/50 text-[10px] uppercase font-medium tracking-wider">Sync State</p>
-<p class="text-white text-lg font-bold">99.9%</p>
-<div class="h-1 w-full bg-white/10 rounded-full mt-1 overflow-hidden">
-<div class="h-full bg-primary w-[99.9%]"></div>
-</div>
-</div>
-</div>
-<!-- Central 3D Stack Visualization -->
-<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 py-8 z-10">
-<!-- Logic Node -->
-<div class="relative group">
-<div class="glass-node w-48 h-24 rounded-xl flex flex-col items-center justify-center transform perspective-1000 rotateX-12 transition-transform hover:scale-105">
-<span class="material-symbols-outlined text-primary mb-1">psychology</span>
-<p class="text-white text-[10px] font-bold tracking-widest uppercase">Logic Layer</p>
-<p class="text-primary/80 text-[9px]">ML INFERENCE</p>
-</div>
-<!-- Floating Detail Chip -->
-<div class="absolute -right-24 top-1/2 -translate-y-1/2 bg-primary/20 border border-primary/40 px-2 py-1 rounded text-[9px] whitespace-nowrap backdrop-blur-md">
-<span class="text-primary font-bold">EXEC:</span> Tensor B_04
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between z-20 border-b border-white/5">
+        <div class="text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-white text-xs font-bold tracking-[0.2em] opacity-60">REGENESIS
+                AOSPOSX</h2>
+            <h2 class="text-white text-base font-bold leading-tight tracking-[-0.015em]">CASCADE
+                TRINITY // L2</h2>
+        </div>
+        <div class="flex w-12 items-center justify-end">
+            <button class="flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 bg-primary/20 text-primary">
+                <span class="material-symbols-outlined">monitoring</span>
+            </button>
+        </div>
+    </div>
+    <!-- System Status Bar -->
+    <div class="bg-primary/10 border-y border-primary/20 py-1 z-10">
+        <h4 class="text-primary text-[10px] font-bold leading-normal tracking-[0.3em] text-center">
+            ORCHESTRATION: ACTIVE</h4>
+    </div>
+    <!-- Main Viewport: 3D Trinity Stack -->
+    <div class="relative flex-1 technical-grid overflow-hidden">
+        <!-- Technical Sidebar (Left) -->
+        <div class="absolute left-4 top-8 flex flex-col gap-3 z-30 w-32">
+            <div class="flex flex-col gap-1 rounded-lg p-3 bg-background-dark/60 border border-white/5 backdrop-blur-sm">
+                <p class="text-white/50 text-[10px] uppercase font-medium tracking-wider">
+                    Throughput</p>
+                <p class="text-white text-lg font-bold">42.5k <span
+                        class="text-[10px] font-normal opacity-60">TPS</span></p>
+                <div class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[12px] text-green-400">trending_up</span>
+                    <p class="text-green-400 text-[10px] font-medium">+1.2%</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 rounded-lg p-3 bg-background-dark/60 border border-white/5 backdrop-blur-sm">
+                <p class="text-white/50 text-[10px] uppercase font-medium tracking-wider">
+                    Latency</p>
+                <p class="text-white text-lg font-bold">0.04<span
+                        class="text-[10px] font-normal opacity-60">ms</span></p>
+                <p class="text-orange-400 text-[10px] font-medium">-0.01ms</p>
+            </div>
+            <div class="flex flex-col gap-1 rounded-lg p-3 bg-background-dark/60 border border-white/5 backdrop-blur-sm">
+                <p class="text-white/50 text-[10px] uppercase font-medium tracking-wider">Sync
+                    State</p>
+                <p class="text-white text-lg font-bold">99.9%</p>
+                <div class="h-1 w-full bg-white/10 rounded-full mt-1 overflow-hidden">
+                    <div class="h-full bg-primary w-[99.9%]"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Central 3D Stack Visualization -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 py-8 z-10">
+            <!-- Logic Node -->
+            <div class="relative group">
+                <div class="glass-node w-48 h-24 rounded-xl flex flex-col items-center justify-center transform perspective-1000 rotateX-12 transition-transform hover:scale-105">
+                    <span class="material-symbols-outlined text-primary mb-1">psychology</span>
+                    <p class="text-white text-[10px] font-bold tracking-widest uppercase">Logic
+                        Layer</p>
+                    <p class="text-primary/80 text-[9px]">ML INFERENCE</p>
+                </div>
+                <!-- Floating Detail Chip -->
+                <div class="absolute -right-24 top-1/2 -translate-y-1/2 bg-primary/20 border border-primary/40 px-2 py-1 rounded text-[9px] whitespace-nowrap backdrop-blur-md">
+                    <span class="text-primary font-bold">EXEC:</span> Tensor B_04
+                </div>
+            </div>
+            <!-- Data Stream -->
+            <div class="data-stream opacity-40"></div>
+            <!-- Compute Node -->
+            <div class="relative group">
+                <div class="glass-node w-56 h-28 rounded-xl flex flex-col items-center justify-center transform perspective-1000 rotateX-12 scale-110 border-primary/50 shadow-[0_0_30px_rgba(37,89,244,0.3)]">
+                    <span class="material-symbols-outlined text-primary mb-1 text-3xl">memory</span>
+                    <p class="text-white text-xs font-bold tracking-widest uppercase">Compute
+                        Core</p>
+                    <p class="text-primary/80 text-[10px]">PARALLEL PROCESSING</p>
+                </div>
+                <div class="absolute -left-28 top-1/2 -translate-y-1/2 bg-primary/20 border border-primary/40 px-2 py-1 rounded text-[9px] whitespace-nowrap backdrop-blur-md">
+                    <span class="text-primary font-bold">LOAD:</span> 74.2% CORE_ALL
+                </div>
+            </div>
+            <!-- Data Stream -->
+            <div class="data-stream opacity-40"></div>
+            <!-- Storage Node -->
+            <div class="relative group">
+                <div class="glass-node w-48 h-24 rounded-xl flex flex-col items-center justify-center transform perspective-1000 rotateX-12 transition-transform hover:scale-105">
+                    <span class="material-symbols-outlined text-primary mb-1">database</span>
+                    <p class="text-white text-[10px] font-bold tracking-widest uppercase">State
+                        Vault</p>
+                    <p class="text-primary/80 text-[9px]">STORAGE &amp; PERSISTENCE</p>
+                </div>
+                <div class="absolute -right-24 top-1/2 -translate-y-1/2 bg-primary/20 border border-primary/40 px-2 py-1 rounded text-[9px] whitespace-nowrap backdrop-blur-md">
+                    <span class="text-primary font-bold">I/O:</span> 8.2 GB/s
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Logs Overlay -->
+        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-dark to-transparent pt-12 z-20">
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-3 bg-white/5 p-2 rounded-lg border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-sm">settings_input_component</span>
+                    <div class="flex flex-col">
+                        <p class="text-white text-[11px] font-medium leading-none">Logic: Tensor
+                            Execution B-Phase</p>
+                        <p class="text-white/40 text-[9px]">08:42:01.004 // CASCADE_L2_LOGIC</p>
                     </div>
-</div>
-<!-- Data Stream -->
-<div class="data-stream opacity-40"></div>
-<!-- Compute Node -->
-<div class="relative group">
-<div class="glass-node w-56 h-28 rounded-xl flex flex-col items-center justify-center transform perspective-1000 rotateX-12 scale-110 border-primary/50 shadow-[0_0_30px_rgba(37,89,244,0.3)]">
-<span class="material-symbols-outlined text-primary mb-1 text-3xl">memory</span>
-<p class="text-white text-xs font-bold tracking-widest uppercase">Compute Core</p>
-<p class="text-primary/80 text-[10px]">PARALLEL PROCESSING</p>
-</div>
-<div class="absolute -left-28 top-1/2 -translate-y-1/2 bg-primary/20 border border-primary/40 px-2 py-1 rounded text-[9px] whitespace-nowrap backdrop-blur-md">
-<span class="text-primary font-bold">LOAD:</span> 74.2% CORE_ALL
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 p-2 rounded-lg border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-sm">memory</span>
+                    <div class="flex flex-col">
+                        <p class="text-white text-[11px] font-medium leading-none">Compute: Global
+                            Resource Allocation</p>
+                        <p class="text-white/40 text-[9px]">08:42:00.892 // CASCADE_L2_COMPUTE</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bottom Navigation Bar (iOS Style) -->
+    <div class="bg-background-dark/95 border-t border-white/10 px-6 pt-2 pb-8 z-30 flex items-center justify-between backdrop-blur-xl">
+        <div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
+            <span class="material-symbols-outlined text-[24px]">dashboard</span>
+            <span class="text-[10px] font-medium">Overview</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 cursor-pointer text-primary">
+            <span class="material-symbols-outlined text-[24px]">hub</span>
+            <span class="text-[10px] font-medium">Trinity</span>
+            <div class="w-1 h-1 bg-primary rounded-full"></div>
+        </div>
+        <div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
+            <span class="material-symbols-outlined text-[24px]">terminal</span>
+            <span class="text-[10px] font-medium">Logs</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
+            <span class="material-symbols-outlined text-[24px]">settings</span>
+            <span class="text-[10px] font-medium">Config</span>
+        </div>
+    </div>
+    <!-- Decorative UI Elements (Holographic Lines) -->
+    <div class="absolute top-0 right-0 w-32 h-32 border-t border-r border-primary/20 pointer-events-none z-0 mt-20 mr-4"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 border-b border-l border-primary/20 pointer-events-none z-0 mb-32 ml-4"></div>
 </div>
-<!-- Data Stream -->
-<div class="data-stream opacity-40"></div>
-<!-- Storage Node -->
-<div class="relative group">
-<div class="glass-node w-48 h-24 rounded-xl flex flex-col items-center justify-center transform perspective-1000 rotateX-12 transition-transform hover:scale-105">
-<span class="material-symbols-outlined text-primary mb-1">database</span>
-<p class="text-white text-[10px] font-bold tracking-widest uppercase">State Vault</p>
-<p class="text-primary/80 text-[9px]">STORAGE &amp; PERSISTENCE</p>
-</div>
-<div class="absolute -right-24 top-1/2 -translate-y-1/2 bg-primary/20 border border-primary/40 px-2 py-1 rounded text-[9px] whitespace-nowrap backdrop-blur-md">
-<span class="text-primary font-bold">I/O:</span> 8.2 GB/s
-                    </div>
-</div>
-</div>
-<!-- Bottom Logs Overlay -->
-<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-dark to-transparent pt-12 z-20">
-<div class="flex flex-col gap-2">
-<div class="flex items-center gap-3 bg-white/5 p-2 rounded-lg border border-white/5">
-<span class="material-symbols-outlined text-primary text-sm">settings_input_component</span>
-<div class="flex flex-col">
-<p class="text-white text-[11px] font-medium leading-none">Logic: Tensor Execution B-Phase</p>
-<p class="text-white/40 text-[9px]">08:42:01.004 // CASCADE_L2_LOGIC</p>
-</div>
-</div>
-<div class="flex items-center gap-3 bg-white/5 p-2 rounded-lg border border-white/5">
-<span class="material-symbols-outlined text-primary text-sm">memory</span>
-<div class="flex flex-col">
-<p class="text-white text-[11px] font-medium leading-none">Compute: Global Resource Allocation</p>
-<p class="text-white/40 text-[9px]">08:42:00.892 // CASCADE_L2_COMPUTE</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Navigation Bar (iOS Style) -->
-<div class="bg-background-dark/95 border-t border-white/10 px-6 pt-2 pb-8 z-30 flex items-center justify-between backdrop-blur-xl">
-<div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
-<span class="material-symbols-outlined text-[24px]">dashboard</span>
-<span class="text-[10px] font-medium">Overview</span>
-</div>
-<div class="flex flex-col items-center gap-1 cursor-pointer text-primary">
-<span class="material-symbols-outlined text-[24px]">hub</span>
-<span class="text-[10px] font-medium">Trinity</span>
-<div class="w-1 h-1 bg-primary rounded-full"></div>
-</div>
-<div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
-<span class="material-symbols-outlined text-[24px]">terminal</span>
-<span class="text-[10px] font-medium">Logs</span>
-</div>
-<div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
-<span class="material-symbols-outlined text-[24px]">settings</span>
-<span class="text-[10px] font-medium">Config</span>
-</div>
-</div>
-<!-- Decorative UI Elements (Holographic Lines) -->
-<div class="absolute top-0 right-0 w-32 h-32 border-t border-r border-primary/20 pointer-events-none z-0 mt-20 mr-4"></div>
-<div class="absolute bottom-0 left-0 w-32 h-32 border-b border-l border-primary/20 pointer-events-none z-0 mb-32 ml-4"></div>
-</div>
-</body></html>
+</body>
+</html>

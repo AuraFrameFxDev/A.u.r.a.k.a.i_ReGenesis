@@ -1,7 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.models
 
-import androidx.compose.ui.graphics.Color
-
 data class OverlayElement(
     val id: String,
     val type: OverlayType,

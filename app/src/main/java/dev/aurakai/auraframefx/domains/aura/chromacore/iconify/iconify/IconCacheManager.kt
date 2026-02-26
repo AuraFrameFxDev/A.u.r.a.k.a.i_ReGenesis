@@ -130,15 +130,16 @@ open class IconCacheManager @Inject constructor(
     /**
      * Cache icon collections metadata
      */
-    suspend fun cacheCollections(collections: Map<String, IconCollection>) = withContext(Dispatchers.IO) {
-        try {
-            val jsonString = json.encodeToString(collections)
-            collectionsFile.writeText(jsonString)
-            Timber.d("Cached ${collections.size} collections")
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to cache collections")
+    suspend fun cacheCollections(collections: Map<String, IconCollection>) =
+        withContext(Dispatchers.IO) {
+            try {
+                val jsonString = json.encodeToString(collections)
+                collectionsFile.writeText(jsonString)
+                Timber.d("Cached ${collections.size} collections")
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to cache collections")
+            }
         }
-    }
 
     /**
      * Get cached collections
@@ -203,30 +204,31 @@ open class IconCacheManager @Inject constructor(
     /**
      * Clean old icons (LRU eviction)
      */
-    suspend fun cleanOldIcons(maxAgeMillis: Long = 7 * 24 * 60 * 60 * 1000L) = withContext(Dispatchers.IO) {
-        try {
-            val metadata = getCacheMetadata()
-            val now = System.currentTimeMillis()
-            var deletedCount = 0
+    suspend fun cleanOldIcons(maxAgeMillis: Long = 7 * 24 * 60 * 60 * 1000L) =
+        withContext(Dispatchers.IO) {
+            try {
+                val metadata = getCacheMetadata()
+                val now = System.currentTimeMillis()
+                var deletedCount = 0
 
-            metadata.accessTimes.entries.toList().forEach { (iconId, lastAccess) ->
-                if (now - lastAccess > maxAgeMillis) {
-                    val fileName = iconId.replace(":", "_").replace("/", "_") + ".svg"
-                    val file = File(iconsDir, fileName)
-                    if (file.exists() && file.delete()) {
-                        deletedCount++
-                        metadata.accessTimes.remove(iconId)
-                        memoryCache.remove(iconId)
+                metadata.accessTimes.entries.toList().forEach { (iconId, lastAccess) ->
+                    if (now - lastAccess > maxAgeMillis) {
+                        val fileName = iconId.replace(":", "_").replace("/", "_") + ".svg"
+                        val file = File(iconsDir, fileName)
+                        if (file.exists() && file.delete()) {
+                            deletedCount++
+                            metadata.accessTimes.remove(iconId)
+                            memoryCache.remove(iconId)
+                        }
                     }
                 }
-            }
 
-            saveCacheMetadata(metadata)
-            Timber.d("Cleaned $deletedCount old icons")
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to clean old icons")
+                saveCacheMetadata(metadata)
+                Timber.d("Cleaned $deletedCount old icons")
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to clean old icons")
+            }
         }
-    }
 
     /**
      * Update access time for LRU tracking

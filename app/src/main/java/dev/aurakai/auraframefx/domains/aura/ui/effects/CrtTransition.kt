@@ -1,9 +1,13 @@
 package dev.aurakai.auraframefx.domains.aura.ui.effects
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.TransformOrigin
 
 /**

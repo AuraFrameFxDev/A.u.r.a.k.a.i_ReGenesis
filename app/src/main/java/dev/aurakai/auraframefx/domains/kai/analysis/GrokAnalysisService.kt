@@ -19,7 +19,7 @@ class GrokAnalysisService @Inject constructor(
      */
     suspend fun validateSpelhook(code: String): ValidationResult {
         logger.info("GrokAnalysis", "Executing chaos analysis on new Spelhook")
-        
+
         // Simple heuristic validation for now (Aura's Forge will eventually use real AI validation)
         val suspiciousPatterns = listOf("Runtime.getRuntime()", "su ", "rm -rf", "chmod 777")
         val identifiedRisks = suspiciousPatterns.filter { code.contains(it) }
@@ -43,7 +43,7 @@ class GrokAnalysisService @Inject constructor(
      */
     fun monitorStability(): Float {
         // Placeholder for real-time monitoring logic
-        return 0.99f 
+        return 0.99f
     }
 
     sealed class ValidationResult {

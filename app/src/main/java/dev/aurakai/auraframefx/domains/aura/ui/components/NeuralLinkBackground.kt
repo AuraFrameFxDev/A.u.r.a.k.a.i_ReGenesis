@@ -12,10 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.util.lerp
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -39,7 +36,7 @@ fun NeuralLinkBackground(
     secondaryColor: Color = Color(0xFF0000FF) // Blue
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "neural_link")
-    
+
     // Animate "travel" distance
     val travelDistance by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -96,7 +93,7 @@ fun NeuralLinkBackground(
                 val startY = centerY
                 val endX = centerX + cos(angle) * maxRadius
                 val endY = centerY + sin(angle) * maxRadius
-                
+
                 drawLine(
                     color = secondaryColor.copy(alpha = 0.1f),
                     start = Offset(startX, startY),
@@ -109,18 +106,19 @@ fun NeuralLinkBackground(
             lines.forEach { line ->
                 // Calculate current Z position (0 is far, 1 is near)
                 // We wrap the value using modulo to create infinite loop
-                val currentZ = (travelDistance * line.speedMultiplier * speed + line.radiusOffset) % 1000f / 1000f
-                
+                val currentZ =
+                    (travelDistance * line.speedMultiplier * speed + line.radiusOffset) % 1000f / 1000f
+
                 // Perspective projection
                 // Objects get larger and further from center as they approach (Z -> 1)
                 // Objects fade in as they approach, then fade out quickly when too close
-                
+
                 val perspective = currentZ * currentZ * currentZ // Non-linear for speed effect
                 val radius = perspective * maxRadius * 0.8f
-                
+
                 val x = centerX + cos(line.angle) * radius
                 val y = centerY + sin(line.angle) * radius
-                
+
                 // Tail effect (line segment pointing towards center)
                 val tailLength = line.length * perspective * 0.5f
                 val tailX = centerX + cos(line.angle) * (radius - tailLength)

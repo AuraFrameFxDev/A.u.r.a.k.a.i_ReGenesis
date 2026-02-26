@@ -1,7 +1,5 @@
 package dev.aurakai.auraframefx.domains.genesis.network
 
-import kotlinx.serialization.Serializable
-
 /**
  * A sealed class that encapsulates successful response with data
  * or an error state with a message.
@@ -116,9 +114,10 @@ inline fun <T, R> NetworkResponse<T>.map(transform: (T) -> R): NetworkResponse<R
 /**
  * Extension function to transform the error of a [NetworkResponse] if it's a [NetworkResponse.Error].
  */
-inline fun <T> NetworkResponse<T>.mapError(transform: (NetworkResponse.Error) -> NetworkResponse.Error): NetworkResponse<T> = when (this) {
-    is NetworkResponse.Success -> this
-    is NetworkResponse.Error -> transform(this)
-    NetworkResponse.Loading -> NetworkResponse.Loading
-}
+inline fun <T> NetworkResponse<T>.mapError(transform: (NetworkResponse.Error) -> NetworkResponse.Error): NetworkResponse<T> =
+    when (this) {
+        is NetworkResponse.Success -> this
+        is NetworkResponse.Error -> transform(this)
+        NetworkResponse.Loading -> NetworkResponse.Loading
+    }
 

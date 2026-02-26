@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,34 +27,35 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-
+import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
 /**
- * UI Settings screen for toggling various UI components
+ * UI Settings screen — Aura controls every visibility toggle.
+ * State comes from AuraUIControlViewModel (DataStore-backed). No local mutableState.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UISettingsScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    onBack: () -> Unit = { navController.navigateUp() }
+    onBack: () -> Unit = { navController.navigateUp() },
+    viewModel: AuraUIControlViewModel = hiltViewModel()
 ) {
-    // State for UI toggles
-    var isSidebarVisible by remember { mutableStateOf(true) }
-    var isNotchbarVisible by remember { mutableStateOf(true) }
-    var isStatusBarVisible by remember { mutableStateOf(true) }
-    var isBottomNavVisible by remember { mutableStateOf(true) }
-    var isGlowEffectsEnabled by remember { mutableStateOf(true) }
-    var isPixelArtEnabled by remember { mutableStateOf(true) }
-    var isDarkMode by remember { mutableStateOf(true) }
+    val state by viewModel.uiSettingsState.collectAsState()
+    val isSidebarVisible = state.isSidebarVisible
+    val isNotchbarVisible = state.isNotchbarVisible
+    val isStatusBarVisible = state.isStatusBarVisible
+    val isBottomNavVisible = state.isBottomNavVisible
+    val isGlowEffectsEnabled = state.isGlowEffectsEnabled
+    val isPixelArtEnabled = state.isPixelArtEnabled
+    val isDarkMode = state.isDarkMode
 
     Scaffold(
         topBar = {
@@ -93,28 +95,28 @@ fun UISettingsScreen(
                     title = "Sidebar",
                     subtitle = "Show/hide the main sidebar",
                     isChecked = isSidebarVisible,
-                    onCheckedChange = { isSidebarVisible = it }
+                    onCheckedChange = { viewModel.setSidebarVisible(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Notch Bar",
                     subtitle = "Show/hide the top notch bar",
                     isChecked = isNotchbarVisible,
-                    onCheckedChange = { isNotchbarVisible = it }
+                    onCheckedChange = { viewModel.setNotchbarVisible(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Status Bar",
                     subtitle = "Show/hide the system status bar",
                     isChecked = isStatusBarVisible,
-                    onCheckedChange = { isStatusBarVisible = it }
+                    onCheckedChange = { viewModel.setStatusBarVisible(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Bottom Navigation",
                     subtitle = "Show/hide the bottom navigation bar",
                     isChecked = isBottomNavVisible,
-                    onCheckedChange = { isBottomNavVisible = it }
+                    onCheckedChange = { viewModel.setBottomNavVisible(it) }
                 )
             }
 
@@ -124,38 +126,51 @@ fun UISettingsScreen(
                     title = "Glow Effects",
                     subtitle = "Enable/disable UI glow and bloom effects",
                     isChecked = isGlowEffectsEnabled,
-                    onCheckedChange = { isGlowEffectsEnabled = it }
+                    onCheckedChange = { viewModel.setGlowEffects(it) }
                 )
 
                 SettingsToggleItem(
                     title = "Pixel Art Mode",
                     subtitle = "Enable retro pixel art styling",
                     isChecked = isPixelArtEnabled,
-                    onCheckedChange = { isPixelArtEnabled = it }
+                    onCheckedChange = { viewModel.setPixelArt(it) }
                 )
             }
 
-            // Theme Section
-            SettingsSection(title = "Theme") {
-                SettingsToggleItem(
-                    title = "Dark Mode",
-                    subtitle = "Toggle between light and dark theme",
-                    isChecked = isDarkMode,
-                    onCheckedChange = { isDarkMode = it }
+            // Customization Section
+            SettingsSection(title = "Customization Hub") {
+                SettingsClickItem(
+                    title = "Gate Customization",
+                    subtitle = "Splash and Drawer images",
+                    onClick = { navController.navigate("gate_customization") }
+                )
+                SettingsClickItem(
+                    title = "Notch Bar",
+                    subtitle = "Status bar neural layer",
+                    onClick = { navController.navigate("notch_bar_customization") }
+                )
+                SettingsClickItem(
+                    title = "Quick Settings",
+                    subtitle = "QS background assets",
+                    onClick = { navController.navigate("qs_customization") }
+                )
+                SettingsClickItem(
+                    title = "Chroma Core",
+                    subtitle = "Re-calibrate system colors",
+                    onClick = { navController.navigate("chroma_core_colors") }
                 )
             }
 
             // Reset Button
             Button(
                 onClick = {
-                    // Reset all toggles to default
-                    isSidebarVisible = true
-                    isNotchbarVisible = true
-                    isStatusBarVisible = true
-                    isBottomNavVisible = true
-                    isGlowEffectsEnabled = true
-                    isPixelArtEnabled = true
-                    isDarkMode = true
+                    viewModel.setSidebarVisible(true)
+                    viewModel.setNotchbarVisible(true)
+                    viewModel.setStatusBarVisible(true)
+                    viewModel.setBottomNavVisible(true)
+                    viewModel.setGlowEffects(true)
+                    viewModel.setPixelArt(true)
+                    viewModel.setDarkMode(true)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -193,6 +208,40 @@ private fun SettingsSection(
         ) {
             content()
         }
+    }
+}
+
+@Composable
+private fun SettingsClickItem(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Icon(
+            imageVector = Icons.Default.ChevronRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

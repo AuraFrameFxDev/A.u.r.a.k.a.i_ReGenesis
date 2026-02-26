@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.agents.coordination.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.network.qualifiers.BaseUrl
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 
 import java.time.Clock
 import java.time.Duration
@@ -23,7 +22,7 @@ typealias GenesisAgent = GenesisOrchestrator
 
 // Trinity Agents - comment out if these classes don't exist yet
 // typealias AuraAgent = dev.aurakai.auraframefx.ai.agents.AuraAgent
-// typealias KaiAgent = dev.aurakai.auraframefx.agents.trinity.KaiAgent
+// typealias KaiAgent = dev.aurakai.auraframefx.domains.kai.KaiAgent
 // typealias CascadeAgent = dev.aurakai.auraframefx.cascade.CascadeAgent
 
 // ============================================================================

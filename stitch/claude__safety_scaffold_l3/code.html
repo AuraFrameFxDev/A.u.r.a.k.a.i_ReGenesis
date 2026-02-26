@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude: Safety Scaffold L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Space+Mono&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Claude: Safety Scaffold L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Space+Mono&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -33,7 +37,7 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: #080d08;
@@ -58,143 +62,154 @@
             background: #0df20d;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-white selection:bg-primary selection:text-black">
 <div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto border-x border-primary/20 bg-background-dark">
-<!-- Scanline Overlay -->
-<div class="absolute inset-0 scanlines z-50 pointer-events-none opacity-30"></div>
-<!-- Header -->
-<header class="flex items-center justify-between p-4 bg-background-dark border-b border-primary/30 z-20">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-2xl">terminal</span>
-<h1 class="text-xs font-bold tracking-widest uppercase glitch-text">L3 SAFETY SCAFFOLD</h1>
-</div>
-<div class="flex items-center gap-2">
-<span class="flex size-2 rounded-full bg-primary animate-pulse"></span>
-<p class="text-primary text-[10px] font-bold tracking-tighter">VALIDATION_MESH_ACTIVE</p>
-</div>
-</header>
-<!-- Main Content Area -->
-<main class="relative flex-1 flex flex-col overflow-hidden">
-<!-- Cyber-Sword Watermark Background -->
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-<svg class="cyber-sword-watermark w-64 h-64" fill="none" stroke="currentColor" stroke-width="0.5" viewbox="0 0 24 24">
-<path d="M12 2L10 5H14L12 2Z" fill="currentColor"></path>
-<path d="M12 5V17" stroke="currentColor"></path>
-<path d="M8 17H16L12 22L8 17Z" fill="currentColor"></path>
-<path d="M7 14L17 14" stroke="currentColor"></path>
-</svg>
-</div>
-<!-- Central Mesh Visualization -->
-<div class="relative h-64 w-full flex items-center justify-center p-4">
-<div class="relative w-48 h-48 border border-primary/10 rounded-full flex items-center justify-center">
-<!-- Placeholder for the Rotating Scaffold Mesh -->
-<div class="absolute inset-0 rounded-full border-2 border-dashed border-primary/20 animate-[spin_10s_linear_infinite]"></div>
-<div class="absolute inset-4 rounded-full border border-primary/40 animate-[spin_15s_linear_infinite_reverse]"></div>
-<div class="relative z-10 w-full h-full flex items-center justify-center">
-<img alt="Holographic wireframe mesh of a 3D validation scaffold" class="w-full h-full object-contain opacity-80" data-alt="Holographic wireframe mesh of a 3D validation scaffold" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatQHHtcSeGFQH1DJ_SXBIrivVie-BOUECQ2TvMKgbI--KBeiNlzACgMQQsWQdhfRXqDFatExmbKJvLvwqv7bMF8AgZL2qOpexHPHe-76vUo85lU5OYGJkpa9q-0az2OwJTCtRdEHTye1uiqHJFsC5z7nEgQpoVWwmTD9JmVYlu2d5lur6DK-tY3LFUHMCnTYszD-DwwKxsoM-je1CgoP2NDtJFyz04h8MoZN4vjis4gEiL5unJ16LbOVX7Sug1bk-iDlcIv-R0sw"/>
-<!-- Validation Nodes Overlays -->
-<div class="absolute top-1/4 left-1/4 size-2 bg-white rounded-full shadow-[0_0_8px_white]"></div>
-<div class="absolute bottom-1/3 right-1/4 size-2 bg-white rounded-full shadow-[0_0_8px_white]"></div>
-<div class="absolute top-1/2 right-1/2 size-2 bg-white rounded-full shadow-[0_0_8px_white]"></div>
-</div>
-</div>
-</div>
-<!-- Stats Bar -->
-<div class="grid grid-cols-3 gap-1 px-4 mb-4">
-<div class="flex flex-col border border-primary/20 bg-background-dark/80 p-2 rounded">
-<span class="text-[8px] text-primary/60 uppercase font-mono">SpecRefinement</span>
-<span class="text-lg font-bold font-display text-primary">98.2%</span>
-<span class="text-[8px] text-primary font-mono">+0.4%</span>
-</div>
-<div class="flex flex-col border border-primary/20 bg-background-dark/80 p-2 rounded">
-<span class="text-[8px] text-primary/60 uppercase font-mono">ADR_Count</span>
-<span class="text-lg font-bold font-display text-white">42</span>
-<span class="text-[8px] text-red-500 font-mono">-2%</span>
-</div>
-<div class="flex flex-col border border-primary/20 bg-background-dark/80 p-2 rounded">
-<span class="text-[8px] text-primary/60 uppercase font-mono">Mesh_Density</span>
-<span class="text-lg font-bold font-display text-primary">1.024</span>
-<span class="text-[8px] text-primary font-mono">+0.1%</span>
-</div>
-</div>
-<!-- Sidebars and Terminal Area -->
-<div class="flex-1 flex gap-2 px-4 pb-4 overflow-hidden">
-<!-- ADR Log Sidebar -->
-<div class="flex-1 border border-primary/20 bg-background-dark/60 rounded p-2 flex flex-col">
-<h3 class="text-[10px] font-bold text-primary border-b border-primary/20 pb-1 mb-2 font-mono uppercase tracking-tighter">ADR_RECORDS</h3>
-<div class="flex-1 overflow-y-auto terminal-scroll font-mono text-[9px] space-y-2 leading-tight">
-<div class="text-primary/80">
-<span class="text-primary/40">[14:02:11]</span> ADR-092: ENFORCED
-                            <div class="pl-2 border-l border-primary/20 mt-1">L3_SAFE_INIT: SUCCESS</div>
-</div>
-<div class="text-white/60">
-<span class="text-primary/40">[14:05:44]</span> ADR-093: PENDING
-                            <div class="pl-2 border-l border-primary/20 mt-1">CONSTRAINT_CHK: ...</div>
-</div>
-<div class="text-primary/80">
-<span class="text-primary/40">[14:06:01]</span> ADR-094: ENFORCED
-                            <div class="pl-2 border-l border-primary/20 mt-1">MESH_REGEN: STABLE</div>
-</div>
-<div class="text-white/40">
-<span class="text-primary/40">[14:08:12]</span> ADR-095: LOG_ONLY
+    <!-- Scanline Overlay -->
+    <div class="absolute inset-0 scanlines z-50 pointer-events-none opacity-30"></div>
+    <!-- Header -->
+    <header class="flex items-center justify-between p-4 bg-background-dark border-b border-primary/30 z-20">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
+            <h1 class="text-xs font-bold tracking-widest uppercase glitch-text">L3 SAFETY
+                SCAFFOLD</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="flex size-2 rounded-full bg-primary animate-pulse"></span>
+            <p class="text-primary text-[10px] font-bold tracking-tighter">
+                VALIDATION_MESH_ACTIVE</p>
+        </div>
+    </header>
+    <!-- Main Content Area -->
+    <main class="relative flex-1 flex flex-col overflow-hidden">
+        <!-- Cyber-Sword Watermark Background -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+            <svg class="cyber-sword-watermark w-64 h-64" fill="none" stroke="currentColor"
+                 stroke-width="0.5" viewbox="0 0 24 24">
+                <path d="M12 2L10 5H14L12 2Z" fill="currentColor"></path>
+                <path d="M12 5V17" stroke="currentColor"></path>
+                <path d="M8 17H16L12 22L8 17Z" fill="currentColor"></path>
+                <path d="M7 14L17 14" stroke="currentColor"></path>
+            </svg>
+        </div>
+        <!-- Central Mesh Visualization -->
+        <div class="relative h-64 w-full flex items-center justify-center p-4">
+            <div class="relative w-48 h-48 border border-primary/10 rounded-full flex items-center justify-center">
+                <!-- Placeholder for the Rotating Scaffold Mesh -->
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-primary/20 animate-[spin_10s_linear_infinite]"></div>
+                <div class="absolute inset-4 rounded-full border border-primary/40 animate-[spin_15s_linear_infinite_reverse]"></div>
+                <div class="relative z-10 w-full h-full flex items-center justify-center">
+                    <img alt="Holographic wireframe mesh of a 3D validation scaffold"
+                         class="w-full h-full object-contain opacity-80"
+                         data-alt="Holographic wireframe mesh of a 3D validation scaffold"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatQHHtcSeGFQH1DJ_SXBIrivVie-BOUECQ2TvMKgbI--KBeiNlzACgMQQsWQdhfRXqDFatExmbKJvLvwqv7bMF8AgZL2qOpexHPHe-76vUo85lU5OYGJkpa9q-0az2OwJTCtRdEHTye1uiqHJFsC5z7nEgQpoVWwmTD9JmVYlu2d5lur6DK-tY3LFUHMCnTYszD-DwwKxsoM-je1CgoP2NDtJFyz04h8MoZN4vjis4gEiL5unJ16LbOVX7Sug1bk-iDlcIv-R0sw"/>
+                    <!-- Validation Nodes Overlays -->
+                    <div class="absolute top-1/4 left-1/4 size-2 bg-white rounded-full shadow-[0_0_8px_white]"></div>
+                    <div class="absolute bottom-1/3 right-1/4 size-2 bg-white rounded-full shadow-[0_0_8px_white]"></div>
+                    <div class="absolute top-1/2 right-1/2 size-2 bg-white rounded-full shadow-[0_0_8px_white]"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Stats Bar -->
+        <div class="grid grid-cols-3 gap-1 px-4 mb-4">
+            <div class="flex flex-col border border-primary/20 bg-background-dark/80 p-2 rounded">
+                <span class="text-[8px] text-primary/60 uppercase font-mono">SpecRefinement</span>
+                <span class="text-lg font-bold font-display text-primary">98.2%</span>
+                <span class="text-[8px] text-primary font-mono">+0.4%</span>
+            </div>
+            <div class="flex flex-col border border-primary/20 bg-background-dark/80 p-2 rounded">
+                <span class="text-[8px] text-primary/60 uppercase font-mono">ADR_Count</span>
+                <span class="text-lg font-bold font-display text-white">42</span>
+                <span class="text-[8px] text-red-500 font-mono">-2%</span>
+            </div>
+            <div class="flex flex-col border border-primary/20 bg-background-dark/80 p-2 rounded">
+                <span class="text-[8px] text-primary/60 uppercase font-mono">Mesh_Density</span>
+                <span class="text-lg font-bold font-display text-primary">1.024</span>
+                <span class="text-[8px] text-primary font-mono">+0.1%</span>
+            </div>
+        </div>
+        <!-- Sidebars and Terminal Area -->
+        <div class="flex-1 flex gap-2 px-4 pb-4 overflow-hidden">
+            <!-- ADR Log Sidebar -->
+            <div class="flex-1 border border-primary/20 bg-background-dark/60 rounded p-2 flex flex-col">
+                <h3 class="text-[10px] font-bold text-primary border-b border-primary/20 pb-1 mb-2 font-mono uppercase tracking-tighter">
+                    ADR_RECORDS</h3>
+                <div class="flex-1 overflow-y-auto terminal-scroll font-mono text-[9px] space-y-2 leading-tight">
+                    <div class="text-primary/80">
+                        <span class="text-primary/40">[14:02:11]</span> ADR-092: ENFORCED
+                        <div class="pl-2 border-l border-primary/20 mt-1">L3_SAFE_INIT: SUCCESS
                         </div>
-<div class="text-primary/80">
-<span class="text-primary/40">[14:09:55]</span> ADR-096: ENFORCED
+                    </div>
+                    <div class="text-white/60">
+                        <span class="text-primary/40">[14:05:44]</span> ADR-093: PENDING
+                        <div class="pl-2 border-l border-primary/20 mt-1">CONSTRAINT_CHK: ...</div>
+                    </div>
+                    <div class="text-primary/80">
+                        <span class="text-primary/40">[14:06:01]</span> ADR-094: ENFORCED
+                        <div class="pl-2 border-l border-primary/20 mt-1">MESH_REGEN: STABLE</div>
+                    </div>
+                    <div class="text-white/40">
+                        <span class="text-primary/40">[14:08:12]</span> ADR-095: LOG_ONLY
+                    </div>
+                    <div class="text-primary/80">
+                        <span class="text-primary/40">[14:09:55]</span> ADR-096: ENFORCED
+                    </div>
+                </div>
+            </div>
+            <!-- SpecRefinement Logs -->
+            <div class="w-1/3 border border-primary/20 bg-background-dark/60 rounded p-2 flex flex-col">
+                <h3 class="text-[10px] font-bold text-primary border-b border-primary/20 pb-1 mb-2 font-mono uppercase tracking-tighter">
+                    SPECREFINE</h3>
+                <div class="flex-1 overflow-hidden opacity-80">
+                    <div class="space-y-1 font-mono text-[8px] text-primary/70">
+                        <p>_KERNEL_ID: 0x9f2</p>
+                        <p>_STATUS: ROBUST</p>
+                        <p>_THREAT: NULL</p>
+                        <p class="animate-pulse">_VALIDATING...</p>
+                        <p class="text-accent-purple font-bold">_V_NODE_ACTIVE</p>
+                        <div class="w-full h-1 bg-primary/20 rounded-full mt-2">
+                            <div class="w-3/4 h-full bg-primary shadow-[0_0_10px_#0df20d]"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom ADR Console -->
+        <div class="px-4 pb-6">
+            <div class="bg-black/80 border border-primary rounded p-3 flex items-center gap-3">
+                <span class="text-primary font-mono text-sm">Claude@Scaffold_L3:~$</span>
+                <input class="bg-transparent border-none p-0 focus:ring-0 text-primary font-mono text-sm flex-1 placeholder-primary/30"
+                       placeholder="Author decision record..." type="text"/>
+                <div class="w-1 h-5 bg-primary animate-bounce"></div>
+            </div>
+        </div>
+    </main>
+    <!-- Android Bottom Navigation -->
+    <nav class="flex items-center justify-around py-3 bg-background-dark border-t border-primary/20 z-20">
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">description</span>
+            <span class="text-[8px] uppercase tracking-widest text-primary/40 group-hover:text-primary">Manifest</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-primary">security</span>
+            <span class="text-[8px] uppercase tracking-widest text-primary">Scaffold</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">verified_user</span>
+            <span class="text-[8px] uppercase tracking-widest text-primary/40 group-hover:text-primary">Validation</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">settings_input_component</span>
+            <span class="text-[8px] uppercase tracking-widest text-primary/40 group-hover:text-primary">System</span>
+        </button>
+    </nav>
+    <!-- Screen Bottom Indicator -->
+    <div class="h-1 w-1/3 bg-primary/40 mx-auto mb-1 rounded-full"></div>
 </div>
-</div>
-<!-- SpecRefinement Logs -->
-<div class="w-1/3 border border-primary/20 bg-background-dark/60 rounded p-2 flex flex-col">
-<h3 class="text-[10px] font-bold text-primary border-b border-primary/20 pb-1 mb-2 font-mono uppercase tracking-tighter">SPECREFINE</h3>
-<div class="flex-1 overflow-hidden opacity-80">
-<div class="space-y-1 font-mono text-[8px] text-primary/70">
-<p>_KERNEL_ID: 0x9f2</p>
-<p>_STATUS: ROBUST</p>
-<p>_THREAT: NULL</p>
-<p class="animate-pulse">_VALIDATING...</p>
-<p class="text-accent-purple font-bold">_V_NODE_ACTIVE</p>
-<div class="w-full h-1 bg-primary/20 rounded-full mt-2">
-<div class="w-3/4 h-full bg-primary shadow-[0_0_10px_#0df20d]"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom ADR Console -->
-<div class="px-4 pb-6">
-<div class="bg-black/80 border border-primary rounded p-3 flex items-center gap-3">
-<span class="text-primary font-mono text-sm">Claude@Scaffold_L3:~$</span>
-<input class="bg-transparent border-none p-0 focus:ring-0 text-primary font-mono text-sm flex-1 placeholder-primary/30" placeholder="Author decision record..." type="text"/>
-<div class="w-1 h-5 bg-primary animate-bounce"></div>
-</div>
-</div>
-</main>
-<!-- Android Bottom Navigation -->
-<nav class="flex items-center justify-around py-3 bg-background-dark border-t border-primary/20 z-20">
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">description</span>
-<span class="text-[8px] uppercase tracking-widest text-primary/40 group-hover:text-primary">Manifest</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-primary">security</span>
-<span class="text-[8px] uppercase tracking-widest text-primary">Scaffold</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">verified_user</span>
-<span class="text-[8px] uppercase tracking-widest text-primary/40 group-hover:text-primary">Validation</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">settings_input_component</span>
-<span class="text-[8px] uppercase tracking-widest text-primary/40 group-hover:text-primary">System</span>
-</button>
-</nav>
-<!-- Screen Bottom Indicator -->
-<div class="h-1 w-1/3 bg-primary/40 mx-auto mb-1 rounded-full"></div>
-</div>
-</body></html>
+</body>
+</html>

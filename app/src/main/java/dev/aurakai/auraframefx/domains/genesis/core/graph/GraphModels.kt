@@ -291,8 +291,8 @@ object GraphIntegrity {
     fun validateNode(node: GraphNode): Boolean =
         try {
             node.id.isNotBlank() &&
-            node.activationLevel in 0.0..1.0 &&
-            node.timestamp > 0
+                    node.activationLevel in 0.0..1.0 &&
+                    node.timestamp > 0
         } catch (e: Exception) {
             false
         }
@@ -304,8 +304,8 @@ object GraphIntegrity {
     fun validateEdge(edge: GraphEdge): Boolean =
         try {
             edge.from != edge.to &&
-            edge.weight in -1.0..1.0 &&
-            edge.persistence in 0.0..1.0
+                    edge.weight in -1.0..1.0 &&
+                    edge.persistence in 0.0..1.0
         } catch (e: Exception) {
             false
         }

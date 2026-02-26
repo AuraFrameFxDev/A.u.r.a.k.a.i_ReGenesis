@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.logging
 
-import android.util.Log
 import timber.log.Timber
 
 /**

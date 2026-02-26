@@ -12,7 +12,7 @@ import kotlinx.serialization.json.buildJsonObject
 data class AiRequest(
     val prompt: String = "",
     val query: String = "", // Compatibility alias
-    val category: AgentCapabilityCategory = AgentCapabilityCategory.GENERIC,
+    val agentType: AgentType = AgentType.GENESIS,
     val type: AiRequestType = AiRequestType.TEXT,
     val context: JsonObject = buildJsonObject { },
     val metadata: Map<String, String> = emptyMap(),

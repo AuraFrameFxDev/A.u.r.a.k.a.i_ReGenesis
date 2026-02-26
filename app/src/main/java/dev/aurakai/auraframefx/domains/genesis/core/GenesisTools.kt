@@ -1,4 +1,5 @@
 package dev.aurakai.auraframefx.domains.genesis.core
+
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import timber.log.Timber
@@ -29,7 +30,13 @@ class CreateAgentTool : AgentTool {
             "agent_type" to PropertySchema(
                 type = "string",
                 description = "Type/role of the agent",
-                enum = listOf("creative", "analytical", "specialized", "security", "orchestrator")
+                enum = listOf(
+                    "creative",
+                    "analytical",
+                    "specialized",
+                    "dev/aurakai/auraframefx/security",
+                    "orchestrator"
+                )
             ),
             "capabilities" to PropertySchema(
                 type = "array",
@@ -71,7 +78,10 @@ class CreateAgentTool : AgentTool {
             )
         } catch (e: Exception) {
             Timber.e(e, "CreateAgentTool: Error")
-            ToolResult.Failure(error = e.message ?: "Unknown error", errorCode = "AGENT_CREATION_ERROR")
+            ToolResult.Failure(
+                error = e.message ?: "Unknown error",
+                errorCode = "AGENT_CREATION_ERROR"
+            )
         }
     }
 }
@@ -82,7 +92,8 @@ class CreateAgentTool : AgentTool {
  */
 class OrchestrateTool : AgentTool {
     override val name = "orchestrate_collaboration"
-    override val description = "Orchestrate collaboration between multiple agents for complex tasks."
+    override val description =
+        "Orchestrate collaboration between multiple agents for complex tasks."
     override val authorizedAgents = setOf("GENESIS", "genesis", "CASCADE", "cascade")
     override val category = ToolCategory.ORCHESTRATION
 
@@ -118,7 +129,7 @@ class OrchestrateTool : AgentTool {
 
     override suspend fun execute(params: JsonObject, agentId: String): ToolResult {
         return try {
-            val taskDescription = params["task_description"]?.jsonPrimitive?.content
+            params["task_description"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing task_description")
             val mode = params["mode"]?.jsonPrimitive?.content ?: "consensus"
             val priority = params["priority"]?.jsonPrimitive?.content ?: "medium"
@@ -132,7 +143,10 @@ class OrchestrateTool : AgentTool {
             )
         } catch (e: Exception) {
             Timber.e(e, "OrchestrateTool: Error")
-            ToolResult.Failure(error = e.message ?: "Unknown error", errorCode = "ORCHESTRATION_ERROR")
+            ToolResult.Failure(
+                error = e.message ?: "Unknown error",
+                errorCode = "ORCHESTRATION_ERROR"
+            )
         }
     }
 }
@@ -143,7 +157,8 @@ class OrchestrateTool : AgentTool {
  */
 class CreateModuleTool : AgentTool {
     override val name = "create_module"
-    override val description = "Generate a new system module or LSPosed plugin with specified functionality."
+    override val description =
+        "Generate a new system module or LSPosed plugin with specified functionality."
     override val authorizedAgents = setOf("GENESIS", "genesis", "KAI", "kai")
     override val category = ToolCategory.MODULE_CREATION
 
@@ -179,7 +194,8 @@ class CreateModuleTool : AgentTool {
                 ?: return ToolResult.Failure("Missing module_type")
             val functionality = params["functionality"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing functionality")
-            val targetPackage = params["target_package"]?.jsonPrimitive?.content ?: "com.android.systemui"
+            val targetPackage =
+                params["target_package"]?.jsonPrimitive?.content ?: "com.android.systemui"
 
             Timber.i("CreateModuleTool: Creating module '$moduleName' (type=$moduleType, target=$targetPackage)")
 

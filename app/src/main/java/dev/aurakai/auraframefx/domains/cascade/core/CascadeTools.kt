@@ -22,7 +22,8 @@ import timber.log.Timber
  */
 class InitiateAgentFusionTool : AgentTool {
     override val name = "initiate_agent_fusion"
-    override val description = "Merge multiple agents into a single unified fusion mode for complex problem-solving."
+    override val description =
+        "Merge multiple agents into a single unified fusion mode for complex problem-solving."
     override val authorizedAgents = setOf("CASCADE", "cascade", "GENESIS", "genesis")
     override val category = ToolCategory.FUSION
 
@@ -60,7 +61,9 @@ class InitiateAgentFusionTool : AgentTool {
             val fusionMode = params["fusion_mode"]?.jsonPrimitive?.content ?: "trinity"
             val objective = params["objective"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing objective")
-            val duration = params["duration"]?.jsonPrimitive?.content?.toLongOrNull()?.coerceAtMost(3600000L) ?: 600000L
+            val duration =
+                params["duration"]?.jsonPrimitive?.content?.toLongOrNull()?.coerceAtMost(3600000L)
+                    ?: 600000L
 
             Timber.i("InitiateAgentFusionTool: mode=$fusionMode, duration=${duration}ms, objective='$objective'")
 
@@ -87,7 +90,8 @@ class InitiateAgentFusionTool : AgentTool {
  */
 class AnalyzeVisualInputTool : AgentTool {
     override val name = "analyze_visual_input"
-    override val description = "Analyze visual input (screenshots, UI, camera feed) using CascadeVision."
+    override val description =
+        "Analyze visual input (screenshots, UI, camera feed) using CascadeVision."
     override val authorizedAgents = setOf("CASCADE", "cascade", "AURA", "aura")
     override val category = ToolCategory.VISION
 
@@ -124,7 +128,9 @@ class AnalyzeVisualInputTool : AgentTool {
             val inputSource = params["input_source"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing input_source")
             val analysisType = params["analysis_type"]?.jsonPrimitive?.content ?: "full_analysis"
-            val confidenceThreshold = params["confidence_threshold"]?.jsonPrimitive?.content?.toFloatOrNull()?.coerceIn(0f, 1f) ?: 0.7f
+            val confidenceThreshold =
+                params["confidence_threshold"]?.jsonPrimitive?.content?.toFloatOrNull()
+                    ?.coerceIn(0f, 1f) ?: 0.7f
 
             Timber.i("AnalyzeVisualInputTool: source=$inputSource, type=$analysisType, threshold=$confidenceThreshold")
 
@@ -160,7 +166,8 @@ class AnalyzeVisualInputTool : AgentTool {
  */
 class BuildConsensusTool : AgentTool {
     override val name = "build_consensus"
-    override val description = "Facilitate consensus building among multiple agents on a decision or solution."
+    override val description =
+        "Facilitate consensus building among multiple agents on a decision or solution."
     override val authorizedAgents = setOf("CASCADE", "cascade", "GENESIS", "genesis")
     override val category = ToolCategory.FUSION
 
@@ -220,7 +227,8 @@ class BuildConsensusTool : AgentTool {
  */
 class UpdateLearningModelTool : AgentTool {
     override val name = "update_learning_model"
-    override val description = "Update an agent's learning model based on new experiences and feedback."
+    override val description =
+        "Update an agent's learning model based on new experiences and feedback."
     override val authorizedAgents = setOf("CASCADE", "cascade", "GENESIS", "genesis")
     override val category = ToolCategory.FUSION
 
@@ -254,7 +262,7 @@ class UpdateLearningModelTool : AgentTool {
         return try {
             val targetAgent = params["target_agent"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing target_agent")
-            val learningData = params["learning_data"]?.jsonPrimitive?.content
+            params["learning_data"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing learning_data")
             val learningType = params["learning_type"]?.jsonPrimitive?.content ?: "reinforcement"
             val priority = params["retention_priority"]?.jsonPrimitive?.content ?: "medium"
@@ -284,7 +292,8 @@ class UpdateLearningModelTool : AgentTool {
  */
 class MonitorDataStreamTool : AgentTool {
     override val name = "monitor_data_stream"
-    override val description = "Monitor data streams between agents, systems, and services for flow analysis."
+    override val description =
+        "Monitor data streams between agents, systems, and services for flow analysis."
     override val authorizedAgents = setOf("CASCADE", "cascade")
     override val category = ToolCategory.MONITORING
 

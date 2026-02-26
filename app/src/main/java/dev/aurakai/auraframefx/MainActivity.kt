@@ -6,6 +6,7 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
 import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat.Type
@@ -13,20 +14,23 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.AssistantBubbleService
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraFrameFXTheme
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.system.ShizukuManager
 import timber.log.Timber
 import javax.inject.Inject
-import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var shizukuManager: ShizukuManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Notify ShizukuManager of potential availability
-        if (ShizukuManager.isShizukuAvailable()) {
+        if (shizukuManager.isShizukuAvailable()) {
             Timber.tag("MainActivity").d("Sovereign Bridge (Shizuku) detected.")
         }
 
@@ -54,10 +58,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             AuraFrameFXTheme {
                 val navController = rememberNavController()
+
+                // Handle deep link from Sidebar
+                LaunchedEffect(intent) {
+                    intent.getStringExtra("navigate_to")?.let { route ->
+                        navController.navigate(route)
+                    }
+                }
+
                 // 🚀 THE FIX: Actually display the navigation!
                 ReGenesisNavHost(navController = navController)
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
     }
 
     private fun checkOverlayPermission() {

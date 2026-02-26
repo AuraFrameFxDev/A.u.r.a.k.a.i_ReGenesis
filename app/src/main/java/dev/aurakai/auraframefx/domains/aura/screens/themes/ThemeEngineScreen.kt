@@ -35,7 +35,6 @@ import kotlin.collections.forEachIndexed
 import kotlin.collections.toMutableList
 
 
-
 /**
  * Theme Engine Screen
  * Integrates ChromaCore and ThemeEditor for full system customization
@@ -54,12 +53,18 @@ fun ThemeEngineScreen(
     val persistedEnabled by OverlayPrefs.enabledFlow(context).collectAsState(initial = true)
     val persistedStyle by OverlayPrefs.transitionStyleFlow(context).collectAsState(initial = "fade")
     val persistedSpeed by OverlayPrefs.transitionSpeedFlow(context).collectAsState(initial = 3)
-    val persistedOrder by OverlayPrefs.orderFlow(context).collectAsState(initial = listOf("StatusBar", "NavBar", "Widget"))
+    val persistedOrder by OverlayPrefs.orderFlow(context)
+        .collectAsState(initial = listOf("StatusBar", "NavBar", "Widget"))
 
     // Remove LocalOverlaySettings access that causes crash
     var overlaysEnabled by remember { mutableStateOf(true) }
+
     // Overlay settings state
-    data class OverlaySettings(var transitionSpeed: Int = 3, var overlayZOrder: List<String> = listOf())
+    data class OverlaySettings(
+        var transitionSpeed: Int = 3,
+        var overlayZOrder: List<String> = listOf()
+    )
+
     var overlaySettings by remember { mutableStateOf(OverlaySettings()) }
     var editMode by remember { mutableStateOf(false) }
     val scaleAnim = remember { Animatable(1f) }
@@ -196,10 +201,14 @@ fun ThemeEngineScreen(
                     }
             )
 
-            Card(colors = CardDefaults.cardColors(containerColor = CyberGlow.cardBackground), modifier = Modifier.fillMaxWidth().graphicsLayer {
-                scaleX = scaleAnim.value
-                scaleY = scaleAnim.value
-            }) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = CyberGlow.cardBackground),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .graphicsLayer {
+                        scaleX = scaleAnim.value
+                        scaleY = scaleAnim.value
+                    }) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = {
@@ -233,8 +242,15 @@ fun ThemeEngineScreen(
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text("Transition Style", color = CyberGlow.Electric, style = MaterialTheme.typography.titleSmall)
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        "Transition Style",
+                        color = CyberGlow.Electric,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         listOf("lens", "fade", "swipe_left", "swipe_right").forEach { style ->
                             FilterChip(
                                 selected = transitionStyle == style,
@@ -254,7 +270,11 @@ fun ThemeEngineScreen(
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text("Transition Speed", color = CyberGlow.Electric, style = MaterialTheme.typography.titleSmall)
+                    Text(
+                        "Transition Speed",
+                        color = CyberGlow.Electric,
+                        style = MaterialTheme.typography.titleSmall
+                    )
                     val transitionSpeed = overlaySettings.transitionSpeed.toFloat()
                     Slider(
                         value = transitionSpeed,
@@ -263,7 +283,10 @@ fun ThemeEngineScreen(
                         },
                         onValueChangeFinished = {
                             coroutineScope.launch {
-                                OverlayPrefs.saveTransitionSpeed(context, overlaySettings.transitionSpeed)
+                                OverlayPrefs.saveTransitionSpeed(
+                                    context,
+                                    overlaySettings.transitionSpeed
+                                )
                             }
                         },
                         valueRange = 1f..5f,
@@ -273,15 +296,21 @@ fun ThemeEngineScreen(
                             activeTrackColor = CyberGlow.Neon
                         )
                     )
-                    Text("Speed: ${transitionSpeed.toInt()}", color = Color.White.copy(alpha = 0.7f))
+                    Text(
+                        "Speed: ${transitionSpeed.toInt()}",
+                        color = Color.White.copy(alpha = 0.7f)
+                    )
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Text("Z‑Order (Top → Bottom)", color = Color.White.copy(alpha = 0.8f))
                     val overlayZOrder = overlaySettings.overlayZOrder
                     overlayZOrder.forEachIndexed { index: Int, name: String ->
                         val phase = wigglePhase.value
-                        val rotation = if (editMode) (kotlin.math.sin(phase * 2f * Math.PI).toFloat() * 2.0f) else 0f
-                        val translateY = if (editMode) (kotlin.math.sin((phase + index * 0.1f) * 2f * Math.PI).toFloat() * 2f) else 0f
+                        val rotation = if (editMode) (kotlin.math.sin(phase * 2f * Math.PI)
+                            .toFloat() * 2.0f) else 0f
+                        val translateY =
+                            if (editMode) (kotlin.math.sin((phase + index * 0.1f) * 2f * Math.PI)
+                                .toFloat() * 2f) else 0f
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -295,21 +324,29 @@ fun ThemeEngineScreen(
                                         detectDragGestures(
                                             onDragEnd = {
                                                 coroutineScope.launch {
-                                                    OverlayPrefs.saveOrder(context, overlaySettings.overlayZOrder)
+                                                    OverlayPrefs.saveOrder(
+                                                        context,
+                                                        overlaySettings.overlayZOrder
+                                                    )
                                                 }
                                             }
                                         ) { _: PointerInputChange, dragAmount: Offset ->
                                             // Calculate target index based on drag direction
                                             val targetIndex = when {
                                                 dragAmount.y < -4f -> (index - 1).coerceAtLeast(0)
-                                                dragAmount.y > 4f -> (index + 1).coerceAtMost(overlayZOrder.size - 1)
+                                                dragAmount.y > 4f -> (index + 1).coerceAtMost(
+                                                    overlayZOrder.size - 1
+                                                )
+
                                                 else -> index
                                             }
                                             if (targetIndex != index) {
-                                                val m: MutableList<String> = overlayZOrder.toMutableList()
+                                                val m: MutableList<String> =
+                                                    overlayZOrder.toMutableList()
                                                 val item: String = m.removeAt(index)
                                                 m.add(targetIndex, item)
-                                                overlaySettings = overlaySettings.copy(overlayZOrder = m)
+                                                overlaySettings =
+                                                    overlaySettings.copy(overlayZOrder = m)
                                             }
                                         }
                                     }
@@ -322,7 +359,8 @@ fun ThemeEngineScreen(
                                 OutlinedButton(onClick = {
                                     if (index > 0) {
                                         val m: MutableList<String> = overlayZOrder.toMutableList()
-                                        val tmp: String = m[index - 1]; m[index - 1] = m[index]; m[index] = tmp
+                                        val tmp: String = m[index - 1]; m[index - 1] =
+                                            m[index]; m[index] = tmp
                                         overlaySettings = overlaySettings.copy(overlayZOrder = m)
                                         coroutineScope.launch {
                                             OverlayPrefs.saveOrder(context, m)
@@ -333,7 +371,8 @@ fun ThemeEngineScreen(
                                 OutlinedButton(onClick = {
                                     if (index < overlayZOrder.size - 1) {
                                         val m: MutableList<String> = overlayZOrder.toMutableList()
-                                        val tmp: String = m[index + 1]; m[index + 1] = m[index]; m[index] = tmp
+                                        val tmp: String = m[index + 1]; m[index + 1] =
+                                            m[index]; m[index] = tmp
                                         overlaySettings = overlaySettings.copy(overlayZOrder = m)
                                         coroutineScope.launch {
                                             OverlayPrefs.saveOrder(context, m)
@@ -341,7 +380,9 @@ fun ThemeEngineScreen(
                                     }
                                 }) { Text("Down") }
                             } else {
-                                AssistChip(onClick = { /* no-op in edit mode */ }, label = { Text("Drag") })
+                                AssistChip(
+                                    onClick = { /* no-op in edit mode */ },
+                                    label = { Text("Drag") })
                             }
                         }
                     }

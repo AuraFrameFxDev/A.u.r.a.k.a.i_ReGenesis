@@ -18,18 +18,27 @@ class OverlayUtils @Inject constructor(
 
     suspend fun enableOverlay(overlayPackage: String, userId: Int = 0): Result<Unit> =
         withContext(Dispatchers.IO) {
-            logger.info("OverlayUtils", "enableOverlay requested: $overlayPackage (no-op on this build)")
+            logger.info(
+                "OverlayUtils",
+                "enableOverlay requested: $overlayPackage (no-op on this build)"
+            )
             Result.success(Unit)
         }
 
     suspend fun disableOverlay(overlayPackage: String, userId: Int = 0): Result<Unit> =
         withContext(Dispatchers.IO) {
-            logger.info("OverlayUtils", "disableOverlay requested: $overlayPackage (no-op on this build)")
+            logger.info(
+                "OverlayUtils",
+                "disableOverlay requested: $overlayPackage (no-op on this build)"
+            )
             Result.success(Unit)
         }
 
     fun isOverlayEnabled(overlayPackage: String, userId: Int = 0): Boolean {
-        logger.info("OverlayUtils", "isOverlayEnabled requested: $overlayPackage (no-op on this build)")
+        logger.info(
+            "OverlayUtils",
+            "isOverlayEnabled requested: $overlayPackage (no-op on this build)"
+        )
         return false
     }
 
@@ -38,10 +47,16 @@ class OverlayUtils @Inject constructor(
         enable: Boolean,
         userId: Int = 0
     ): Result<Unit> =
-        if (enable) enableOverlay(overlayPackage, userId) else disableOverlay(overlayPackage, userId)
+        if (enable) enableOverlay(overlayPackage, userId) else disableOverlay(
+            overlayPackage,
+            userId
+        )
 
     fun getOverlaysForTarget(targetPackage: String, userId: Int = 0): List<OverlayInfo> {
-        logger.info("OverlayUtils", "getOverlaysForTarget requested: $targetPackage (no-op on this build)")
+        logger.info(
+            "OverlayUtils",
+            "getOverlaysForTarget requested: $targetPackage (no-op on this build)"
+        )
         return emptyList()
     }
 
@@ -54,7 +69,10 @@ class OverlayUtils @Inject constructor(
         colors: Map<String, Int>
     ): Result<Unit> =
         withContext(Dispatchers.IO) {
-            logger.warn("OverlayUtils", "createFabricatedOverlay is not available on this build (no-op)")
+            logger.warn(
+                "OverlayUtils",
+                "createFabricatedOverlay is not available on this build (no-op)"
+            )
             Result.success(Unit)
         }
 
@@ -73,7 +91,10 @@ class OverlayUtils @Inject constructor(
 
     suspend fun resetToDefaultColors(): Result<Unit> =
         withContext(Dispatchers.IO) {
-            logger.warn("OverlayUtils", "resetToDefaultColors is not available on this build (no-op)")
+            logger.warn(
+                "OverlayUtils",
+                "resetToDefaultColors is not available on this build (no-op)"
+            )
             Result.success(Unit)
         }
 
@@ -82,7 +103,10 @@ class OverlayUtils @Inject constructor(
         targetPackage: String
     ): Result<Unit> =
         withContext(Dispatchers.IO) {
-            logger.warn("OverlayUtils", "removeFabricatedOverlay is not available on this build (no-op)")
+            logger.warn(
+                "OverlayUtils",
+                "removeFabricatedOverlay is not available on this build (no-op)"
+            )
             Result.success(Unit)
         }
 }

@@ -37,7 +37,6 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
-import dev.aurakai.auraframefx.domains.aura.ui.components.graph.Offset as GraphOffset
 
 /**
  * Displays an interactive, zoomable, and pannable graph visualization with selectable nodes.
@@ -352,7 +351,6 @@ fun Dp.toPx(drawScope: DrawScope): Float = with(drawScope) { this@toPx.toPx() }
 
 // Helper extension for GraphOffset to Compose Offset - already defined in Composable
 // fun Offset.toCompose(): Offset = Offset(this.x.toFloat(), this.y.toFloat())
-
 
 
 /**

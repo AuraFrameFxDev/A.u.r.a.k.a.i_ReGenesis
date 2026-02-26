@@ -4,11 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.config.CustomizationPreferences
-import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 import dev.aurakai.auraframefx.domains.aura.LauncherConfiguration
 import dev.aurakai.auraframefx.domains.aura.MonetConfiguration
 import dev.aurakai.auraframefx.domains.aura.SystemUIConfiguration
+import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -77,7 +76,16 @@ open class CustomizationViewModel @Inject constructor() : ViewModel() {
         val launcherFlow = CustomizationPreferences.launcherConfigFlow(context)
 
         viewModelScope.launch {
-            combine(themeFlow, glassFlow, animFlow, uiFlow, modeFlow, monetFlow, systemUIFlow, launcherFlow) { values: Array<Any?> ->
+            combine(
+                themeFlow,
+                glassFlow,
+                animFlow,
+                uiFlow,
+                modeFlow,
+                monetFlow,
+                systemUIFlow,
+                launcherFlow
+            ) { values: Array<Any?> ->
                 val theme = values[0] as Triple<String, String, Boolean>
                 val glass = values[1] as Triple<Boolean, Float, Float>
                 val anim = values[2] as Pair<Boolean, Int>
@@ -112,15 +120,34 @@ open class CustomizationViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setGlass(context: Context, enabled: Boolean, blurRadiusDp: Float, surfaceAlpha: Float) {
-        viewModelScope.launch { CustomizationPreferences.setGlass(context, enabled, blurRadiusDp, surfaceAlpha) }
+        viewModelScope.launch {
+            CustomizationPreferences.setGlass(
+                context,
+                enabled,
+                blurRadiusDp,
+                surfaceAlpha
+            )
+        }
     }
 
     fun setAnimations(context: Context, enabled: Boolean, speed: Int) {
         viewModelScope.launch { CustomizationPreferences.setAnimations(context, enabled, speed) }
     }
 
-    fun setUiElements(context: Context, showStatusBar: Boolean, showNotchBar: Boolean, showOverlayMenus: Boolean) {
-        viewModelScope.launch { CustomizationPreferences.setUiElements(context, showStatusBar, showNotchBar, showOverlayMenus) }
+    fun setUiElements(
+        context: Context,
+        showStatusBar: Boolean,
+        showNotchBar: Boolean,
+        showOverlayMenus: Boolean
+    ) {
+        viewModelScope.launch {
+            CustomizationPreferences.setUiElements(
+                context,
+                showStatusBar,
+                showNotchBar,
+                showOverlayMenus
+            )
+        }
     }
 
     fun setReGenesisMode(context: Context, mode: ReGenesisMode) {
@@ -142,7 +169,8 @@ open class CustomizationViewModel @Inject constructor() : ViewModel() {
     fun setAgentColor(context: Context, agentName: String, hexColor: String) {
         viewModelScope.launch {
             CustomizationPreferences.setAgentColor(context, agentName, hexColor)
-            _state.value = _state.value.copy(agentColors = _state.value.agentColors + (agentName to hexColor))
+            _state.value =
+                _state.value.copy(agentColors = _state.value.agentColors + (agentName to hexColor))
         }
     }
 

@@ -10,7 +10,7 @@ import dev.aurakai.auraframefx.BuildConfig
  */
 object UnifiedLoggingSystem {
     private const val TAG = "AuraFX"
-    
+
     /**
      * Initialize the logging system.
      * Should be called in the Application class.

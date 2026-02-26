@@ -40,8 +40,11 @@ object logger {
     // Long-form tagged methods (aliases)
     fun info(tag: String, message: String) = i(tag, message)
     fun debug(tag: String, message: String) = d(tag, message)
-    fun warn(tag: String, message: String, throwable: Throwable? = null) = w(tag, message, throwable)
-    fun error(tag: String, message: String, throwable: Throwable? = null) = e(tag, message, throwable)
+    fun warn(tag: String, message: String, throwable: Throwable? = null) =
+        w(tag, message, throwable)
+
+    fun error(tag: String, message: String, throwable: Throwable? = null) =
+        e(tag, message, throwable)
 
     // Simple message-only methods (use class name from callsite as tag)
     fun i(message: String) = Timber.i(message)

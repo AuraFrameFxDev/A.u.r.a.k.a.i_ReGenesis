@@ -1,7 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.ui
 
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -36,7 +34,7 @@ sealed class QuickSettingsBackground {
 
     @Serializable
     data class Solid(
-        val color: Long, 
+        val color: Long,
         val alpha: Float,
         override val cornerRadius: Float? = null,
         override val elevation: Float? = null
