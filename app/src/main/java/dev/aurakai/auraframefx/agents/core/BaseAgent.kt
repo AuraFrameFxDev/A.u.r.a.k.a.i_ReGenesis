@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.agents.core
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
@@ -62,7 +61,7 @@ abstract class BaseAgent(
             emit(response)
 
         } catch (e: Exception) {
-            emit(AgentResponse.error("Error in ${agentName}: ${e.message}"))
+            emit(AgentResponse.error("Error in ${agentName}: ${e.message}",))
         }
     }
 
@@ -128,7 +127,7 @@ abstract class BaseAgent(
             else -> "Unexpected error: ${error.message}"
         }
 
-        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}")
+        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}",)
     }
 
     /**

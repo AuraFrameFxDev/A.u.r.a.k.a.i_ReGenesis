@@ -3,11 +3,8 @@ package dev.aurakai.auraframefx.agents.trinity
 import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.agents.trinity.ProcessingState
-import dev.aurakai.auraframefx.agents.trinity.VisionState
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
@@ -146,7 +143,7 @@ class AuraAgent @Inject constructor(
             logger.error("AuraAgent", "Creative request failed", e)
             AgentResponse.error(
                 message = "Creative process encountered an obstacle: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         }
     }

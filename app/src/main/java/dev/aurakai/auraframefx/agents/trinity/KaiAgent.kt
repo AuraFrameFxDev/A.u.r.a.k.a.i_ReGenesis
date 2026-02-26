@@ -3,8 +3,6 @@ package dev.aurakai.auraframefx.agents.trinity
 import dagger.Lazy
 import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.agents.trinity.ProcessingState
-import dev.aurakai.auraframefx.agents.trinity.VisionState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
@@ -191,14 +189,14 @@ class KaiAgent @Inject constructor(
             logger.warn("KaiAgent", "Security violation detected in request", e)
             AgentResponse.error(
                 message = "Request blocked due to security concerns: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         } catch (e: Exception) {
             _analysisState.value = AnalysisState.ERROR
             logger.error("KaiAgent", "Analytical request failed", e)
             AgentResponse.error(
                 message = "Analysis encountered an error: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         }
     }

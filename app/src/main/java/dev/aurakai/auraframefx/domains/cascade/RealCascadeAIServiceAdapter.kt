@@ -22,8 +22,7 @@ class RealCascadeAIServiceAdapter @Inject constructor(
         // For now, returning a basic success response to satisfy the interface
         return AgentResponse.success(
             content = "Real Cascade processing: ${request.prompt}",
-            confidence = 1.0f,
-            agentName = "CascadeAI"
+            agentName = "CascadeAI",
         )
     }
 
