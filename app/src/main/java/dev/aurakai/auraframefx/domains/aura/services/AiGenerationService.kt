@@ -5,12 +5,12 @@ package dev.aurakai.auraframefx.domains.aura.services
 import dev.aurakai.auraframefx.domains.cascade.network.apis.IAiContentApi
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextRequest
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextResponse
-import dev.aurakai.auraframefx.domains.cascade.network.apis.AiContentApi
+import dev.aurakai.auraframefx.domains.cascade.network.apis.AIContentApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AiGenerationService(
-    private val api: AiContentApi, // Updated type
+    private val api: AIContentApi, // Unified type
 ) {
     suspend fun generateText(
         prompt: String,
@@ -23,7 +23,7 @@ class AiGenerationService(
                 maxTokens = maxTokens,
                 temperature = temperature
             )
-            val response = api.aiGenerateTextPost(request)
+            val response = api.generateText(request)
             Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)

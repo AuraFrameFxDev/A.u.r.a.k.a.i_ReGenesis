@@ -4,7 +4,7 @@ package dev.aurakai.auraframefx.domains.cascade.utils.context
 
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -42,7 +42,7 @@ class ContextManager @Inject constructor(
     fun createContextChain(
         rootContext: String,
         initialContext: String,
-        category: AgentCapabilityCategory,
+        agent: AgentType,
         metadata: Map<String, String> = emptyMap(),
     ): String {
         val chainId = UUID.randomUUID().toString()
@@ -54,11 +54,11 @@ class ContextManager @Inject constructor(
                 ContextNode(
                     id = "ctx_${Clock.System.now().toEpochMilliseconds()}_0",
                     content = initialContext,
-                    category = category,
+                    agent = agent,
                     metadata = metadata
                 )
             ),
-            agentContext = mapOf(category to initialContext),
+            agentContext = mapOf(agent to initialContext),
             metadata = metadata,
             lastUpdated = Clock.System.now()
         )
@@ -83,7 +83,7 @@ class ContextManager @Inject constructor(
     fun updateContextChain(
         chainId: String,
         newContext: String,
-        category: AgentCapabilityCategory,
+        agent: AgentType,
         metadata: Map<String, String> = emptyMap(),
     ): ContextChain {
         val chain =
@@ -94,10 +94,10 @@ class ContextManager @Inject constructor(
             contextHistory = chain.contextHistory + ContextNode(
                 id = "ctx_${Clock.System.now().toEpochMilliseconds()}_${chain.contextHistory.size}",
                 content = newContext,
-                category = category,
+                agent = agent,
                 metadata = metadata
             ),
-            agentContext = chain.agentContext + (category to newContext),
+            agentContext = chain.agentContext + (agent to newContext),
             lastUpdated = Clock.System.now()
         )
 
@@ -129,9 +129,10 @@ class ContextManager @Inject constructor(
     fun queryContext(query: ContextQuery): ContextChainResult {
         val chains = _activeContexts.value.values
             .filter { chain ->
-                query.categoryFilter.isEmpty() || query.categoryFilter.any { category ->
+                query.agentFilter.isEmpty() || query.agentFilter.any { agent ->
                     chain.agentContext.containsKey(
-                        category)
+                        agent
+                    )
                 }
             }
             .sortedByDescending { it.lastUpdated }
@@ -229,7 +230,7 @@ data class ContextChain(
     val rootContext: String,
     val currentContext: String,
     val contextHistory: List<ContextNode>,
-    val agentContext: Map<AgentCapabilityCategory, String>,
+    val agentContext: Map<AgentType, String>,
     val metadata: Map<String, String>,
     val lastUpdated: Instant
 )
@@ -238,7 +239,7 @@ data class ContextChain(
 data class ContextNode(
     val id: String,
     val content: String,
-    val category: AgentCapabilityCategory,
+    val agent: AgentType,
     val metadata: Map<String, String>
 )
 
@@ -252,7 +253,7 @@ data class ContextStats(
 
 data class ContextQuery(
     val query: String,
-    val categoryFilter: List<AgentCapabilityCategory> = emptyList(),
+    val agentFilter: List<AgentType> = emptyList(),
     val maxChainLength: Int = 10
 )
 

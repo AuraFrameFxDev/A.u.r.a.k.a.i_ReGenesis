@@ -24,7 +24,8 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  */
 @Singleton
 class ChromaCoreManager @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val shizukuManager: ShizukuManager
 ) {
     // Keys for persistence
     private val KEY_STATUSBAR_LOGO = booleanPreferencesKey("statusbar_logo_enabled")
@@ -102,7 +103,7 @@ class ChromaCoreManager @Inject constructor(
         return try {
             if (Shell.isAppGrantedRoot() == true) {
                 Shell.cmd(command).exec().isSuccess
-            } else if (ShizukuManager.isShizukuAvailable()) {
+            } else if (shizukuManager.isShizukuAvailable()) {
                 // Use shizuku shell if root is not available
                 // shizukuManager.runCommand(command)
                 false // Stub for now

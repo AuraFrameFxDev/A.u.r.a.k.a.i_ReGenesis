@@ -4,7 +4,7 @@ import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
@@ -52,33 +52,33 @@ class AIPipelineProcessor @Inject constructor(
         // Process through Cascade first for state management
         val cascadeAgentResponse = cascadeService.processRequest(
             AiRequest(
-                prompt = task,
-                category = AgentCapabilityCategory.ANALYSIS
+                query = task,
+                type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT
             ),
-            context = "pipeline_processing",
-            category = AgentCapabilityCategory.ANALYSIS
+            context = "pipeline_processing"
         )
         responses.add(
             AgentMessage(
                 from = "CASCADE",
                 content = cascadeAgentResponse.content,
-                category = AgentCapabilityCategory.ANALYSIS,
+                sender = AgentType.CASCADE,
                 timestamp = System.currentTimeMillis(),
                 confidence = cascadeAgentResponse.confidence
             )
         )
 
         // Process through Kai for security analysis if needed
-        if (selectedAgents.contains(AgentCapabilityCategory.SECURITY)) {
+        if (selectedAgents.contains(AgentType.KAI)) {
             val kaiAgentResponse = kaiService.processRequest(
-                AiRequest(task, "security"),
-                context = "security_analysis"
+                AiRequest(prompt = task, category = AgentCapabilityCategory.SECURITY),
+                context = "security_analysis",
+                category = AgentCapabilityCategory.SECURITY
             )
             responses.add(
                 AgentMessage(
                     from = "KAI",
                     content = kaiAgentResponse.content,
-                    category = AgentCapabilityCategory.SECURITY,
+                    sender = AgentType.KAI,
                     timestamp = System.currentTimeMillis(),
                     confidence = kaiAgentResponse.confidence
                 )
@@ -86,17 +86,17 @@ class AIPipelineProcessor @Inject constructor(
         }
 
         // Process through Aura for creative response
-        if (selectedAgents.contains(AgentCapabilityCategory.CREATIVE)) {
-            val auraAgentResponse = auraService.processRequest(
-                AiRequest(prompt = task, category = AgentCapabilityCategory.CREATIVE),
-                context = "creative_pipeline",
-                category = AgentCapabilityCategory.CREATIVE
+        if (selectedAgents.contains(AgentType.AURA)) {
+            val auraResponse = auraService.generateText(task, "creative_pipeline")
+            val auraAgentResponse = AgentResponse(
+                content = auraResponse,
+                confidence = 0.8f
             )
             responses.add(
                 AgentMessage(
                     from = "AURA",
                     content = auraAgentResponse.content,
-                    category = AgentCapabilityCategory.CREATIVE,
+                    sender = AgentType.AURA,
                     timestamp = System.currentTimeMillis(),
                     confidence = auraAgentResponse.confidence
                 )
@@ -109,7 +109,7 @@ class AIPipelineProcessor @Inject constructor(
             AgentMessage(
                 from = "GENESIS",
                 content = finalResponse,
-                category = AgentCapabilityCategory.COORDINATION,
+                sender = AgentType.GENESIS,
                 timestamp = System.currentTimeMillis(),
                 confidence = calculateConfidence(responses)
             )
@@ -214,36 +214,36 @@ class AIPipelineProcessor @Inject constructor(
      * @param priority Normalized priority from 0.0 to 1.0 that can force inclusion of higher-capability agents.
      * @return A set of AgentType values representing the agents chosen to process the task.
      */
-    private fun selectAgents(task: String, priority: Float): Set<AgentCapabilityCategory> {
-        val selectedAgents = mutableSetOf<AgentCapabilityCategory>()
+    private fun selectAgents(task: String, priority: Float): Set<AgentType> {
+        val selectedAgents = mutableSetOf<AgentType>()
 
-        selectedAgents.add(AgentCapabilityCategory.COORDINATION)
+        selectedAgents.add(AgentType.GENESIS)
 
         when {
             task.contains("analyze", ignoreCase = true) ||
                     task.contains("data", ignoreCase = true) -> {
-                selectedAgents.add(AgentCapabilityCategory.ANALYSIS)
+                selectedAgents.add(AgentType.CASCADE)
             }
 
             task.contains("dev/aurakai/auraframefx/security", ignoreCase = true) ||
                     task.contains("protect", ignoreCase = true) ||
                     task.contains("safe", ignoreCase = true) -> {
-                selectedAgents.add(AgentCapabilityCategory.SECURITY)
+                selectedAgents.add(AgentType.KAI)
             }
 
             task.contains("create", ignoreCase = true) ||
                     task.contains("generate", ignoreCase = true) ||
                     task.contains("design", ignoreCase = true) -> {
-                selectedAgents.add(AgentCapabilityCategory.CREATIVE)
+                selectedAgents.add(AgentType.AURA)
             }
         }
 
         if (priority > 0.8f) {
-            selectedAgents.addAll(setOf(AgentCapabilityCategory.ANALYSIS, AgentCapabilityCategory.CREATIVE))
+            selectedAgents.addAll(setOf(AgentType.CASCADE, AgentType.AURA))
         }
 
         if (task.length > 100 || task.split(" ").size > 20) {
-            selectedAgents.add(AgentCapabilityCategory.ANALYSIS)
+            selectedAgents.add(AgentType.CASCADE)
         }
 
         return selectedAgents
@@ -262,28 +262,28 @@ class AIPipelineProcessor @Inject constructor(
             return "[System] No agent responses available."
         }
 
-        val responsesByAgent = responses.groupBy { it.category }
+        val responsesByAgent = responses.groupBy { it.sender }
 
         return buildString {
             append("=== AuraFrameFX AI Response ===\n\n")
 
-            responsesByAgent[AgentCapabilityCategory.COORDINATION]?.firstOrNull()?.let { genesis ->
+            responsesByAgent[AgentType.GENESIS]?.firstOrNull()?.let { genesis ->
                 append("9e0 Genesis Core Analysis:\n")
                 append(genesis.content)
                 append("\n\n")
             }
 
-            responsesByAgent.forEach { (category, agentResponses) ->
-                if (category != null && category != AgentCapabilityCategory.COORDINATION && agentResponses.isNotEmpty()) {
-                    val agentIcon = when (category) {
-                        AgentCapabilityCategory.ANALYSIS -> "4ca"
-                        AgentCapabilityCategory.CREATIVE -> "3a8"
-                        AgentCapabilityCategory.SECURITY -> "6e1e0f"
+            responsesByAgent.forEach { (agentType, agentResponses) ->
+                if (agentType != null && agentType != AgentType.GENESIS && agentResponses.isNotEmpty()) {
+                    val agentIcon = when (agentType) {
+                        AgentType.CASCADE -> "4ca"
+                        AgentType.AURA -> "3a8"
+                        AgentType.KAI -> "6e1e0f"
                         else -> "916"
                     }
                     append(
                         "$agentIcon ${
-                            category.name.lowercase().replaceFirstChar { it.uppercase() }
+                            agentType.name.lowercase().replaceFirstChar { it.uppercase() }
                         } Input:\n"
                     )
                     agentResponses.forEach { response ->
@@ -332,7 +332,7 @@ class AIPipelineProcessor @Inject constructor(
                 (current["agent_performance"] as? MutableMap<String, MutableList<Float>>)
                     ?: mutableMapOf()
             responses.forEach { response ->
-                val agentName = response.category?.name ?: "UNKNOWN"
+                val agentName = response.sender?.name ?: "UNKNOWN"
                 val performanceList = agentPerformance.getOrPut(agentName) { mutableListOf() }
                 performanceList.add(response.confidence)
                 if (performanceList.size > 20) performanceList.removeAt(0)

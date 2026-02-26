@@ -5,7 +5,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
@@ -20,7 +20,7 @@ import javax.inject.Singleton
  */
 interface KaiAIService {
     suspend fun initialize()
-    suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
+    suspend fun processRequest(request: AiRequest, context: String): AgentResponse
     suspend fun analyzeSecurityThreat(threat: String): Map<String, Any>
     fun processRequestFlow(request: AiRequest): Flow<AgentResponse>
     suspend fun monitorSecurityStatus(): Map<String, Any>
@@ -73,7 +73,7 @@ class DefaultKaiAIService @Inject constructor(
      * @param context Optional caller context or correlation information used for logging/tracing.
      * @return An AgentResponse containing the analysis message, a confidence score, and the KAI agent; when an error occurs the response contains an explanatory error message and zero confidence.
      */
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         ensureInitialized()
 
         return try {
@@ -89,17 +89,17 @@ class DefaultKaiAIService @Inject constructor(
             AgentResponse(
                 content = response,
                 confidence = securityScore["confidence"] as? Float ?: 0.9f,
-                category = category
+                agentType = AgentType.KAI
             )
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error processing request", e)
-            errorHandler.handleError(e, category, "processRequest")
+            errorHandler.handleError(e, AgentType.KAI, "processRequest")
 
             AgentResponse(
                 content = "Security analysis temporarily unavailable",
                 confidence = 0.0F,
                 error = e.message,
-                category = category
+                agentType = AgentType.KAI
             )
         }
     }
@@ -149,7 +149,7 @@ class DefaultKaiAIService @Inject constructor(
             )
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error analyzing security threat", e)
-            errorHandler.handleError(e, AgentCapabilityCategory.SECURITY, "analyzeSecurityThreat")
+            errorHandler.handleError(e, AgentType.KAI, "analyzeSecurityThreat")
 
             mapOf(
                 "threat_level" to "unknown",
@@ -179,7 +179,7 @@ class DefaultKaiAIService @Inject constructor(
                 AgentResponse(
                     content = "Kai analyzing security posture...",
                     confidence = 0.5f,
-                    category = AgentCapabilityCategory.SECURITY
+                    agentType = AgentType.KAI
                 )
             )
 
@@ -198,21 +198,23 @@ class DefaultKaiAIService @Inject constructor(
                 AgentResponse(
                     content = detailedResponse,
                     confidence = analysisResult["confidence"] as? Float ?: 0.9f,
-                    category = AgentCapabilityCategory.SECURITY
+                    agentType = AgentType.KAI
                 )
-            )
+                )
+
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error in processRequestFlow", e)
-            errorHandler.handleError(e, AgentCapabilityCategory.SECURITY, "processRequestFlow")
+            errorHandler.handleError(e, AgentType.KAI, "processRequestFlow")
 
             emit(
                 AgentResponse(
                     content = "Security analysis error: ${e.message}",
                     confidence = 0.0f,
                     error = e.message,
-                    category = AgentCapabilityCategory.SECURITY
+                    agentType = AgentType.KAI
                 )
-            )
+                )
+
         }
     }
 

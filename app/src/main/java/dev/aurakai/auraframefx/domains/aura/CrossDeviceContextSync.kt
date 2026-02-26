@@ -32,8 +32,7 @@ class CrossDeviceContextSync @Inject constructor(
     }
 
     private val userId: String by lazy {
-        // Current v1 fallback: use device-bound ID. 
-        // In future iterations, this will be retrieved from the central Authentication Service.
+        // TODO: Get from authentication service
         "user_${deviceId}"
     }
 

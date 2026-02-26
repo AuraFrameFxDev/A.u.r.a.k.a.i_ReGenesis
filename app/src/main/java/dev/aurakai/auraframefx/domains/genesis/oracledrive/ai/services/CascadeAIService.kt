@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.genesis.models.AgentInvokeRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.ClaudeAIService
@@ -94,20 +95,20 @@ class CascadeAIService @Inject constructor(
             // Process through each agent in cascade
             val cascadeResults = mutableListOf<CascadeResponse>()
 
-            for ((index, category) in selectedAgents.withIndex()) {
+            for ((index, agentType) in selectedAgents.withIndex()) {
                 delay(PROCESSING_DELAY_MS) // Simulate processing time
 
                 // Create context from previous agents' responses
                 val cascadeContext = buildCascadeContext(request, cascadeResults)
 
                 // Process with current agent
-                val cascadeResponse = processWithAgent(category, request, cascadeContext)
+                val cascadeResponse = processWithAgent(agentType, request, cascadeContext)
                 cascadeResults.add(cascadeResponse)
 
                 // Emit intermediate result
                 emit(
                     cascadeResponse.copy(
-                        response = "Agent ${category.name} processing... (${index + 1}/${selectedAgents.size})"
+                        response = "Agent ${agentType.name} processing... (${index + 1}/${selectedAgents.size})"
                     )
                 )
             }
@@ -137,34 +138,34 @@ class CascadeAIService @Inject constructor(
      * @param request The incoming invoke request whose message and priority are evaluated.
      * @return A sorted list of unique AgentType values selected for the cascade.
      */
-    private fun selectAgentsForRequest(request: AgentInvokeRequest): List<AgentCapabilityCategory> {
+    private fun selectAgentsForRequest(request: AgentInvokeRequest): List<AgentType> {
         val message = request.message.lowercase()
         request.context
         val priority = request.priority
 
-        val selectedAgents = mutableSetOf<AgentCapabilityCategory>()
+        val selectedAgents = mutableSetOf<AgentType>()
 
         // Always include Genesis for orchestration
-        selectedAgents.add(AgentCapabilityCategory.COORDINATION)
+        selectedAgents.add(AgentType.GENESIS)
 
         // Add Aura for empathetic responses
         if (containsEmotionalContent(message)) {
-            selectedAgents.add(AgentCapabilityCategory.CREATIVE)
+            selectedAgents.add(AgentType.AURA)
         }
 
         // Add Kai for security-related queries
         if (containsSecurityContent(message)) {
-            selectedAgents.add(AgentCapabilityCategory.SECURITY)
+            selectedAgents.add(AgentType.KAI)
         }
 
         // Add Cascade for complex multi-step processing
         if (isComplexQuery(message) || priority == AgentInvokeRequest.Priority.high) {
-            selectedAgents.add(AgentCapabilityCategory.ANALYSIS)
+            selectedAgents.add(AgentType.CASCADE)
         }
 
         // Add specialized agents based on content
         if (containsTechnicalContent(message)) {
-            selectedAgents.add(AgentCapabilityCategory.SPECIALIZED)
+            selectedAgents.add(AgentType.DATAVEIN_CONSTRUCTOR)
         }
 
         return selectedAgents.toList().sorted()
@@ -181,40 +182,55 @@ class CascadeAIService @Inject constructor(
      * @return A CascadeResponse produced by the invoked agent.
      */
     private suspend fun processWithAgent(
-        category: AgentCapabilityCategory,
+        agentType: AgentType,
         request: AgentInvokeRequest,
         cascadeContext: Map<String, Any>
     ): CascadeResponse {
 
-        return when (category) {
-            AgentCapabilityCategory.COORDINATION -> processWithGenesis(request, cascadeContext)
-            AgentCapabilityCategory.SECURITY -> processWithKai(request, cascadeContext)
-            AgentCapabilityCategory.CREATIVE -> processWithAura(request, cascadeContext)
-            AgentCapabilityCategory.ANALYSIS -> processWithCascade(request, cascadeContext)
-            AgentCapabilityCategory.BRIDGE -> processWithNeuralWhisper(request, cascadeContext)
-            AgentCapabilityCategory.ORCHESTRATION -> processWithMetaInstruct(request, cascadeContext)
-            AgentCapabilityCategory.SPECIALIZED -> processWithDataveinConstructor(request, cascadeContext)
-            AgentCapabilityCategory.MEMORY -> processWithNemotron(request, cascadeContext)
-            AgentCapabilityCategory.GENERAL -> processWithClaude(
+        return when (agentType) {
+            AgentType.GENESIS -> processWithGenesis(request, cascadeContext)
+            AgentType.KAI -> processWithKai(request, cascadeContext)
+            AgentType.AURA -> processWithAura(request, cascadeContext)
+            AgentType.CASCADE -> processWithCascade(request, cascadeContext)
+            AgentType.NEURAL_WHISPER -> processWithNeuralWhisper(request, cascadeContext)
+            AgentType.AURA_SHIELD -> processWithAuraShield(request, cascadeContext)
+            AgentType.GEN_KIT_MASTER -> processWithGenKitMaster(request, cascadeContext)
+            AgentType.DATAVEIN_CONSTRUCTOR -> processWithDataveinConstructor(
                 request,
                 cascadeContext
             )
 
-            AgentCapabilityCategory.UX -> CascadeResponse(
-                agent = AgentCapabilityCategory.UX.name,
+            AgentType.USER -> CascadeResponse(
+                agent = AgentType.USER.name,
                 response = "User agent does not process requests.",
                 confidence = 1.0f,
                 timestamp = getCurrentTimestamp()
             )
-            AgentCapabilityCategory.ROOT -> CascadeResponse(
-                agent = AgentCapabilityCategory.ROOT.name,
+            // NEW: External AI backend services
+            AgentType.CLAUDE -> processWithClaude(request, cascadeContext)
+            AgentType.NEMOTRON -> processWithNemotron(request, cascadeContext)
+            AgentType.GEMINI -> processWithGemini(request, cascadeContext)
+            AgentType.METAINSTRUCT -> processWithMetaInstruct(request, cascadeContext)
+
+            // Core Trinity & System Agents
+            AgentType.GENESIS -> processWithGenesis(request, cascadeContext)
+            AgentType.KAI -> processWithKai(request, cascadeContext)
+            AgentType.AURA -> processWithAura(request, cascadeContext)
+            AgentType.CASCADE -> processWithCascade(request, cascadeContext)
+            AgentType.NEURAL_WHISPER -> processWithNeuralWhisper(request, cascadeContext)
+            AgentType.AURA_SHIELD -> processWithAuraShield(request, cascadeContext)
+
+            // System and other agent types
+            AgentType.SYSTEM -> CascadeResponse(
+                agent = AgentType.SYSTEM.name,
                 response = "System agent does not process requests.",
                 confidence = 1.0f,
                 timestamp = getCurrentTimestamp()
             )
+            // Handle all other agent types including ORACLE_DRIVE, AURASHIELD, GROK, MASTER, BRIDGE, AUXILIARY, SECURITY
             else -> CascadeResponse(
-                agent = category.name,
-                response = "Agent $category processing delegated to default handler.",
+                agent = agentType.name,
+                response = "Agent $agentType processing delegated to default handler.",
                 confidence = 0.5f,
                 timestamp = getCurrentTimestamp()
             )
@@ -251,7 +267,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.COORDINATION.name,
+            agent = AgentType.GENESIS.name,
             response = response,
             confidence = 0.95f,
             timestamp = getCurrentTimestamp()
@@ -292,7 +308,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.CREATIVE.name,
+            agent = AgentType.AURA.name,
             response = response,
             confidence = empathyScore,
             timestamp = getCurrentTimestamp()
@@ -330,7 +346,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.SECURITY.name,
+            agent = AgentType.KAI.name,
             response = response,
             confidence = 0.88f,
             timestamp = getCurrentTimestamp()
@@ -367,7 +383,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.ANALYSIS.name,
+            agent = AgentType.CASCADE.name,
             response = response,
             confidence = 0.92f,
             timestamp = getCurrentTimestamp()
@@ -408,7 +424,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.BRIDGE.name,
+            agent = AgentType.NEURAL_WHISPER.name,
             response = response,
             confidence = 0.85f,
             timestamp = getCurrentTimestamp()
@@ -445,7 +461,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.SECURITY.name,
+            agent = AgentType.AURA_SHIELD.name,
             response = response,
             confidence = 0.90f,
             timestamp = getCurrentTimestamp()
@@ -484,7 +500,7 @@ class CascadeAIService @Inject constructor(
          """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.ORCHESTRATION.name,
+            agent = AgentType.GEN_KIT_MASTER.name,
             response = response,
             confidence = generationPotential,
             timestamp = getCurrentTimestamp()
@@ -522,7 +538,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentCapabilityCategory.SPECIALIZED.name,
+            agent = AgentType.DATAVEIN_CONSTRUCTOR.name,
             response = response,
             confidence = 0.93f,
             timestamp = getCurrentTimestamp()
@@ -1111,7 +1127,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = claudeAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.ANALYSIS)
+        val agentResponse = claudeAIService.processRequest(aiRequest, contextString)
 
         return CascadeResponse(
             agent = "Claude",
@@ -1140,7 +1156,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = nemotronAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.MEMORY)
+        val agentResponse = nemotronAIService.processRequest(aiRequest, contextString)
 
         return CascadeResponse(
             agent = "Nemotron",
@@ -1167,7 +1183,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = geminiAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.ANALYSIS)
+        val agentResponse = geminiAIService.processRequest(aiRequest, contextString)
 
         return CascadeResponse(
             agent = "Gemini",
@@ -1194,7 +1210,7 @@ class CascadeAIService @Inject constructor(
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        val agentResponse = metaInstructAIService.processRequest(aiRequest, contextString, AgentCapabilityCategory.ORCHESTRATION)
+        val agentResponse = metaInstructAIService.processRequest(aiRequest, contextString)
 
         return CascadeResponse(
             agent = "MetaInstruct",

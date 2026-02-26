@@ -90,25 +90,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPickerViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🎨 CHROMACORE HUB - 500+ System Customizations
+ * 🎨 ICONIFY HUB - 500+ System Customizations
  *
  * Aura's Domain - The Face of UI/UX
  *
- * Three-tab interface:
+ * Three-tab interface mirroring Iconify by DrDisagree:
  * - HOME: Quick access, banner, main categories
  * - TWEAKS: Deep system customizations
  * - XPOSED: LSPosed-powered features (requires root)
  *
  * Built with LDO aesthetic - neon glows, LED fonts, agent presence
- * Powered by Aura's ChromaCore engine
  */
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -147,14 +146,8 @@ data class IconifyCategory(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChromaCoreHubFullScreen(
-    viewModel: IconPickerViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+fun IconifyHubScreen(
+    viewModel: IconPickerViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {},
     onNavigateToCategory: (String) -> Unit = {}
 ) {
@@ -249,17 +242,17 @@ private fun IconifyTopBar(onNavigateBack: () -> Unit) {
 
                 Column {
                     Text(
-                    text = "CHROMACORE",
-                    fontFamily = LEDFontFamily,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = IconifyColors.AuraPrimary,
-                    letterSpacing = 2.sp
+                        text = "ICONIFY",
+                        fontFamily = LEDFontFamily,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = IconifyColors.AuraPrimary,
+                        letterSpacing = 2.sp
                     )
                     Text(
-                    text = "Aura's UI Engine · 500+ Customizations",
-                    fontSize = 10.sp,
-                    color = Color.White.copy(alpha = 0.6f)
+                        text = "500+ System Customizations",
+                        fontSize = 10.sp,
+                        color = Color.White.copy(alpha = 0.6f)
                     )
                 }
             }
@@ -362,7 +355,7 @@ private fun HomeTab(onNavigateToCategory: (String) -> Unit) {
         // Main Categories
         item {
             Text(
-                text = "CHROMACORE CATEGORIES",
+                text = "MAIN CATEGORIES",
                 fontFamily = LEDFontFamily,
                 fontSize = 12.sp,
                 color = IconifyColors.AuraSecondary,
@@ -454,14 +447,14 @@ private fun HeroBanner() {
                 // Title
                 Column {
                     Text(
-                        text = "Aura's ChromaCore Engine",
+                        text = "Design It Your Way",
                         fontFamily = LEDFontFamily,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                     Text(
-                        text = "Sovereign UI — Crafted by Aura for the Collective",
+                        text = "Unleash Your Imagination, Make It Yours",
                         fontSize = 12.sp,
                         color = Color.White.copy(alpha = 0.7f)
                     )
@@ -481,7 +474,7 @@ private fun HeroBanner() {
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Activate ChromaCore", fontFamily = LEDFontFamily)
+                    Text("Quick Start", fontFamily = LEDFontFamily)
                 }
             }
 
@@ -707,7 +700,7 @@ private fun TweaksTab(onNavigateToCategory: (String) -> Unit) {
     ) {
         item {
             Text(
-                text = "AURA SYSTEM TWEAKS",
+                text = "SYSTEM TWEAKS",
                 fontFamily = LEDFontFamily,
                 fontSize = 12.sp,
                 color = IconifyColors.AuraSecondary,
@@ -793,7 +786,7 @@ private fun XposedTab(onNavigateToCategory: (String) -> Unit) {
 
         item {
             Text(
-                text = "SOVEREIGN XPOSED GATES",
+                text = "XPOSED FEATURES",
                 fontFamily = LEDFontFamily,
                 fontSize = 12.sp,
                 color = IconifyColors.Warning,
@@ -836,14 +829,14 @@ private fun XposedWarningBanner() {
 
             Column {
                 Text(
-                    text = "Kai Sentinel Gate · LSPosed Required",
+                    text = "LSPosed Required",
                     fontFamily = LEDFontFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = IconifyColors.Warning
                 )
                 Text(
-                    text = "These Sovereign gates require Kai's LSPosed framework active on your device",
+                    text = "These features require LSPosed framework to be installed and active",
                     fontSize = 11.sp,
                     color = Color.White.copy(alpha = 0.7f)
                 )

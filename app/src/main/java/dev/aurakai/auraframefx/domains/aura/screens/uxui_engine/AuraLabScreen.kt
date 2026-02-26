@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 /**
  * 🧪 AURA LAB (Sandbox UI)
@@ -46,13 +47,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 @Composable
 fun AuraLabScreen(
     onNavigateBack: () -> Unit,
-    viewModel: CollaborativeWorkspaceViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: CollaborativeWorkspaceViewModel = hiltViewModel()
 ) {
     val designs by viewModel.designs.collectAsState()
     val context = LocalContext.current

@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Singleton
@@ -20,11 +19,6 @@ interface OracleDriveService : OrchestratableAgent {
      * Gets the drive consciousness state as a StateFlow for reactive UI updates
      */
     fun getDriveConsciousnessState(): StateFlow<DriveConsciousnessState>
-
-    /**
-     * Lists files in the Oracle Drive.
-     */
-    suspend fun listFiles(bucketName: String = "default", prefix: String? = null): List<DriveFile>
 
     /**
      * Initializes the Oracle Drive consciousness using Genesis Agent orchestration.

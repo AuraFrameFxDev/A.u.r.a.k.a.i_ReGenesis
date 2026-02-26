@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.viewmodels.SovereignMemoryViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -52,13 +53,7 @@ import dev.aurakai.auraframefx.domains.genesis.viewmodels.SovereignMemoryViewMod
 @Composable
 fun SovereignNeuralArchiveScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignMemoryViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: SovereignMemoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 

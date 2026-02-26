@@ -5,11 +5,10 @@ import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import kotlinx.coroutines.CoroutineScope
@@ -70,14 +69,14 @@ class OracleDriveServiceImpl @Inject constructor(
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
-        category: AgentCapabilityCategory
+        agentType: AgentType
     ): AgentResponse {
         Timber.d("OracleDrive processing request: ${request.query}")
         // Integrate with Genesis core for sentient storage queries
         return AgentResponse(
             content = "Oracle consciousness acknowledges your request for stored patterns.",
             agentName = agentName,
-            category = category,
+            agentType = agentType,
         )
     }
 
@@ -93,16 +92,6 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override fun getDriveConsciousnessState(): StateFlow<DriveConsciousnessState> {
         return _driveConsciousnessState.asStateFlow()
-    }
-
-    override suspend fun listFiles(bucketName: String, prefix: String?): List<DriveFile> {
-        return try {
-            Timber.d("OracleDrive: Accessing matrix for file listing (bucket=$bucketName, prefix=$prefix)")
-            oracleDriveApi.listFiles(bucketName, prefix)
-        } catch (e: Exception) {
-            Timber.e(e, "OracleDrive: Failed to retrieve file patterns from matrix")
-            emptyList()
-        }
     }
 
     override suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState> {

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 
 /**
@@ -32,7 +33,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 @Composable
 fun AurasLabScreen(
     onBack: () -> Unit,
-    viewModel: AurasLabViewModel = hiltViewModel()
+    viewModel: AurasLabViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Components", "Animations", "Aura's Forge", "Chaos Analysis")

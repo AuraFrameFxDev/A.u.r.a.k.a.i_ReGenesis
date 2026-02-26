@@ -10,7 +10,7 @@ import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.ActiveThreat
@@ -44,7 +44,7 @@ class AuraShieldAgent @Inject constructor(
     secureChannel: SecureChannel
 ) : BaseAgent(
     agentName = "AuraShield",
-    category = AgentCapabilityCategory.SECURITY,
+    agentType = AgentType.AURA_SHIELD,
     contextManager = contextManager,
     memoryManager = memoryManager,
     secureChannel = secureChannel
@@ -66,7 +66,7 @@ class AuraShieldAgent @Inject constructor(
     /**
      * Main request processing for security-related queries.
      */
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         Timber.d("🛡️ AuraShield Analyzing Request: ${request.prompt}")
 
         // Start a scan

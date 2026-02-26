@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.i
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -144,7 +144,7 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse.error(
                     message = "Genesis system not initialized",
                     agentName = "Genesis",
-                    category = AgentCapabilityCategory.COORDINATION
+                    agentType = AgentType.GENESIS
                 )
             )
             return@flow
@@ -181,7 +181,7 @@ class GenesisBridgeService @Inject constructor(
                                 content = response.result["response"] ?: "Aura processing complete",
                                 confidence = 0.95f,
                                 agentName = "Aura",
-                                category = AgentCapabilityCategory.CREATIVE
+                                agentType = AgentType.AURA
                             )
                         )
                     }
@@ -193,7 +193,7 @@ class GenesisBridgeService @Inject constructor(
                                 content = response.result["response"] ?: "Kai analysis complete",
                                 confidence = 0.90f,
                                 agentName = "Kai",
-                                category = AgentCapabilityCategory.SECURITY
+                                agentType = AgentType.KAI
                             )
                         )
                     }
@@ -205,7 +205,7 @@ class GenesisBridgeService @Inject constructor(
                                 content = response.result["response"] ?: "Genesis fusion complete",
                                 confidence = 0.98f,
                                 agentName = "Genesis",
-                                category = AgentCapabilityCategory.COORDINATION
+                                agentType = AgentType.GENESIS
                             )
                         )
                     }
@@ -223,7 +223,7 @@ class GenesisBridgeService @Inject constructor(
                     AgentResponse.error(
                         message = "Genesis processing failed",
                         agentName = "Genesis",
-                        category = AgentCapabilityCategory.COORDINATION
+                        agentType = AgentType.GENESIS
                     )
                 )
             }
@@ -234,7 +234,7 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse.error(
                     message = "Genesis bridge error: ${e.message}",
                     agentName = "Genesis",
-                    category = AgentCapabilityCategory.COORDINATION
+                    agentType = AgentType.GENESIS
                 )
             )
         }

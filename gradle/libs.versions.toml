@@ -17,7 +17,7 @@ firebaseCrashlyticsPlugin = "3.0.6"
 hilt = "2.59.1"
 hilt-android = "2.57.2"
 hiltAndroidTestingVersion = "2.59.1"
-hiltWork = "1.2.0"
+hiltWork = "1.3.0"
 junitJupiterApi = "6.0.2"
 junitJupiterApiVersion = "6.0.2"
 junitVintageEngine = "6.0.2"
@@ -50,10 +50,10 @@ work = "2.11.1"
 compose-bom = "2026.01.01"
 compose-material-icons = "1.7.4"
 firebaseBom = "34.9.0"
-retrofit = "2.11.0"
+retrofit = "3.0.0"
 okhttp = "5.3.2"
 moshi = "1.15.2"
-ktor = "2.3.12"
+ktor = "3.1.3"
 coroutines = "1.10.2"
 kotlinxDatetime = "0.7.1-0.6.x-compat"
 kotlinxSerialization = "1.10.0"
@@ -68,7 +68,7 @@ leakcanary = "2.14"
 lottie = "6.7.1"
 material = "1.13.0"
 timber = "5.0.1"
-libsu = "5.2.2"
+libsu = "6.0.0"
 xposed = "82"
 xposed-bridge = "1.3.1"
 ndk = "29.0.14206865"
@@ -82,8 +82,7 @@ androidxTestRunner = "1.5.2"
 androidxTestRules = "1.5.0"
 androidxTestExtJunit = "1.1.5"
 androidxTestExtTruth = "1.5.0"
-espressoCore = "3.6.1"
-recyclerview = "1.4.0"
+espressoCore = "3.5.1"
 kotlinxCoroutinesTest = "1.10.2"
 turbine = "1.1.0"
 kotlin-compose = "1.82"
@@ -93,7 +92,7 @@ robolectric = "4.12.1"
 hiltAndroidTesting = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
 hiltAndroidCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 androidxJunit = "1.3.0"
-espresso = "3.6.1"
+espresso = "3.7.0"
 benchmark = "1.4.1"
 material3 = "1.4.0"
 foundationLayout = "1.10.2"
@@ -122,7 +121,7 @@ androidx-compose-material-icons-extended = { module = "androidx.compose.material
 androidx-compose-material3-window-size-class1 = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "runtimeLivedata" }
 androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
-androidx-test-core = { module = "androidx.test:core", version.ref = "core" }
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 # androidx-multidex removed - redundant for minSdk 34
 androidx-rules = { module = "androidx.test:rules", version.ref = "core" }
@@ -190,7 +189,6 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 # ============================================================================
 # YukiHook API & KavaRef
@@ -222,14 +220,14 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 # Firebase (via BOM - KTX merged into main modules)
 # ============================================================================
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-auth = { module = "com.google.firebase:firebase-auth" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
-firebase-database = { module = "com.google.firebase:firebase-database" }
-firebase-storage = { module = "com.google.firebase:firebase-storage" }
-firebase-config = { module = "com.google.firebase:firebase-config" }
-firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "23.0.0" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.4" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version = "24.0.1" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "26.1.0" }
+firebase-database = { module = "com.google.firebase:firebase-database", version = "22.0.1" }
+firebase-storage = { module = "com.google.firebase:firebase-storage", version = "22.0.1" }
+firebase-config = { module = "com.google.firebase:firebase-config", version = "23.0.1" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version = "25.0.1" }
 
 # ============================================================================
 # Google AI & ML
@@ -242,14 +240,14 @@ generativeai-ktx = { group = "com.google.ai.client.generativeai", name = "genera
 # ============================================================================
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltWork" }
+hilt-work-compiler = { group = "androidx.hilt", name = "hilt-work-compiler", version.ref = "hiltWork" }
 
 # ============================================================================
 # Networking
 # ============================================================================
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+retrofit-converter-kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
 retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
 
 # ============================================================================
@@ -259,7 +257,7 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
-# ktor-serialization-moshi does not exist — removed
+ktor-serialization-moshi = { group = "io.ktor", name = "ktor-serialization-moshi", version.ref = "ktor" }
 
 # ============================================================================
 # Kotlinx Libraries
@@ -363,7 +361,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
- kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 # NOTE: Firebase Analytics is NOT a plugin - just use implementation(libs.firebase.analytics)
@@ -487,12 +485,13 @@ testing = [
     "junit-jupiter-api",
     "mockk",
     "androidx-junit",
-    "androidx-test-core",
+    "androidx-core",
     "androidx-runner",
     "androidx-rules",
     "truth",
     "robolectric",
-    ]
+]
+
 system-root = [
     "libsu-core",
     "libsu-nio",

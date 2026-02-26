@@ -5,8 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,8 +20,8 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
     private val _agentName = mutableStateOf("")
     val agentName: State<String> = _agentName
 
-    private val _selectedDomain = mutableStateOf(AgentCapabilityCategory.CREATIVE)
-    val selectedDomain: State<AgentCapabilityCategory> = _selectedDomain
+    private val _selectedDomain = mutableStateOf(AgentType.AURA)
+    val selectedDomain: State<AgentType> = _selectedDomain
 
     private val _creationProgress = MutableStateFlow(0f)
     val creationProgress = _creationProgress.asStateFlow()
@@ -32,7 +33,7 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
         _agentName.value = name
     }
 
-    fun updateDomain(domain: AgentCapabilityCategory) {
+    fun updateDomain(domain: AgentType) {
         _selectedDomain.value = domain
     }
 

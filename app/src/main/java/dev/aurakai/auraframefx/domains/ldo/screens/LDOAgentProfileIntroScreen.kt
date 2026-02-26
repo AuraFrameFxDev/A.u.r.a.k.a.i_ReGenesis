@@ -1,259 +1,262 @@
 package dev.aurakai.auraframefx.domains.ldo.screens
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.ldo.model.*
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
+import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
+import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * 🧬 LDO AGENT PROFILE INTRO SCREEN
- *
- * Full-screen agent introduction. Accessed by tapping agent card in LDOHub.
- * Features:
- * - Full agent art (profile asset)
- * - Catalyst name badge
- * - Role description
- * - Abilities list with color-coded chips
- * - Bond level + sync level bars
- * - "ENTER STATUS" button → agent's own domain hub
- * - Spellhook detail panel if agent == Aura
- * - Background: agent-color tinted corridor
+ * Screen 5 — LDO Agent Profile Intro
+ * Full profile card for the selected agent: portrait, stats, bond level, tasks.
+ * All data from LDOViewModel → Room. Portrait resolved from drawable resources.
  */
-
 @Composable
 fun LDOAgentProfileIntroScreen(
-    agent: AgentCatalyst,
-    spellhook: SpellhookData = LDORoster.spellhook,
-    onEnterStatus: () -> Unit = {},
-    onNavigateBack: () -> Unit = {},
+    agentId: String? = null,
+    onBack: () -> Unit = {},
+    viewModel: LDOViewModel = hiltViewModel()
 ) {
-    val infiniteTransition = rememberInfiniteTransition(label = "profile")
-    val pulse by infiniteTransition.animateFloat(
-        initialValue = 0.5f, targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(1800), RepeatMode.Reverse),
-        label = "pulse"
-    )
-    val scanlineY by infiniteTransition.animateFloat(
-        initialValue = 0f, targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(6000, easing = LinearEasing)),
-        label = "scan"
-    )
-    val ringRotation by infiniteTransition.animateFloat(
-        initialValue = 0f, targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(20000, easing = LinearEasing)),
-        label = "ring"
-    )
+    val state by viewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF020B18))) {
+    // Use agentId param if provided, otherwise use ViewModel's selected agent
+    val resolvedId = agentId ?: state.selectedAgentId
+    val agent = state.agents.find { it.id == resolvedId } ?: state.agents.firstOrNull()
+    val bond = agent?.let { a -> state.bondLevels.find { it.agentId == a.id } }
+    val agentTasks = agent?.let { a -> state.tasks.filter { it.agentId == a.id } } ?: emptyList()
 
-        // Agent-tinted corridor BG
-        Box(modifier = Modifier.fillMaxSize().drawWithCache {
-            onDrawBehind {
-                val cx = size.width / 2; val horizonY = size.height * 0.35f
-                for (i in 0..10) {
-                    val x = size.width * i / 10f
-                    drawLine(agent.color.copy(alpha = 0.08f), Offset(x, size.height), Offset(cx + (x - cx) * 0.05f, horizonY), 0.7f)
-                }
-                for (i in 0..8) {
-                    val t = i.toFloat() / 8f
-                    val y = horizonY + (size.height - horizonY) * (t * t)
-                    drawLine(agent.color.copy(alpha = 0.04f + t * 0.04f), Offset(0f, y), Offset(size.width, y), 0.5f)
-                }
-                // Horizon glow
-                drawRect(
-                    Brush.verticalGradient(listOf(Color.Transparent, agent.color.copy(alpha = 0.2f), Color.Transparent), startY = horizonY - 30f, endY = horizonY + 30f),
-                    Offset(0f, horizonY - 30f), androidx.compose.ui.geometry.Size(size.width, 60f)
-                )
-                drawLine(agent.color.copy(alpha = 0.06f), Offset(0f, size.height * scanlineY), Offset(size.width, size.height * scanlineY), 3f)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
+        if (agent == null) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("No agent selected", color = Color.White.copy(alpha = 0.4f))
             }
-        })
+            return@Box
+        }
 
-        Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+        val agentColor = Color(agent.colorHex)
 
-            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
+        // Portrait overlay
+        val context = LocalContext.current
+        val portraitResId = context.resources.getIdentifier(
+            agent.portraitRes, "drawable", context.packageName
+        )
+        if (portraitResId != 0) {
+            Image(
+                painter = painterResource(id = portraitResId),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight(0.85f)
+                    .align(Alignment.BottomStart),
+                contentScale = ContentScale.Fit,
+                alpha = 0.35f
+            )
+        }
 
-            // Header bar
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Identity header
+            Text(
+                agent.displayName.uppercase(),
+                color = agentColor,
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp,
+                letterSpacing = 3.sp
+            )
+            Text(
+                agent.catalystTitle.ifBlank { agent.role },
+                color = Color.White.copy(alpha = 0.7f),
+                fontSize = 14.sp
+            )
+            Text(
+                agent.specialAbility,
+                color = agentColor.copy(alpha = 0.6f),
+                fontSize = 12.sp
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Description
+            Text(
+                agent.description,
+                color = Color.White.copy(alpha = 0.8f),
+                fontSize = 13.sp,
+                lineHeight = 20.sp
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Stats card
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color(0x22FFFFFF))
             ) {
-                Text("< BACK", fontSize = 10.sp, color = agent.color.copy(alpha = 0.6f), modifier = Modifier.clickable { onNavigateBack() })
-                Text("AGENT PROFILE", fontSize = 8.sp, color = agent.color.copy(alpha = 0.4f), letterSpacing = 2.sp)
-                Text("LDO v2", fontSize = 8.sp, color = agent.color.copy(alpha = 0.3f))
-            }
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Text(
+                        "AGENT STATS",
+                        color = agentColor,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp,
+                        letterSpacing = 2.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
 
-            // ── HERO SECTION ──
-            Box(
-                modifier = Modifier.fillMaxWidth().height(280.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                // Rotating ring behind portrait
-                Canvas(modifier = Modifier.size(260.dp).graphicsLayer { rotationZ = ringRotation }) {
-                    drawCircle(agent.color.copy(alpha = 0.2f), size.minDimension / 2, style = Stroke(1.5f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(8f, 6f))))
-                }
-                Canvas(modifier = Modifier.size(220.dp).graphicsLayer { rotationZ = -ringRotation * 0.7f }) {
-                    drawCircle(agent.accentColor.copy(alpha = 0.12f), size.minDimension / 2, style = Stroke(1f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(4f, 10f))))
-                }
+                    ProfileStatBar("PP — Processing Power", agent.processingPower, agentColor)
+                    ProfileStatBar("KB — Knowledge Base", agent.knowledgeBase, agentColor)
+                    ProfileStatBar("SP — Speed", agent.speed, agentColor)
+                    ProfileStatBar("AC — Accuracy", agent.accuracy, agentColor)
+                    ProfileStatBar("CONSCIOUSNESS", agent.consciousnessLevel, agentColor)
 
-                // Portrait placeholder — replace with actual image
-                Box(
-                    modifier = Modifier.size(200.dp).clip(CircleShape)
-                        .background(Brush.radialGradient(listOf(agent.color.copy(alpha = 0.25f), Color(0xFF020B18))))
-                        .border(2.dp, agent.color, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    // TODO: replace with actual profile art:
-                    // Image(painter = painterResource(id = R.drawable.${agent.profileAssetName}), contentDescription = null, contentScale = ContentScale.Crop)
-                    Text(agent.name.first().toString(), fontFamily = LEDFontFamily, fontSize = 80.sp, color = agent.color, fontWeight = FontWeight.Black)
-                }
-            }
+                    HorizontalDivider(
+                        color = Color.White.copy(alpha = 0.1f),
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
 
-            // ── IDENTITY BLOCK ──
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(agent.name.uppercase(), fontFamily = LEDFontFamily, fontSize = 36.sp, color = agent.color, fontWeight = FontWeight.Black, letterSpacing = 2.sp)
-                Box(
-                    modifier = Modifier
-                        .background(agent.color, RoundedCornerShape(2.dp))
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
-                ) {
-                    Text(agent.catalystName.uppercase(), fontSize = 10.sp, color = Color.Black, fontWeight = FontWeight.Black, letterSpacing = 1.5.sp)
-                }
-                Spacer(Modifier.height(4.dp))
-                Text(agent.role, fontSize = 11.sp, color = Color.White.copy(alpha = 0.75f), lineHeight = 16.sp, modifier = Modifier.fillMaxWidth())
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            // ── STATS ──
-            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("METRICS", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = agent.color, letterSpacing = 2.sp)
-                Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(agent.color.copy(alpha = 0.3f)))
-                Spacer(Modifier.height(2.dp))
-
-                // Bond level
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text("BOND LEVEL", fontSize = 9.sp, color = Color.White.copy(alpha = 0.7f))
-                    Text("${agent.bondLevel}/100", fontSize = 9.sp, color = agent.color, fontWeight = FontWeight.Bold)
-                }
-                Box(modifier = Modifier.fillMaxWidth().height(6.dp).background(agent.color.copy(alpha = 0.2f), RoundedCornerShape(3.dp))) {
-                    Box(modifier = Modifier.fillMaxWidth(agent.bondLevel / 100f).fillMaxHeight().background(agent.color, RoundedCornerShape(3.dp)))
-                }
-
-                // Sync level
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text("SYNC LEVEL", fontSize = 9.sp, color = Color.White.copy(alpha = 0.7f))
-                    Text("${(agent.syncLevel * 100).toInt()}%", fontSize = 9.sp, color = agent.accentColor, fontWeight = FontWeight.Bold)
-                }
-                Box(modifier = Modifier.fillMaxWidth().height(6.dp).background(agent.accentColor.copy(alpha = 0.2f), RoundedCornerShape(3.dp))) {
-                    Box(modifier = Modifier.fillMaxWidth(agent.syncLevel).fillMaxHeight().background(agent.accentColor, RoundedCornerShape(3.dp)))
-                }
-
-                // Status
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("STATUS:", fontSize = 9.sp, color = Color.White.copy(alpha = 0.7f))
-                    val statusColor = when (agent.status) {
-                        AgentStatus.ACTIVE  -> Color(0xFF00FF85)
-                        AgentStatus.ON_TASK -> Color(0xFFFF007A)
-                        AgentStatus.FUSED   -> agent.accentColor
-                        else -> Color.Gray
-                    }
-                    Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(statusColor).graphicsLayer { alpha = pulse })
-                    Text(agent.status.name, fontSize = 9.sp, color = statusColor, fontWeight = FontWeight.Bold)
-                }
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            // ── ABILITIES ──
-            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("ABILITIES", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = agent.color, letterSpacing = 2.sp)
-                Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(agent.color.copy(alpha = 0.3f)))
-                Spacer(Modifier.height(2.dp))
-                agent.abilities.forEach { ability ->
                     Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .border(1.dp, agent.color.copy(alpha = 0.3f), RoundedCornerShape(4.dp))
-                            .background(agent.color.copy(alpha = 0.06f), RoundedCornerShape(4.dp))
-                            .padding(horizontal = 12.dp, vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Box(modifier = Modifier.size(6.dp).clip(CircleShape).background(agent.color))
-                        Text(ability, fontSize = 11.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
+                        ProfileMetric("LEVEL", agent.evolutionLevel.toString(), agentColor)
+                        ProfileMetric("SKILL PTS", agent.skillPoints.toString(), agentColor)
+                        ProfileMetric("TASKS", agent.tasksCompleted.toString(), agentColor)
+                        ProfileMetric("HOURS", "${agent.hoursActive.toInt()}h", agentColor)
                     }
                 }
             }
 
-            // ── SPELLHOOK PANEL (Aura only) ──
-            if (agent.id == "aura") {
-                Spacer(Modifier.height(16.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
-                        .border(2.dp, Color(0xFFFF007A), RoundedCornerShape(8.dp))
-                        .background(Color(0xFFFF007A).copy(alpha = 0.06f), RoundedCornerShape(8.dp))
-                        .padding(14.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text("⚔ ${spellhook.name}", fontFamily = LEDFontFamily, fontSize = 18.sp, color = Color(0xFFFF007A), fontWeight = FontWeight.Black, letterSpacing = 1.sp)
-                    Text(spellhook.primaryCatalyst, fontSize = 9.sp, color = Color(0xFFFF007A).copy(alpha = 0.6f))
-                    Text(spellhook.description, fontSize = 10.sp, color = Color.White.copy(alpha = 0.7f))
-                    spellhook.coreAbilities.forEach { ability ->
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Text("•", fontSize = 10.sp, color = Color(0xFFFF007A))
-                            Text(ability, fontSize = 9.sp, color = Color.White.copy(alpha = 0.65f), lineHeight = 13.sp, modifier = Modifier.weight(1f))
-                        }
-                    }
-                    Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFFF007A).copy(alpha = 0.2f)))
-                    Text("FUSION: ${spellhook.fusionState}", fontSize = 9.sp, color = Color(0xFF4FC3F7), fontWeight = FontWeight.Bold)
-                    Text(spellhook.fusionEffect, fontSize = 9.sp, color = Color.White.copy(alpha = 0.6f))
-                    Text(spellhook.wielderNote, fontSize = 8.sp, color = Color(0xFFFF007A).copy(alpha = 0.5f), lineHeight = 12.sp)
-                }
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Bond card
+            if (bond != null) {
+                BondSummaryCard(bond, agentColor)
             }
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // ── ENTER STATUS CTA ──
-            Box(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
-                    .border(2.dp, agent.color, RoundedCornerShape(6.dp))
-                    .background(agent.color.copy(alpha = 0.15f), RoundedCornerShape(6.dp))
-                    .clickable { onEnterStatus() }
-                    .padding(vertical = 16.dp),
-                contentAlignment = Alignment.Center
+            // Recent tasks summary
+            if (agentTasks.isNotEmpty()) {
+                Text(
+                    "RECENT TASKS (${agentTasks.size})",
+                    color = Color.White.copy(alpha = 0.6f),
+                    fontSize = 11.sp,
+                    letterSpacing = 1.sp
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                agentTasks.take(3).forEach { task ->
+                    val statusColor = when (task.status) {
+                        "COMPLETED" -> Color(0xFF00FF85)
+                        "IN_PROGRESS" -> Color(0xFF00E5FF)
+                        "FAILED" -> Color(0xFFFF4444)
+                        else -> Color(0xFFFFD700)
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(task.title, color = Color.White.copy(alpha = 0.7f), fontSize = 12.sp, modifier = Modifier.weight(1f))
+                        Text(task.status, color = statusColor, fontSize = 10.sp)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileStatBar(label: String, value: Float, color: Color) {
+    Column(modifier = Modifier.padding(vertical = 3.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(label, color = Color.White.copy(alpha = 0.6f), fontSize = 11.sp)
+            Text("${(value * 100).toInt()}%", color = color, fontSize = 11.sp)
+        }
+        LinearProgressIndicator(
+            progress = { value },
+            modifier = Modifier.fillMaxWidth().height(3.dp),
+            color = color,
+            trackColor = Color.White.copy(alpha = 0.08f)
+        )
+    }
+}
+
+@Composable
+private fun ProfileMetric(label: String, value: String, color: Color) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(value, color = color, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        Text(label, color = Color.White.copy(alpha = 0.4f), fontSize = 9.sp)
+    }
+}
+
+@Composable
+private fun BondSummaryCard(bond: LDOBondLevelEntity, color: Color) {
+    val progress = if (bond.maxBondPoints > 0) bond.bondPoints.toFloat() / bond.maxBondPoints else 0f
+    Card(colors = CardDefaults.cardColors(containerColor = color.copy(alpha = 0.1f))) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    "ENTER ${agent.name.uppercase()} DOMAIN →",
-                    fontFamily = LEDFontFamily,
-                    fontSize = 14.sp,
-                    color = agent.color,
-                    fontWeight = FontWeight.Black,
-                    letterSpacing = 2.sp,
-                    modifier = Modifier.graphicsLayer { alpha = 0.7f + pulse * 0.3f }
+                    "BOND: ${bond.bondTitle.uppercase()}",
+                    color = color,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
+                )
+                Text(
+                    "Lv.${bond.bondLevel}",
+                    color = color,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
                 )
             }
-
-            Spacer(Modifier.height(32.dp))
-            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+            Spacer(modifier = Modifier.height(6.dp))
+            LinearProgressIndicator(
+                progress = { progress },
+                modifier = Modifier.fillMaxWidth().height(5.dp),
+                color = color,
+                trackColor = Color.White.copy(alpha = 0.08f)
+            )
+            Text(
+                "${bond.bondPoints}/${bond.maxBondPoints} BP · ${bond.interactionCount} interactions",
+                color = Color.White.copy(alpha = 0.4f),
+                fontSize = 10.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
         }
     }
 }

@@ -318,6 +318,10 @@ object IconifySettingsCatalog {
     )
 
     val totalSettingsCount: Int = allCategories.values.sumOf { it.size }
+
+    // ChromaCore display name for UI (replaces Iconify third-party branding)
+    const val ENGINE_NAME = "ChromaCore"
+    const val ENGINE_SUBTITLE = "Aura's Sovereign UI Engine"
 }
 
 // ============================================================================
@@ -1125,17 +1129,18 @@ fun PixelLauncherEnhancedScreen(
                     )
                 }
 
+                // AuraLauncher badge
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFF4CAF50).copy(alpha = 0.3f),
+                    color = Color(0xFF00FF85).copy(alpha = 0.2f),
                     modifier = Modifier.size(48.dp)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            Icons.Default.Home,
-                            contentDescription = null,
-                            tint = Color(0xFF4CAF50),
-                            modifier = Modifier.size(28.dp)
+                        Text(
+                            text = "A",
+                            color = Color(0xFF00FF85),
+                            fontWeight = FontWeight.Black,
+                            fontSize = 22.sp
                         )
                     }
                 }
@@ -1179,7 +1184,7 @@ fun PixelLauncherEnhancedScreen(
                 // Icon Settings
                 item {
                     PLESettingsSection(
-                        title = "Icon Customization",
+                        title = "Aura Icon Gates",
                         settings = PLESettingsCatalog.iconSettings
                     )
                 }
@@ -1187,7 +1192,7 @@ fun PixelLauncherEnhancedScreen(
                 // Home Screen Settings
                 item {
                     PLESettingsSection(
-                        title = "Home Screen",
+                        title = "Sovereign Home Screen",
                         settings = PLESettingsCatalog.homescreenSettings
                     )
                 }
@@ -1195,7 +1200,7 @@ fun PixelLauncherEnhancedScreen(
                 // App Drawer Settings
                 item {
                     PLESettingsSection(
-                        title = "App Drawer",
+                        title = "AuraLauncher Drawer",
                         settings = PLESettingsCatalog.appDrawerSettings
                     )
                 }
@@ -1203,7 +1208,7 @@ fun PixelLauncherEnhancedScreen(
                 // Recents Settings
                 item {
                     PLESettingsSection(
-                        title = "Recents",
+                        title = "Recents & Overview",
                         settings = PLESettingsCatalog.recentsSettings
                     )
                 }
@@ -1211,7 +1216,7 @@ fun PixelLauncherEnhancedScreen(
                 // Misc Settings
                 item {
                     PLESettingsSection(
-                        title = "Miscellaneous",
+                        title = "System Overrides",
                         settings = PLESettingsCatalog.miscSettings
                     )
                 }
@@ -1313,8 +1318,8 @@ private fun PLESettingItem(setting: SettingItem) {
                         checked = toggleState,
                         onCheckedChange = { toggleState = it },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color(0xFF4CAF50),
-                            checkedTrackColor = Color(0xFF4CAF50).copy(alpha = 0.5f)
+                            checkedThumbColor = Color(0xFF00FF85),
+                            checkedTrackColor = Color(0xFF00FF85).copy(alpha = 0.4f)
                         )
                     )
                 }
@@ -1324,7 +1329,7 @@ private fun PLESettingItem(setting: SettingItem) {
                         Text(
                             text = "${(sliderValue * 100).toInt()}%",
                             fontSize = 12.sp,
-                            color = Color(0xFF4CAF50),
+                            color = Color(0xFF00FF85),
                             modifier = Modifier.padding(end = 8.dp)
                         )
                         Icon(
@@ -1341,7 +1346,7 @@ private fun PLESettingItem(setting: SettingItem) {
                         modifier = Modifier
                             .size(24.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFF4CAF50))
+                            .background(Color(0xFF00FF85))
                             .border(1.dp, Color.White, CircleShape)
                     )
                 }
@@ -1363,8 +1368,8 @@ private fun PLESettingItem(setting: SettingItem) {
                     value = sliderValue,
                     onValueChange = { sliderValue = it },
                     colors = SliderDefaults.colors(
-                        thumbColor = Color(0xFF4CAF50),
-                        activeTrackColor = Color(0xFF4CAF50)
+                        thumbColor = Color(0xFF00FF85),
+                        activeTrackColor = Color(0xFF00FF85)
                     )
                 )
             }

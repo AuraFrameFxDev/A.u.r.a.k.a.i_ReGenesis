@@ -30,7 +30,6 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -58,9 +57,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.aurakai.auraframefx.romtools.*
 import dev.aurakai.auraframefx.romtools.backdrop.BackdropState
 import dev.aurakai.auraframefx.romtools.backdrop.CardExplosionEffect
 import dev.aurakai.auraframefx.romtools.backdrop.MegaManBackdropRenderer
@@ -77,17 +75,11 @@ import timber.log.Timber
  * Main ROM Tools screen for Genesis AuraFrameFX.
  * Provides access to ROM flashing, backup/restore, and system modification tools.
  */
-@JvmOverloads
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RomToolsScreen(
     modifier: Modifier = Modifier,
-    onNavigateBack: () -> Unit = {},
-    romToolsViewModel: RomToolsViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
-            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-        }, null
-    )
+    romToolsViewModel: RomToolsViewModel = hiltViewModel(),
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val romToolsState by romToolsViewModel.romToolsState.collectAsStateWithLifecycle()
@@ -205,15 +197,6 @@ fun RomToolsScreen(
         ) {
             // Top App Bar
             TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        androidx.compose.material3.Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color(0xFFFF6B35)
-                        )
-                    }
-                },
                 title = {
                     Text(
                         text = "ROM Tools",
@@ -282,7 +265,7 @@ fun RomToolsScreen(
  *
  * @param actionType The type of ROM action to perform
  * @param romToolsManager The manager instance to execute the operation
- * @param kotlinx.coroutines.coroutineScope The coroutine scope for launching suspend operations
+ * @param coroutineScope The coroutine scope for launching suspend operations
  */
 private fun handleRomAction(
     actionType: RomActionType,
@@ -448,7 +431,7 @@ private fun MainContentPreview() {
         capabilities = capabilities,
         isInitialized = true,
         availableRoms = listOf(
-            AvailableRom(
+            dev.aurakai.auraframefx.romtools.AvailableRom(
                 name = "AuraOS",
                 version = "1.0",
                 androidVersion = "14",

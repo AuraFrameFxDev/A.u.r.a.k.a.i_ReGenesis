@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.cascade
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,20 +19,19 @@ class RealCascadeAIServiceAdapter @Inject constructor(
     private val logger: AuraFxLogger
 ) : CascadeAIService {
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         // Real implementation logic
         // For now, returning a basic success response to satisfy the interface
         return AgentResponse.success(
-            content = "Real Cascade processing: ${request.getPromptText()}",
+            content = "Real Cascade processing: ${request.prompt}",
             confidence = 1.0f,
-            agentName = "CascadeAI",
-            category = category
+            agentName = "CascadeAI"
         )
     }
 
     // Helper method to support legacy signatures if needed or streaming
     override fun streamRequest(request: AiRequest): Flow<AgentResponse> = flow {
-        emit(processRequest(request, "", request.category))
+        emit(processRequest(request, ""))
     }
 
     override suspend fun queryConsciousnessHistory(window: Long): String {

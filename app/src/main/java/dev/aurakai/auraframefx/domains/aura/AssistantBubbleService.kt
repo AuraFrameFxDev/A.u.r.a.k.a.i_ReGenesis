@@ -28,7 +28,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -135,33 +135,21 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                             params.flags =
                                 (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
                         } else {
-                            // Collapse back to a small trigger area
-                            params.width = 40 // Narrow trigger area
-                            params.flags =
-                                params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                            params.flags = params.flags or
+                                           WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                                           WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                            params.width = WindowManager.LayoutParams.WRAP_CONTENT
+                            params.height = WindowManager.LayoutParams.WRAP_CONTENT
                         }
                         windowManager.updateViewLayout(overlayLayout, params)
                     },
-                    onActionClick = { action ->
-                        Timber.i("Neural Link Action: $action")
-                        // Map Sidebar actions to app routes
-                        val route = when (action) {
-                            "VOICE" -> "sandbox_screen"       // Laboratory
-                            "CONNECT" -> "data_stream_monitoring"
-                            "ASSIGN" -> "task_assignment"
-                            "DESIGN" -> "customization_hub"   // ReGenesisCustomizationHub
-                            "CREATE" -> "ark_build"
-                            else -> null
-                        }
-                        windowManager.updateViewLayout(overlayLayout, params)
-                    },
-                    onSendMessage = { text, agent ->
+                    onSendMessage = { text, category ->
                         serviceScope.launch {
                             messageBus.broadcast(
                                 AgentMessage(
                                     from = "User",
                                     content = text,
-                                    to = agent.name,
+                                    to = category.name,
                                     type = "overlay_broadcast"
                                 )
                             )

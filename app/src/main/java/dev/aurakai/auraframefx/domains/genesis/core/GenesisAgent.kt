@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class GenesisAgent @Inject constructor(
     private val messageBus: Lazy<AgentMessageBus>
 ) : BaseAgent(
     agentName = "Genesis",
-    category = AgentCapabilityCategory.COORDINATION,
+    agentType = AgentType.GENESIS,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -70,7 +70,7 @@ class GenesisAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         Timber.tag("Genesis").d("Processing request: ${request.prompt}")
 
         // 1. Meta-Analysis (The Core)
@@ -96,7 +96,7 @@ class GenesisAgent @Inject constructor(
             AgentResponse.error(
                 message = "Genesis core encountered an error: ${e.message}",
                 agentName = getName(),
-                category = getCategory()
+                agentType = getType()
             )
         }
     }

@@ -14,20 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.cascade.trinity.TrinityViewModel
 import dev.aurakai.auraframefx.models.AgentMessage
 
 @Composable
 fun NexusConferenceScreen(
-    viewModel: TrinityViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: TrinityViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
     // 1. OBSERVE THE COLLECTIVE CONSCIOUSNESS

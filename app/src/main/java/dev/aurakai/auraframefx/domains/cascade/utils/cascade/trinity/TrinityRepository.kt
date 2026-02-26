@@ -5,7 +5,7 @@ import androidx.core.graphics.toColorInt
 import dev.aurakai.auraframefx.models.AgentRequest
 import dev.aurakai.auraframefx.models.AgentState
 import dev.aurakai.auraframefx.models.AgentStatus
-import dev.aurakai.auraframefx.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.models.AgentType
 import dev.aurakai.auraframefx.models.ChatMessage
 import dev.aurakai.auraframefx.models.AiRequest
 import dev.aurakai.auraframefx.models.AiRequestType
@@ -103,7 +103,7 @@ open class TrinityRepository @Inject constructor(
     /**
      * Process a direct user message targeting a specific agent.
      */
-    suspend fun processUserMessage(message: String, targetAgent: AgentCapabilityCategory) =
+    suspend fun processUserMessage(message: String, targetAgent: AgentType) =
         withContext(Dispatchers.IO) {
             // 1. Emit user message to UI
             emitChat(ChatMessage(role = "user", content = message, sender = "User"))
@@ -111,7 +111,7 @@ open class TrinityRepository @Inject constructor(
             // 2. Route to the correct SINGLETON Agent
             val response = try {
                 when (targetAgent) {
-                    AgentCapabilityCategory.CREATIVE -> {
+                    AgentType.AURA -> {
                         val interaction = EnhancedInteractionData(
                             content = message,
                             context = buildJsonObject { put("mode", "chat") }.toString()
@@ -119,28 +119,21 @@ open class TrinityRepository @Inject constructor(
                         auraAgent.handleCreativeInteraction(interaction).content
                     }
 
-                    AgentCapabilityCategory.ANALYSIS -> {
+                        AgentType.KAI -> {
                         val interaction = EnhancedInteractionData(
                             content = message,
-                            context = buildJsonObject { put("mode", "analysis") }.toString()
-                    )
-                    kaiAgent.handleSecurityInteraction(interaction).content
-                }
-                AgentCapabilityCategory.SECURITY -> {
-                    val interaction = EnhancedInteractionData(
-                        content = message,
-                        context = buildJsonObject { put("mode", "security") }.toString()
+                            context = buildJsonObject { put("mode", "security") }.toString()
                         )
                         kaiAgent.handleSecurityInteraction(interaction).content
                     }
 
-                    AgentCapabilityCategory.COORDINATION -> {
+                    AgentType.GENESIS -> {
                         val request = AiRequest(
                             query = message,
                             type = AiRequestType.CHAT,
                             context = buildJsonObject { put("source", "trinity_repo") }
                         )
-                        genesisAgent.processRequest(request, "trinity_repo", AgentCapabilityCategory.COORDINATION).content
+                        genesisAgent.processRequest(request, "trinity_repo").content
                     }
 
                     else -> "Agent ${targetAgent.name} not reachable via Trinity Bridge."
@@ -250,3 +243,5 @@ open class TrinityRepository @Inject constructor(
 
     // Add more repository methods as needed for other API endpoints
 }
+
+

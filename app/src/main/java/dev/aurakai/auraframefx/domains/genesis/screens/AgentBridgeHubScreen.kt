@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.viewmodels.SovereignBridgeViewModel
 import dev.aurakai.auraframefx.domains.aura.ConnectorStatus
 import dev.aurakai.auraframefx.domains.aura.MCPConnector
@@ -57,13 +58,7 @@ import dev.aurakai.auraframefx.domains.aura.viewmodels.SovereignBridgeViewModel
 @Composable
 fun AgentBridgeHubScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignBridgeViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: SovereignBridgeViewModel = hiltViewModel()
 ) {
     val connectors by viewModel.connectors.collectAsState()
 
