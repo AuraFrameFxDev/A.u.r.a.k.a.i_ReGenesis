@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/screens/WorkingLabScreen.kt
+package dev.aurakai.auraframefx.domains.aura.screens
+========
 package dev.aurakai.auraframefx.domains.aura.ui.screens
+>>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/aura/ui/screens/WorkingLabScreen.kt
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,7 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.cascade.storage.AuraKaiModules
-import dev.aurakai.auraframefx.embodiment.*
+import dev.aurakai.aurafAramefx.embodiment.*
 import dev.aurakai.auraframefx.domains.aura.ui.components.*
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.coroutineScope
@@ -149,9 +153,11 @@ fun WorkingLabScreen(
                                         state = step.sprite as? AuraState ?: AuraState.IDLE_WALK
                                     )
                                 }
+
                                 else -> {
                                     engine.manifestAura(
-                                        state = step.sprite as? AuraState ?: AuraState.SCIENTIST_MODE,
+                                        state = step.sprite as? AuraState
+                                            ?: AuraState.SCIENTIST_MODE,
                                         config = ManifestationDefaults.DEFAULT_CONFIG.copy(
                                             duration = step.duration
                                         )
@@ -180,9 +186,11 @@ fun WorkingLabScreen(
                                         state = step.sprite as? KaiState ?: KaiState.SHIELD_NEUTRAL
                                     )
                                 }
+
                                 else -> {
                                     engine.manifestKai(
-                                        state = step.sprite as? KaiState ?: KaiState.HOLOGRAPHIC_INTERFACE,
+                                        state = step.sprite as? KaiState
+                                            ?: KaiState.HOLOGRAPHIC_INTERFACE,
                                         config = ManifestationDefaults.DEFAULT_CONFIG.copy(
                                             duration = step.duration
                                         )

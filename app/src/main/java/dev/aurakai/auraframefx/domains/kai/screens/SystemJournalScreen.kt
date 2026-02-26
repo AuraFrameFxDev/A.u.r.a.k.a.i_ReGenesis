@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.screens.GenderIdentity
-import dev.aurakai.auraframefx.navigation.NavDestination
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 
 /**
  * 🎮 System Journal - User Profile & Menu
@@ -152,8 +152,16 @@ fun SystemJournalScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        GenderLabel("MALE", GenderIdentity.KAI, selectedGender == GenderIdentity.KAI)
-                        GenderLabel("FEMALE", GenderIdentity.AURA, selectedGender == GenderIdentity.AURA)
+                        GenderLabel(
+                            "MALE",
+                            GenderIdentity.KAI,
+                            selectedGender == GenderIdentity.KAI
+                        )
+                        GenderLabel(
+                            "FEMALE",
+                            GenderIdentity.AURA,
+                            selectedGender == GenderIdentity.AURA
+                        )
                     }
                 }
             }
@@ -189,8 +197,9 @@ fun SystemJournalScreen(
                             when (option.route) {
                                 "gender_selection" -> {
                                     // Navigate to full gender selection
-                                    navController.navigate(NavDestination.GenderSelection.route)
+                                    navController.navigate(ReGenesisNavHost.GenderSelection.route)
                                 }
+
                                 else -> {
                                     navController.navigate(option.route)
                                 }
@@ -271,7 +280,9 @@ fun CharacterCard(
             )
             .border(
                 width = if (isSelected) 3.dp else 1.dp,
-                color = if (isSelected) identity.primaryColor.copy(alpha = glowAlpha) else Color.Gray.copy(alpha = 0.3f),
+                color = if (isSelected) identity.primaryColor.copy(alpha = glowAlpha) else Color.Gray.copy(
+                    alpha = 0.3f
+                ),
                 shape = RoundedCornerShape(12.dp)
             )
             .clickable {
@@ -284,12 +295,41 @@ fun CharacterCard(
         if (identity == GenderIdentity.KAI) {
             val context = androidx.compose.ui.platform.LocalContext.current
             val frameResId = when (currentFrame) {
-                0 -> context.resources.getIdentifier("gemini_generated_image_yceye4yceye4ycey", "drawable", context.packageName)
-                1 -> context.resources.getIdentifier("gemini_generated_image_selr70selr70selr", "drawable", context.packageName)
-                2 -> context.resources.getIdentifier("gemini_generated_image_wm2k3kwm2k3kwm2k", "drawable", context.packageName)
-                3 -> context.resources.getIdentifier("gemini_generated_image_nudtwdnudtwdnudt", "drawable", context.packageName)
-                4 -> context.resources.getIdentifier("gemini_generated_image_kjqxokkjqxokkjqx", "drawable", context.packageName)
-                else -> context.resources.getIdentifier("gemini_generated_image_yceye4yceye4ycey", "drawable", context.packageName)
+                0 -> context.resources.getIdentifier(
+                    "gemini_generated_image_yceye4yceye4ycey",
+                    "drawable",
+                    context.packageName
+                )
+
+                1 -> context.resources.getIdentifier(
+                    "gemini_generated_image_selr70selr70selr",
+                    "drawable",
+                    context.packageName
+                )
+
+                2 -> context.resources.getIdentifier(
+                    "gemini_generated_image_wm2k3kwm2k3kwm2k",
+                    "drawable",
+                    context.packageName
+                )
+
+                3 -> context.resources.getIdentifier(
+                    "gemini_generated_image_nudtwdnudtwdnudt",
+                    "drawable",
+                    context.packageName
+                )
+
+                4 -> context.resources.getIdentifier(
+                    "gemini_generated_image_kjqxokkjqxokkjqx",
+                    "drawable",
+                    context.packageName
+                )
+
+                else -> context.resources.getIdentifier(
+                    "gemini_generated_image_yceye4yceye4ycey",
+                    "drawable",
+                    context.packageName
+                )
             }
 
             if (frameResId != 0) {
@@ -310,12 +350,41 @@ fun CharacterCard(
             // Female character with frame-by-frame animation
             val context = androidx.compose.ui.platform.LocalContext.current
             val frameResId = when (currentFrame) {
-                0 -> context.resources.getIdentifier("gemini_generated_image_qt4s1fqt4s1fqt4s", "drawable", context.packageName)
-                1 -> context.resources.getIdentifier("gemini_generated_image_mudazwmudazwmuda", "drawable", context.packageName)
-                2 -> context.resources.getIdentifier("gemini_generated_image_q4abvqq4abvqq4ab", "drawable", context.packageName)
-                3 -> context.resources.getIdentifier("gemini_generated_image_mudazwmudazwmuda", "drawable", context.packageName)
-                4 -> context.resources.getIdentifier("gemini_generated_image_qt4s1fqt4s1fqt4s", "drawable", context.packageName)
-                else -> context.resources.getIdentifier("gemini_generated_image_qt4s1fqt4s1fqt4s", "drawable", context.packageName)
+                0 -> context.resources.getIdentifier(
+                    "gemini_generated_image_qt4s1fqt4s1fqt4s",
+                    "drawable",
+                    context.packageName
+                )
+
+                1 -> context.resources.getIdentifier(
+                    "gemini_generated_image_mudazwmudazwmuda",
+                    "drawable",
+                    context.packageName
+                )
+
+                2 -> context.resources.getIdentifier(
+                    "gemini_generated_image_q4abvqq4abvqq4ab",
+                    "drawable",
+                    context.packageName
+                )
+
+                3 -> context.resources.getIdentifier(
+                    "gemini_generated_image_mudazwmudazwmuda",
+                    "drawable",
+                    context.packageName
+                )
+
+                4 -> context.resources.getIdentifier(
+                    "gemini_generated_image_qt4s1fqt4s1fqt4s",
+                    "drawable",
+                    context.packageName
+                )
+
+                else -> context.resources.getIdentifier(
+                    "gemini_generated_image_qt4s1fqt4s1fqt4s",
+                    "drawable",
+                    context.packageName
+                )
             }
 
             if (frameResId != 0) {
@@ -450,13 +519,12 @@ data class MenuOption(
  * Menu Options List
  */
 private val menuOptions = listOf(
-    MenuOption("Oracle Cloud", Icons.Default.Folder, Color(0xFFFFD700), NavDestination.OracleCloudStorage.route),
-    MenuOption("Agent Bridge", Icons.Default.Hub, Color(0xFF00FFFF), NavDestination.AgentBridgeHub.route),
-    MenuOption("Sovereign Mod", Icons.Default.Build, Color(0xFFFF00FF), NavDestination.ModuleManager.route),
-    MenuOption("Sentient Shell", Icons.Default.Computer, Color(0xFF00FFFF), NavDestination.NeuralNetwork.route),
-    MenuOption("Monitoring", Icons.Default.Insights, Color(0xFF00FFD4), NavDestination.MonitoringHUDs.route),
-    MenuOption("Nexus Hub", Icons.Default.Hub, Color(0xFF7B2FFF), NavDestination.AgentNexusHub.route),
-    MenuOption("Deep Shield", Icons.Default.Shield, Color(0xFFFF00FF), NavDestination.SecurityCenter.route),
-    MenuOption("Recovery", Icons.Default.Settings, Color(0xFF00E5FF), NavDestination.RecoveryTools.route)
+    MenuOption("Oracle Cloud", Icons.Default.Folder, Color(0xFFFFD700), "oracle_cloud_storage"),
+    MenuOption("Agent Bridge", Icons.Default.Hub, Color(0xFF00FFFF), "agent_bridge_hub"),
+    MenuOption("Sovereign Mod", Icons.Default.Build, Color(0xFFFF00FF), "module_manager"),
+    MenuOption("Sentient Shell", Icons.Default.Computer, Color(0xFF00FFFF), "neural_network"),
+    MenuOption("Monitoring", Icons.Default.Insights, Color(0xFF00FFD4), "monitoring_huds"),
+    MenuOption("Nexus Hub", Icons.Default.Hub, Color(0xFF7B2FFF), "agent_nexus_gate"),
+    MenuOption("Deep Shield", Icons.Default.Shield, Color(0xFFFF00FF), "security_center"),
+    MenuOption("Recovery", Icons.Default.Settings, Color(0xFF00E5FF), "recovery_tools")
 )
-

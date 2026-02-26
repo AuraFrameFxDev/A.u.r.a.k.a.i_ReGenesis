@@ -16,6 +16,8 @@ import dev.aurakai.auraframefx.domains.kai.ManageLSPosedHookTool
 import dev.aurakai.auraframefx.domains.kai.ViewSystemLogsTool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,7 +35,7 @@ class ToolInitializer @Inject constructor(
     // private val mcpAdapter: MCPServerAdapter // TODO: Re-add when MCPServerAdapter is fixed
 ) {
 
-    private val initScope = CoroutineScope(Dispatchers.Default)
+    private val initScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     /**
      * Initialize all agent tools
@@ -147,6 +149,15 @@ class ToolInitializer @Inject constructor(
     }
 
     /**
+     * Shutdown the tool initializer and cancel all coroutines.
+     * Called during app termination.
+     */
+    fun shutdown() {
+        Timber.d("ToolInitializer shutting down")
+        initScope.cancel()
+    }
+
+    /**
      * Get tool summary for debugging
      */
     suspend fun getToolSummary(): String {
@@ -161,7 +172,10 @@ class ToolInitializer @Inject constructor(
             toolsByCategory.forEach { (category, tools) ->
                 appendLine("[$category] - ${tools.size} tools")
                 tools.forEach { tool ->
-                    val agents = if (tool.authorizedAgents.contains("*")) "ALL" else tool.authorizedAgents.joinToString(", ")
+                    val agents =
+                        if (tool.authorizedAgents.contains("*")) "ALL" else tool.authorizedAgents.joinToString(
+                            ", "
+                        )
                     appendLine("  • ${tool.name} (agents: $agents)")
                 }
                 appendLine()

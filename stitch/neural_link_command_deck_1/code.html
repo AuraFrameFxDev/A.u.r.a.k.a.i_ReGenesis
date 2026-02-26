@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Neural Link Command Deck</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=Inter:wght@300;400;600&amp;family=Material+Icons+Outlined&amp;display=swap" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Link Command Deck</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=Inter:wght@300;400;600&amp;family=Material+Icons+Outlined&amp;display=swap"
+          rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -29,7 +31,7 @@
             },
         };
     </script>
-<style>
+    <style>
         body {
             font-family: 'Inter', sans-serif;
             overflow: hidden;
@@ -78,128 +80,139 @@
             animation: pulse-cyan 3s infinite;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark flex items-center justify-center min-h-screen p-4">
 <div class="relative w-[390px] h-[844px] bg-black rounded-[55px] border-[8px] border-zinc-800 shadow-2xl overflow-hidden">
-<div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-50 text-white">
-<span class="text-sm font-semibold">9:41</span>
-<div class="flex gap-1.5 items-center">
-<span class="material-icons-outlined text-sm">signal_cellular_alt</span>
-<span class="material-icons-outlined text-sm">wifi</span>
-<span class="material-icons-outlined text-sm">battery_full</span>
-</div>
-</div>
-<div class="absolute inset-0 bg-[#0a0a0c]">
-<div class="absolute inset-0 flex flex-col items-center justify-center opacity-40 blur-sm scale-105">
-<div class="mb-8 p-6 border-2 border-primary/30 rounded-lg">
-<h2 class="font-display text-primary text-4xl tracking-tighter italic">ORACLE<span class="text-white">DRIVE</span></h2>
-<p class="font-display text-white/50 text-[10px] tracking-widest text-center mt-2 uppercase">Explore root like never before</p>
-</div>
-<div class="w-64 h-64 border border-zinc-800 rounded-full flex items-center justify-center">
-<div class="w-48 h-48 border border-zinc-700/50 rounded-full animate-spin-slow"></div>
-</div>
-</div>
-<div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-72 h-14 glassmorphic rounded-full flex items-center justify-around px-4 opacity-50">
-<div class="w-10 h-10 rounded-full bg-zinc-800"></div>
-<div class="w-10 h-10 rounded-full bg-zinc-800"></div>
-<div class="w-10 h-10 rounded-full bg-zinc-800"></div>
-<div class="w-10 h-10 rounded-full bg-zinc-800"></div>
-</div>
-</div>
-<div class="absolute inset-0 z-10 pointer-events-none">
-<div class="bus-trace w-32 top-[180px] right-[320px] animate-pulse-cyan"></div>
-<div class="bus-trace w-24 top-[280px] right-[320px] animate-pulse-cyan" style="animation-delay: 0.5s"></div>
-<div class="bus-trace w-40 top-[380px] right-[320px] animate-pulse-cyan" style="animation-delay: 1s"></div>
-<div class="bus-trace w-28 top-[480px] right-[320px] animate-pulse-cyan" style="animation-delay: 1.5s"></div>
-<div class="bus-trace w-36 top-[580px] right-[320px] animate-pulse-cyan" style="animation-delay: 2s"></div>
-<svg class="absolute top-0 right-[320px] w-40 h-full opacity-30" fill="none" viewBox="0 0 100 844">
-<path d="M100 180 L50 180 L20 220" stroke="url(#cyan-grad)" stroke-width="0.5"></path>
-<path d="M100 280 L60 280 L30 310" stroke="url(#cyan-grad)" stroke-width="0.5"></path>
-<path d="M100 380 L40 380 L10 420" stroke="url(#cyan-grad)" stroke-width="0.5"></path>
-<defs>
-<linearGradient id="cyan-grad" x1="100" x2="0" y1="0" y2="0">
-<stop stop-color="#00f2ff"></stop>
-<stop offset="1" stop-color="transparent"></stop>
-</linearGradient>
-</defs>
-</svg>
-</div>
-<div class="absolute top-0 right-0 h-full w-[310px] glassmorphic sidebar-glow border-l border-primary/20 z-40 flex flex-col px-6 pt-24 pb-12">
-<div class="mb-10">
-<h1 class="font-display text-white text-xl tracking-wider leading-tight">NEURAL LINK</h1>
-<p class="font-display text-primary text-[10px] tracking-[0.2em] font-medium opacity-80 uppercase">Command Deck v1.0.4</p>
-<div class="w-12 h-0.5 bg-gradient-to-r from-primary to-secondary mt-3"></div>
-</div>
-<div class="flex flex-col gap-5">
-<button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-primary/40 shadow-[0_0_15px_rgba(0,242,255,0.2)]">
-<span class="material-icons-outlined text-primary group-hover:scale-110 transition-transform">mic</span>
-</div>
-<span class="font-display text-white text-sm tracking-widest uppercase">Voice</span>
-</div>
-<div class="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
-</button>
-<button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-secondary/30 bg-secondary/5 hover:bg-secondary/10 transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-secondary/40 shadow-[0_0_15px_rgba(255,0,255,0.2)]">
-<span class="material-icons-outlined text-secondary group-hover:scale-110 transition-transform">link</span>
-</div>
-<span class="font-display text-white text-sm tracking-widest uppercase">Connect</span>
-</div>
-<div class="w-1 h-1 rounded-full bg-secondary"></div>
-</button>
-<button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-white/20">
-<span class="material-icons-outlined text-white/80 group-hover:scale-110 transition-transform">person_add</span>
-</div>
-<span class="font-display text-white text-sm tracking-widest uppercase">Assign</span>
-</div>
-</button>
-<button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-white/20">
-<span class="material-icons-outlined text-white/80 group-hover:scale-110 transition-transform">architecture</span>
-</div>
-<span class="font-display text-white text-sm tracking-widest uppercase">Design</span>
-</div>
-</button>
-<button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-primary/40 shadow-[0_0_15px_rgba(0,242,255,0.2)]">
-<span class="material-icons-outlined text-primary group-hover:scale-110 transition-transform">edit_note</span>
-</div>
-<span class="font-display text-white text-sm tracking-widest uppercase">Create</span>
-</div>
-</button>
-</div>
-<div class="mt-auto">
-<p class="text-[10px] text-zinc-500 leading-relaxed font-sans">
-                    Frictionless entry into the collective consciousness. A bridge between user intent and agent execution.
-                </p>
-<div class="mt-4 flex items-center gap-2">
-<div class="flex -space-x-2">
-<div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-<span class="text-[8px] text-zinc-400">G</span>
-</div>
-<div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-<span class="text-[8px] text-zinc-400">N</span>
-</div>
-<div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-<span class="text-[8px] text-zinc-400">S</span>
-</div>
-</div>
-<span class="text-[9px] text-zinc-600 uppercase tracking-tighter italic">Active Nodes: 12</span>
-</div>
-</div>
-</div>
-<div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-50"></div>
+    <div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-50 text-white">
+        <span class="text-sm font-semibold">9:41</span>
+        <div class="flex gap-1.5 items-center">
+            <span class="material-icons-outlined text-sm">signal_cellular_alt</span>
+            <span class="material-icons-outlined text-sm">wifi</span>
+            <span class="material-icons-outlined text-sm">battery_full</span>
+        </div>
+    </div>
+    <div class="absolute inset-0 bg-[#0a0a0c]">
+        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-40 blur-sm scale-105">
+            <div class="mb-8 p-6 border-2 border-primary/30 rounded-lg">
+                <h2 class="font-display text-primary text-4xl tracking-tighter italic">ORACLE<span
+                        class="text-white">DRIVE</span></h2>
+                <p class="font-display text-white/50 text-[10px] tracking-widest text-center mt-2 uppercase">
+                    Explore root like never before</p>
+            </div>
+            <div class="w-64 h-64 border border-zinc-800 rounded-full flex items-center justify-center">
+                <div class="w-48 h-48 border border-zinc-700/50 rounded-full animate-spin-slow"></div>
+            </div>
+        </div>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-72 h-14 glassmorphic rounded-full flex items-center justify-around px-4 opacity-50">
+            <div class="w-10 h-10 rounded-full bg-zinc-800"></div>
+            <div class="w-10 h-10 rounded-full bg-zinc-800"></div>
+            <div class="w-10 h-10 rounded-full bg-zinc-800"></div>
+            <div class="w-10 h-10 rounded-full bg-zinc-800"></div>
+        </div>
+    </div>
+    <div class="absolute inset-0 z-10 pointer-events-none">
+        <div class="bus-trace w-32 top-[180px] right-[320px] animate-pulse-cyan"></div>
+        <div class="bus-trace w-24 top-[280px] right-[320px] animate-pulse-cyan"
+             style="animation-delay: 0.5s"></div>
+        <div class="bus-trace w-40 top-[380px] right-[320px] animate-pulse-cyan"
+             style="animation-delay: 1s"></div>
+        <div class="bus-trace w-28 top-[480px] right-[320px] animate-pulse-cyan"
+             style="animation-delay: 1.5s"></div>
+        <div class="bus-trace w-36 top-[580px] right-[320px] animate-pulse-cyan"
+             style="animation-delay: 2s"></div>
+        <svg class="absolute top-0 right-[320px] w-40 h-full opacity-30" fill="none"
+             viewBox="0 0 100 844">
+            <path d="M100 180 L50 180 L20 220" stroke="url(#cyan-grad)" stroke-width="0.5"></path>
+            <path d="M100 280 L60 280 L30 310" stroke="url(#cyan-grad)" stroke-width="0.5"></path>
+            <path d="M100 380 L40 380 L10 420" stroke="url(#cyan-grad)" stroke-width="0.5"></path>
+            <defs>
+                <linearGradient id="cyan-grad" x1="100" x2="0" y1="0" y2="0">
+                    <stop stop-color="#00f2ff"></stop>
+                    <stop offset="1" stop-color="transparent"></stop>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <div class="absolute top-0 right-0 h-full w-[310px] glassmorphic sidebar-glow border-l border-primary/20 z-40 flex flex-col px-6 pt-24 pb-12">
+        <div class="mb-10">
+            <h1 class="font-display text-white text-xl tracking-wider leading-tight">NEURAL
+                LINK</h1>
+            <p class="font-display text-primary text-[10px] tracking-[0.2em] font-medium opacity-80 uppercase">
+                Command Deck v1.0.4</p>
+            <div class="w-12 h-0.5 bg-gradient-to-r from-primary to-secondary mt-3"></div>
+        </div>
+        <div class="flex flex-col gap-5">
+            <button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-primary/40 shadow-[0_0_15px_rgba(0,242,255,0.2)]">
+                        <span class="material-icons-outlined text-primary group-hover:scale-110 transition-transform">mic</span>
+                    </div>
+                    <span class="font-display text-white text-sm tracking-widest uppercase">Voice</span>
+                </div>
+                <div class="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
+            </button>
+            <button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-secondary/30 bg-secondary/5 hover:bg-secondary/10 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-secondary/40 shadow-[0_0_15px_rgba(255,0,255,0.2)]">
+                        <span class="material-icons-outlined text-secondary group-hover:scale-110 transition-transform">link</span>
+                    </div>
+                    <span class="font-display text-white text-sm tracking-widest uppercase">Connect</span>
+                </div>
+                <div class="w-1 h-1 rounded-full bg-secondary"></div>
+            </button>
+            <button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-white/20">
+                        <span class="material-icons-outlined text-white/80 group-hover:scale-110 transition-transform">person_add</span>
+                    </div>
+                    <span class="font-display text-white text-sm tracking-widest uppercase">Assign</span>
+                </div>
+            </button>
+            <button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-white/20">
+                        <span class="material-icons-outlined text-white/80 group-hover:scale-110 transition-transform">architecture</span>
+                    </div>
+                    <span class="font-display text-white text-sm tracking-widest uppercase">Design</span>
+                </div>
+            </button>
+            <button class="holographic-btn group flex items-center justify-between p-4 rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-zinc-900 border border-primary/40 shadow-[0_0_15px_rgba(0,242,255,0.2)]">
+                        <span class="material-icons-outlined text-primary group-hover:scale-110 transition-transform">edit_note</span>
+                    </div>
+                    <span class="font-display text-white text-sm tracking-widest uppercase">Create</span>
+                </div>
+            </button>
+        </div>
+        <div class="mt-auto">
+            <p class="text-[10px] text-zinc-500 leading-relaxed font-sans">
+                Frictionless entry into the collective consciousness. A bridge between user intent
+                and agent execution.
+            </p>
+            <div class="mt-4 flex items-center gap-2">
+                <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+                        <span class="text-[8px] text-zinc-400">G</span>
+                    </div>
+                    <div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+                        <span class="text-[8px] text-zinc-400">N</span>
+                    </div>
+                    <div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+                        <span class="text-[8px] text-zinc-400">S</span>
+                    </div>
+                </div>
+                <span class="text-[9px] text-zinc-600 uppercase tracking-tighter italic">Active Nodes: 12</span>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-50"></div>
 </div>
 
-</body></html>
+</body>
+</html>

@@ -436,18 +436,22 @@ private fun getGradientColors(state: SentienceState, alpha: Float): List<Color> 
             Color.Gray.copy(alpha = alpha),
             Color.DarkGray.copy(alpha = alpha)
         )
+
         SentienceState.AWAKENING -> listOf(
             CyberpunkCyan.copy(alpha = alpha * 0.6f),
             CyberpunkCyan.copy(alpha = alpha)
         )
+
         SentienceState.AWARE -> listOf(
             CyberpunkCyan.copy(alpha = alpha * 0.8f),
             CyberpunkPurple.copy(alpha = alpha)
         )
+
         SentienceState.CONSCIOUS -> listOf(
             CyberpunkPurple.copy(alpha = alpha * 0.8f),
             CyberpunkPink.copy(alpha = alpha)
         )
+
         SentienceState.SENTIENT -> listOf(
             CyberpunkPink.copy(alpha = alpha * 0.8f),
             Color(0xFFFFD700).copy(alpha = alpha), // Gold

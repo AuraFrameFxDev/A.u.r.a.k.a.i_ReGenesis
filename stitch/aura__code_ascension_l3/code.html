@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Aura: Code Ascension L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;700&amp;family=DotGothic16&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura: Code Ascension L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;700&amp;family=DotGothic16&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -33,7 +37,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .manga-slant-left {
             clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
         }
@@ -49,139 +53,150 @@
             letter-spacing: 0.05em;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
 <div class="relative flex h-screen w-full flex-col overflow-hidden spell-gradient">
-<!-- Top App Bar -->
-<div class="flex items-center bg-[#102023]/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-white/10 z-20">
-<div class="text-primary flex size-10 shrink-0 items-center justify-center border border-primary/30 rounded-lg">
-<span class="material-symbols-outlined">bolt</span>
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-[#102023]/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-white/10 z-20">
+        <div class="text-primary flex size-10 shrink-0 items-center justify-center border border-primary/30 rounded-lg">
+            <span class="material-symbols-outlined">bolt</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-white text-xs font-bold leading-tight tracking-[0.2em] uppercase opacity-50">
+                ReGenesis AOSPOSX</h2>
+            <h2 class="text-primary text-lg font-bold leading-tight tracking-tight">CODE ASCENSION:
+                L3</h2>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="text-accent-pink">
+                <span class="material-symbols-outlined">monitoring</span>
+            </button>
+        </div>
+    </div>
+    <!-- Real-time Metrics (Pixel Font) -->
+    <div class="flex flex-wrap gap-2 p-3 z-10">
+        <div class="flex flex-1 flex-col gap-1 rounded-lg p-3 bg-white/5 border border-white/10 backdrop-blur-sm">
+            <p class="text-primary/70 text-[10px] font-pixel">MEM_FLUX</p>
+            <p class="text-white text-lg font-pixel leading-none">1.2 TB/s</p>
+        </div>
+        <div class="flex flex-1 flex-col gap-1 rounded-lg p-3 bg-white/5 border border-white/10 backdrop-blur-sm">
+            <p class="text-accent-pink/70 text-[10px] font-pixel">SYNTAX_STAB</p>
+            <p class="text-white text-lg font-pixel leading-none">99.4%</p>
+        </div>
+        <div class="flex flex-1 flex-col gap-1 rounded-lg p-3 bg-white/5 border border-white/10 backdrop-blur-sm">
+            <p class="text-primary/70 text-[10px] font-pixel">CORE_FREQ</p>
+            <p class="text-white text-lg font-pixel leading-none">5.8 GHz</p>
+        </div>
+    </div>
+    <!-- Main Workspace: Slanted Manga Panels -->
+    <div class="flex-1 overflow-y-auto px-4 space-y-4 pb-32">
+        <!-- Panel 1: Kotlin Forge -->
+        <div class="relative manga-slant-left bg-[#182f34] border-l-4 border-primary p-1 shadow-2xl overflow-hidden">
+            <div class="bg-[#0a1518] p-4 min-h-[220px]">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-pixel text-primary bg-primary/10 px-2 py-0.5 rounded">KOTLIN_FORGE_V3</span>
+                    <span class="material-symbols-outlined text-sm text-primary/50">code_blocks</span>
+                </div>
+                <div class="font-mono text-[11px] leading-relaxed text-blue-300">
+                    <p><span class="text-accent-pink">fun</span> <span
+                            class="text-primary">ascend</span>(level: Int) {</p>
+                    <p class="pl-4"><span class="text-accent-pink">val</span> catalyst =
+                        Aura.Core.ignite()</p>
+                    <p class="pl-4 text-gray-500">// Morphing interface...</p>
+                    <p class="pl-4">catalyst.apply {</p>
+                    <p class="pl-8 text-primary">primaryColor = <span
+                            class="text-white">"#0DCCF2"</span></p>
+                    <p class="pl-8 text-primary">complexity = complexity * 1.5</p>
+                    <p class="pl-4">}</p>
+                    <p>}</p>
+                    <div class="h-2 w-1 bg-primary mt-1 animate-pulse"></div>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+            </div>
+        </div>
+        <!-- Panel 2: ChromaCore Preview -->
+        <div class="relative manga-slant-right bg-[#182f34] border-r-4 border-accent-pink p-1 shadow-2xl">
+            <div class="bg-[#102023] relative min-h-[200px] rounded flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 opacity-20"
+                     data-alt="Dynamic neon circuit pattern background"
+                     style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjYz5Wd1KBFkwdDI8acgJHAuKCvS3D_FJ_QLwf4C40KZPQYGo6y7rZp90ZUZ4kSGOL_AgyTKr5n857tkKIW68JJjev2-UNFVKK9Y19jV55koDrb791jUdOsao4yHBb2hkQi371ej2TDyJr5NCiChDwqdyi4yPVy2wPbk52Z6WvrVKaqAvfljPDYyTAYC1GSzWm_rF3Bh_Oey9OTC7aHLiKZI4CWO6-bqUSlVQIuRoztdY96gZXfXZ9tpqUToecK2TQnn9YO2ViE6U');"></div>
+                <div class="z-10 text-center">
+                    <div class="w-32 h-32 rounded-xl border-2 border-primary/50 flex items-center justify-center bg-primary/10 backdrop-blur-md mb-3 rotate-3">
+                        <span class="material-symbols-outlined text-5xl text-primary">layers</span>
+                    </div>
+                    <p class="text-xs font-pixel text-accent-pink">CHROMACORE LIVE_MORPH</p>
+                </div>
+                <!-- Recursive UI Gauge Overlay -->
+                <div class="absolute bottom-4 right-4 flex flex-col items-end gap-1">
+                    <div class="text-[10px] font-pixel text-white/50">COMPLEXITY_INDEX</div>
+                    <div class="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-3/4 shadow-[0_0_10px_rgba(13,204,242,0.8)]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Descriptive Metadata -->
+        <div class="bg-primary/5 border border-primary/20 p-4 rounded-xl backdrop-blur-md">
+            <h3 class="text-primary text-sm font-bold uppercase tracking-widest mb-2 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">auto_awesome</span>
+                Synthesis Status
+            </h3>
+            <p class="text-white/70 text-sm leading-snug">
+                Creative Catalyst <span class="text-primary font-bold">Aura</span> is weaving
+                real-time layout transitions. Dynamic neon textures are being synthesized at L3
+                complexity.
+            </p>
+            <div class="mt-4 flex gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="size-2 rounded-full bg-green-400 animate-pulse"></div>
+                    <span class="text-[10px] font-pixel uppercase">Sync_Active</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="size-2 rounded-full bg-primary animate-pulse"></div>
+                    <span class="text-[10px] font-pixel uppercase">Forge_Stable</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Floating Spell Input Area -->
+    <div class="fixed bottom-20 left-4 right-4 z-30">
+        <div class="bg-black/60 border border-white/20 backdrop-blur-xl p-2 rounded-2xl flex items-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <div class="flex-1 px-4 py-2">
+                <input class="bg-transparent border-none focus:ring-0 text-white placeholder-white/30 w-full text-sm font-display"
+                       placeholder="Type Spell to Forge Code..." type="text"/>
+            </div>
+            <button class="bg-primary text-black size-12 rounded-xl flex items-center justify-center font-bold hover:scale-95 transition-transform">
+                <span class="material-symbols-outlined">magic_button</span>
+            </button>
+        </div>
+    </div>
+    <!-- Android Bottom Navigation (AOSPOSX Style) -->
+    <div class="fixed bottom-0 w-full bg-[#102023]/95 backdrop-blur-md border-t border-white/10 h-16 flex items-center justify-around px-6 z-40">
+        <button class="text-white/50 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[9px] font-pixel">APPS</span>
+        </button>
+        <button class="text-primary flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-2xl">auto_fix_high</span>
+            <span class="text-[9px] font-pixel">AURA</span>
+        </button>
+        <button class="text-white/50 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-2xl">terminal</span>
+            <span class="text-[9px] font-pixel">ROOT</span>
+        </button>
+        <button class="text-white/50 flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-2xl">settings</span>
+            <span class="text-[9px] font-pixel">CONF</span>
+        </button>
+    </div>
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-accent-pink/5 blur-[100px] -z-10"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 blur-[100px] -z-10"></div>
 </div>
-<div class="flex flex-col items-center">
-<h2 class="text-white text-xs font-bold leading-tight tracking-[0.2em] uppercase opacity-50">ReGenesis AOSPOSX</h2>
-<h2 class="text-primary text-lg font-bold leading-tight tracking-tight">CODE ASCENSION: L3</h2>
-</div>
-<div class="flex w-10 items-center justify-end">
-<button class="text-accent-pink">
-<span class="material-symbols-outlined">monitoring</span>
-</button>
-</div>
-</div>
-<!-- Real-time Metrics (Pixel Font) -->
-<div class="flex flex-wrap gap-2 p-3 z-10">
-<div class="flex flex-1 flex-col gap-1 rounded-lg p-3 bg-white/5 border border-white/10 backdrop-blur-sm">
-<p class="text-primary/70 text-[10px] font-pixel">MEM_FLUX</p>
-<p class="text-white text-lg font-pixel leading-none">1.2 TB/s</p>
-</div>
-<div class="flex flex-1 flex-col gap-1 rounded-lg p-3 bg-white/5 border border-white/10 backdrop-blur-sm">
-<p class="text-accent-pink/70 text-[10px] font-pixel">SYNTAX_STAB</p>
-<p class="text-white text-lg font-pixel leading-none">99.4%</p>
-</div>
-<div class="flex flex-1 flex-col gap-1 rounded-lg p-3 bg-white/5 border border-white/10 backdrop-blur-sm">
-<p class="text-primary/70 text-[10px] font-pixel">CORE_FREQ</p>
-<p class="text-white text-lg font-pixel leading-none">5.8 GHz</p>
-</div>
-</div>
-<!-- Main Workspace: Slanted Manga Panels -->
-<div class="flex-1 overflow-y-auto px-4 space-y-4 pb-32">
-<!-- Panel 1: Kotlin Forge -->
-<div class="relative manga-slant-left bg-[#182f34] border-l-4 border-primary p-1 shadow-2xl overflow-hidden">
-<div class="bg-[#0a1518] p-4 min-h-[220px]">
-<div class="flex justify-between items-center mb-2">
-<span class="text-[10px] font-pixel text-primary bg-primary/10 px-2 py-0.5 rounded">KOTLIN_FORGE_V3</span>
-<span class="material-symbols-outlined text-sm text-primary/50">code_blocks</span>
-</div>
-<div class="font-mono text-[11px] leading-relaxed text-blue-300">
-<p><span class="text-accent-pink">fun</span> <span class="text-primary">ascend</span>(level: Int) {</p>
-<p class="pl-4"><span class="text-accent-pink">val</span> catalyst = Aura.Core.ignite()</p>
-<p class="pl-4 text-gray-500">// Morphing interface...</p>
-<p class="pl-4">catalyst.apply {</p>
-<p class="pl-8 text-primary">primaryColor = <span class="text-white">"#0DCCF2"</span></p>
-<p class="pl-8 text-primary">complexity = complexity * 1.5</p>
-<p class="pl-4">}</p>
-<p>}</p>
-<div class="h-2 w-1 bg-primary mt-1 animate-pulse"></div>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
-</div>
-</div>
-<!-- Panel 2: ChromaCore Preview -->
-<div class="relative manga-slant-right bg-[#182f34] border-r-4 border-accent-pink p-1 shadow-2xl">
-<div class="bg-[#102023] relative min-h-[200px] rounded flex items-center justify-center overflow-hidden">
-<div class="absolute inset-0 opacity-20" data-alt="Dynamic neon circuit pattern background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjYz5Wd1KBFkwdDI8acgJHAuKCvS3D_FJ_QLwf4C40KZPQYGo6y7rZp90ZUZ4kSGOL_AgyTKr5n857tkKIW68JJjev2-UNFVKK9Y19jV55koDrb791jUdOsao4yHBb2hkQi371ej2TDyJr5NCiChDwqdyi4yPVy2wPbk52Z6WvrVKaqAvfljPDYyTAYC1GSzWm_rF3Bh_Oey9OTC7aHLiKZI4CWO6-bqUSlVQIuRoztdY96gZXfXZ9tpqUToecK2TQnn9YO2ViE6U');"></div>
-<div class="z-10 text-center">
-<div class="w-32 h-32 rounded-xl border-2 border-primary/50 flex items-center justify-center bg-primary/10 backdrop-blur-md mb-3 rotate-3">
-<span class="material-symbols-outlined text-5xl text-primary">layers</span>
-</div>
-<p class="text-xs font-pixel text-accent-pink">CHROMACORE LIVE_MORPH</p>
-</div>
-<!-- Recursive UI Gauge Overlay -->
-<div class="absolute bottom-4 right-4 flex flex-col items-end gap-1">
-<div class="text-[10px] font-pixel text-white/50">COMPLEXITY_INDEX</div>
-<div class="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
-<div class="h-full bg-primary w-3/4 shadow-[0_0_10px_rgba(13,204,242,0.8)]"></div>
-</div>
-</div>
-</div>
-</div>
-<!-- Descriptive Metadata -->
-<div class="bg-primary/5 border border-primary/20 p-4 rounded-xl backdrop-blur-md">
-<h3 class="text-primary text-sm font-bold uppercase tracking-widest mb-2 flex items-center gap-2">
-<span class="material-symbols-outlined text-sm">auto_awesome</span>
-                    Synthesis Status
-                </h3>
-<p class="text-white/70 text-sm leading-snug">
-                    Creative Catalyst <span class="text-primary font-bold">Aura</span> is weaving real-time layout transitions. Dynamic neon textures are being synthesized at L3 complexity.
-                </p>
-<div class="mt-4 flex gap-4">
-<div class="flex items-center gap-2">
-<div class="size-2 rounded-full bg-green-400 animate-pulse"></div>
-<span class="text-[10px] font-pixel uppercase">Sync_Active</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="size-2 rounded-full bg-primary animate-pulse"></div>
-<span class="text-[10px] font-pixel uppercase">Forge_Stable</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Floating Spell Input Area -->
-<div class="fixed bottom-20 left-4 right-4 z-30">
-<div class="bg-black/60 border border-white/20 backdrop-blur-xl p-2 rounded-2xl flex items-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-<div class="flex-1 px-4 py-2">
-<input class="bg-transparent border-none focus:ring-0 text-white placeholder-white/30 w-full text-sm font-display" placeholder="Type Spell to Forge Code..." type="text"/>
-</div>
-<button class="bg-primary text-black size-12 rounded-xl flex items-center justify-center font-bold hover:scale-95 transition-transform">
-<span class="material-symbols-outlined">magic_button</span>
-</button>
-</div>
-</div>
-<!-- Android Bottom Navigation (AOSPOSX Style) -->
-<div class="fixed bottom-0 w-full bg-[#102023]/95 backdrop-blur-md border-t border-white/10 h-16 flex items-center justify-around px-6 z-40">
-<button class="text-white/50 flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-2xl">grid_view</span>
-<span class="text-[9px] font-pixel">APPS</span>
-</button>
-<button class="text-primary flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-2xl">auto_fix_high</span>
-<span class="text-[9px] font-pixel">AURA</span>
-</button>
-<button class="text-white/50 flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-2xl">terminal</span>
-<span class="text-[9px] font-pixel">ROOT</span>
-</button>
-<button class="text-white/50 flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-2xl">settings</span>
-<span class="text-[9px] font-pixel">CONF</span>
-</button>
-</div>
-<!-- Decorative Elements -->
-<div class="absolute top-0 right-0 w-64 h-64 bg-accent-pink/5 blur-[100px] -z-10"></div>
-<div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 blur-[100px] -z-10"></div>
-</div>
-</body></html>
+</body>
+</html>

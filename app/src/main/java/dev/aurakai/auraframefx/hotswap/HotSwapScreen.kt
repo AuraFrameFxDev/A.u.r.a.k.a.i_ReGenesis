@@ -4,15 +4,59 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.FileDownload
+import androidx.compose.material.icons.filled.FileUpload
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.SwapHoriz
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,8 +64,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 
 /**
@@ -37,13 +79,10 @@ import androidx.navigation.NavController
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotSwapScreen(navController: NavController, viewModel: HotSwapViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-        }, null
-    )) {
+fun HotSwapScreen(
+    navController: NavController,
+    viewModel: HotSwapViewModel = hiltViewModel()
+) {
     val gateConfigs by viewModel.gateConfigs.collectAsState()
     val assetBundles by viewModel.assetBundles.collectAsState()
     val currentConfig by viewModel.currentConfig.collectAsState()
@@ -472,13 +511,10 @@ private fun AssetBundleCard(
 
 @Composable
 private fun ShortcutsTab(viewModel: HotSwapViewModel) {
-    val config by viewModel.currentConfig.collectAsState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(16.dp)
     ) {
         Text(
             "QUICK ACCESS SHORTCUTS",
@@ -487,46 +523,17 @@ private fun ShortcutsTab(viewModel: HotSwapViewModel) {
                 fontWeight = FontWeight.Bold
             )
         )
-
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))
-        ) {
-            Row(
-                modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text("Floating Panel", color = Color.White)
-                    Text("Show quick access overlay", fontSize = 12.sp, color = Color.Gray)
-                }
-                androidx.compose.material3.Switch(
-                    checked = config.quickAccessEnabled,
-                    onCheckedChange = { viewModel.toggleQuickAccess() }
-                )
-            }
-        }
-
-        if (config.quickAccessEnabled) {
-            Text("Position", fontSize = 14.sp, color = Color.White)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                listOf("top_left", "top_right", "bottom_left", "bottom_right").forEach { pos ->
-                    val isSelected = config.quickAccessPosition == pos
-                    androidx.compose.material3.FilterChip(
-                        selected = isSelected,
-                        onClick = { viewModel.updateQuickAccessPosition(pos) },
-                        label = { Text(pos.replace("_", " ").uppercase()) },
-                        colors = androidx.compose.material3.FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = Color(0xFFFF8C00)
-                        )
-                    )
-                }
-            }
-        }
+        Text(
+            "Configure floating quick access panel",
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = Color.Gray
+            )
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            "⚙️ Shortcut customization coming soon...",
+            color = Color.Gray
+        )
     }
 }
 
@@ -594,7 +601,10 @@ private fun AddGateDialog(
                 Spacer(modifier = Modifier.height(8.dp))
                 TextField(value = route, onValueChange = { route = it }, label = { Text("Route") })
                 Spacer(modifier = Modifier.height(8.dp))
-                TextField(value = color, onValueChange = { color = it }, label = { Text("Color (Hex)") })
+                TextField(
+                    value = color,
+                    onValueChange = { color = it },
+                    label = { Text("Color (Hex)") })
             }
         },
         confirmButton = {

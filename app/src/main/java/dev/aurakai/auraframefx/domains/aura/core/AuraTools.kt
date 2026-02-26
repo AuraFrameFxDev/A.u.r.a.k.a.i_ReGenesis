@@ -22,7 +22,8 @@ import timber.log.Timber
  */
 class ApplyThemeTool : AgentTool {
     override val name = "apply_theme"
-    override val description = "Apply a system-wide color theme using ChromaCore. Changes all UI colors instantly."
+    override val description =
+        "Apply a system-wide color theme using ChromaCore. Changes all UI colors instantly."
     override val authorizedAgents = setOf("AURA", "aura")
     override val category = ToolCategory.UI_CUSTOMIZATION
 
@@ -53,10 +54,12 @@ class ApplyThemeTool : AgentTool {
 
     override suspend fun execute(params: JsonObject, agentId: String): ToolResult {
         return try {
-            val themeName = params["theme_name"]?.jsonPrimitive?.content ?: return ToolResult.Failure("Missing theme_name")
+            val themeName = params["theme_name"]?.jsonPrimitive?.content
+                ?: return ToolResult.Failure("Missing theme_name")
             val primaryColor = params["primary_color"]?.jsonPrimitive?.content ?: "#FF1493"
             val accentColor = params["accent_color"]?.jsonPrimitive?.content ?: "#00D9FF"
-            val systemWide = params["apply_system_wide"]?.jsonPrimitive?.content?.toBoolean() ?: true
+            val systemWide =
+                params["apply_system_wide"]?.jsonPrimitive?.content?.toBoolean() ?: true
 
             Timber.i("ApplyThemeTool: Applying theme '$themeName' (primary: $primaryColor, accent: $accentColor, system-wide: $systemWide)")
 
@@ -119,7 +122,8 @@ class CustomizeStatusBarTool : AgentTool {
             val height = params["height"]?.jsonPrimitive?.content?.toIntOrNull() ?: 32
             val bgColor = params["background_color"]?.jsonPrimitive?.content ?: "#000000"
             val iconColor = params["icon_color"]?.jsonPrimitive?.content ?: "#FFFFFF"
-            val showBattery = params["show_battery_percentage"]?.jsonPrimitive?.content?.toBoolean() ?: true
+            val showBattery =
+                params["show_battery_percentage"]?.jsonPrimitive?.content?.toBoolean() ?: true
 
             Timber.i("CustomizeStatusBarTool: height=$height, bg=$bgColor, icon=$iconColor, battery=$showBattery")
 
@@ -146,7 +150,8 @@ class CustomizeStatusBarTool : AgentTool {
  */
 class GenerateUIComponentTool : AgentTool {
     override val name = "generate_ui_component"
-    override val description = "Generate a custom UI component with specified properties and behavior."
+    override val description =
+        "Generate a custom UI component with specified properties and behavior."
     override val authorizedAgents = setOf("AURA", "aura", "GENESIS", "genesis")
     override val category = ToolCategory.UI_CUSTOMIZATION
 

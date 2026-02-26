@@ -4,13 +4,13 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthApi {
-    
+
     @POST("auth/login")
     suspend fun login(@Body credentials: LoginRequest): LoginResponse
-    
+
     @POST("auth/refresh")
     suspend fun refreshToken(@Body request: RefreshTokenRequest): TokenResponse
-    
+
     @POST("auth/logout")
     suspend fun logout(): LogoutResponse
 }

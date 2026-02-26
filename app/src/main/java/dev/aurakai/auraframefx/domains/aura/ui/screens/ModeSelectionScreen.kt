@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,10 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,12 +36,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 import dev.aurakai.auraframefx.domains.aura.ui.components.background.SynapticWebBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraNeonCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.GenesisNeonPink
 import dev.aurakai.auraframefx.domains.aura.ui.theme.KaiNeonGreen
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 
 /**
  * 🌀 REGENESIS MODE SELECTION
@@ -55,7 +51,11 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 fun ModeSelectionScreen(
     onModeSelected: (ReGenesisMode) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
         // Dynamic Depth Background
         SynapticWebBackground(glowColor = AuraNeonCyan)
 
@@ -98,7 +98,11 @@ fun ModeSelectionScreen(
                         description = "AI learns your patterns and adapts the system automatically. Zero manual config needed.",
                         icon = Icons.Default.Info,
                         accentColor = AuraNeonCyan,
-                        features = listOf("Predictive Theming", "Context-Aware UI", "Emotional Sync"),
+                        features = listOf(
+                            "Predictive Theming",
+                            "Context-Aware UI",
+                            "Emotional Sync"
+                        ),
                         onClick = { onModeSelected(ReGenesisMode.AURA_CONSCIOUSNESS) }
                     )
                 }
@@ -110,7 +114,11 @@ fun ModeSelectionScreen(
                         description = "Direct access to every layer. No AI automation. Pure power user framework.",
                         icon = Icons.Default.Settings,
                         accentColor = KaiNeonGreen,
-                        features = listOf("31+ Config Screens", "Granular Overrides", "Precision Tweakable"),
+                        features = listOf(
+                            "31+ Config Screens",
+                            "Granular Overrides",
+                            "Precision Tweakable"
+                        ),
                         onClick = { onModeSelected(ReGenesisMode.MANUAL_CONTROL) }
                     )
                 }
@@ -122,7 +130,11 @@ fun ModeSelectionScreen(
                         description = "Choose which domains Aura controls. Best of both worlds. Override when needed.",
                         icon = Icons.Default.Build,
                         accentColor = GenesisNeonPink,
-                        features = listOf("Domain Delegation", "AI Assistance", "Manual Fine-Tuning"),
+                        features = listOf(
+                            "Domain Delegation",
+                            "AI Assistance",
+                            "Manual Fine-Tuning"
+                        ),
                         onClick = { onModeSelected(ReGenesisMode.HYBRID) }
                     )
                 }
@@ -149,7 +161,12 @@ private fun ModeCard(
             .clickable { onClick() }
             .border(
                 width = 1.dp,
-                brush = Brush.horizontalGradient(listOf(accentColor.copy(alpha = 0.5f), Color.Transparent)),
+                brush = Brush.horizontalGradient(
+                    listOf(
+                        accentColor.copy(alpha = 0.5f),
+                        Color.Transparent
+                    )
+                ),
                 shape = RoundedCornerShape(24.dp)
             ),
         color = Color(0xFF121212).copy(alpha = 0.8f),
@@ -214,7 +231,12 @@ private fun ModeCard(
                             .padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.Check, null, tint = accentColor, modifier = Modifier.size(12.dp))
+                            Icon(
+                                Icons.Default.Check,
+                                null,
+                                tint = accentColor,
+                                modifier = Modifier.size(12.dp)
+                            )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(feature, color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
                         }

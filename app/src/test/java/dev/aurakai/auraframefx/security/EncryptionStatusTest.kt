@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
  */
 class EncryptionStatusTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test all enum values exist`() {
         val expectedValues = setOf(
             EncryptionStatus.ACTIVE,
@@ -75,7 +75,7 @@ class EncryptionStatusTest {
         assertTrue(EncryptionStatus.DISABLED.ordinal < EncryptionStatus.ERROR.ordinal)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test enum equality`() {
         val status1 = EncryptionStatus.ACTIVE
         val status2 = EncryptionStatus.ACTIVE
@@ -118,7 +118,7 @@ class EncryptionStatusTest {
         assertFalse(statusList.contains(EncryptionStatus.NOT_INITIALIZED))
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test enum in sets for uniqueness`() {
         val statusSet = setOf(
             EncryptionStatus.ACTIVE,
@@ -131,7 +131,7 @@ class EncryptionStatusTest {
         assertTrue(statusSet.contains(EncryptionStatus.DISABLED))
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test enum serialization toString`() {
         assertEquals("ACTIVE", EncryptionStatus.ACTIVE.toString())
         assertEquals("NOT_INITIALIZED", EncryptionStatus.NOT_INITIALIZED.toString())

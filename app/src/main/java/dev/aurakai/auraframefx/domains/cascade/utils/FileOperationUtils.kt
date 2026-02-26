@@ -27,7 +27,7 @@ object FileOperationUtils {
         } else {
             @Suppress("DEPRECATION")
             File(context.filesDir, dirName)
-        }.apply { 
+        }.apply {
             if (!exists()) {
                 mkdirs()
             }
@@ -83,7 +83,7 @@ object FileOperationUtils {
                 context.getExternalFilesDir(null)
             }
             directory ?: context.filesDir
-        }.also { 
+        }.also {
             if (!it.exists()) {
                 it.mkdirs()
             }

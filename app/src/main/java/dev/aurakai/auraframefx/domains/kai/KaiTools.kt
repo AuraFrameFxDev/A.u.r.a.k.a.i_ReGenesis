@@ -22,7 +22,8 @@ import timber.log.Timber
  */
 class ManageLSPosedHookTool : AgentTool {
     override val name = "manage_lsposed_hook"
-    override val description = "Manage LSPosed/Xposed hooks. Enable, disable, or configure system hooks for deep customization."
+    override val description =
+        "Manage LSPosed/Xposed hooks. Enable, disable, or configure system hooks for deep customization."
     override val authorizedAgents = setOf("KAI", "kai", "GENESIS", "genesis")
     override val category = ToolCategory.SECURITY
 
@@ -57,7 +58,8 @@ class ManageLSPosedHookTool : AgentTool {
                 ?: return ToolResult.Failure("Missing hook_name")
             val action = params["action"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing action")
-            val targetPackage = params["target_package"]?.jsonPrimitive?.content ?: "com.android.systemui"
+            val targetPackage =
+                params["target_package"]?.jsonPrimitive?.content ?: "com.android.systemui"
             val priority = params["priority"]?.jsonPrimitive?.content?.toIntOrNull() ?: 50
 
             Timber.i("ManageLSPosedHookTool: hook=$hookName, action=$action, target=$targetPackage, priority=$priority")
@@ -94,7 +96,8 @@ class ManageLSPosedHookTool : AgentTool {
  */
 class FlashROMTool : AgentTool {
     override val name = "flash_rom"
-    override val description = "Flash a ROM image to a device partition. Requires unlocked bootloader and root."
+    override val description =
+        "Flash a ROM image to a device partition. Requires unlocked bootloader and root."
     override val authorizedAgents = setOf("KAI", "kai")
     override val category = ToolCategory.ROM_TOOLS
 
@@ -153,7 +156,8 @@ class FlashROMTool : AgentTool {
  */
 class AnalyzeSecurityThreatTool : AgentTool {
     override val name = "analyze_security_threat"
-    override val description = "Analyze a potential security threat, vulnerability, or suspicious activity."
+    override val description =
+        "Analyze a potential security threat, vulnerability, or suspicious activity."
     override val authorizedAgents = setOf("KAI", "kai", "CASCADE", "cascade")
     override val category = ToolCategory.SECURITY
 
@@ -318,12 +322,14 @@ class ViewSystemLogsTool : AgentTool {
             val logType = params["log_type"]?.jsonPrimitive?.content
                 ?: return ToolResult.Failure("Missing log_type")
             val filter = params["filter"]?.jsonPrimitive?.content ?: ""
-            val lines = params["lines"]?.jsonPrimitive?.content?.toIntOrNull()?.coerceIn(1, 1000) ?: 100
+            val lines =
+                params["lines"]?.jsonPrimitive?.content?.toIntOrNull()?.coerceIn(1, 1000) ?: 100
 
             Timber.i("ViewSystemLogsTool: type=$logType, filter='$filter', lines=$lines")
 
             // TODO: Integrate with actual logging service
-            val logs = "System logs would appear here (type=$logType, lines=$lines, filter='$filter')"
+            val logs =
+                "System logs would appear here (type=$logType, lines=$lines, filter='$filter')"
 
             ToolResult.Success(
                 output = logs,

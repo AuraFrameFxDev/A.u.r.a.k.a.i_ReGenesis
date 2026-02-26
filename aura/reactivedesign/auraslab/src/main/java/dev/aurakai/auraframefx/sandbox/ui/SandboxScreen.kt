@@ -94,7 +94,11 @@ fun SandboxScreen() {
                     androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
                         drawRect(
                             brush = androidx.compose.ui.graphics.Brush.verticalGradient(
-                                colors = listOf(Color(0xFF0F0C29), Color(0xFF302B63), Color(0xFF24243E))
+                                colors = listOf(
+                                    Color(0xFF0F0C29),
+                                    Color(0xFF302B63),
+                                    Color(0xFF24243E)
+                                )
                             )
                         )
                     }
@@ -118,20 +122,33 @@ fun SandboxScreen() {
 //                dev.aurakai.auraframefx.aura.ui.HaloView(
 //                    modifier = Modifier.fillMaxSize()
 //                )
-                Text("HaloView Placeholder (Move to shared lib)", color = Color.Gray, modifier = Modifier.align(Alignment.Center))
+                Text(
+                    "HaloView Placeholder (Move to shared lib)",
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
 
         SandboxSection(title = "🧪 ChromaCore Diagnostics") {
             val sourceColor = Color(0xFFE94560)
-            val blendedColor = dev.aurakai.colorblendr.ChromaCore.blendColors(sourceColor, Color(0xFF00F5FF), 0.5f)
-            
+            val blendedColor =
+                dev.aurakai.colorblendr.ChromaCore.blendColors(sourceColor, Color(0xFF00F5FF), 0.5f)
+
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Dynamic Palette Generation", fontSize = 14.sp, color = Color.White.copy(alpha = 0.7f))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "Dynamic Palette Generation",
+                    fontSize = 14.sp,
+                    color = Color.White.copy(alpha = 0.7f)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     ColorBox(sourceColor, "Source")
                     ColorBox(blendedColor, "Blended")
-                    val complementary = dev.aurakai.colorblendr.ChromaCore.generateHarmonics(sourceColor)[2] // 2 is complementary in generateHarmonics
+                    val complementary =
+                        dev.aurakai.colorblendr.ChromaCore.generateHarmonics(sourceColor)[2] // 2 is complementary in generateHarmonics
                     ColorBox(complementary, "Harmonic")
                 }
             }

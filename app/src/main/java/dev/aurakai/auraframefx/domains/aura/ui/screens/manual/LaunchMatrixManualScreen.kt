@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens.manual
+package dev.aurakai.auraframefx.ui.screens.manual
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,9 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.theme.KaiNeonGreen
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.customization.CustomizationViewModel
+import dev.aurakai.auraframefx.ui.theme.KaiNeonGreen
+import dev.aurakai.auraframefx.ui.theme.LEDFontFamily
 
 /**
  * 🚀 LAUNCH MATRIX - MANUAL CONTROL
@@ -46,7 +46,11 @@ fun LaunchMatrixManualScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -80,7 +84,12 @@ fun LaunchMatrixManualScreen(
                     value = config.desktopRows.toFloat(),
                     range = 3f..10f,
                     accentColor = KaiNeonGreen,
-                    onValueChange = { viewModel.updateLauncherConfig(context, config.copy(desktopRows = it.toInt())) }
+                    onValueChange = {
+                        viewModel.updateLauncherConfig(
+                            context,
+                            config.copy(desktopRows = it.toInt())
+                        )
+                    }
                 )
             }
 
@@ -91,7 +100,12 @@ fun LaunchMatrixManualScreen(
                     value = config.desktopColumns.toFloat(),
                     range = 3f..10f,
                     accentColor = KaiNeonGreen,
-                    onValueChange = { viewModel.updateLauncherConfig(context, config.copy(desktopColumns = it.toInt())) }
+                    onValueChange = {
+                        viewModel.updateLauncherConfig(
+                            context,
+                            config.copy(desktopColumns = it.toInt())
+                        )
+                    }
                 )
             }
 
@@ -102,7 +116,12 @@ fun LaunchMatrixManualScreen(
                     value = config.iconSize * 100f,
                     range = 50f..150f,
                     accentColor = KaiNeonGreen,
-                    onValueChange = { viewModel.updateLauncherConfig(context, config.copy(iconSize = it / 100f)) }
+                    onValueChange = {
+                        viewModel.updateLauncherConfig(
+                            context,
+                            config.copy(iconSize = it / 100f)
+                        )
+                    }
                 )
             }
 
@@ -112,7 +131,12 @@ fun LaunchMatrixManualScreen(
                     label = "Force Themed Icons",
                     checked = config.themedIcons,
                     accentColor = KaiNeonGreen,
-                    onCheckedChange = { viewModel.updateLauncherConfig(context, config.copy(themedIcons = it)) }
+                    onCheckedChange = {
+                        viewModel.updateLauncherConfig(
+                            context,
+                            config.copy(themedIcons = it)
+                        )
+                    }
                 )
             }
         }
@@ -120,7 +144,13 @@ fun LaunchMatrixManualScreen(
 }
 
 @Composable
-private fun ManualSlider(label: String, value: Float, range: ClosedFloatingPointRange<Float>, accentColor: Color, onValueChange: (Float) -> Unit) {
+private fun ManualSlider(
+    label: String,
+    value: Float,
+    range: ClosedFloatingPointRange<Float>,
+    accentColor: Color,
+    onValueChange: (Float) -> Unit
+) {
     Column {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(label, color = Color.White, fontSize = 16.sp)
@@ -140,7 +170,12 @@ private fun ManualSlider(label: String, value: Float, range: ClosedFloatingPoint
 }
 
 @Composable
-private fun ManualSwitch(label: String, checked: Boolean, accentColor: Color, onCheckedChange: (Boolean) -> Unit) {
+private fun ManualSwitch(
+    label: String,
+    checked: Boolean,
+    accentColor: Color,
+    onCheckedChange: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,

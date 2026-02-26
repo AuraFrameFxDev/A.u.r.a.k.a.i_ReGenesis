@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
+package dev.aurakai.auraframefx.cascade.trinity
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,14 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.aura.chromacore.ui.TrinityUiState
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.domains.aura.models.Theme
-import dev.aurakai.auraframefx.domains.nexus.models.UserData
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import dev.aurakai.auraframefx.aura.ui.TrinityUiState
+import dev.aurakai.auraframefx.models.AgentResponse
+import dev.aurakai.auraframefx.models.AgentStatus
+import dev.aurakai.auraframefx.models.Theme
+import dev.aurakai.auraframefx.models.UserData
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -55,13 +53,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrinityScreen(
-    viewModel: TrinityViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: TrinityViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -179,7 +171,7 @@ fun TrinityScreen(
                     state.lastAgentResponse?.let { response ->
                         item {
                             LastAgentResponse(
-                                agentType = state.lastAgentCategory ?: "Unknown",
+                                agentType = state.lastAgentType ?: "Unknown",
                                 response = response
                             )
                         }
@@ -295,8 +287,8 @@ private fun ThemeItem(theme: Theme, onThemeSelected: () -> Unit) {
                 // Removed description as it's not in DomainTheme
             }
 
-            if (theme.isDark) {
-                 Text("Dark", style = MaterialTheme.typography.labelSmall)
+            if (theme.isDark) { // Using isDark instead of isActive
+                Text("Dark", style = MaterialTheme.typography.labelSmall)
             }
         }
     }

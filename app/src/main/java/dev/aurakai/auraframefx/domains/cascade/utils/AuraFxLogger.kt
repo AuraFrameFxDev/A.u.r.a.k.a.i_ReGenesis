@@ -8,8 +8,11 @@ interface AuraFxLogger {
     // Short-form methods (for compatibility with existing call sites)
     fun i(tag: String, message: String) = info(tag, message)
     fun d(tag: String, message: String) = debug(tag, message)
-    fun w(tag: String, message: String, throwable: Throwable? = null) = warn(tag, message, throwable)
-    fun e(tag: String, message: String, throwable: Throwable? = null) = error(tag, message, throwable)
+    fun w(tag: String, message: String, throwable: Throwable? = null) =
+        warn(tag, message, throwable)
+
+    fun e(tag: String, message: String, throwable: Throwable? = null) =
+        error(tag, message, throwable)
 
     // Long-form methods
     fun debug(tag: String, message: String, throwable: Throwable? = null)
@@ -49,8 +52,12 @@ interface AuraFxLogger {
      * This allows code to call AuraFxLogger.info(...), AuraFxLogger.debug(...), etc.
      */
     companion object {
-        fun i(tag: String, message: String) = dev.aurakai.auraframefx.domains.cascade.utils.i(tag, message)
-        fun d(tag: String, message: String) = dev.aurakai.auraframefx.domains.cascade.utils.d(tag, message)
+        fun i(tag: String, message: String) =
+            dev.aurakai.auraframefx.domains.cascade.utils.i(tag, message)
+
+        fun d(tag: String, message: String) =
+            dev.aurakai.auraframefx.domains.cascade.utils.d(tag, message)
+
         fun w(tag: String, message: String, throwable: Throwable? = null) =
             dev.aurakai.auraframefx.domains.cascade.utils.warn(tag, message, throwable)
 

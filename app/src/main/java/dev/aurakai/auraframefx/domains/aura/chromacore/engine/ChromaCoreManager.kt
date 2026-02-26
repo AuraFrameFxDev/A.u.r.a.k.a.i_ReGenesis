@@ -6,11 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
+import dev.aurakai.auraframefx.system.ShizukuManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
@@ -25,7 +24,8 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
  */
 @Singleton
 class ChromaCoreManager @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val shizukuManager: ShizukuManager
 ) {
     // Keys for persistence
     private val KEY_STATUSBAR_LOGO = booleanPreferencesKey("statusbar_logo_enabled")
@@ -43,7 +43,7 @@ class ChromaCoreManager @Inject constructor(
      */
     suspend fun applyConfiguration(config: ChromaCoreConfig) {
         Timber.d("🎨 ChromaCore: Applying Configuration...")
-        
+
         // 1. Apply Colors (Fabricated Overlays via Root/Shizuku)
         applyColorEngine(config)
 
@@ -59,7 +59,7 @@ class ChromaCoreManager @Inject constructor(
 
     private fun applyColorEngine(config: ChromaCoreConfig) {
         if (!config.useDynamicColors) return
-        
+
         // Example: cmd overlay fabricator ...
         val colorHex = String.format("#%06X", 0xFFFFFF and config.themeSeedColor)
         executeCommand("cmd overlay fabricator create --name ChromaCoreAccent --package android --target android --type 0x1c --value $colorHex")
@@ -78,7 +78,10 @@ class ChromaCoreManager @Inject constructor(
     private fun updateXposedPrefs(config: ChromaCoreConfig) {
         // Write to a shared preference file that Xposed hooks can read
         // This is the bridge between the UI/Manager and the Xposed Hooker
-        val xprefs = context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_WORLD_READABLE or Context.MODE_PRIVATE)
+        val xprefs = context.getSharedPreferences(
+            "chromacore_xposed_prefs",
+            Context.MODE_WORLD_READABLE or Context.MODE_PRIVATE
+        )
         xprefs.edit().apply {
             putBoolean("statusbar_logo_enabled", config.statusbarLogoEnabled)
             putInt("theme_seed_color", config.themeSeedColor)
@@ -100,7 +103,7 @@ class ChromaCoreManager @Inject constructor(
         return try {
             if (Shell.isAppGrantedRoot() == true) {
                 Shell.cmd(command).exec().isSuccess
-            } else if (ShizukuManager.isShizukuAvailable()) {
+            } else if (shizukuManager.isShizukuAvailable()) {
                 // Use shizuku shell if root is not available
                 // shizukuManager.runCommand(command)
                 false // Stub for now

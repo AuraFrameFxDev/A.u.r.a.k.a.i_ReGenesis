@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ROM Safety &amp; Results L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ROM Safety &amp; Results L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -33,7 +37,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .glow-red {
             box-shadow: 0 0 15px rgba(242, 13, 13, 0.4);
         }
@@ -45,121 +49,130 @@
             background: rgba(26, 8, 8, 0.85);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white overflow-hidden">
 <div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto border-x border-white/5 shadow-2xl">
-<!-- Top App Bar -->
-<div class="flex items-center bg-background-dark p-4 pb-2 justify-between z-20">
-<div class="text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer transition-colors">
-<span class="material-symbols-outlined">arrow_back</span>
-</div>
-<div class="flex flex-col items-center">
-<h2 class="text-white text-xs font-bold uppercase tracking-widest leading-tight">ReGenesis AOSPOSX</h2>
-<p class="text-[10px] text-primary font-medium">L3 PROTOCOL ACTIVE</p>
-</div>
-<div class="flex w-10 items-center justify-end">
-<button class="flex size-10 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer">
-<span class="material-symbols-outlined">security</span>
-</button>
-</div>
-</div>
-<!-- Main Content Area (Scrollable) -->
-<div class="flex-1 overflow-y-auto pb-24">
-<!-- Context Header -->
-<div class="px-6 pt-4 pb-2">
-<div class="flex items-center gap-2 mb-1">
-<span class="size-2 rounded-full bg-primary animate-pulse"></span>
-<span class="text-[10px] font-bold text-primary tracking-tighter uppercase">Kernel Access Level 3</span>
-</div>
-<h1 class="text-3xl font-bold leading-none tracking-tight">Operation Safety &amp; Results</h1>
-</div>
-<!-- Warning Card Section -->
-<div class="px-4 py-4">
-<div class="rounded-xl border border-primary/40 bg-primary/5 p-6 space-y-4">
-<div class="flex items-center gap-3 text-primary">
-<span class="material-symbols-outlined text-3xl">warning</span>
-<h3 class="text-xl font-bold tracking-tight">CRITICAL WARNING</h3>
-</div>
-<p class="text-sm text-gray-300 leading-relaxed">
-                        This operation will modify <span class="text-primary font-bold">SYSTEM PARTITIONS</span>. All persistent user data will be irrevocably destroyed. ReGenesis kernel signature will be re-written.
-                    </p>
-<div class="space-y-3 pt-4 border-t border-primary/20">
-<p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Authorization Required</p>
-<div class="relative group">
-<input class="w-full bg-background-dark border border-primary/60 rounded-lg h-14 px-4 text-white focus:ring-2 focus:ring-primary/50 focus:outline-none placeholder:text-primary/30 glow-red" placeholder="Type 'I UNDERSTAND'" type="text"/>
-</div>
-</div>
-<button class="w-full h-14 bg-primary hover:bg-red-700 text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all active:scale-95">
-<span class="material-symbols-outlined">bolt</span>
-                        FLASH SYSTEM IMAGE
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-dark p-4 pb-2 justify-between z-20">
+        <div class="text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-white text-xs font-bold uppercase tracking-widest leading-tight">
+                ReGenesis AOSPOSX</h2>
+            <p class="text-[10px] text-primary font-medium">L3 PROTOCOL ACTIVE</p>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer">
+                <span class="material-symbols-outlined">security</span>
+            </button>
+        </div>
+    </div>
+    <!-- Main Content Area (Scrollable) -->
+    <div class="flex-1 overflow-y-auto pb-24">
+        <!-- Context Header -->
+        <div class="px-6 pt-4 pb-2">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="size-2 rounded-full bg-primary animate-pulse"></span>
+                <span class="text-[10px] font-bold text-primary tracking-tighter uppercase">Kernel Access Level 3</span>
+            </div>
+            <h1 class="text-3xl font-bold leading-none tracking-tight">Operation Safety &amp;
+                Results</h1>
+        </div>
+        <!-- Warning Card Section -->
+        <div class="px-4 py-4">
+            <div class="rounded-xl border border-primary/40 bg-primary/5 p-6 space-y-4">
+                <div class="flex items-center gap-3 text-primary">
+                    <span class="material-symbols-outlined text-3xl">warning</span>
+                    <h3 class="text-xl font-bold tracking-tight">CRITICAL WARNING</h3>
+                </div>
+                <p class="text-sm text-gray-300 leading-relaxed">
+                    This operation will modify <span class="text-primary font-bold">SYSTEM PARTITIONS</span>.
+                    All persistent user data will be irrevocably destroyed. ReGenesis kernel
+                    signature will be re-written.
+                </p>
+                <div class="space-y-3 pt-4 border-t border-primary/20">
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                        Authorization Required</p>
+                    <div class="relative group">
+                        <input class="w-full bg-background-dark border border-primary/60 rounded-lg h-14 px-4 text-white focus:ring-2 focus:ring-primary/50 focus:outline-none placeholder:text-primary/30 glow-red"
+                               placeholder="Type 'I UNDERSTAND'" type="text"/>
+                    </div>
+                </div>
+                <button class="w-full h-14 bg-primary hover:bg-red-700 text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all active:scale-95">
+                    <span class="material-symbols-outlined">bolt</span>
+                    FLASH SYSTEM IMAGE
+                </button>
+            </div>
+        </div>
+        <!-- Result Mockup Section (The "After" State) -->
+        <div class="px-4 py-4">
+            <div class="relative rounded-xl border border-success/40 bg-success/5 p-6 overflow-hidden">
+                <div class="absolute -top-10 -right-10 opacity-10">
+                    <span class="material-symbols-outlined text-[120px] text-success">check_circle</span>
+                </div>
+                <div class="flex flex-col items-center text-center space-y-4 relative z-10">
+                    <div class="size-20 rounded-full bg-success/20 flex items-center justify-center glow-green">
+                        <span class="material-symbols-outlined text-5xl text-success">verified</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="text-xl font-bold text-success uppercase italic">Operation
+                            Success</h4>
+                        <p class="text-xs text-gray-400">Partition AOSPOSX-0.34a updated
+                            successfully</p>
+                    </div>
+                </div>
+                <div class="mt-8 grid grid-cols-1 gap-3">
+                    <button class="w-full h-12 bg-success text-black font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-green-400 transition-colors">
+                        <span class="material-symbols-outlined">restart_alt</span>
+                        REBOOT NOW
                     </button>
+                    <button class="w-full h-12 border border-white/20 text-white font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-white/5 transition-colors">
+                        <span class="material-symbols-outlined">support_agent</span>
+                        RESTORE AURAKAI AGENTS
+                    </button>
+                </div>
+                <!-- Logs View -->
+                <div class="mt-6 bg-black/40 rounded p-3 font-mono text-[10px] text-success/70 border border-success/10">
+                    <div class="flex justify-between border-b border-success/10 pb-1 mb-2 italic">
+                        <span>SESSION_LOG_L3</span>
+                        <span>CMD_OK</span>
+                    </div>
+                    <p>&gt; Unmounting /system... OK</p>
+                    <p>&gt; Writing boot.img... 100%</p>
+                    <p>&gt; Patching vbmeta... SUCCESS</p>
+                    <p>&gt; Verifying checksum... 0xAF32... MATCH</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- iOS Style Bottom Navigation -->
+    <div class="absolute bottom-0 left-0 right-0 h-20 glass-panel border-t border-white/10 flex items-center justify-around px-4 pb-4 z-30">
+        <div class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors cursor-pointer">
+            <span class="material-symbols-outlined">terminal</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Terminal</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-primary cursor-pointer relative">
+            <span class="material-symbols-outlined">security</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Safety</span>
+            <div class="absolute -top-1 size-1 bg-primary rounded-full"></div>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors cursor-pointer">
+            <span class="material-symbols-outlined">list_alt</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Logs</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors cursor-pointer">
+            <span class="material-symbols-outlined">settings_suggest</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Config</span>
+        </div>
+    </div>
+    <!-- iOS Home Indicator -->
+    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-40"></div>
 </div>
-</div>
-<!-- Result Mockup Section (The "After" State) -->
-<div class="px-4 py-4">
-<div class="relative rounded-xl border border-success/40 bg-success/5 p-6 overflow-hidden">
-<div class="absolute -top-10 -right-10 opacity-10">
-<span class="material-symbols-outlined text-[120px] text-success">check_circle</span>
-</div>
-<div class="flex flex-col items-center text-center space-y-4 relative z-10">
-<div class="size-20 rounded-full bg-success/20 flex items-center justify-center glow-green">
-<span class="material-symbols-outlined text-5xl text-success">verified</span>
-</div>
-<div class="space-y-1">
-<h4 class="text-xl font-bold text-success uppercase italic">Operation Success</h4>
-<p class="text-xs text-gray-400">Partition AOSPOSX-0.34a updated successfully</p>
-</div>
-</div>
-<div class="mt-8 grid grid-cols-1 gap-3">
-<button class="w-full h-12 bg-success text-black font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-green-400 transition-colors">
-<span class="material-symbols-outlined">restart_alt</span>
-                            REBOOT NOW
-                        </button>
-<button class="w-full h-12 border border-white/20 text-white font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-white/5 transition-colors">
-<span class="material-symbols-outlined">support_agent</span>
-                            RESTORE AURAKAI AGENTS
-                        </button>
-</div>
-<!-- Logs View -->
-<div class="mt-6 bg-black/40 rounded p-3 font-mono text-[10px] text-success/70 border border-success/10">
-<div class="flex justify-between border-b border-success/10 pb-1 mb-2 italic">
-<span>SESSION_LOG_L3</span>
-<span>CMD_OK</span>
-</div>
-<p>&gt; Unmounting /system... OK</p>
-<p>&gt; Writing boot.img... 100%</p>
-<p>&gt; Patching vbmeta... SUCCESS</p>
-<p>&gt; Verifying checksum... 0xAF32... MATCH</p>
-</div>
-</div>
-</div>
-</div>
-<!-- iOS Style Bottom Navigation -->
-<div class="absolute bottom-0 left-0 right-0 h-20 glass-panel border-t border-white/10 flex items-center justify-around px-4 pb-4 z-30">
-<div class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors cursor-pointer">
-<span class="material-symbols-outlined">terminal</span>
-<span class="text-[10px] font-medium uppercase tracking-tighter">Terminal</span>
-</div>
-<div class="flex flex-col items-center gap-1 text-primary cursor-pointer relative">
-<span class="material-symbols-outlined">security</span>
-<span class="text-[10px] font-medium uppercase tracking-tighter">Safety</span>
-<div class="absolute -top-1 size-1 bg-primary rounded-full"></div>
-</div>
-<div class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors cursor-pointer">
-<span class="material-symbols-outlined">list_alt</span>
-<span class="text-[10px] font-medium uppercase tracking-tighter">Logs</span>
-</div>
-<div class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors cursor-pointer">
-<span class="material-symbols-outlined">settings_suggest</span>
-<span class="text-[10px] font-medium uppercase tracking-tighter">Config</span>
-</div>
-</div>
-<!-- iOS Home Indicator -->
-<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-40"></div>
-</div>
-</body></html>
+</body>
+</html>

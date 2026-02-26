@@ -89,7 +89,8 @@ import kotlin.math.roundToInt
  * - "TAP TO OPEN" text along edge
  * - Pulsing neon ring animations
  */
-class FloatingAgentOverlay : Service(), LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner {
+class FloatingAgentOverlay : Service(), LifecycleOwner, ViewModelStoreOwner,
+    SavedStateRegistryOwner {
 
     private lateinit var windowManager: WindowManager
     private var overlayView: ComposeView? = null
@@ -189,7 +190,9 @@ class FloatingAgentOverlay : Service(), LifecycleOwner, ViewModelStoreOwner, Sav
         super.onDestroy()
         lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
         overlayView?.let {
-            windowManager.removeView(it)
+            if (::windowManager.isInitialized) {
+                windowManager.removeView(it)
+            }
         }
     }
 

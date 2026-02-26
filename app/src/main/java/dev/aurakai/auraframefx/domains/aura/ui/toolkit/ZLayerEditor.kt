@@ -1,11 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura.ui.toolkit
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,18 +13,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlin.math.roundToInt
 
 /**
  * 🎨 Z-LAYER EDITOR
@@ -90,10 +82,10 @@ fun ZLayerEditorScreen() {
             )
         )
     }
-    
+
     var selectedLayer by remember { mutableStateOf<UILayer?>(null) }
     var showLayerPreview by remember { mutableStateOf(true) }
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         // LAYER PREVIEW (Bottom to top Z-order)
         if (showLayerPreview) {
@@ -132,7 +124,7 @@ fun ZLayerEditorScreen() {
                     }
             }
         }
-        
+
         // CONTROL PANEL (Right Side)
         Row(
             modifier = Modifier
@@ -166,19 +158,19 @@ fun ZLayerEditorScreen() {
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
-                        
+
                         IconButton(
                             onClick = { showLayerPreview = !showLayerPreview }
                         ) {
                             Icon(
-                                if (showLayerPreview) Icons.Default.Visibility 
+                                if (showLayerPreview) Icons.Default.Visibility
                                 else Icons.Default.VisibilityOff,
                                 contentDescription = "Toggle Preview",
                                 tint = Color.Cyan
                             )
                         }
                     }
-                    
+
                     // Freedom Manifesto
                     Card(
                         modifier = Modifier
@@ -215,12 +207,12 @@ fun ZLayerEditorScreen() {
                             }
                         }
                     }
-                    
+
                     Divider(
                         color = Color.White.copy(alpha = 0.2f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                    
+
                     // Layer List
                     Text(
                         "LAYERS (${layers.size})",
@@ -229,7 +221,7 @@ fun ZLayerEditorScreen() {
                         color = Color.White.copy(alpha = 0.7f),
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    
+
                     LazyColumn(
                         modifier = Modifier.weight(1f),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -255,18 +247,22 @@ fun ZLayerEditorScreen() {
                                 },
                                 onMoveUp = {
                                     if (index > 0) {
-                                        val sorted = layers.sortedByDescending { it.zIndex }.toMutableList()
+                                        val sorted =
+                                            layers.sortedByDescending { it.zIndex }.toMutableList()
                                         val temp = sorted[index - 1].zIndex
-                                        sorted[index - 1] = sorted[index - 1].copy(zIndex = sorted[index].zIndex)
+                                        sorted[index - 1] =
+                                            sorted[index - 1].copy(zIndex = sorted[index].zIndex)
                                         sorted[index] = sorted[index].copy(zIndex = temp)
                                         layers = sorted
                                     }
                                 },
                                 onMoveDown = {
                                     if (index < layers.size - 1) {
-                                        val sorted = layers.sortedByDescending { it.zIndex }.toMutableList()
+                                        val sorted =
+                                            layers.sortedByDescending { it.zIndex }.toMutableList()
                                         val temp = sorted[index + 1].zIndex
-                                        sorted[index + 1] = sorted[index + 1].copy(zIndex = sorted[index].zIndex)
+                                        sorted[index + 1] =
+                                            sorted[index + 1].copy(zIndex = sorted[index].zIndex)
                                         sorted[index] = sorted[index].copy(zIndex = temp)
                                         layers = sorted
                                     }
@@ -274,14 +270,14 @@ fun ZLayerEditorScreen() {
                             )
                         }
                     }
-                    
+
                     // Selected Layer Controls
                     selectedLayer?.let { layer ->
                         Divider(
                             color = Color.White.copy(alpha = 0.2f),
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
-                        
+
                         LayerControls(
                             layer = layer,
                             onUpdate = { updated ->
@@ -313,9 +309,9 @@ fun LayerItem(
             .fillMaxWidth()
             .clickable(onClick = onSelect),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) 
-                Color.Cyan.copy(alpha = 0.2f) 
-            else 
+            containerColor = if (isSelected)
+                Color.Cyan.copy(alpha = 0.2f)
+            else
                 Color.White.copy(alpha = 0.05f)
         ),
         shape = RoundedCornerShape(8.dp),
@@ -343,7 +339,7 @@ fun LayerItem(
                     color = Color.White.copy(alpha = 0.6f)
                 )
             }
-            
+
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 IconButton(
                     onClick = onVisibilityToggle,
@@ -356,7 +352,7 @@ fun LayerItem(
                         modifier = Modifier.size(16.dp)
                     )
                 }
-                
+
                 IconButton(
                     onClick = onLockToggle,
                     modifier = Modifier.size(32.dp)
@@ -388,7 +384,7 @@ fun LayerControls(
             fontWeight = FontWeight.Bold,
             color = Color.White.copy(alpha = 0.7f)
         )
-        
+
         // Opacity
         PropertySlider(
             label = "Opacity",
@@ -396,7 +392,7 @@ fun LayerControls(
             onValueChange = { onUpdate(layer.copy(opacity = it)) },
             valueRange = 0f..1f
         )
-        
+
         // Blur
         PropertySlider(
             label = "Blur",
@@ -404,7 +400,7 @@ fun LayerControls(
             onValueChange = { onUpdate(layer.copy(blurAmount = it)) },
             valueRange = 0f..20f
         )
-        
+
         // Scale
         PropertySlider(
             label = "Scale",
@@ -412,7 +408,7 @@ fun LayerControls(
             onValueChange = { onUpdate(layer.copy(scale = it)) },
             valueRange = 0.5f..2f
         )
-        
+
         // Offset X
         PropertySlider(
             label = "Offset X",
@@ -420,7 +416,7 @@ fun LayerControls(
             onValueChange = { onUpdate(layer.copy(offsetX = it)) },
             valueRange = -500f..500f
         )
-        
+
         // Offset Y
         PropertySlider(
             label = "Offset Y",

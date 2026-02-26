@@ -2,12 +2,10 @@ package dev.aurakai.auraframefx.embodiment
 
 import androidx.compose.animation.core.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import kotlin.math.atan2
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 

@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.engine
 
-import androidx.compose.ui.graphics.Color
 import kotlinx.serialization.Serializable
 
 /**

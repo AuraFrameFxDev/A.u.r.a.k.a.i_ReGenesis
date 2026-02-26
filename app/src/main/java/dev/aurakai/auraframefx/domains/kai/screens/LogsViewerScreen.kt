@@ -1,52 +1,81 @@
 package dev.aurakai.auraframefx.domains.kai.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ListAlt
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
+import dev.aurakai.auraframefx.domains.kai.viewmodels.LogEntry
 
 /**
- * Logs Viewer Screen
- * View system logs and module activity
+ * Logs Viewer Screen — Kai reads real logcat via root or fallback process.
+ * State comes from KaiSystemViewModel. No local log list.
  */
 @Composable
 fun LogsViewerScreen(
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
-    val logs = remember { mutableStateListOf(
-        LogEntry("INFO", "LSPosed", "Framework initialized successfully", "10:30:15", Color(0xFF4ECDC4)),
-        LogEntry("WARN", "GravityBox", "System UI hook applied", "10:29:42", Color(0xFFFFD93D)),
-        LogEntry("ERROR", "XPrivacyLua", "Permission denied for location access", "10:28:33", Color(0xFFDC143C)),
-        LogEntry("INFO", "App Settings", "Per-app configuration loaded", "10:27:18", Color(0xFF4ECDC4)),
-        LogEntry("DEBUG", "YouTube AdAway", "Ad detection algorithm updated", "10:26:55", Color(0xFF9370DB)),
-        LogEntry("INFO", "BootManager", "Startup optimization completed", "10:25:12", Color(0xFF4ECDC4)),
-        LogEntry("WARN", "Amplify", "Battery calibration required", "10:24:38", Color(0xFFFFD93D)),
-        LogEntry("INFO", "System", "All hooks loaded successfully", "10:23:05", Color(0xFF4ECDC4)),
-        LogEntry("ERROR", "FakeID", "Device ID spoofing failed", "10:22:29", Color(0xFFDC143C)),
-        LogEntry("DEBUG", "Network", "VPN connection established", "10:21:47", Color(0xFF9370DB))
-    )}
+    val logsState by viewModel.logsState.collectAsState()
+    val logLevels = listOf("All", "DEBUG", "INFO", "WARN", "ERROR", "VERBOSE")
 
+    // Local UI-only filter state (client-side; does not re-run logcat)
     val selectedLevel = remember { mutableStateOf("All") }
-    val logLevels = listOf("All", "DEBUG", "INFO", "WARN", "ERROR")
     val searchQuery = remember { mutableStateOf("") }
 
-    val filteredLogs = logs.filter { log ->
+    // Kick off log stream when screen first appears
+    LaunchedEffect(Unit) {
+        viewModel.startLogStream()
+    }
+
+    val allEntries = logsState.entries
+    val filteredLogs = allEntries.filter { log ->
         (selectedLevel.value == "All" || log.level == selectedLevel.value) &&
-        (searchQuery.value.isEmpty() || log.message.contains(searchQuery.value, ignoreCase = true) ||
-         log.source.contains(searchQuery.value, ignoreCase = true))
+            (searchQuery.value.isEmpty() ||
+                log.message.contains(searchQuery.value, ignoreCase = true) ||
+                log.tag.contains(searchQuery.value, ignoreCase = true))
     }
 
     Column(
@@ -68,7 +97,7 @@ fun LogsViewerScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "View system logs and module activity",
+            text = if (logsState.isStreaming) "Loading logcat…" else "System logs — ${allEntries.size} entries",
             style = MaterialTheme.typography.bodyLarge,
             color = Color(0xFFFFED4E).copy(alpha = 0.8f)
         )
@@ -77,7 +106,6 @@ fun LogsViewerScreen(
 
         // Search and Filter
         Row(modifier = Modifier.fillMaxWidth()) {
-            // Search Bar
             OutlinedTextField(
                 value = searchQuery.value,
                 onValueChange = { searchQuery.value = it },
@@ -99,15 +127,12 @@ fun LogsViewerScreen(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Level Filter
             var expanded by remember { mutableStateOf(false) }
             Box(modifier = Modifier.weight(0.8f)) {
                 OutlinedButton(
                     onClick = { expanded = true },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = Color(0xFFFFD93D)
-                    )
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFFFD93D))
                 ) {
                     Text(selectedLevel.value)
                     Icon(
@@ -148,9 +173,9 @@ fun LogsViewerScreen(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                val errorCount = logs.count { it.level == "ERROR" }
-                val warnCount = logs.count { it.level == "WARN" }
-                val infoCount = logs.count { it.level == "INFO" }
+                val errorCount = allEntries.count { it.level == "ERROR" }
+                val warnCount = allEntries.count { it.level == "WARN" }
+                val infoCount = allEntries.count { it.level == "INFO" }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -198,7 +223,6 @@ fun LogsViewerScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Logs List
         Text(
             text = "Recent Logs (${filteredLogs.size})",
             style = MaterialTheme.typography.titleLarge,
@@ -214,7 +238,7 @@ fun LogsViewerScreen(
                 LogEntryCard(log = log)
             }
 
-            if (filteredLogs.isEmpty()) {
+            if (filteredLogs.isEmpty() && !logsState.isStreaming) {
                 item {
                     Box(
                         modifier = Modifier
@@ -236,7 +260,7 @@ fun LogsViewerScreen(
                                 color = Color.White.copy(alpha = 0.5f)
                             )
                             Text(
-                                text = "Try adjusting your search or filter",
+                                text = "Try adjusting your search or filter, or tap Refresh",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.White.copy(alpha = 0.3f)
                             )
@@ -251,14 +275,9 @@ fun LogsViewerScreen(
         // Action Buttons
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedButton(
-                onClick = {
-                    // Clear all logs
-                    logs.clear()
-                },
+                onClick = { viewModel.clearLogs() },
                 modifier = Modifier.weight(1f),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = Color(0xFFDC143C)
-                )
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFDC143C))
             ) {
                 Icon(
                     imageVector = Icons.Default.Clear,
@@ -269,32 +288,11 @@ fun LogsViewerScreen(
                 Text("Clear Logs")
             }
             Spacer(modifier = Modifier.width(16.dp))
-            OutlinedButton(
-                onClick = {
-                    // Export logs
-                },
-                modifier = Modifier.weight(1f),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = Color(0xFF4ECDC4)
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Download,
-                    contentDescription = "Export",
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text("Export")
-            }
-            Spacer(modifier = Modifier.width(16.dp))
             Button(
-                onClick = {
-                    // Refresh logs
-                },
+                onClick = { viewModel.startLogStream(logsState.filter) },
+                enabled = !logsState.isStreaming,
                 modifier = Modifier.weight(1f),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFFD93D)
-                )
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD93D))
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
@@ -302,26 +300,19 @@ fun LogsViewerScreen(
                     modifier = Modifier.size(16.dp)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Text("Refresh", color = Color.Black)
+                Text(if (logsState.isStreaming) "Loading…" else "Refresh", color = Color.Black)
             }
         }
     }
 }
 
-/**
- * Log entry card component
- */
 @Composable
 private fun LogEntryCard(log: LogEntry) {
+    val entryColor = Color(log.color)
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Black.copy(alpha = 0.4f)
-        ),
-        border = androidx.compose.foundation.BorderStroke(
-            1.dp,
-            log.color.copy(alpha = 0.3f)
-        )
+        colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.4f)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, entryColor.copy(alpha = 0.3f))
     ) {
         Row(
             modifier = Modifier
@@ -331,15 +322,13 @@ private fun LogEntryCard(log: LogEntry) {
         ) {
             // Level Badge
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = log.color.copy(alpha = 0.2f)
-                ),
+                colors = CardDefaults.cardColors(containerColor = entryColor.copy(alpha = 0.2f)),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
                     text = log.level,
                     style = MaterialTheme.typography.labelSmall,
-                    color = log.color,
+                    color = entryColor,
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                     fontWeight = FontWeight.Bold
                 )
@@ -347,7 +336,6 @@ private fun LogEntryCard(log: LogEntry) {
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Timestamp
             Text(
                 text = log.timestamp,
                 style = MaterialTheme.typography.bodySmall,
@@ -356,17 +344,15 @@ private fun LogEntryCard(log: LogEntry) {
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Source
             Text(
-                text = "[${log.source}]",
+                text = "[${log.tag}]",
                 style = MaterialTheme.typography.bodySmall,
-                color = log.color,
+                color = entryColor,
                 fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Message
             Text(
                 text = log.message,
                 style = MaterialTheme.typography.bodyMedium,
@@ -376,14 +362,3 @@ private fun LogEntryCard(log: LogEntry) {
         }
     }
 }
-
-/**
- * Data class for log entries
- */
-data class LogEntry(
-    val level: String,
-    val source: String,
-    val message: String,
-    val timestamp: String,
-    val color: Color
-)

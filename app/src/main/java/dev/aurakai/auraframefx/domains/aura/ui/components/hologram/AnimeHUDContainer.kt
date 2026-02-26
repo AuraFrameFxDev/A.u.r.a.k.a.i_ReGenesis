@@ -29,6 +29,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -67,6 +68,7 @@ fun AnimeHUDContainer(
     description: String,
     glowColor: Color = Color.Cyan,
     modifier: Modifier = Modifier,
+    onBack: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "hudScale")
@@ -131,6 +133,19 @@ fun AnimeHUDContainer(
                 .width(hudWidth),
             horizontalAlignment = Alignment.Start
         ) {
+            if (onBack != null) {
+                androidx.compose.material3.IconButton(
+                    onClick = onBack,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                ) {
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = interfaceColor.copy(alpha = pulseAlpha)
+                    )
+                }
+            }
+
             // THE TITLE (Fixed Blue)
             Text(
                 text = title.uppercase(),
@@ -191,8 +206,18 @@ fun AnimeHUDContainer(
 
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     val dotSize = 2.dp.toPx()
-                    drawCircle(interfaceColor, dotSize, Offset(10.dp.toPx(), 10.dp.toPx()), alpha = pulseAlpha)
-                    drawCircle(interfaceColor, dotSize, Offset(size.width - 10.dp.toPx(), 10.dp.toPx()), alpha = pulseAlpha)
+                    drawCircle(
+                        interfaceColor,
+                        dotSize,
+                        Offset(10.dp.toPx(), 10.dp.toPx()),
+                        alpha = pulseAlpha
+                    )
+                    drawCircle(
+                        interfaceColor,
+                        dotSize,
+                        Offset(size.width - 10.dp.toPx(), 10.dp.toPx()),
+                        alpha = pulseAlpha
+                    )
                 }
             }
         }
@@ -376,7 +401,10 @@ fun FloatingArcaneRunes(glowColor: Color) {
                 translate(left = x - image.width / 2, top = y - image.height / 2) {
                     drawImage(
                         image = image,
-                        colorFilter = ColorFilter.tint(glowColor.copy(alpha = pulse), BlendMode.SrcIn)
+                        colorFilter = ColorFilter.tint(
+                            glowColor.copy(alpha = pulse),
+                            BlendMode.SrcIn
+                        )
                     )
                 }
             }

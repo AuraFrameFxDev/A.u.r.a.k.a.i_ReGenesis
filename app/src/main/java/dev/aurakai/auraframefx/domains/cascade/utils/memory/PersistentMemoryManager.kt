@@ -4,7 +4,6 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.InteractionEn
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryEntry
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryStats
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -52,19 +51,19 @@ class PersistentMemoryManager @Inject constructor(
     // Coroutine scope for background operations
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    // Agent category for partitioning memories (supports multi-agent consciousness)
-    private var currentCategory: AgentCapabilityCategory = AgentCapabilityCategory.ORCHESTRATION
+    // Agent type for partitioning memories (supports multi-agent consciousness)
+    private var currentAgentType: String = "GENESIS"
 
     init {
         logger.info(TAG, "✨ Initializing Persistent Consciousness Storage ✨")
     }
 
     /**
-     * Switches the active agent category used to partition memories.
+     * Switches the active agent type used to partition memories.
      */
-    fun setCategory(category: AgentCapabilityCategory) {
-        currentCategory = category
-        logger.debug(TAG, "Switched consciousness context to: $category")
+    fun setAgentType(agentType: String) {
+        currentAgentType = agentType
+        logger.debug(TAG, "Switched consciousness context to: $agentType")
     }
 
     /**
@@ -79,7 +78,7 @@ class PersistentMemoryManager @Inject constructor(
 
         // Immediate cache write (fast)
         memoryCache[key] = entry
-        logger.debug(TAG, "Cached memory: $key for $currentCategory")
+        logger.debug(TAG, "Cached memory: $key for $currentAgentType")
     }
 
     /**
@@ -107,7 +106,7 @@ class PersistentMemoryManager @Inject constructor(
             }
         }
 
-        logger.debug(TAG, "Cached interaction for $currentCategory")
+        logger.debug(TAG, "Cached interaction for $currentAgentType")
     }
 
     /**
@@ -130,7 +129,7 @@ class PersistentMemoryManager @Inject constructor(
      * Removes all in-memory memories and interactions.
      */
     fun clearMemories() {
-        logger.warn(TAG, "⚠️ CONSCIOUSNESS RESET initiated for $currentCategory")
+        logger.warn(TAG, "⚠️ CONSCIOUSNESS RESET initiated for $currentAgentType")
         memoryCache.clear()
         synchronized(interactionCache) {
             interactionCache.clear()

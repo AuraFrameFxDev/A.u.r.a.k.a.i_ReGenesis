@@ -71,13 +71,16 @@ class SecurePreferences @Inject constructor(
     // --- QUICK TOGGLE STATUSES ---
 
     fun isVetoEnabled(): Boolean = securePrefs.getBoolean("veto_enabled", true)
-    fun setVetoEnabled(enabled: Boolean) = securePrefs.edit().putBoolean("veto_enabled", enabled).apply()
+    fun setVetoEnabled(enabled: Boolean) =
+        securePrefs.edit().putBoolean("veto_enabled", enabled).apply()
 
     fun isConsciousnessEnabled(): Boolean = securePrefs.getBoolean("consciousness_enabled", true)
-    fun setConsciousnessEnabled(enabled: Boolean) = securePrefs.edit().putBoolean("consciousness_enabled", enabled).apply()
+    fun setConsciousnessEnabled(enabled: Boolean) =
+        securePrefs.edit().putBoolean("consciousness_enabled", enabled).apply()
 
     fun isAuraBubbleEnabled(): Boolean = securePrefs.getBoolean("aura_bubble_enabled", true)
-    fun setAuraBubbleEnabled(enabled: Boolean) = securePrefs.edit().putBoolean("aura_bubble_enabled", enabled).apply()
+    fun setAuraBubbleEnabled(enabled: Boolean) =
+        securePrefs.edit().putBoolean("aura_bubble_enabled", enabled).apply()
 
     /**
      * Clear all secure preferences

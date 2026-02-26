@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.preview.UIComponentsPreview
-import androidx.compose.ui.tooling.preview.Preview
 
 /**
  * A comprehensive theme editor that shows a live preview of UI components
@@ -136,7 +133,6 @@ fun ThemeEditor(
         }
     }
 }
-
 
 
 @Composable

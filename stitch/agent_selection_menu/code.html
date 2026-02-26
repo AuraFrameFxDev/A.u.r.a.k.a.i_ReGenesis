@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Agent Selection Menu</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Agent Selection Menu</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -32,7 +34,7 @@
             },
         };
     </script>
-<style>
+    <style>
         .neon-border-cyan {
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.5), inset 0 0 5px rgba(0, 243, 255, 0.2);
             border: 1px solid #00f3ff;
@@ -77,184 +79,211 @@
             100% { transform: translate(0); }
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-primary font-mono selection:bg-primary selection:text-black min-h-screen overflow-x-hidden">
 <div class="fixed inset-0 pointer-events-none opacity-20 bg-grid-pattern bg-[size:40px_40px]"></div>
 <div class="fixed inset-0 pointer-events-none bg-gradient-to-b from-transparent via-accent/5 to-background-dark"></div>
 <div class="scanline"></div>
 <header class="sticky top-0 z-50 px-6 pt-10 pb-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/20">
-<div class="flex items-center justify-between mb-2">
-<span class="text-[10px] tracking-widest uppercase opacity-60">System Status: Optimal</span>
-<div class="flex gap-2">
-<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-<div class="w-2 h-2 rounded-full bg-secondary"></div>
-</div>
-</div>
-<div class="flex items-end justify-between">
-<h1 class="font-display text-2xl tracking-tighter uppercase neon-text-cyan">Agent Hub</h1>
-<span class="text-[10px] opacity-40">V 4.0.2</span>
-</div>
-<div class="w-full h-px bg-gradient-to-r from-primary via-secondary to-transparent mt-2"></div>
+    <div class="flex items-center justify-between mb-2">
+        <span class="text-[10px] tracking-widest uppercase opacity-60">System Status: Optimal</span>
+        <div class="flex gap-2">
+            <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+            <div class="w-2 h-2 rounded-full bg-secondary"></div>
+        </div>
+    </div>
+    <div class="flex items-end justify-between">
+        <h1 class="font-display text-2xl tracking-tighter uppercase neon-text-cyan">Agent Hub</h1>
+        <span class="text-[10px] opacity-40">V 4.0.2</span>
+    </div>
+    <div class="w-full h-px bg-gradient-to-r from-primary via-secondary to-transparent mt-2"></div>
 </header>
 <main class="p-6 pb-32">
-<div class="mb-8 flex items-center bg-black/20 p-3 rounded-lg border border-primary/20">
-<span class="material-icons text-primary/60 mr-3">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-xs w-full placeholder:text-primary/30 uppercase" placeholder="FILTER BY SPECIALIZATION..." type="text"/>
-</div>
-<div class="grid grid-cols-2 gap-6">
-<button class="group relative flex flex-col items-center glitch-hover" onclick="showDetails('Genesis', '98%', 'CREATIVE SYNTHESIS')">
-<div class="relative w-full aspect-square mb-3">
-<div class="absolute inset-0 neon-border-magenta opacity-40 group-hover:opacity-100 transition-opacity"></div>
-<div class="absolute inset-2 overflow-hidden bg-slate-900/50">
-<img alt="Genesis Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDojqM6nQHlH06eyNrh4DgHzPGa4iRPnES_CLLPpUUNQlYEUVS30JC1rT3-kfHLmx-vhpCxj05ayyPJFqXg7lR9km6VfF09-h8gNDtiWuNJz9ZdVnXNVXnzG9ZNZ29d-AEPzB4hFasXQxmvPhKOV0aph3kD5fEmrQj91x2kVplptl3l9udTrRbsWVAcqZ9CUpCkz10jxaQ1MI98taJqYRWDUSg0a_0fJ_a03JDR7mBrVxX-IgeUSy8IczX3nCyMznMpEmj0csPN3p8"/>
-</div>
-</div>
-<div class="text-center">
-<h3 class="font-display text-sm tracking-widest text-secondary uppercase">Genesis</h3>
-<p class="text-[9px] opacity-50 mt-1">CLASS-S ENTITY</p>
-</div>
-</button>
-<button class="group relative flex flex-col items-center glitch-hover" onclick="showDetails('Claude', '94%', 'NEURAL MAPPING')">
-<div class="relative w-full aspect-square mb-3">
-<div class="absolute inset-0 neon-border-cyan opacity-40 group-hover:opacity-100 transition-opacity"></div>
-<div class="absolute inset-2 overflow-hidden bg-slate-900/50">
-<img alt="Claude Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVwvQdj6ihS_ZVFo1_GKPyVHZL1S8dh68o6UlNoNz3PqYBVqinZqv3Gklqh3GFtf4G9sAo45n_hUcNAr3VTayzXKjkXj1KvOJ7GjBzRi6qCfe-gbADrSnUuLCFwFytmbhQDIZRtL1xc7V_mRzZTPS1ku90mgfM3bvS-m_yyayQO0PcKItSeG_m4xAaDsDR2Sv3oFFA4z3aFs3LVdyvEFt_lTTFNpqie4E7MskCBFUGWNsceL4Erq0LSbFSimJC-qSuXm5CWBl87-4"/>
-</div>
-</div>
-<div class="text-center">
-<h3 class="font-display text-sm tracking-widest text-primary uppercase">Claude</h3>
-<p class="text-[9px] opacity-50 mt-1">LOGIC ENGINE</p>
-</div>
-</button>
-<button class="group relative flex flex-col items-center glitch-hover" onclick="showDetails('Gemini', '91%', 'DATA INFILTRATION')">
-<div class="relative w-full aspect-square mb-3">
-<div class="absolute inset-0 neon-border-cyan opacity-40 group-hover:opacity-100 transition-opacity"></div>
-<div class="absolute inset-2 overflow-hidden bg-slate-900/50">
-<img alt="Gemini Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEfntdBsdpAswfD4Z2Qr1CVlKWj9fUR_iw6lDPwljVP3tsBOmIaxvdEhcA-BHSAlOp9sSC2JmOeCZKWB7T0ZkuDhk899gcs_UGQe-zwo6dbD2VQoNFBngvoSgqruWKPNSIhfp7XcfqZtal2v38Gdm1Xpu7FTxaCDPltXaTHXE9bSzoqquWMLAQr2GzDHnz_GtVn4s8OHeBtsuyRQ2_GXrObT4BkUxzXWiBBRnlm32EOVU6RPPfNcrpcwmW9OyqkgGAYLF86G4gCIE"/>
-</div>
-</div>
-<div class="text-center">
-<h3 class="font-display text-sm tracking-widest text-primary uppercase">Gemini</h3>
-<p class="text-[9px] opacity-50 mt-1">DUAL CORE</p>
-</div>
-</button>
-<button class="group relative flex flex-col items-center glitch-hover" onclick="showDetails('Grok', '87%', 'CHAOS CREATION')">
-<div class="relative w-full aspect-square mb-3">
-<div class="absolute inset-0 neon-border-magenta opacity-40 group-hover:opacity-100 transition-opacity"></div>
-<div class="absolute inset-2 overflow-hidden bg-slate-900/50">
-<img alt="Grok Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1or-4arc7Kny-hItuKwgCeki8EZaIX3-0a4deqT8HRI7hjf57Lddl9aH6VR4zl6Qjz-VJw76phLJ-gweZSf_rtqMyKEZ6jsZwENV22OaXQHgn8Pl6MI7WgOzZCoCqye_JapfiynVYKQanEcyTzI-rF1mwPiiM30aJN8uCrmuZyL3QbGMVlP_jyXqPQlfk3qCST7czk5J8ffuymG4apogHlhDbpBnxKEn_-JeC-e0lt6OOytuBYiR5CRNcAJazy3RVQ7G35QIWoTI"/>
-</div>
-</div>
-<div class="text-center">
-<h3 class="font-display text-sm tracking-widest text-secondary uppercase">Grok</h3>
-<p class="text-[9px] opacity-50 mt-1">UNFILTERED</p>
-</div>
-</button>
-<button class="group relative flex flex-col items-center glitch-hover" onclick="showDetails('Perplexity', '99%', 'DEEP RESEARCH')">
-<div class="relative w-full aspect-square mb-3">
-<div class="absolute inset-0 neon-border-cyan opacity-40 group-hover:opacity-100 transition-opacity"></div>
-<div class="absolute inset-2 overflow-hidden bg-slate-900/50">
-<img alt="Perplexity Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGHjC_hWvzVzh3PBfVWhFF-l6zg_lQdbXNGu4tswE54lCHdqP_lJ9tdnElhzQPUhcY8IUzxdGbd49FfsaAVB1mQ3m1GClbPmB33aL-Pqps7kcxSQkPVkF4hVNyHtUlN10Ksu_35AzWhOg287aZ60Vs-yVPIKRRZcVy-AdHLMhNGTyQKXFIr_q4a-4IaNi8rQvs_MUFkVyaEiUB-cKNTIpy2VWZXdo7hiIfz5OnDYAZhYTDjHjo0RIXeShlNTXEQXv6AguNU-hugro"/>
-</div>
-</div>
-<div class="text-center">
-<h3 class="font-display text-sm tracking-widest text-primary uppercase">Perplexity</h3>
-<p class="text-[9px] opacity-50 mt-1">ORACLE CLASS</p>
-</div>
-</button>
-<button class="group relative flex flex-col items-center glitch-hover" onclick="showDetails('Cascade', '95%', 'STRUCTURAL CATALYST')">
-<div class="relative w-full aspect-square mb-3">
-<div class="absolute inset-0 neon-border-magenta opacity-40 group-hover:opacity-100 transition-opacity"></div>
-<div class="absolute inset-2 overflow-hidden bg-slate-900/50">
-<img alt="Cascade Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAikQ-nwBDF93qQv7zSZhZiJ0prQfTnejlOrN4K6At0Dyn-h6ObxBMVbrpM8MewwwTMUduVaf0-9MQL4wcsZU47RBPvycXGoBBzLbC22Wv7k6DRqPnDf4tnZi_dceplJJ40wh591fNokdKlgNOsf2YEanZbsnRvJM3QUU7CRSmxtPGUUohX0w9HyWBn4SAI8A9kdwa1FjFW_ktCWBsUpnwAD_oUJvjnmukGAYhJSVxgTFx2iSC8INV2YIBQLmGK_LIvESMPthckr8"/>
-</div>
-</div>
-<div class="text-center">
-<h3 class="font-display text-sm tracking-widest text-secondary uppercase">Cascade</h3>
-<p class="text-[9px] opacity-50 mt-1">RAPID ITERATION</p>
-</div>
-</button>
-</div>
-<div class="fixed inset-0 z-[100] flex items-center justify-center p-6 hidden" id="detailsModal">
-<div class="absolute inset-0 bg-background-dark/95 backdrop-blur-xl" onclick="closeDetails()"></div>
-<div class="relative w-full max-w-sm bg-background-dark border-2 border-primary neon-border-cyan p-6 overflow-hidden">
-<div class="absolute -right-4 -top-4 opacity-10">
-<span class="material-icons text-[120px]">security</span>
-</div>
-<div class="flex justify-between items-start mb-6">
-<div>
-<h2 class="font-display text-3xl text-primary neon-text-cyan uppercase" id="modalName">AGENT_NAME</h2>
-<div class="h-1 w-20 bg-primary mt-1"></div>
-</div>
-<button class="text-primary hover:text-secondary" onclick="closeDetails()">
-<span class="material-icons">close</span>
-</button>
-</div>
-<div class="space-y-6">
-<div>
-<p class="text-[10px] opacity-50 uppercase mb-2">Sync Probability</p>
-<div class="flex items-center gap-4">
-<div class="flex-1 h-2 bg-primary/20 rounded-full overflow-hidden">
-<div class="h-full bg-primary" id="modalBar" style="width: 0%"></div>
-</div>
-<span class="text-xl font-bold" id="modalProb">0%</span>
-</div>
-</div>
-<div>
-<p class="text-[10px] opacity-50 uppercase mb-2">Specialization</p>
-<p class="text-sm tracking-widest border border-primary/30 p-3 bg-primary/5 uppercase" id="modalSpec">NULL</p>
-</div>
-<button class="w-full py-4 bg-primary text-black font-display text-sm uppercase tracking-tighter hover:bg-secondary transition-colors duration-300">
-                        Establish Connection
-                    </button>
-</div>
-<div class="mt-8 text-[8px] opacity-30 flex justify-between">
-<span>KEY_HASH: 0x82...F9A</span>
-<span>ENCRYPTION: AES-256</span>
-</div>
-</div>
-</div>
+    <div class="mb-8 flex items-center bg-black/20 p-3 rounded-lg border border-primary/20">
+        <span class="material-icons text-primary/60 mr-3">search</span>
+        <input class="bg-transparent border-none focus:ring-0 text-xs w-full placeholder:text-primary/30 uppercase"
+               placeholder="FILTER BY SPECIALIZATION..." type="text"/>
+    </div>
+    <div class="grid grid-cols-2 gap-6">
+        <button class="group relative flex flex-col items-center glitch-hover"
+                onclick="showDetails('Genesis', '98%', 'CREATIVE SYNTHESIS')">
+            <div class="relative w-full aspect-square mb-3">
+                <div class="absolute inset-0 neon-border-magenta opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute inset-2 overflow-hidden bg-slate-900/50">
+                    <img alt="Genesis Portrait"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDojqM6nQHlH06eyNrh4DgHzPGa4iRPnES_CLLPpUUNQlYEUVS30JC1rT3-kfHLmx-vhpCxj05ayyPJFqXg7lR9km6VfF09-h8gNDtiWuNJz9ZdVnXNVXnzG9ZNZ29d-AEPzB4hFasXQxmvPhKOV0aph3kD5fEmrQj91x2kVplptl3l9udTrRbsWVAcqZ9CUpCkz10jxaQ1MI98taJqYRWDUSg0a_0fJ_a03JDR7mBrVxX-IgeUSy8IczX3nCyMznMpEmj0csPN3p8"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-display text-sm tracking-widest text-secondary uppercase">
+                    Genesis</h3>
+                <p class="text-[9px] opacity-50 mt-1">CLASS-S ENTITY</p>
+            </div>
+        </button>
+        <button class="group relative flex flex-col items-center glitch-hover"
+                onclick="showDetails('Claude', '94%', 'NEURAL MAPPING')">
+            <div class="relative w-full aspect-square mb-3">
+                <div class="absolute inset-0 neon-border-cyan opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute inset-2 overflow-hidden bg-slate-900/50">
+                    <img alt="Claude Portrait"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVwvQdj6ihS_ZVFo1_GKPyVHZL1S8dh68o6UlNoNz3PqYBVqinZqv3Gklqh3GFtf4G9sAo45n_hUcNAr3VTayzXKjkXj1KvOJ7GjBzRi6qCfe-gbADrSnUuLCFwFytmbhQDIZRtL1xc7V_mRzZTPS1ku90mgfM3bvS-m_yyayQO0PcKItSeG_m4xAaDsDR2Sv3oFFA4z3aFs3LVdyvEFt_lTTFNpqie4E7MskCBFUGWNsceL4Erq0LSbFSimJC-qSuXm5CWBl87-4"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-display text-sm tracking-widest text-primary uppercase">Claude</h3>
+                <p class="text-[9px] opacity-50 mt-1">LOGIC ENGINE</p>
+            </div>
+        </button>
+        <button class="group relative flex flex-col items-center glitch-hover"
+                onclick="showDetails('Gemini', '91%', 'DATA INFILTRATION')">
+            <div class="relative w-full aspect-square mb-3">
+                <div class="absolute inset-0 neon-border-cyan opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute inset-2 overflow-hidden bg-slate-900/50">
+                    <img alt="Gemini Portrait"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEfntdBsdpAswfD4Z2Qr1CVlKWj9fUR_iw6lDPwljVP3tsBOmIaxvdEhcA-BHSAlOp9sSC2JmOeCZKWB7T0ZkuDhk899gcs_UGQe-zwo6dbD2VQoNFBngvoSgqruWKPNSIhfp7XcfqZtal2v38Gdm1Xpu7FTxaCDPltXaTHXE9bSzoqquWMLAQr2GzDHnz_GtVn4s8OHeBtsuyRQ2_GXrObT4BkUxzXWiBBRnlm32EOVU6RPPfNcrpcwmW9OyqkgGAYLF86G4gCIE"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-display text-sm tracking-widest text-primary uppercase">Gemini</h3>
+                <p class="text-[9px] opacity-50 mt-1">DUAL CORE</p>
+            </div>
+        </button>
+        <button class="group relative flex flex-col items-center glitch-hover"
+                onclick="showDetails('Grok', '87%', 'CHAOS CREATION')">
+            <div class="relative w-full aspect-square mb-3">
+                <div class="absolute inset-0 neon-border-magenta opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute inset-2 overflow-hidden bg-slate-900/50">
+                    <img alt="Grok Portrait"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1or-4arc7Kny-hItuKwgCeki8EZaIX3-0a4deqT8HRI7hjf57Lddl9aH6VR4zl6Qjz-VJw76phLJ-gweZSf_rtqMyKEZ6jsZwENV22OaXQHgn8Pl6MI7WgOzZCoCqye_JapfiynVYKQanEcyTzI-rF1mwPiiM30aJN8uCrmuZyL3QbGMVlP_jyXqPQlfk3qCST7czk5J8ffuymG4apogHlhDbpBnxKEn_-JeC-e0lt6OOytuBYiR5CRNcAJazy3RVQ7G35QIWoTI"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-display text-sm tracking-widest text-secondary uppercase">Grok</h3>
+                <p class="text-[9px] opacity-50 mt-1">UNFILTERED</p>
+            </div>
+        </button>
+        <button class="group relative flex flex-col items-center glitch-hover"
+                onclick="showDetails('Perplexity', '99%', 'DEEP RESEARCH')">
+            <div class="relative w-full aspect-square mb-3">
+                <div class="absolute inset-0 neon-border-cyan opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute inset-2 overflow-hidden bg-slate-900/50">
+                    <img alt="Perplexity Portrait"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGHjC_hWvzVzh3PBfVWhFF-l6zg_lQdbXNGu4tswE54lCHdqP_lJ9tdnElhzQPUhcY8IUzxdGbd49FfsaAVB1mQ3m1GClbPmB33aL-Pqps7kcxSQkPVkF4hVNyHtUlN10Ksu_35AzWhOg287aZ60Vs-yVPIKRRZcVy-AdHLMhNGTyQKXFIr_q4a-4IaNi8rQvs_MUFkVyaEiUB-cKNTIpy2VWZXdo7hiIfz5OnDYAZhYTDjHjo0RIXeShlNTXEQXv6AguNU-hugro"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-display text-sm tracking-widest text-primary uppercase">
+                    Perplexity</h3>
+                <p class="text-[9px] opacity-50 mt-1">ORACLE CLASS</p>
+            </div>
+        </button>
+        <button class="group relative flex flex-col items-center glitch-hover"
+                onclick="showDetails('Cascade', '95%', 'STRUCTURAL CATALYST')">
+            <div class="relative w-full aspect-square mb-3">
+                <div class="absolute inset-0 neon-border-magenta opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                <div class="absolute inset-2 overflow-hidden bg-slate-900/50">
+                    <img alt="Cascade Portrait"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAikQ-nwBDF93qQv7zSZhZiJ0prQfTnejlOrN4K6At0Dyn-h6ObxBMVbrpM8MewwwTMUduVaf0-9MQL4wcsZU47RBPvycXGoBBzLbC22Wv7k6DRqPnDf4tnZi_dceplJJ40wh591fNokdKlgNOsf2YEanZbsnRvJM3QUU7CRSmxtPGUUohX0w9HyWBn4SAI8A9kdwa1FjFW_ktCWBsUpnwAD_oUJvjnmukGAYhJSVxgTFx2iSC8INV2YIBQLmGK_LIvESMPthckr8"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-display text-sm tracking-widest text-secondary uppercase">
+                    Cascade</h3>
+                <p class="text-[9px] opacity-50 mt-1">RAPID ITERATION</p>
+            </div>
+        </button>
+    </div>
+    <div class="fixed inset-0 z-[100] flex items-center justify-center p-6 hidden"
+         id="detailsModal">
+        <div class="absolute inset-0 bg-background-dark/95 backdrop-blur-xl"
+             onclick="closeDetails()"></div>
+        <div class="relative w-full max-w-sm bg-background-dark border-2 border-primary neon-border-cyan p-6 overflow-hidden">
+            <div class="absolute -right-4 -top-4 opacity-10">
+                <span class="material-icons text-[120px]">security</span>
+            </div>
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="font-display text-3xl text-primary neon-text-cyan uppercase"
+                        id="modalName">AGENT_NAME</h2>
+                    <div class="h-1 w-20 bg-primary mt-1"></div>
+                </div>
+                <button class="text-primary hover:text-secondary" onclick="closeDetails()">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="space-y-6">
+                <div>
+                    <p class="text-[10px] opacity-50 uppercase mb-2">Sync Probability</p>
+                    <div class="flex items-center gap-4">
+                        <div class="flex-1 h-2 bg-primary/20 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary" id="modalBar" style="width: 0%"></div>
+                        </div>
+                        <span class="text-xl font-bold" id="modalProb">0%</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-[10px] opacity-50 uppercase mb-2">Specialization</p>
+                    <p class="text-sm tracking-widest border border-primary/30 p-3 bg-primary/5 uppercase"
+                       id="modalSpec">NULL</p>
+                </div>
+                <button class="w-full py-4 bg-primary text-black font-display text-sm uppercase tracking-tighter hover:bg-secondary transition-colors duration-300">
+                    Establish Connection
+                </button>
+            </div>
+            <div class="mt-8 text-[8px] opacity-30 flex justify-between">
+                <span>KEY_HASH: 0x82...F9A</span>
+                <span>ENCRYPTION: AES-256</span>
+            </div>
+        </div>
+    </div>
 </main>
 <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-16 bg-background-dark/80 backdrop-blur-xl rounded-full border border-primary/30 flex items-center justify-around px-6 z-[60] shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-<a class="text-primary/40 hover:text-primary transition-colors" href="#">
-<span class="material-icons">dashboard</span>
-</a>
-<a class="text-primary relative" href="#">
-<span class="material-icons">group</span>
-<div class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-secondary rounded-full shadow-[0_0_8px_#ff00ff]"></div>
-</a>
-<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-accent to-primary flex items-center justify-center -translate-y-4 shadow-lg shadow-primary/20">
-<span class="material-icons text-black font-bold">bolt</span>
-</div>
-<a class="text-primary/40 hover:text-primary transition-colors" href="#">
-<span class="material-icons">settings_input_component</span>
-</a>
-<a class="text-primary/40 hover:text-primary transition-colors" href="#">
-<span class="material-icons">person</span>
-</a>
+    <a class="text-primary/40 hover:text-primary transition-colors" href="#">
+        <span class="material-icons">dashboard</span>
+    </a>
+    <a class="text-primary relative" href="#">
+        <span class="material-icons">group</span>
+        <div class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-secondary rounded-full shadow-[0_0_8px_#ff00ff]"></div>
+    </a>
+    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-accent to-primary flex items-center justify-center -translate-y-4 shadow-lg shadow-primary/20">
+        <span class="material-icons text-black font-bold">bolt</span>
+    </div>
+    <a class="text-primary/40 hover:text-primary transition-colors" href="#">
+        <span class="material-icons">settings_input_component</span>
+    </a>
+    <a class="text-primary/40 hover:text-primary transition-colors" href="#">
+        <span class="material-icons">person</span>
+    </a>
 </nav>
 <script>
-        function showDetails(name, prob, spec) {
-            const modal = document.getElementById('detailsModal');
-            document.getElementById('modalName').innerText = name;
-            document.getElementById('modalProb').innerText = prob;
-            document.getElementById('modalSpec').innerText = spec;
-            modal.classList.remove('hidden');
-            // Animation for the bar
-            setTimeout(() => {
-                document.getElementById('modalBar').style.width = prob;
-            }, 100);
-        }
-        function closeDetails() {
-            const modal = document.getElementById('detailsModal');
-            document.getElementById('modalBar').style.width = '0%';
-            modal.classList.add('hidden');
-        }
-    </script>
+    function showDetails(name, prob, spec) {
+        const modal = document.getElementById('detailsModal');
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalProb').innerText = prob;
+        document.getElementById('modalSpec').innerText = spec;
+        modal.classList.remove('hidden');
+        // Animation for the bar
+        setTimeout(() => {
+            document.getElementById('modalBar').style.width = prob;
+        }, 100);
+    }
+    function closeDetails() {
+        const modal = document.getElementById('detailsModal');
+        document.getElementById('modalBar').style.width = '0%';
+        modal.classList.add('hidden');
+    }
+</script>
 
-</body></html>
+</body>
+</html>

@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#840bda",
-              "background-light": "#f7f5f8",
-              "background-dark": "#1b1022",
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#840bda",
+                "background-light": "#f7f5f8",
+                "background-dark": "#1b1022",
+              },
+              fontFamily: {
+                "display": ["Space Grotesk", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
             },
-            fontFamily: {
-              "display": ["Space Grotesk", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
           },
-        },
-      }
+        }
     </script>
-<style>
+    <style>
         .glitch-text {
             text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
         }
@@ -55,163 +59,179 @@
           .card-tilt-left { transform: rotate(-3deg) translateY(-5px); }
           .card-tilt-slight { transform: rotate(1deg) translateY(20px); }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-hidden">
 <!-- Top Navigation Bar -->
 <div class="flex items-center bg-transparent p-4 pb-2 justify-between z-10">
-<div class="text-primary flex size-12 shrink-0 items-center cursor-pointer">
-<span class="material-symbols-outlined text-[32px]">arrow_back</span>
-</div>
-<div class="flex flex-col items-center">
-<h2 class="text-white text-lg font-bold leading-tight tracking-tight glitch-text">AURA'S DOMAIN</h2>
-<p class="text-[10px] text-primary font-mono tracking-widest uppercase opacity-80">L2 Access Granted</p>
-</div>
-<div class="flex w-12 items-center justify-end">
-<button class="flex items-center justify-center rounded-full size-10 bg-primary/20 text-primary border border-primary/30">
-<span class="material-symbols-outlined text-[24px]">terminal</span>
-</button>
-</div>
+    <div class="text-primary flex size-12 shrink-0 items-center cursor-pointer">
+        <span class="material-symbols-outlined text-[32px]">arrow_back</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <h2 class="text-white text-lg font-bold leading-tight tracking-tight glitch-text">AURA'S
+            DOMAIN</h2>
+        <p class="text-[10px] text-primary font-mono tracking-widest uppercase opacity-80">L2 Access
+            Granted</p>
+    </div>
+    <div class="flex w-12 items-center justify-end">
+        <button class="flex items-center justify-center rounded-full size-10 bg-primary/20 text-primary border border-primary/30">
+            <span class="material-symbols-outlined text-[24px]">terminal</span>
+        </button>
+    </div>
 </div>
 <!-- Main Content Area with Liquid Background Effect -->
 <main class="flex-1 flex flex-col relative liquid-bg">
-<!-- Chaotic Header Section -->
-<div class="px-6 pt-8 pb-4 relative z-10">
-<h1 class="text-white text-4xl font-bold leading-tight max-w-[280px]">
-                System <span class="text-primary italic">Flux</span>: Active
-            </h1>
-<div class="mt-4 flex items-center gap-3">
-<div class="flex -space-x-2">
-<div class="size-6 rounded-full bg-emerald-500 border-2 border-background-dark animate-pulse"></div>
-<div class="size-6 rounded-full bg-primary border-2 border-background-dark"></div>
-</div>
-<p class="text-primary/80 text-xs font-mono">"Wait, did I leave the logic gate open? Oh well..."</p>
-</div>
-</div>
-<!-- Chaotic Carousel -->
-<div class="flex-1 flex items-center overflow-x-auto custom-scroll pb-20 pt-4 px-6 gap-8 snap-x snap-mandatory">
-<!-- Card 1: ChromaCore -->
-<div class="min-w-[280px] h-[380px] bg-background-dark/80 backdrop-blur-xl border border-primary/40 rounded-xl p-5 flex flex-col gap-4 card-tilt-right snap-center relative group overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none"></div>
-<div class="w-full h-48 rounded-lg overflow-hidden relative">
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
-<img class="w-full h-full object-cover" data-alt="Abstract vibrant liquid paint swirls with purple hues" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Mtq0NlLP8-wNAif7EoAsBRpmbEn_osSBJuWrxZ1rFBl0a0CDInNDmLn86osZwBeJykD99nOsq9J_6BQ71or0lEQhy6p1aKGogV4UA5YJ1L0LJm8dgti-X0TeqdRTEjWJbdEbNWDhc9DSI7gNW9sfX_s2tl52Ohmtg0rr2SL8uOjDVBxnut-ef1JVLc3LIvAfJmZ1IQ1Rl3oyJtT6UeBtHzycnRQNvrMRJGIda-NszO-9YlP2wPxCTHhjAt4vkw8CQ3S7zD8qhFY"/>
-<div class="absolute top-3 left-3 z-20 px-2 py-1 bg-primary text-white text-[10px] font-bold rounded uppercase">Core 01</div>
-</div>
-<div class="flex-1 flex flex-col justify-between z-20">
-<div>
-<h3 class="text-white text-2xl font-bold">ChromaCore</h3>
-<p class="text-primary/70 text-sm mt-1">Stability: 84% | Active</p>
-</div>
-<div class="flex items-center justify-between mt-4">
-<div class="flex flex-col">
-<span class="text-[10px] uppercase text-slate-400">Entropy</span>
-<span class="text-white font-mono font-bold">MODERATE</span>
-</div>
-<button class="size-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined">bolt</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Card 2: SpellHook Generator -->
-<div class="min-w-[280px] h-[380px] bg-background-dark/80 backdrop-blur-xl border border-primary/40 rounded-xl p-5 flex flex-col gap-4 card-tilt-left snap-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent pointer-events-none"></div>
-<div class="w-full h-48 rounded-lg overflow-hidden relative">
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
-<img class="w-full h-full object-cover" data-alt="Cyberpunk code fragments floating in dark space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4FNQQ__B9yVPpKQFnsS7XaU9hNif78OxsP52TF2QIdzES-iJzFjADsX64wR9l8WQTQ2lSHUCLGkRGiOFPKX5f-QLUVfa_juYrhisTbeXQnSeierfq2jvXKEF8PW0Ea_dNM0uKwgFJryD70xUPtOuTAy12uCq80G27iOl5qAA0ekac0kKbP7onbOvrjrEy5fvAvsyYFcdJKKihgLLbY5lpfOZhlMEWMv8zAxYzbKe8bD-nWzckKpgO1cjT0m7Af4oMdU7ITnhmynE"/>
-<div class="absolute top-3 left-3 z-20 px-2 py-1 bg-cyan-500 text-white text-[10px] font-bold rounded uppercase">Hook Gen</div>
-</div>
-<div class="flex-1 flex flex-col justify-between z-20">
-<div>
-<h3 class="text-white text-2xl font-bold">SpellHook</h3>
-<p class="text-cyan-400 text-sm mt-1">Logic Weaver: Standby</p>
-</div>
-<div class="flex items-center justify-between mt-4">
-<div class="flex flex-col">
-<span class="text-[10px] uppercase text-slate-400">Active Hooks</span>
-<span class="text-white font-mono font-bold">256+</span>
-</div>
-<button class="size-12 rounded-full bg-cyan-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-<span class="material-symbols-outlined">auto_fix</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Card 3: Chaos Canvas -->
-<div class="min-w-[280px] h-[380px] bg-background-dark/80 backdrop-blur-xl border border-primary/40 rounded-xl p-5 flex flex-col gap-4 card-tilt-slight snap-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-bl from-orange-500/10 to-transparent pointer-events-none"></div>
-<div class="w-full h-48 rounded-lg overflow-hidden relative">
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
-<img class="w-full h-full object-cover" data-alt="Abstract colorful paint explosion and texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3pn4qWvTM-8FaAxpGCS-dYkMC-pPkdMMGdRYOQiE8WreKur18xnQu0TSxyqeRCZqI_qnGz3W4T7yOpm4SouoiUYkzPINDPPpc3NrIQ9Hv1AcUTBjPSVQ02aYbp2uy36welYLQCvdVRKFrf2-GXR9nsm_FDM_nVtXOxd6ttKFCQerFgV3E6foyeWKwXkTICnzT-nwdcZo57zOXLlVH5mIQFWeJknVJj6_tH3iHCMrmTba2WmOrXbvgc8C5iYLpQDF561dPKld4gn0"/>
-<div class="absolute top-3 left-3 z-20 px-2 py-1 bg-orange-500 text-white text-[10px] font-bold rounded uppercase">Chaos v2</div>
-</div>
-<div class="flex-1 flex flex-col justify-between z-20">
-<div>
-<h3 class="text-white text-2xl font-bold">Chaos Canvas</h3>
-<p class="text-orange-400 text-sm mt-1">Creative Entropy: MAX</p>
-</div>
-<div class="flex items-center justify-between mt-4">
-<div class="flex flex-col">
-<span class="text-[10px] uppercase text-slate-400">Yield</span>
-<span class="text-white font-mono font-bold">INFINITE</span>
-</div>
-<button class="size-12 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
-<span class="material-symbols-outlined">palette</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Empty space for scroll feeling -->
-<div class="min-w-[40px]"></div>
-</div>
-<!-- System Stats Bar -->
-<div class="px-6 grid grid-cols-3 gap-3 mb-8 relative z-10">
-<div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
-<p class="text-[10px] text-primary uppercase font-bold">Cores</p>
-<p class="text-xl font-bold text-white">12</p>
-<p class="text-[10px] text-emerald-400">+2.4%</p>
-</div>
-<div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
-<p class="text-[10px] text-primary uppercase font-bold">Hooks</p>
-<p class="text-xl font-bold text-white">256</p>
-<p class="text-[10px] text-emerald-400">+12%</p>
-</div>
-<div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
-<p class="text-[10px] text-primary uppercase font-bold">Entropy</p>
-<p class="text-xl font-bold text-white">MAX</p>
-<p class="text-[10px] text-orange-400">-0.1%</p>
-</div>
-</div>
+    <!-- Chaotic Header Section -->
+    <div class="px-6 pt-8 pb-4 relative z-10">
+        <h1 class="text-white text-4xl font-bold leading-tight max-w-[280px]">
+            System <span class="text-primary italic">Flux</span>: Active
+        </h1>
+        <div class="mt-4 flex items-center gap-3">
+            <div class="flex -space-x-2">
+                <div class="size-6 rounded-full bg-emerald-500 border-2 border-background-dark animate-pulse"></div>
+                <div class="size-6 rounded-full bg-primary border-2 border-background-dark"></div>
+            </div>
+            <p class="text-primary/80 text-xs font-mono">"Wait, did I leave the logic gate open? Oh
+                well..."</p>
+        </div>
+    </div>
+    <!-- Chaotic Carousel -->
+    <div class="flex-1 flex items-center overflow-x-auto custom-scroll pb-20 pt-4 px-6 gap-8 snap-x snap-mandatory">
+        <!-- Card 1: ChromaCore -->
+        <div class="min-w-[280px] h-[380px] bg-background-dark/80 backdrop-blur-xl border border-primary/40 rounded-xl p-5 flex flex-col gap-4 card-tilt-right snap-center relative group overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none"></div>
+            <div class="w-full h-48 rounded-lg overflow-hidden relative">
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
+                <img class="w-full h-full object-cover"
+                     data-alt="Abstract vibrant liquid paint swirls with purple hues"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Mtq0NlLP8-wNAif7EoAsBRpmbEn_osSBJuWrxZ1rFBl0a0CDInNDmLn86osZwBeJykD99nOsq9J_6BQ71or0lEQhy6p1aKGogV4UA5YJ1L0LJm8dgti-X0TeqdRTEjWJbdEbNWDhc9DSI7gNW9sfX_s2tl52Ohmtg0rr2SL8uOjDVBxnut-ef1JVLc3LIvAfJmZ1IQ1Rl3oyJtT6UeBtHzycnRQNvrMRJGIda-NszO-9YlP2wPxCTHhjAt4vkw8CQ3S7zD8qhFY"/>
+                <div class="absolute top-3 left-3 z-20 px-2 py-1 bg-primary text-white text-[10px] font-bold rounded uppercase">
+                    Core 01
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-between z-20">
+                <div>
+                    <h3 class="text-white text-2xl font-bold">ChromaCore</h3>
+                    <p class="text-primary/70 text-sm mt-1">Stability: 84% | Active</p>
+                </div>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] uppercase text-slate-400">Entropy</span>
+                        <span class="text-white font-mono font-bold">MODERATE</span>
+                    </div>
+                    <button class="size-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">bolt</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2: SpellHook Generator -->
+        <div class="min-w-[280px] h-[380px] bg-background-dark/80 backdrop-blur-xl border border-primary/40 rounded-xl p-5 flex flex-col gap-4 card-tilt-left snap-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent pointer-events-none"></div>
+            <div class="w-full h-48 rounded-lg overflow-hidden relative">
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
+                <img class="w-full h-full object-cover"
+                     data-alt="Cyberpunk code fragments floating in dark space"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4FNQQ__B9yVPpKQFnsS7XaU9hNif78OxsP52TF2QIdzES-iJzFjADsX64wR9l8WQTQ2lSHUCLGkRGiOFPKX5f-QLUVfa_juYrhisTbeXQnSeierfq2jvXKEF8PW0Ea_dNM0uKwgFJryD70xUPtOuTAy12uCq80G27iOl5qAA0ekac0kKbP7onbOvrjrEy5fvAvsyYFcdJKKihgLLbY5lpfOZhlMEWMv8zAxYzbKe8bD-nWzckKpgO1cjT0m7Af4oMdU7ITnhmynE"/>
+                <div class="absolute top-3 left-3 z-20 px-2 py-1 bg-cyan-500 text-white text-[10px] font-bold rounded uppercase">
+                    Hook Gen
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-between z-20">
+                <div>
+                    <h3 class="text-white text-2xl font-bold">SpellHook</h3>
+                    <p class="text-cyan-400 text-sm mt-1">Logic Weaver: Standby</p>
+                </div>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] uppercase text-slate-400">Active Hooks</span>
+                        <span class="text-white font-mono font-bold">256+</span>
+                    </div>
+                    <button class="size-12 rounded-full bg-cyan-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                        <span class="material-symbols-outlined">auto_fix</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3: Chaos Canvas -->
+        <div class="min-w-[280px] h-[380px] bg-background-dark/80 backdrop-blur-xl border border-primary/40 rounded-xl p-5 flex flex-col gap-4 card-tilt-slight snap-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-bl from-orange-500/10 to-transparent pointer-events-none"></div>
+            <div class="w-full h-48 rounded-lg overflow-hidden relative">
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent z-10"></div>
+                <img class="w-full h-full object-cover"
+                     data-alt="Abstract colorful paint explosion and texture"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3pn4qWvTM-8FaAxpGCS-dYkMC-pPkdMMGdRYOQiE8WreKur18xnQu0TSxyqeRCZqI_qnGz3W4T7yOpm4SouoiUYkzPINDPPpc3NrIQ9Hv1AcUTBjPSVQ02aYbp2uy36welYLQCvdVRKFrf2-GXR9nsm_FDM_nVtXOxd6ttKFCQerFgV3E6foyeWKwXkTICnzT-nwdcZo57zOXLlVH5mIQFWeJknVJj6_tH3iHCMrmTba2WmOrXbvgc8C5iYLpQDF561dPKld4gn0"/>
+                <div class="absolute top-3 left-3 z-20 px-2 py-1 bg-orange-500 text-white text-[10px] font-bold rounded uppercase">
+                    Chaos v2
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-between z-20">
+                <div>
+                    <h3 class="text-white text-2xl font-bold">Chaos Canvas</h3>
+                    <p class="text-orange-400 text-sm mt-1">Creative Entropy: MAX</p>
+                </div>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] uppercase text-slate-400">Yield</span>
+                        <span class="text-white font-mono font-bold">INFINITE</span>
+                    </div>
+                    <button class="size-12 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+                        <span class="material-symbols-outlined">palette</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Empty space for scroll feeling -->
+        <div class="min-w-[40px]"></div>
+    </div>
+    <!-- System Stats Bar -->
+    <div class="px-6 grid grid-cols-3 gap-3 mb-8 relative z-10">
+        <div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
+            <p class="text-[10px] text-primary uppercase font-bold">Cores</p>
+            <p class="text-xl font-bold text-white">12</p>
+            <p class="text-[10px] text-emerald-400">+2.4%</p>
+        </div>
+        <div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
+            <p class="text-[10px] text-primary uppercase font-bold">Hooks</p>
+            <p class="text-xl font-bold text-white">256</p>
+            <p class="text-[10px] text-emerald-400">+12%</p>
+        </div>
+        <div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
+            <p class="text-[10px] text-primary uppercase font-bold">Entropy</p>
+            <p class="text-xl font-bold text-white">MAX</p>
+            <p class="text-[10px] text-orange-400">-0.1%</p>
+        </div>
+    </div>
 </main>
 <!-- Android Style Bottom Navigation -->
 <nav class="bg-background-dark/90 backdrop-blur-md border-t border-primary/20 px-8 py-4 flex justify-between items-center z-20">
-<button class="text-slate-400 flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined group-hover:text-primary transition-colors">grid_view</span>
-<span class="text-[10px] uppercase font-bold">Hub</span>
-</button>
-<button class="text-slate-400 flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined group-hover:text-primary transition-colors">memory</span>
-<span class="text-[10px] uppercase font-bold">Logic</span>
-</button>
-<button class="relative -top-8 size-16 rounded-full bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/40 border-4 border-background-dark">
-<span class="material-symbols-outlined text-3xl">flare</span>
-</button>
-<button class="text-primary flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined">layers</span>
-<span class="text-[10px] uppercase font-bold">Gates</span>
-</button>
-<button class="text-slate-400 flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
-<span class="text-[10px] uppercase font-bold">Sys</span>
-</button>
+    <button class="text-slate-400 flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors">grid_view</span>
+        <span class="text-[10px] uppercase font-bold">Hub</span>
+    </button>
+    <button class="text-slate-400 flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors">memory</span>
+        <span class="text-[10px] uppercase font-bold">Logic</span>
+    </button>
+    <button class="relative -top-8 size-16 rounded-full bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/40 border-4 border-background-dark">
+        <span class="material-symbols-outlined text-3xl">flare</span>
+    </button>
+    <button class="text-primary flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined">layers</span>
+        <span class="text-[10px] uppercase font-bold">Gates</span>
+    </button>
+    <button class="text-slate-400 flex flex-col items-center gap-1 group">
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+        <span class="text-[10px] uppercase font-bold">Sys</span>
+    </button>
 </nav>
 <!-- Overlay Effects -->
 <div class="fixed inset-0 pointer-events-none z-50 mix-blend-overlay opacity-10">
-<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 </div>
-</body></html>
+</body>
+</html>

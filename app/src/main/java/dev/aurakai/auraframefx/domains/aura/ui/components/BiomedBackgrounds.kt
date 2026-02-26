@@ -1,6 +1,12 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.EaseInOutSine
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,7 +18,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import kotlin.math.sin
 
 /**
@@ -34,7 +39,15 @@ fun WoodsyPlainsBackground(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364))))
+            .background(
+                Brush.verticalGradient(
+                    listOf(
+                        Color(0xFF0F2027),
+                        Color(0xFF203A43),
+                        Color(0xFF2C5364)
+                    )
+                )
+            )
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             // Draw stylized leafy clusters or beams
@@ -45,13 +58,16 @@ fun WoodsyPlainsBackground(modifier: Modifier = Modifier) {
                     center = Offset(size.width * (i / 15f) + windShift, size.height * (i % 3 / 3f))
                 )
             }
-            
+
             // Subtle distant trees/plains silhouette
             val path = Path()
             path.moveTo(0f, size.height)
             path.lineTo(0f, size.height * 0.8f)
             repeat(20) { i ->
-                path.lineTo(size.width * (i / 20f), size.height * 0.75f + (sin(i.toFloat() + windShift/10f) * 30f))
+                path.lineTo(
+                    size.width * (i / 20f),
+                    size.height * 0.75f + (sin(i.toFloat() + windShift / 10f) * 30f)
+                )
             }
             path.lineTo(size.width, size.height * 0.8f)
             path.lineTo(size.width, size.height)
@@ -94,7 +110,7 @@ fun IcyTundraBackground(modifier: Modifier = Modifier) {
                     alpha = shimmer
                 )
             }
-            
+
             // Icy mountains
             val path = Path()
             path.moveTo(0f, size.height)
@@ -137,12 +153,18 @@ fun LavaApocalypseBackground(modifier: Modifier = Modifier) {
                 val x = (i * 100f)
                 val currentY = flow * size.height
                 drawRect(
-                    brush = Brush.verticalGradient(listOf(Color.Transparent, Color(0xFFFF4500), Color.Transparent)),
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            Color.Transparent,
+                            Color(0xFFFF4500),
+                            Color.Transparent
+                        )
+                    ),
                     topLeft = Offset(x, (currentY + i * 100f) % size.height),
                     size = androidx.compose.ui.geometry.Size(30f, 200f)
                 )
             }
-            
+
             // Heat haze/embers
             repeat(40) { i ->
                 val x = (i * 47L % size.width.toInt()).toFloat()

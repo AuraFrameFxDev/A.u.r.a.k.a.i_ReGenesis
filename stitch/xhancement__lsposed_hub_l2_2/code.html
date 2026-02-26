@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -30,7 +33,7 @@
             },
         }
     </script>
-<style type="text/tailwindcss">@keyframes rotate-slow {
+    <style type="text/tailwindcss">@keyframes rotate-slow {
     from {
         transform: rotate(0deg) scale(1.2);
         } to {
@@ -111,185 +114,204 @@
 .flow-path {
     stroke-dasharray: 100;
     animation: flow-line 30s linear infinite
-    }</style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
     }
-  </style>
-  </head>
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-dark font-display text-white selection:bg-primary/30 antialiased overflow-x-hidden">
 <div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto border-x border-primary/10 bg-background-dark overflow-hidden">
-<div class="fixed inset-0 z-0 pointer-events-none">
-<div class="absolute inset-0 security-lattice-base opacity-40"></div>
-<div class="absolute inset-0 hex-pattern scale-150"></div>
-<div class="absolute top-1/4 left-1/3 size-2 bg-primary rounded-full ping-cyan shadow-[0_0_15px_#0dccf2]"></div>
-<div class="absolute top-2/3 right-1/4 size-3 bg-accent rounded-full ping-magenta shadow-[0_0_15px_#ff00ff]"></div>
-<div class="absolute bottom-1/4 left-1/4 size-2 bg-primary rounded-full ping-cyan delay-1000 shadow-[0_0_15px_#0dccf2]"></div>
-<div class="absolute top-1/2 right-1/2 size-1 bg-accent rounded-full ping-magenta delay-2000 shadow-[0_0_15px_#ff00ff]"></div>
-<div class="absolute -right-20 top-20 opacity-10 animated-wireframe">
-<svg class="w-64 h-64 text-primary" fill="none" stroke="currentColor" stroke-width="0.5" viewBox="0 0 100 100">
-<path class="flow-path" d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z"></path>
-<path d="M50 0 L50 100"></path>
-<path d="M0 25 L100 75"></path>
-<path d="M100 25 L0 75"></path>
-</svg>
-</div>
-</div>
-<div class="fixed inset-0 scanline-overlay z-50 pointer-events-none opacity-20"></div>
-<header class="sticky top-0 z-40 bg-background-dark/80 backdrop-blur-md border-b border-primary/20 p-4">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-2xl">terminal</span>
-<div>
-<h1 class="text-primary font-bold tracking-widest text-sm uppercase">SENTINEL HUB // L2</h1>
-<p class="text-[10px] text-primary/60 font-medium tracking-tighter">FORTRESS_REGENESIS // SHIELD_V.4.2.0</p>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="flex items-center justify-center size-10 rounded border border-primary/30 text-primary hover:bg-primary/10">
-<span class="material-symbols-outlined text-[20px]">security</span>
-</button>
-</div>
-</div>
-</header>
-<div class="relative z-10 flex flex-col flex-1">
-<div class="grid grid-cols-2 gap-3 p-4">
-<div class="flex flex-col gap-1 glass-card p-4 rounded-sm border-l-2 border-l-primary">
-<div class="flex justify-between items-center mb-1">
-<span class="text-[10px] font-bold text-primary tracking-widest uppercase">Safe Mode</span>
-<div class="size-2 rounded-full bg-primary/20 border border-primary animate-pulse"></div>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-xl font-bold tracking-tight text-white uppercase italic">Inactive</span>
-<div class="w-10 h-5 bg-black/40 border border-primary/40 rounded-full relative p-0.5 flex items-center justify-start">
-<div class="h-full aspect-square bg-primary/40 rounded-full"></div>
-</div>
-</div>
-</div>
-<div class="flex flex-col gap-1 glass-card p-4 rounded-sm border-l-2 border-l-accent">
-<div class="flex justify-between items-center mb-1">
-<span class="text-[10px] font-bold text-accent tracking-widest uppercase">Integrity</span>
-<div class="size-2 rounded-full bg-accent shadow-[0_0_8px_#ff00ff]"></div>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-xl font-bold tracking-tight text-white uppercase italic">Verified</span>
-<div class="w-10 h-5 bg-accent/20 border border-accent rounded-full relative p-0.5 flex items-center justify-end">
-<div class="h-full aspect-square bg-accent rounded-full shadow-[0_0_8px_#ff00ff]"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-4 relative group">
-<div class="w-full h-64 bg-black/40 backdrop-blur-lg rounded-lg border border-primary/30 relative overflow-hidden flex items-center justify-center">
-<div class="absolute inset-0 security-lattice-base opacity-20"></div>
-<div class="absolute inset-0 flex items-center justify-center opacity-70">
-<svg class="w-48 h-48 text-primary animated-wireframe" fill="none" stroke="currentColor" stroke-width="0.75" viewBox="0 0 100 100">
-<path class="flow-path" d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z"></path>
-<path d="M50 10 L50 90"></path>
-<path d="M10 30 L90 70"></path>
-<path d="M90 30 L10 70"></path>
-<circle class="stroke-accent" cx="50" cy="50" r="15"></circle>
-<circle cx="50" cy="10" fill="currentColor" r="2"></circle>
-<circle cx="90" cy="30" fill="currentColor" r="2"></circle>
-<circle cx="50" cy="50" fill="#ff00ff" r="2"></circle>
-</svg>
-</div>
-<div class="absolute bottom-2 left-3 right-3 h-12 overflow-hidden bg-black/60 backdrop-blur-sm p-2 border-t border-primary/20">
-<p class="text-[9px] font-mono text-primary/80 tracking-tighter">&gt; SENTINEL_WATCH: MONITORING_GRID_X02</p>
-<p class="text-[9px] font-mono text-accent/80 tracking-tighter">&gt; [!] THREAT_NEUTRALIZED @ MEMORY_SECTOR_7</p>
-</div>
-<div class="absolute top-3 right-3">
-<div class="px-2 py-1 bg-primary/20 backdrop-blur-md border border-primary/40 rounded text-[9px] font-bold text-primary tracking-widest">ACTIVE_SENTINEL</div>
-</div>
-</div>
-</div>
-<div class="flex-1 px-4 py-6">
-<h2 class="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-4 flex items-center gap-2">
-<span class="w-2 h-4 bg-primary inline-block"></span>
-                    INSTALLED ENHANCEMENTS
-                </h2>
-<div class="space-y-3 pb-24">
-<div class="glass-card p-4 rounded-sm flex items-center justify-between group">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<h3 class="font-bold text-sm tracking-wide text-white group-hover:text-primary transition-colors">GravityBox ReGenesis</h3>
-<span class="bg-accent px-1.5 py-0.5 text-[8px] font-black italic text-black rounded-sm">KAI VETO</span>
-</div>
-<p class="text-[10px] text-primary/60 font-mono tracking-tighter">v12.0.1-alpha | SYSTEM_UI_HOOK</p>
-</div>
-<div class="flex items-center">
-<div class="w-12 h-6 bg-primary/10 border-2 border-primary rounded-sm flex items-center justify-end px-1 cursor-pointer">
-<div class="size-3.5 bg-primary shadow-[0_0_10px_#0dccf2]"></div>
-</div>
-</div>
-</div>
-<div class="glass-card p-4 rounded-sm flex items-center justify-between group">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<h3 class="font-bold text-sm tracking-wide text-white group-hover:text-primary transition-colors">Core Patch Pro</h3>
-<span class="bg-white/10 px-1.5 py-0.5 text-[8px] font-black italic text-white/40 rounded-sm">SECURED</span>
-</div>
-<p class="text-[10px] text-primary/60 font-mono tracking-tighter">v4.5.0 | PKG_MANAGER_HOOK</p>
-</div>
-<div class="flex items-center">
-<div class="w-12 h-6 bg-primary/10 border-2 border-primary rounded-sm flex items-center justify-end px-1 cursor-pointer">
-<div class="size-3.5 bg-primary shadow-[0_0_10px_#0dccf2]"></div>
-</div>
-</div>
-</div>
-<div class="glass-card p-4 rounded-sm flex items-center justify-between opacity-60">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<h3 class="font-bold text-sm tracking-wide text-white/50">Fingerprint Spoof</h3>
-<span class="bg-white/5 px-1.5 py-0.5 text-[8px] font-black italic text-white/20 rounded-sm">NULL</span>
-</div>
-<p class="text-[10px] text-white/30 font-mono tracking-tighter">v1.2.0 | HARDWARE_ABSTR_LAYER</p>
-</div>
-<div class="flex items-center">
-<div class="w-12 h-6 bg-white/5 border-2 border-white/10 rounded-sm flex items-center justify-start px-1 cursor-pointer">
-<div class="size-3.5 bg-white/20"></div>
-</div>
-</div>
-</div>
-<div class="glass-card p-4 rounded-sm flex items-center justify-between group">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<h3 class="font-bold text-sm tracking-wide text-white group-hover:text-primary transition-colors">Cydia Substrate Legacy</h3>
-<span class="bg-accent px-1.5 py-0.5 text-[8px] font-black italic text-black rounded-sm">KAI VETO</span>
-</div>
-<p class="text-[10px] text-primary/60 font-mono tracking-tighter">v0.9.3 | DALVIK_RUNTIME_PATCH</p>
-</div>
-<div class="flex items-center">
-<div class="w-12 h-6 bg-primary/10 border-2 border-primary rounded-sm flex items-center justify-end px-1 cursor-pointer">
-<div class="size-3.5 bg-primary shadow-[0_0_10px_#0dccf2]"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<nav class="fixed bottom-0 left-0 right-0 z-50 max-w-[430px] mx-auto bg-background-dark/80 backdrop-blur-xl border-t border-primary/20 pt-2 pb-8 px-8">
-<div class="flex justify-between items-center">
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<span class="material-symbols-outlined text-white/40 group-hover:text-primary">home</span>
-<span class="text-[9px] font-bold text-white/40 group-hover:text-primary uppercase tracking-tighter">Home</span>
-</div>
-<div class="flex flex-col items-center gap-1 cursor-pointer">
-<span class="material-symbols-outlined text-primary shadow-[0_0_10px_rgba(13,204,242,0.5)]">hub</span>
-<span class="text-[9px] font-bold text-primary uppercase tracking-tighter">Xhance</span>
-<div class="h-1 w-4 bg-primary mt-0.5 rounded-full"></div>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<span class="material-symbols-outlined text-white/40 group-hover:text-primary">database</span>
-<span class="text-[9px] font-bold text-white/40 group-hover:text-primary uppercase tracking-tighter">Logs</span>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<span class="material-symbols-outlined text-white/40 group-hover:text-primary">settings_suggest</span>
-<span class="text-[9px] font-bold text-white/40 group-hover:text-primary uppercase tracking-tighter">System</span>
-</div>
-</div>
-</nav>
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 security-lattice-base opacity-40"></div>
+        <div class="absolute inset-0 hex-pattern scale-150"></div>
+        <div class="absolute top-1/4 left-1/3 size-2 bg-primary rounded-full ping-cyan shadow-[0_0_15px_#0dccf2]"></div>
+        <div class="absolute top-2/3 right-1/4 size-3 bg-accent rounded-full ping-magenta shadow-[0_0_15px_#ff00ff]"></div>
+        <div class="absolute bottom-1/4 left-1/4 size-2 bg-primary rounded-full ping-cyan delay-1000 shadow-[0_0_15px_#0dccf2]"></div>
+        <div class="absolute top-1/2 right-1/2 size-1 bg-accent rounded-full ping-magenta delay-2000 shadow-[0_0_15px_#ff00ff]"></div>
+        <div class="absolute -right-20 top-20 opacity-10 animated-wireframe">
+            <svg class="w-64 h-64 text-primary" fill="none" stroke="currentColor" stroke-width="0.5"
+                 viewBox="0 0 100 100">
+                <path class="flow-path" d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z"></path>
+                <path d="M50 0 L50 100"></path>
+                <path d="M0 25 L100 75"></path>
+                <path d="M100 25 L0 75"></path>
+            </svg>
+        </div>
+    </div>
+    <div class="fixed inset-0 scanline-overlay z-50 pointer-events-none opacity-20"></div>
+    <header class="sticky top-0 z-40 bg-background-dark/80 backdrop-blur-md border-b border-primary/20 p-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
+                <div>
+                    <h1 class="text-primary font-bold tracking-widest text-sm uppercase">SENTINEL
+                        HUB // L2</h1>
+                    <p class="text-[10px] text-primary/60 font-medium tracking-tighter">
+                        FORTRESS_REGENESIS // SHIELD_V.4.2.0</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex items-center justify-center size-10 rounded border border-primary/30 text-primary hover:bg-primary/10">
+                    <span class="material-symbols-outlined text-[20px]">security</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="relative z-10 flex flex-col flex-1">
+        <div class="grid grid-cols-2 gap-3 p-4">
+            <div class="flex flex-col gap-1 glass-card p-4 rounded-sm border-l-2 border-l-primary">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-[10px] font-bold text-primary tracking-widest uppercase">Safe Mode</span>
+                    <div class="size-2 rounded-full bg-primary/20 border border-primary animate-pulse"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-xl font-bold tracking-tight text-white uppercase italic">Inactive</span>
+                    <div class="w-10 h-5 bg-black/40 border border-primary/40 rounded-full relative p-0.5 flex items-center justify-start">
+                        <div class="h-full aspect-square bg-primary/40 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 glass-card p-4 rounded-sm border-l-2 border-l-accent">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-[10px] font-bold text-accent tracking-widest uppercase">Integrity</span>
+                    <div class="size-2 rounded-full bg-accent shadow-[0_0_8px_#ff00ff]"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-xl font-bold tracking-tight text-white uppercase italic">Verified</span>
+                    <div class="w-10 h-5 bg-accent/20 border border-accent rounded-full relative p-0.5 flex items-center justify-end">
+                        <div class="h-full aspect-square bg-accent rounded-full shadow-[0_0_8px_#ff00ff]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-4 relative group">
+            <div class="w-full h-64 bg-black/40 backdrop-blur-lg rounded-lg border border-primary/30 relative overflow-hidden flex items-center justify-center">
+                <div class="absolute inset-0 security-lattice-base opacity-20"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-70">
+                    <svg class="w-48 h-48 text-primary animated-wireframe" fill="none"
+                         stroke="currentColor" stroke-width="0.75" viewBox="0 0 100 100">
+                        <path class="flow-path"
+                              d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z"></path>
+                        <path d="M50 10 L50 90"></path>
+                        <path d="M10 30 L90 70"></path>
+                        <path d="M90 30 L10 70"></path>
+                        <circle class="stroke-accent" cx="50" cy="50" r="15"></circle>
+                        <circle cx="50" cy="10" fill="currentColor" r="2"></circle>
+                        <circle cx="90" cy="30" fill="currentColor" r="2"></circle>
+                        <circle cx="50" cy="50" fill="#ff00ff" r="2"></circle>
+                    </svg>
+                </div>
+                <div class="absolute bottom-2 left-3 right-3 h-12 overflow-hidden bg-black/60 backdrop-blur-sm p-2 border-t border-primary/20">
+                    <p class="text-[9px] font-mono text-primary/80 tracking-tighter">&gt;
+                        SENTINEL_WATCH: MONITORING_GRID_X02</p>
+                    <p class="text-[9px] font-mono text-accent/80 tracking-tighter">&gt; [!]
+                        THREAT_NEUTRALIZED @ MEMORY_SECTOR_7</p>
+                </div>
+                <div class="absolute top-3 right-3">
+                    <div class="px-2 py-1 bg-primary/20 backdrop-blur-md border border-primary/40 rounded text-[9px] font-bold text-primary tracking-widest">
+                        ACTIVE_SENTINEL
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 px-4 py-6">
+            <h2 class="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-4 flex items-center gap-2">
+                <span class="w-2 h-4 bg-primary inline-block"></span>
+                INSTALLED ENHANCEMENTS
+            </h2>
+            <div class="space-y-3 pb-24">
+                <div class="glass-card p-4 rounded-sm flex items-center justify-between group">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-sm tracking-wide text-white group-hover:text-primary transition-colors">
+                                GravityBox ReGenesis</h3>
+                            <span class="bg-accent px-1.5 py-0.5 text-[8px] font-black italic text-black rounded-sm">KAI VETO</span>
+                        </div>
+                        <p class="text-[10px] text-primary/60 font-mono tracking-tighter">
+                            v12.0.1-alpha | SYSTEM_UI_HOOK</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-6 bg-primary/10 border-2 border-primary rounded-sm flex items-center justify-end px-1 cursor-pointer">
+                            <div class="size-3.5 bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-sm flex items-center justify-between group">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-sm tracking-wide text-white group-hover:text-primary transition-colors">
+                                Core Patch Pro</h3>
+                            <span class="bg-white/10 px-1.5 py-0.5 text-[8px] font-black italic text-white/40 rounded-sm">SECURED</span>
+                        </div>
+                        <p class="text-[10px] text-primary/60 font-mono tracking-tighter">v4.5.0 |
+                            PKG_MANAGER_HOOK</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-6 bg-primary/10 border-2 border-primary rounded-sm flex items-center justify-end px-1 cursor-pointer">
+                            <div class="size-3.5 bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-sm flex items-center justify-between opacity-60">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-sm tracking-wide text-white/50">Fingerprint
+                                Spoof</h3>
+                            <span class="bg-white/5 px-1.5 py-0.5 text-[8px] font-black italic text-white/20 rounded-sm">NULL</span>
+                        </div>
+                        <p class="text-[10px] text-white/30 font-mono tracking-tighter">v1.2.0 |
+                            HARDWARE_ABSTR_LAYER</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-6 bg-white/5 border-2 border-white/10 rounded-sm flex items-center justify-start px-1 cursor-pointer">
+                            <div class="size-3.5 bg-white/20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-sm flex items-center justify-between group">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-sm tracking-wide text-white group-hover:text-primary transition-colors">
+                                Cydia Substrate Legacy</h3>
+                            <span class="bg-accent px-1.5 py-0.5 text-[8px] font-black italic text-black rounded-sm">KAI VETO</span>
+                        </div>
+                        <p class="text-[10px] text-primary/60 font-mono tracking-tighter">v0.9.3 |
+                            DALVIK_RUNTIME_PATCH</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-6 bg-primary/10 border-2 border-primary rounded-sm flex items-center justify-end px-1 cursor-pointer">
+                            <div class="size-3.5 bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="fixed bottom-0 left-0 right-0 z-50 max-w-[430px] mx-auto bg-background-dark/80 backdrop-blur-xl border-t border-primary/20 pt-2 pb-8 px-8">
+        <div class="flex justify-between items-center">
+            <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                <span class="material-symbols-outlined text-white/40 group-hover:text-primary">home</span>
+                <span class="text-[9px] font-bold text-white/40 group-hover:text-primary uppercase tracking-tighter">Home</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 cursor-pointer">
+                <span class="material-symbols-outlined text-primary shadow-[0_0_10px_rgba(13,204,242,0.5)]">hub</span>
+                <span class="text-[9px] font-bold text-primary uppercase tracking-tighter">Xhance</span>
+                <div class="h-1 w-4 bg-primary mt-0.5 rounded-full"></div>
+            </div>
+            <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                <span class="material-symbols-outlined text-white/40 group-hover:text-primary">database</span>
+                <span class="text-[9px] font-bold text-white/40 group-hover:text-primary uppercase tracking-tighter">Logs</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                <span class="material-symbols-outlined text-white/40 group-hover:text-primary">settings_suggest</span>
+                <span class="text-[9px] font-bold text-white/40 group-hover:text-primary uppercase tracking-tighter">System</span>
+            </div>
+        </div>
+    </nav>
 </div>
 
-</body></html>
+</body>
+</html>

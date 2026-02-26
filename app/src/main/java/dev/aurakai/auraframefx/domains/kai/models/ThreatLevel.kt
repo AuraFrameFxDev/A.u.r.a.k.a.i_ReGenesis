@@ -12,7 +12,7 @@ enum class ThreatLevel(val severity: Int, val description: String) {
     HIGH(5, "Significant security threat"),
     CRITICAL(6, "Critical security breach"),
     AI_ERROR(7, "AI system error");
-    
+
     companion object {
         fun fromSeverity(severity: Int): ThreatLevel {
             return entries.find { it.severity == severity } ?: NONE

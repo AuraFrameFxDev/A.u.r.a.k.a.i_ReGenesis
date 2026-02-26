@@ -9,27 +9,27 @@ import androidx.compose.ui.graphics.Color
  * "Identity is Immutable. Style is Fluid."
  */
 object AgentPrimaryColors {
-    
+
     // 🎨 AURA - The Creative Catalyst
     // Motif: Magenta/Electric Pink splashes on Cyan/Purple energy
     val AuraMagenta = Color(0xFFFF00DE)
     val AuraCyan = Color(0xFF00FFFF)
     val AuraDeepPurple = Color(0xFF7B2FFF)
-    
+
     // 🛡️ KAI - Sentinel's Fortress
     // Motif: Electric Cyan, targeting grids, neon security borders
     val KaiCyan = Color(0xFF00D9FF)
     val KaiSecurityGreen = Color(0xFF00FF85)
-    
+
     // 🔮 GENESIS - OracleDrive
     // Motif: Yellow/Gold resonance circuits, Amber nodes
     val GenesisGold = Color(0xFFFFD700)
     val GenesisAmber = Color(0xFFFF8C00)
     val GenesisDeepBlue = Color(0xFF0A0E27)
-    
+
     // 🌀 NEXUS - The Collective
     val NexusPurple = Color(0xFFB026FF)
-    
+
     // 🧊 CASCADE - Data Analysis
     val CascadeTeal = Color(0xFF00FFAA)
 }

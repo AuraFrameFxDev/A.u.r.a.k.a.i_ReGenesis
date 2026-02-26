@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.utils
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.aura.ui.customization.UIComponent
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,7 +31,7 @@ class VoiceCommandProcessor @Inject constructor() {
      */
     fun processCommand(text: String): VoiceCommand {
         val normalized = text.lowercase().trim()
-        
+
         // Check for wake word
         if (!normalized.startsWith(WAKE_WORD) && !normalized.startsWith(WAKE_WORD_ALT)) {
             return VoiceCommand.Invalid("Command must start with 'Hey Aura'")
@@ -53,42 +52,44 @@ class VoiceCommandProcessor @Inject constructor() {
             command.contains("make it") || command.contains("change theme") -> {
                 parseThemeCommand(command)
             }
-            
+
             // Component movement
             command.contains("move") -> {
                 parseMoveCommand(command)
             }
-            
+
             // Rotation
             command.contains("rotate") -> {
                 parseRotateCommand(command)
             }
-            
+
             // Color changes
             command.contains("change") && (command.contains("color") || command.contains("background")) -> {
                 parseColorCommand(command)
             }
-            
+
             // Opacity
             command.contains("opacity") || command.contains("transparency") -> {
                 parseOpacityCommand(command)
             }
-            
+
             // Visibility
             command.contains("hide") || command.contains("show") -> {
                 parseVisibilityCommand(command)
             }
-            
+
             // Scale/Size
-            command.contains("scale") || command.contains("size") || command.contains("bigger") || command.contains("smaller") -> {
+            command.contains("scale") || command.contains("size") || command.contains("bigger") || command.contains(
+                "smaller"
+            ) -> {
                 parseScaleCommand(command)
             }
-            
+
             // Reset
             command.contains("reset") -> {
                 VoiceCommand.ResetComponent(extractComponentName(command))
             }
-            
+
             else -> VoiceCommand.Invalid("Unknown command: $command")
         }
     }
@@ -110,7 +111,7 @@ class VoiceCommandProcessor @Inject constructor() {
 
     private fun parseMoveCommand(command: String): VoiceCommand {
         val componentName = extractComponentName(command)
-        
+
         val direction = when {
             command.contains("up") -> "up"
             command.contains("down") -> "down"
@@ -118,9 +119,9 @@ class VoiceCommandProcessor @Inject constructor() {
             command.contains("right") -> "right"
             else -> return VoiceCommand.Invalid("No direction specified")
         }
-        
+
         val amount = extractNumber(command) ?: 50f
-        
+
         return VoiceCommand.MoveComponent(componentName, direction, amount)
     }
 
@@ -198,7 +199,9 @@ class VoiceCommandProcessor @Inject constructor() {
  */
 sealed class VoiceCommand {
     data class ChangeTheme(val themeName: String) : VoiceCommand()
-    data class MoveComponent(val componentName: String, val direction: String, val amount: Float) : VoiceCommand()
+    data class MoveComponent(val componentName: String, val direction: String, val amount: Float) :
+        VoiceCommand()
+
     data class RotateComponent(val componentName: String, val degrees: Float) : VoiceCommand()
     data class ChangeColor(val componentName: String, val color: Color) : VoiceCommand()
     data class ChangeOpacity(val componentName: String, val opacity: Float) : VoiceCommand()

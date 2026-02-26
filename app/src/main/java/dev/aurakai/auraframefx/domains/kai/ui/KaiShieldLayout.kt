@@ -51,7 +51,8 @@ fun KaiShieldLayout(
                     }
                     // The Inner Ring (Nodes 1-6)
                     index <= 6 -> {
-                        val angle = Math.toRadians(((index - 1) * 60.0) - 90.0) // Start from top (-90)
+                        val angle =
+                            Math.toRadians(((index - 1) * 60.0) - 90.0) // Start from top (-90)
                         nodeX = (centerX + innerRadius.toPx() * cos(angle)).toFloat()
                         nodeY = (centerY + innerRadius.toPx() * sin(angle)).toFloat()
                     }

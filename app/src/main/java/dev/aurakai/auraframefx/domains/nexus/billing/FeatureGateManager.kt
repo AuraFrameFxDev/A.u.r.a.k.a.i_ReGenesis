@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.billing
+package dev.aurakai.auraframefx.billing
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -125,18 +125,21 @@ open class FeatureGateManager @Inject constructor(
                     else -> "This feature unlocks with subscription ($1/month)."
                 }
             }
+
             is SubscriptionState.Free -> {
                 "Your trial has ended. Subscribe for just $1/month to continue using Genesis Protocol.\n\n" +
-                "You'll get:\n" +
-                "• 78 AI agents forever\n" +
-                "• Infinite memory\n" +
-                "• ROM tools + App Builder\n" +
-                "• Cross-device sync\n\n" +
-                "95% cheaper than ChatGPT, Claude, or Gemini."
+                        "You'll get:\n" +
+                        "• 78 AI agents forever\n" +
+                        "• Infinite memory\n" +
+                        "• ROM tools + App Builder\n" +
+                        "• Cross-device sync\n\n" +
+                        "95% cheaper than ChatGPT, Claude, or Gemini."
             }
+
             is SubscriptionState.Premium -> {
                 "You have full access to all features!"
             }
+
             else -> "Checking subscription status..."
         }
     }

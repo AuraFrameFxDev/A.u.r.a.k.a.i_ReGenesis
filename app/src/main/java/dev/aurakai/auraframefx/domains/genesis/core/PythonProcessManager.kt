@@ -7,7 +7,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -487,7 +486,7 @@ class PythonProcessManager @Inject constructor(
 
     // Compatibility methods for legacy callers
     fun isBackendRunning(): Boolean = isHealthy()
-    
+
     fun getBackendUrl(): String = "http://localhost:5000" // Default for flask
 
     fun startGenesisBackend(): Boolean {

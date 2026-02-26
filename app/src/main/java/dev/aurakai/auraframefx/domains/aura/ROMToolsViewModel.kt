@@ -151,12 +151,12 @@ open class ROMToolsViewModel @Inject constructor(
 
     private fun checkMagisk(): Boolean {
         return File("/data/adb/magisk").exists() ||
-               File("/sbin/.magisk").exists()
+                File("/sbin/.magisk").exists()
     }
 
     private fun checkLSPosed(): Boolean {
         return File("/data/adb/lspd").exists() ||
-               File("/system/framework/lspd.dex").exists()
+                File("/system/framework/lspd.dex").exists()
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
@@ -167,11 +167,21 @@ open class ROMToolsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val files = listOf(
-                    SystemFile("/system/build.prop", "Build Properties", "text/plain", editable = true),
+                    SystemFile(
+                        "/system/build.prop",
+                        "Build Properties",
+                        "text/plain",
+                        editable = true
+                    ),
                     SystemFile("/system/etc/hosts", "Hosts File", "text/plain", editable = true),
                     SystemFile("/system/etc/init.d", "Init Scripts", "directory", editable = false),
                     SystemFile("/system/framework", "Framework", "directory", editable = false),
-                    SystemFile("/data/system/packages.xml", "Packages Config", "text/xml", editable = true),
+                    SystemFile(
+                        "/data/system/packages.xml",
+                        "Packages Config",
+                        "text/xml",
+                        editable = true
+                    ),
                     SystemFile("/data/data", "App Data", "directory", editable = false)
                 )
                 _systemFiles.value = files
@@ -295,7 +305,8 @@ open class ROMToolsViewModel @Inject constructor(
     fun toggleModule(module: XposedModule, enabled: Boolean) {
         viewModelScope.launch {
             try {
-                _operationStatus.value = "${if (enabled) "Enabling" else "Disabling"} ${module.name}..."
+                _operationStatus.value =
+                    "${if (enabled) "Enabling" else "Disabling"} ${module.name}..."
 
                 // Toggle module via LSPosed API
                 // This would integrate with LSPosed's module management

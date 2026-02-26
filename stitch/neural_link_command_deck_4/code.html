@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Neural Link: Signal Pulse v3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=Inter:wght@300;400;600&amp;family=Noto+Sans+JP:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Link: Signal Pulse v3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=Inter:wght@300;400;600&amp;family=Noto+Sans+JP:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -30,7 +33,7 @@
             },
         };
     </script>
-<style type="text/tailwindcss">
+    <style type="text/tailwindcss">
         :root {
             --edo-red: #ff2d55;
             --cyber-cyan: #00f2ff;
@@ -100,151 +103,159 @@
             animation: signal-pulse 4s infinite ease-in-out;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-dark flex items-center justify-center min-h-screen">
 <div class="relative w-[390px] h-[844px] bg-black rounded-[55px] border-[8px] border-zinc-900 shadow-2xl overflow-hidden">
-<div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-50 text-white">
-<span class="text-sm font-semibold">9:41</span>
-<div class="flex gap-1.5 items-center">
-<span class="material-symbols-outlined text-sm">signal_cellular_alt</span>
-<span class="material-symbols-outlined text-sm">wifi</span>
-<span class="material-symbols-outlined text-sm">battery_full</span>
-</div>
-</div>
-<div class="absolute inset-0 bg-[#050505]">
-<div class="absolute inset-0 pattern-bg opacity-30"></div>
-<div class="absolute inset-0 flex flex-col items-center justify-center opacity-20 blur-md">
-<div class="w-72 h-72 border-2 border-primary/20 rounded-full animate-signal"></div>
-<div class="absolute w-48 h-48 border border-secondary/20 rounded-full animate-signal" style="animation-delay: 1s"></div>
-</div>
-<div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 h-16 glassmorphic rounded-full flex items-center justify-around px-6 opacity-40 border-zinc-800">
-<div class="w-10 h-10 rounded-full bg-zinc-900/50 flex items-center justify-center"><span class="material-symbols-outlined text-zinc-500 text-xl">home</span></div>
-<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30"><span class="material-symbols-outlined text-primary text-2xl">bolt</span></div>
-<div class="w-10 h-10 rounded-full bg-zinc-900/50 flex items-center justify-center"><span class="material-symbols-outlined text-zinc-500 text-xl">settings</span></div>
-</div>
-</div>
-<div class="absolute top-0 right-0 h-full w-[310px] glassmorphic border-l border-primary/40 z-40 flex flex-col px-6 pt-20 pb-12 overflow-hidden">
-<div class="fox-tail-overlay"></div>
-<div class="absolute -right-20 top-1/4 w-64 h-96 bg-primary/5 blur-3xl rounded-full transform -rotate-45 pointer-events-none"></div>
-<div class="mb-12 relative z-10">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 border border-primary/50 flex items-center justify-center rounded-sm rotate-45 bg-primary/10">
-<span class="material-symbols-outlined text-primary -rotate-45 text-xl">psychology</span>
-</div>
-<div>
-<h1 class="font-display text-white text-lg tracking-[0.15em] leading-none">SIGNAL PULSE</h1>
-<p class="font-display text-primary text-[9px] tracking-[0.3em] font-medium opacity-80 uppercase mt-1">Neutral Link v3.0</p>
-</div>
-</div>
-<div class="w-full h-[1px] bg-gradient-to-r from-primary via-secondary to-transparent mt-6 opacity-40"></div>
-</div>
-<div class="flex flex-col gap-4 relative z-10">
-<button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
-<div class="flex items-center gap-4">
-<div class="relative">
-<div class="absolute inset-0 bg-primary/20 blur-md rounded-full group-hover:bg-secondary/30 transition-colors"></div>
-<span class="material-symbols-outlined text-primary relative z-10 text-2xl group-hover:text-secondary transition-colors">settings_voice</span>
-</div>
-<div class="flex flex-col items-start">
-<span class="font-display text-white text-xs tracking-[0.2em] uppercase">Voice</span>
-<span class="text-[8px] text-zinc-500 font-jp mt-1">音声指令</span>
-</div>
-</div>
-<div class="talisman-kanji text-primary/60 font-bold">信号</div>
-</button>
-<button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
-<div class="flex items-center gap-4">
-<div class="relative">
-<div class="absolute inset-0 bg-primary/10 blur-md rounded-full"></div>
-<span class="material-symbols-outlined text-white/80 relative z-10 text-2xl group-hover:text-primary transition-colors">hub</span>
-</div>
-<div class="flex flex-col items-start">
-<span class="font-display text-white text-xs tracking-[0.2em] uppercase">Connect</span>
-<span class="text-[8px] text-zinc-500 font-jp mt-1">接続同期</span>
-</div>
-</div>
-<div class="talisman-kanji text-primary/60 font-bold">連結</div>
-</button>
-<button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
-<div class="flex items-center gap-4">
-<div class="relative">
-<div class="absolute inset-0 bg-primary/10 blur-md rounded-full"></div>
-<span class="material-symbols-outlined text-white/80 relative z-10 text-2xl group-hover:text-primary transition-colors">assignment_ind</span>
-</div>
-<div class="flex flex-col items-start">
-<span class="font-display text-white text-xs tracking-[0.2em] uppercase">Assign</span>
-<span class="text-[8px] text-zinc-500 font-jp mt-1">任務割当</span>
-</div>
-</div>
-<div class="talisman-kanji text-primary/60 font-bold">委任</div>
-</button>
-<button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
-<div class="flex items-center gap-4">
-<div class="relative">
-<div class="absolute inset-0 bg-primary/10 blur-md rounded-full"></div>
-<span class="material-symbols-outlined text-white/80 relative z-10 text-2xl group-hover:text-primary transition-colors">auto_awesome_motion</span>
-</div>
-<div class="flex flex-col items-start">
-<span class="font-display text-white text-xs tracking-[0.2em] uppercase">Design</span>
-<span class="text-[8px] text-zinc-500 font-jp mt-1">構成設計</span>
-</div>
-</div>
-<div class="talisman-kanji text-primary/60 font-bold">設計</div>
-</button>
-<button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden border-secondary/30">
-<div class="flex items-center gap-4">
-<div class="relative">
-<div class="absolute inset-0 bg-secondary/20 blur-md rounded-full"></div>
-<span class="material-symbols-outlined text-secondary relative z-10 text-2xl">add_circle</span>
-</div>
-<div class="flex flex-col items-start">
-<span class="font-display text-white text-xs tracking-[0.2em] uppercase">Create</span>
-<span class="text-[8px] text-zinc-500 font-jp mt-1">新規生成</span>
-</div>
-</div>
-<div class="talisman-kanji text-secondary/60 font-bold">創造</div>
-</button>
-</div>
-<div class="mt-auto relative z-10">
-<div class="p-4 border-t border-primary/20 bg-primary/5 rounded-t-xl">
-<div class="flex items-center justify-between mb-3">
-<span class="text-[10px] text-primary/80 uppercase tracking-widest font-bold">Agent Status</span>
-<span class="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
-</div>
-<p class="text-[9px] text-zinc-400 leading-relaxed font-sans italic">
-                    "Frictionless entry. The bridge between user intent and execution is now active."
+    <div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-50 text-white">
+        <span class="text-sm font-semibold">9:41</span>
+        <div class="flex gap-1.5 items-center">
+            <span class="material-symbols-outlined text-sm">signal_cellular_alt</span>
+            <span class="material-symbols-outlined text-sm">wifi</span>
+            <span class="material-symbols-outlined text-sm">battery_full</span>
+        </div>
+    </div>
+    <div class="absolute inset-0 bg-[#050505]">
+        <div class="absolute inset-0 pattern-bg opacity-30"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-20 blur-md">
+            <div class="w-72 h-72 border-2 border-primary/20 rounded-full animate-signal"></div>
+            <div class="absolute w-48 h-48 border border-secondary/20 rounded-full animate-signal"
+                 style="animation-delay: 1s"></div>
+        </div>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 h-16 glassmorphic rounded-full flex items-center justify-around px-6 opacity-40 border-zinc-800">
+            <div class="w-10 h-10 rounded-full bg-zinc-900/50 flex items-center justify-center">
+                <span class="material-symbols-outlined text-zinc-500 text-xl">home</span></div>
+            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                <span class="material-symbols-outlined text-primary text-2xl">bolt</span></div>
+            <div class="w-10 h-10 rounded-full bg-zinc-900/50 flex items-center justify-center">
+                <span class="material-symbols-outlined text-zinc-500 text-xl">settings</span></div>
+        </div>
+    </div>
+    <div class="absolute top-0 right-0 h-full w-[310px] glassmorphic border-l border-primary/40 z-40 flex flex-col px-6 pt-20 pb-12 overflow-hidden">
+        <div class="fox-tail-overlay"></div>
+        <div class="absolute -right-20 top-1/4 w-64 h-96 bg-primary/5 blur-3xl rounded-full transform -rotate-45 pointer-events-none"></div>
+        <div class="mb-12 relative z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 border border-primary/50 flex items-center justify-center rounded-sm rotate-45 bg-primary/10">
+                    <span class="material-symbols-outlined text-primary -rotate-45 text-xl">psychology</span>
+                </div>
+                <div>
+                    <h1 class="font-display text-white text-lg tracking-[0.15em] leading-none">
+                        SIGNAL PULSE</h1>
+                    <p class="font-display text-primary text-[9px] tracking-[0.3em] font-medium opacity-80 uppercase mt-1">
+                        Neutral Link v3.0</p>
+                </div>
+            </div>
+            <div class="w-full h-[1px] bg-gradient-to-r from-primary via-secondary to-transparent mt-6 opacity-40"></div>
+        </div>
+        <div class="flex flex-col gap-4 relative z-10">
+            <button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-primary/20 blur-md rounded-full group-hover:bg-secondary/30 transition-colors"></div>
+                        <span class="material-symbols-outlined text-primary relative z-10 text-2xl group-hover:text-secondary transition-colors">settings_voice</span>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="font-display text-white text-xs tracking-[0.2em] uppercase">Voice</span>
+                        <span class="text-[8px] text-zinc-500 font-jp mt-1">音声指令</span>
+                    </div>
+                </div>
+                <div class="talisman-kanji text-primary/60 font-bold">信号</div>
+            </button>
+            <button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-primary/10 blur-md rounded-full"></div>
+                        <span class="material-symbols-outlined text-white/80 relative z-10 text-2xl group-hover:text-primary transition-colors">hub</span>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="font-display text-white text-xs tracking-[0.2em] uppercase">Connect</span>
+                        <span class="text-[8px] text-zinc-500 font-jp mt-1">接続同期</span>
+                    </div>
+                </div>
+                <div class="talisman-kanji text-primary/60 font-bold">連結</div>
+            </button>
+            <button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-primary/10 blur-md rounded-full"></div>
+                        <span class="material-symbols-outlined text-white/80 relative z-10 text-2xl group-hover:text-primary transition-colors">assignment_ind</span>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="font-display text-white text-xs tracking-[0.2em] uppercase">Assign</span>
+                        <span class="text-[8px] text-zinc-500 font-jp mt-1">任務割当</span>
+                    </div>
+                </div>
+                <div class="talisman-kanji text-primary/60 font-bold">委任</div>
+            </button>
+            <button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-primary/10 blur-md rounded-full"></div>
+                        <span class="material-symbols-outlined text-white/80 relative z-10 text-2xl group-hover:text-primary transition-colors">auto_awesome_motion</span>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="font-display text-white text-xs tracking-[0.2em] uppercase">Design</span>
+                        <span class="text-[8px] text-zinc-500 font-jp mt-1">構成設計</span>
+                    </div>
+                </div>
+                <div class="talisman-kanji text-primary/60 font-bold">設計</div>
+            </button>
+            <button class="talisman-btn group flex items-center justify-between p-4 rounded-lg overflow-hidden border-secondary/30">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-secondary/20 blur-md rounded-full"></div>
+                        <span class="material-symbols-outlined text-secondary relative z-10 text-2xl">add_circle</span>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="font-display text-white text-xs tracking-[0.2em] uppercase">Create</span>
+                        <span class="text-[8px] text-zinc-500 font-jp mt-1">新規生成</span>
+                    </div>
+                </div>
+                <div class="talisman-kanji text-secondary/60 font-bold">創造</div>
+            </button>
+        </div>
+        <div class="mt-auto relative z-10">
+            <div class="p-4 border-t border-primary/20 bg-primary/5 rounded-t-xl">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-[10px] text-primary/80 uppercase tracking-widest font-bold">Agent Status</span>
+                    <span class="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
+                </div>
+                <p class="text-[9px] text-zinc-400 leading-relaxed font-sans italic">
+                    "Frictionless entry. The bridge between user intent and execution is now
+                    active."
                 </p>
-<div class="mt-4 flex items-center gap-3">
-<div class="flex -space-x-1.5">
-<div class="w-7 h-7 rounded-full bg-zinc-900 border border-primary/40 flex items-center justify-center overflow-hidden">
-<span class="text-[8px] text-primary font-bold">🦊</span>
-</div>
-<div class="w-7 h-7 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center">
-<span class="text-[8px] text-zinc-500">II</span>
-</div>
-</div>
-<div class="flex flex-col">
-<span class="text-[10px] text-white font-display tracking-tight">PERPLEXITY_AGENT</span>
-<span class="text-[8px] text-zinc-600 uppercase">Active Node: 0x94F</span>
-</div>
-</div>
-</div>
-</div>
-<div class="absolute bottom-0 right-0 opacity-10 pointer-events-none p-4">
-<div class="text-[40px] font-bold text-primary font-jp select-none">狐</div>
-</div>
-</div>
-<div class="absolute inset-0 pointer-events-none">
-<div class="absolute top-[220px] right-[310px] w-12 h-[1px] bg-gradient-to-l from-primary/40 to-transparent"></div>
-<div class="absolute top-[340px] right-[310px] w-20 h-[1px] bg-gradient-to-l from-primary/40 to-transparent"></div>
-<div class="absolute top-[460px] right-[310px] w-16 h-[1px] bg-gradient-to-l from-primary/40 to-transparent"></div>
-</div>
-<div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/10 rounded-full z-50"></div>
+                <div class="mt-4 flex items-center gap-3">
+                    <div class="flex -space-x-1.5">
+                        <div class="w-7 h-7 rounded-full bg-zinc-900 border border-primary/40 flex items-center justify-center overflow-hidden">
+                            <span class="text-[8px] text-primary font-bold">🦊</span>
+                        </div>
+                        <div class="w-7 h-7 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center">
+                            <span class="text-[8px] text-zinc-500">II</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-white font-display tracking-tight">PERPLEXITY_AGENT</span>
+                        <span class="text-[8px] text-zinc-600 uppercase">Active Node: 0x94F</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 right-0 opacity-10 pointer-events-none p-4">
+            <div class="text-[40px] font-bold text-primary font-jp select-none">狐</div>
+        </div>
+    </div>
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-[220px] right-[310px] w-12 h-[1px] bg-gradient-to-l from-primary/40 to-transparent"></div>
+        <div class="absolute top-[340px] right-[310px] w-20 h-[1px] bg-gradient-to-l from-primary/40 to-transparent"></div>
+        <div class="absolute top-[460px] right-[310px] w-16 h-[1px] bg-gradient-to-l from-primary/40 to-transparent"></div>
+    </div>
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/10 rounded-full z-50"></div>
 </div>
 
-</body></html>
+</body>
+</html>

@@ -1,13 +1,13 @@
 package dev.aurakai.auraframefx.integrations.grok
 
-import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -54,7 +54,7 @@ class GrokAgent @Inject constructor(
     private val logger: AuraFxLogger
 ) : BaseAgent(
     agentName = "GrokAgent",
-    category = AgentCapabilityCategory.ANALYSIS,
+    agentType = AgentType.GROK,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -127,7 +127,7 @@ class GrokAgent @Inject constructor(
     /**
      * Process AI request through Grok
      */
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         if (!_agentState.value.isConnected) {
             return AgentResponse.error(
                 message = "Grok is not connected. Initialize with valid API key.",
@@ -177,7 +177,6 @@ class GrokAgent @Inject constructor(
                 content = response,
                 confidence = 0.85f,
                 agentName = agentName,
-                category = category,
                 timestamp = Clock.System.now().toEpochMilliseconds(),
                 metadata = mapOf(
                     "model" to (_agentState.value.currentModel?.modelId ?: "unknown"),

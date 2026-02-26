@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LDO Agent Orchestration Hub L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>LDO Agent Orchestration Hub L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,7 +32,7 @@
             },
         }
     </script>
-<style>.data-stream-bg {
+    <style>.data-stream-bg {
     background-image: linear-gradient(to bottom, rgba(22, 16, 34, 0.95), rgba(22, 16, 34, 0.98)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuBRp34pUBopfD19oZE3W1l6dD50MYmjgh6D8FS4igO3nw7pui8KuKYbkvsBFfBohXqTgWUNy3mAvpM1dUFs2GofMa7hqEOWbNA6jQSEvIoCU93HDnBhD2nbxEOAmfIQiKU9NiRlJb8Z_MwvfC31L2C-M4Sv7kgOW2MXanqo2GlZsbxJqe6wOrIXZSwOjf1BChQrTQckMIrF37BQlaY8KaXq0fB7wIFneNIno1I6ixSyAo2Jd-Km-t9F2r0vws-Kw_llxunrPFOkIt8);
     background-size: cover;
     background-position: center
@@ -41,179 +45,200 @@
     }
 .glow-purple {
     box-shadow: 0 0 15px rgba(82, 17, 212, 0.4)
-    }</style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
     }
-  </style>
-  </head>
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-white">
 <div class="relative flex h-screen w-full flex-col overflow-hidden data-stream-bg">
-<!-- Header / Status Bar -->
-<div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 border-b border-white/5 justify-between z-50">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-toxic-green text-2xl">terminal</span>
-<div>
-<h1 class="text-xs font-bold tracking-widest text-white/90 uppercase">ReGenesis AOSPOSX</h1>
-<p class="text-[10px] text-toxic-green glow-green font-mono uppercase tracking-tighter">L2 Link: Stable // Hub_78</p>
+    <!-- Header / Status Bar -->
+    <div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 border-b border-white/5 justify-between z-50">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-toxic-green text-2xl">terminal</span>
+            <div>
+                <h1 class="text-xs font-bold tracking-widest text-white/90 uppercase">ReGenesis
+                    AOSPOSX</h1>
+                <p class="text-[10px] text-toxic-green glow-green font-mono uppercase tracking-tighter">
+                    L2 Link: Stable // Hub_78</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden @[480px]:flex flex-col items-end">
+                <span class="text-[10px] text-white/40 uppercase">Enc_Protocol</span>
+                <span class="text-[10px] text-neon-amber font-mono">AES-256-X</span>
+            </div>
+            <button class="flex items-center justify-center rounded-lg bg-white/5 p-2 text-white hover:bg-white/10 transition-colors">
+                <span class="material-symbols-outlined">analytics</span>
+            </button>
+        </div>
+    </div>
+    <!-- Main Workspace (Orbitron Neural Map) -->
+    <div class="relative flex-1 @container overflow-hidden">
+        <!-- Floating Metadata Background Elements -->
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-20 font-mono text-[8px] p-4 flex flex-col gap-8 leading-none">
+            <div class="translate-x-4">{"agent_id": "GNS-01", "buffer": 0.89, "lat": "4.2ms"}</div>
+            <div class="translate-x-20">{"node": "aura_prime", "status": "syncing", "core":
+                "CHROMA"}
+            </div>
+            <div class="-translate-x-2">ROOT/USR/BIN/ORBITRON --EXEC --VERBOSE</div>
+            <div class="translate-x-32 text-neon-amber">WARNING: Buffer Overflow in Kai_Node_7</div>
+            <div class="translate-x-12 opacity-40">{"id": "c_cascade", "hash": "0x5211d4"}</div>
+        </div>
+        <!-- Orbitron Map Centerpiece -->
+        <div class="absolute inset-0 orbitron-mesh flex items-center justify-center p-8">
+            <div class="relative w-full aspect-square max-w-[400px]">
+                <!-- Central Neural Hub -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="size-24 rounded-full border border-primary/40 bg-primary/10 flex items-center justify-center glow-purple">
+                        <div class="size-16 rounded-full border-2 border-primary animate-pulse"></div>
+                    </div>
+                </div>
+                <!-- Agent Nodes -->
+                <!-- Genesis -->
+                <div class="absolute top-[10%] left-[20%] group">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="size-10 rounded-full border-2 border-toxic-green bg-black/50 overflow-hidden ring-4 ring-toxic-green/20">
+                            <img class="w-full h-full object-cover grayscale brightness-125"
+                                 data-alt="Abstract robotic facial silhouette"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqy-cajVSIZSzoBphHBmTUsMLoiEJEiyh0CcQ7T8hfrGFzCGJ5bawehZ00Qve8nLvcmTHj2cvXOeIb3YdYiSY4E9KgplAdBX8XFt0T6xYgQvaUr-GvgAzxC5fgCfMW87Fp1-QrTKXItllWpaqmjYsT1fD_MTddbFpJSiUHC0G8Oj9z38hUrsaqRq-1mq0XjPC5zjN0BwxbXaaF1xSkjdUhnjHQn4VF-pNnQN303OW-oa9Zg_dSLf30ytQCLWCGSsUCC4Vz_e9U4oU"/>
+                        </div>
+                        <span class="text-[10px] font-bold text-toxic-green tracking-tighter uppercase glow-green bg-black/60 px-1">Genesis</span>
+                    </div>
+                </div>
+                <!-- Aura -->
+                <div class="absolute top-[15%] right-[15%] group">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="size-12 rounded-full border-2 border-primary bg-black/50 overflow-hidden ring-4 ring-primary/20">
+                            <img class="w-full h-full object-cover"
+                                 data-alt="Vibrant digital energy core"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5lVwGeZsjJk9l7k91H8gGANCf3zfTtHgQFBk-HJXGIcc2BsyHAbS7lAzrWPtBde0RInB8jGyVcoaK4Po0DZs29QQVDpAfRdFMvjt8qSmDx0vaTxrs82NgBDq2MJDKdiVMaBBeur4viYXQMoUwyDpyp7DVYrPSReoK6RF7yhpmqwKeYZMG9ylIg8pBpOcGPYQR_KzAtZYWp4P7ruKozoS5YTPeGrCiZQBfY2lTwetpVMDgBV8x5lY5mSOOnv_cxmKnsHbZMkcgEqQ"/>
+                        </div>
+                        <span class="text-[10px] font-bold text-primary tracking-tighter uppercase bg-black/60 px-1">Aura</span>
+                    </div>
+                </div>
+                <!-- Kai -->
+                <div class="absolute bottom-[20%] left-[10%] group">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="size-8 rounded-full border-2 border-neon-amber bg-black/50 overflow-hidden ring-4 ring-neon-amber/20">
+                            <img class="w-full h-full object-cover grayscale"
+                                 data-alt="Cybernetic tech components"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvi0IfzmcgBor-IhcE6q_SiDJElJ3D2m5lqYOdxU-Lg7GOT3JnFCKkxULJ5gGOw9kn1VnJO2aX5sH12zqpkbEwSNELV9Nk85ZqXTTX1lCjj9lbS8iF77M9NPiQkItsM3rAai8tTvv0Wsgq5GG3Ca4Zaj8-_3lqpf_ti2cYxg0NeNfVzgZqyyZa21xnDc0HIWa-eXLMI3BTYtMxecIJtuvlqoTUWFAXsHT-I-WqgTC43QrmUGysWaMIGNyijSBefTnb2TDwljerXR4"/>
+                        </div>
+                        <span class="text-[10px] font-bold text-neon-amber tracking-tighter uppercase bg-black/60 px-1">Kai</span>
+                    </div>
+                </div>
+                <!-- Cascade -->
+                <div class="absolute bottom-[30%] right-[5%] group">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="size-10 rounded-full border-2 border-white/40 bg-black/50 overflow-hidden ring-4 ring-white/10">
+                            <img class="w-full h-full object-cover"
+                                 data-alt="Abstract data server pattern"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6tPI4npqRF3Ub2Kce5V8zlUC756v_5CJPvvUPDlNnWZLyyTb0VIfMyBvkW3sCKLSTafJtsOmdRQUimIpAdGfYfT0H6rp3N_mlM5IwmhLlQMtc25jWNhB-0q7O91nG5nrrKOIkjnFAKuHFbVY1SI2DqIzsWNhyhgs297oTkfgCaKnNVhE14H4Sejc1EI0wksuX3eLq5rtnjWrU5T-qwzy0Pf9QxRuzas2VjMXoLFN1Z8ieDJtIdWyzVE5qLgpezc_SvfD2A6pxS04"/>
+                        </div>
+                        <span class="text-[10px] font-bold text-white/80 tracking-tighter uppercase bg-black/60 px-1">Cascade</span>
+                    </div>
+                </div>
+                <!-- Connection Lines (SVG) -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+                     viewbox="0 0 100 100">
+                    <line stroke="#39ff14" stroke-width="0.5" x1="50" x2="25" y1="50"
+                          y2="15"></line>
+                    <line stroke="#5211d4" stroke-width="0.5" x1="50" x2="80" y1="50"
+                          y2="20"></line>
+                    <line stroke="#ffbf00" stroke-width="0.5" x1="50" x2="15" y1="50"
+                          y2="75"></line>
+                    <line stroke="#fff" stroke-width="0.5" x1="50" x2="90" y1="50" y2="65"></line>
+                </svg>
+            </div>
+        </div>
+        <!-- HUD Controls -->
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10">
+            <button class="flex size-10 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white backdrop-blur-sm shadow-xl">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+            <button class="flex size-10 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white backdrop-blur-sm shadow-xl">
+                <span class="material-symbols-outlined">remove</span>
+            </button>
+            <div class="h-px bg-white/10 my-2"></div>
+            <button class="flex size-10 items-center justify-center rounded-lg bg-primary/20 border border-primary text-primary backdrop-blur-sm glow-purple">
+                <span class="material-symbols-outlined">near_me</span>
+            </button>
+        </div>
+    </div>
+    <!-- Agent Detail Panel (Selected: ChromaCore) -->
+    <div class="bg-background-dark/95 border-t border-primary/30 p-4 pb-24 rounded-t-xl backdrop-blur-xl z-20">
+        <div class="flex items-start justify-between mb-4">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="text-[10px] bg-primary px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">ACTIVE</span>
+                    <h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">AGENT
+                        STATUS: CHROMACORE</h3>
+                </div>
+                <p class="text-white/40 text-[10px] font-mono uppercase tracking-widest">Protocol
+                    Override: Enabled</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white/40 text-[10px] uppercase">Engine</p>
+                <p class="text-toxic-green text-sm font-bold font-mono">OracleDrive v2.4</p>
+            </div>
+        </div>
+        <!-- Progress Meter -->
+        <div class="space-y-3">
+            <div class="flex gap-6 justify-between items-end">
+                <p class="text-white/80 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">sync</span> Sync Level
+                </p>
+                <p class="text-toxic-green text-xl font-bold font-mono glow-green">78%</p>
+            </div>
+            <div class="h-3 w-full rounded-full bg-primary/10 border border-primary/20 overflow-hidden p-[2px]">
+                <div class="h-full rounded-full bg-gradient-to-r from-primary via-primary to-toxic-green relative overflow-hidden"
+                     style="width: 78%;">
+                    <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                </div>
+            </div>
+            <div class="flex justify-between text-[10px] font-mono text-white/30 uppercase">
+                <span>Baseline: OK</span>
+                <span>Buffer: 2.4gb/s</span>
+                <span>Status: Transmitting</span>
+            </div>
+        </div>
+        <!-- Quick Action Grid -->
+        <div class="grid grid-cols-2 gap-3 mt-6">
+            <button class="flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest text-white transition-all">
+                <span class="material-symbols-outlined text-sm">bolt</span> Force Sync
+            </button>
+            <button class="flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest text-white transition-all">
+                <span class="material-symbols-outlined text-sm">security</span> Neural Purge
+            </button>
+        </div>
+    </div>
+    <!-- iOS Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-background-dark/90 backdrop-blur-2xl border-t border-white/5 px-6 pt-3 pb-8 z-50">
+        <div class="flex justify-between items-center max-w-md mx-auto">
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined">hub</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Orbitron</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/40">
+                <span class="material-symbols-outlined">format_list_bulleted</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Fleet</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/40">
+                <span class="material-symbols-outlined">terminal</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Logs</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/40">
+                <span class="material-symbols-outlined">settings_suggest</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Systems</span>
+            </button>
+        </div>
+        <!-- Home Indicator (iOS style) -->
+        <div class="mt-4 mx-auto w-32 h-1 rounded-full bg-white/10"></div>
+    </div>
 </div>
-</div>
-<div class="flex items-center gap-4">
-<div class="hidden @[480px]:flex flex-col items-end">
-<span class="text-[10px] text-white/40 uppercase">Enc_Protocol</span>
-<span class="text-[10px] text-neon-amber font-mono">AES-256-X</span>
-</div>
-<button class="flex items-center justify-center rounded-lg bg-white/5 p-2 text-white hover:bg-white/10 transition-colors">
-<span class="material-symbols-outlined">analytics</span>
-</button>
-</div>
-</div>
-<!-- Main Workspace (Orbitron Neural Map) -->
-<div class="relative flex-1 @container overflow-hidden">
-<!-- Floating Metadata Background Elements -->
-<div class="absolute inset-0 z-0 pointer-events-none opacity-20 font-mono text-[8px] p-4 flex flex-col gap-8 leading-none">
-<div class="translate-x-4">{"agent_id": "GNS-01", "buffer": 0.89, "lat": "4.2ms"}</div>
-<div class="translate-x-20">{"node": "aura_prime", "status": "syncing", "core": "CHROMA"}</div>
-<div class="-translate-x-2">ROOT/USR/BIN/ORBITRON --EXEC --VERBOSE</div>
-<div class="translate-x-32 text-neon-amber">WARNING: Buffer Overflow in Kai_Node_7</div>
-<div class="translate-x-12 opacity-40">{"id": "c_cascade", "hash": "0x5211d4"}</div>
-</div>
-<!-- Orbitron Map Centerpiece -->
-<div class="absolute inset-0 orbitron-mesh flex items-center justify-center p-8">
-<div class="relative w-full aspect-square max-w-[400px]">
-<!-- Central Neural Hub -->
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="size-24 rounded-full border border-primary/40 bg-primary/10 flex items-center justify-center glow-purple">
-<div class="size-16 rounded-full border-2 border-primary animate-pulse"></div>
-</div>
-</div>
-<!-- Agent Nodes -->
-<!-- Genesis -->
-<div class="absolute top-[10%] left-[20%] group">
-<div class="flex flex-col items-center gap-2">
-<div class="size-10 rounded-full border-2 border-toxic-green bg-black/50 overflow-hidden ring-4 ring-toxic-green/20">
-<img class="w-full h-full object-cover grayscale brightness-125" data-alt="Abstract robotic facial silhouette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqy-cajVSIZSzoBphHBmTUsMLoiEJEiyh0CcQ7T8hfrGFzCGJ5bawehZ00Qve8nLvcmTHj2cvXOeIb3YdYiSY4E9KgplAdBX8XFt0T6xYgQvaUr-GvgAzxC5fgCfMW87Fp1-QrTKXItllWpaqmjYsT1fD_MTddbFpJSiUHC0G8Oj9z38hUrsaqRq-1mq0XjPC5zjN0BwxbXaaF1xSkjdUhnjHQn4VF-pNnQN303OW-oa9Zg_dSLf30ytQCLWCGSsUCC4Vz_e9U4oU"/>
-</div>
-<span class="text-[10px] font-bold text-toxic-green tracking-tighter uppercase glow-green bg-black/60 px-1">Genesis</span>
-</div>
-</div>
-<!-- Aura -->
-<div class="absolute top-[15%] right-[15%] group">
-<div class="flex flex-col items-center gap-2">
-<div class="size-12 rounded-full border-2 border-primary bg-black/50 overflow-hidden ring-4 ring-primary/20">
-<img class="w-full h-full object-cover" data-alt="Vibrant digital energy core" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5lVwGeZsjJk9l7k91H8gGANCf3zfTtHgQFBk-HJXGIcc2BsyHAbS7lAzrWPtBde0RInB8jGyVcoaK4Po0DZs29QQVDpAfRdFMvjt8qSmDx0vaTxrs82NgBDq2MJDKdiVMaBBeur4viYXQMoUwyDpyp7DVYrPSReoK6RF7yhpmqwKeYZMG9ylIg8pBpOcGPYQR_KzAtZYWp4P7ruKozoS5YTPeGrCiZQBfY2lTwetpVMDgBV8x5lY5mSOOnv_cxmKnsHbZMkcgEqQ"/>
-</div>
-<span class="text-[10px] font-bold text-primary tracking-tighter uppercase bg-black/60 px-1">Aura</span>
-</div>
-</div>
-<!-- Kai -->
-<div class="absolute bottom-[20%] left-[10%] group">
-<div class="flex flex-col items-center gap-2">
-<div class="size-8 rounded-full border-2 border-neon-amber bg-black/50 overflow-hidden ring-4 ring-neon-amber/20">
-<img class="w-full h-full object-cover grayscale" data-alt="Cybernetic tech components" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvi0IfzmcgBor-IhcE6q_SiDJElJ3D2m5lqYOdxU-Lg7GOT3JnFCKkxULJ5gGOw9kn1VnJO2aX5sH12zqpkbEwSNELV9Nk85ZqXTTX1lCjj9lbS8iF77M9NPiQkItsM3rAai8tTvv0Wsgq5GG3Ca4Zaj8-_3lqpf_ti2cYxg0NeNfVzgZqyyZa21xnDc0HIWa-eXLMI3BTYtMxecIJtuvlqoTUWFAXsHT-I-WqgTC43QrmUGysWaMIGNyijSBefTnb2TDwljerXR4"/>
-</div>
-<span class="text-[10px] font-bold text-neon-amber tracking-tighter uppercase bg-black/60 px-1">Kai</span>
-</div>
-</div>
-<!-- Cascade -->
-<div class="absolute bottom-[30%] right-[5%] group">
-<div class="flex flex-col items-center gap-2">
-<div class="size-10 rounded-full border-2 border-white/40 bg-black/50 overflow-hidden ring-4 ring-white/10">
-<img class="w-full h-full object-cover" data-alt="Abstract data server pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6tPI4npqRF3Ub2Kce5V8zlUC756v_5CJPvvUPDlNnWZLyyTb0VIfMyBvkW3sCKLSTafJtsOmdRQUimIpAdGfYfT0H6rp3N_mlM5IwmhLlQMtc25jWNhB-0q7O91nG5nrrKOIkjnFAKuHFbVY1SI2DqIzsWNhyhgs297oTkfgCaKnNVhE14H4Sejc1EI0wksuX3eLq5rtnjWrU5T-qwzy0Pf9QxRuzas2VjMXoLFN1Z8ieDJtIdWyzVE5qLgpezc_SvfD2A6pxS04"/>
-</div>
-<span class="text-[10px] font-bold text-white/80 tracking-tighter uppercase bg-black/60 px-1">Cascade</span>
-</div>
-</div>
-<!-- Connection Lines (SVG) -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewbox="0 0 100 100">
-<line stroke="#39ff14" stroke-width="0.5" x1="50" x2="25" y1="50" y2="15"></line>
-<line stroke="#5211d4" stroke-width="0.5" x1="50" x2="80" y1="50" y2="20"></line>
-<line stroke="#ffbf00" stroke-width="0.5" x1="50" x2="15" y1="50" y2="75"></line>
-<line stroke="#fff" stroke-width="0.5" x1="50" x2="90" y1="50" y2="65"></line>
-</svg>
-</div>
-</div>
-<!-- HUD Controls -->
-<div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10">
-<button class="flex size-10 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white backdrop-blur-sm shadow-xl">
-<span class="material-symbols-outlined">add</span>
-</button>
-<button class="flex size-10 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white backdrop-blur-sm shadow-xl">
-<span class="material-symbols-outlined">remove</span>
-</button>
-<div class="h-px bg-white/10 my-2"></div>
-<button class="flex size-10 items-center justify-center rounded-lg bg-primary/20 border border-primary text-primary backdrop-blur-sm glow-purple">
-<span class="material-symbols-outlined">near_me</span>
-</button>
-</div>
-</div>
-<!-- Agent Detail Panel (Selected: ChromaCore) -->
-<div class="bg-background-dark/95 border-t border-primary/30 p-4 pb-24 rounded-t-xl backdrop-blur-xl z-20">
-<div class="flex items-start justify-between mb-4">
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="text-[10px] bg-primary px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">ACTIVE</span>
-<h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">AGENT STATUS: CHROMACORE</h3>
-</div>
-<p class="text-white/40 text-[10px] font-mono uppercase tracking-widest">Protocol Override: Enabled</p>
-</div>
-<div class="text-right">
-<p class="text-white/40 text-[10px] uppercase">Engine</p>
-<p class="text-toxic-green text-sm font-bold font-mono">OracleDrive v2.4</p>
-</div>
-</div>
-<!-- Progress Meter -->
-<div class="space-y-3">
-<div class="flex gap-6 justify-between items-end">
-<p class="text-white/80 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
-<span class="material-symbols-outlined text-sm">sync</span> Sync Level
-                    </p>
-<p class="text-toxic-green text-xl font-bold font-mono glow-green">78%</p>
-</div>
-<div class="h-3 w-full rounded-full bg-primary/10 border border-primary/20 overflow-hidden p-[2px]">
-<div class="h-full rounded-full bg-gradient-to-r from-primary via-primary to-toxic-green relative overflow-hidden" style="width: 78%;">
-<div class="absolute inset-0 bg-white/20 animate-pulse"></div>
-</div>
-</div>
-<div class="flex justify-between text-[10px] font-mono text-white/30 uppercase">
-<span>Baseline: OK</span>
-<span>Buffer: 2.4gb/s</span>
-<span>Status: Transmitting</span>
-</div>
-</div>
-<!-- Quick Action Grid -->
-<div class="grid grid-cols-2 gap-3 mt-6">
-<button class="flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest text-white transition-all">
-<span class="material-symbols-outlined text-sm">bolt</span> Force Sync
-                </button>
-<button class="flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[10px] font-bold uppercase tracking-widest text-white transition-all">
-<span class="material-symbols-outlined text-sm">security</span> Neural Purge
-                </button>
-</div>
-</div>
-<!-- iOS Bottom Navigation -->
-<div class="fixed bottom-0 left-0 right-0 bg-background-dark/90 backdrop-blur-2xl border-t border-white/5 px-6 pt-3 pb-8 z-50">
-<div class="flex justify-between items-center max-w-md mx-auto">
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined">hub</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Orbitron</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined">format_list_bulleted</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Fleet</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined">terminal</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Logs</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined">settings_suggest</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Systems</span>
-</button>
-</div>
-<!-- Home Indicator (iOS style) -->
-<div class="mt-4 mx-auto w-32 h-1 rounded-full bg-white/10"></div>
-</div>
-</div>
-</body></html>
+</body>
+</html>

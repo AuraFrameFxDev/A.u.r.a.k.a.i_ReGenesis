@@ -35,7 +35,7 @@ object GateAssetConfig {
     // These can be toggled in settings or per user preference
     object StyleMode {
         var auraStyle: GateStyle = GateStyle.STYLE_A
-        var kaiStyle: GateStyle = GateStyle.STYLE_B  // Default to Cyber Security
+        var kaiStyle: GateStyle = GateStyle.STYLE_A  // v2 Sentinels Fortress character art
         var genesisStyle: GateStyle = GateStyle.STYLE_A
         var nexusStyle: GateStyle = GateStyle.STYLE_A
         var helpStyle: GateStyle = GateStyle.STYLE_A
@@ -306,6 +306,21 @@ object GateAssetConfig {
             styleB = "gatescenes_nexus_fusion_symbol",            // NEW! Meta connection
             fallback = null
         )
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // EXODUS HUD BACKGROUNDS
+    // ═══════════════════════════════════════════════════════════════════════
+
+    object ExodusBackgrounds {
+        /** Level 1 — the main carousel arena with phoenix, vortex, red eye */
+        const val LEVEL_1 = "exodus_hud_lvl1_bg"
+
+        // ── Level 2 Hub Backgrounds ──
+        /** Oracle Drive L2 — holographic phoenix, floating data panels, grid floor */
+        const val ORACLE_DRIVE_HUB = "hub_bg_oracle_drive_l2"
+        /** Oracle Drive landscape variant (cropped top 72%, 960×540) */
+        const val ORACLE_DRIVE_LANDSCAPE = "hub_bg_oracle_drive_landscape"
     }
 
     // ═══════════════════════════════════════════════════════════════════════

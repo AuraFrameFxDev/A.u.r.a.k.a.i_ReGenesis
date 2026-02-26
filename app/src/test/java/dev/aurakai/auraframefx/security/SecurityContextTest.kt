@@ -22,7 +22,7 @@ class SecurityContextTest {
     }
 
     // Security State Tests
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test initial security state is not in error`() = runTest {
         val state = securityContext.securityState.first()
         assertFalse("Initial state should not be in error", state.errorState)
@@ -66,7 +66,7 @@ class SecurityContextTest {
             EncryptionStatus.NOT_INITIALIZED, status)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test setEncryptionStatus updates correctly`() = runTest {
         securityContext.setEncryptionStatus(EncryptionStatus.ACTIVE)
 
@@ -74,7 +74,7 @@ class SecurityContextTest {
         assertEquals("Encryption status should be ACTIVE", EncryptionStatus.ACTIVE, status)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test encryption status transitions`() = runTest {
         // Test typical lifecycle transitions
         securityContext.setEncryptionStatus(EncryptionStatus.ACTIVE)
@@ -104,7 +104,7 @@ class SecurityContextTest {
         assertTrue("READ permission should be granted", state["READ"] == true)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test updatePermissions with multiple permissions`() = runTest {
         val permissions = mapOf(
             "READ" to true,
@@ -133,7 +133,7 @@ class SecurityContextTest {
         assertTrue("New permission should exist", state.containsKey("NEW"))
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test hasPermission always returns true in development mode`() {
         assertTrue(securityContext.hasPermission("ANY_PERMISSION"))
         assertTrue(securityContext.hasPermission("READ"))
@@ -156,7 +156,7 @@ class SecurityContextTest {
         assertTrue("Threat detection should be active", isActive)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test startThreatDetection sets encryption to ACTIVE`() = runTest {
         securityContext.startThreatDetection()
 
@@ -165,7 +165,7 @@ class SecurityContextTest {
             EncryptionStatus.ACTIVE, encryptionStatus)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test stopThreatDetection deactivates monitoring`() = runTest {
         securityContext.startThreatDetection()
         securityContext.stopThreatDetection()
@@ -174,7 +174,7 @@ class SecurityContextTest {
         assertFalse("Threat detection should be inactive after stopping", isActive)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test threat detection lifecycle`() = runTest {
         // Initial state
         assertFalse(securityContext.threatDetectionActive.first())
@@ -198,12 +198,12 @@ class SecurityContextTest {
         assertEquals("genesis_user", securityContext.getCurrentUser())
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test isSecureMode returns false in development`() {
         assertFalse("Should not be in secure mode by default", securityContext.isSecureMode())
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test validateAccess always allows in development`() {
         assertTrue(securityContext.validateAccess("/secure/resource"))
         assertTrue(securityContext.validateAccess("/public/resource"))
@@ -279,7 +279,7 @@ class SecurityContextTest {
         assertNotEquals(state1, state3)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test SecurityState copy functionality`() {
         val original = SecurityState(errorState = true, errorMessage = "Original")
         val copied = original.copy(errorMessage = "Modified")
@@ -289,7 +289,7 @@ class SecurityContextTest {
         assertEquals("Original", original.errorMessage)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test ApplicationIntegrity data class`() {
         val integrity = ApplicationIntegrity(signatureHash = "abc123", isValid = true)
 
@@ -320,7 +320,7 @@ class SecurityContextTest {
         assertTrue(types.contains(SecurityEventType.ACCESS_DENIED))
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test EventSeverity enum values`() {
         val severities = EventSeverity.values()
         assertEquals(4, severities.size)

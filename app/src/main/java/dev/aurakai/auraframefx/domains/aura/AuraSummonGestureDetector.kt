@@ -21,7 +21,8 @@ class AuraSummonGestureDetector(
 
     companion object {
         private const val ACTION_SUMMON_AURA = "dev.aurakai.auraframefx.ACTION_SUMMON_AURA"
-        private const val ACTION_AURA_CONTEXT_MENU = "dev.aurakai.auraframefx.ACTION_AURA_CONTEXT_MENU"
+        private const val ACTION_AURA_CONTEXT_MENU =
+            "dev.aurakai.auraframefx.ACTION_AURA_CONTEXT_MENU"
     }
 
     override fun onDown(e: MotionEvent): Boolean {

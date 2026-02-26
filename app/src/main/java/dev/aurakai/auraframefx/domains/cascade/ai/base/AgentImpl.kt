@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.ai.base
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -17,11 +17,11 @@ class AgentImpl : Agent {
     }
 
     /**
-     * Returns the capability category of the agent.
+     * Returns the type or model of the agent.
      */
-    override fun getCategory(): AgentCapabilityCategory {
-        Timber.w("AgentImpl: getCategory() invoked. Returning ROOT fallback.")
-        return AgentCapabilityCategory.ROOT
+    override fun getType(): AgentType {
+        Timber.w("AgentImpl: getType() invoked. Returning SYSTEM fallback.")
+        return AgentType.SYSTEM
     }
 
     /**
@@ -29,11 +29,13 @@ class AgentImpl : Agent {
      */
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        category: AgentCapabilityCategory
+        context: String
     ): AgentResponse {
         Timber.e("AgentImpl: processRequest() invoked. This is a placeholder.")
-        return AgentResponse.error("FallbackAgent: Processing not implemented", agentName = "FallbackAgent")
+        return AgentResponse.error(
+            "FallbackAgent: Processing not implemented",
+            agentName = "FallbackAgent"
+        )
     }
 
     /**
@@ -44,6 +46,11 @@ class AgentImpl : Agent {
      */
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> {
         Timber.e("AgentImpl: processRequestFlow() invoked. This is a placeholder.")
-        return flowOf(AgentResponse.error("FallbackAgent: Stream processing not implemented", agentName = "FallbackAgent"))
+        return flowOf(
+            AgentResponse.error(
+                "FallbackAgent: Stream processing not implemented",
+                agentName = "FallbackAgent"
+            )
+        )
     }
 }

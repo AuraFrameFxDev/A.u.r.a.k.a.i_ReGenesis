@@ -4,10 +4,10 @@ import dagger.Lazy
 import dev.aurakai.auraframefx.domains.cascade.CascadeEvent
 import dev.aurakai.auraframefx.domains.cascade.CascadeEventBus
 import dev.aurakai.auraframefx.domains.cascade.MemoryEvent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -30,9 +30,16 @@ class GenesisBackedKaiAIService @Inject constructor(
         isInitialized = true
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         // Emit event for monitoring
-        CascadeEventBus.emit(CascadeEvent.Memory(MemoryEvent("KAI_PROCESS", mapOf("query" to request.prompt))))
+        CascadeEventBus.emit(
+            CascadeEvent.Memory(
+                MemoryEvent(
+                    "KAI_PROCESS",
+                    mapOf("query" to request.prompt)
+                )
+            )
+        )
 
         // Analyze threat using internal method
         val analysis = analyzeSecurityThreat(request.prompt)
@@ -40,7 +47,7 @@ class GenesisBackedKaiAIService @Inject constructor(
         return AgentResponse(
             content = "Security Analysis: ${analysis["threat_level"]}",
             confidence = analysis["confidence"] as? Float ?: 0.85f,
-            category = category
+            agentType = AgentType.KAI
         )
     }
 
@@ -66,11 +73,13 @@ class GenesisBackedKaiAIService @Inject constructor(
 
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> = flow {
         // Emit initial response
-        emit(AgentResponse(
-            content = "Kai analyzing security posture...",
-            confidence = 0.5f,
-            category = AgentCapabilityCategory.SECURITY
-        ))
+        emit(
+            AgentResponse(
+                content = "Kai analyzing security posture...",
+                confidence = 0.5f,
+                agentType = AgentType.KAI
+            )
+        )
 
         // Perform security analysis
         val analysisResult = analyzeSecurityThreat(request.prompt)
@@ -86,11 +95,13 @@ class GenesisBackedKaiAIService @Inject constructor(
             }
         }
 
-        emit(AgentResponse(
-            content = detailedResponse,
-            confidence = analysisResult["confidence"] as? Float ?: 0.95f,
-            category = AgentCapabilityCategory.SECURITY
-        ))
+        emit(
+            AgentResponse(
+                content = detailedResponse,
+                confidence = analysisResult["confidence"] as? Float ?: 0.95f,
+                agentType = AgentType.KAI
+            )
+        )
     }
 
     override suspend fun monitorSecurityStatus(): Map<String, Any> {

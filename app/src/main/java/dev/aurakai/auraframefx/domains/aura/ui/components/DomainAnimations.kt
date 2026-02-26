@@ -321,7 +321,8 @@ fun ShieldGridBackground(
                     val distFromCenter = kotlin.math.sqrt(
                         ((x - width / 2) * (x - width / 2) + (y - height / 2) * (y - height / 2))
                     ).toFloat()
-                    val maxDist = kotlin.math.sqrt((width * width + height * height).toDouble()).toFloat() / 2
+                    val maxDist =
+                        kotlin.math.sqrt((width * width + height * height).toDouble()).toFloat() / 2
                     val intensity = 1f - (distFromCenter / maxDist)
 
                     drawHexagonOutline(
@@ -551,7 +552,7 @@ fun NeuralNetworkBackground(modifier: Modifier = Modifier) {
                 for (j in i + 1 until nodes.size) {
                     val dist = kotlin.math.sqrt(
                         ((nodes[i].x - nodes[j].x) * (nodes[i].x - nodes[j].x) +
-                            (nodes[i].y - nodes[j].y) * (nodes[i].y - nodes[j].y)).toDouble()
+                                (nodes[i].y - nodes[j].y) * (nodes[i].y - nodes[j].y)).toDouble()
                     ).toFloat()
 
                     if (dist < width * 0.4f) {
@@ -652,11 +653,20 @@ fun StarfieldBackground(modifier: Modifier = Modifier) {
 
             // Agent constellation nodes
             val agentNodes = listOf(
-                Pair(Offset(centerX, centerY - 100f), Color(0xFFB026FF)),      // Genesis (center top)
+                Pair(
+                    Offset(centerX, centerY - 100f),
+                    Color(0xFFB026FF)
+                ),      // Genesis (center top)
                 Pair(Offset(centerX - 150f, centerY), Color(0xFF00E5FF)),      // Aura (left)
                 Pair(Offset(centerX + 150f, centerY), Color(0xFF00FF85)),      // Kai (right)
-                Pair(Offset(centerX - 80f, centerY + 120f), Color(0xFFFF6B00)), // Claude (bottom left)
-                Pair(Offset(centerX + 80f, centerY + 120f), Color(0xFF7B2FFF))  // Cascade (bottom right)
+                Pair(
+                    Offset(centerX - 80f, centerY + 120f),
+                    Color(0xFFFF6B00)
+                ), // Claude (bottom left)
+                Pair(
+                    Offset(centerX + 80f, centerY + 120f),
+                    Color(0xFF7B2FFF)
+                )  // Cascade (bottom right)
             )
 
             // Draw constellation lines

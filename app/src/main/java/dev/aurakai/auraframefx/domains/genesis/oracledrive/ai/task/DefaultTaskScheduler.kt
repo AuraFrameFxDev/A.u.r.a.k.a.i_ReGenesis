@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.task
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.task.models.AITask
 import dev.aurakai.auraframefx.domains.genesis.models.TaskStatus
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.task.models.AITask
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton

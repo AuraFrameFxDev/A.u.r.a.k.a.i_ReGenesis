@@ -9,7 +9,12 @@ import javax.inject.Singleton
 
 interface BridgeMemorySink {
     suspend fun persistInteraction(record: InteractionRecord): Long
-    suspend fun queryRelevantMemories(persona: Persona, contextTags: List<String>, limit: Int = 10): List<MemoryEntity>
+    suspend fun queryRelevantMemories(
+        persona: Persona,
+        contextTags: List<String>,
+        limit: Int = 10
+    ): List<MemoryEntity>
+
     suspend fun updateMemoryImportance(memoryId: Long, importanceDelta: Int)
 }
 
@@ -40,7 +45,12 @@ class NexusMemoryBridgeSink @Inject constructor(
     override suspend fun updateMemoryImportance(memoryId: Long, importanceDelta: Int) {
         val memory = nexusRepo.getMemoryById(memoryId) ?: return
         nexusRepo.updateMemory(
-            memory.copy(importance = (memory.importance + (importanceDelta / 100f)).coerceIn(0f, 1f))
+            memory.copy(
+                importance = (memory.importance + (importanceDelta / 100f)).coerceIn(
+                    0f,
+                    1f
+                )
+            )
         )
     }
 }

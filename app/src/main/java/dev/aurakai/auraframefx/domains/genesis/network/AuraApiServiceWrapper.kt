@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.domains.genesis.network
 
-import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
+import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import javax.inject.Inject
 
 /**

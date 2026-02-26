@@ -40,8 +40,8 @@ fun ChatBubbleMenu(
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
     val density = LocalDensity.current
-    val offsetXDp by remember(offsetX) { mutableStateOf(with(density){ offsetX.toDp() }) }
-    val offsetYDp by remember(offsetY) { mutableStateOf(with(density){ offsetY.toDp() }) }
+    val offsetXDp by remember(offsetX) { mutableStateOf(with(density) { offsetX.toDp() }) }
+    val offsetYDp by remember(offsetY) { mutableStateOf(with(density) { offsetY.toDp() }) }
     Box(
         modifier = modifier
             .offset(x = offsetXDp, y = offsetYDp)

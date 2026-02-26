@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ReGenesis Dev Console</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Space+Mono&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ReGenesis Dev Console</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Space+Mono&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -34,7 +38,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .grid-bg {
             background-image: 
                 linear-gradient(to right, rgba(13, 204, 242, 0.05) 1px, transparent 1px),
@@ -66,153 +70,164 @@
             border: 1px solid rgba(13, 204, 242, 0.2);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30 overflow-hidden">
 <!-- Background Effects -->
 <div class="fixed inset-0 overflow-hidden">
-<div class="grid-bg"></div>
-<div class="absolute inset-0 bg-gradient-to-b from-background-dark/20 via-transparent to-background-dark"></div>
+    <div class="grid-bg"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-background-dark/20 via-transparent to-background-dark"></div>
 </div>
 <!-- Main Container (iPhone Form Factor Simulation) -->
 <div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto border-x border-primary/10 bg-background-dark/40 shadow-2xl">
-<!-- Status Bar -->
-<div class="flex items-center justify-between px-6 pt-12 pb-2 text-[10px] font-mono tracking-widest text-primary/60">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                LIVE_SYS_LINK: ACTIVE
+    <!-- Status Bar -->
+    <div class="flex items-center justify-between px-6 pt-12 pb-2 text-[10px] font-mono tracking-widest text-primary/60">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            LIVE_SYS_LINK: ACTIVE
+        </div>
+        <div class="flex items-center gap-4">
+            <span>CPU: 42.1%</span>
+            <span>MEM: 1.2GB/8GB</span>
+        </div>
+    </div>
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-transparent p-4 justify-between border-b border-primary/20">
+        <div class="flex items-center gap-3">
+            <div class="text-primary" data-icon="terminal">
+                <span class="material-symbols-outlined text-3xl">terminal</span>
             </div>
-<div class="flex items-center gap-4">
-<span>CPU: 42.1%</span>
-<span>MEM: 1.2GB/8GB</span>
+            <div>
+                <h2 class="text-primary text-sm font-bold leading-none tracking-tighter uppercase">
+                    REGENESIS_DEV_TERMINAL</h2>
+                <p class="text-[10px] text-primary/40 font-mono mt-1">BUILD_ID: v4.2.0-STABLE</p>
+            </div>
+        </div>
+        <button class="flex size-10 items-center justify-center rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors">
+            <span class="material-symbols-outlined text-primary">settings_input_component</span>
+        </button>
+    </div>
+    <!-- Scrollable Content Area -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar">
+        <!-- Code Analysis Summary -->
+        <div class="space-y-3">
+            <h3 class="text-[11px] font-bold text-primary/60 tracking-[0.2em] px-1">
+                CODE_ANALYSIS_MANIFEST</h3>
+            <div class="grid grid-cols-1 gap-3">
+                <!-- Null Safety Card -->
+                <div class="glass-panel p-4 rounded-lg flex flex-col gap-1 group">
+                    <div class="flex justify-between items-start">
+                        <p class="text-xs font-mono text-primary/80">NULL_SAFETY_SCAN</p>
+                        <span class="material-symbols-outlined text-warning text-sm">warning</span>
+                    </div>
+                    <p class="text-2xl font-bold tracking-tight text-white">73 <span
+                            class="text-sm font-normal text-warning">ISSUES</span></p>
+                    <div class="w-full bg-white/5 h-1 rounded-full mt-2 overflow-hidden">
+                        <div class="bg-warning w-[45%] h-full"></div>
+                    </div>
+                </div>
+                <!-- Memory Leaks Card -->
+                <div class="glass-panel p-4 rounded-lg flex flex-col gap-1 border-warning/40">
+                    <div class="flex justify-between items-start">
+                        <p class="text-xs font-mono text-primary/80">MEMORY_LEAKS</p>
+                        <span class="material-symbols-outlined text-critical text-sm animate-pulse">dangerous</span>
+                    </div>
+                    <p class="text-2xl font-bold tracking-tight text-critical">5 <span
+                            class="text-sm font-normal uppercase">High Priority</span></p>
+                    <p class="text-[10px] font-mono text-primary/40 mt-1">&gt; CRITICAL_LEAK_IN:
+                        auth_subsystem.py</p>
+                </div>
+                <!-- Test Coverage Card -->
+                <div class="glass-panel p-4 rounded-lg flex flex-col gap-1 border-primary/40">
+                    <div class="flex justify-between items-start">
+                        <p class="text-xs font-mono text-primary/80">TEST_COVERAGE</p>
+                        <span class="material-symbols-outlined text-primary text-sm">verified</span>
+                    </div>
+                    <p class="text-2xl font-bold tracking-tight text-white">1000+ <span
+                            class="text-sm font-normal text-primary">FILES</span></p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="flex-1 bg-white/5 h-1 rounded-full overflow-hidden">
+                            <div class="bg-primary w-[88%] h-full"></div>
+                        </div>
+                        <span class="text-[10px] font-mono text-primary">88%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Command Center -->
+        <div class="space-y-3 pt-4">
+            <h3 class="text-[11px] font-bold text-primary/60 tracking-[0.2em] px-1">
+                TERMINAL_COMMANDS</h3>
+            <div class="grid grid-cols-1 gap-2">
+                <button class="flex items-center justify-between w-full bg-primary/10 border border-primary/30 p-3 rounded-lg hover:bg-primary/20 transition-all active:scale-95 group">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">shield</span>
+                        <span class="font-mono text-sm tracking-tighter">RUN_PROGUARD_OBFUSCATION</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary/40 group-hover:text-primary">chevron_right</span>
+                </button>
+                <button class="flex items-center justify-between w-full bg-primary/10 border border-primary/30 p-3 rounded-lg hover:bg-primary/20 transition-all active:scale-95 group">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">analytics</span>
+                        <span class="font-mono text-sm tracking-tighter">CHK_PY_BACKEND_HEALTH</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary/40 group-hover:text-primary">chevron_right</span>
+                </button>
+                <button class="flex items-center justify-between w-full bg-primary/10 border border-primary/30 p-3 rounded-lg hover:bg-primary/20 transition-all active:scale-95 group">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-warning">key</span>
+                        <span class="font-mono text-sm tracking-tighter">ROTATE_API_KEYS</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary/40 group-hover:text-primary">chevron_right</span>
+                </button>
+            </div>
+        </div>
+        <!-- System Logs (Ghosted Code) -->
+        <div class="pt-6">
+            <h3 class="text-[11px] font-bold text-primary/60 tracking-[0.2em] px-1 mb-2 uppercase">
+                System_Log_Feed</h3>
+            <div class="glass-panel rounded-lg p-3 font-mono text-[10px] leading-relaxed space-y-1 h-40 overflow-hidden relative">
+                <div class="text-primary/70">&gt; INITIALIZING_PYTHON_BACKEND... [OK]</div>
+                <div class="text-primary/50">&gt; SCANNING_PROGUARD_RULES... DONE</div>
+                <div class="text-warning/80">&gt; AUTH_TOKEN: [GHOSTED_SECRET_HIDDEN]</div>
+                <div class="text-primary/70">&gt; 3D_GRID_SUBSYSTEM: ACTIVE</div>
+                <div class="text-primary/30">&gt; async def monitor_heap():</div>
+                <div class="text-primary/30">&gt;     while True:</div>
+                <div class="text-primary/30">&gt;         await check_leaks()</div>
+                <div class="text-primary/30">&gt;         await asyncio.sleep(5)</div>
+                <div class="text-primary/20">&gt; DEBUG: Socket connection established on port
+                    8080
+                </div>
+                <div class="text-primary/20">&gt; INFO: ReGenesis core services stabilized</div>
+                <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background-dark to-transparent"></div>
+            </div>
+        </div>
+    </div>
+    <!-- iOS Style Bottom Navigation -->
+    <div class="bg-background-dark/95 border-t border-primary/20 pt-2 pb-8 px-6 flex justify-between items-center z-20">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Dash</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">code</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Repo</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">security</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Sec</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">person_search</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Logs</span>
+        </button>
+    </div>
+    <!-- iOS Home Indicator -->
+    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-primary/30 rounded-full"></div>
 </div>
-</div>
-<!-- Top App Bar -->
-<div class="flex items-center bg-transparent p-4 justify-between border-b border-primary/20">
-<div class="flex items-center gap-3">
-<div class="text-primary" data-icon="terminal">
-<span class="material-symbols-outlined text-3xl">terminal</span>
-</div>
-<div>
-<h2 class="text-primary text-sm font-bold leading-none tracking-tighter uppercase">REGENESIS_DEV_TERMINAL</h2>
-<p class="text-[10px] text-primary/40 font-mono mt-1">BUILD_ID: v4.2.0-STABLE</p>
-</div>
-</div>
-<button class="flex size-10 items-center justify-center rounded-lg border border-primary/30 hover:bg-primary/10 transition-colors">
-<span class="material-symbols-outlined text-primary">settings_input_component</span>
-</button>
-</div>
-<!-- Scrollable Content Area -->
-<div class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar">
-<!-- Code Analysis Summary -->
-<div class="space-y-3">
-<h3 class="text-[11px] font-bold text-primary/60 tracking-[0.2em] px-1">CODE_ANALYSIS_MANIFEST</h3>
-<div class="grid grid-cols-1 gap-3">
-<!-- Null Safety Card -->
-<div class="glass-panel p-4 rounded-lg flex flex-col gap-1 group">
-<div class="flex justify-between items-start">
-<p class="text-xs font-mono text-primary/80">NULL_SAFETY_SCAN</p>
-<span class="material-symbols-outlined text-warning text-sm">warning</span>
-</div>
-<p class="text-2xl font-bold tracking-tight text-white">73 <span class="text-sm font-normal text-warning">ISSUES</span></p>
-<div class="w-full bg-white/5 h-1 rounded-full mt-2 overflow-hidden">
-<div class="bg-warning w-[45%] h-full"></div>
-</div>
-</div>
-<!-- Memory Leaks Card -->
-<div class="glass-panel p-4 rounded-lg flex flex-col gap-1 border-warning/40">
-<div class="flex justify-between items-start">
-<p class="text-xs font-mono text-primary/80">MEMORY_LEAKS</p>
-<span class="material-symbols-outlined text-critical text-sm animate-pulse">dangerous</span>
-</div>
-<p class="text-2xl font-bold tracking-tight text-critical">5 <span class="text-sm font-normal uppercase">High Priority</span></p>
-<p class="text-[10px] font-mono text-primary/40 mt-1">&gt; CRITICAL_LEAK_IN: auth_subsystem.py</p>
-</div>
-<!-- Test Coverage Card -->
-<div class="glass-panel p-4 rounded-lg flex flex-col gap-1 border-primary/40">
-<div class="flex justify-between items-start">
-<p class="text-xs font-mono text-primary/80">TEST_COVERAGE</p>
-<span class="material-symbols-outlined text-primary text-sm">verified</span>
-</div>
-<p class="text-2xl font-bold tracking-tight text-white">1000+ <span class="text-sm font-normal text-primary">FILES</span></p>
-<div class="flex items-center gap-2 mt-2">
-<div class="flex-1 bg-white/5 h-1 rounded-full overflow-hidden">
-<div class="bg-primary w-[88%] h-full"></div>
-</div>
-<span class="text-[10px] font-mono text-primary">88%</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Command Center -->
-<div class="space-y-3 pt-4">
-<h3 class="text-[11px] font-bold text-primary/60 tracking-[0.2em] px-1">TERMINAL_COMMANDS</h3>
-<div class="grid grid-cols-1 gap-2">
-<button class="flex items-center justify-between w-full bg-primary/10 border border-primary/30 p-3 rounded-lg hover:bg-primary/20 transition-all active:scale-95 group">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">shield</span>
-<span class="font-mono text-sm tracking-tighter">RUN_PROGUARD_OBFUSCATION</span>
-</div>
-<span class="material-symbols-outlined text-primary/40 group-hover:text-primary">chevron_right</span>
-</button>
-<button class="flex items-center justify-between w-full bg-primary/10 border border-primary/30 p-3 rounded-lg hover:bg-primary/20 transition-all active:scale-95 group">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">analytics</span>
-<span class="font-mono text-sm tracking-tighter">CHK_PY_BACKEND_HEALTH</span>
-</div>
-<span class="material-symbols-outlined text-primary/40 group-hover:text-primary">chevron_right</span>
-</button>
-<button class="flex items-center justify-between w-full bg-primary/10 border border-primary/30 p-3 rounded-lg hover:bg-primary/20 transition-all active:scale-95 group">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-warning">key</span>
-<span class="font-mono text-sm tracking-tighter">ROTATE_API_KEYS</span>
-</div>
-<span class="material-symbols-outlined text-primary/40 group-hover:text-primary">chevron_right</span>
-</button>
-</div>
-</div>
-<!-- System Logs (Ghosted Code) -->
-<div class="pt-6">
-<h3 class="text-[11px] font-bold text-primary/60 tracking-[0.2em] px-1 mb-2 uppercase">System_Log_Feed</h3>
-<div class="glass-panel rounded-lg p-3 font-mono text-[10px] leading-relaxed space-y-1 h-40 overflow-hidden relative">
-<div class="text-primary/70">&gt; INITIALIZING_PYTHON_BACKEND... [OK]</div>
-<div class="text-primary/50">&gt; SCANNING_PROGUARD_RULES... DONE</div>
-<div class="text-warning/80">&gt; AUTH_TOKEN: [GHOSTED_SECRET_HIDDEN]</div>
-<div class="text-primary/70">&gt; 3D_GRID_SUBSYSTEM: ACTIVE</div>
-<div class="text-primary/30">&gt; async def monitor_heap():</div>
-<div class="text-primary/30">&gt;     while True:</div>
-<div class="text-primary/30">&gt;         await check_leaks()</div>
-<div class="text-primary/30">&gt;         await asyncio.sleep(5)</div>
-<div class="text-primary/20">&gt; DEBUG: Socket connection established on port 8080</div>
-<div class="text-primary/20">&gt; INFO: ReGenesis core services stabilized</div>
-<div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background-dark to-transparent"></div>
-</div>
-</div>
-</div>
-<!-- iOS Style Bottom Navigation -->
-<div class="bg-background-dark/95 border-t border-primary/20 pt-2 pb-8 px-6 flex justify-between items-center z-20">
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined text-2xl">grid_view</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Dash</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">code</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Repo</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">security</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Sec</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">person_search</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Logs</span>
-</button>
-</div>
-<!-- iOS Home Indicator -->
-<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-primary/30 rounded-full"></div>
-</div>
-</body></html>
+</body>
+</html>

@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.genesis.network
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 /**
  * Interceptor that handles HTTP errors and converts them to exceptions if needed.

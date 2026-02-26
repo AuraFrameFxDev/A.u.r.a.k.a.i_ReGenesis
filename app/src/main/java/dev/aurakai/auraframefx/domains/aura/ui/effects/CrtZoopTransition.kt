@@ -1,24 +1,28 @@
 package dev.aurakai.auraframefx.domains.aura.ui.effects
 
-import android.graphics.RenderEffect
-import android.graphics.Shader
 import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
 
 /**
  * 📺 CRT ZOOP TRANSITION: REFRACTIVE NEON BRUTALISM
@@ -37,7 +41,7 @@ fun <T> CrtZoopTransition(
     content: @Composable (T) -> Unit
 ) {
     val transition = updateTransition(targetState, label = "CrtZoopMachine")
-    
+
     transition.AnimatedContent(
         transitionSpec = {
             // PNEUMATIC ENTRY: Fast slide in with a heavy recoil (spring)
@@ -63,7 +67,7 @@ fun <T> CrtZoopTransition(
     ) { state ->
         // WRAPPER FOR CHROMATIC ABERRATION & SCANLINES
         Box(modifier = Modifier.fillMaxSize()) {
-            
+
             // CONTENT LAYER WITH OPTIONAL RENDER EFFECT
             Box(
                 modifier = Modifier
@@ -93,7 +97,7 @@ fun <T> CrtZoopTransition(
                     )
                     y += lineHeight + gap
                 }
-                
+
                 // Vignette / Tube Edge
                 drawRect(
                     brush = androidx.compose.ui.graphics.Brush.radialGradient(

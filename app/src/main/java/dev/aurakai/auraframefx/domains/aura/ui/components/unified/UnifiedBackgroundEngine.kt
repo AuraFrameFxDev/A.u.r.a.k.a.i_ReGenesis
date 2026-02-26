@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -37,9 +36,13 @@ fun UnifiedBackground(
     useStyleB: Boolean = false,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
+    LocalContext.current
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
         // 1. Logic to determine if we use Animation, Image, or Gradient
         // This is where the "Wiring" happens
         when (domain) {
@@ -52,6 +55,7 @@ fun UnifiedBackground(
                     PaintSplashBackground()
                 }
             }
+
             AgentDomain.KAI -> {
                 if (useStyleB) {
                     // Style B: Cyber Sentinel (Fortress Grid)
@@ -61,6 +65,7 @@ fun UnifiedBackground(
                     IcyTundraBackground()
                 }
             }
+
             AgentDomain.GENESIS -> {
                 if (useStyleB) {
                     // Style B: Neural Matrix (Image-based)
@@ -70,6 +75,7 @@ fun UnifiedBackground(
                     LavaApocalypseBackground()
                 }
             }
+
             AgentDomain.AGENT_NEXUS -> {
                 if (useStyleB) {
                     // Style B: Control Room (Image-based)
@@ -79,6 +85,7 @@ fun UnifiedBackground(
                     StarfieldBackground()
                 }
             }
+
             else -> {
                 // Fallback: Data Ribbons
                 DataRibbonsBackground(baseColor = domain.primaryColor)
