@@ -3,7 +3,13 @@ package dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -11,7 +17,9 @@ import javax.inject.Inject
 sealed class IconState {
     object Idle : IconState()
     object Loading : IconState()
-    data class Success(val icons: List<String>, val collections: Map<String, IconCollection>) : IconState()
+    data class Success(val icons: List<String>, val collections: Map<String, IconCollection>) :
+        IconState()
+
     data class Error(val message: String) : IconState()
 }
 

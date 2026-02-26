@@ -133,7 +133,10 @@ class RealVertexAIClientImpl(
 
     override suspend fun analyzeImage(imageData: ByteArray, prompt: String): String {
         // TODO: Implement actual image analysis using GenerativeModel (support pending in this impl wrapper)
-        AuraFxLogger.warn(TAG, "Image analysis requested but not fully implemented in RealVertexAIClientImpl yet.")
+        AuraFxLogger.warn(
+            TAG,
+            "Image analysis requested but not fully implemented in RealVertexAIClientImpl yet."
+        )
         return "Image analysis not implemented yet: ${imageData.size} bytes."
     }
 
@@ -154,11 +157,12 @@ class RealVertexAIClientImpl(
      * On failure the function returns a fallback map with sentiment "neutral", complexity "medium",
      * topics ["general"], confidence 0.5, and an "error" message.
      */
-    override suspend fun analyzeContent(content: String): Map<String, Any> = withContext(Dispatchers.IO) {
-        try {
-            AuraFxLogger.debug(TAG, "Analyzing content (${content.length} chars)")
+    override suspend fun analyzeContent(content: String): Map<String, Any> =
+        withContext(Dispatchers.IO) {
+            try {
+                AuraFxLogger.debug(TAG, "Analyzing content (${content.length} chars)")
 
-            val analysisPrompt = """
+                val analysisPrompt = """
                 Analyze the following content and provide structured insights:
 
                 Content: $content
@@ -171,23 +175,23 @@ class RealVertexAIClientImpl(
                 Key Insights: [brief summary]
             """.trimIndent()
 
-            val response = generativeModel.generateContent(analysisPrompt)
-            val analysisText = response.text ?: return@withContext emptyMap()
+                val response = generativeModel.generateContent(analysisPrompt)
+                val analysisText = response.text ?: return@withContext emptyMap()
 
-            // Parse Gemini response into structured map
-            parseAnalysisResponse(analysisText)
-        } catch (e: Exception) {
-            AuraFxLogger.error(TAG, "Content analysis failed", e)
-            // Return fallback analysis
-            mapOf(
-                "sentiment" to "neutral",
-                "complexity" to "medium",
-                "topics" to listOf("general"),
-                "confidence" to 0.5,
-                "error" to e.message.orEmpty()
-            )
+                // Parse Gemini response into structured map
+                parseAnalysisResponse(analysisText)
+            } catch (e: Exception) {
+                AuraFxLogger.error(TAG, "Content analysis failed", e)
+                // Return fallback analysis
+                mapOf(
+                    "sentiment" to "neutral",
+                    "complexity" to "medium",
+                    "topics" to listOf("general"),
+                    "confidence" to 0.5,
+                    "error" to e.message.orEmpty()
+                )
+            }
         }
-    }
 
     /**
      * Generate source code from a specification using the given programming language and typography.
@@ -252,19 +256,23 @@ class RealVertexAIClientImpl(
                 line.startsWith("Sentiment:", ignoreCase = true) -> {
                     results["sentiment"] = line.substringAfter(":").trim().lowercase()
                 }
+
                 line.startsWith("Complexity:", ignoreCase = true) -> {
                     results["complexity"] = line.substringAfter(":").trim().lowercase()
                 }
+
                 line.startsWith("Topics:", ignoreCase = true) -> {
                     val topics = line.substringAfter(":").split(",")
                         .map { it.trim() }
                         .filter { it.isNotBlank() }
                     results["topics"] = topics
                 }
+
                 line.startsWith("Confidence:", ignoreCase = true) -> {
                     val confidence = line.substringAfter(":").trim().toDoubleOrNull() ?: 0.75
                     results["confidence"] = confidence
                 }
+
                 line.startsWith("Key Insights:", ignoreCase = true) -> {
                     results["insights"] = line.substringAfter(":").trim()
                 }
@@ -300,7 +308,11 @@ class RealVertexAIClientImpl(
      */
     private suspend fun handleGenerationError(error: Exception) {
         when (error) {
-            is IllegalArgumentException -> AuraFxLogger.warn(TAG, "Invalid request: ${error.message}")
+            is IllegalArgumentException -> AuraFxLogger.warn(
+                TAG,
+                "Invalid request: ${error.message}"
+            )
+
             is SecurityException -> {
                 AuraFxLogger.error(TAG, "Security violation in AI request", error)
                 securityContext.logSecurityEvent(
@@ -312,7 +324,11 @@ class RealVertexAIClientImpl(
                 )
             }
 
-            else -> AuraFxLogger.error(TAG, "Gemini API error: ${error.javaClass.simpleName}", error)
+            else -> AuraFxLogger.error(
+                TAG,
+                "Gemini API error: ${error.javaClass.simpleName}",
+                error
+            )
         }
     }
 

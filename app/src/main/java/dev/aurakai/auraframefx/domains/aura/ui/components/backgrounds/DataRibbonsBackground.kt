@@ -1,13 +1,21 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components.backgrounds
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.lerp
 import kotlin.math.sin
 import kotlin.random.Random
 
@@ -41,10 +49,10 @@ fun DataRibbonsBackground(
                 yBase = Random.nextFloat(),                // relative 0..1
                 phase = Random.nextFloat() * 6.28318f,     // 0..2π
                 speed = Random.nextFloat() * (speedMax - speedMin) + speedMin,
-                amp   = amplitudePx * (0.7f + 0.6f * Random.nextFloat()),
+                amp = amplitudePx * (0.7f + 0.6f * Random.nextFloat()),
                 thick = thicknessPx * (0.7f + 0.6f * Random.nextFloat()),
                 layer = layer,
-                col   = lerp(baseColor, accentColor, Random.nextFloat()).copy(alpha = 0.85f)
+                col = lerp(baseColor, accentColor, Random.nextFloat()).copy(alpha = 0.85f)
             )
         }
     }
@@ -66,10 +74,14 @@ fun DataRibbonsBackground(
             }
 
             // glow passes
-            drawPath(path, r.col.copy(alpha = 0.20f),
-                style = Stroke(width = r.thick * 2.8f, cap = StrokeCap.Round))
-            drawPath(path, r.col.copy(alpha = 0.40f),
-                style = Stroke(width = r.thick * 1.8f, cap = StrokeCap.Round))
+            drawPath(
+                path, r.col.copy(alpha = 0.20f),
+                style = Stroke(width = r.thick * 2.8f, cap = StrokeCap.Round)
+            )
+            drawPath(
+                path, r.col.copy(alpha = 0.40f),
+                style = Stroke(width = r.thick * 1.8f, cap = StrokeCap.Round)
+            )
             drawPath(path, r.col, style = Stroke(width = r.thick, cap = StrokeCap.Round))
         }
     }

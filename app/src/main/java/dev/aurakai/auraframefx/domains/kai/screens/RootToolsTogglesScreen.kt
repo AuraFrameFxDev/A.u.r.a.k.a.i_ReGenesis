@@ -1,9 +1,7 @@
 package dev.aurakai.auraframefx.domains.kai.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -225,7 +223,8 @@ fun RootToolsTogglesScreen(
                                 // TODO: Implement Magisk module toggle
                                 kotlinx.coroutines.delay(1500)
                                 magiskEnabled = enabled
-                                statusMessage = "Magisk modules ${if (enabled) "enabled" else "disabled"}"
+                                statusMessage =
+                                    "Magisk modules ${if (enabled) "enabled" else "disabled"}"
                                 isProcessing = false
                             }
                         },
@@ -252,7 +251,8 @@ fun RootToolsTogglesScreen(
                                 // TODO: Implement root permission toggle
                                 kotlinx.coroutines.delay(1500)
                                 rootGranted = enabled
-                                statusMessage = "Root access ${if (enabled) "granted" else "revoked"}"
+                                statusMessage =
+                                    "Root access ${if (enabled) "granted" else "revoked"}"
                                 isProcessing = false
                             }
                         },
@@ -282,8 +282,10 @@ fun RootToolsTogglesScreen(
                             when (showConfirmDialog) {
                                 RootToggleAction.UnlockBootloader ->
                                     "⚠️ WARNING: Unlocking the bootloader will ERASE ALL DATA on this device. This action cannot be undone. Are you sure?"
+
                                 RootToggleAction.LockBootloader ->
                                     "⚠️ WARNING: Locking the bootloader may prevent booting if custom ROM is installed. Continue?"
+
                                 else -> "Are you sure you want to perform this action?"
                             }
                         )
@@ -301,6 +303,7 @@ fun RootToolsTogglesScreen(
                                             bootloaderUnlocked = true
                                             statusMessage = "Bootloader unlocked successfully"
                                         }
+
                                         RootToggleAction.LockBootloader -> {
                                             statusMessage = "Locking bootloader..."
                                             // TODO: Implement bootloader lock
@@ -308,6 +311,7 @@ fun RootToolsTogglesScreen(
                                             bootloaderUnlocked = false
                                             statusMessage = "Bootloader locked successfully"
                                         }
+
                                         else -> {}
                                     }
                                     isProcessing = false
@@ -418,7 +422,9 @@ private fun RootToggleCard(
                     enabled = !isProcessing,
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = if (isDangerous) Color.Red else Color.Cyan,
-                        checkedTrackColor = if (isDangerous) Color.Red.copy(alpha = 0.5f) else Color.Cyan.copy(alpha = 0.5f),
+                        checkedTrackColor = if (isDangerous) Color.Red.copy(alpha = 0.5f) else Color.Cyan.copy(
+                            alpha = 0.5f
+                        ),
                         uncheckedThumbColor = Color.Gray,
                         uncheckedTrackColor = Color.Gray.copy(alpha = 0.3f)
                     )

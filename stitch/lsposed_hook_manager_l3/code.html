@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LSPosed Hook Manager L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>LSPosed Hook Manager L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -32,7 +36,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .terminal-glow {
             text-shadow: 0 0 10px rgba(37, 244, 120, 0.4);
         }
@@ -49,182 +53,191 @@
             box-shadow: 0 0 5px rgba(37, 244, 120, 0.2);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-dark font-display text-white selection:bg-primary selection:text-black">
 <div class="relative flex h-screen w-full max-w-[430px] mx-auto flex-col overflow-hidden border-x border-primary/10 bg-background-dark shadow-2xl">
-<!-- Scanline Overlay -->
-<div class="absolute inset-0 scanline z-50 opacity-20"></div>
-<!-- Top App Bar -->
-<div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pt-6 justify-between border-b border-primary/20">
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary terminal-glow">terminal</span>
-<h2 class="text-white text-sm font-bold tracking-widest uppercase">Level 3 Access</h2>
-</div>
-<h1 class="text-primary text-xl font-bold leading-tight tracking-tight terminal-glow">REGENESIS AOSPOSX</h1>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex flex-col items-end">
-<span class="text-[10px] text-primary/60 uppercase">System Status</span>
-<span class="text-xs text-primary font-bold">STABLE</span>
-</div>
-<button class="flex size-10 items-center justify-center rounded-lg bg-primary/10 border border-primary/30 text-primary">
-<span class="material-symbols-outlined">memory</span>
-</button>
-</div>
-</div>
-<!-- Scrollable Content -->
-<div class="flex-1 overflow-y-auto pb-24 scrollbar-hide">
-<!-- Target App Selector -->
-<div class="px-4 py-6">
-<div class="mb-2 flex justify-between items-end">
-<label class="text-[10px] text-primary/60 uppercase font-bold tracking-[0.2em]">Target Package</label>
-<span class="text-[10px] text-primary uppercase">v3.4.12_X</span>
-</div>
-<div class="relative flex items-center group">
-<div class="absolute left-4 text-primary">
-<span class="material-symbols-outlined text-[20px]">search</span>
-</div>
-<input class="w-full bg-card-bg/50 border border-primary/30 rounded-lg py-3 pl-12 pr-4 text-primary placeholder:text-primary/30 focus:ring-1 focus:ring-primary focus:border-primary transition-all text-sm font-mono" placeholder="com.android.systemui"/>
-<div class="absolute right-3 flex gap-1">
-<div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
-</div>
-</div>
-</div>
-<!-- Filter Tabs -->
-<div class="flex gap-2 px-4 mb-6 overflow-x-auto no-scrollbar">
-<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary px-3 text-black text-[10px] font-bold uppercase tracking-wider">
-                    All Hooks
-                </button>
-<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/30 px-3 text-primary text-[10px] font-bold uppercase tracking-wider">
-                    Active
-                </button>
-<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/30 px-3 text-primary text-[10px] font-bold uppercase tracking-wider">
-                    Blocked
-                </button>
-<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/30 px-3 text-primary text-[10px] font-bold uppercase tracking-wider text-nowrap">
-                    System Core
-                </button>
-</div>
-<!-- Hook Section Header -->
-<div class="px-4 py-2 bg-primary/5 border-y border-primary/10 flex justify-between items-center">
-<span class="text-[10px] text-primary/80 font-bold tracking-widest uppercase">L3_INTERCEPT_STACK</span>
-<span class="text-[10px] text-white/40 font-mono">0x7F2A...9C</span>
-</div>
-<!-- Hook Cards -->
-<div class="divide-y divide-primary/10">
-<!-- Hook Item 1 (Vetoed) -->
-<div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
-<div class="flex justify-between items-start mb-3">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="text-xs font-mono text-white/90 font-semibold">android.app.Activity.onCreate</span>
-<span class="bg-red-500/20 text-red-500 text-[9px] px-1.5 py-0.5 border border-red-500/40 rounded flex items-center gap-1 font-bold">
+    <!-- Scanline Overlay -->
+    <div class="absolute inset-0 scanline z-50 opacity-20"></div>
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pt-6 justify-between border-b border-primary/20">
+        <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary terminal-glow">terminal</span>
+                <h2 class="text-white text-sm font-bold tracking-widest uppercase">Level 3
+                    Access</h2>
+            </div>
+            <h1 class="text-primary text-xl font-bold leading-tight tracking-tight terminal-glow">
+                REGENESIS AOSPOSX</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex flex-col items-end">
+                <span class="text-[10px] text-primary/60 uppercase">System Status</span>
+                <span class="text-xs text-primary font-bold">STABLE</span>
+            </div>
+            <button class="flex size-10 items-center justify-center rounded-lg bg-primary/10 border border-primary/30 text-primary">
+                <span class="material-symbols-outlined">memory</span>
+            </button>
+        </div>
+    </div>
+    <!-- Scrollable Content -->
+    <div class="flex-1 overflow-y-auto pb-24 scrollbar-hide">
+        <!-- Target App Selector -->
+        <div class="px-4 py-6">
+            <div class="mb-2 flex justify-between items-end">
+                <label class="text-[10px] text-primary/60 uppercase font-bold tracking-[0.2em]">Target
+                    Package</label>
+                <span class="text-[10px] text-primary uppercase">v3.4.12_X</span>
+            </div>
+            <div class="relative flex items-center group">
+                <div class="absolute left-4 text-primary">
+                    <span class="material-symbols-outlined text-[20px]">search</span>
+                </div>
+                <input class="w-full bg-card-bg/50 border border-primary/30 rounded-lg py-3 pl-12 pr-4 text-primary placeholder:text-primary/30 focus:ring-1 focus:ring-primary focus:border-primary transition-all text-sm font-mono"
+                       placeholder="com.android.systemui"/>
+                <div class="absolute right-3 flex gap-1">
+                    <div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Filter Tabs -->
+        <div class="flex gap-2 px-4 mb-6 overflow-x-auto no-scrollbar">
+            <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary px-3 text-black text-[10px] font-bold uppercase tracking-wider">
+                All Hooks
+            </button>
+            <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/30 px-3 text-primary text-[10px] font-bold uppercase tracking-wider">
+                Active
+            </button>
+            <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/30 px-3 text-primary text-[10px] font-bold uppercase tracking-wider">
+                Blocked
+            </button>
+            <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/30 px-3 text-primary text-[10px] font-bold uppercase tracking-wider text-nowrap">
+                System Core
+            </button>
+        </div>
+        <!-- Hook Section Header -->
+        <div class="px-4 py-2 bg-primary/5 border-y border-primary/10 flex justify-between items-center">
+            <span class="text-[10px] text-primary/80 font-bold tracking-widest uppercase">L3_INTERCEPT_STACK</span>
+            <span class="text-[10px] text-white/40 font-mono">0x7F2A...9C</span>
+        </div>
+        <!-- Hook Cards -->
+        <div class="divide-y divide-primary/10">
+            <!-- Hook Item 1 (Vetoed) -->
+            <div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono text-white/90 font-semibold">android.app.Activity.onCreate</span>
+                            <span class="bg-red-500/20 text-red-500 text-[9px] px-1.5 py-0.5 border border-red-500/40 rounded flex items-center gap-1 font-bold">
 <span class="material-symbols-outlined text-[10px] fill-1">gpp_maybe</span>
                                     SECURITY VETO
                                 </span>
+                        </div>
+                        <p class="text-[11px] text-primary/60 font-mono">Target:
+                            com.android.systemui</p>
+                    </div>
+                    <label class="relative flex h-6 w-11 cursor-not-allowed items-center rounded-full bg-red-500/20 p-1 opacity-50">
+                        <div class="h-4 w-4 rounded-full bg-red-500 shadow-sm"></div>
+                    </label>
+                </div>
+                <div class="bg-black/40 p-2 rounded border border-primary/10">
+                    <p class="text-[10px] text-primary/40 leading-relaxed italic">Restricted by
+                        KAI-Sentinel: Illegal memory access pattern detected on secondary
+                        thread.</p>
+                </div>
+            </div>
+            <!-- Hook Item 2 (Active) -->
+            <div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
+                <div class="flex justify-between items-start mb-1">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono text-white/90 font-semibold">android.view.View.setAlpha</span>
+                        </div>
+                        <p class="text-[11px] text-primary/60 font-mono">Target: * (Global Hook)</p>
+                    </div>
+                    <label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-primary/20 p-1 transition-all">
+                        <input checked="" class="sr-only peer" type="checkbox"/>
+                        <div class="h-4 w-4 rounded-full bg-primary shadow-[0_0_8px_rgba(37,244,120,0.8)] translate-x-5 transition-transform"></div>
+                    </label>
+                </div>
+                <div class="flex gap-4 mt-3">
+                    <div class="flex items-center gap-1">
+                        <span class="text-[9px] text-white/40 uppercase">Hits:</span>
+                        <span class="text-[9px] text-primary font-mono">12,402</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="text-[9px] text-white/40 uppercase">Latency:</span>
+                        <span class="text-[9px] text-primary font-mono">0.4ms</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Hook Item 3 (Inactive) -->
+            <div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
+                <div class="flex justify-between items-start mb-1">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono text-white/40 font-semibold line-through">com.google.android.gms.getAccount</span>
+                        </div>
+                        <p class="text-[11px] text-primary/30 font-mono">Target: com.whatsapp</p>
+                    </div>
+                    <label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-white/10 p-1 transition-all">
+                        <input class="sr-only peer" type="checkbox"/>
+                        <div class="h-4 w-4 rounded-full bg-white/40 shadow-sm translate-x-0 transition-transform"></div>
+                    </label>
+                </div>
+            </div>
+            <!-- Hook Item 4 (Active) -->
+            <div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
+                <div class="flex justify-between items-start mb-1">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono text-white/90 font-semibold">android.telephony.getDeviceId</span>
+                            <span class="bg-primary/20 text-primary text-[9px] px-1.5 py-0.5 border border-primary/40 rounded font-bold uppercase tracking-tight">Proxy Mode</span>
+                        </div>
+                        <p class="text-[11px] text-primary/60 font-mono">Target:
+                            com.instagram.android</p>
+                    </div>
+                    <label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-primary/20 p-1 transition-all">
+                        <input checked="" class="sr-only peer" type="checkbox"/>
+                        <div class="h-4 w-4 rounded-full bg-primary shadow-[0_0_8px_rgba(37,244,120,0.8)] translate-x-5 transition-transform"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bottom Navigation (AOSPOSX Adapted) -->
+    <div class="absolute bottom-0 left-0 right-0 bg-background-dark/95 backdrop-blur-xl border-t border-primary/20 px-6 py-4 flex justify-between items-center z-40">
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Modules</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary terminal-glow">
+            <span class="material-symbols-outlined text-2xl fill-1">cable</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Hooks</span>
+            <div class="h-1 w-4 bg-primary rounded-full mt-0.5"></div>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">list_alt</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Logs</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">settings_input_component</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Core</span>
+        </button>
+    </div>
+    <!-- System HUD elements -->
+    <div class="absolute top-24 right-4 pointer-events-none opacity-20 hidden sm:block">
+        <div class="flex flex-col items-end font-mono text-[8px] text-primary">
+            <span>CPU_LOAD: 24%</span>
+            <span>MEM_FREE: 1.2GB</span>
+            <span>HOOK_THREADS: 4</span>
+            <span>KAI_VER: 9.0.4</span>
+        </div>
+    </div>
 </div>
-<p class="text-[11px] text-primary/60 font-mono">Target: com.android.systemui</p>
-</div>
-<label class="relative flex h-6 w-11 cursor-not-allowed items-center rounded-full bg-red-500/20 p-1 opacity-50">
-<div class="h-4 w-4 rounded-full bg-red-500 shadow-sm"></div>
-</label>
-</div>
-<div class="bg-black/40 p-2 rounded border border-primary/10">
-<p class="text-[10px] text-primary/40 leading-relaxed italic">Restricted by KAI-Sentinel: Illegal memory access pattern detected on secondary thread.</p>
-</div>
-</div>
-<!-- Hook Item 2 (Active) -->
-<div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
-<div class="flex justify-between items-start mb-1">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="text-xs font-mono text-white/90 font-semibold">android.view.View.setAlpha</span>
-</div>
-<p class="text-[11px] text-primary/60 font-mono">Target: * (Global Hook)</p>
-</div>
-<label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-primary/20 p-1 transition-all">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="h-4 w-4 rounded-full bg-primary shadow-[0_0_8px_rgba(37,244,120,0.8)] translate-x-5 transition-transform"></div>
-</label>
-</div>
-<div class="flex gap-4 mt-3">
-<div class="flex items-center gap-1">
-<span class="text-[9px] text-white/40 uppercase">Hits:</span>
-<span class="text-[9px] text-primary font-mono">12,402</span>
-</div>
-<div class="flex items-center gap-1">
-<span class="text-[9px] text-white/40 uppercase">Latency:</span>
-<span class="text-[9px] text-primary font-mono">0.4ms</span>
-</div>
-</div>
-</div>
-<!-- Hook Item 3 (Inactive) -->
-<div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
-<div class="flex justify-between items-start mb-1">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="text-xs font-mono text-white/40 font-semibold line-through">com.google.android.gms.getAccount</span>
-</div>
-<p class="text-[11px] text-primary/30 font-mono">Target: com.whatsapp</p>
-</div>
-<label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-white/10 p-1 transition-all">
-<input class="sr-only peer" type="checkbox"/>
-<div class="h-4 w-4 rounded-full bg-white/40 shadow-sm translate-x-0 transition-transform"></div>
-</label>
-</div>
-</div>
-<!-- Hook Item 4 (Active) -->
-<div class="p-4 bg-background-dark hover:bg-primary/5 transition-colors">
-<div class="flex justify-between items-start mb-1">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="text-xs font-mono text-white/90 font-semibold">android.telephony.getDeviceId</span>
-<span class="bg-primary/20 text-primary text-[9px] px-1.5 py-0.5 border border-primary/40 rounded font-bold uppercase tracking-tight">Proxy Mode</span>
-</div>
-<p class="text-[11px] text-primary/60 font-mono">Target: com.instagram.android</p>
-</div>
-<label class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-primary/20 p-1 transition-all">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="h-4 w-4 rounded-full bg-primary shadow-[0_0_8px_rgba(37,244,120,0.8)] translate-x-5 transition-transform"></div>
-</label>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Navigation (AOSPOSX Adapted) -->
-<div class="absolute bottom-0 left-0 right-0 bg-background-dark/95 backdrop-blur-xl border-t border-primary/20 px-6 py-4 flex justify-between items-center z-40">
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">grid_view</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Modules</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary terminal-glow">
-<span class="material-symbols-outlined text-2xl fill-1">cable</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Hooks</span>
-<div class="h-1 w-4 bg-primary rounded-full mt-0.5"></div>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">list_alt</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Logs</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">settings_input_component</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Core</span>
-</button>
-</div>
-<!-- System HUD elements -->
-<div class="absolute top-24 right-4 pointer-events-none opacity-20 hidden sm:block">
-<div class="flex flex-col items-end font-mono text-[8px] text-primary">
-<span>CPU_LOAD: 24%</span>
-<span>MEM_FREE: 1.2GB</span>
-<span>HOOK_THREADS: 4</span>
-<span>KAI_VER: 9.0.4</span>
-</div>
-</div>
-</div>
-</body></html>
+</body>
+</html>

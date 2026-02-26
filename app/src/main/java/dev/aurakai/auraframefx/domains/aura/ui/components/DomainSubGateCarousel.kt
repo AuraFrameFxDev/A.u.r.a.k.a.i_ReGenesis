@@ -2,10 +2,20 @@ package dev.aurakai.auraframefx.domains.aura.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,11 +57,16 @@ fun DomainSubGateCarousel(
         pageSpacing = 16.dp
     ) { page ->
         val gate = subGates[page]
-        val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+        val pageOffset =
+            ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
 
         val scale = lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
         val alpha = lerp(0.5f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
-        val rotationY = lerp(0f, 30f, pageOffset.coerceIn(0f, 1f)) * (if (page < pagerState.currentPage) 1f else -1f)
+        val rotationY = lerp(
+            0f,
+            30f,
+            pageOffset.coerceIn(0f, 1f)
+        ) * (if (page < pagerState.currentPage) 1f else -1f)
 
         Card(
             modifier = Modifier
@@ -78,8 +93,8 @@ fun DomainSubGateCarousel(
                 // Background Image (Style A or B)
                 val drawableName = if (useStyleB) gate.styleBDrawable else gate.styleADrawable
                 val resId = context.resources.getIdentifier(
-                    drawableName, 
-                    "drawable", 
+                    drawableName,
+                    "drawable",
                     context.packageName
                 )
 
@@ -126,9 +141,9 @@ fun DomainSubGateCarousel(
                         color = domainColor,
                         letterSpacing = 1.sp
                     )
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     Text(
                         text = "ACCESS GATE",
                         style = MaterialTheme.typography.labelMedium,

@@ -175,7 +175,8 @@ class WorkManagerModuleTest {
         @DisplayName("Should handle configuration parameter")
         fun shouldHandleConfigurationParameter() {
             // Given
-            val customConfig = workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
+            val customConfig =
+                workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
 
             // When
             val result = workManagerModule.provideWorkManager(mockContext, customConfig)
@@ -302,7 +303,8 @@ class WorkManagerModuleTest {
         @DisplayName("Should create complete WorkManager setup")
         fun shouldCreateCompleteWorkManagerSetup() {
             // When
-            val configuration = workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
+            val configuration =
+                workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
             val workManager = workManagerModule.provideWorkManager(mockContext, configuration)
 
             // Then
@@ -356,7 +358,8 @@ class WorkManagerModuleTest {
             // When
             repeat(10) {
                 val thread = Thread {
-                    val config = workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
+                    val config =
+                        workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
                     synchronized(results) {
                         results.add(config)
                     }
@@ -489,7 +492,7 @@ class WorkManagerModuleTest {
         @DisplayName("Should propagate exceptions from Configuration builder")
         fun shouldPropagateExceptionsFromConfigurationBuilder() {
             // Given
-            val faultyFactory = mockk<HiltWorkerFactory>(relaxed = true) {
+            mockk<HiltWorkerFactory>(relaxed = true) {
                 every { this@mockk.toString() } throws RuntimeException("Factory error")
             }
 
@@ -595,7 +598,8 @@ class WorkManagerModuleTest {
         fun shouldHandleAlternatingConfigurationAndWorkManagerCreation() {
             // When & Then
             repeat(10) {
-                val config = workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
+                val config =
+                    workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
                 val workManager = workManagerModule.provideWorkManager(mockContext, config)
                 assertNotNull(config)
                 assertNotNull(workManager)
@@ -611,7 +615,8 @@ class WorkManagerModuleTest {
             // When & Then
             assertDoesNotThrow {
                 repeat(iterations) {
-                    val config = workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
+                    val config =
+                        workManagerModule.provideWorkManagerConfiguration(mockHiltWorkerFactory)
                     workManagerModule.provideWorkManager(mockContext, config)
                 }
             }

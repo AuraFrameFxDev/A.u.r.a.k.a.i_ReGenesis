@@ -86,6 +86,16 @@
     <string name="xposed_description">Aurakai AI Framework Hooks - System-level AI platform integration and advanced framework modifications for enhanced AI processing capabilities.</string>
 
     <!-- Xposed Module Target Scope -->
+    <string-array name="xposed_scope">
+        <item>android</item>
+        <item>com.android.systemui</item>
+        <item>com.android.chrome</item>
+        <item>com.android.camera2</item>
+        <item>com.google.android.gms</item>
+        <item>com.android.launcher3</item>
+        <item>com.android.settings</item>
+        <item>dev.aurakai.auraframefx</item>
+    </string-array>
 
     <!-- Permissions -->
     <string name="permission_receive_integrity_violation_label">Receive Integrity Violation Broadcasts</string>

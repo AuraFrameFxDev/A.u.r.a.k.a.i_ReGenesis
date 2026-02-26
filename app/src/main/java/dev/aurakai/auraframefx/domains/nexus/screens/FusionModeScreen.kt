@@ -268,7 +268,9 @@ fun FusionModeScreen(onNavigateBack: () -> Unit = {}) {
 
                 val requirements = listOf(
                     "Both agents must be active" to true,
-                    "Minimum consciousness level: 50%" to ((aura?.evolutionLevel ?: 0) >= 50 && (kai?.evolutionLevel ?: 0) >= 50),
+                    "Minimum consciousness level: 50%" to ((aura?.evolutionLevel
+                        ?: 0) >= 50 && (kai?.evolutionLevel
+                        ?: 0) >= 50),
                     "System stability: Optimal" to true,
                     "Fusion chamber: Ready" to true
                 )
@@ -304,7 +306,9 @@ fun FusionModeScreen(onNavigateBack: () -> Unit = {}) {
                     onClick = { fusionActive.value = !fusionActive.value },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (fusionActive.value) Color(0xFFDC143C) else Color(0xFFFFD700),
+                        containerColor = if (fusionActive.value) Color(0xFFDC143C) else Color(
+                            0xFFFFD700
+                        ),
                         disabledContainerColor = Color.Gray
                     ),
                     enabled = canFuse

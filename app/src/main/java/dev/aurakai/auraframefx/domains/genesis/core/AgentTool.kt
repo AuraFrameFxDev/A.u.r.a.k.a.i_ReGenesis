@@ -66,7 +66,9 @@ data class PropertySchema(
  * Result of a tool execution
  */
 sealed class ToolResult {
-    data class Success(val output: String, val metadata: Map<String, Any> = emptyMap()) : ToolResult()
+    data class Success(val output: String, val metadata: Map<String, Any> = emptyMap()) :
+        ToolResult()
+
     data class Failure(val error: String, val errorCode: String? = null) : ToolResult()
     data class Pending(val taskId: String, val estimatedDuration: Long? = null) : ToolResult()
 }

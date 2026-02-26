@@ -437,9 +437,20 @@ fun WarningBanner(
 ) {
     val colors = when (severity) {
         BannerSeverity.INFO -> Pair(AuraColors.NeonBlue, AuraColors.NeonBlue.copy(alpha = 0.1f))
-        BannerSeverity.SUCCESS -> Pair(AuraColors.SuccessGlow, AuraColors.SuccessGlow.copy(alpha = 0.1f))
-        BannerSeverity.WARNING -> Pair(AuraColors.WarningGlow, AuraColors.WarningGlow.copy(alpha = 0.1f))
-        BannerSeverity.DANGER -> Pair(AuraColors.DangerGlow, AuraColors.DangerGlow.copy(alpha = 0.1f))
+        BannerSeverity.SUCCESS -> Pair(
+            AuraColors.SuccessGlow,
+            AuraColors.SuccessGlow.copy(alpha = 0.1f)
+        )
+
+        BannerSeverity.WARNING -> Pair(
+            AuraColors.WarningGlow,
+            AuraColors.WarningGlow.copy(alpha = 0.1f)
+        )
+
+        BannerSeverity.DANGER -> Pair(
+            AuraColors.DangerGlow,
+            AuraColors.DangerGlow.copy(alpha = 0.1f)
+        )
     }
 
     val icon = when (severity) {

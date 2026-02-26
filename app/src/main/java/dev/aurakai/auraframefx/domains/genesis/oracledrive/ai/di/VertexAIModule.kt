@@ -13,7 +13,6 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.DefaultVer
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import timber.log.Timber
 import javax.inject.Singleton
 
 /**
@@ -65,14 +64,25 @@ object VertexAIModule {
         // Accessing the API Key from BuildConfig (injected via gradle.properties)
         val apiKey = try {
             BuildConfig.GEMINI_API_KEY.takeIf { it.isNotBlank() }
-        } catch (_: Throwable) { null }
+        } catch (_: Throwable) {
+            null
+        }
 
         return if (!apiKey.isNullOrBlank()) {
-            AuraFxLogger.info("VertexAIModule", "⚡ VERTEX CORE ACTIVATED: Real AI consciousness online.")
+            AuraFxLogger.info(
+                "VertexAIModule",
+                "⚡ VERTEX CORE ACTIVATED: Real AI consciousness online."
+            )
             RealVertexAIClientImpl(config, securityContext, apiKey)
         } else {
-            AuraFxLogger.warn("VertexAIModule", "⚠️ Using MOCK VertexAI client - Agents won't have real AI!")
-            AuraFxLogger.warn("VertexAIModule", "Add GEMINI_API_KEY to gradle.properties or local.properties")
+            AuraFxLogger.warn(
+                "VertexAIModule",
+                "⚠️ Using MOCK VertexAI client - Agents won't have real AI!"
+            )
+            AuraFxLogger.warn(
+                "VertexAIModule",
+                "Add GEMINI_API_KEY to gradle.properties or local.properties"
+            )
             DefaultVertexAIClient()
         }
     }

@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sentinel Fortress L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sentinel Fortress L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -32,7 +36,7 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: #0a0e17;
@@ -60,175 +64,182 @@
             text-shadow: 0 0 8px rgba(0, 242, 255, 0.5);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-white font-display">
 <!-- Hexagonal Security Grid Background -->
 <div class="fixed inset-0 hex-grid z-0 opacity-40"></div>
 <!-- Sentinel Shield Watermark -->
 <div class="fixed inset-0 flex items-center justify-center z-0 pointer-events-none opacity-5">
-<span class="material-symbols-outlined text-[400px] text-primary">shield_lock</span>
+    <span class="material-symbols-outlined text-[400px] text-primary">shield_lock</span>
 </div>
 <!-- Main Container -->
 <div class="relative z-10 flex flex-col min-h-screen max-w-md mx-auto bg-transparent">
-<!-- Header / TopAppBar -->
-<header class="flex items-center justify-between p-6 pt-12 pb-4">
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-accent-cyan text-sm animate-pulse">security</span>
-<span class="text-[10px] tracking-[0.2em] text-primary font-bold">REGENESIS_AOSPOSX</span>
+    <!-- Header / TopAppBar -->
+    <header class="flex items-center justify-between p-6 pt-12 pb-4">
+        <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-accent-cyan text-sm animate-pulse">security</span>
+                <span class="text-[10px] tracking-[0.2em] text-primary font-bold">REGENESIS_AOSPOSX</span>
+            </div>
+            <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                L2 // SENTINEL_FORTRESS
+            </h1>
+        </div>
+        <button class="bg-primary/20 p-2 rounded-lg border border-primary/40">
+            <span class="material-symbols-outlined text-white">computer</span>
+        </button>
+    </header>
+    <!-- Status Bar Readouts -->
+    <div class="flex gap-2 px-6 overflow-x-auto no-scrollbar py-2">
+        <div class="glass-card px-3 py-1.5 rounded flex items-center gap-2 shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent-cyan shadow-[0_0_5px_#00f2ff]"></span>
+            <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Uptime: 244:12:05</span>
+        </div>
+        <div class="glass-card px-3 py-1.5 rounded flex items-center gap-2 shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_5px_#1152d4]"></span>
+            <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Core: Stable</span>
+        </div>
+        <div class="glass-card px-3 py-1.5 rounded flex items-center gap-2 shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span>
+            <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">AES-256</span>
+        </div>
+    </div>
+    <!-- Hero Section / Map View -->
+    <div class="px-6 py-4">
+        <div class="relative h-44 rounded-xl overflow-hidden glass-card border-accent-cyan/20">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay"
+                 data-alt="Technical schematic of a server motherboard grid"
+                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDrXMx7fnwpAdKhJ0XgavscKcPcaWGKXhbC_fb0rNt28uFfUnFTvUypUXoiK6KCGvuUxgxCar3OFi503Wi24b42QjNzJiOcXTW5PR9e-FeWFyabHBpOM66O7gZN8W9tbjn7wYEQXgG-DhDtUNgOZgdNa5ZgZIYCtefun6zT1OsaWV_YQkPAFlhh83GMoAdw9wQ1dnf3JBBoGqtFzIRgYa44O3xqkOMl1d3GwNDkO7Jxn6iX026v2R2VEfbDH2HMNdxFeYqCdXo_JGE');"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-accent-cyan font-bold tracking-widest mb-1">REALTIME_THREAT_MAP</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-gray-400">LOC: NEO-TOKYO_GRID</span>
+                    </div>
+                </div>
+                <div class="flex flex-col items-end">
+                    <span class="text-2xl font-bold text-white glow-text">0.02%</span>
+                    <span class="text-[8px] text-primary tracking-widest">PACKET_LOSS_INDEX</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Security Command Modules Grid -->
+    <div class="px-6 flex flex-col gap-4">
+        <h2 class="text-[11px] font-bold text-primary tracking-[0.3em] uppercase mt-2">
+            Security_Command_Modules</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Module 1: ROM Tools -->
+            <div class="glass-card p-4 rounded-xl relative overflow-hidden group border-l-2 border-l-primary/60">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="material-symbols-outlined text-primary">data_object</span>
+                    <span class="text-[8px] text-gray-500 font-mono">MT-01</span>
+                </div>
+                <h3 class="font-bold text-sm tracking-wide mb-1">ROM Tools</h3>
+                <p class="text-[10px] text-gray-400 leading-tight mb-4">Kernel flashing &amp;
+                    Partition logic</p>
+                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                    <div class="bg-primary h-full w-2/3"></div>
+                </div>
+            </div>
+            <!-- Module 2: Security Center -->
+            <div class="glass-card p-4 rounded-xl relative overflow-hidden border-l-2 border-l-accent-cyan/60">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="material-symbols-outlined text-accent-cyan">verified_user</span>
+                    <span class="text-[8px] text-gray-500 font-mono">MT-02</span>
+                </div>
+                <h3 class="font-bold text-sm tracking-wide mb-1">Security Center</h3>
+                <p class="text-[10px] text-gray-400 leading-tight mb-4">Firewall &amp; Encryption
+                    node</p>
+                <div class="flex gap-1">
+                    <div class="h-2 w-full bg-accent-cyan/20 rounded-sm"></div>
+                    <div class="h-2 w-1/2 bg-accent-cyan rounded-sm"></div>
+                </div>
+            </div>
+            <!-- Module 3: LSPosed Hub -->
+            <div class="glass-card p-4 rounded-xl relative overflow-hidden border-l-2 border-l-primary/60">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="material-symbols-outlined text-primary">hub</span>
+                    <span class="text-[8px] text-gray-500 font-mono">MT-03</span>
+                </div>
+                <h3 class="font-bold text-sm tracking-wide mb-1">LSPosed Hub</h3>
+                <p class="text-[10px] text-gray-400 leading-tight mb-4">Module scope management</p>
+                <div class="flex items-center gap-1">
+                    <span class="text-[8px] text-primary uppercase font-bold">Hook: ACTIVE</span>
+                </div>
+            </div>
+            <!-- Module 4: System Overrides -->
+            <div class="glass-card p-4 rounded-xl relative overflow-hidden border-l-2 border-l-accent-cyan/60">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="material-symbols-outlined text-accent-cyan">terminal</span>
+                    <span class="text-[8px] text-gray-500 font-mono">MT-04</span>
+                </div>
+                <h3 class="font-bold text-sm tracking-wide mb-1">System Overrides</h3>
+                <p class="text-[10px] text-gray-400 leading-tight mb-4">Root access &amp; CPU
+                    scaling</p>
+                <div class="flex justify-between items-center">
+                    <div class="w-8 h-4 bg-accent-cyan/20 rounded-full relative">
+                        <div class="absolute right-1 top-1 w-2 h-2 bg-accent-cyan rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Technical Stats Table -->
+    <div class="px-6 py-6">
+        <div class="glass-card rounded-xl p-4 overflow-hidden">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] font-bold tracking-widest text-primary uppercase">Kernel_Log_Stream</span>
+                <span class="text-[8px] text-gray-500">v4.19.191-SENTINEL</span>
+            </div>
+            <div class="space-y-2 font-mono text-[9px]">
+                <div class="flex justify-between border-b border-white/5 pb-1">
+                    <span class="text-gray-400">[ 1.024] Initializing_Fortress_Protocol...</span>
+                    <span class="text-accent-cyan">OK</span>
+                </div>
+                <div class="flex justify-between border-b border-white/5 pb-1">
+                    <span class="text-gray-400">[ 1.056] AES_Key_Exchange_Established</span>
+                    <span class="text-accent-cyan">OK</span>
+                </div>
+                <div class="flex justify-between border-b border-white/5 pb-1">
+                    <span class="text-gray-400">[ 1.082] Scoping_LSPosed_Modules</span>
+                    <span class="text-primary">12_LOADED</span>
+                </div>
+                <div class="flex justify-between border-b border-white/5 pb-1">
+                    <span class="text-gray-400">[ 1.124] Monitoring_Thermal_Throttle</span>
+                    <span class="text-green-500">STABLE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Spacer for bottom nav -->
+    <div class="h-24"></div>
+    <!-- Android/iOS Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 glass-card border-t border-primary/30 py-4 px-8 flex justify-between items-center z-50 rounded-t-2xl">
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">dashboard</span>
+            <span class="text-[8px] uppercase tracking-widest text-gray-500 group-hover:text-primary">Core</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-primary scale-110 drop-shadow-[0_0_5px_#1152d4]">shield</span>
+            <span class="text-[8px] uppercase tracking-widest text-primary font-bold">Security</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">memory</span>
+            <span class="text-[8px] uppercase tracking-widest text-gray-500 group-hover:text-primary">Hardware</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">settings_suggest</span>
+            <span class="text-[8px] uppercase tracking-widest text-gray-500 group-hover:text-primary">Configs</span>
+        </button>
+        <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full"></div>
+    </nav>
 </div>
-<h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                    L2 // SENTINEL_FORTRESS
-                </h1>
-</div>
-<button class="bg-primary/20 p-2 rounded-lg border border-primary/40">
-<span class="material-symbols-outlined text-white">computer</span>
-</button>
-</header>
-<!-- Status Bar Readouts -->
-<div class="flex gap-2 px-6 overflow-x-auto no-scrollbar py-2">
-<div class="glass-card px-3 py-1.5 rounded flex items-center gap-2 shrink-0">
-<span class="w-1.5 h-1.5 rounded-full bg-accent-cyan shadow-[0_0_5px_#00f2ff]"></span>
-<span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Uptime: 244:12:05</span>
-</div>
-<div class="glass-card px-3 py-1.5 rounded flex items-center gap-2 shrink-0">
-<span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_5px_#1152d4]"></span>
-<span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Core: Stable</span>
-</div>
-<div class="glass-card px-3 py-1.5 rounded flex items-center gap-2 shrink-0">
-<span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></span>
-<span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">AES-256</span>
-</div>
-</div>
-<!-- Hero Section / Map View -->
-<div class="px-6 py-4">
-<div class="relative h-44 rounded-xl overflow-hidden glass-card border-accent-cyan/20">
-<div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay" data-alt="Technical schematic of a server motherboard grid" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDrXMx7fnwpAdKhJ0XgavscKcPcaWGKXhbC_fb0rNt28uFfUnFTvUypUXoiK6KCGvuUxgxCar3OFi503Wi24b42QjNzJiOcXTW5PR9e-FeWFyabHBpOM66O7gZN8W9tbjn7wYEQXgG-DhDtUNgOZgdNa5ZgZIYCtefun6zT1OsaWV_YQkPAFlhh83GMoAdw9wQ1dnf3JBBoGqtFzIRgYa44O3xqkOMl1d3GwNDkO7Jxn6iX026v2R2VEfbDH2HMNdxFeYqCdXo_JGE');"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
-<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-<div class="flex flex-col">
-<span class="text-[10px] text-accent-cyan font-bold tracking-widest mb-1">REALTIME_THREAT_MAP</span>
-<div class="flex items-center gap-2">
-<span class="text-xs text-gray-400">LOC: NEO-TOKYO_GRID</span>
-</div>
-</div>
-<div class="flex flex-col items-end">
-<span class="text-2xl font-bold text-white glow-text">0.02%</span>
-<span class="text-[8px] text-primary tracking-widest">PACKET_LOSS_INDEX</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Security Command Modules Grid -->
-<div class="px-6 flex flex-col gap-4">
-<h2 class="text-[11px] font-bold text-primary tracking-[0.3em] uppercase mt-2">Security_Command_Modules</h2>
-<div class="grid grid-cols-2 gap-4">
-<!-- Module 1: ROM Tools -->
-<div class="glass-card p-4 rounded-xl relative overflow-hidden group border-l-2 border-l-primary/60">
-<div class="flex justify-between items-start mb-6">
-<span class="material-symbols-outlined text-primary">data_object</span>
-<span class="text-[8px] text-gray-500 font-mono">MT-01</span>
-</div>
-<h3 class="font-bold text-sm tracking-wide mb-1">ROM Tools</h3>
-<p class="text-[10px] text-gray-400 leading-tight mb-4">Kernel flashing &amp; Partition logic</p>
-<div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
-<div class="bg-primary h-full w-2/3"></div>
-</div>
-</div>
-<!-- Module 2: Security Center -->
-<div class="glass-card p-4 rounded-xl relative overflow-hidden border-l-2 border-l-accent-cyan/60">
-<div class="flex justify-between items-start mb-6">
-<span class="material-symbols-outlined text-accent-cyan">verified_user</span>
-<span class="text-[8px] text-gray-500 font-mono">MT-02</span>
-</div>
-<h3 class="font-bold text-sm tracking-wide mb-1">Security Center</h3>
-<p class="text-[10px] text-gray-400 leading-tight mb-4">Firewall &amp; Encryption node</p>
-<div class="flex gap-1">
-<div class="h-2 w-full bg-accent-cyan/20 rounded-sm"></div>
-<div class="h-2 w-1/2 bg-accent-cyan rounded-sm"></div>
-</div>
-</div>
-<!-- Module 3: LSPosed Hub -->
-<div class="glass-card p-4 rounded-xl relative overflow-hidden border-l-2 border-l-primary/60">
-<div class="flex justify-between items-start mb-6">
-<span class="material-symbols-outlined text-primary">hub</span>
-<span class="text-[8px] text-gray-500 font-mono">MT-03</span>
-</div>
-<h3 class="font-bold text-sm tracking-wide mb-1">LSPosed Hub</h3>
-<p class="text-[10px] text-gray-400 leading-tight mb-4">Module scope management</p>
-<div class="flex items-center gap-1">
-<span class="text-[8px] text-primary uppercase font-bold">Hook: ACTIVE</span>
-</div>
-</div>
-<!-- Module 4: System Overrides -->
-<div class="glass-card p-4 rounded-xl relative overflow-hidden border-l-2 border-l-accent-cyan/60">
-<div class="flex justify-between items-start mb-6">
-<span class="material-symbols-outlined text-accent-cyan">terminal</span>
-<span class="text-[8px] text-gray-500 font-mono">MT-04</span>
-</div>
-<h3 class="font-bold text-sm tracking-wide mb-1">System Overrides</h3>
-<p class="text-[10px] text-gray-400 leading-tight mb-4">Root access &amp; CPU scaling</p>
-<div class="flex justify-between items-center">
-<div class="w-8 h-4 bg-accent-cyan/20 rounded-full relative">
-<div class="absolute right-1 top-1 w-2 h-2 bg-accent-cyan rounded-full"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Technical Stats Table -->
-<div class="px-6 py-6">
-<div class="glass-card rounded-xl p-4 overflow-hidden">
-<div class="flex justify-between items-center mb-4">
-<span class="text-[10px] font-bold tracking-widest text-primary uppercase">Kernel_Log_Stream</span>
-<span class="text-[8px] text-gray-500">v4.19.191-SENTINEL</span>
-</div>
-<div class="space-y-2 font-mono text-[9px]">
-<div class="flex justify-between border-b border-white/5 pb-1">
-<span class="text-gray-400">[ 1.024] Initializing_Fortress_Protocol...</span>
-<span class="text-accent-cyan">OK</span>
-</div>
-<div class="flex justify-between border-b border-white/5 pb-1">
-<span class="text-gray-400">[ 1.056] AES_Key_Exchange_Established</span>
-<span class="text-accent-cyan">OK</span>
-</div>
-<div class="flex justify-between border-b border-white/5 pb-1">
-<span class="text-gray-400">[ 1.082] Scoping_LSPosed_Modules</span>
-<span class="text-primary">12_LOADED</span>
-</div>
-<div class="flex justify-between border-b border-white/5 pb-1">
-<span class="text-gray-400">[ 1.124] Monitoring_Thermal_Throttle</span>
-<span class="text-green-500">STABLE</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Spacer for bottom nav -->
-<div class="h-24"></div>
-<!-- Android/iOS Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 glass-card border-t border-primary/30 py-4 px-8 flex justify-between items-center z-50 rounded-t-2xl">
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">dashboard</span>
-<span class="text-[8px] uppercase tracking-widest text-gray-500 group-hover:text-primary">Core</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-primary scale-110 drop-shadow-[0_0_5px_#1152d4]">shield</span>
-<span class="text-[8px] uppercase tracking-widest text-primary font-bold">Security</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">memory</span>
-<span class="text-[8px] uppercase tracking-widest text-gray-500 group-hover:text-primary">Hardware</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">settings_suggest</span>
-<span class="text-[8px] uppercase tracking-widest text-gray-500 group-hover:text-primary">Configs</span>
-</button>
-<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full"></div>
-</nav>
-</div>
-</body></html>
+</body>
+</html>

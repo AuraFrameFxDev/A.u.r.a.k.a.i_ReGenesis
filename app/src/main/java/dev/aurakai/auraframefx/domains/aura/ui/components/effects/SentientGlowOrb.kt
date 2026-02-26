@@ -27,7 +27,7 @@ fun SentientGlowOrb(
     diagnosticMode: Boolean = false
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "OrbPulse")
-    
+
     // Amber Pulse for diagnostic mode, or regular pulse for normal mode
     val activeColor by animateColorAsState(
         targetValue = if (diagnosticMode) Color(0xFFFFBF00) else coreColor,
@@ -37,7 +37,7 @@ fun SentientGlowOrb(
         ),
         label = "DiagnosticPulse"
     )
-    
+
     // Core expansion pulse
     val pulseScale by infiniteTransition.animateFloat(
         initialValue = 0.8f,
@@ -48,7 +48,7 @@ fun SentientGlowOrb(
         ),
         label = "CorePulse"
     )
-    
+
     // Rotation for energy rings
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -88,7 +88,7 @@ fun SentientGlowOrb(
         ) {
             val strokeWidth = 2.dp.toPx()
             val ringColor = activeColor.copy(alpha = 0.6f)
-            
+
             // Draw arcs to simulate energy rings
             drawArc(
                 color = ringColor,

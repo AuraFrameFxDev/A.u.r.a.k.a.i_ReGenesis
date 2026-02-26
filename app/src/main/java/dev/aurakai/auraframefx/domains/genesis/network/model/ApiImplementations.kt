@@ -39,7 +39,10 @@ class AIAgentApiImpl @Inject constructor() : AIAgentApi {
         )
     }
 
-    override suspend fun processAgentRequest(agentType: String, request: dev.aurakai.auraframefx.domains.genesis.models.AgentRequest): dev.aurakai.auraframefx.domains.genesis.models.AgentResponse {
+    override suspend fun processAgentRequest(
+        agentType: String,
+        request: dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
+    ): dev.aurakai.auraframefx.domains.genesis.models.AgentResponse {
         return dev.aurakai.auraframefx.domains.genesis.models.AgentResponse(
             agentName = agentType,
             content = "Request processed",

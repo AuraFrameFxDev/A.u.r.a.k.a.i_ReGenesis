@@ -1,11 +1,10 @@
 package dev.aurakai.auraframefx.domains.genesis
 
+import android.content.Context
+import android.os.Bundle
 import android.service.voice.VoiceInteractionService
 import android.service.voice.VoiceInteractionSession
 import android.service.voice.VoiceInteractionSessionService
-import android.os.Bundle
-import android.content.Context
-import android.content.Intent
 import android.util.Log
 
 class GenesisAssistantService : VoiceInteractionService() {

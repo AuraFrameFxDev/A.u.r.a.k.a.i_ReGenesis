@@ -40,7 +40,10 @@ open class VoiceCommandManager @Inject constructor(
             }
 
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
                 putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
                 putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
@@ -112,11 +115,11 @@ open class VoiceCommandManager @Inject constructor(
         }
 
         override fun onPartialResults(partialResults: Bundle?) {
-             val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-             val text = matches?.firstOrNull()
-             if (text != null) {
-                 _voiceState.value = VoiceState.PartialResult(text)
-             }
+            val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+            val text = matches?.firstOrNull()
+            if (text != null) {
+                _voiceState.value = VoiceState.PartialResult(text)
+            }
         }
 
         override fun onEvent(eventType: Int, params: Bundle?) {}

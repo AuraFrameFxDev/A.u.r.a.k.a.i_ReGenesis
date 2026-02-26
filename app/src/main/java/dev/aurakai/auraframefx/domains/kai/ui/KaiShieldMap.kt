@@ -1,6 +1,11 @@
 package dev.aurakai.auraframefx.domains.kai.ui
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,7 +14,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
@@ -48,7 +54,11 @@ fun KaiShieldMap() {
             .background(KaiDarkVoid)
     ) {
         // 1. The Active Intelligence Mesh (Background Canvas)
-        Canvas(modifier = Modifier.fillMaxSize().scale(shieldPulse)) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .scale(shieldPulse)
+        ) {
             val cx = size.width / 2
             val cy = size.height / 2
             val outerR = 140.dp.toPx()

@@ -1,7 +1,8 @@
 package dev.aurakai.colorblendr
 
 import androidx.compose.ui.graphics.Color
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 /**
  * 🎨 CHROMACORE - Advanced Color Manipulation Engine
@@ -20,8 +21,10 @@ object ChromaCore {
 
         // Perceptual blending in linear RGB space
         val r = sqrt(color1.red * color1.red * invRatio + color2.red * color2.red * clampedRatio)
-        val g = sqrt(color1.green * color1.green * invRatio + color2.green * color2.green * clampedRatio)
-        val b = sqrt(color1.blue * color1.blue * invRatio + color2.blue * color2.blue * clampedRatio)
+        val g =
+            sqrt(color1.green * color1.green * invRatio + color2.green * color2.green * clampedRatio)
+        val b =
+            sqrt(color1.blue * color1.blue * invRatio + color2.blue * color2.blue * clampedRatio)
         val a = color1.alpha * invRatio + color2.alpha * clampedRatio
 
         return Color(r, g, b, a)
@@ -73,27 +76,32 @@ object ChromaCore {
     }
 
     // HSV conversion utilities
-    private data class HSV(val hue: Float, val saturation: Float, val value: Float, val alpha: Float = 1f)
+    private data class HSV(
+        val hue: Float,
+        val saturation: Float,
+        val value: Float,
+        val alpha: Float = 1f
+    )
 
     private fun rgbToHsv(color: Color): HSV {
         val r = color.red
         val g = color.green
         val b = color.blue
-        
+
         val max = maxOf(r, g, b)
         val min = minOf(r, g, b)
         val delta = max - min
-        
+
         val hue = when {
             delta == 0f -> 0f
             max == r -> 60f * (((g - b) / delta) % 6f)
             max == g -> 60f * (((b - r) / delta) + 2f)
             else -> 60f * (((r - g) / delta) + 4f)
         }.let { if (it < 0) it + 360f else it }
-        
+
         val saturation = if (max == 0f) 0f else delta / max
         val value = max
-        
+
         return HSV(hue, saturation, value, color.alpha)
     }
 
@@ -101,7 +109,7 @@ object ChromaCore {
         val c = hsv.value * hsv.saturation
         val x = c * (1f - abs((hsv.hue / 60f) % 2f - 1f))
         val m = hsv.value - c
-        
+
         val (r, g, b) = when {
             hsv.hue < 60f -> Triple(c, x, 0f)
             hsv.hue < 120f -> Triple(x, c, 0f)
@@ -110,7 +118,7 @@ object ChromaCore {
             hsv.hue < 300f -> Triple(x, 0f, c)
             else -> Triple(c, 0f, x)
         }
-        
+
         return Color(r + m, g + m, b + m, hsv.alpha)
     }
 

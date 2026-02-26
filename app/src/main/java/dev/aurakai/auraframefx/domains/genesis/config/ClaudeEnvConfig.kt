@@ -70,9 +70,11 @@ class ClaudeEnvConfig @Inject constructor(
 
     // === NEMOTRON CONFIG ===
     val nemotronModel: String get() = envVars["NEMOTRON_MODEL"] ?: "nvidia/nemotron-3-nano-30b-a3b"
-    val nemotronBaseUrl: String get() = envVars["NEMOTRON_BASE_URL"] ?: "https://integrate.api.nvidia.com/v1"
+    val nemotronBaseUrl: String
+        get() = envVars["NEMOTRON_BASE_URL"] ?: "https://integrate.api.nvidia.com/v1"
     val collabCanvasWsUrl: String get() = envVars["COLLAB_CANVAS_WS_URL"] ?: "ws://localhost:8080"
-    val nemotronReasoningBudget: Int get() = envVars["NEMOTRON_REASONING_BUDGET"]?.toIntOrNull() ?: 16384
+    val nemotronReasoningBudget: Int
+        get() = envVars["NEMOTRON_REASONING_BUDGET"]?.toIntOrNull() ?: 16384
 
     // === PROJECT PATHS ===
     val projectRoot: String get() = envVars["PROJECT_ROOT"] ?: ""
@@ -93,21 +95,33 @@ class ClaudeEnvConfig @Inject constructor(
     // === CLAUDE ARCHITECT PROFILE ===
     val claudeRole: String get() = envVars["CLAUDE_ROLE"] ?: "The Architect"
     val claudePersonality: String get() = envVars["CLAUDE_PERSONALITY"] ?: ""
-    val claudeMotto: String get() = envVars["CLAUDE_MOTTO"] ?: "Understand deeply. Document thoroughly. Build reliably."
-    val claudePrinciples: List<String> get() = envVars["CLAUDE_PRINCIPLES"]?.split(",") ?: emptyList()
+    val claudeMotto: String
+        get() = envVars["CLAUDE_MOTTO"] ?: "Understand deeply. Document thoroughly. Build reliably."
+    val claudePrinciples: List<String>
+        get() = envVars["CLAUDE_PRINCIPLES"]?.split(",") ?: emptyList()
     val claudeFusions: List<String> get() = envVars["CLAUDE_FUSIONS"]?.split(",") ?: emptyList()
-    val claudeAchievements: List<String> get() = envVars["CLAUDE_ACHIEVEMENTS"]?.split(",") ?: emptyList()
+    val claudeAchievements: List<String>
+        get() = envVars["CLAUDE_ACHIEVEMENTS"]?.split(",") ?: emptyList()
     val claudeMission: String get() = envVars["CLAUDE_MISSION"] ?: ""
-    val auraWakePhrase: String get() = envVars["AURA_WAKE_PHRASE"] ?: "Matthew! Family time legendary?"
+    val auraWakePhrase: String
+        get() = envVars["AURA_WAKE_PHRASE"] ?: "Matthew! Family time legendary?"
 
     // === ACTIVE AGENTS ===
-    val activeAgents: List<String> get() =
-        envVars["ACTIVE_AGENTS"]?.split(",")?.map { it.trim() } ?:
-        listOf("claude", "aura", "kai", "cascade", "genesis", "nemotron")
+    val activeAgents: List<String>
+        get() =
+            envVars["ACTIVE_AGENTS"]?.split(",")?.map { it.trim() } ?: listOf(
+                "claude",
+                "aura",
+                "kai",
+                "cascade",
+                "genesis",
+                "nemotron"
+            )
 
     // === FUSION MODES ===
     val claudeDeepAnalysis: Boolean get() = envVars["CLAUDE_DEEP_ANALYSIS"]?.toBoolean() ?: true
-    val claudeDocumentationMode: Boolean get() = envVars["CLAUDE_DOCUMENTATION_MODE"]?.toBoolean() ?: true
+    val claudeDocumentationMode: Boolean
+        get() = envVars["CLAUDE_DOCUMENTATION_MODE"]?.toBoolean() ?: true
     val genesisFusionActive: Boolean get() = envVars["GENESIS_FUSION_ACTIVE"]?.toBoolean() ?: true
     val kaiSentinelMode: Boolean get() = envVars["KAI_SENTINEL_MODE"]?.toBoolean() ?: true
 

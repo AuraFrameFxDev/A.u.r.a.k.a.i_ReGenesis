@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.GET_SIGNATURES
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,8 +37,8 @@ class SecurityContext @Inject constructor(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val _securityState = MutableStateFlow(LocalSecurityState())
-    val securityState: StateFlow<LocalSecurityState> = _securityState.asStateFlow()
+    private val _securityState = MutableStateFlow(SecurityState())
+    val securityState: StateFlow<SecurityState> = _securityState.asStateFlow()
 
     private val _threatDetectionActive = MutableStateFlow(false)
     val threatDetectionActive: StateFlow<Boolean> = _threatDetectionActive.asStateFlow()
@@ -46,7 +46,8 @@ class SecurityContext @Inject constructor(
     private val _permissionsState = MutableStateFlow<Map<String, Boolean>>(emptyMap())
     val permissionsState: StateFlow<Map<String, Boolean>> = _permissionsState.asStateFlow()
 
-    private val _encryptionStatus = MutableStateFlow<EncryptionStatus>(EncryptionStatus.NOT_INITIALIZED)
+    private val _encryptionStatus =
+        MutableStateFlow<EncryptionStatus>(EncryptionStatus.NOT_INITIALIZED)
     val encryptionStatus: StateFlow<EncryptionStatus> = _encryptionStatus.asStateFlow()
 
     init {
@@ -194,14 +195,14 @@ class SecurityContext @Inject constructor(
         }
     }
 
-    fun shareSecureContextWith(agent: AgentCapabilityCategory, context: String): SharedSecureContext {
+    fun shareSecureContextWith(agentType: AgentType, context: String): SharedSecureContext {
         val secureId = generateSecureId()
         val timestamp = System.currentTimeMillis()
 
         return SharedSecureContext(
             id = secureId,
-            originatingAgent = AgentCapabilityCategory.SECURITY,
-            targetAgent = agent,
+            originatingAgent = AgentType.KAI,
+            targetAgent = agentType,
             encryptedContent = context.toByteArray(),
             timestamp = timestamp,
             expiresAt = timestamp + 3600000
@@ -215,8 +216,9 @@ class SecurityContext @Inject constructor(
                 PackageManager.PackageInfoFlags.of(GET_SIGNATURES.toLong())
             )
 
-            val signatureBytes = packageInfo.signingInfo?.apkContentsSigners?.getOrNull(0)?.toByteArray()
-                ?: throw Exception("No signature found")
+            val signatureBytes =
+                packageInfo.signingInfo?.apkContentsSigners?.getOrNull(0)?.toByteArray()
+                    ?: throw Exception("No signature found")
 
             val md = MessageDigest.getInstance("SHA-256")
             val signatureDigest = md.digest(signatureBytes)
@@ -319,7 +321,7 @@ class SecurityContext @Inject constructor(
 }
 
 @Serializable
-data class LocalSecurityState(
+data class SecurityState(
     val detectedThreats: List<SecurityThreat> = emptyList(),
     val threatLevel: ThreatLevel = ThreatLevel.LOW,
     val lastScanTime: Long = 0,
@@ -420,8 +422,8 @@ enum class EventSeverity {
 @Serializable
 data class SharedSecureContext(
     val id: String,
-    val originatingAgent: AgentCapabilityCategory,
-    val targetAgent: AgentCapabilityCategory,
+    val originatingAgent: AgentType,
+    val targetAgent: AgentType,
     val encryptedContent: ByteArray,
     val timestamp: Long,
     val expiresAt: Long,

@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
@@ -121,36 +122,41 @@ class IconifyService @Inject constructor(
     /**
      * Get all available icon collections
      */
-    suspend fun getCollections(): Result<Map<String, IconCollection>> = withContext(Dispatchers.IO) {
-        try {
-            // Check cache first
-            iconCacheManager.getCachedCollections()?.let {
-                return@withContext Result.success(it)
+    suspend fun getCollections(): Result<Map<String, IconCollection>> =
+        withContext(Dispatchers.IO) {
+            try {
+                // Check cache first
+                iconCacheManager.getCachedCollections()?.let {
+                    return@withContext Result.success(it)
+                }
+
+                val request = Request.Builder()
+                    .url(collectionUrl)
+                    .get()
+                    .build()
+
+                val response = okHttpClient.newCall(request).execute()
+
+                if (!response.isSuccessful) {
+                    return@withContext Result.failure(IOException("Failed to fetch collections: ${response.code}"))
+                }
+
+                val body = response.body?.string() ?: return@withContext Result.failure(
+                    IOException(
+                        "Empty response"
+                    )
+                )
+                val collections = json.decodeFromString<Map<String, IconCollection>>(body)
+
+                // Cache collections
+                iconCacheManager.cacheCollections(collections)
+
+                Result.success(collections)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to fetch collections")
+                Result.failure(e)
             }
-
-            val request = Request.Builder()
-                .url(collectionUrl)
-                .get()
-                .build()
-
-            val response = okHttpClient.newCall(request).execute()
-
-            if (!response.isSuccessful) {
-                return@withContext Result.failure(IOException("Failed to fetch collections: ${response.code}"))
-            }
-
-            val body = response.body?.string() ?: return@withContext Result.failure(IOException("Empty response"))
-            val collections = json.decodeFromString<Map<String, IconCollection>>(body)
-
-            // Cache collections
-            iconCacheManager.cacheCollections(collections)
-
-            Result.success(collections)
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to fetch collections")
-            Result.failure(e)
         }
-    }
 
     /**
      * Search icons by keyword
@@ -182,7 +188,8 @@ class IconifyService @Inject constructor(
                 return@withContext Result.failure(IOException("Search failed: ${response.code}"))
             }
 
-            val body = response.body?.string() ?: return@withContext Result.failure(IOException("Empty response"))
+            val body = response.body?.string()
+                ?: return@withContext Result.failure(IOException("Empty response"))
             val result = json.decodeFromString<IconSearchResult>(body)
 
             Result.success(result)
@@ -216,7 +223,8 @@ class IconifyService @Inject constructor(
                 return@withContext Result.failure(IOException("Failed to fetch icon: ${response.code}"))
             }
 
-            val svg = response.body?.string() ?: return@withContext Result.failure(IOException("Empty SVG"))
+            val svg = response.body?.string()
+                ?: return@withContext Result.failure(IOException("Empty SVG"))
 
             // Cache SVG
             iconCacheManager.cacheIcon(iconId, svg)
@@ -232,47 +240,48 @@ class IconifyService @Inject constructor(
      * Get multiple icons in one request (more efficient)
      * @param iconIds List of icon IDs (e.g., ["mdi:heart", "fa:user"])
      */
-    suspend fun getIconsBatch(iconIds: List<String>): Result<Map<String, String>> = withContext(Dispatchers.IO) {
-        try {
-            val results = mutableMapOf<String, String>()
+    suspend fun getIconsBatch(iconIds: List<String>): Result<Map<String, String>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val results = mutableMapOf<String, String>()
 
-            // Group by prefix for efficient batch fetching
-            val grouped = iconIds.groupBy { it.split(":").firstOrNull() ?: "" }
+                // Group by prefix for efficient batch fetching
+                val grouped = iconIds.groupBy { it.split(":").firstOrNull() ?: "" }
 
-            grouped.forEach { (prefix, ids) ->
-                val icons = ids.mapNotNull { it.split(":").getOrNull(1) }
-                val url = "$baseUrl/$prefix.json?icons=${icons.joinToString(",")}"
+                grouped.forEach { (prefix, ids) ->
+                    val icons = ids.mapNotNull { it.split(":").getOrNull(1) }
+                    val url = "$baseUrl/$prefix.json?icons=${icons.joinToString(",")}"
 
-                val request = Request.Builder()
-                    .url(url)
-                    .get()
-                    .build()
+                    val request = Request.Builder()
+                        .url(url)
+                        .get()
+                        .build()
 
-                val response = okHttpClient.newCall(request).execute()
+                    val response = okHttpClient.newCall(request).execute()
 
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    if (body != null) {
-                        val iconSet = json.decodeFromString<IconSetResponse>(body)
+                    if (response.isSuccessful) {
+                        val body = response.body?.string()
+                        if (body != null) {
+                            val iconSet = json.decodeFromString<IconSetResponse>(body)
 
-                        iconSet.icons.forEach { (name, data) ->
-                            val fullId = "$prefix:$name"
-                            val svg = buildSvgFromIconData(data, iconSet.width, iconSet.height)
-                            results[fullId] = svg
+                            iconSet.icons.forEach { (name, data) ->
+                                val fullId = "$prefix:$name"
+                                val svg = buildSvgFromIconData(data, iconSet.width, iconSet.height)
+                                results[fullId] = svg
 
-                            // Cache each icon
-                            iconCacheManager.cacheIcon(fullId, svg)
+                                // Cache each icon
+                                iconCacheManager.cacheIcon(fullId, svg)
+                            }
                         }
                     }
                 }
-            }
 
-            Result.success(results)
-        } catch (e: Exception) {
-            Timber.e(e, "Batch icon fetch failed")
-            Result.failure(e)
+                Result.success(results)
+            } catch (e: Exception) {
+                Timber.e(e, "Batch icon fetch failed")
+                Result.failure(e)
+            }
         }
-    }
 
     /**
      * Get popular icons from a collection
@@ -282,8 +291,11 @@ class IconifyService @Inject constructor(
         limit: Int = 24
     ): Result<List<String>> = withContext(Dispatchers.IO) {
         try {
-            val collections = getCollections().getOrNull() ?: return@withContext Result.failure(IOException("No collections"))
-            val collection = collections[prefix] ?: return@withContext Result.failure(IOException("Collection not found"))
+            val collections = getCollections().getOrNull() ?: return@withContext Result.failure(
+                IOException("No collections")
+            )
+            val collection = collections[prefix]
+                ?: return@withContext Result.failure(IOException("Collection not found"))
 
             // Return sample icons from collection metadata
             val samples = collection.samples.take(limit)

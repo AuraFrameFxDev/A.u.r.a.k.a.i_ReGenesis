@@ -20,36 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.models.Emotion
-import dev.aurakai.auraframefx.domains.aura.ui.theme.DarkBackground
-import dev.aurakai.auraframefx.domains.aura.ui.theme.ErrorColor
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightBackground
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnBackground
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnError
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnPrimary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnSecondary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnSurface
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnSurfaceVariant
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightOnTertiary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightPrimary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightSecondary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightSurface
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightSurfaceVariant
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LightTertiary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonGreen
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonRed
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
-import dev.aurakai.auraframefx.domains.aura.ui.theme.OnPrimary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.OnSecondary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.OnSurface
-import dev.aurakai.auraframefx.domains.aura.ui.theme.OnSurfaceVariant
-import dev.aurakai.auraframefx.domains.aura.ui.theme.OnTertiary
-import dev.aurakai.auraframefx.domains.aura.ui.theme.Surface
-import dev.aurakai.auraframefx.domains.aura.ui.theme.SurfaceVariant
 import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Theme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Color as ThemeColor
 
@@ -115,6 +86,7 @@ val SolarizedColorScheme = lightColorScheme(
 // Stub AuraMoodViewModel for now - this should be properly implemented
 class AuraMoodViewModel : androidx.lifecycle.ViewModel() {
     data class MoodState(val emotion: Emotion = Emotion.NEUTRAL, val intensity: Float = 0.5f)
+
     val moodState = kotlinx.coroutines.flow.MutableStateFlow(MoodState())
 }
 
@@ -170,13 +142,7 @@ val LocalMoodState = compositionLocalOf { Emotion.NEUTRAL }
 fun AuraFrameFXTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
-    moodViewModel: AuraMoodViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    moodViewModel: AuraMoodViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {

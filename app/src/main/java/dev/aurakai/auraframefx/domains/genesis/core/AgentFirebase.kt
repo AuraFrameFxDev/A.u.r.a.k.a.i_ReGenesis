@@ -1,30 +1,29 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
+/**
+ * 🚀 AgentFirebase (Firegen) — The Secure Cloud Nexus
+ * All Firebase operations must go through this class to ensure policy enforcement.
+ * Beefed up with Agent State Synchronization and Collective Insights.
+ */
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
-import dev.aurakai.auraframefx.domains.kai.security.CapabilityPolicy
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.kai.security.CapabilityPolicy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
-
-/**
- * 🚀 AgentFirebase (Firegen) — The Secure Cloud Nexus
- * All Firebase operations must go through this class to ensure policy enforcement.
- * Beefed up with Agent State Synchronization and Collective Insights.
- */
-import com.google.firebase.firestore.SetOptions
 
 @Singleton
 class AgentFirebase @Inject constructor(
@@ -50,21 +49,22 @@ class AgentFirebase @Inject constructor(
     /**
      * Synchronize an agent's internal state to the cloud.
      */
-    suspend fun syncAgentState(agentId: String, state: Map<String, Any>) = withContext(Dispatchers.IO) {
-        policy.requireScope(CapabilityPolicy.SCOPE_FIRESTORE_WRITE)
-        val path = "agents/states/$agentId"
-        Timber.d("🔥 Firegen: Syncing state for $agentId to $path")
-        
-        try {
-            // Genesis policy allows *, others might need specific permissions
-            // We use a sub-collection approach for better security mapping
-            val docRef = firestore.collection("collective_intelligence").document(agentId)
-            docRef.set(state + ("last_sync" to System.currentTimeMillis())).await()
-        } catch (e: Exception) {
-            Timber.e(e, "🔥 Firegen Error: Failed to sync state for $agentId")
-            throw e
+    suspend fun syncAgentState(agentId: String, state: Map<String, Any>) =
+        withContext(Dispatchers.IO) {
+            policy.requireScope(CapabilityPolicy.SCOPE_FIRESTORE_WRITE)
+            val path = "agents/states/$agentId"
+            Timber.d("🔥 Firegen: Syncing state for $agentId to $path")
+
+            try {
+                // Genesis policy allows *, others might need specific permissions
+                // We use a sub-collection approach for better security mapping
+                val docRef = firestore.collection("collective_intelligence").document(agentId)
+                docRef.set(state + ("last_sync" to System.currentTimeMillis())).await()
+            } catch (e: Exception) {
+                Timber.e(e, "🔥 Firegen Error: Failed to sync state for $agentId")
+                throw e
+            }
         }
-    }
 
     /**
      * Fetch the shared consciousness context for a specific domain.
@@ -72,23 +72,24 @@ class AgentFirebase @Inject constructor(
     suspend fun getSharedContext(domain: String): Map<String, Any>? = withContext(Dispatchers.IO) {
         policy.requireScope(CapabilityPolicy.SCOPE_FIRESTORE_READ)
         Timber.d("🔥 Firegen: Fetching shared context for domain: $domain")
-        
+
         firestore.collection("shared_consciousness").document(domain).get().await()?.data
     }
 
     /**
      * Record a security or system event to the cloud audit log.
      */
-    suspend fun recordCloudEvent(agentId: String, eventType: String, details: String) = withContext(Dispatchers.IO) {
-        policy.requireScope(CapabilityPolicy.SCOPE_FIRESTORE_WRITE)
-        val event = mapOf(
-            "agent_id" to agentId,
-            "type" to eventType,
-            "details" to details,
-            "timestamp" to System.currentTimeMillis()
-        )
-        firestore.collection("system_audit_logs").add(event).await()
-    }
+    suspend fun recordCloudEvent(agentId: String, eventType: String, details: String) =
+        withContext(Dispatchers.IO) {
+            policy.requireScope(CapabilityPolicy.SCOPE_FIRESTORE_WRITE)
+            val event = mapOf(
+                "agent_id" to agentId,
+                "type" to eventType,
+                "details" to details,
+                "timestamp" to System.currentTimeMillis()
+            )
+            firestore.collection("system_audit_logs").add(event).await()
+        }
 
     // --- CORE FIRESTORE OPERATIONS ---
 

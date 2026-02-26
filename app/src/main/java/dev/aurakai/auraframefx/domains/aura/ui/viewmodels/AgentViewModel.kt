@@ -3,23 +3,23 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.agents.trinity.AuraAgent
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
-import dev.aurakai.auraframefx.agents.coordination.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
-import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentState
-import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
 import dev.aurakai.auraframefx.domains.cascade.utils.error
 import dev.aurakai.auraframefx.domains.cascade.utils.info
 import dev.aurakai.auraframefx.domains.cascade.utils.warn
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.genesis.models.AgentState
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
+import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -186,7 +186,11 @@ open class AgentViewModel @Inject constructor(
     // TASK MANAGEMENT
     // ═══════════════════════════════════════════════════════════════════════════
 
-    fun assignTask(agentName: String, taskDescription: String, priority: TaskPriority = TaskPriority.NORMAL) {
+    fun assignTask(
+        agentName: String,
+        taskDescription: String,
+        priority: TaskPriority = TaskPriority.NORMAL
+    ) {
         viewModelScope.launch {
             val task = AgentTask(
                 id = UUID.randomUUID().toString(),
@@ -207,29 +211,36 @@ open class AgentViewModel @Inject constructor(
 
     private fun executeTask(task: AgentTask) {
         viewModelScope.launch {
-            // Update status to IN_PROGRESS
-            updateTaskStatus(task.id, AgentTaskStatus.IN_PROGRESS)
+            try {
+                // Update status to IN_PROGRESS
+                updateTaskStatus(task.id, AgentTaskStatus.IN_PROGRESS)
 
-            // Simulate task execution based on agent
-            val agent = AgentRepository.getAgentByName(task.agentName)
-            val executionTime = when (agent?.speed ?: 0.5f) {
-                in 0.9f..1.0f -> 2000L  // Fast agents
-                in 0.7f..0.9f -> 4000L  // Normal agents
-                else -> 6000L            // Slower agents
+                // Simulate task execution based on agent
+                val agent = AgentRepository.getAgentByName(task.agentName)
+                val executionTime = when (agent?.speed ?: 0.5f) {
+                    in 0.9f..1.0f -> 2000L  // Fast agents
+                    in 0.7f..0.9f -> 4000L  // Normal agents
+                    else -> 6000L            // Slower agents
+                }
+
+                delay(executionTime)
+
+                // Complete task
+                updateTaskStatus(task.id, AgentTaskStatus.COMPLETED)
+                persistentAgentRepository.incrementTaskCount(task.agentName)
+                _agentEvents.emit(AgentEvent.TaskCompleted(task))
+
+                // Send completion message
+                addSystemMessage(
+                    task.agentName,
+                    "Task completed: ${task.description.take(50)}${if (task.description.length > 50) "..." else ""} ✓"
+                )
+            } catch (e: Exception) {
+                error("AgentViewModel", "Task execution failed: ${task.id}", e)
+                updateTaskStatus(task.id, AgentTaskStatus.FAILED)
+                _agentEvents.emit(AgentEvent.TaskFailed(task.id, e.message ?: "Unknown error"))
+                addSystemMessage(task.agentName, "Task failed: ${e.message ?: "Internal Error"}")
             }
-
-            delay(executionTime)
-
-            // Complete task
-            updateTaskStatus(task.id, AgentTaskStatus.COMPLETED)
-            persistentAgentRepository.incrementTaskCount(task.agentName)
-            _agentEvents.emit(AgentEvent.TaskCompleted(task))
-
-            // Send completion message
-            addSystemMessage(
-                task.agentName,
-                "Task completed: ${task.description.take(50)}${if (task.description.length > 50) "..." else ""} ✓"
-            )
         }
     }
 
@@ -270,19 +281,17 @@ open class AgentViewModel @Inject constructor(
             addMessage(agentName, userMsg)
 
             // Send to Repository (Neural Bridge)
-            val category = when (agentName.uppercase()) {
-                "AURA" -> AgentCapabilityCategory.CREATIVE
-                "KAI" -> AgentCapabilityCategory.ANALYSIS
-                "GENESIS" -> AgentCapabilityCategory.COORDINATION
-                "CASCADE" -> AgentCapabilityCategory.SPECIALIZED
-                else -> AgentCapabilityCategory.COORDINATION
+            val type = try {
+                AgentType.valueOf(agentName.uppercase())
+            } catch (e: Exception) {
+                AgentType.GENESIS
             }
             // We don't need to add the repo's echo of "User" message if we added it locally
             // But we DO need the response.
 
             // To avoid double-entry of User message (from repo echo), we can filter or just let repo handle it.
             // Let's use the repo solely.
-            trinityRepository.processUserMessage(message, category)
+            trinityRepository.processUserMessage(message, type)
 
             // Listen for the specific response? No, the global collector in init should handle it.
         }
@@ -333,9 +342,10 @@ open class AgentViewModel @Inject constructor(
                             put("source", "direct_chat")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "direct_chat", AgentCapabilityCategory.COORDINATION)
+                    val response = genesisAgent.processRequest(request, "direct_chat")
                     response.content
                 }
+
                 "Aura" -> {
                     val interaction = EnhancedInteractionData(
                         content = userMessage,
@@ -346,6 +356,7 @@ open class AgentViewModel @Inject constructor(
                     val response = auraAgent.handleCreativeInteraction(interaction)
                     response.content
                 }
+
                 "Kai" -> {
                     val interaction = EnhancedInteractionData(
                         content = userMessage,
@@ -356,6 +367,7 @@ open class AgentViewModel @Inject constructor(
                     val response = kaiAgent.handleSecurityInteraction(interaction)
                     response.content
                 }
+
                 "Cascade" -> {
                     val request = AiRequest(
                         query = "As Cascade, the analytics specialist: $userMessage",
@@ -364,9 +376,10 @@ open class AgentViewModel @Inject constructor(
                             put("agent_persona", "cascade")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "cascade", AgentCapabilityCategory.SPECIALIZED)
+                    val response = genesisAgent.processRequest(request, "cascade")
                     response.content
                 }
+
                 "Claude" -> {
                     val request = AiRequest(
                         query = "As Claude, the build system architect: $userMessage",
@@ -375,9 +388,10 @@ open class AgentViewModel @Inject constructor(
                             put("agent_persona", "claude")
                         }
                     )
-                    val response = genesisAgent.processRequest(request, "claude", AgentCapabilityCategory.SPECIALIZED)
+                    val response = genesisAgent.processRequest(request, "claude")
                     response.content
                 }
+
                 else -> {
                     warn("AgentViewModel", "Unknown agent: $agentName, using fallback")
                     "I'm here to assist you. Let me know what you need. 🤖"
@@ -473,6 +487,7 @@ open class AgentViewModel @Inject constructor(
         data class AgentDeactivated(val agentName: String) : AgentEvent()
         data class TaskAssigned(val task: AgentTask) : AgentEvent()
         data class TaskCompleted(val task: AgentTask) : AgentEvent()
+        data class TaskFailed(val taskId: String, val error: String) : AgentEvent()
         data class TaskCancelled(val taskId: String) : AgentEvent()
         data class MessageReceived(val message: ChatMessage) : AgentEvent()
         data class AgentHeartbeat(val agentName: String) : AgentEvent()

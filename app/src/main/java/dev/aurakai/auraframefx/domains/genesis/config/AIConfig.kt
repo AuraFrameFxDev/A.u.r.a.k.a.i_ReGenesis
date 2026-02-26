@@ -25,18 +25,32 @@ data class AIConfig(
     }
 
     companion object {
+        /**
+         * Creates default config loading API key from BuildConfig.
+         * Throws if API key is not configured in gradle.properties or environment.
+         */
         fun createDefault(): AIConfig {
+            val apiKey = dev.aurakai.auraframefx.BuildConfig.GEMINI_API_KEY
+                .takeIf { it.isNotBlank() }
+                ?: throw IllegalStateException(
+                    "API key not configured. Add GEMINI_API_KEY to gradle.properties or environment variables."
+                )
+
             return AIConfig(
                 modelName = "AeGenesis-consciousness-v1",
-                apiKey = "AeGenesis-default-key",
+                apiKey = apiKey,
                 projectId = "AeGenesis-platform"
             )
         }
 
+        /**
+         * Creates test config with fake API key for unit tests.
+         * NEVER use this in production code!
+         */
         fun createForTesting(): AIConfig {
             return AIConfig(
                 modelName = "genesis-test-model",
-                apiKey = "test-key",
+                apiKey = "test-key-mock-only",  // Mock key for testing
                 projectId = "test-project",
                 enableLogging = false,
                 enableAnalytics = false,

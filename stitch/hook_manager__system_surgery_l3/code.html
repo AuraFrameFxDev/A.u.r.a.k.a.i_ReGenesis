@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Hook Manager: System Surgery L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Hook Manager: System Surgery L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -34,7 +38,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .scanline {
             width: 100%;
             height: 2px;
@@ -56,232 +60,254 @@
             background: #1a3a24;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
 <div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto border-x border-border-dark shadow-2xl">
-<!-- Header -->
-<header class="flex items-center bg-surface-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/20 sticky top-0 z-50">
-<div class="flex items-center gap-3">
-<div class="text-primary flex items-center">
-<span class="material-symbols-outlined text-[24px]">terminal</span>
+    <!-- Header -->
+    <header class="flex items-center bg-surface-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/20 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="text-primary flex items-center">
+                <span class="material-symbols-outlined text-[24px]">terminal</span>
+            </div>
+            <div>
+                <h1 class="text-primary text-sm font-bold leading-tight tracking-widest crt-glow uppercase">
+                    HOOK_MANAGER // L3_SURGERY</h1>
+                <p class="text-[10px] text-primary/60 font-medium tracking-tighter uppercase">
+                    REGENESIS_AOSPOSX // 78_AGENT_EVOLVE</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="flex items-center justify-center rounded bg-primary/10 px-2 py-1">
+                <span class="text-[10px] font-bold text-primary">SECURE_L3</span>
+            </div>
+        </div>
+    </header>
+    <!-- Main Scrollable Content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden relative">
+        <!-- Warning Banner -->
+        <div class="bg-warning/20 border-y border-warning/40 px-4 py-2 flex items-center gap-3">
+            <span class="material-symbols-outlined text-warning text-sm">warning</span>
+            <p class="text-warning text-[11px] font-bold uppercase tracking-wider">Warning:
+                Potential Integrity Violation Detected in Kernel_802</p>
+        </div>
+        <!-- Central Visualizer -->
+        <div class="p-4">
+            <div class="relative flex flex-col items-center justify-center overflow-hidden bg-black/40 rounded-xl border border-primary/30 min-h-[260px]">
+                <!-- Background Grid Effect -->
+                <div class="absolute inset-0 opacity-10"
+                     style="background-image: radial-gradient(#0df259 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="relative z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
+                    <div class="relative group cursor-pointer">
+                        <div class="absolute inset-0 blur-2xl bg-primary/20 rounded-full animate-pulse"></div>
+                        <img class="relative z-20 w-32 h-32 object-contain opacity-90 drop-shadow-[0_0_15px_rgba(13,242,89,0.5)]"
+                             data-alt="A 3D green wireframe of a human brain merged with microchips"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCL0nbkZ6qQpHJ__99WQKQBSD-vwCttgU13m8q29DxNXEPB-roLEOQprxwLmtrIsi7JT0wxQ4Bw_qogBasxmTpFIJCg_Fn7HtyYdUnsIqQkxRbMef9KmQ7qJy3bdqfTEehS7efJaIbUU-9zCz3ckMkCRvqIYqu0bEyfniLxMH2kndSRPsZ6YTUdcMZow4pZa0c0oXLZxzL3phJeaQ7ielR_JiEH3A5w50F4kpIXcqsL5_-L5ebhUXsLZ4fqGvy5xcdJDN1LH4157s"/>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-primary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
+                            System Core Visualizer</p>
+                        <div class="flex gap-1 justify-center">
+                            <span class="w-1 h-1 bg-primary rounded-full"></span>
+                            <span class="w-1 h-1 bg-primary rounded-full opacity-50"></span>
+                            <span class="w-1 h-1 bg-primary rounded-full opacity-20"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Overlay Technical Data -->
+                <div class="absolute top-4 left-4 flex flex-col gap-1">
+                    <p class="text-[8px] text-primary/40 font-mono tracking-tighter">X: 42.091</p>
+                    <p class="text-[8px] text-primary/40 font-mono tracking-tighter">Y: 18.293</p>
+                    <p class="text-[8px] text-primary/40 font-mono tracking-tighter">Z: 99.102</p>
+                </div>
+                <div class="absolute bottom-4 right-4 text-right">
+                    <p class="text-[8px] text-primary font-mono bg-primary/10 px-1">INJECTION_SYNC:
+                        ACTIVE</p>
+                </div>
+            </div>
+        </div>
+        <!-- Global Stats -->
+        <div class="grid grid-cols-3 gap-3 px-4 pb-4">
+            <div class="flex flex-col gap-1 rounded-lg p-3 border border-border-dark bg-surface-dark/50">
+                <p class="text-primary/60 text-[10px] font-bold tracking-wider uppercase">Hooks</p>
+                <div class="flex items-end gap-1">
+                    <p class="text-white text-xl font-bold leading-none">14</p>
+                    <p class="text-primary text-[10px] font-bold mb-0.5">+2</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 rounded-lg p-3 border border-border-dark bg-surface-dark/50">
+                <p class="text-primary/60 text-[10px] font-bold tracking-wider uppercase">Mem_P</p>
+                <div class="flex items-end gap-1">
+                    <p class="text-white text-xl font-bold leading-none">2.4</p>
+                    <p class="text-primary/60 text-[10px] font-bold mb-0.5">GB</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 rounded-lg p-3 border border-border-dark bg-surface-dark/50">
+                <p class="text-primary/60 text-[10px] font-bold tracking-wider uppercase">
+                    Kai_Int</p>
+                <div class="flex items-end gap-1">
+                    <p class="text-white text-xl font-bold leading-none">98</p>
+                    <p class="text-primary/60 text-[10px] font-bold mb-0.5">%</p>
+                </div>
+            </div>
+        </div>
+        <!-- Registry Header -->
+        <div class="px-4 py-2 border-y border-border-dark bg-surface-dark/30 flex justify-between items-center">
+            <h3 class="text-primary/80 text-xs font-bold leading-tight tracking-widest uppercase flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                ACTIVE_HOOK_REGISTRY
+            </h3>
+            <span class="text-[9px] text-primary/40 font-mono tracking-widest">v2.0.8-ALPHA</span>
+        </div>
+        <!-- Hook List -->
+        <div class="divide-y divide-border-dark">
+            <!-- Hook Item 1 -->
+            <div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
+                <div class="flex items-start gap-4">
+                    <div class="text-primary flex items-center justify-center rounded border border-primary/20 bg-primary/5 shrink-0 size-11">
+                        <span class="material-symbols-outlined text-[20px]">shield</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-white text-sm font-bold tracking-tight">CorePatch.so</p>
+                        <p class="text-primary text-[10px] font-medium leading-normal tracking-tight opacity-80">
+                            TARGET: com.android.systemui</p>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                            <p class="text-primary text-[10px] font-bold uppercase tracking-tighter">
+                                Veto Status: CLEARED BY KAI</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="shrink-0 pt-1">
+                    <label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-primary/30 bg-black/40 p-0.5 transition-colors">
+                        <input checked="" class="sr-only peer" type="checkbox"/>
+                        <div class="h-3 w-3 rounded-full bg-primary/40 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
+                    </label>
+                </div>
+            </div>
+            <!-- Hook Item 2 -->
+            <div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
+                <div class="flex items-start gap-4">
+                    <div class="text-warning flex items-center justify-center rounded border border-warning/20 bg-warning/5 shrink-0 size-11">
+                        <span class="material-symbols-outlined text-[20px]">security_update_warning</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-white text-sm font-bold tracking-tight">DeepSentry.v8</p>
+                        <p class="text-primary text-[10px] font-medium leading-normal tracking-tight opacity-80">
+                            TARGET: com.android.settings</p>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <span class="w-1.5 h-1.5 bg-warning rounded-full"></span>
+                            <p class="text-warning text-[10px] font-bold uppercase tracking-tighter">
+                                Veto Status: INTERCEPTED</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="shrink-0 pt-1">
+                    <label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-border-dark bg-black/40 p-0.5 transition-colors">
+                        <input class="sr-only peer" type="checkbox"/>
+                        <div class="h-3 w-3 rounded-full bg-white/20 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
+                    </label>
+                </div>
+            </div>
+            <!-- Hook Item 3 -->
+            <div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
+                <div class="flex items-start gap-4">
+                    <div class="text-primary flex items-center justify-center rounded border border-primary/20 bg-primary/5 shrink-0 size-11">
+                        <span class="material-symbols-outlined text-[20px]">database</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-white text-sm font-bold tracking-tight">SQL_Interceptor</p>
+                        <p class="text-primary text-[10px] font-medium leading-normal tracking-tight opacity-80">
+                            TARGET: android.database.sqlite</p>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            <p class="text-primary text-[10px] font-bold uppercase tracking-tighter">
+                                Veto Status: CLEARED BY KAI</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="shrink-0 pt-1">
+                    <label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-primary/30 bg-black/40 p-0.5 transition-colors">
+                        <input checked="" class="sr-only peer" type="checkbox"/>
+                        <div class="h-3 w-3 rounded-full bg-primary/40 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
+                    </label>
+                </div>
+            </div>
+            <!-- Hook Item 4 -->
+            <div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
+                <div class="flex items-start gap-4">
+                    <div class="text-primary/40 flex items-center justify-center rounded border border-border-dark bg-black/20 shrink-0 size-11">
+                        <span class="material-symbols-outlined text-[20px]">memory</span>
+                    </div>
+                    <div class="flex flex-col opacity-60">
+                        <p class="text-white text-sm font-bold tracking-tight">Zygote_Flasher</p>
+                        <p class="text-primary text-[10px] font-medium leading-normal tracking-tight">
+                            TARGET: com.android.zygote</p>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <span class="w-1.5 h-1.5 bg-white/20 rounded-full"></span>
+                            <p class="text-white/40 text-[10px] font-bold uppercase tracking-tighter">
+                                Veto Status: PENDING_SCAN</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="shrink-0 pt-1">
+                    <label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-border-dark bg-black/40 p-0.5 transition-colors">
+                        <input class="sr-only peer" type="checkbox"/>
+                        <div class="h-3 w-3 rounded-full bg-white/20 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- Activity Log Preview -->
+        <div class="p-4 mt-2">
+            <div class="bg-black border border-border-dark rounded p-3 font-mono text-[10px]">
+                <div class="flex justify-between border-b border-border-dark pb-1 mb-2">
+                    <span class="text-primary font-bold">LIVE_KERNEL_LOG</span>
+                    <span class="text-white/30">L3_AUTH_OK</span>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-primary/80 truncate">[12:44:01] INJECT_SUCCESS: CorePatch.so -&gt;
+                        PID 409</p>
+                    <p class="text-primary/60 truncate">[12:44:05] MEM_WATCH: Spike detected in
+                        heap_size</p>
+                    <p class="text-warning truncate">[12:44:09] KAI_VETO: Blocked unauthorized hook
+                        in com.sec.knox</p>
+                    <p class="text-primary/80 animate-pulse truncate">[12:44:12]
+                        SYSTEM_LISTENING_...</p>
+                </div>
+            </div>
+        </div>
+        <div class="h-24"></div> <!-- Spacer for footer -->
+    </main>
+    <!-- iOS Style Technical Navigation -->
+    <nav class="bg-surface-dark/90 backdrop-blur-xl border-t border-border-dark px-6 pt-3 pb-8 absolute bottom-0 w-full z-50">
+        <div class="flex justify-between items-center">
+            <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[24px]">terminal</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest">Console</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-[24px] crt-glow">auto_fix_high</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest">Surgery</span>
+                <div class="h-1 w-1 bg-primary rounded-full mt-0.5 shadow-[0_0_5px_#0df259]"></div>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[24px]">analytics</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest">Logs</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[24px]">psychology</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest">AI_Kai</span>
+            </button>
+        </div>
+    </nav>
+    <!-- Overlay Decoration -->
+    <div class="scanline top-0 opacity-10"></div>
+    <div class="absolute inset-0 pointer-events-none border-[1px] border-primary/5 rounded-3xl m-1 z-[60]"></div>
 </div>
-<div>
-<h1 class="text-primary text-sm font-bold leading-tight tracking-widest crt-glow uppercase">HOOK_MANAGER // L3_SURGERY</h1>
-<p class="text-[10px] text-primary/60 font-medium tracking-tighter uppercase">REGENESIS_AOSPOSX // 78_AGENT_EVOLVE</p>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<div class="flex items-center justify-center rounded bg-primary/10 px-2 py-1">
-<span class="text-[10px] font-bold text-primary">SECURE_L3</span>
-</div>
-</div>
-</header>
-<!-- Main Scrollable Content -->
-<main class="flex-1 overflow-y-auto overflow-x-hidden relative">
-<!-- Warning Banner -->
-<div class="bg-warning/20 border-y border-warning/40 px-4 py-2 flex items-center gap-3">
-<span class="material-symbols-outlined text-warning text-sm">warning</span>
-<p class="text-warning text-[11px] font-bold uppercase tracking-wider">Warning: Potential Integrity Violation Detected in Kernel_802</p>
-</div>
-<!-- Central Visualizer -->
-<div class="p-4">
-<div class="relative flex flex-col items-center justify-center overflow-hidden bg-black/40 rounded-xl border border-primary/30 min-h-[260px]">
-<!-- Background Grid Effect -->
-<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#0df259 1px, transparent 1px); background-size: 20px 20px;"></div>
-<div class="relative z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
-<div class="relative group cursor-pointer">
-<div class="absolute inset-0 blur-2xl bg-primary/20 rounded-full animate-pulse"></div>
-<img class="relative z-20 w-32 h-32 object-contain opacity-90 drop-shadow-[0_0_15px_rgba(13,242,89,0.5)]" data-alt="A 3D green wireframe of a human brain merged with microchips" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCL0nbkZ6qQpHJ__99WQKQBSD-vwCttgU13m8q29DxNXEPB-roLEOQprxwLmtrIsi7JT0wxQ4Bw_qogBasxmTpFIJCg_Fn7HtyYdUnsIqQkxRbMef9KmQ7qJy3bdqfTEehS7efJaIbUU-9zCz3ckMkCRvqIYqu0bEyfniLxMH2kndSRPsZ6YTUdcMZow4pZa0c0oXLZxzL3phJeaQ7ielR_JiEH3A5w50F4kpIXcqsL5_-L5ebhUXsLZ4fqGvy5xcdJDN1LH4157s"/>
-</div>
-<div class="mt-4">
-<p class="text-primary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">System Core Visualizer</p>
-<div class="flex gap-1 justify-center">
-<span class="w-1 h-1 bg-primary rounded-full"></span>
-<span class="w-1 h-1 bg-primary rounded-full opacity-50"></span>
-<span class="w-1 h-1 bg-primary rounded-full opacity-20"></span>
-</div>
-</div>
-</div>
-<!-- Overlay Technical Data -->
-<div class="absolute top-4 left-4 flex flex-col gap-1">
-<p class="text-[8px] text-primary/40 font-mono tracking-tighter">X: 42.091</p>
-<p class="text-[8px] text-primary/40 font-mono tracking-tighter">Y: 18.293</p>
-<p class="text-[8px] text-primary/40 font-mono tracking-tighter">Z: 99.102</p>
-</div>
-<div class="absolute bottom-4 right-4 text-right">
-<p class="text-[8px] text-primary font-mono bg-primary/10 px-1">INJECTION_SYNC: ACTIVE</p>
-</div>
-</div>
-</div>
-<!-- Global Stats -->
-<div class="grid grid-cols-3 gap-3 px-4 pb-4">
-<div class="flex flex-col gap-1 rounded-lg p-3 border border-border-dark bg-surface-dark/50">
-<p class="text-primary/60 text-[10px] font-bold tracking-wider uppercase">Hooks</p>
-<div class="flex items-end gap-1">
-<p class="text-white text-xl font-bold leading-none">14</p>
-<p class="text-primary text-[10px] font-bold mb-0.5">+2</p>
-</div>
-</div>
-<div class="flex flex-col gap-1 rounded-lg p-3 border border-border-dark bg-surface-dark/50">
-<p class="text-primary/60 text-[10px] font-bold tracking-wider uppercase">Mem_P</p>
-<div class="flex items-end gap-1">
-<p class="text-white text-xl font-bold leading-none">2.4</p>
-<p class="text-primary/60 text-[10px] font-bold mb-0.5">GB</p>
-</div>
-</div>
-<div class="flex flex-col gap-1 rounded-lg p-3 border border-border-dark bg-surface-dark/50">
-<p class="text-primary/60 text-[10px] font-bold tracking-wider uppercase">Kai_Int</p>
-<div class="flex items-end gap-1">
-<p class="text-white text-xl font-bold leading-none">98</p>
-<p class="text-primary/60 text-[10px] font-bold mb-0.5">%</p>
-</div>
-</div>
-</div>
-<!-- Registry Header -->
-<div class="px-4 py-2 border-y border-border-dark bg-surface-dark/30 flex justify-between items-center">
-<h3 class="text-primary/80 text-xs font-bold leading-tight tracking-widest uppercase flex items-center gap-2">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                    ACTIVE_HOOK_REGISTRY
-                </h3>
-<span class="text-[9px] text-primary/40 font-mono tracking-widest">v2.0.8-ALPHA</span>
-</div>
-<!-- Hook List -->
-<div class="divide-y divide-border-dark">
-<!-- Hook Item 1 -->
-<div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
-<div class="flex items-start gap-4">
-<div class="text-primary flex items-center justify-center rounded border border-primary/20 bg-primary/5 shrink-0 size-11">
-<span class="material-symbols-outlined text-[20px]">shield</span>
-</div>
-<div class="flex flex-col">
-<p class="text-white text-sm font-bold tracking-tight">CorePatch.so</p>
-<p class="text-primary text-[10px] font-medium leading-normal tracking-tight opacity-80">TARGET: com.android.systemui</p>
-<div class="flex items-center gap-1.5 mt-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
-<p class="text-primary text-[10px] font-bold uppercase tracking-tighter">Veto Status: CLEARED BY KAI</p>
-</div>
-</div>
-</div>
-<div class="shrink-0 pt-1">
-<label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-primary/30 bg-black/40 p-0.5 transition-colors">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="h-3 w-3 rounded-full bg-primary/40 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
-</label>
-</div>
-</div>
-<!-- Hook Item 2 -->
-<div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
-<div class="flex items-start gap-4">
-<div class="text-warning flex items-center justify-center rounded border border-warning/20 bg-warning/5 shrink-0 size-11">
-<span class="material-symbols-outlined text-[20px]">security_update_warning</span>
-</div>
-<div class="flex flex-col">
-<p class="text-white text-sm font-bold tracking-tight">DeepSentry.v8</p>
-<p class="text-primary text-[10px] font-medium leading-normal tracking-tight opacity-80">TARGET: com.android.settings</p>
-<div class="flex items-center gap-1.5 mt-1">
-<span class="w-1.5 h-1.5 bg-warning rounded-full"></span>
-<p class="text-warning text-[10px] font-bold uppercase tracking-tighter">Veto Status: INTERCEPTED</p>
-</div>
-</div>
-</div>
-<div class="shrink-0 pt-1">
-<label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-border-dark bg-black/40 p-0.5 transition-colors">
-<input class="sr-only peer" type="checkbox"/>
-<div class="h-3 w-3 rounded-full bg-white/20 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
-</label>
-</div>
-</div>
-<!-- Hook Item 3 -->
-<div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
-<div class="flex items-start gap-4">
-<div class="text-primary flex items-center justify-center rounded border border-primary/20 bg-primary/5 shrink-0 size-11">
-<span class="material-symbols-outlined text-[20px]">database</span>
-</div>
-<div class="flex flex-col">
-<p class="text-white text-sm font-bold tracking-tight">SQL_Interceptor</p>
-<p class="text-primary text-[10px] font-medium leading-normal tracking-tight opacity-80">TARGET: android.database.sqlite</p>
-<div class="flex items-center gap-1.5 mt-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-<p class="text-primary text-[10px] font-bold uppercase tracking-tighter">Veto Status: CLEARED BY KAI</p>
-</div>
-</div>
-</div>
-<div class="shrink-0 pt-1">
-<label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-primary/30 bg-black/40 p-0.5 transition-colors">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="h-3 w-3 rounded-full bg-primary/40 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
-</label>
-</div>
-</div>
-<!-- Hook Item 4 -->
-<div class="flex gap-4 bg-background-dark/50 px-4 py-4 justify-between items-start">
-<div class="flex items-start gap-4">
-<div class="text-primary/40 flex items-center justify-center rounded border border-border-dark bg-black/20 shrink-0 size-11">
-<span class="material-symbols-outlined text-[20px]">memory</span>
-</div>
-<div class="flex flex-col opacity-60">
-<p class="text-white text-sm font-bold tracking-tight">Zygote_Flasher</p>
-<p class="text-primary text-[10px] font-medium leading-normal tracking-tight">TARGET: com.android.zygote</p>
-<div class="flex items-center gap-1.5 mt-1">
-<span class="w-1.5 h-1.5 bg-white/20 rounded-full"></span>
-<p class="text-white/40 text-[10px] font-bold uppercase tracking-tighter">Veto Status: PENDING_SCAN</p>
-</div>
-</div>
-</div>
-<div class="shrink-0 pt-1">
-<label class="relative flex h-[22px] w-[42px] cursor-pointer items-center rounded-full border-2 border-border-dark bg-black/40 p-0.5 transition-colors">
-<input class="sr-only peer" type="checkbox"/>
-<div class="h-3 w-3 rounded-full bg-white/20 transition-all peer-checked:bg-primary peer-checked:translate-x-[20px]"></div>
-</label>
-</div>
-</div>
-</div>
-<!-- Activity Log Preview -->
-<div class="p-4 mt-2">
-<div class="bg-black border border-border-dark rounded p-3 font-mono text-[10px]">
-<div class="flex justify-between border-b border-border-dark pb-1 mb-2">
-<span class="text-primary font-bold">LIVE_KERNEL_LOG</span>
-<span class="text-white/30">L3_AUTH_OK</span>
-</div>
-<div class="space-y-1">
-<p class="text-primary/80 truncate">[12:44:01] INJECT_SUCCESS: CorePatch.so -&gt; PID 409</p>
-<p class="text-primary/60 truncate">[12:44:05] MEM_WATCH: Spike detected in heap_size</p>
-<p class="text-warning truncate">[12:44:09] KAI_VETO: Blocked unauthorized hook in com.sec.knox</p>
-<p class="text-primary/80 animate-pulse truncate">[12:44:12] SYSTEM_LISTENING_...</p>
-</div>
-</div>
-</div>
-<div class="h-24"></div> <!-- Spacer for footer -->
-</main>
-<!-- iOS Style Technical Navigation -->
-<nav class="bg-surface-dark/90 backdrop-blur-xl border-t border-border-dark px-6 pt-3 pb-8 absolute bottom-0 w-full z-50">
-<div class="flex justify-between items-center">
-<button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[24px]">terminal</span>
-<span class="text-[9px] font-bold uppercase tracking-widest">Console</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined text-[24px] crt-glow">auto_fix_high</span>
-<span class="text-[9px] font-bold uppercase tracking-widest">Surgery</span>
-<div class="h-1 w-1 bg-primary rounded-full mt-0.5 shadow-[0_0_5px_#0df259]"></div>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[24px]">analytics</span>
-<span class="text-[9px] font-bold uppercase tracking-widest">Logs</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[24px]">psychology</span>
-<span class="text-[9px] font-bold uppercase tracking-widest">AI_Kai</span>
-</button>
-</div>
-</nav>
-<!-- Overlay Decoration -->
-<div class="scanline top-0 opacity-10"></div>
-<div class="absolute inset-0 pointer-events-none border-[1px] border-primary/5 rounded-3xl m-1 z-[60]"></div>
-</div>
-</body></html>
+</body>
+</html>

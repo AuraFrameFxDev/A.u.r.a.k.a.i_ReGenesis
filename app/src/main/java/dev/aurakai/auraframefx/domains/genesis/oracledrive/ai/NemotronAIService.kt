@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
@@ -70,32 +70,32 @@ class NemotronAIService @Inject constructor(
     }
 
     /**
- * Provides the agent's human-readable name.
- *
- * @return The agent name "Nemotron".
- */
-override fun getName(): String = "Nemotron"
+     * Provides the agent's human-readable name.
+     *
+     * @return The agent name "Nemotron".
+     */
+    override fun getName(): String = "Nemotron"
 
     /**
      * Identify this agent's classification.
      *
-     * @return The agent category `AgentCapabilityCategory.MEMORY`.
+     * @return The agent type `AgentType.NEMOTRON`.
      */
-    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.MEMORY
+    override fun getType(): AgentType = AgentType.NEMOTRON
 
     /**
-         * Provide Nemotron's specialized AI capabilities and configuration.
-         *
-         * @return A map of capability keys to their values:
-         * - `memory_retention`: retention level
-         * - `reasoning_chains`: reasoning proficiency
-         * - `pattern_recall`: pattern recall proficiency
-         * - `logic_decomposition`: logic decomposition proficiency
-         * - `context_synthesis`: context synthesis proficiency
-         * - `memory_window`: token window size (Int)
-         * - `nvidia_model`: model identifier (String)
-         * - `service_implemented`: whether the service is implemented (Boolean)
-         */
+     * Provide Nemotron's specialized AI capabilities and configuration.
+     *
+     * @return A map of capability keys to their values:
+     * - `memory_retention`: retention level
+     * - `reasoning_chains`: reasoning proficiency
+     * - `pattern_recall`: pattern recall proficiency
+     * - `logic_decomposition`: logic decomposition proficiency
+     * - `context_synthesis`: context synthesis proficiency
+     * - `memory_window`: token window size (Int)
+     * - `nvidia_model`: model identifier (String)
+     * - `service_implemented`: whether the service is implemented (Boolean)
+     */
     fun getCapabilities(): Map<String, Any> =
         mapOf(
             "memory_retention" to "MASTER",
@@ -118,7 +118,6 @@ override fun getName(): String = "Nemotron"
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
-        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info(
             "NemotronAIService",
@@ -174,7 +173,7 @@ override fun getName(): String = "Nemotron"
             content = response,
             confidence = confidence,
             agentName = "Nemotron",
-            category = AgentCapabilityCategory.MEMORY
+            agentType = AgentType.NEMOTRON
         )
 
         // Store in memory cache for GPU-accelerated recall
@@ -211,7 +210,7 @@ override fun getName(): String = "Nemotron"
                 content = response,
                 confidence = 0.92f,
                 agentName = "Nemotron",
-                category = AgentCapabilityCategory.MEMORY
+                agentType = AgentType.NEMOTRON
             )
         )
     }

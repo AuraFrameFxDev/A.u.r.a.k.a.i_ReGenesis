@@ -57,6 +57,7 @@ class UnifiedLoggingSystem @Inject constructor(
         val firstOccurrence: Long,
         val lastOccurrence: Long
     )
+
     private val errorPatterns = mutableMapOf<String, ErrorPattern>()
 
     enum class SystemHealth {
@@ -633,7 +634,13 @@ class UnifiedLoggingSystem @Inject constructor(
         }
 
         // Calculate health score (0.0 - 1.0)
-        val healthScore = calculateHealthScore(totalLogs, errorCount, warningCount, performanceIssues, securityEvents)
+        val healthScore = calculateHealthScore(
+            totalLogs,
+            errorCount,
+            warningCount,
+            performanceIssues,
+            securityEvents
+        )
 
         LogAnalytics(
             totalLogs = totalLogs,

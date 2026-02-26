@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Kai Domain Gates L2</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Kai Domain Gates L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,7 +32,7 @@
             },
         }
     </script>
-<style>
+    <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-image: 
@@ -53,115 +57,121 @@
             box-shadow: 0 0 15px #00f2ff;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-white min-h-screen flex flex-col overflow-hidden">
 <!-- Top Navigation Bar -->
 <header class="flex items-center justify-between p-6 pt-12 border-b border-primary/20 bg-background-dark/80 backdrop-blur-md">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-3xl">shield_lock</span>
-<div>
-<h1 class="text-xl font-bold tracking-tighter leading-none">KAI_SENTINEL_SYSTEM</h1>
-<p class="text-[10px] text-primary tracking-[0.2em] font-medium uppercase mt-1">Level_02 // DOMAIN_ACCESS</p>
-</div>
-</div>
-<button class="w-10 h-10 flex items-center justify-center border border-primary/30 rounded">
-<span class="material-symbols-outlined text-primary">grid_view</span>
-</button>
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl">shield_lock</span>
+        <div>
+            <h1 class="text-xl font-bold tracking-tighter leading-none">KAI_SENTINEL_SYSTEM</h1>
+            <p class="text-[10px] text-primary tracking-[0.2em] font-medium uppercase mt-1">Level_02
+                // DOMAIN_ACCESS</p>
+        </div>
+    </div>
+    <button class="w-10 h-10 flex items-center justify-center border border-primary/30 rounded">
+        <span class="material-symbols-outlined text-primary">grid_view</span>
+    </button>
 </header>
 <!-- Main Content Area: Carousel -->
 <main class="flex-1 flex flex-col items-center justify-center relative px-6">
-<!-- Status Indicator Side Bar (Right) -->
-<div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-8 items-center">
-<div class="text-[10px] origin-center -rotate-90 tracking-[0.3em] text-primary/40 font-bold whitespace-nowrap">SYSTEM_MAP_02</div>
-<div class="flex flex-col gap-2">
-<div class="w-1 h-8 bg-primary shadow-[0_0_8px_#0b73da]"></div>
-<div class="w-1 h-4 bg-primary/20"></div>
-<div class="w-1 h-4 bg-primary/20"></div>
-<div class="w-1 h-4 bg-primary/20"></div>
-</div>
-</div>
-<!-- Diamond Carousel Frame -->
-<div class="relative w-full aspect-square max-w-sm flex items-center justify-center">
-<!-- Background Glow -->
-<div class="absolute w-72 h-72 bg-primary/10 blur-[100px] rounded-full"></div>
-<!-- Active Diamond Gate -->
-<div class="diamond-border w-full aspect-square relative group">
-<div class="diamond-clip w-full h-full bg-[#0a141d] flex flex-col items-center justify-center p-12 text-center relative">
-<!-- Technical UI Overlays -->
-<div class="absolute top-8 left-8 border-t-2 border-l-2 border-primary/40 w-6 h-6"></div>
-<div class="absolute top-8 right-8 border-t-2 border-r-2 border-primary/40 w-6 h-6"></div>
-<div class="absolute bottom-8 left-8 border-b-2 border-l-2 border-primary/40 w-6 h-6"></div>
-<div class="absolute bottom-8 right-8 border-b-2 border-r-2 border-primary/40 w-6 h-6"></div>
-<div class="scan-line"></div>
-<div class="relative z-10">
-<span class="material-symbols-outlined text-6xl text-primary mb-4 drop-shadow-[0_0_15px_rgba(11,115,218,0.5)]">security</span>
-<h2 class="text-2xl font-bold tracking-tight mb-2">INTEGRITY<br/>FIREWALL</h2>
-<div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/40 px-3 py-1 rounded">
-<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-<span class="text-[10px] font-bold tracking-widest uppercase">Status: Impermeable</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Ghost Peaks (Next/Prev indicators) -->
-<div class="absolute -left-1/2 w-full aspect-square border border-primary/10 diamond-clip opacity-20 scale-90 translate-x-12"></div>
-<div class="absolute -right-1/2 w-full aspect-square border border-primary/10 diamond-clip opacity-20 scale-90 -translate-x-12"></div>
-</div>
-<!-- Carousel Label Footer -->
-<div class="mt-8 text-center">
-<p class="text-xs text-primary/60 font-medium tracking-[0.4em] uppercase mb-4">Select Domain Gate</p>
-<div class="flex gap-4 justify-center">
-<div class="w-12 h-1 bg-primary"></div>
-<div class="w-12 h-1 bg-primary/20"></div>
-<div class="w-12 h-1 bg-primary/20"></div>
-</div>
-</div>
+    <!-- Status Indicator Side Bar (Right) -->
+    <div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-8 items-center">
+        <div class="text-[10px] origin-center -rotate-90 tracking-[0.3em] text-primary/40 font-bold whitespace-nowrap">
+            SYSTEM_MAP_02
+        </div>
+        <div class="flex flex-col gap-2">
+            <div class="w-1 h-8 bg-primary shadow-[0_0_8px_#0b73da]"></div>
+            <div class="w-1 h-4 bg-primary/20"></div>
+            <div class="w-1 h-4 bg-primary/20"></div>
+            <div class="w-1 h-4 bg-primary/20"></div>
+        </div>
+    </div>
+    <!-- Diamond Carousel Frame -->
+    <div class="relative w-full aspect-square max-w-sm flex items-center justify-center">
+        <!-- Background Glow -->
+        <div class="absolute w-72 h-72 bg-primary/10 blur-[100px] rounded-full"></div>
+        <!-- Active Diamond Gate -->
+        <div class="diamond-border w-full aspect-square relative group">
+            <div class="diamond-clip w-full h-full bg-[#0a141d] flex flex-col items-center justify-center p-12 text-center relative">
+                <!-- Technical UI Overlays -->
+                <div class="absolute top-8 left-8 border-t-2 border-l-2 border-primary/40 w-6 h-6"></div>
+                <div class="absolute top-8 right-8 border-t-2 border-r-2 border-primary/40 w-6 h-6"></div>
+                <div class="absolute bottom-8 left-8 border-b-2 border-l-2 border-primary/40 w-6 h-6"></div>
+                <div class="absolute bottom-8 right-8 border-b-2 border-r-2 border-primary/40 w-6 h-6"></div>
+                <div class="scan-line"></div>
+                <div class="relative z-10">
+                    <span class="material-symbols-outlined text-6xl text-primary mb-4 drop-shadow-[0_0_15px_rgba(11,115,218,0.5)]">security</span>
+                    <h2 class="text-2xl font-bold tracking-tight mb-2">INTEGRITY<br/>FIREWALL</h2>
+                    <div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/40 px-3 py-1 rounded">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        <span class="text-[10px] font-bold tracking-widest uppercase">Status: Impermeable</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Ghost Peaks (Next/Prev indicators) -->
+        <div class="absolute -left-1/2 w-full aspect-square border border-primary/10 diamond-clip opacity-20 scale-90 translate-x-12"></div>
+        <div class="absolute -right-1/2 w-full aspect-square border border-primary/10 diamond-clip opacity-20 scale-90 -translate-x-12"></div>
+    </div>
+    <!-- Carousel Label Footer -->
+    <div class="mt-8 text-center">
+        <p class="text-xs text-primary/60 font-medium tracking-[0.4em] uppercase mb-4">Select Domain
+            Gate</p>
+        <div class="flex gap-4 justify-center">
+            <div class="w-12 h-1 bg-primary"></div>
+            <div class="w-12 h-1 bg-primary/20"></div>
+            <div class="w-12 h-1 bg-primary/20"></div>
+        </div>
+    </div>
 </main>
 <!-- System Stats Grid -->
-<section class="p-6 grid grid-cols-3 gap-3 bg-background-dark/60 backdrop-blur-sm border-t border-primary/10">
-<div class="flex flex-col border-l border-primary/30 pl-3">
-<span class="text-[9px] text-primary/60 font-bold tracking-tighter uppercase">Encryption</span>
-<span class="text-lg font-bold">AES-512</span>
-</div>
-<div class="flex flex-col border-l border-primary/30 pl-3">
-<span class="text-[9px] text-primary/60 font-bold tracking-tighter uppercase">Throughput</span>
-<span class="text-lg font-bold">1.2 PB/s</span>
-</div>
-<div class="flex flex-col border-l border-primary/30 pl-3">
-<span class="text-[9px] text-primary/60 font-bold tracking-tighter uppercase">Sovereignty</span>
-<span class="text-lg font-bold">100%</span>
-</div>
+<section
+        class="p-6 grid grid-cols-3 gap-3 bg-background-dark/60 backdrop-blur-sm border-t border-primary/10">
+    <div class="flex flex-col border-l border-primary/30 pl-3">
+        <span class="text-[9px] text-primary/60 font-bold tracking-tighter uppercase">Encryption</span>
+        <span class="text-lg font-bold">AES-512</span>
+    </div>
+    <div class="flex flex-col border-l border-primary/30 pl-3">
+        <span class="text-[9px] text-primary/60 font-bold tracking-tighter uppercase">Throughput</span>
+        <span class="text-lg font-bold">1.2 PB/s</span>
+    </div>
+    <div class="flex flex-col border-l border-primary/30 pl-3">
+        <span class="text-[9px] text-primary/60 font-bold tracking-tighter uppercase">Sovereignty</span>
+        <span class="text-lg font-bold">100%</span>
+    </div>
 </section>
 <!-- Android Style Navigation -->
 <nav class="h-16 flex items-center justify-around px-12 bg-background-dark border-t border-white/5">
-<button class="w-10 h-10 flex items-center justify-center opacity-60">
-<span class="material-symbols-outlined text-2xl">chevron_left</span>
-</button>
-<button class="w-12 h-12 flex items-center justify-center border-2 border-primary rounded-full shadow-[0_0_10px_#0b73da]">
-<div class="w-6 h-6 bg-primary rounded-sm"></div>
-</button>
-<button class="w-10 h-10 flex items-center justify-center opacity-60">
-<span class="material-symbols-outlined text-xl">crop_square</span>
-</button>
+    <button class="w-10 h-10 flex items-center justify-center opacity-60">
+        <span class="material-symbols-outlined text-2xl">chevron_left</span>
+    </button>
+    <button class="w-12 h-12 flex items-center justify-center border-2 border-primary rounded-full shadow-[0_0_10px_#0b73da]">
+        <div class="w-6 h-6 bg-primary rounded-sm"></div>
+    </button>
+    <button class="w-10 h-10 flex items-center justify-center opacity-60">
+        <span class="material-symbols-outlined text-xl">crop_square</span>
+    </button>
 </nav>
 <!-- Data Overlays (Decorative) -->
 <div class="fixed top-24 left-6 pointer-events-none opacity-40">
-<div class="text-[8px] font-mono leading-tight">
-            SYS_RESOURCES_OK<br/>
-            BUFFER_FLOW_OPTIMAL<br/>
-            GATE_AUTH_TOKEN_V2
-        </div>
+    <div class="text-[8px] font-mono leading-tight">
+        SYS_RESOURCES_OK<br/>
+        BUFFER_FLOW_OPTIMAL<br/>
+        GATE_AUTH_TOKEN_V2
+    </div>
 </div>
 <div class="fixed bottom-36 right-6 pointer-events-none opacity-40 text-right">
-<div class="text-[8px] font-mono leading-tight">
-            KAI_SENTINEL_v4.2.0<br/>
-            UPTIME: 1422:04:12<br/>
-            TEMP: 32°C
-        </div>
+    <div class="text-[8px] font-mono leading-tight">
+        KAI_SENTINEL_v4.2.0<br/>
+        UPTIME: 1422:04:12<br/>
+        TEMP: 32°C
+    </div>
 </div>
-</body></html>
+</body>
+</html>

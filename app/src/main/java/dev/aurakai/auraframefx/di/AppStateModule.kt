@@ -17,15 +17,20 @@ private val Context.appStateDataStore: DataStore<Preferences> by preferencesData
 
 /**
  * Hilt Module for providing application state related dependencies.
+ * TODO: Reported as unused declaration. Ensure Hilt is set up and this module is processed.
  */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppStateModule {
 
     /**
-     * Provides a DataStore instance for app state.
-     * @param context Application context.
-     * @return A DataStore instance.
+     * Provides a DataStore instance, potentially for app state.
+     * Note: DataStoreModule also provides a DataStore. If these are for different DataStores,
+     * consider using @Named qualifiers or distinct return types.
+     * For now, assuming this might be a duplicate or for a specific named DataStore.
+     * @param _context Application context. Parameter reported as unused.
+     * @return A DataStore instance (using Any as placeholder).
+     * TODO: Reported as unused. Implement to provide an actual DataStore for app state.
      */
     @Provides
     @Singleton

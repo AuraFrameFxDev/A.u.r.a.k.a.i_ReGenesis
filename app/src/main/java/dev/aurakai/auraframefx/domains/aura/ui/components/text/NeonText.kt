@@ -39,7 +39,7 @@ fun NeonText(
 ) {
     val density = LocalDensity.current
     val glowRadiusPx = with(density) { glowRadius.toPx() }
-    
+
     // Animation for the glow effect
     val infiniteTransition = rememberInfiniteTransition(label = "neonGlow")
     val glowIntensity by infiniteTransition.animateFloat(
@@ -84,7 +84,7 @@ fun NeonText(
         letterSpacing = letterSpacing,
         color = color
     )
-    
+
     val textLayoutResult = remember(visibleText, textStyle) {
         textMeasurer.measure(
             text = AnnotatedString(visibleText),
@@ -97,7 +97,8 @@ fun NeonText(
         contentAlignment = Alignment.Center
     ) {
         // Glow Layer (Canvas)
-        Canvas(modifier = Modifier.size(
+        Canvas(
+            modifier = Modifier.size(
             width = with(density) { textLayoutResult.size.width.toDp() + glowRadius * 2 },
             height = with(density) { textLayoutResult.size.height.toDp() + glowRadius * 2 }
         )) {

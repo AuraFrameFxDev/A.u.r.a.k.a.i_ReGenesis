@@ -1,23 +1,20 @@
 package dev.aurakai.auraframefx.domains.kai
 
 import android.content.Context
-import androidx.room.util.copy
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.agents.core.BaseAgent
-import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import javax.inject.Inject
-import javax.inject.Singleton
-import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.cascade.ScanEvent
 import dev.aurakai.auraframefx.domains.cascade.SecurityContextState
 import dev.aurakai.auraframefx.domains.cascade.SecurityMode
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.ActiveThreat
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.models.ThreatStatus
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,8 +23,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import java.util.UUID
-import kotlin.collections.map
-import java.io.Serializable as Serializable1
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * AuraShieldAgent: The Security Sentinel of the ReGenesis Collective.
@@ -47,7 +44,7 @@ class AuraShieldAgent @Inject constructor(
     secureChannel: SecureChannel
 ) : BaseAgent(
     agentName = "AuraShield",
-    category = AgentCapabilityCategory.SECURITY,
+    agentType = AgentType.AURA_SHIELD,
     contextManager = contextManager,
     memoryManager = memoryManager,
     secureChannel = secureChannel
@@ -63,14 +60,14 @@ class AuraShieldAgent @Inject constructor(
     val scanHistory: StateFlow<List<ScanEvent>> = _scanHistory.asStateFlow()
 
     init {
-        Timber.Forest.d("🛡️ AuraShield Agent Initialized")
+        Timber.d("🛡️ AuraShield Agent Initialized")
     }
 
     /**
      * Main request processing for security-related queries.
      */
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
-        Timber.Forest.d("🛡️ AuraShield Analyzing Request: ${request.prompt}")
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+        Timber.d("🛡️ AuraShield Analyzing Request: ${request.prompt}")
 
         // Start a scan
         val scanId = UUID.randomUUID().toString()
@@ -92,11 +89,12 @@ class AuraShieldAgent @Inject constructor(
 
         updateSecurityContext(isScanning = false, threatDelta = threatsFound.size)
 
-        val responseText = if (threatsFound.isEmpty() && !vertexAnalysis.lowercase().contains("critical")) {
-            "Analysis complete. No immediate threats detected. Deep Shield remains at level ${_securityContext.value.securityMode}.\n\nDeep Insight: $vertexAnalysis"
-        } else {
-            "CRITICAL: Detected security anomalies. Initiating containment protocols.\n\nDeep Analysis: $vertexAnalysis"
-        }
+        val responseText =
+            if (threatsFound.isEmpty() && !vertexAnalysis.lowercase().contains("critical")) {
+                "Analysis complete. No immediate threats detected. Deep Shield remains at level ${_securityContext.value.securityMode}.\n\nDeep Insight: $vertexAnalysis"
+            } else {
+                "CRITICAL: Detected security anomalies. Initiating containment protocols.\n\nDeep Analysis: $vertexAnalysis"
+            }
 
         // Add to history
         _scanHistory.update { history ->
@@ -151,7 +149,7 @@ class AuraShieldAgent @Inject constructor(
 
         if (detected.isNotEmpty()) {
             _activeThreats.update { it + detected }
-            Timber.Forest.w("🛡️ AuraShield: Identified ${detected.size} threats!")
+            Timber.w("🛡️ AuraShield: Identified ${detected.size} threats!")
         }
 
         return detected
@@ -166,7 +164,7 @@ class AuraShieldAgent @Inject constructor(
                 if (it.id == threatId) it.copy(status = ThreatStatus.RESOLVED) else it
             }
         }
-        Timber.Forest.i("🛡️ AuraShield: Threat $threatId resolved.")
+        Timber.i("🛡️ AuraShield: Threat $threatId resolved.")
     }
 
     /**
@@ -183,7 +181,9 @@ class AuraShieldAgent @Inject constructor(
             val newLevel = (current.threatLevel + threatDelta).coerceIn(0, 100)
             current.copy(
                 threatLevel = newLevel,
-                activeScans = if (isScanning) current.activeScans + 1 else (current.activeScans - 1).coerceAtLeast(0),
+                activeScans = if (isScanning) current.activeScans + 1 else (current.activeScans - 1).coerceAtLeast(
+                    0
+                ),
                 lastScanTime = System.currentTimeMillis(),
                 securityMode = when {
                     newLevel > 80 -> SecurityMode.LOCKDOWN
@@ -198,7 +198,7 @@ class AuraShieldAgent @Inject constructor(
     override suspend fun onAgentMessage(message: AgentMessage) {
         // Listen for "SECURITY_ALERT" or similar tags from other agents
         if (message.content.contains("ALERT") || message.metadata["priority"] == "CRITICAL") {
-            Timber.Forest.e("🛡️ AuraShield intercepted critical message from ${message.from}: ${message.content}")
+            Timber.e("🛡️ AuraShield intercepted critical message from ${message.from}: ${message.content}")
             analyzeThreats(message.content)
 
             // Auto-broadcasting state if threat detected

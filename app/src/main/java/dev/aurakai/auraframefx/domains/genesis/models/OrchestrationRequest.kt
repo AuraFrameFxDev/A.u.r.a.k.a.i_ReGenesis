@@ -35,7 +35,7 @@ data class OrchestrationRequest(
 
     /* Specific agents to involve in the orchestration (optional). */
     @SerialName(value = "targetAgents")
-    val targetAgents: List<@Contextual AgentCapabilityCategory>? = null,
+    val targetAgents: List<@Contextual AgentType>? = null,
 
     )
 

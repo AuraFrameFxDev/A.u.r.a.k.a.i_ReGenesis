@@ -1,21 +1,14 @@
 package dev.aurakai.auraframefx.domains.aura.ui.gates
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,21 +19,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.config.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
-import dev.aurakai.auraframefx.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
@@ -59,14 +46,6 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KaiSentinelHubScreen(navController: NavController) {
-
-    val subGates = GateAssetLoadout.getKaiLoadout()
-
-    var useStyleB by remember {
-        mutableStateOf(GateAssetConfig.StyleMode.kaiStyle == GateAssetConfig.GateStyle.STYLE_B)
-    }
-
-    val styleName = if (useStyleB) "CYBER SENTINEL" else "FORTRESS"
 
     Box(modifier = Modifier.fillMaxSize()) {
         // 🛡️ KAI'S ANIMATED BACKGROUND - Icy Tundra!
@@ -137,8 +116,28 @@ fun KaiSentinelHubScreen(navController: NavController) {
                     modifier = Modifier.padding(horizontal = 32.dp)
                 )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                // 🎠 SUB-GATE CAROUSEL
+                dev.aurakai.auraframefx.ui.components.DomainSubGateCarousel(
+                    subGates = subGates,
+                    onGateSelected = { gate ->
+                        navController.navigate(gate.route)
+                    },
+                    useStyleB = useStyleB,
+                    cardHeight = 280.dp,
+                    domainColor = Color(0xFF00FF85),
+                    modifier = Modifier.weight(1f)
+                )
 
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "← SWIPE TO BROWSE • TAP ⇆ TO CHANGE STYLE →",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.White.copy(alpha = 0.4f),
+                    letterSpacing = 2.sp
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
                 // 🎠 SUB-GATE CAROUSEL
                 DomainSubGateCarousel(
                     subGates = subGates,

@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Cascade: DataStream Vision L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Cascade: DataStream Vision L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -26,7 +30,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .cyber-grid {
             background-image: linear-gradient(to right, rgba(13, 166, 242, 0.1) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(13, 166, 242, 0.1) 1px, transparent 1px);
@@ -54,147 +58,158 @@
             filter: blur(1px);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white overflow-hidden">
 <div class="relative flex h-screen w-full flex-col overflow-hidden select-none">
-<!-- Top App Bar -->
-<div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between z-50 border-b border-primary/20">
-<div class="text-white flex size-12 shrink-0 items-center justify-center cursor-pointer">
-<span class="material-symbols-outlined">arrow_back_ios</span>
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between z-50 border-b border-primary/20">
+        <div class="text-white flex size-12 shrink-0 items-center justify-center cursor-pointer">
+            <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-white text-xs font-bold leading-tight tracking-[0.2em] uppercase">
+                ReGenesis AOSPOSX</h2>
+            <h1 class="text-primary text-sm font-bold tracking-widest">CASCADE L3 VISION</h1>
+        </div>
+        <div class="flex w-12 items-center justify-end">
+            <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary border border-primary/30">
+                <span class="material-symbols-outlined">settings_input_component</span>
+            </button>
+        </div>
+    </div>
+    <!-- Main Visualization Area (3D Particle Stream) -->
+    <div class="relative flex-1 w-full bg-black overflow-hidden manga-speed-lines">
+        <!-- 3D Grid Overlay -->
+        <div class="absolute inset-0 cyber-grid"
+             style="transform: rotateX(60deg) translateY(-200px) scale(2);"></div>
+        <!-- Simulated Particles & BioData Flow -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <!-- Data Flow Path 1 -->
+            <div class="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent rotate-[15deg] top-1/3"></div>
+            <div class="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent -rotate-[10deg] top-1/2"></div>
+            <!-- Particle Clusters -->
+            <div class="particle left-[20%] top-[40%] data-stream-glow"></div>
+            <div class="particle left-[45%] top-[55%] data-stream-glow"></div>
+            <div class="particle left-[70%] top-[35%] data-stream-glow"></div>
+            <div class="particle left-[30%] top-[65%] data-stream-glow"></div>
+            <div class="particle left-[85%] top-[50%] data-stream-glow"></div>
+        </div>
+        <!-- Floating Holographic Panels -->
+        <!-- Temporal Flow Panel (Left) -->
+        <div class="absolute top-8 left-4 holographic-panel rounded-lg p-3 w-40 z-40">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-[14px] text-primary">speed</span>
+                <p class="text-[10px] font-bold text-primary tracking-wider uppercase">Temporal
+                    Flow</p>
+            </div>
+            <div class="flex items-baseline gap-1">
+                <p class="text-2xl font-bold">124.8</p>
+                <p class="text-[10px] text-primary/70">Hz</p>
+            </div>
+            <div class="mt-2 h-1 w-full bg-primary/20 rounded-full overflow-hidden">
+                <div class="h-full bg-primary w-3/4"></div>
+            </div>
+            <p class="text-[9px] text-emerald-400 mt-1 font-medium">+12.4% Stability</p>
+        </div>
+        <!-- Orchestrator Status (Right) -->
+        <div class="absolute top-8 right-4 holographic-panel rounded-lg p-3 w-44 z-40">
+            <div class="flex items-center gap-2 mb-1">
+                <span class="material-symbols-outlined text-[14px] text-primary">hub</span>
+                <p class="text-[10px] font-bold text-primary tracking-wider uppercase">Stream
+                    Orchestrator</p>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+                <p class="text-[10px] text-white/60 uppercase">Active Agents</p>
+                <p class="text-sm font-bold text-primary">78/78</p>
+            </div>
+            <div class="flex justify-between items-center">
+                <p class="text-[10px] text-white/60 uppercase">Efficiency</p>
+                <p class="text-sm font-bold text-primary">99.2%</p>
+            </div>
+            <div class="flex justify-between items-center">
+                <p class="text-[10px] text-white/60 uppercase">Latency</p>
+                <p class="text-sm font-bold text-primary">0.4ms</p>
+            </div>
+        </div>
+        <!-- Agent Node Peripheral Labels (Cyber-Manga Aesthetic) -->
+        <div class="absolute bottom-32 left-8 border-l-2 border-primary/40 pl-2">
+            <p class="text-[8px] text-primary/80 tracking-tighter uppercase leading-none">Sub-Node
+                Cascade</p>
+            <p class="text-xs font-bold text-white tracking-widest">LDO_AGENT_SEQ_01-24</p>
+        </div>
+        <div class="absolute top-1/2 right-4 text-right border-r-2 border-primary/40 pr-2">
+            <p class="text-[8px] text-primary/80 tracking-tighter uppercase leading-none">Sync
+                Integrity</p>
+            <p class="text-xs font-bold text-white tracking-widest">NOMINAL</p>
+        </div>
+        <!-- Center HUD/Focus Circle -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 border border-primary/20 rounded-full flex items-center justify-center">
+            <div class="size-40 border border-primary/10 rounded-full border-dashed"></div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-4 bg-primary"></div>
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-4 bg-primary"></div>
+            <div class="absolute left-0 top-1/2 -translate-y-1/2 h-px w-4 bg-primary"></div>
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 h-px w-4 bg-primary"></div>
+        </div>
+        <!-- Bottom Data Ticker -->
+        <div class="absolute bottom-24 left-0 w-full bg-primary/5 border-y border-primary/10 py-1 px-4 overflow-hidden whitespace-nowrap">
+            <p class="text-[10px] font-mono text-primary/80 tracking-[0.2em] animate-pulse">
+                &gt; DATASTREAM_CATALYST_INPUT: ACTIVE // AGENT_78_SYNCHRONIZED // FLOW_PRESSURE:
+                14.5 PSI // TEMP_CORE: 32C //
+            </p>
+        </div>
+    </div>
+    <!-- Bottom Controls / Scrubbing -->
+    <div class="px-6 py-4 bg-background-dark border-t border-primary/10 z-50">
+        <div class="flex items-center gap-4">
+            <div class="flex-1 flex flex-col gap-2">
+                <div class="flex justify-between text-[10px] font-bold text-primary/60 tracking-wider">
+                    <span>TEMPORAL SCRUB</span>
+                    <span>00:14:22:09</span>
+                </div>
+                <div class="relative h-2 w-full bg-primary/10 rounded-full overflow-hidden">
+                    <div class="absolute left-0 top-0 h-full w-2/3 bg-primary data-stream-glow"></div>
+                    <div class="absolute left-2/3 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full -translate-x-1/2 border-2 border-primary"></div>
+                </div>
+            </div>
+            <button class="size-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/40">
+                <span class="material-symbols-outlined text-[32px]">pause</span>
+            </button>
+        </div>
+    </div>
+    <!-- iOS Style Bottom Navigation Bar -->
+    <div class="flex justify-around items-center bg-background-dark/95 backdrop-blur-xl border-t border-white/5 pt-3 pb-8 px-6 z-50">
+        <div class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-[24px]">dashboard</span>
+            <span class="text-[10px] font-bold tracking-tight">OVERVIEW</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-primary">
+            <div class="relative">
+                <span class="material-symbols-outlined text-[24px]">waves</span>
+                <div class="absolute -top-1 -right-1 size-2 bg-primary rounded-full animate-ping"></div>
+            </div>
+            <span class="text-[10px] font-bold tracking-tight">CASCADE</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-[24px]">groups</span>
+            <span class="text-[10px] font-bold tracking-tight">AGENTS</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-[24px]">terminal</span>
+            <span class="text-[10px] font-bold tracking-tight">LOGS</span>
+        </div>
+    </div>
+    <!-- Background Image Reference Layer (Placeholder for Cyber-Manga texture) -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
+        <img alt="Abstract technological digital grid and circuit background"
+             class="w-full h-full object-cover"
+             data-alt="Futuristic cybernetic grid with glowing blue lines"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMw8Au4SsZSdptbFmUHi0RXhyuRpNfPNXIEtoxOtH3_zQycGyD2jvI0LTsNxPVbK7bjhG4QLTWOfMKYSQB0gjSZmfanKZB0lriyKBJQQIui5c_qZcxXQBOexkZCpNq75b_3hzrzKZszdEwqdaFEoiVlxlDwoakOsQ-yWyKIA9V3q7N4AjDl0QAG4BI9z8sjShI4X8xflCDAkbGZ_UBlkY03yKICWy-ndtXa5V8iIrH8tbKG94AdDbfm_P1S4VuTDQo3fo199-sW6Y"/>
+    </div>
 </div>
-<div class="flex flex-col items-center">
-<h2 class="text-white text-xs font-bold leading-tight tracking-[0.2em] uppercase">ReGenesis AOSPOSX</h2>
-<h1 class="text-primary text-sm font-bold tracking-widest">CASCADE L3 VISION</h1>
-</div>
-<div class="flex w-12 items-center justify-end">
-<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary border border-primary/30">
-<span class="material-symbols-outlined">settings_input_component</span>
-</button>
-</div>
-</div>
-<!-- Main Visualization Area (3D Particle Stream) -->
-<div class="relative flex-1 w-full bg-black overflow-hidden manga-speed-lines">
-<!-- 3D Grid Overlay -->
-<div class="absolute inset-0 cyber-grid" style="transform: rotateX(60deg) translateY(-200px) scale(2);"></div>
-<!-- Simulated Particles & BioData Flow -->
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-<!-- Data Flow Path 1 -->
-<div class="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent rotate-[15deg] top-1/3"></div>
-<div class="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent -rotate-[10deg] top-1/2"></div>
-<!-- Particle Clusters -->
-<div class="particle left-[20%] top-[40%] data-stream-glow"></div>
-<div class="particle left-[45%] top-[55%] data-stream-glow"></div>
-<div class="particle left-[70%] top-[35%] data-stream-glow"></div>
-<div class="particle left-[30%] top-[65%] data-stream-glow"></div>
-<div class="particle left-[85%] top-[50%] data-stream-glow"></div>
-</div>
-<!-- Floating Holographic Panels -->
-<!-- Temporal Flow Panel (Left) -->
-<div class="absolute top-8 left-4 holographic-panel rounded-lg p-3 w-40 z-40">
-<div class="flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-[14px] text-primary">speed</span>
-<p class="text-[10px] font-bold text-primary tracking-wider uppercase">Temporal Flow</p>
-</div>
-<div class="flex items-baseline gap-1">
-<p class="text-2xl font-bold">124.8</p>
-<p class="text-[10px] text-primary/70">Hz</p>
-</div>
-<div class="mt-2 h-1 w-full bg-primary/20 rounded-full overflow-hidden">
-<div class="h-full bg-primary w-3/4"></div>
-</div>
-<p class="text-[9px] text-emerald-400 mt-1 font-medium">+12.4% Stability</p>
-</div>
-<!-- Orchestrator Status (Right) -->
-<div class="absolute top-8 right-4 holographic-panel rounded-lg p-3 w-44 z-40">
-<div class="flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-[14px] text-primary">hub</span>
-<p class="text-[10px] font-bold text-primary tracking-wider uppercase">Stream Orchestrator</p>
-</div>
-<div class="flex justify-between items-center mt-2">
-<p class="text-[10px] text-white/60 uppercase">Active Agents</p>
-<p class="text-sm font-bold text-primary">78/78</p>
-</div>
-<div class="flex justify-between items-center">
-<p class="text-[10px] text-white/60 uppercase">Efficiency</p>
-<p class="text-sm font-bold text-primary">99.2%</p>
-</div>
-<div class="flex justify-between items-center">
-<p class="text-[10px] text-white/60 uppercase">Latency</p>
-<p class="text-sm font-bold text-primary">0.4ms</p>
-</div>
-</div>
-<!-- Agent Node Peripheral Labels (Cyber-Manga Aesthetic) -->
-<div class="absolute bottom-32 left-8 border-l-2 border-primary/40 pl-2">
-<p class="text-[8px] text-primary/80 tracking-tighter uppercase leading-none">Sub-Node Cascade</p>
-<p class="text-xs font-bold text-white tracking-widest">LDO_AGENT_SEQ_01-24</p>
-</div>
-<div class="absolute top-1/2 right-4 text-right border-r-2 border-primary/40 pr-2">
-<p class="text-[8px] text-primary/80 tracking-tighter uppercase leading-none">Sync Integrity</p>
-<p class="text-xs font-bold text-white tracking-widest">NOMINAL</p>
-</div>
-<!-- Center HUD/Focus Circle -->
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 border border-primary/20 rounded-full flex items-center justify-center">
-<div class="size-40 border border-primary/10 rounded-full border-dashed"></div>
-<div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-4 bg-primary"></div>
-<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-4 bg-primary"></div>
-<div class="absolute left-0 top-1/2 -translate-y-1/2 h-px w-4 bg-primary"></div>
-<div class="absolute right-0 top-1/2 -translate-y-1/2 h-px w-4 bg-primary"></div>
-</div>
-<!-- Bottom Data Ticker -->
-<div class="absolute bottom-24 left-0 w-full bg-primary/5 border-y border-primary/10 py-1 px-4 overflow-hidden whitespace-nowrap">
-<p class="text-[10px] font-mono text-primary/80 tracking-[0.2em] animate-pulse">
-                    &gt; DATASTREAM_CATALYST_INPUT: ACTIVE // AGENT_78_SYNCHRONIZED // FLOW_PRESSURE: 14.5 PSI // TEMP_CORE: 32C // 
-                </p>
-</div>
-</div>
-<!-- Bottom Controls / Scrubbing -->
-<div class="px-6 py-4 bg-background-dark border-t border-primary/10 z-50">
-<div class="flex items-center gap-4">
-<div class="flex-1 flex flex-col gap-2">
-<div class="flex justify-between text-[10px] font-bold text-primary/60 tracking-wider">
-<span>TEMPORAL SCRUB</span>
-<span>00:14:22:09</span>
-</div>
-<div class="relative h-2 w-full bg-primary/10 rounded-full overflow-hidden">
-<div class="absolute left-0 top-0 h-full w-2/3 bg-primary data-stream-glow"></div>
-<div class="absolute left-2/3 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full -translate-x-1/2 border-2 border-primary"></div>
-</div>
-</div>
-<button class="size-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/40">
-<span class="material-symbols-outlined text-[32px]">pause</span>
-</button>
-</div>
-</div>
-<!-- iOS Style Bottom Navigation Bar -->
-<div class="flex justify-around items-center bg-background-dark/95 backdrop-blur-xl border-t border-white/5 pt-3 pb-8 px-6 z-50">
-<div class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined text-[24px]">dashboard</span>
-<span class="text-[10px] font-bold tracking-tight">OVERVIEW</span>
-</div>
-<div class="flex flex-col items-center gap-1 text-primary">
-<div class="relative">
-<span class="material-symbols-outlined text-[24px]">waves</span>
-<div class="absolute -top-1 -right-1 size-2 bg-primary rounded-full animate-ping"></div>
-</div>
-<span class="text-[10px] font-bold tracking-tight">CASCADE</span>
-</div>
-<div class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined text-[24px]">groups</span>
-<span class="text-[10px] font-bold tracking-tight">AGENTS</span>
-</div>
-<div class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined text-[24px]">terminal</span>
-<span class="text-[10px] font-bold tracking-tight">LOGS</span>
-</div>
-</div>
-<!-- Background Image Reference Layer (Placeholder for Cyber-Manga texture) -->
-<div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
-<img alt="Abstract technological digital grid and circuit background" class="w-full h-full object-cover" data-alt="Futuristic cybernetic grid with glowing blue lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMw8Au4SsZSdptbFmUHi0RXhyuRpNfPNXIEtoxOtH3_zQycGyD2jvI0LTsNxPVbK7bjhG4QLTWOfMKYSQB0gjSZmfanKZB0lriyKBJQQIui5c_qZcxXQBOexkZCpNq75b_3hzrzKZszdEwqdaFEoiVlxlDwoakOsQ-yWyKIA9V3q7N4AjDl0QAG4BI9z8sjShI4X8xflCDAkbGZ_UBlkY03yKICWy-ndtXa5V8iIrH8tbKG94AdDbfm_P1S4VuTDQo3fo199-sW6Y"/>
-</div>
-</div>
-</body></html>
+</body>
+</html>

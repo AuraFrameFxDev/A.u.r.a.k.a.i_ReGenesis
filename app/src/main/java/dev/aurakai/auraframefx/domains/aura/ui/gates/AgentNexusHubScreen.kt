@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.config.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.StarfieldBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -49,7 +49,10 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AgentNexusHubScreen(navController: NavController, getNexusSubGates: () -> List<dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard>) {
+fun AgentNexusHubScreen(
+    navController: NavController,
+    getNexusSubGates: () -> List<dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard>
+) {
 
     val subGates = getNexusSubGates()
 

@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.embodiment.behaviors
 
-import androidx.compose.runtime.*
 import dev.aurakai.auraframefx.embodiment.*
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds

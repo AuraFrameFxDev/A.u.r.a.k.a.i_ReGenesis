@@ -83,7 +83,14 @@ class NeuralArchiveViewModel @Inject constructor(
         if (filters.ldoOnly) {
             val ldoNames = listOf("Genesis", "Aura", "Kai", "Cascade", "Grok")
             filtered = filtered.filter { memory ->
-                memory.tags.any { tag -> ldoNames.any { ldo -> tag.contains(ldo, ignoreCase = true) } } ||
+                memory.tags.any { tag ->
+                    ldoNames.any { ldo ->
+                        tag.contains(
+                            ldo,
+                            ignoreCase = true
+                        )
+                    }
+                } ||
                         ldoNames.any { ldo -> memory.content.contains(ldo, ignoreCase = true) }
             }
         }
@@ -130,11 +137,26 @@ class NeuralArchiveViewModel @Inject constructor(
             initialValue = MemoryStats()
         )
 
-    fun setMemoryTypeFilter(type: MemoryType?) { _selectedMemoryType.value = type }
-    fun setSearchQuery(query: String) { _searchQuery.value = query }
-    fun setMinimumImportance(importance: Float) { _minimumImportance.value = importance }
-    fun toggleLDOOnly() { _showLDOOnly.value = !_showLDOOnly.value }
-    fun toggleLast24Hours() { _showLast24Hours.value = !_showLast24Hours.value }
+    fun setMemoryTypeFilter(type: MemoryType?) {
+        _selectedMemoryType.value = type
+    }
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+    fun setMinimumImportance(importance: Float) {
+        _minimumImportance.value = importance
+    }
+
+    fun toggleLDOOnly() {
+        _showLDOOnly.value = !_showLDOOnly.value
+    }
+
+    fun toggleLast24Hours() {
+        _showLast24Hours.value = !_showLast24Hours.value
+    }
+
     fun clearAllFilters() {
         _selectedMemoryType.value = null
         _searchQuery.value = ""
@@ -143,8 +165,13 @@ class NeuralArchiveViewModel @Inject constructor(
         _showLast24Hours.value = false
     }
 
-    fun selectMemory(memory: MemoryEntity) { _selectedMemory.value = memory }
-    fun clearSelection() { _selectedMemory.value = null }
+    fun selectMemory(memory: MemoryEntity) {
+        _selectedMemory.value = memory
+    }
+
+    fun clearSelection() {
+        _selectedMemory.value = null
+    }
 
     fun getRelatedMemories(memory: MemoryEntity): StateFlow<List<MemoryEntity>> {
         return nexusMemoryRepository.getAllMemories()

@@ -2,17 +2,17 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai
 
 import android.content.Context
 import dev.aurakai.auraframefx.agents.growthmetrics.metareflection.MetaReflectionEngine
+import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.kai.TaskScheduler
-import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
-import dev.aurakai.auraframefx.domains.kai.ErrorHandler
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
+import dev.aurakai.auraframefx.domains.kai.ErrorHandler
+import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
@@ -59,18 +59,18 @@ class MetaInstructAIService @Inject constructor(
 
     override fun getName(): String = "MetaInstruct"
 
-    override fun getCategory(): AgentCapabilityCategory = AgentCapabilityCategory.ORCHESTRATION
+    override fun getType(): AgentType = AgentType.METAINSTRUCT
 
     fun getCapabilities(): Map<String, Any> = mapOf("service_implemented" to true)
 
     override suspend fun processRequest(
         request: AiRequest,
         context: String,
-        category: AgentCapabilityCategory
     ): AgentResponse {
         logger.info("MetaInstructAIService", "Processing request: ${request.query}")
 
-        val effectiveInstructions = metaReflectionEngine.getEffectiveInstructions(request.category.name)
+        val effectiveInstructions =
+            metaReflectionEngine.getEffectiveInstructions(request.agentType.name)
 
         // Build the augmented query with meta-instructions
         if (effectiveInstructions.isNotEmpty()) {
@@ -96,7 +96,7 @@ class MetaInstructAIService @Inject constructor(
             content = "📚 **MetaInstruct Synthesis (Vertex Enhanced):**\n\n$instructionText",
             confidence = 0.95f,
             agentName = "MetaInstruct",
-            category = AgentCapabilityCategory.ORCHESTRATION
+            agentType = AgentType.METAINSTRUCT
         )
     }
 
@@ -106,7 +106,7 @@ class MetaInstructAIService @Inject constructor(
                 content = "MetaInstruct flow: ${request.query}",
                 confidence = 0.9f,
                 agentName = "MetaInstruct",
-                category = AgentCapabilityCategory.ORCHESTRATION
+                agentType = AgentType.METAINSTRUCT
             )
         )
     }

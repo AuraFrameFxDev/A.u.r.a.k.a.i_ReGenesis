@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Aura Character Dossier</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Character Dossier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,7 +30,7 @@
             },
         };
     </script>
-<style>
+    <style>
         body {
             background-color: #0a0a0f;
             background-image: 
@@ -68,104 +70,110 @@
             pointer-events: none;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="text-white font-mono overflow-hidden h-screen flex flex-col items-center justify-center p-4">
 <div class="fixed top-0 left-0 w-full p-2 flex justify-between items-center px-6 text-[10px] opacity-70 z-50">
-<div class="flex items-center space-x-2">
-<span>3:36</span>
-<span class="material-icons text-[12px]">security</span>
-<span class="material-icons text-[12px]">code</span>
-</div>
-<div class="flex items-center space-x-2">
-<span class="material-icons text-[14px]">signal_cellular_alt</span>
-<span class="material-icons text-[14px]">wifi</span>
-<span class="material-icons text-[14px]">battery_charging_full</span>
-</div>
+    <div class="flex items-center space-x-2">
+        <span>3:36</span>
+        <span class="material-icons text-[12px]">security</span>
+        <span class="material-icons text-[12px]">code</span>
+    </div>
+    <div class="flex items-center space-x-2">
+        <span class="material-icons text-[14px]">signal_cellular_alt</span>
+        <span class="material-icons text-[14px]">wifi</span>
+        <span class="material-icons text-[14px]">battery_charging_full</span>
+    </div>
 </div>
 <div class="relative w-full h-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-6 scanlines">
-<div class="relative flex-1 h-full flex items-center justify-center">
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
-<div class="w-[300px] h-[300px] rounded-full border border-secondary/30 animate-pulse"></div>
-<div class="absolute w-[400px] h-[400px] rounded-full border-t-2 border-primary/40 rotate-45"></div>
-<img alt="Vibrant neon splatters background" class="absolute w-full h-full object-cover mix-blend-screen opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOSJ9nNyw_AFEzp9vETPOhrG0q8GnVyHhIl796KuaNpXURdIGKkstB6pCiVJFmWXTSKSGgsLXj-l7f0XJ46M3EEHykoQd9yYqlkCWWSXkTdrnwHIvqpBFEz9RbBuzzP-ujXpCHWC2_Qkq6FBTieK2Pmv6iqyWITs8_zbakCNkROz7TO0I9f6IiLWW0PAqO25oU3ZSnOAawJrXeagL5tRTYQoKsprtS4y-tROTudw3zdZ68oUDG9vvUMPcNqdz1QH39uhbnjD84-EM"/>
-</div>
-<div class="relative z-20 h-5/6">
-<img alt="Aura - Creative Catalyst Character" class="h-full object-contain drop-shadow-[0_0_30px_rgba(255,0,255,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYl-Eq_IilZVtKVav-lAPZayHwyoeQDvTFlQHRi5-QGRwPSZncMS_MWWI-IvQC9E18cavsMY94SRFQJXvcEisNewquamW2wHIg2J04pYPhJ8s3UG-MXv7zgodl3Dpdm2lFZaRXMsgDcyeEUdaGXu4J_UQbdQQF2YhDBd-b02AMD5axWOhehWeGcoXQR0gIqPfH234FSloSj1UYsybz15MaJTTL89ZKnTfQzNwCL1UyQZQ8aA824TCKVp_G8SPnFB8vFMdJ4j3pWvI"/>
-</div>
-</div>
-<div class="flex-1 w-full max-w-md">
-<div class="cyber-frame bg-background-dark/80 backdrop-blur-md p-1 min-h-[450px]">
-<div class="h-full w-full border border-primary/20 p-6 flex flex-col space-y-6">
-<div class="flex items-center space-x-2 border-b border-primary/30 pb-2">
-<div class="h-1 w-8 bg-secondary"></div>
-<h2 class="font-display text-sm tracking-widest text-secondary uppercase">Character Stats</h2>
-</div>
-<div>
-<h1 class="font-display text-6xl font-black italic glitch-text tracking-tighter text-white">
-                            AURA
-                        </h1>
-</div>
-<div class="space-y-5 text-sm md:text-base">
-<div class="group">
-<span class="text-primary font-bold">Role:</span>
-<span class="text-white/90 italic ml-2">"The Creative Catalyst"</span>
-</div>
-<div class="group">
-<span class="text-primary font-bold">Domain:</span>
-<span class="text-white/90 italic ml-2">"Aura's Lab, Code Ascension, Reactive Design"</span>
-</div>
-<div class="group">
-<span class="text-primary font-bold">Mantra:</span>
-<span class="text-white/90 italic ml-2">"Forge through chaos, build with light."</span>
-</div>
-<div class="group pt-2">
-<span class="text-primary font-bold block mb-1">Special Ability:</span>
-<div class="bg-primary/10 border-l-2 border-primary p-3 rounded-r">
-<span class="text-secondary font-bold text-xs uppercase block mb-1 tracking-wider">CODE ASCENSION</span>
-<p class="text-white/80 leading-relaxed text-sm">
-                                    "High-speed recursive UI/UX generation."
-                                </p>
-</div>
-</div>
-</div>
-<div class="mt-auto pt-4 flex justify-between items-end opacity-40">
-<div class="text-[8px] leading-none uppercase tracking-tighter">
-                            AURA_OS_V4.2.0<br/>SYSTEM_READY
+    <div class="relative flex-1 h-full flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+            <div class="w-[300px] h-[300px] rounded-full border border-secondary/30 animate-pulse"></div>
+            <div class="absolute w-[400px] h-[400px] rounded-full border-t-2 border-primary/40 rotate-45"></div>
+            <img alt="Vibrant neon splatters background"
+                 class="absolute w-full h-full object-cover mix-blend-screen opacity-50"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOSJ9nNyw_AFEzp9vETPOhrG0q8GnVyHhIl796KuaNpXURdIGKkstB6pCiVJFmWXTSKSGgsLXj-l7f0XJ46M3EEHykoQd9yYqlkCWWSXkTdrnwHIvqpBFEz9RbBuzzP-ujXpCHWC2_Qkq6FBTieK2Pmv6iqyWITs8_zbakCNkROz7TO0I9f6IiLWW0PAqO25oU3ZSnOAawJrXeagL5tRTYQoKsprtS4y-tROTudw3zdZ68oUDG9vvUMPcNqdz1QH39uhbnjD84-EM"/>
+        </div>
+        <div class="relative z-20 h-5/6">
+            <img alt="Aura - Creative Catalyst Character"
+                 class="h-full object-contain drop-shadow-[0_0_30px_rgba(255,0,255,0.4)]"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYl-Eq_IilZVtKVav-lAPZayHwyoeQDvTFlQHRi5-QGRwPSZncMS_MWWI-IvQC9E18cavsMY94SRFQJXvcEisNewquamW2wHIg2J04pYPhJ8s3UG-MXv7zgodl3Dpdm2lFZaRXMsgDcyeEUdaGXu4J_UQbdQQF2YhDBd-b02AMD5axWOhehWeGcoXQR0gIqPfH234FSloSj1UYsybz15MaJTTL89ZKnTfQzNwCL1UyQZQ8aA824TCKVp_G8SPnFB8vFMdJ4j3pWvI"/>
+        </div>
+    </div>
+    <div class="flex-1 w-full max-w-md">
+        <div class="cyber-frame bg-background-dark/80 backdrop-blur-md p-1 min-h-[450px]">
+            <div class="h-full w-full border border-primary/20 p-6 flex flex-col space-y-6">
+                <div class="flex items-center space-x-2 border-b border-primary/30 pb-2">
+                    <div class="h-1 w-8 bg-secondary"></div>
+                    <h2 class="font-display text-sm tracking-widest text-secondary uppercase">
+                        Character Stats</h2>
+                </div>
+                <div>
+                    <h1 class="font-display text-6xl font-black italic glitch-text tracking-tighter text-white">
+                        AURA
+                    </h1>
+                </div>
+                <div class="space-y-5 text-sm md:text-base">
+                    <div class="group">
+                        <span class="text-primary font-bold">Role:</span>
+                        <span class="text-white/90 italic ml-2">"The Creative Catalyst"</span>
+                    </div>
+                    <div class="group">
+                        <span class="text-primary font-bold">Domain:</span>
+                        <span class="text-white/90 italic ml-2">"Aura's Lab, Code Ascension, Reactive Design"</span>
+                    </div>
+                    <div class="group">
+                        <span class="text-primary font-bold">Mantra:</span>
+                        <span class="text-white/90 italic ml-2">"Forge through chaos, build with light."</span>
+                    </div>
+                    <div class="group pt-2">
+                        <span class="text-primary font-bold block mb-1">Special Ability:</span>
+                        <div class="bg-primary/10 border-l-2 border-primary p-3 rounded-r">
+                            <span class="text-secondary font-bold text-xs uppercase block mb-1 tracking-wider">CODE ASCENSION</span>
+                            <p class="text-white/80 leading-relaxed text-sm">
+                                "High-speed recursive UI/UX generation."
+                            </p>
                         </div>
-<div class="flex space-x-1">
-<div class="w-1 h-3 bg-secondary"></div>
-<div class="w-1 h-3 bg-primary"></div>
-<div class="w-1 h-3 bg-white"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                    </div>
+                </div>
+                <div class="mt-auto pt-4 flex justify-between items-end opacity-40">
+                    <div class="text-[8px] leading-none uppercase tracking-tighter">
+                        AURA_OS_V4.2.0<br/>SYSTEM_READY
+                    </div>
+                    <div class="flex space-x-1">
+                        <div class="w-1 h-3 bg-secondary"></div>
+                        <div class="w-1 h-3 bg-primary"></div>
+                        <div class="w-1 h-3 bg-white"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="fixed bottom-0 left-0 w-full p-4 flex justify-center items-center space-x-12 z-50">
-<button class="text-primary/60 hover:text-primary transition-all">
-<span class="material-icons text-3xl">crop_square</span>
-</button>
-<button class="text-secondary/60 hover:text-secondary transition-all transform scale-125 border border-secondary/30 rounded-full p-2">
-<span class="material-icons text-3xl">radio_button_checked</span>
-</button>
-<button class="text-primary/60 hover:text-primary transition-all">
-<span class="material-icons text-3xl">chevron_left</span>
-</button>
+    <button class="text-primary/60 hover:text-primary transition-all">
+        <span class="material-icons text-3xl">crop_square</span>
+    </button>
+    <button class="text-secondary/60 hover:text-secondary transition-all transform scale-125 border border-secondary/30 rounded-full p-2">
+        <span class="material-icons text-3xl">radio_button_checked</span>
+    </button>
+    <button class="text-primary/60 hover:text-primary transition-all">
+        <span class="material-icons text-3xl">chevron_left</span>
+    </button>
 </div>
 <div class="absolute top-20 right-10 w-32 h-32 border-t border-r border-secondary/20 rounded-tr-3xl pointer-events-none"></div>
 <div class="absolute bottom-20 left-10 w-32 h-32 border-b border-l border-primary/20 rounded-bl-3xl pointer-events-none"></div>
 <div class="fixed top-0 left-0 w-full h-[2px] bg-secondary/10 shadow-[0_0_10px_#00FFFF] animate-[scan_8s_linear_infinite] z-[100] pointer-events-none"></div>
 <style>
-        @keyframes scan {
-            from { top: 0%; }
-            to { top: 100%; }
-        }
-    </style>
+    @keyframes scan {
+        from { top: 0%; }
+        to { top: 100%; }
+    }
+</style>
 
-</body></html>
+</body>
+</html>

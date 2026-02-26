@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Clock configuration for lock screen

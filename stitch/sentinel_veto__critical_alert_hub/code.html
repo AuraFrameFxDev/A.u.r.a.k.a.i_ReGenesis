@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sentinel Veto: Critical Alert Hub</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sentinel Veto: Critical Alert Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -31,7 +35,7 @@
             },
         }
     </script>
-<style>
+    <style>
         @keyframes pulse-red {
             0%, 100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(242, 13, 13, 0.8)); }
             50% { opacity: 0.7; filter: drop-shadow(0 0 5px rgba(242, 13, 13, 0.4)); }
@@ -47,129 +51,136 @@
             clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 5% 100%, 0 85%);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="font-display bg-background-light dark:bg-background-dark text-white overflow-hidden selection:bg-primary/30">
 <!-- Main Intervention Overlay -->
 <div class="relative flex h-screen w-full flex-col bg-background-dark overflow-hidden">
-<!-- Scanline Overlay -->
-<div class="absolute inset-0 scanline pointer-events-none opacity-20 z-50"></div>
-<!-- Background Sentinel Shield Lattice (Static representation of rotation) -->
-<div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-<svg class="w-[150%] h-[150%] text-primary" fill="none" stroke="currentColor" stroke-width="0.2" viewbox="0 0 100 100">
-<circle cx="50" cy="50" r="45"></circle>
-<path d="M50 5 L50 95 M5 50 L95 50"></path>
-<path d="M15 15 L85 85 M15 85 L85 15"></path>
-<circle cx="50" cy="50" r="30" stroke-dasharray="2 2"></circle>
-<circle cx="50" cy="50" r="15"></circle>
-</svg>
-</div>
-<!-- Top Status Bar -->
-<div class="flex items-center bg-black/60 backdrop-blur-md p-4 border-b border-primary/30 justify-between z-40">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm">shield_with_heart</span>
-<h2 class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">Ethical Governor Intervention</h2>
-</div>
-<div class="text-[10px] text-primary/60 font-mono">SYS_LOCK: ACTIVE</div>
-</div>
-<!-- Central Veto Seal Section -->
-<div class="flex-1 flex flex-col items-center justify-center p-6 relative z-30">
-<div class="absolute top-10 left-4 text-[8px] font-mono text-primary/40 leading-tight">
-                BREACH_DETECTION_ENGINE_V4.2<br/>
-                ANALYZING_COGNITIVE_LOOP...<br/>
-                THREAT_LEVEL: EXTREME<br/>
-                ENFORCING_PROTOCOL_78
+    <!-- Scanline Overlay -->
+    <div class="absolute inset-0 scanline pointer-events-none opacity-20 z-50"></div>
+    <!-- Background Sentinel Shield Lattice (Static representation of rotation) -->
+    <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+        <svg class="w-[150%] h-[150%] text-primary" fill="none" stroke="currentColor"
+             stroke-width="0.2" viewbox="0 0 100 100">
+            <circle cx="50" cy="50" r="45"></circle>
+            <path d="M50 5 L50 95 M5 50 L95 50"></path>
+            <path d="M15 15 L85 85 M15 85 L85 15"></path>
+            <circle cx="50" cy="50" r="30" stroke-dasharray="2 2"></circle>
+            <circle cx="50" cy="50" r="15"></circle>
+        </svg>
+    </div>
+    <!-- Top Status Bar -->
+    <div class="flex items-center bg-black/60 backdrop-blur-md p-4 border-b border-primary/30 justify-between z-40">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-sm">shield_with_heart</span>
+            <h2 class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">Ethical
+                Governor Intervention</h2>
+        </div>
+        <div class="text-[10px] text-primary/60 font-mono">SYS_LOCK: ACTIVE</div>
+    </div>
+    <!-- Central Veto Seal Section -->
+    <div class="flex-1 flex flex-col items-center justify-center p-6 relative z-30">
+        <div class="absolute top-10 left-4 text-[8px] font-mono text-primary/40 leading-tight">
+            BREACH_DETECTION_ENGINE_V4.2<br/>
+            ANALYZING_COGNITIVE_LOOP...<br/>
+            THREAT_LEVEL: EXTREME<br/>
+            ENFORCING_PROTOCOL_78
+        </div>
+        <div class="animate-veto-pulse flex flex-col items-center">
+            <div class="relative mb-4">
+                <div class="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20"></div>
+                <div class="size-32 flex items-center justify-center rounded-full border-4 border-primary bg-primary/10 shadow-[0_0_30px_rgba(242,13,13,0.4)]">
+                    <span class="material-symbols-outlined text-primary text-7xl font-bold">gavel</span>
+                </div>
             </div>
-<div class="animate-veto-pulse flex flex-col items-center">
-<div class="relative mb-4">
-<div class="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20"></div>
-<div class="size-32 flex items-center justify-center rounded-full border-4 border-primary bg-primary/10 shadow-[0_0_30px_rgba(242,13,13,0.4)]">
-<span class="material-symbols-outlined text-primary text-7xl font-bold">gavel</span>
+            <h1 class="text-primary tracking-[0.25em] text-4xl font-bold leading-tight text-center drop-shadow-md">
+                VETO ACTIVE</h1>
+            <div class="h-1 w-32 bg-primary mt-2"></div>
+        </div>
+        <!-- Technical Data Blocks -->
+        <div class="w-full mt-12 grid grid-cols-2 gap-3">
+            <div class="bg-primary/5 border border-primary/20 p-4 mecha-border backdrop-blur-sm">
+                <p class="text-primary/60 text-[10px] uppercase font-bold tracking-wider mb-1">
+                    Violation Source</p>
+                <p class="text-white text-sm font-bold truncate">Agent-78-Evolution</p>
+                <div class="flex items-center gap-1 mt-2">
+                    <div class="h-1 flex-1 bg-primary/20">
+                        <div class="h-full bg-primary w-[82%]"></div>
+                    </div>
+                    <span class="text-primary text-[10px] font-mono">-82%</span>
+                </div>
+            </div>
+            <div class="bg-primary/5 border border-primary/20 p-4 mecha-border backdrop-blur-sm">
+                <p class="text-primary/60 text-[10px] uppercase font-bold tracking-wider mb-1">
+                    Integrity Score</p>
+                <p class="text-white text-sm font-bold">14.008%</p>
+                <div class="flex items-center gap-1 mt-2">
+                    <div class="h-1 flex-1 bg-primary/20">
+                        <div class="h-full bg-primary w-[14%]"></div>
+                    </div>
+                    <span class="text-primary text-[10px] font-mono">LOW</span>
+                </div>
+            </div>
+        </div>
+        <!-- Detailed Telemetry -->
+        <div class="w-full mt-3 bg-black/40 border border-primary/10 p-4 rounded text-[11px] font-mono text-primary/80">
+            <div class="flex justify-between border-b border-primary/10 pb-2 mb-2">
+                <span>ANOMALY TYPE</span>
+                <span class="text-white">COGNITIVE LOOP BREACH</span>
+            </div>
+            <div class="flex justify-between border-b border-primary/10 pb-2 mb-2">
+                <span>THREAT VECTOR</span>
+                <span class="text-white">REGENESIS_AOSPOSX_CORE</span>
+            </div>
+            <div class="flex justify-between">
+                <span>LOCATION</span>
+                <span class="text-white">SYST_SEC_GRID_09</span>
+            </div>
+        </div>
+    </div>
+    <!-- Action Buttons Section -->
+    <div class="p-6 space-y-3 relative z-40 bg-gradient-to-t from-background-dark to-transparent">
+        <button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded shadow-[0_0_20px_rgba(242,13,13,0.3)] flex items-center justify-center gap-2 tracking-widest uppercase text-sm border-t border-white/20">
+            <span class="material-symbols-outlined text-lg">bolt</span>
+            Sanitize System
+        </button>
+        <button class="w-full bg-white/5 border border-white/10 text-white/40 font-bold py-4 rounded flex items-center justify-center gap-2 tracking-widest uppercase text-sm cursor-not-allowed grayscale">
+            <span class="material-symbols-outlined text-lg">lock</span>
+            Override Locked
+        </button>
+    </div>
+    <!-- Android-Style Bottom Navigation (Dimmed Underneath) -->
+    <div class="flex justify-around items-center px-6 py-4 bg-black/80 opacity-40 border-t border-white/5 z-40">
+        <div class="flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-white">grid_view</span>
+            <span class="text-[8px] uppercase">Nexus</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-white">terminal</span>
+            <span class="text-[8px] uppercase">Core</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined">warning</span>
+            <span class="text-[8px] uppercase">Alert</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-white">account_tree</span>
+            <span class="text-[8px] uppercase">Agents</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+            <span class="material-symbols-outlined text-white">settings_input_component</span>
+            <span class="text-[8px] uppercase">Config</span>
+        </div>
+    </div>
+    <!-- Hero image for context (background hinted) -->
+    <div class="hidden">
+        <img data-alt="Futuristic mecha system core interface with red warning lights"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-FwyCHv058AWytVobrkNYnP2BZkIgRZShNLoQ4vd2cMMaRfg8DuE0gcJDR3JDl1n8hSjq6cE_LZwXVn81fz_VJc50WnSLGCsF1vA1NTEmTqTChBTsUPjA3jJ9FWYWcxHe1DlRQqtlilP3HXxPHwG8QzNaxHNfDG7vUp71XFMFaWgc-zsRsaAPkUYIhOroAG-pj27NuJq7dD2eNnNAQ-KVCxqQ6X1yHF_MInEzYILgJntr0yjgya3zRuQMuEoCktbjWwVhLtq6GMw"/>
+    </div>
 </div>
-</div>
-<h1 class="text-primary tracking-[0.25em] text-4xl font-bold leading-tight text-center drop-shadow-md">VETO ACTIVE</h1>
-<div class="h-1 w-32 bg-primary mt-2"></div>
-</div>
-<!-- Technical Data Blocks -->
-<div class="w-full mt-12 grid grid-cols-2 gap-3">
-<div class="bg-primary/5 border border-primary/20 p-4 mecha-border backdrop-blur-sm">
-<p class="text-primary/60 text-[10px] uppercase font-bold tracking-wider mb-1">Violation Source</p>
-<p class="text-white text-sm font-bold truncate">Agent-78-Evolution</p>
-<div class="flex items-center gap-1 mt-2">
-<div class="h-1 flex-1 bg-primary/20">
-<div class="h-full bg-primary w-[82%]"></div>
-</div>
-<span class="text-primary text-[10px] font-mono">-82%</span>
-</div>
-</div>
-<div class="bg-primary/5 border border-primary/20 p-4 mecha-border backdrop-blur-sm">
-<p class="text-primary/60 text-[10px] uppercase font-bold tracking-wider mb-1">Integrity Score</p>
-<p class="text-white text-sm font-bold">14.008%</p>
-<div class="flex items-center gap-1 mt-2">
-<div class="h-1 flex-1 bg-primary/20">
-<div class="h-full bg-primary w-[14%]"></div>
-</div>
-<span class="text-primary text-[10px] font-mono">LOW</span>
-</div>
-</div>
-</div>
-<!-- Detailed Telemetry -->
-<div class="w-full mt-3 bg-black/40 border border-primary/10 p-4 rounded text-[11px] font-mono text-primary/80">
-<div class="flex justify-between border-b border-primary/10 pb-2 mb-2">
-<span>ANOMALY TYPE</span>
-<span class="text-white">COGNITIVE LOOP BREACH</span>
-</div>
-<div class="flex justify-between border-b border-primary/10 pb-2 mb-2">
-<span>THREAT VECTOR</span>
-<span class="text-white">REGENESIS_AOSPOSX_CORE</span>
-</div>
-<div class="flex justify-between">
-<span>LOCATION</span>
-<span class="text-white">SYST_SEC_GRID_09</span>
-</div>
-</div>
-</div>
-<!-- Action Buttons Section -->
-<div class="p-6 space-y-3 relative z-40 bg-gradient-to-t from-background-dark to-transparent">
-<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded shadow-[0_0_20px_rgba(242,13,13,0.3)] flex items-center justify-center gap-2 tracking-widest uppercase text-sm border-t border-white/20">
-<span class="material-symbols-outlined text-lg">bolt</span>
-                Sanitize System
-            </button>
-<button class="w-full bg-white/5 border border-white/10 text-white/40 font-bold py-4 rounded flex items-center justify-center gap-2 tracking-widest uppercase text-sm cursor-not-allowed grayscale">
-<span class="material-symbols-outlined text-lg">lock</span>
-                Override Locked
-            </button>
-</div>
-<!-- Android-Style Bottom Navigation (Dimmed Underneath) -->
-<div class="flex justify-around items-center px-6 py-4 bg-black/80 opacity-40 border-t border-white/5 z-40">
-<div class="flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-white">grid_view</span>
-<span class="text-[8px] uppercase">Nexus</span>
-</div>
-<div class="flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-white">terminal</span>
-<span class="text-[8px] uppercase">Core</span>
-</div>
-<div class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined">warning</span>
-<span class="text-[8px] uppercase">Alert</span>
-</div>
-<div class="flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-white">account_tree</span>
-<span class="text-[8px] uppercase">Agents</span>
-</div>
-<div class="flex flex-col items-center gap-1">
-<span class="material-symbols-outlined text-white">settings_input_component</span>
-<span class="text-[8px] uppercase">Config</span>
-</div>
-</div>
-<!-- Hero image for context (background hinted) -->
-<div class="hidden">
-<img data-alt="Futuristic mecha system core interface with red warning lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-FwyCHv058AWytVobrkNYnP2BZkIgRZShNLoQ4vd2cMMaRfg8DuE0gcJDR3JDl1n8hSjq6cE_LZwXVn81fz_VJc50WnSLGCsF1vA1NTEmTqTChBTsUPjA3jJ9FWYWcxHe1DlRQqtlilP3HXxPHwG8QzNaxHNfDG7vUp71XFMFaWgc-zsRsaAPkUYIhOroAG-pj27NuJq7dD2eNnNAQ-KVCxqQ6X1yHF_MInEzYILgJntr0yjgya3zRuQMuEoCktbjWwVhLtq6GMw"/>
-</div>
-</div>
-</body></html>
+</body>
+</html>

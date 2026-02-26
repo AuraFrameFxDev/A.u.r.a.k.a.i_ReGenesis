@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import java.util.UUID
 
 /**
@@ -15,9 +15,9 @@ data class Task(
     val priority: TaskPriority = TaskPriority.NORMAL,
     val urgency: TaskUrgency = TaskUrgency.MEDIUM,
     val importance: TaskImportance = TaskImportance.MEDIUM,
-    val category: AgentCapabilityCategory? = null,
-    val requiredAgents: Set<AgentCapabilityCategory> = emptySet(),
-    val assignedAgents: Set<AgentCapabilityCategory> = emptySet(),
+    val agentType: AgentType? = null,
+    val requiredAgents: Set<AgentType> = emptySet(),
+    val assignedAgents: Set<AgentType> = emptySet(),
     val dependencies: Set<String> = emptySet(),
     val metadata: Map<String, String> = emptyMap(),
     val status: TaskStatus = TaskStatus.PENDING
