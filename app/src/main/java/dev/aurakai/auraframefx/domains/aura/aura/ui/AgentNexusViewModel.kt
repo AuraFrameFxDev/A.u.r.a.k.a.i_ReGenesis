@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.aura.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.ai.services.AgentWebExplorationService
-import dev.aurakai.auraframefx.genesis.oracledrive.ai.services.GenesisBridgeService
+import dev.aurakai.auraframefx.domains.genesis.services.AgentWebExplorationService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -23,7 +23,7 @@ import javax.inject.Inject
 open class AgentNexusViewModel @Inject constructor(
     private val webExplorationService: AgentWebExplorationService,
     private val genesisBridge: GenesisBridgeService,
-    private val claudeEnvConfig: dev.aurakai.auraframefx.config.ClaudeEnvConfig
+    private val claudeEnvConfig: dev.aurakai.auraframefx.domains.genesis.config.ClaudeEnvConfig
 ) : ViewModel() {
 
     // Agent selection state
