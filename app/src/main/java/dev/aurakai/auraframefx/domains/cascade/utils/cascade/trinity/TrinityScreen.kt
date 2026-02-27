@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
