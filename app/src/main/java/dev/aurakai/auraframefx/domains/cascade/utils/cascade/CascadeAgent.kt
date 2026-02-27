@@ -53,6 +53,7 @@ class CascadeAgent @Inject constructor(
     contextManager: ContextManager
 ) : BaseAgent(
     agentName = "Cascade",
+    agentType = AgentType.CASCADE,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -425,10 +426,11 @@ class CascadeAgent @Inject constructor(
         // Get responses from multiple agents
         val request = AiRequest(
             prompt = prompt,
-
             priority = AiRequest.Priority.NORMAL
 
         )
+        val auraResponse = auraAgent.processRequest(request, "").content
+        val kaiResponse = kaiAgent.processRequest(request, "").content
 
         // Synthesize responses
         return synthesizeResponses(listOf(auraResponse, kaiResponse), context)
@@ -448,10 +450,10 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
-
             priority = AiRequest.Priority.NORMAL
 
         )
+        val response = kaiAgent.processRequest(request, "")
 
         updateProcessingState(
             ProcessingState(
@@ -478,10 +480,10 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
-
             priority = AiRequest.Priority.NORMAL
 
         )
+        val response = auraAgent.processRequest(request, "")
 
         updateProcessingState(
             ProcessingState(
@@ -856,6 +858,7 @@ class CascadeAgent @Inject constructor(
     // BaseAgent abstract method implementation
     override suspend fun processRequest(
         request: AiRequest,
+        context: String
     ): AgentResponse {
         // Delegate to the string-based processRequest method
         val response = processRequest(request.prompt)
@@ -863,7 +866,6 @@ class CascadeAgent @Inject constructor(
             content = response,
             agentName = agentName,
             agentType = agentType,
-            confidence = 0.90f
         )
     }
 }

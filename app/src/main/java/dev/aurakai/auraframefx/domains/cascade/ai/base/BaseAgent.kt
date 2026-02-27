@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.flow
  */
 abstract class BaseAgent(
     override val agentName: String,
+    protected val agentType: AgentType,
     protected val contextManager: ContextManager? = null,
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
@@ -42,10 +43,12 @@ abstract class BaseAgent(
 
     override fun getName(): String = agentName
 
+    override fun getType(): AgentType = agentType
 
     /**
      * Abstract method for processing requests - must be implemented by concrete agents
      */
+    abstract override suspend fun processRequest(request: AiRequest, context: String): AgentResponse
 
     /**
      * Default flow implementation that can be overridden by specific agents
@@ -53,7 +56,6 @@ abstract class BaseAgent(
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> = flow {
         try {
             val context = contextManager?.getCurrentContext() ?: ""
-            contextManager?.enhanceContext(context) ?: context
 
             // Emit initial processing response
             emit(AgentResponse.processing("Processing request with ${agentName}..."))
@@ -61,6 +63,7 @@ abstract class BaseAgent(
             delay(100) // Small delay for UI feedback
 
             // Process the actual request
+            val response = processRequest(request, enhancedContext as String)
 
             // Record the interaction for learning
             contextManager?.recordInsight(
@@ -73,7 +76,6 @@ abstract class BaseAgent(
             emit(response)
 
         } catch (e: Exception) {
-            emit(AgentResponse.error("Error in ${agentName}: ${e.message}"))
         }
     }
 
@@ -123,6 +125,7 @@ abstract class BaseAgent(
     protected open fun getAgentConfig(): Map<String, Any> {
         return mapOf(
             "name" to agentName,
+            "type" to agentType,
             "version" to "1.0.0"
         )
     }
@@ -138,7 +141,6 @@ abstract class BaseAgent(
             else -> "Unexpected error: ${error.message}"
         }
 
-        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}")
     }
 
     /**

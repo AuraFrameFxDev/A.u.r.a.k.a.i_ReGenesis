@@ -50,7 +50,6 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 
 /**
- * Direct Chat Scareen
  * One-on-one conversations with AI agents
  *
  * ✨ Now powered by AgentViewModel for real agent intelligence!
@@ -58,6 +57,7 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 @Composable
 fun DirectChatScreen(
     navController: NavController,
+    viewModel: AgentViewModel = hiltViewModel()
 ) {
     val agents = remember { AgentRepository.getAllAgents() }
     val selectedAgent = remember { mutableStateOf(agents.firstOrNull()) }

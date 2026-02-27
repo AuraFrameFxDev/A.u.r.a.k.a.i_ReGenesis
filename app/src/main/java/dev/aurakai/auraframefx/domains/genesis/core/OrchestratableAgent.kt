@@ -53,7 +53,9 @@ interface OrchestratableAgent {
     suspend fun processRequest(
         request: AiRequest,
         context: String,
+        agentType: AgentType
     ): AgentResponse
+
     /**
      * Handle an incoming message from the inter-agent communication bus.
      */

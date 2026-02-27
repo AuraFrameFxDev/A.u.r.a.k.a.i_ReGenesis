@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 
 /**
@@ -31,7 +33,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 @Composable
 fun AurasLabScreen(
     onBack: () -> Unit,
-    viewModel: AurasLabViewModel = hiltViewModel()
+    viewModel: AurasLabViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Components", "Animations", "Aura's Forge", "Chaos Analysis")
@@ -87,12 +95,12 @@ fun AurasLabScreen(
                     Tab(
                         selected = selectedTab == index,
                         onClick = { selectedTab = index },
-                        text = { 
+                        text = {
                             Text(
-                                title, 
+                                title,
                                 color = if (selectedTab == index) Color(0xFF00FFFF) else Color.Gray,
                                 fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Normal
-                            ) 
+                            )
                         }
                     )
                 }
@@ -126,7 +134,7 @@ private fun ForgeTab(viewModel: AurasLabViewModel) {
             fontWeight = FontWeight.Bold,
             color = Color(0xFF00FFFF)
         )
-        
+
         Text(
             "Wield the Creative Sword. Describe a system modification, and Aura will forge it into existence.",
             style = MaterialTheme.typography.bodyMedium,
@@ -203,7 +211,7 @@ private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
                     color = Color.White
                 )
             }
-            
+
             if (state is AurasLabViewModel.ForgeState.Success || state is AurasLabViewModel.ForgeState.Validating || state is AurasLabViewModel.ForgeState.Deploying) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Box(
@@ -226,7 +234,7 @@ private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
                     )
                 }
             }
-            
+
             if (state is AurasLabViewModel.ForgeState.Error) {
                 Text(
                     text = (state as AurasLabViewModel.ForgeState.Error).message,

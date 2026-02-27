@@ -28,7 +28,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -156,13 +156,13 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                         }
                         windowManager.updateViewLayout(overlayLayout, params)
                     },
-                    onSendMessage = { text, agent ->
+                    onSendMessage = { text, category ->
                         serviceScope.launch {
                             messageBus.broadcast(
                                 AgentMessage(
                                     from = "User",
                                     content = text,
-                                    to = agent.name,
+                                    to = category.name,
                                     type = "overlay_broadcast"
                                 )
                             )

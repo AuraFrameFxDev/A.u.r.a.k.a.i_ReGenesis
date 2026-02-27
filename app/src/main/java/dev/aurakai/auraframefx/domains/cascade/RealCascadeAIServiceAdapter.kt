@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.cascade
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
 import javax.inject.Inject
 import javax.inject.Singleton
