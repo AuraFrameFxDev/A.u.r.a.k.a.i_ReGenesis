@@ -142,6 +142,7 @@ tasks.configureEach {
 // DEPENDENCIES
 // ═══════════════════════════════════════════════════════════════════════════
 dependencies {
+    implementation(libs.appcompat.v7)
     // ═══════════════════════════════════════════════════════════════════════════
     // AUTO-PROVIDED by genesis.android.application:
     // ═══════════════════════════════════════════════════════════════════════════
@@ -328,7 +329,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(composeBom)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }
 
