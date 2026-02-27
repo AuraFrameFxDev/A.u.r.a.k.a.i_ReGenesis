@@ -36,7 +36,6 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
-import kotlin.math.pow
 import kotlin.math.sin
 
 /**
