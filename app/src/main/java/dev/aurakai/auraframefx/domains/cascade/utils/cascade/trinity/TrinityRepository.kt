@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.models.AiRequestType
 import dev.aurakai.auraframefx.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.models.Theme
 import dev.aurakai.auraframefx.models.UserData
-import dev.aurakai.auraframefx.network.AuraApiServiceWrapper
+import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
 import dev.aurakai.auraframefx.network.model.AgentStatusResponse
 import dev.aurakai.auraframefx.models.AgentResponse
 import kotlinx.coroutines.Dispatchers
