@@ -5,10 +5,12 @@
 // Plugins are versioned in the root build.gradle.kts
 
 import com.android.build.api.dsl.ApplicationExtension
-<<<<<<< HEAD
-=======
+import com.google.devtools.ksp.gradle.model.Ksp
+
 import org.gradle.kotlin.dsl.ksp
->>>>>>> element
+
+
+lateinit var pickFirsts: Any
 
 plugins {
     id("com.android.application")
@@ -118,20 +120,17 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
-<<<<<<< HEAD
+
 // Enable modern Kotlin features (Experimental/New in 2.2+)
-=======
 // ═══════════════════════════════════════════════════════════════════════════
 // KSP — Project-level (NOT inside ApplicationExtension)
 // ═══════════════════════════════════════════════════════════════════════════
-ksp {
+Ksp
     arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
-}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // KOTLIN COMPILE OPTIONS
 // ═══════════════════════════════════════════════════════════════════════════
->>>>>>> element
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
@@ -159,7 +158,6 @@ tasks.configureEach {
 // DEPENDENCIES
 // ═══════════════════════════════════════════════════════════════════════════
 dependencies {
-<<<<<<< HEAD
     // ═══════════════════════════════════════════════════════════════════════════
         // Domain Modules Projects
     implementation(project(":core-module"))
@@ -197,7 +195,6 @@ dependencies {
     //
     // ⚠️ ONLY declare module-specific dependencies below!
     // ═══════════════════════════════════════════════════════════════════════════
-=======
     // Project Modules
     implementation(project(":core-module"))
     implementation(project(":aura:reactivedesign:auraslab"))
@@ -221,7 +218,6 @@ dependencies {
     implementation(project(":agents:growthmetrics:tasker"))
     implementation(project(":utilities"))
     implementation(project(":list"))
->>>>>>> element
 
     // Core desugar
     coreLibraryDesugaring(libs.desugar.jdk.libs)
@@ -230,9 +226,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
 
-<<<<<<< HEAD
     // Core Android
-=======
     // Kotlin / Coroutines
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
     implementation(libs.kotlinx.coroutines.android)
@@ -240,7 +234,6 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     // AndroidX Core
->>>>>>> element
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
@@ -249,7 +242,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
-<<<<<<< HEAD
 
     // MultiDex support for 64K+ methods (Removed: redundant for minSdk 34)
 
@@ -264,22 +256,18 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     // Compose Extras (Navigation, Animation)
-=======
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.security.crypto)
     implementation(libs.androidx.datastore.preferences)
->>>>>>> element
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
     ksp("androidx.hilt:hilt-compiler:1.3.0")  // androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
 
-<<<<<<< HEAD
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
-=======
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
     implementation(composeBom)
@@ -293,7 +281,6 @@ dependencies {
     implementation(libs.coil.svg)
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
->>>>>>> element
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -354,24 +341,20 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
-<<<<<<< HEAD
 
     // Networking - Ktor Client
     implementation(libs.ktor.client.core)
-=======
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
     implementation(libs.timber)
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.retrofit.converter.kotlinx.serialization)
->>>>>>> element
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
 
-<<<<<<< HEAD
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
 
@@ -415,9 +398,7 @@ dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     // Firebase Ecosystem
     // ═══════════════════════════════════════════════════════════════════════════
-=======
     // Firebase
->>>>>>> element
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
@@ -457,7 +438,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.work)
-    ksp("androidx.hilt:hilt-compiler:1.3.0")  // androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
+    ksp("androidx.hilt:hilt-compiler:1.3.0")
+
+fun ksp(configure: String) {}
+// androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
     compileOnly(libs.xposed.api)
