@@ -66,6 +66,7 @@ open class DiagnosticsViewModel @Inject constructor(
                     )
                     put(
                         "Offline AI Config Version (Timestamp)",
+                        if (offlineData.aiConfig.lastSyncTimestamp != 0L) {
                             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(
                                 Date(
                                     offlineData.aiConfig.lastSyncTimestamp
@@ -77,9 +78,11 @@ open class DiagnosticsViewModel @Inject constructor(
                     )
                     put(
                         "Monitoring Enabled",
+                        offlineData.monitoringEnabled.toString()
                     )
                     put(
                         "Contextual Memory Last Update",
+                        if (offlineData.contextualMemory.lastUpdateTimestamp != 0L) {
                             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(
                                 Date(
                                     offlineData.contextualMemory.lastUpdateTimestamp

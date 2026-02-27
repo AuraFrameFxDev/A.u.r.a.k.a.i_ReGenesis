@@ -175,6 +175,7 @@ dependencies {
     implementation(project(":agents:growthmetrics:tasker"))
     implementation(project(":utilities"))
     implementation(project(":list"))
+    implementation(libs.androidx.compose.ui.graphics)
 
     // Core desugar
     coreLibraryDesugaring(libs.desugar.jdk.libs)

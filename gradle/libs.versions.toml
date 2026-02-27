@@ -112,6 +112,7 @@ androidxAnimation = "1.10.2"
 junitJupiterVersion = "6.0.2"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.9.1"
+uiGraphics = "1.10.3"
 
 [libraries]
 # ============================================================================
@@ -355,6 +356,7 @@ animation = { group = "androidx.compose.animation", name = "animation", version.
 jupiter-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
 firebase-vertexai = { group = "com.google.firebase", name = "firebase-vertexai", version.ref = "firebaseVertexai" }
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3Exoplayer" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "uiGraphics" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
