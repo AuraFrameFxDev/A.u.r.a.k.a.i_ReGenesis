@@ -243,5 +243,3 @@ open class TrinityRepository @Inject constructor(
 
     // Add more repository methods as needed for other API endpoints
 }
-
-

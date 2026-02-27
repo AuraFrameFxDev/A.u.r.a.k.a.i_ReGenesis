@@ -1,11 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import android.content.SharedPreferences
-import dev.aurakai.auraframefx.ui.OverlayShape
-import dev.aurakai.auraframefx.ui.QuickSettingsAnimation
-import dev.aurakai.auraframefx.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.ui.QuickSettingsTileConfig
-import dev.aurakai.auraframefx.ui.ImageResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -158,8 +151,6 @@ class QuickSettingsCustomizer @Inject constructor(
             val animationStr = prefs.getString("tile_animation_$tileId", null)
 
             val shape = shapeStr?.let { OverlayShape.valueOf(it) } ?: OverlayShape.ROUNDED_RECTANGLE
-            val animation = animationStr?.let { QuickSettingsAnimation.valueOf(it) }
-                ?: QuickSettingsAnimation.FADE
 
             tiles.add(
                 QuickSettingsTileConfig(

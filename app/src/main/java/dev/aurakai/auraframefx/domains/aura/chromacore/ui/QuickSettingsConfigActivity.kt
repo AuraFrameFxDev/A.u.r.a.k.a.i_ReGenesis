@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -19,10 +17,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
-import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfigManager
-import dev.aurakai.auraframefx.ui.QuickSettingsBackground
-import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig as SystemQuickSettingsConfig
-import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -239,10 +233,6 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
             }
         }
 
-        private fun applyTileStyle(
-            cardView: MaterialCardView,
-            tile: SystemQuickSettingsTileConfig
-        ) {
             // Apply background color based on tile state
             val backgroundColor = if (tile.enabled) {
                 ContextCompat.getColor(cardView.context, R.color.primary)

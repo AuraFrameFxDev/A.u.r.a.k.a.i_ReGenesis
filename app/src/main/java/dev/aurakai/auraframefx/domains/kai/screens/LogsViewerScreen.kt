@@ -17,15 +17,37 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ListAlt
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
+import dev.aurakai.auraframefx.domains.kai.viewmodels.LogEntry
 
 /**
  * Logs Viewer Screen — Kai reads real logcat via root or fallback process.
@@ -36,18 +58,8 @@ fun LogsViewerScreen(
     onNavigateBack: () -> Unit = {},
     viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
-    val logs = remember { mutableStateListOf(
-        LogEntry("INFO", "LSPosed", "Framework initialized successfully", "10:30:15", Color(0xFF4ECDC4)),
-        LogEntry("WARN", "GravityBox", "System UI hook applied", "10:29:42", Color(0xFFFFD93D)),
-        LogEntry("ERROR", "XPrivacyLua", "Permission denied for location access", "10:28:33", Color(0xFFDC143C)),
-        LogEntry("INFO", "App Settings", "Per-app configuration loaded", "10:27:18", Color(0xFF4ECDC4)),
-        LogEntry("DEBUG", "YouTube AdAway", "Ad detection algorithm updated", "10:26:55", Color(0xFF9370DB)),
-        LogEntry("INFO", "BootManager", "Startup optimization completed", "10:25:12", Color(0xFF4ECDC4)),
-        LogEntry("WARN", "Amplify", "Battery calibration required", "10:24:38", Color(0xFFFFD93D)),
-        LogEntry("INFO", "System", "All hooks loaded successfully", "10:23:05", Color(0xFF4ECDC4)),
-        LogEntry("ERROR", "FakeID", "Device ID spoofing failed", "10:22:29", Color(0xFFDC143C)),
-        LogEntry("DEBUG", "Network", "VPN connection established", "10:21:47", Color(0xFF9370DB))
-    )}
+    val logsState by viewModel.logsState.collectAsState()
+    val logLevels = listOf("All", "DEBUG", "INFO", "WARN", "ERROR", "VERBOSE")
 
     // Local UI-only filter state (client-side; does not re-run logcat)
     val selectedLevel = remember { mutableStateOf("All") }

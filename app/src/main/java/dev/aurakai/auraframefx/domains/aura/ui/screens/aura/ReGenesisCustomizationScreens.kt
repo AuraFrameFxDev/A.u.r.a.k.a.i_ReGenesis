@@ -318,10 +318,6 @@ object IconifySettingsCatalog {
     )
 
     val totalSettingsCount: Int = allCategories.values.sumOf { it.size }
-
-    // ChromaCore display name for UI (replaces Iconify third-party branding)
-    const val ENGINE_NAME = "ChromaCore"
-    const val ENGINE_SUBTITLE = "Aura's Sovereign UI Engine"
 }
 
 // ============================================================================
@@ -752,7 +748,7 @@ private fun ColorBlendrSettingItem(
                             .border(1.dp, Color.White, CircleShape)
                     )
                 }
-
+                
                 SettingType.SELECTION -> {
                     Icon(
                         Icons.Default.ChevronRight,
@@ -816,7 +812,7 @@ private fun ColorPreviewCard(primaryColor: Color) {
                     lighten(primaryColor, 0.2f),
                     lighten(primaryColor, 0.4f)
                 )
-
+                
                 shades.forEach { shade ->
                     Box(
                         modifier = Modifier
@@ -1129,18 +1125,17 @@ fun PixelLauncherEnhancedScreen(
                     )
                 }
 
-                // AuraLauncher badge
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFF00FF85).copy(alpha = 0.2f),
+                    color = Color(0xFF4CAF50).copy(alpha = 0.3f),
                     modifier = Modifier.size(48.dp)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
-                        Text(
-                            text = "A",
-                            color = Color(0xFF00FF85),
-                            fontWeight = FontWeight.Black,
-                            fontSize = 22.sp
+                        Icon(
+                            Icons.Default.Home,
+                            contentDescription = null,
+                            tint = Color(0xFF4CAF50),
+                            modifier = Modifier.size(28.dp)
                         )
                     }
                 }
@@ -1184,7 +1179,7 @@ fun PixelLauncherEnhancedScreen(
                 // Icon Settings
                 item {
                     PLESettingsSection(
-                        title = "Aura Icon Gates",
+                        title = "Icon Customization",
                         settings = PLESettingsCatalog.iconSettings
                     )
                 }
@@ -1192,7 +1187,7 @@ fun PixelLauncherEnhancedScreen(
                 // Home Screen Settings
                 item {
                     PLESettingsSection(
-                        title = "Sovereign Home Screen",
+                        title = "Home Screen",
                         settings = PLESettingsCatalog.homescreenSettings
                     )
                 }
@@ -1200,7 +1195,7 @@ fun PixelLauncherEnhancedScreen(
                 // App Drawer Settings
                 item {
                     PLESettingsSection(
-                        title = "AuraLauncher Drawer",
+                        title = "App Drawer",
                         settings = PLESettingsCatalog.appDrawerSettings
                     )
                 }
@@ -1208,7 +1203,7 @@ fun PixelLauncherEnhancedScreen(
                 // Recents Settings
                 item {
                     PLESettingsSection(
-                        title = "Recents & Overview",
+                        title = "Recents",
                         settings = PLESettingsCatalog.recentsSettings
                     )
                 }
@@ -1216,7 +1211,7 @@ fun PixelLauncherEnhancedScreen(
                 // Misc Settings
                 item {
                     PLESettingsSection(
-                        title = "System Overrides",
+                        title = "Miscellaneous",
                         settings = PLESettingsCatalog.miscSettings
                     )
                 }
@@ -1318,8 +1313,8 @@ private fun PLESettingItem(setting: SettingItem) {
                         checked = toggleState,
                         onCheckedChange = { toggleState = it },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color(0xFF00FF85),
-                            checkedTrackColor = Color(0xFF00FF85).copy(alpha = 0.4f)
+                            checkedThumbColor = Color(0xFF4CAF50),
+                            checkedTrackColor = Color(0xFF4CAF50).copy(alpha = 0.5f)
                         )
                     )
                 }
@@ -1329,7 +1324,7 @@ private fun PLESettingItem(setting: SettingItem) {
                         Text(
                             text = "${(sliderValue * 100).toInt()}%",
                             fontSize = 12.sp,
-                            color = Color(0xFF00FF85),
+                            color = Color(0xFF4CAF50),
                             modifier = Modifier.padding(end = 8.dp)
                         )
                         Icon(
@@ -1346,7 +1341,7 @@ private fun PLESettingItem(setting: SettingItem) {
                         modifier = Modifier
                             .size(24.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFF00FF85))
+                            .background(Color(0xFF4CAF50))
                             .border(1.dp, Color.White, CircleShape)
                     )
                 }
@@ -1368,8 +1363,8 @@ private fun PLESettingItem(setting: SettingItem) {
                     value = sliderValue,
                     onValueChange = { sliderValue = it },
                     colors = SliderDefaults.colors(
-                        thumbColor = Color(0xFF00FF85),
-                        activeTrackColor = Color(0xFF00FF85)
+                        thumbColor = Color(0xFF4CAF50),
+                        activeTrackColor = Color(0xFF4CAF50)
                     )
                 )
             }
@@ -1407,7 +1402,7 @@ object PLESettingsCatalog {
         SettingItem("App drawer themed icons", "Enable themed icons in app drawer", SettingType.TOGGLE),
         SettingItem("Custom themed icon color", "Pick your own hex color for icons", SettingType.COLOR_PICKER)
     )
-
+    
     val homescreenSettings = listOf(
         SettingItem("Double tap to sleep", "Double tap empty space to lock screen", SettingType.TOGGLE),
         SettingItem("Wallpaper zooming", "Zoom wallpaper when using drawer/recents", SettingType.TOGGLE),
@@ -1420,7 +1415,7 @@ object PLESettingsCatalog {
         SettingItem("Homescreen rows", "Grid height customization", SettingType.SLIDER),
         SettingItem("Lock layout", "Icons/widgets can't be moved", SettingType.TOGGLE)
     )
-
+    
     val appDrawerSettings = listOf(
         SettingItem("Icon labels in app drawer", "Show/Hide labels in drawer", SettingType.TOGGLE),
         SettingItem("App drawer background opacity", "Transparency level", SettingType.SLIDER),
@@ -1429,7 +1424,7 @@ object PLESettingsCatalog {
         SettingItem("Hide apps from app drawer", "Select apps to obscure", SettingType.SELECTION),
         SettingItem("Allow searching for hidden apps", "Include hidden results in search", SettingType.TOGGLE)
     )
-
+    
     val recentsSettings = listOf(
         SettingItem("Disable recents live tile", "Fix bugs in overview screen", SettingType.TOGGLE),
         SettingItem("Recents background opacity", "Transparency in recents view", SettingType.SLIDER),
@@ -1439,7 +1434,7 @@ object PLESettingsCatalog {
         SettingItem("Remove screenshot button", "Hides screenshot button in overview", SettingType.TOGGLE),
         SettingItem("Use gesture for freeform mode", "Swipe up and release at top", SettingType.TOGGLE)
     )
-
+    
     val miscSettings = listOf(
         SettingItem("Developer options", "Enable hidden internal settings", SettingType.TOGGLE),
         SettingItem("Show entry in settings", "Show shortcut in system launcher", SettingType.TOGGLE)

@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup

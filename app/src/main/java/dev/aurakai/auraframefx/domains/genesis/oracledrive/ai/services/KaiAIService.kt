@@ -201,7 +201,6 @@ class DefaultKaiAIService @Inject constructor(
                     agentType = AgentType.KAI
                 )
                 )
-
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error in processRequestFlow", e)
             errorHandler.handleError(e, AgentType.KAI, "processRequestFlow")
@@ -214,7 +213,6 @@ class DefaultKaiAIService @Inject constructor(
                     agentType = AgentType.KAI
                 )
                 )
-
         }
     }
 

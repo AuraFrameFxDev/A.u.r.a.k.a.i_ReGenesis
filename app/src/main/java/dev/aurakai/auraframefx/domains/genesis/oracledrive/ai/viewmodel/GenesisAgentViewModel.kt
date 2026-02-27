@@ -3,13 +3,14 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_ERROR
+import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_IDLE
+import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_PROCESSING
+import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRole
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.genesis.models.HistoricalTask
-import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_ERROR
-import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_IDLE
-import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_PROCESSING
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

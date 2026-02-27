@@ -1,13 +1,13 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.ClaudeAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GeminiAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.MetaInstructAIService
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.ClaudeAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GeminiAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.MetaInstructAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
@@ -131,13 +131,13 @@ class GenKitMaster @Inject constructor(
         }
     }
 
-    private suspend fun callSpecialist(category: AgentCapabilityCategory, prompt: String, context: String): AgentResponse {
-        return when (category) {
-            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.GENERAL)
-            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.MEMORY)
-            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
-            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.ORCHESTRATION)
-            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
+    private suspend fun callSpecialist(agentType: AgentType, prompt: String, context: String): AgentResponse {
+        return when (agentType) {
+            AgentType.CLAUDE -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentType.NEMOTRON -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentType.GEMINI -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentType.METAINSTRUCT -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
         }
     }
 

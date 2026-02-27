@@ -1,13 +1,9 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyHookApi
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import dev.aurakai.auraframefx.domains.aura.LockScreenModels
-import dev.aurakai.auraframefx.domains.aura.aura.animations.LockScreenConfigAnimation
 
 @LegacyHookApi
-class LockScreenHooker(val config: LockScreenConfig) : YukiBaseHooker() {
 
     private lateinit var choosename: String
 
@@ -34,10 +30,6 @@ private fun applyGenesisShowAnimation(
                 // Use the object's toString() (or name-like) value and try to map it
                 val nameLike = animObj.toString()
                 LockScreenConfigAnimation.AnimationType.entries.firstOrNull {
-                    it.name.equals(
-                        nameLike,
-                        ignoreCase = true
-                    ) || it.name.equals(nameLike.removePrefix("AnimationType."), ignoreCase = true)
                 } ?: LockScreenConfigAnimation.AnimationType.Zoom
             }
         } catch (t: Throwable) {

@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState

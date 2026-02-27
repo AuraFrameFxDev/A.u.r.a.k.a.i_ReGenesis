@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -58,7 +56,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
@@ -236,8 +233,6 @@ fun HaloView(
                         (it.name.equals("cascade", true) && agentCategoryKey == AgentCapabilityCategory.ANALYSIS)
                     }
                     if (agentConfigIndex != -1) {
-                        val angle =
-                            (agentConfigIndex * 360f / agentConfigs.size + rotationAngle) % 360f
                         val x = center.x + radius * cos((angle * PI / 180f).toFloat())
                         val y = center.y + radius * sin((angle * PI / 180f).toFloat())
 
@@ -281,8 +276,6 @@ fun HaloView(
                                 val distance = (offset - nodeCenter).getDistance()
                                 if (distance < 24.dp.toPx()) {
                                     try {
-                                        draggingAgent =
-                                            when (config.name.lowercase(Locale.ROOT)) {
                                             "aura" -> AgentCapabilityCategory.CREATIVE
                                             "kai" -> AgentCapabilityCategory.SECURITY
                                             "genesis" -> AgentCapabilityCategory.COORDINATION
@@ -383,9 +376,9 @@ fun HaloView(
 
         // Status indicators using BoxWithConstraints to access size in composable context
         // Status indicators using BoxWithConstraints to access size in composable context
-        BoxWithConstraints(
-            modifier = Modifier.fillMaxSize()
-        ) {
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxSize()
+    ) {
             val boxWidth = constraints.maxWidth.toFloat()
             val boxHeight = constraints.maxHeight.toFloat()
             val density = LocalDensity.current.density
@@ -437,50 +430,50 @@ fun HaloView(
         }
 
         // Center node (Genesis)
-        Box(
-            modifier = Modifier
-                .size(80.dp)
-                .align(Alignment.Center)
-                .clip(CircleShape)
-                .background(NeonTeal.copy(alpha = 0.8f))
-                .clickable {
-                    if (selectedTask.isNotBlank()) {
-                        coroutineScope.launch {
-                            viewModel.processQuery(selectedTask)
-                            taskHistoryFlow.update { current ->
-                                return@update current + "[GENESIS] $selectedTask"
-                            }
-                            agentStatus[AgentCapabilityCategory.COORDINATION] = "processing"
-                            selectedTask = ""
+    Box(
+        modifier = Modifier
+            .size(80.dp)
+            .align(Alignment.Center)
+            .clip(CircleShape)
+            .background(NeonTeal.copy(alpha = 0.8f))
+            .clickable {
+                if (selectedTask.isNotBlank()) {
+                    coroutineScope.launch {
+                        viewModel.processQuery(selectedTask)
+                        taskHistoryFlow.update { current ->
+                            return@update current + "[GENESIS] $selectedTask"
                         }
+                        agentStatus[AgentCapabilityCategory.COORDINATION] = "processing"
+                        selectedTask = ""
                     }
                 }
-                .padding(8.dp),
-            contentAlignment = Alignment.Center
+            }
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            color = NeonTeal.copy(alpha = 0.8f),
+            modifier = Modifier.size(80.dp),
+            shape = CircleShape
         ) {
-            Surface(
-                color = NeonTeal.copy(alpha = 0.8f),
-                modifier = Modifier.size(80.dp),
-                shape = CircleShape
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "GENESIS",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Hive Mind",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = NeonPurple
-                    )
-                }
+                Text(
+                    text = "GENESIS",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color.White
+                )
+                Text(
+                    text = "Hive Mind",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = NeonPurple
+                )
             }
         }
+    }
 
         // Task input overlay
         if (draggingAgent != null) {
@@ -503,16 +496,8 @@ fun HaloView(
                             color = NeonTeal
                         )
 
-                        TextField(
-                            value = selectedTask,
-                            onValueChange = { it.also { selectedTask = it } },
-                            placeholder = { Text("Enter task description...") },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = TextFieldDefaults.colors(
                                 focusedContainerColor = NeonTeal.copy(alpha = 0.1f),
                                 unfocusedContainerColor = NeonTeal.copy(alpha = 0.1f)
-                            )
-                        )
                     }
                 }
             }
@@ -566,23 +551,23 @@ fun HaloView(
                 ) {
                     // Specify the generic type explicitly to help the compiler infer T
                     items<String>(items = taskHistory) { task ->
-                        Surface(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .animateItem(),
-                            shape = RoundedCornerShape(8.dp),
-                            color = MaterialTheme.colorScheme.surface,
-                            shadowElevation = 1.dp
-                        ) {
-                            Text(
-                                text = task,
-                                modifier = Modifier.padding(12.dp),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
+                         Surface(
+                             modifier = Modifier
+                                 .fillMaxWidth()
+                                 .animateItem(),
+                             shape = RoundedCornerShape(8.dp),
+                             color = MaterialTheme.colorScheme.surface,
+                             shadowElevation = 1.dp
+                         ) {
+                             Text(
+                                 text = task,
+                                 modifier = Modifier.padding(12.dp),
+                                 style = MaterialTheme.typography.bodyMedium,
+                                 color = MaterialTheme.colorScheme.onSurface
+                             )
+                         }
+                     }
+                 }
             }
         }
 
@@ -668,8 +653,6 @@ fun HaloView(
 
             taskHistory.forEach { task ->
                 val agentNameFromHistory = task.substringAfter("[").substringBefore("]")
-                val foundAgentConfig =
-                    agentConfigs.find { it.name.equals(agentNameFromHistory, ignoreCase = true) }
                 if (foundAgentConfig != null) {
                     try {
                         val actualAgentCategory = when (foundAgentConfig.name.lowercase(Locale.ROOT)) {

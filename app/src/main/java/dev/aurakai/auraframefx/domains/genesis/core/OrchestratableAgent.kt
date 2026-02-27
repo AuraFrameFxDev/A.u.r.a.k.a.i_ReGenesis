@@ -54,7 +54,6 @@ interface OrchestratableAgent {
         request: AiRequest,
         context: String,
     ): AgentResponse
-
     /**
      * Handle an incoming message from the inter-agent communication bus.
      */

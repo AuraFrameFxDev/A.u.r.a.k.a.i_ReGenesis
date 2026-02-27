@@ -13,7 +13,9 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -25,11 +27,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
-
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 
 /**
  * Genesis-OS Cascade Agent
@@ -428,7 +425,9 @@ class CascadeAgent @Inject constructor(
         // Get responses from multiple agents
         val request = AiRequest(
             prompt = prompt,
+
             priority = AiRequest.Priority.NORMAL
+
         )
 
         // Synthesize responses
@@ -449,7 +448,9 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
+
             priority = AiRequest.Priority.NORMAL
+
         )
 
         updateProcessingState(
@@ -477,7 +478,9 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
+
             priority = AiRequest.Priority.NORMAL
+
         )
 
         updateProcessingState(
@@ -859,6 +862,8 @@ class CascadeAgent @Inject constructor(
         return AgentResponse.success(
             content = response,
             agentName = agentName,
+            agentType = agentType,
+            confidence = 0.90f
         )
     }
 }

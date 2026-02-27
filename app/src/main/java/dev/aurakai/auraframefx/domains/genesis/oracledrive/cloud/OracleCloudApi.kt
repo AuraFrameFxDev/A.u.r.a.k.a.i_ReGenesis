@@ -119,7 +119,8 @@ class OracleCloudApi @Inject constructor() {
     suspend fun uploadFile(
         @Path("bucket") bucketName: String,
         @Path("objectName") objectName: String,
-        @Body body: RequestBody,
+        @Body body: RequestBody
+    ,
         @Path("namespace") namespace: String = "aurakai"
     ): Response<Unit>
 

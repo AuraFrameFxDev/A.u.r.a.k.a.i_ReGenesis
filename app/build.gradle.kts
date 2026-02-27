@@ -223,57 +223,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    // WorkManager
-    implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.androidx.hilt.work)
-
-    // DataStore
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.datastore.core)
-
-    // Google Play Billing - Subscription Management
-    implementation(libs.billing.ktx)
-
-    // Security
-    implementation(libs.androidx.security.crypto)
-
-    // Root/System Utils
-    implementation(libs.libsu.core)
-    implementation(libs.libsu.nio)
-    implementation(libs.libsu.service)
-
-    // Shizuku & Rikka
-    implementation(libs.shizuku.api)
-    implementation(libs.shizuku.provider)
-    implementation(libs.rikkax.core)
-    implementation(libs.rikkax.core.ktx)
-    implementation(libs.rikkax.material) {
-        exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
-    }
-
-    // YukiHook API
-    compileOnly(libs.yukihookapi.api) {
-        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
-    ksp(libs.yukihookapi.ksp)
-
-    // Force resolution of conflicting dependencies
-    configurations.all {
-         resolutionStrategy {
-             force("androidx.appcompat:appcompat:1.7.1")
-             force("com.google.android.material:material:1.13.0")
-         }
-    }
-
-    // Firebase BOM (Bill of Materials) for version management
-    implementation(platform(libs.firebase.bom))
-
-
-    // Networking - OkHttp + Retrofit
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.kotlinx.serialization)
+    // Network
+    implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
@@ -283,6 +234,12 @@ dependencies {
     implementation(libs.timber)
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.converter.scalars)
+
+    // Networking - Ktor Client
+    implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
@@ -295,38 +252,62 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.config)
 
-    // Vertex AI / Gemini
-    implementation(libs.generativeai)
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Internal Project Modules - Core
+    // ═══════════════════════════════════════════════════════════════════════════
 
-    // YukiHookAPI (Xposed)
-    implementation(libs.yukihookapi.api)
-    ksp(libs.yukihookapi.ksp)
-    compileOnly(libs.xposed.api)
+    // Material Icons Extended
+    implementation(libs.compose.material.icons.extended)
 
-    implementation(libs.billing.ktx)
-    implementation(libs.shizuku.api)
-    implementation(libs.libsu.core)
-    debugImplementation(libs.leakcanary.android)
+    // Aura → ReactiveDesign (Creative UI & Collaboration)
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:customization"))
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(composeBom)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    // Kai → SentinelsFortress (Security & Threat Monitoring)
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+
+    // Genesis → OracleDrive (System & Root Management)
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":genesis:oracledrive:datavein"))
+
+    // Cascade → DataStream (Data Routing & Delivery)
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:taskmanager"))
+
+    // Agents → GrowthMetrics (AI Agent Evolution)
+    implementation(project(":agents:growthmetrics:metareflection"))
+    implementation(project(":agents:growthmetrics:nexusmemory"))
+    implementation(project(":agents:growthmetrics:spheregrid"))
+    implementation(project(":agents:growthmetrics:identity"))
+    implementation(project(":agents:growthmetrics:progression"))
+    implementation(project(":agents:growthmetrics:tasker"))
+
+    // Central Core Module
+    implementation(project(":core-module"))
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// YUKIHOOK DUPLICATE CLASS FIX
-// ═══════════════════════════════════════════════════════════════════════════
-// Both api and ksp-xposed contain YukiHookAPIProperties.class
-// ksp-xposed should ONLY be on the KSP processor classpath, NOT runtime/compile
-configurations.configureEach {
-    if (name.contains("runtimeClasspath", ignoreCase = true) ||
-        name.contains("compileClasspath", ignoreCase = true)
-    ) {
+// Force a single annotations artifact and exclude YukiHook KSP from runtime to avoid duplicate-class errors
+configurations.all {
+    // Skip androidTest configurations to avoid issues with local JARs
+    if (name.contains("AndroidTest")) {
+        return@all
+    }
+
+    // Exclude YukiHook KSP processor from runtime classpaths to prevent collisions with the API
+    if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+
+    resolutionStrategy {
+        force("org.jetbrains:annotations:26.0.2-1")
     }
 }
 

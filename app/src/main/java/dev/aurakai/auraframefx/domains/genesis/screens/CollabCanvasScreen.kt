@@ -21,8 +21,6 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDConta
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.viewmodels.CollaborativeWorkspaceViewModel
 import dev.aurakai.auraframefx.domains.aura.UIDesign
 
@@ -34,13 +32,7 @@ import dev.aurakai.auraframefx.domains.aura.UIDesign
 @Composable
 fun CollabCanvasScreen(
     onNavigateBack: () -> Unit,
-    viewModel: CollaborativeWorkspaceViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: CollaborativeWorkspaceViewModel = hiltViewModel()
 ) {
     val designs by viewModel.designs.collectAsState()
     val context = androidx.compose.ui.platform.LocalContext.current

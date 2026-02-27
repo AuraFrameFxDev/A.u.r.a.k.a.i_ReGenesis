@@ -142,7 +142,7 @@ abstract class BaseAgent(
             agentName = agentName,
             agentType = agentType,
             metadata = metadata + getAgentConfig(),
-            category = category
+            agentType = agentType
         )
     }
 
@@ -214,6 +214,7 @@ abstract class BaseAgent(
         isOrchestratorInitialized = false
     }
 
+    override suspend fun processRequest(request: AiRequest, context: String, agentType: AgentType): AgentResponse {
         // Delegates to the two-argument version
         return processRequest(request, context)
     }

@@ -1,18 +1,6 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import dev.aurakai.auraframefx.system.lockscreen.model.BackgroundConfig
-import dev.aurakai.auraframefx.system.lockscreen.model.ClockConfig
-import dev.aurakai.auraframefx.system.lockscreen.model.LockScreenAnimation
-import dev.aurakai.auraframefx.system.lockscreen.model.LockScreenAnimationConfig
-import dev.aurakai.auraframefx.system.lockscreen.model.LockScreenElementType
-import dev.aurakai.auraframefx.ui.HapticFeedbackConfig
-import dev.aurakai.auraframefx.ui.ImageResource
-import dev.aurakai.auraframefx.ui.OverlayShape
-import dev.aurakai.auraframefx.ui.theme.ThemeManager
-import dev.aurakai.auraframefx.utils.AuraFxLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,8 +24,6 @@ class LockScreenCustomizer @Inject constructor(
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var isInitialized = false
 
-    private val _currentConfig = MutableStateFlow<LockScreenConfig?>(null)
-    val currentConfig: StateFlow<LockScreenConfig?> = _currentConfig
 
     /**
      * Initializes the lock screen customizer with Genesis Protocol enhancements
@@ -61,17 +47,8 @@ class LockScreenCustomizer @Inject constructor(
             initializeSecurityFeatures()
 
             isInitialized = true
-            AuraFxLogger.info(
-                "LockScreenCustomizer",
-                "✅ LockScreen customizer initialized successfully"
-            )
 
         } catch (e: Exception) {
-            AuraFxLogger.error(
-                "LockScreenCustomizer",
-                "Failed to initialize lock screen customizer",
-                e
-            )
             throw e
         }
     }
@@ -277,7 +254,6 @@ class LockScreenCustomizer @Inject constructor(
      *
      * @param config The LockScreenConfig to persist. Only selected fields are written to prefs.
      */
-    private fun saveConfiguration(config: LockScreenConfig) {
         try {
             // Save to SharedPreferences
             // This would serialize the config to JSON or structured keys
@@ -293,8 +269,6 @@ class LockScreenCustomizer @Inject constructor(
         }
     }
 
-    private fun getDefaultConfig(): LockScreenConfig {
-        return LockScreenConfig(
             showGenesisElements = true,
             clockConfig = ClockConfig(),
             hapticFeedback = HapticFeedbackConfig(),
@@ -312,7 +286,6 @@ class LockScreenCustomizer @Inject constructor(
         // Initialize security features for lock screen
     }
 
-    private suspend fun applyConfiguration(config: LockScreenConfig) {
         AuraFxLogger.debug("LockScreenCustomizer", "Applying full lock screen configuration")
         // Implementation for applying the complete configuration
     }
@@ -329,10 +302,6 @@ class LockScreenCustomizer @Inject constructor(
         elementType: LockScreenElementType,
         animation: LockScreenAnimation
     ) {
-        AuraFxLogger.debug(
-            "LockScreenCustomizer",
-            "Applying element animation change: $elementType"
-        )
         // Implementation for applying animation changes
     }
 
@@ -361,10 +330,6 @@ class LockScreenCustomizer @Inject constructor(
         position: Pair<Float, Float>,
         properties: Map<String, Any>
     ) {
-        AuraFxLogger.debug(
-            "LockScreenCustomizer",
-            "Adding notification element at position: $position"
-        )
         // Implementation for adding notification element
     }
 

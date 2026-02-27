@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -10,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 
 @Composable
 fun SecurityScannerScreen() {
@@ -30,7 +29,6 @@ fun SecurityScannerScreen() {
             scanResults.value = emptyList()
             for (i in 0..100 step 5) {
                 scanProgress.value = i / 100f
-                kotlinx.coroutines.delay(100)
             }
             scanResults.value = mockResults
             isScanning.value = false

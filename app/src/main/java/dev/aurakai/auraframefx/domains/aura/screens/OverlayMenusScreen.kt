@@ -52,8 +52,16 @@ import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
 /**
+ * Overlay Menus Customization Screen — Aura in control.
+ * Persisted toggles come from AuraUIControlViewModel.
+ * autoHideDelay is UI-only cosmetic state (no system hook yet).
  */
 @Composable
+fun OverlayMenusScreen(
+    navController: NavController,
+    viewModel: AuraUIControlViewModel = hiltViewModel()
+) {
+    val state by viewModel.overlayMenuState.collectAsState()
 
     val sidebarPositions = listOf("Left", "Right", "Bottom")
     // Cosmetic-only — not yet persisted (no system hook for auto-hide delay)
@@ -77,10 +85,12 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        // Overlay Search (UI-only filter — no server-side filtering needed here)
         androidx.compose.material3.OutlinedTextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
             label = { Text("Search Overlays...", color = Color(0xFFFF4500).copy(alpha = 0.5f)) },
+            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
             colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFFFF4500),
                 unfocusedBorderColor = Color(0xFFFF4500).copy(alpha = 0.3f),
@@ -92,34 +102,57 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
         // Preview Card
         Card(
+            modifier = Modifier.fillMaxWidth().height(150.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
+                if (state.auraOverlayEnabled) {
                     Card(
+                        modifier = Modifier.size(60.dp).align(Alignment.TopStart).offset(20.dp, 20.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF69B4).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(30.dp)
                     ) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("🎨", style = MaterialTheme.typography.titleMedium)
                         }
                     }
                 }
 
+                if (state.kaiOverlayEnabled) {
                     Card(
+                        modifier = Modifier.size(60.dp).align(Alignment.TopEnd).offset((-20).dp, 20.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFDC143C).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(30.dp)
                     ) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("🛡️", style = MaterialTheme.typography.titleMedium)
                         }
                     }
                 }
 
+                if (state.chatBubbleEnabled) {
                     Card(
+                        modifier = Modifier.size(50.dp).align(Alignment.BottomEnd).offset((-20).dp, (-20).dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF4169E1).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(25.dp)
                     ) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("💬", style = MaterialTheme.typography.titleSmall)
                         }
                     }
                 }
 
+                if (state.sidebarPosition != "Bottom") {
+                    val alignment = if (state.sidebarPosition == "Left") Alignment.CenterStart else Alignment.CenterEnd
                     Card(
+                        modifier = Modifier.width(8.dp).height(100.dp).align(alignment),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)),
                         shape = RoundedCornerShape(4.dp)
                     ) {}
                 } else {
                     Card(
+                        modifier = Modifier.height(8.dp).width(100.dp).align(Alignment.BottomCenter),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)),
                         shape = RoundedCornerShape(4.dp)
                     ) {}
                 }
@@ -128,6 +161,7 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
                     text = "Overlay Preview",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.5f),
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp)
                 )
             }
         }
@@ -148,12 +182,19 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(Icons.Default.Palette, "Aura Overlay", tint = Color(0xFFFF69B4), modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
+                    Text("Aura Creative Overlay", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Floating creative tools and design helpers", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f))
                 }
                 Switch(
+                    checked = state.auraOverlayEnabled,
+                    onCheckedChange = { viewModel.setAuraOverlayEnabled(it) },
+                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFFFF69B4), checkedTrackColor = Color(0xFFFF69B4).copy(alpha = 0.5f))
                 )
             }
         }
@@ -166,12 +207,19 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(Icons.Default.Security, "Kai Overlay", tint = Color(0xFFDC143C), modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
+                    Text("Kai Security Overlay", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Security monitoring and protection tools", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f))
                 }
                 Switch(
+                    checked = state.kaiOverlayEnabled,
+                    onCheckedChange = { viewModel.setKaiOverlayEnabled(it) },
+                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFFDC143C), checkedTrackColor = Color(0xFFDC143C).copy(alpha = 0.5f))
                 )
             }
         }
@@ -184,12 +232,19 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(Icons.AutoMirrored.Filled.Chat, "Chat Bubble", tint = Color(0xFF4169E1), modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
+                    Text("Agent Chat Bubble", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Draggable chat interface for AI agents", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f))
                 }
                 Switch(
+                    checked = state.chatBubbleEnabled,
+                    onCheckedChange = { viewModel.setChatBubbleEnabled(it) },
+                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFF4169E1), checkedTrackColor = Color(0xFF4169E1).copy(alpha = 0.5f))
                 )
             }
         }
@@ -202,23 +257,34 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+                Text("Agent Sidebar", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
 
+                Text("Position", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.8f))
                 Spacer(modifier = Modifier.height(8.dp))
                 sidebarPositions.forEach { position ->
                     Row(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
+                            selected = state.sidebarPosition == position,
+                            onClick = { viewModel.setSidebarPosition(position) },
+                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFFFF4500))
                         )
                         Spacer(modifier = Modifier.width(16.dp))
+                        Text(position, style = MaterialTheme.typography.bodyMedium, color = Color.White)
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                Text("Auto-hide Delay", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.8f))
+                Text("${autoHideDelay.toInt()} seconds", style = MaterialTheme.typography.bodySmall, color = Color(0xFFFF4500))
                 Spacer(modifier = Modifier.height(8.dp))
                 Slider(
+                    value = autoHideDelay,
+                    onValueChange = { autoHideDelay = it },
                     valueRange = 1f..10f,
                     colors = SliderDefaults.colors(
                         thumbColor = Color(0xFFFF4500),
@@ -231,11 +297,13 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Overlay Permissions (read-only status display)
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+                Text("System Permissions", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
 
                 val permissions = listOf(
@@ -246,6 +314,7 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
                 permissions.forEach { (permission, granted) ->
                     Row(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -255,8 +324,10 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
+                        Text(permission, style = MaterialTheme.typography.bodyMedium, color = Color.White, modifier = Modifier.weight(1f))
                         if (!granted) {
                             TextButton(onClick = { /* Request permission */ }) {
+                                Text("Grant", color = Color(0xFFFF4500))
                             }
                         }
                     }
@@ -266,9 +337,14 @@ import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Changes are auto-persisted on every toggle
         Button(
+            onClick = { /* Aura applies changes automatically on each toggle */ },
             modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF4500)),
+            enabled = false
         ) {
+            Text("Changes Applied Automatically", color = Color.White)
         }
     }
 }

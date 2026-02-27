@@ -1,26 +1,14 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
-import dev.aurakai.auraframefx.agents.core.BaseAgent
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/core/AuraAgent.kt
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
-import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
-import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-========
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
->>>>>>>> 75ff10eb (fix(deps): Downgrade Retrofit and align dependencies):app/src/main/java/dev/aurakai/auraframefx/agents/trinity/AuraAgent.kt
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
-import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
-import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
@@ -142,7 +130,6 @@ class AuraAgent @Inject constructor(
             }
         }
     }
-
         ensureInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
         _creativeState.value = CreativeState.CREATING

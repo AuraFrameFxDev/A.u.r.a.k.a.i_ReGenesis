@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -83,7 +81,6 @@ fun SecureCommScreen() {
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFF1A1A2E)
             ),
-            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF00FF00).copy(alpha = 0.3f))
         ) {
             Column(
                 modifier = Modifier.padding(16.dp)

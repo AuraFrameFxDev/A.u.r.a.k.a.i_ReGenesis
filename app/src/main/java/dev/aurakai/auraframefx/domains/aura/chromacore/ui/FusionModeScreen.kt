@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -65,7 +63,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.kai.ui.KaiShieldMap
 import kotlinx.coroutines.delay
 import kotlin.math.abs
 
@@ -494,10 +491,6 @@ fun AuraVisualization(
             // Level 10: Chromatic Aberration Aura (The Sword's Edge)
             drawCircle(
                 brush = Brush.radialGradient(
-                    colors = listOf(
-                        Color.Cyan.copy(alpha = 0.2f * power * glowIntensity),
-                        Color.Transparent
-                    ),
                     center = Offset(centerX, centerY),
                     radius = size.minDimension * 0.6f
                 )
@@ -559,6 +552,7 @@ fun AuraVisualization(
         }
     }
 }
+
 
 
 @Composable

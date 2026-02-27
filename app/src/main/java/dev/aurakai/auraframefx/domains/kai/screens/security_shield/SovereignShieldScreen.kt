@@ -31,8 +31,6 @@ import dev.aurakai.auraframefx.domains.kai.viewmodels.SovereignShieldViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import androidx.compose.foundation.shape.CircleShape
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 /**
  * 🛡️ SOVEREIGN SHIELD (The Anti-Big-Tech Standard)
@@ -42,13 +40,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 @Composable
 fun SovereignShieldScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignShieldViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: SovereignShieldViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -70,7 +62,7 @@ fun SovereignShieldScreen(
                 ) {
                     Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
                 }
-
+                
                 // Privacy Score readout
                 PrivacyScoreDisplay(state.privacyScore)
 

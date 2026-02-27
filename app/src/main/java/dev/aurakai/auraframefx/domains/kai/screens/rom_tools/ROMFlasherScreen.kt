@@ -35,9 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.romtools.AvailableRom
 import dev.aurakai.auraframefx.romtools.RomFile
@@ -283,13 +281,7 @@ enum class FlashStage {
 
 @Composable
 fun ROMFlasherScreen(
-    viewModel: ROMFlasherViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: ROMFlasherViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current

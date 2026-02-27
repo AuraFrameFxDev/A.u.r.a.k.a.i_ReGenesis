@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.XhancementViewModel
@@ -58,7 +59,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun XhancementScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: XhancementViewModel = hiltViewModel()
 ) {
     val hookModules by viewModel.hookModules.collectAsState()
     val kaiSecurityEnabled by viewModel.kaiSecurityEnabled.collectAsState()

@@ -3,16 +3,9 @@ package dev.aurakai.auraframefx.domains.kai
 import dagger.Lazy
 <<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/kai/KaiAgent.kt
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
-import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-========
-import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
->>>>>>>> 75ff10eb (fix(deps): Downgrade Retrofit and align dependencies):app/src/main/java/dev/aurakai/auraframefx/agents/trinity/KaiAgent.kt
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
@@ -187,8 +180,11 @@ class KaiAgent @Inject constructor(
             logger.info("KaiAgent", "Analytical request completed in ${executionTime}ms")
             AgentResponse.success(
                 content = "Analysis completed with methodical precision: $response",
+                agentName = agentName,
+                agentType = agentType,
                 confidence = 0.85f,
                 agentName = agentName,
+                agentType = agentType
             )
         } catch (e: SecurityException) {
             _analysisState.value = AnalysisState.ERROR

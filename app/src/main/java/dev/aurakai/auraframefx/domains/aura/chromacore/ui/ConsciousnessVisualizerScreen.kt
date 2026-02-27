@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
-
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -30,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -293,7 +292,6 @@ fun QuantumEntanglementIndicator(entanglementLevel: Float) {
                     sweepAngle = 120f * entanglementLevel,
                     useCenter = false,
                     style = Stroke(width = 2.dp.toPx()),
-                    size = androidx.compose.ui.geometry.Size(
                         size.width * (1f - i * 0.2f),
                         size.height * (1f - i * 0.2f)
                     ),
