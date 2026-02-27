@@ -12,6 +12,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 
 /**
  * 🌐 REGENESIS CORE APPLICATION

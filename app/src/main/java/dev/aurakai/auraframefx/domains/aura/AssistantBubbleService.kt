@@ -36,6 +36,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 
 /**
  * 🫧 ASSISTANT BUBBLE SERVICE

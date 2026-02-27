@@ -3,8 +3,19 @@ package dev.aurakai.auraframefx.domains.cascade.ai.base
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
 <<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/cascade/ai/base/BaseAgent.kt
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+
 ========
 >>>>>>>> 75ff10eb (fix(deps): Downgrade Retrofit and align dependencies):app/src/main/java/dev/aurakai/auraframefx/agents/core/BaseAgent.kt
 import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
@@ -42,7 +53,7 @@ abstract class BaseAgent(
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> = flow {
         try {
             val context = contextManager?.getCurrentContext() ?: ""
-            val enhancedContext = contextManager?.enhanceContext(context) ?: context
+            contextManager?.enhanceContext(context) ?: context
 
             // Emit initial processing response
             emit(AgentResponse.processing("Processing request with ${agentName}..."))
@@ -62,7 +73,7 @@ abstract class BaseAgent(
             emit(response)
 
         } catch (e: Exception) {
-            emit(AgentResponse.error("Error in ${agentName}: ${e.message}",))
+            emit(AgentResponse.error("Error in ${agentName}: ${e.message}"))
         }
     }
 
@@ -127,7 +138,7 @@ abstract class BaseAgent(
             else -> "Unexpected error: ${error.message}"
         }
 
-        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}",)
+        return AgentResponse.error("$errorMessage${if (context.isNotEmpty()) " (Context: $context)" else ""}")
     }
 
     /**
@@ -214,7 +225,11 @@ abstract class BaseAgent(
         isOrchestratorInitialized = false
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String, agentType: AgentType): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         // Delegates to the two-argument version
         return processRequest(request, context)
     }

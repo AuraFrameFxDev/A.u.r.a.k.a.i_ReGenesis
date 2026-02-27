@@ -226,4 +226,9 @@ sealed class NavDestination(val route: String, val title: String? = null, val ic
     data object FAQBrowser : NavDestination("faq_browser")
     data object TutorialVideos : NavDestination("tutorial_videos")
     data object Settings : NavDestination("settings")
+    companion object {
+        val CodeAscension: Any
+        val AuraDossier: Any
+        val AuraStudioLab: Any
+    }
 }
