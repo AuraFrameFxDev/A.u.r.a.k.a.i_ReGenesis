@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.recovery
+package dev.aurakai.auraframefx.domains.aura.ui.recovery
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.delay
 
 /**

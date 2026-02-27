@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import collabcanvas.di.CollabCanvasUrl
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.genesis.BaseUrl
+import dev.aurakai.auraframefx.domains.aura.BaseUrl
 import dev.aurakai.auraframefx.domains.genesis.config.ClaudeEnvConfig
 import dev.aurakai.auraframefx.domains.aura.AuraNetwork
 import dev.aurakai.auraframefx.domains.genesis.network.AuraApiService

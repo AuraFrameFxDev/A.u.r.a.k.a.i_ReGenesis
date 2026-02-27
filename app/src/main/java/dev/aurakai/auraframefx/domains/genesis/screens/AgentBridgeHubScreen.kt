@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.aura.viewmodels.SovereignBridgeViewModel
 import dev.aurakai.auraframefx.domains.aura.ConnectorStatus
 import dev.aurakai.auraframefx.domains.aura.MCPConnector
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer

@@ -28,7 +28,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,6 +36,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 
 /**
  * 🫧 ASSISTANT BUBBLE SERVICE
@@ -153,34 +154,16 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                             "CREATE" -> "ark_build"
                             else -> null
                         }
-
-                        if (route != null) {
-                            val navIntent = Intent(
-                                this@AssistantBubbleService,
-                                dev.aurakai.auraframefx.MainActivity::class.java
-                            ).apply {
-                                flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                putExtra("navigate_to", route)
-                            }
-                            startActivity(navIntent)
-                            isSidebarVisible.value = false // Auto-close sidebar
-
-                            // Re-collapse window
-                            params.width = 40
-                            params.flags =
-                                params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            windowManager.updateViewLayout(overlayLayout, params)
-                        }
-
-                        // Also broadcast the message
+                        windowManager.updateViewLayout(overlayLayout, params)
+                    },
+                    onSendMessage = { text, agent ->
                         serviceScope.launch {
                             messageBus.broadcast(
                                 AgentMessage(
-                                    from = "NeuralLink",
-                                    content = "Initiating $action protocol via Command Deck.",
-                                    type = "command_execution",
-                                    metadata = mapOf("action" to action)
+                                    from = "User",
+                                    content = text,
+                                    to = agent.name,
+                                    type = "overlay_broadcast"
                                 )
                             )
                         }

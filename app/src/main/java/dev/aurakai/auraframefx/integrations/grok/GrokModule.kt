@@ -6,10 +6,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import javax.inject.Singleton
 
 /**

@@ -43,12 +43,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 
 /**
- * Direct Chat Screen
+ * Direct Chat Scareen
  * One-on-one conversations with AI agents
  *
  * ✨ Now powered by AgentViewModel for real agent intelligence!
@@ -56,7 +58,6 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 @Composable
 fun DirectChatScreen(
     navController: NavController,
-    viewModel: AgentViewModel = hiltViewModel()
 ) {
     val agents = remember { AgentRepository.getAllAgents() }
     val selectedAgent = remember { mutableStateOf(agents.firstOrNull()) }

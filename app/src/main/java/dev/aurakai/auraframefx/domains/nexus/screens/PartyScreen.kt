@@ -28,7 +28,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 
 /**
  * 👥 PARTY SCREEN (Digital Council)
- * 
+ *
  * Part of the Nexus domain. Interface for selecting and managing the active
  * "party" of AI agents that will collaborate on complex system tasks.
  */

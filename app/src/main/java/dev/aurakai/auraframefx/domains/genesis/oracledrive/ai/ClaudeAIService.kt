@@ -168,9 +168,9 @@ class ClaudeAIService @Inject constructor(
 
         val agentResponse = AgentResponse.success(
             content = response,
-            confidence = confidence,
             agentName = "Claude",
-            agentType = AgentType.CLAUDE
+            agentType = AgentType.CLAUDE,
+            confidence = confidence,
         )
 
         // Store in cache for future requests
@@ -199,9 +199,9 @@ class ClaudeAIService @Inject constructor(
         return flowOf(
             AgentResponse.success(
                 content = response,
-                confidence = 0.9f,
                 agentName = "Claude",
-                agentType = AgentType.CLAUDE
+                agentType = AgentType.CLAUDE,
+                confidence = 0.9f,
             )
         )
     }

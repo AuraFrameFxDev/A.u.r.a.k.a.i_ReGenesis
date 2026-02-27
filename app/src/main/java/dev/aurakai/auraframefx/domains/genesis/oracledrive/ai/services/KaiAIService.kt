@@ -200,7 +200,7 @@ class DefaultKaiAIService @Inject constructor(
                     confidence = analysisResult["confidence"] as? Float ?: 0.9f,
                     agentType = AgentType.KAI
                 )
-            )
+                )
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error in processRequestFlow", e)
             errorHandler.handleError(e, AgentType.KAI, "processRequestFlow")
@@ -212,7 +212,7 @@ class DefaultKaiAIService @Inject constructor(
                     error = e.message,
                     agentType = AgentType.KAI
                 )
-            )
+                )
         }
     }
 

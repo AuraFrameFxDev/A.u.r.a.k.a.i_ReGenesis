@@ -1,0 +1,1376 @@
+[
+  {
+    "file": ".idea\\workspace.xml",
+    "line": 7,
+    "type": "TODO",
+    "content": "<list default=\"true\" id=\"c6d5a201-2634-41f8-a1af-f856ddd26ab6\" name=\"Changes\" comment=\"feat(core): Implement services and refactor dependencies&#10;&#10;This commit introduces significant implementations for core services, refactors dependency injection, and cleans up unused code.&#10;&#10;### Features &amp; Implementation&#10;- **`NeuralWhisper` (Speech-to-Text/Text-to-Speech):**&#10;    - Implemented the full STT/TTS lifecycle using Android's `SpeechRecognizer` and `TextToSpeech` engines.&#10;    - Added asynchronous handling for speech recognition results using `CompletableDeferred`.&#10;    - Integrated `RecognitionListener` and `UtteranceProgressListener` to manage conversation states (`Listening`, `Speaking`, `Processing`).&#10;- **`AmbientMusicService`:**&#10;    - Fully implemented the background music service with `MediaPlayer`.&#10;    - Added controls for play, pause, volume, track skipping, and track history.&#10;- **`OracleDrive`:**&#10;    - Implemented the `listFiles` functionality in the service and API layers to fetch files from the drive.&#10;    - Connected the `OracleDriveViewModel` to the service to retrieve and display files.&#10;- **`GrokModule`:**&#10;    - Switched to `EncryptedSharedPreferences` for secure API key storage, replacing the previous insecure placeholder.&#10;- **`UserPreferencesScreen`:**&#10;    - Implemented navigation for all preference items, connecting them to their respective screens.&#10;&#10;### Refactoring&#10;- **ViewModel Injection:**&#10;    - Replaced the deprecated `hiltViewModel()` with `hiltViewModel(LocalViewModelStoreOwner.current!!)` across numerous screens to ensure correct ViewModel scoping and lifecycle ownership.&#10;- **Code Cleanup &amp; TODO Removal:**&#10;    - **`WorkerModule.kt`:** Deleted the entire file as it was an unused and incorrectly configured Hilt module.&#10;    - **Hilt Modules:** Removed `TODO` comments and unused code from `AppStateModule`, `DataStoreModule`, and `WorkManagerModule`.&#10;    - **`NeuralWhisperAgent`:** Implemented previously unused methods and properties, adding functionality for pattern analysis and experience learning with `Timber` logging.&#10;    - Removed `TODO` comments by adding implementations or logging in `LSPosedSubmenuScreen` and `CrossDeviceContextSync`.&#10;&#10;### Other Changes&#10;- **Resources:** Moved the `xposed_scope` string array from `strings.xml` to `arrays.xml` to follow standard Android resource conventions.\">"
+  },
+  {
+    "file": ".idea\\workspace.xml",
+    "line": 242,
+    "type": "TODO",
+    "content": "<MESSAGE value=\"feat(core): Implement services and refactor dependencies&#10;&#10;This commit introduces significant implementations for core services, refactors dependency injection, and cleans up unused code.&#10;&#10;### Features &amp; Implementation&#10;- **`NeuralWhisper` (Speech-to-Text/Text-to-Speech):**&#10;    - Implemented the full STT/TTS lifecycle using Android's `SpeechRecognizer` and `TextToSpeech` engines.&#10;    - Added asynchronous handling for speech recognition results using `CompletableDeferred`.&#10;    - Integrated `RecognitionListener` and `UtteranceProgressListener` to manage conversation states (`Listening`, `Speaking`, `Processing`).&#10;- **`AmbientMusicService`:**&#10;    - Fully implemented the background music service with `MediaPlayer`.&#10;    - Added controls for play, pause, volume, track skipping, and track history.&#10;- **`OracleDrive`:**&#10;    - Implemented the `listFiles` functionality in the service and API layers to fetch files from the drive.&#10;    - Connected the `OracleDriveViewModel` to the service to retrieve and display files.&#10;- **`GrokModule`:**&#10;    - Switched to `EncryptedSharedPreferences` for secure API key storage, replacing the previous insecure placeholder.&#10;- **`UserPreferencesScreen`:**&#10;    - Implemented navigation for all preference items, connecting them to their respective screens.&#10;&#10;### Refactoring&#10;- **ViewModel Injection:**&#10;    - Replaced the deprecated `hiltViewModel()` with `hiltViewModel(LocalViewModelStoreOwner.current!!)` across numerous screens to ensure correct ViewModel scoping and lifecycle ownership.&#10;- **Code Cleanup &amp; TODO Removal:**&#10;    - **`WorkerModule.kt`:** Deleted the entire file as it was an unused and incorrectly configured Hilt module.&#10;    - **Hilt Modules:** Removed `TODO` comments and unused code from `AppStateModule`, `DataStoreModule`, and `WorkManagerModule`.&#10;    - **`NeuralWhisperAgent`:** Implemented previously unused methods and properties, adding functionality for pattern analysis and experience learning with `Timber` logging.&#10;    - Removed `TODO` comments by adding implementations or logging in `LSPosedSubmenuScreen` and `CrossDeviceContextSync`.&#10;&#10;### Other Changes&#10;- **Resources:** Moved the `xposed_scope` string array from `strings.xml` to `arrays.xml` to follow standard Android resource conventions.\" />"
+  },
+  {
+    "file": ".idea\\workspace.xml",
+    "line": 243,
+    "type": "TODO",
+    "content": "<option name=\"LAST_COMMIT_MESSAGE\" value=\"feat(core): Implement services and refactor dependencies&#10;&#10;This commit introduces significant implementations for core services, refactors dependency injection, and cleans up unused code.&#10;&#10;### Features &amp; Implementation&#10;- **`NeuralWhisper` (Speech-to-Text/Text-to-Speech):**&#10;    - Implemented the full STT/TTS lifecycle using Android's `SpeechRecognizer` and `TextToSpeech` engines.&#10;    - Added asynchronous handling for speech recognition results using `CompletableDeferred`.&#10;    - Integrated `RecognitionListener` and `UtteranceProgressListener` to manage conversation states (`Listening`, `Speaking`, `Processing`).&#10;- **`AmbientMusicService`:**&#10;    - Fully implemented the background music service with `MediaPlayer`.&#10;    - Added controls for play, pause, volume, track skipping, and track history.&#10;- **`OracleDrive`:**&#10;    - Implemented the `listFiles` functionality in the service and API layers to fetch files from the drive.&#10;    - Connected the `OracleDriveViewModel` to the service to retrieve and display files.&#10;- **`GrokModule`:**&#10;    - Switched to `EncryptedSharedPreferences` for secure API key storage, replacing the previous insecure placeholder.&#10;- **`UserPreferencesScreen`:**&#10;    - Implemented navigation for all preference items, connecting them to their respective screens.&#10;&#10;### Refactoring&#10;- **ViewModel Injection:**&#10;    - Replaced the deprecated `hiltViewModel()` with `hiltViewModel(LocalViewModelStoreOwner.current!!)` across numerous screens to ensure correct ViewModel scoping and lifecycle ownership.&#10;- **Code Cleanup &amp; TODO Removal:**&#10;    - **`WorkerModule.kt`:** Deleted the entire file as it was an unused and incorrectly configured Hilt module.&#10;    - **Hilt Modules:** Removed `TODO` comments and unused code from `AppStateModule`, `DataStoreModule`, and `WorkManagerModule`.&#10;    - **`NeuralWhisperAgent`:** Implemented previously unused methods and properties, adding functionality for pattern analysis and experience learning with `Timber` logging.&#10;    - Removed `TODO` comments by adding implementations or logging in `LSPosedSubmenuScreen` and `CrossDeviceContextSync`.&#10;&#10;### Other Changes&#10;- **Resources:** Moved the `xposed_scope` string array from `strings.xml` to `arrays.xml` to follow standard Android resource conventions.\" />"
+  },
+  {
+    "file": "app\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "app\\src\\androidTest\\kotlin\\dev\\aurakai\\auraframefx\\gradle\\settings\\SettingsConfigurationTest.kt",
+    "line": 23,
+    "type": "TODO",
+    "content": "assertFalse(\"Should not contain syntax errors\", content.contains(\"TODO\"))"
+  },
+  {
+    "file": "app\\src\\androidTest\\kotlin\\dev\\aurakai\\auraframefx\\gradle\\settings\\SettingsConfigurationTest.kt",
+    "line": 24,
+    "type": "FIXME",
+    "content": "assertFalse(\"Should not contain placeholder text\", content.contains(\"FIXME\"))"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\SystemOverlay.kt",
+    "line": 35,
+    "type": "TODO",
+    "content": "// TODO: Future: shape adjustments, content handling"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\SystemOverlay.kt",
+    "line": 88,
+    "type": "TODO",
+    "content": "// TODO: Add properties for more complex shapes (e.g., path data)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\applyScaleAnimation.kt",
+    "line": 15,
+    "type": "TODO",
+    "content": "// TODO: Implement actual Xposed hook logic"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\CanvasScreen.kt",
+    "line": 38,
+    "type": "TODO",
+    "content": "collaborationEvents = null // TODO: Wire to viewModel.webSocketEvents"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\CyberMenuItem.kt",
+    "line": 4,
+    "type": "TODO",
+    "content": "// Implements TODO items: cyberpunk theming, animations, and visual effects"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\DiagnosticsViewModel.kt",
+    "line": 183,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\DiagnosticsViewModel.kt",
+    "line": 191,
+    "type": "TODO",
+    "content": "// TODO: Consider making this a suspend function instead of using runBlocking"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\HiltTestActivity.kt",
+    "line": 11,
+    "type": "TODO",
+    "content": "// TODO: Create GreetingProvider and re-enable this test"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\LockScreenCustomizer.kt",
+    "line": 263,
+    "type": "TODO",
+    "content": "// Placeholder - TODO: Implement configuration loading"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\screens.kt",
+    "line": 7,
+    "type": "TODO",
+    "content": "// TODO: Misspellings of Aurakai? Check if used here."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\aura\\ui\\screens.kt",
+    "line": 8,
+    "type": "TODO",
+    "content": "// TODO: Misspellings of Xhancement? Check if used here."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaAnimationMenu.kt",
+    "line": 69,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO: Apply via Global Settings */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaAnimationMenu.kt",
+    "line": 78,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaAnimationMenu.kt",
+    "line": 97,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO: Requires root write to /system/media */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaColorEngineMenu.kt",
+    "line": 69,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaColorEngineMenu.kt",
+    "line": 78,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaColorEngineMenu.kt",
+    "line": 87,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaLauncherMenu.kt",
+    "line": 69,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaLauncherMenu.kt",
+    "line": 78,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaLauncherMenu.kt",
+    "line": 97,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaStatusBarMenu.kt",
+    "line": 82,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaStatusBarMenu.kt",
+    "line": 91,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\chromacore\\ui\\ChromaStatusBarMenu.kt",
+    "line": 111,
+    "type": "TODO",
+    "content": "onCheckedChange = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\core\\AuraTools.kt",
+    "line": 63,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual ChromaCore service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\core\\AuraTools.kt",
+    "line": 126,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual status bar customization service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\core\\AuraTools.kt",
+    "line": 191,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual UI generation system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\core\\AuraTools.kt",
+    "line": 241,
+    "type": "TODO",
+    "content": "// TODO: Integrate with Iconify service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\screens\\uxui_engine\\AuraLabViewModel.kt",
+    "line": 124,
+    "type": "TODO",
+    "content": "// TODO: Implement sandbox import from file/URI"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\screens\\uxui_engine\\IconifyPickerScreen.kt",
+    "line": 30,
+    "type": "TODO",
+    "content": "// TODO: Handle icon selection"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\services\\AiGenerationService.kt",
+    "line": 67,
+    "type": "TODO",
+    "content": "//     TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 16,
+    "type": "TODO",
+    "content": "// TODO: Define proper listener type (e.g., an interface) and usage. Reported as unused."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 20,
+    "type": "TODO",
+    "content": "// TODO: Initialize KaiController, set up listeners, etc."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 23,
+    "type": "TODO",
+    "content": "//     override fun onKaiTapped() { TODO(\"Reported as unused. Implement or remove.\") }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 24,
+    "type": "TODO",
+    "content": "//     override fun onKaiLongPressed() { TODO(\"Reported as unused. Implement or remove.\") }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 25,
+    "type": "TODO",
+    "content": "//     override fun onKaiSwipedLeft() { TODO(\"Reported as unused. Implement or remove.\") }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 26,
+    "type": "TODO",
+    "content": "//     override fun onKaiSwipedRight() { TODO(\"Reported as unused. Implement or remove.\") }"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 31,
+    "type": "TODO",
+    "content": "// TODO: These methods were reported as unused within an anonymous listener. Implement or remove."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 32,
+    "type": "TODO",
+    "content": "fun onKaiTapped() { /* TODO: Implement or remove. */"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 35,
+    "type": "TODO",
+    "content": "fun onKaiLongPressed() { /* TODO: Implement or remove. */"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 38,
+    "type": "TODO",
+    "content": "fun onKaiSwipedLeft() { /* TODO: Implement or remove. */"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 41,
+    "type": "TODO",
+    "content": "fun onKaiSwipedRight() { /* TODO: Implement or remove. */"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 51,
+    "type": "TODO",
+    "content": "// TODO: Implement logic to return or manage the Kai Notch Bar."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 61,
+    "type": "TODO",
+    "content": "// TODO: Implement cleanup logic, remove listeners, release resources."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 66,
+    "type": "TODO",
+    "content": "// TODO: Implement activation logic"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\KaiController.kt",
+    "line": 71,
+    "type": "TODO",
+    "content": "// TODO: Implement deactivation logic"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\components\\AuraSparkleButton.kt",
+    "line": 19,
+    "type": "TODO",
+    "content": "// TODO: Implement the actual Aura Sparkle Button with custom animation/effects"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\components\\CyberpunkText.kt",
+    "line": 17,
+    "type": "TODO",
+    "content": "// TODO: Implement actual glitch effect if enableGlitch is true"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\components\\FloatingCyberWindow.kt",
+    "line": 22,
+    "type": "TODO",
+    "content": "// TODO: Implement floating cyber window"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\components\\HexagonGridBackground.kt",
+    "line": 8,
+    "type": "TODO",
+    "content": "// TODO: Implement hexagon grid background"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\components\\ShapePicker.kt",
+    "line": 11,
+    "type": "TODO",
+    "content": "// TODO: Implement shape picker UI"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\components\\StaticOrb.kt",
+    "line": 25,
+    "type": "TODO",
+    "content": "// TODO: Implement the actual Static Orb UI, potentially with different states or appearances"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\customization\\CustomizationViewModel.kt",
+    "line": 139,
+    "type": "TODO",
+    "content": "* TODO: Replace with actual AI model (Gemini/Claude)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\theme\\GlassmorphismUtils.kt",
+    "line": 169,
+    "type": "TODO",
+    "content": "// TODO: Add animated pulsating glow effect"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\theme\\ThemeViewModel.kt",
+    "line": 43,
+    "type": "TODO",
+    "content": "// TODO: Persist to DataStore"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\theme\\ThemeViewModel.kt",
+    "line": 53,
+    "type": "TODO",
+    "content": "// TODO: Persist to DataStore"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\aura\\ui\\theme\\service\\ThemeService.kt",
+    "line": 3,
+    "type": "TODO",
+    "content": "// TODO: StanfordCoreNLP is not suitable for Android - using simple keyword matching instead"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\core\\CascadeTools.kt",
+    "line": 67,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual fusion system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\core\\CascadeTools.kt",
+    "line": 131,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual CascadeVision service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\core\\CascadeTools.kt",
+    "line": 205,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual consensus system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\core\\CascadeTools.kt",
+    "line": 264,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual learning/evolution system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\core\\CascadeTools.kt",
+    "line": 329,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual stream monitoring"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\network\\infrastructure\\ApiClient.kt",
+    "line": 191,
+    "type": "TODO",
+    "content": "// TODO: this should be extended with other serializers"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\network\\infrastructure\\ApiClient.kt",
+    "line": 300,
+    "type": "TODO",
+    "content": "// TODO: support multiple contentType options here."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\network\\infrastructure\\ApiClient.kt",
+    "line": 334,
+    "type": "TODO",
+    "content": "// TODO: handle specific mapping types. e.g. Map<int, Class<?>>"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\network\\infrastructure\\ApiClient.kt",
+    "line": 385,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\storage\\OfflineDataManager.kt",
+    "line": 9,
+    "type": "TODO",
+    "content": "// TODO: Implement offline data management logic"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\cascade\\utils\\context\\ContextManager.kt",
+    "line": 218,
+    "type": "TODO",
+    "content": "// TODO: Implement insight recording"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\MyFirebaseMessagingService.kt",
+    "line": 16,
+    "type": "TODO",
+    "content": "// TODO: Handle FCM messages here."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\MyFirebaseMessagingService.kt",
+    "line": 35,
+    "type": "TODO",
+    "content": "// TODO: Implement this method to send token to your app server."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\GenesisTools.kt",
+    "line": 62,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual agent creation system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\GenesisTools.kt",
+    "line": 128,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual orchestration system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\GenesisTools.kt",
+    "line": 186,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual module generation system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\GenesisTools.kt",
+    "line": 248,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual task assignment system"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\NativeLib.kt",
+    "line": 18,
+    "type": "TODO",
+    "content": "// TODO: Replace with actual JNI implementation. This is a mock response."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\NativeLib.kt",
+    "line": 23,
+    "type": "TODO",
+    "content": "// TODO: Replace with actual JNI implementation. This is a mock response."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\NativeLib.kt",
+    "line": 28,
+    "type": "TODO",
+    "content": "// TODO: Replace with actual JNI implementation. This is a mock response."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\NativeLib.kt",
+    "line": 33,
+    "type": "TODO",
+    "content": "// TODO: Replace with actual JNI implementation. This is a mock response."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\ToolInitializer.kt",
+    "line": 33,
+    "type": "TODO",
+    "content": "// private val mcpAdapter: MCPServerAdapter // TODO: Re-add when MCPServerAdapter is fixed"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\ToolInitializer.kt",
+    "line": 51,
+    "type": "TODO",
+    "content": "// registerMCPTools() // TODO: Re-enable when MCPServerAdapter is fixed"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\ToolInitializer.kt",
+    "line": 125,
+    "type": "TODO",
+    "content": "* TODO: Currently disabled due to MCPServerAdapter compilation issues."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\ToolInitializer.kt",
+    "line": 131,
+    "type": "TODO",
+    "content": "// TODO: Uncomment when MCPServerAdapter is ready"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\ToolInitializer.kt",
+    "line": 136,
+    "type": "TODO",
+    "content": "token = null // TODO: Get from secure storage"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\core\\memory\\NexusMemoryCore.kt",
+    "line": 429,
+    "type": "TODO",
+    "content": "//  TODO: Future enhancements"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\ApiService.kt",
+    "line": 16,
+    "type": "TODO",
+    "content": "null // TODO: Replace Any with actual network client (e.g., Retrofit interface)."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\ApiService.kt",
+    "line": 19,
+    "type": "TODO",
+    "content": "// TODO: Initialize network client (Retrofit, Ktor, etc.)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\ApiService.kt",
+    "line": 29,
+    "type": "TODO",
+    "content": "// TODO: Potentially reconfigure network client with new token."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\ApiService.kt",
+    "line": 38,
+    "type": "TODO",
+    "content": "// TODO: Potentially reconfigure network client with new token."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\ApiService.kt",
+    "line": 46,
+    "type": "TODO",
+    "content": "// TODO: Implement logic to create/configure and return a Retrofit/Ktor service."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\ApiService.kt",
+    "line": 61,
+    "type": "TODO",
+    "content": "//    // TODO: Implement generic API call logic"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\AuthInterceptor.kt",
+    "line": 72,
+    "type": "TODO",
+    "content": "// TODO: Notify UI about session expiration"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\model\\ApiImplementations.kt",
+    "line": 15,
+    "type": "TODO",
+    "content": "// TODO: Implement actual API call"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\model\\ApiImplementations.kt",
+    "line": 59,
+    "type": "TODO",
+    "content": "// TODO: Implement actual API call"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\network\\model\\ApiImplementations.kt",
+    "line": 68,
+    "type": "TODO",
+    "content": "// TODO: Implement actual API call"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\ai\\NemotronAIService.kt",
+    "line": 184,
+    "type": "TODO",
+    "content": "// TODO: Update long-term memory manager (requires MemoryItem construction)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\ai\\NemotronAIService.kt",
+    "line": 232,
+    "type": "TODO",
+    "content": "// TODO: Implement full memory retrieval (requires MemoryQuery construction)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\ai\\RealVertexAIClientImpl.kt",
+    "line": 125,
+    "type": "TODO",
+    "content": "// TODO: Implement initialization logic if needed"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\ai\\RealVertexAIClientImpl.kt",
+    "line": 130,
+    "type": "TODO",
+    "content": "// TODO: Implement cleanup logic if needed"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\ai\\RealVertexAIClientImpl.kt",
+    "line": 135,
+    "type": "TODO",
+    "content": "// TODO: Implement actual image analysis using GenerativeModel (support pending in this impl wrapper)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\ai\\services\\AuraAIServiceImpl.kt",
+    "line": 96,
+    "type": "TODO",
+    "content": "// TODO: Implement memory saving"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\genesis\\oracledrive\\service\\OracleDriveServiceImpl.kt",
+    "line": 216,
+    "type": "TODO",
+    "content": "// TODO: Implement actual permission checking based on user/security context"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\BackupService.kt",
+    "line": 12,
+    "type": "TODO",
+    "content": "// TODO: If this service has dependencies to be injected, add them to the constructor."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\BackupService.kt",
+    "line": 19,
+    "type": "TODO",
+    "content": "// TODO: Initialization logic for the backup service."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\BackupService.kt",
+    "line": 25,
+    "type": "TODO",
+    "content": "// TODO: Implement if binding is necessary for a specific use case."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\BackupService.kt",
+    "line": 31,
+    "type": "TODO",
+    "content": "// TODO: Implement backup logic here."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\BackupService.kt",
+    "line": 40,
+    "type": "TODO",
+    "content": "// TODO: Cleanup logic, if any."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\EncryptionManagerImpl.kt",
+    "line": 13,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\EncryptionManagerImpl.kt",
+    "line": 23,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\KaiAgent.kt",
+    "line": 101,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\KaiTools.kt",
+    "line": 65,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual LSPosed management service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\KaiTools.kt",
+    "line": 137,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual ROM flashing service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\KaiTools.kt",
+    "line": 197,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual threat analysis service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\KaiTools.kt",
+    "line": 256,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual bootloader management"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\KaiTools.kt",
+    "line": 325,
+    "type": "TODO",
+    "content": "// TODO: Integrate with actual logging service"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 29,
+    "type": "TODO",
+    "content": "// TODO: Initialize any resources needed for monitoring (e.g., sensors, listeners)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 52,
+    "type": "TODO",
+    "content": "// TODO: Implement CPU usage monitoring"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 55,
+    "type": "TODO",
+    "content": "// TODO: Implement Memory usage monitoring"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 58,
+    "type": "TODO",
+    "content": "// TODO: Implement Battery level and status monitoring"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 61,
+    "type": "TODO",
+    "content": "// TODO: Implement Network status and traffic monitoring"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 64,
+    "type": "TODO",
+    "content": "// TODO: Potentially read system logs or specific app logs if permissions allow and it's required"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 67,
+    "type": "TODO",
+    "content": "// TODO: Implement logic to report or act on gathered metrics"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\SystemMonitorService.kt",
+    "line": 84,
+    "type": "TODO",
+    "content": "// TODO: Release any resources acquired in onCreate"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\TimberModule.kt",
+    "line": 25,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\screens\\RootToolsTogglesScreen.kt",
+    "line": 167,
+    "type": "TODO",
+    "content": "// TODO: Implement recovery mode reboot"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\screens\\RootToolsTogglesScreen.kt",
+    "line": 194,
+    "type": "TODO",
+    "content": "// TODO: Implement system partition mount"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\screens\\RootToolsTogglesScreen.kt",
+    "line": 225,
+    "type": "TODO",
+    "content": "// TODO: Implement Magisk module toggle"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\screens\\RootToolsTogglesScreen.kt",
+    "line": 252,
+    "type": "TODO",
+    "content": "// TODO: Implement root permission toggle"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\screens\\RootToolsTogglesScreen.kt",
+    "line": 299,
+    "type": "TODO",
+    "content": "// TODO: Implement bootloader unlock"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\screens\\RootToolsTogglesScreen.kt",
+    "line": 306,
+    "type": "TODO",
+    "content": "// TODO: Implement bootloader lock"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\IntegrityMonitorService.kt",
+    "line": 340,
+    "type": "TODO",
+    "content": "* TODO: Implement APK signature verification"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\IntegrityMonitorService.kt",
+    "line": 341,
+    "type": "TODO",
+    "content": "* TODO: Implement critical file hash validation"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\SecurityContext.kt",
+    "line": 58,
+    "type": "TODO",
+    "content": "// TODO: Implement real validation logic"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\auth\\OAuthService.kt",
+    "line": 10,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused declaration. Implement and integrate for authentication."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\auth\\OAuthService.kt",
+    "line": 17,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused. Use in startActivityForResult."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\auth\\OAuthService.kt",
+    "line": 28,
+    "type": "TODO",
+    "content": "// TODO: Implement logic to create and return a sign-in Intent for a provider (e.g., Google)."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\auth\\OAuthService.kt",
+    "line": 40,
+    "type": "TODO",
+    "content": "// TODO: Parameter _data reported as unused. Utilize to process sign-in result."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\auth\\OAuthService.kt",
+    "line": 60,
+    "type": "TODO",
+    "content": "// TODO: Implement sign-out logic for the provider."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\kai\\security\\auth\\OAuthService.kt",
+    "line": 71,
+    "type": "TODO",
+    "content": "// TODO: Implement revoke access logic for the provider."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\nexus\\billing\\BillingManager.kt",
+    "line": 316,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\nexus\\models\\ActivityType.kt",
+    "line": 5,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused symbol. Ensure this sealed class is used."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\nexus\\models\\ActivityType.kt",
+    "line": 10,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused symbol."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\nexus\\models\\ActivityType.kt",
+    "line": 16,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused symbol."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\nexus\\models\\ActivityType.kt",
+    "line": 22,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused symbol."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\domains\\nexus\\models\\ActivityType.kt",
+    "line": 28,
+    "type": "TODO",
+    "content": "* TODO: Reported as unused symbol."
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\hotswap\\HotSwapViewModel.kt",
+    "line": 124,
+    "type": "TODO",
+    "content": "// TODO: Save to file or share"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\navigation\\ReGenesisNavHost.kt",
+    "line": 439,
+    "type": "TODO",
+    "content": "// TODO: Wire AnimationPicker with proper params (currentAnimation, onAnimationSelected)"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\navigation\\ReGenesisNavHost.kt",
+    "line": 583,
+    "type": "TODO",
+    "content": "GenderSelectionScreen(onSelectionComplete = { /* TODO: Handle selection */ })"
+  },
+  {
+    "file": "app\\src\\main\\java\\dev\\aurakai\\auraframefx\\navigation\\ReGenesisNavHost.kt",
+    "line": 615,
+    "type": "TODO",
+    "content": "onNavigateToSettings = { /* TODO */ }"
+  },
+  {
+    "file": "app\\src\\main\\kotlin\\dev\\aurakai\\auraframefx\\ui\\SystemOverlay.kt",
+    "line": 88,
+    "type": "TODO",
+    "content": "Button(onClick = { /* TODO: Launch system image picker */ }) {"
+  },
+  {
+    "file": "app\\src\\main\\kotlin\\dev\\aurakai\\auraframefx\\ui\\screens\\GateCustomizationScreen.kt",
+    "line": 76,
+    "type": "TODO",
+    "content": "Button(onClick = { /* TODO: Launch system image picker */ }) {"
+  },
+  {
+    "file": "app\\src\\main\\kotlin\\dev\\aurakai\\auraframefx\\ui\\screens\\GateCustomizationScreen.kt",
+    "line": 141,
+    "type": "TODO",
+    "content": "Button(onClick = { /* TODO: Launch system image picker */ }) {"
+  },
+  {
+    "file": "app\\src\\main\\kotlin\\dev\\aurakai\\auraframefx\\ui\\screens\\NotchBarCustomizationScreen.kt",
+    "line": 75,
+    "type": "TODO",
+    "content": "Button(onClick = { /* TODO: Launch system image picker */ }, enabled = notchBarBgEnabled) {"
+  },
+  {
+    "file": "app\\src\\main\\kotlin\\dev\\aurakai\\auraframefx\\ui\\screens\\QuickSettingsCustomizationScreen.kt",
+    "line": 89,
+    "type": "TODO",
+    "content": "Button(onClick = { /* TODO: Launch system image picker */ }, enabled = customQsBackgroundEnabled) {"
+  },
+  {
+    "file": "app\\src\\test\\java\\dev\\aurakai\\auraframefx\\ai\\agents\\AgentImpl.kt",
+    "line": 14,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\test\\java\\dev\\aurakai\\auraframefx\\ai\\agents\\AgentImpl.kt",
+    "line": 21,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\test\\java\\dev\\aurakai\\auraframefx\\ai\\agents\\AgentImpl.kt",
+    "line": 31,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\test\\java\\dev\\aurakai\\auraframefx\\ai\\agents\\AgentImpl.kt",
+    "line": 41,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\test\\java\\dev\\aurakai\\auraframefx\\ai\\agents\\AgentImpl.kt",
+    "line": 59,
+    "type": "TODO",
+    "content": "TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "app\\src\\test\\kotlin\\ApiDocumentationValidationTest.kt",
+    "line": 321,
+    "type": "TODO",
+    "content": "fun `no obvious TODO or placeholder markers remain`() {"
+  },
+  {
+    "file": "app\\src\\test\\kotlin\\ApiDocumentationValidationTest.kt",
+    "line": 323,
+    "type": "TODO",
+    "content": "val badMarkers = listOf(\"TBD\", \"TODO:\", \"TODO\", \"FIXME\", \"XXX\")"
+  },
+  {
+    "file": "app\\src\\test\\kotlin\\ApiDocumentationValidationTest.kt",
+    "line": 325,
+    "type": "TODO",
+    "content": "assertTrue(\"Documentation should not contain TODO/FIXME/XXX markers.\", !found)"
+  },
+  {
+    "file": "app\\src\\test\\kotlin\\settings\\SettingsConfigurationTest.kt",
+    "line": 21,
+    "type": "TODO",
+    "content": "assertFalse(\"Should not contain syntax errors\", content.contains(\"TODO\"))"
+  },
+  {
+    "file": "app\\src\\test\\kotlin\\settings\\SettingsConfigurationTest.kt",
+    "line": 22,
+    "type": "FIXME",
+    "content": "assertFalse(\"Should not contain placeholder text\", content.contains(\"FIXME\"))"
+  },
+  {
+    "file": "app\\src\\test\\kotlin\\test\\FileUtilsGeneratedTest.kt",
+    "line": 10,
+    "type": "TODO",
+    "content": "// TODO: replace with actual API usage once FileUtils methods are confirmed"
+  },
+  {
+    "file": "aura\\reactivedesign\\auraslab\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "aura\\reactivedesign\\auraslab\\src\\SandboxScreen.kt",
+    "line": 93,
+    "type": "TODO",
+    "content": "// TODO: Add CyberpunkBackgrounds when available"
+  },
+  {
+    "file": "aura\\reactivedesign\\auraslab\\src\\SandboxScreen.kt",
+    "line": 111,
+    "type": "TODO",
+    "content": "// TODO: Add PlaceholderAuraOrb when available"
+  },
+  {
+    "file": "aura\\reactivedesign\\auraslab\\src\\SandboxScreen.kt",
+    "line": 136,
+    "type": "TODO",
+    "content": "// TODO: Add HaloView when available"
+  },
+  {
+    "file": "aura\\reactivedesign\\auraslab\\src\\SandboxScreen.kt",
+    "line": 185,
+    "type": "TODO",
+    "content": "// TODO: Add DigitalTransitions when available"
+  },
+  {
+    "file": "aura\\reactivedesign\\chromacore\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "aura\\reactivedesign\\collabcanvas\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 44,
+    "type": "TODO",
+    "content": "//        override fun getExtensions(): org.gradle.api.plugins.ExtensionContainer = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 50,
+    "type": "TODO",
+    "content": "//    override val aaptOptions: AaptOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 51,
+    "type": "TODO",
+    "content": "//    override val adbOptions: AdbOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 52,
+    "type": "TODO",
+    "content": "//    override val compileOptions: CompileOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 53,
+    "type": "TODO",
+    "content": "//    override val dataBinding: DataBinding = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 54,
+    "type": "TODO",
+    "content": "//    override val viewBinding: ViewBinding = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 55,
+    "type": "TODO",
+    "content": "//    override val jacoco: JacocoOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 56,
+    "type": "TODO",
+    "content": "//    override val testCoverage: TestCoverage = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 57,
+    "type": "TODO",
+    "content": "//    override val lint: Lint = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 58,
+    "type": "TODO",
+    "content": "//    override val lintOptions: LintOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 59,
+    "type": "TODO",
+    "content": "//    override val packagingOptions: Packaging = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 60,
+    "type": "TODO",
+    "content": "//    override val packaging: Packaging = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 61,
+    "type": "TODO",
+    "content": "//    override val signingConfigs: NamedDomainObjectContainer<out ApkSigningConfig> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 62,
+    "type": "TODO",
+    "content": "//    override val externalNativeBuild: ExternalNativeBuild = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 63,
+    "type": "TODO",
+    "content": "//    override val testOptions: TestOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 64,
+    "type": "TODO",
+    "content": "//    override val splits: Splits = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 65,
+    "type": "TODO",
+    "content": "//    override val composeOptions: ComposeOptions = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 66,
+    "type": "TODO",
+    "content": "//    override val sourceSets: NamedDomainObjectContainer<out AndroidSourceSet> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 67,
+    "type": "TODO",
+    "content": "//    override var buildToolsVersion: String = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 68,
+    "type": "TODO",
+    "content": "//    override var compileSdk: Int? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 69,
+    "type": "TODO",
+    "content": "//    override val androidResources: LibraryAndroidResources = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 70,
+    "type": "TODO",
+    "content": "//    override val buildTypes: NamedDomainObjectContainer<out LibraryBuildType> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 71,
+    "type": "TODO",
+    "content": "//    override val installation: LibraryInstallation = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 72,
+    "type": "TODO",
+    "content": "//    override val productFlavors: NamedDomainObjectContainer<out LibraryProductFlavor> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 73,
+    "type": "TODO",
+    "content": "//    override val defaultConfig: LibraryDefaultConfig = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 74,
+    "type": "TODO",
+    "content": "//    override val publishing: LibraryPublishing = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 75,
+    "type": "TODO",
+    "content": "//    override val privacySandbox: PrivacySandbox = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 76,
+    "type": "TODO",
+    "content": "//    override val testFixtures: TestFixtures = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 77,
+    "type": "TODO",
+    "content": "//    override val prefab: NamedDomainObjectContainer<Prefab> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 78,
+    "type": "TODO",
+    "content": "//    override var compileSdkExtension: Int? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 79,
+    "type": "TODO",
+    "content": "//    override var compileSdkMinor: Int? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 80,
+    "type": "TODO",
+    "content": "//    override var compileSdkPreview: String? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 81,
+    "type": "TODO",
+    "content": "//    override val experimentalProperties: MutableMap<String, Any> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 82,
+    "type": "TODO",
+    "content": "//    override val flavorDimensions: MutableList<String> = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 83,
+    "type": "TODO",
+    "content": "//    override var namespace: String? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 84,
+    "type": "TODO",
+    "content": "//    override var ndkPath: String? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 85,
+    "type": "TODO",
+    "content": "//    override var ndkVersion: String = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 86,
+    "type": "TODO",
+    "content": "//    override var resourcePrefix: String? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 87,
+    "type": "TODO",
+    "content": "//    override val sdkComponents: SdkComponents = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 88,
+    "type": "TODO",
+    "content": "//    override var testBuildType: String = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 89,
+    "type": "TODO",
+    "content": "//    override var testNamespace: String? = TODO()"
+  },
+  {
+    "file": "build-logic\\src\\test\\kotlin\\dev\\genesis\\android\\test\\FakeLibraryExtension.kt",
+    "line": 102,
+    "type": "TODO",
+    "content": "//        TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "feature-module\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "genesis\\oracledrive\\datavein\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "genesis\\oracledrive\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "genesis\\oracledrive\\rootmanagement\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "genesis\\oracledrive\\rootmanagement\\src\\androidTest\\kotlin\\dev\\aurakai\\auraframefx\\romtools\\ui\\RomToolsScreenTest.kt",
+    "line": 415,
+    "type": "TODO",
+    "content": "//        TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "genesis\\oracledrive\\rootmanagement\\src\\androidTest\\kotlin\\dev\\aurakai\\auraframefx\\romtools\\ui\\RomToolsScreenTest.kt",
+    "line": 423,
+    "type": "TODO",
+    "content": "//        TODO(\"Not yet implemented\")"
+  },
+  {
+    "file": "genesis\\oracledrive\\rootmanagement\\src\\main\\kotlin\\dev\\aurakai\\auraframefx\\romtools\\ui\\RomToolsScreen.kt",
+    "line": 182,
+    "type": "TODO",
+    "content": "// TODO: Add victory overlay when in COMPLETING/VICTORY states"
+  },
+  {
+    "file": "kai\\sentinelsfortress\\security\\libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  },
+  {
+    "file": "kai\\sentinelsfortress\\security\\src\\test\\kotlin\\BuildScriptTest.kt",
+    "line": 116,
+    "type": "TODO",
+    "content": "// TODO: Add assertions for kotlin libraries"
+  },
+  {
+    "file": "kai\\sentinelsfortress\\security\\src\\test\\kotlin\\BuildScriptTest.kt",
+    "line": 122,
+    "type": "TODO",
+    "content": "// TODO: Add assertions for hilt and ksp wiring"
+  },
+  {
+    "file": "libs\\mvn\\conf\\settings.xml",
+    "line": 85,
+    "type": "TODO",
+    "content": "<!-- TODO Since when can proxies be selected as depicted? -->"
+  }
+]

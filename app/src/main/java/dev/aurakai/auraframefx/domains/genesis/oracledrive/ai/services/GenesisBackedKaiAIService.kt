@@ -79,7 +79,7 @@ class GenesisBackedKaiAIService @Inject constructor(
                 confidence = 0.5f,
                 agentType = AgentType.KAI
             )
-        )
+            )
 
         // Perform security analysis
         val analysisResult = analyzeSecurityThreat(request.prompt)
@@ -101,7 +101,7 @@ class GenesisBackedKaiAIService @Inject constructor(
                 confidence = analysisResult["confidence"] as? Float ?: 0.95f,
                 agentType = AgentType.KAI
             )
-        )
+            )
     }
 
     override suspend fun monitorSecurityStatus(): Map<String, Any> {

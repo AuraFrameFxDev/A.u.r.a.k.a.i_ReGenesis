@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_IDLE
 import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_PROCESSING
 import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRole
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.genesis.models.HistoricalTask
 import kotlinx.coroutines.delay

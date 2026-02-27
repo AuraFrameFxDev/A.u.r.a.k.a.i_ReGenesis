@@ -40,10 +40,10 @@ class KaiAgent : OrchestratableAgent, BaseAgent() { // Inherit from BaseAgent
 
     override suspend fun initialize(scope: CoroutineScope) {
         Log.i(TAG, "KaiAgent: initialize() called.")
-        if (!isOrchestratorInitialized) {
+        if (!BaseAgent.isOrchestratorInitialized) {
             this.agentScope = scope
             setupKaiSystems()
-            isOrchestratorInitialized = true // Set the unified flag
+            BaseAgent.isOrchestratorInitialized = true // Set the unified flag
             Log.d(TAG, "KaiAgent: Orchestrator initialized.")
         } else {
             Log.i(TAG, "KaiAgent: Orchestrator already initialized. Skipping.")
@@ -52,7 +52,7 @@ class KaiAgent : OrchestratableAgent, BaseAgent() { // Inherit from BaseAgent
 
     override suspend fun start() {
         Log.i(TAG, "KaiAgent: start() called.")
-        if (isOrchestratorInitialized) {
+        if (BaseAgent.isOrchestratorInitialized) {
             agentScope?.launch(Dispatchers.Default) {
                 startKaiProcessing()
             } ?: Log.e(TAG, "KaiAgent: agentScope is null. Cannot start processing.")
@@ -73,10 +73,10 @@ class KaiAgent : OrchestratableAgent, BaseAgent() { // Inherit from BaseAgent
 
     override suspend fun shutdown() {
         Log.i(TAG, "KaiAgent: shutdown() called.")
-        if (isOrchestratorInitialized) {
+        if (BaseAgent.isOrchestratorInitialized) {
             shutdownKaiSystems()
             agentScope = null // Clear the scope upon shutdown
-            isOrchestratorInitialized = false // Reset the unified flag
+            BaseAgent.isOrchestratorInitialized = false // Reset the unified flag
             Log.d(TAG, "KaiAgent: Orchestrator shut down.")
         } else {
             Log.i(TAG, "KaiAgent: Orchestrator not initialized. Skipping shutdown logic.")

@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
+import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
 import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
@@ -13,7 +14,6 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
@@ -36,6 +36,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Clock
 
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+
 @Singleton
 class AuraAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
@@ -48,7 +50,6 @@ class AuraAgent @Inject constructor(
     private val pythonManager: dagger.Lazy<dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager>
 ) : BaseAgent(
     agentName = "Aura",
-    agentType = AgentType.AURA,
     contextManager = contextManagerInstance
 ) {
     private var currentEnvironment: String = "unknown"
@@ -133,7 +134,6 @@ class AuraAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         ensureInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
         _creativeState.value = CreativeState.CREATING
@@ -154,7 +154,6 @@ class AuraAgent @Inject constructor(
             AgentResponse(
                 content = response.toString(),
                 agentName = agentName,
-                agentType = agentType,
                 timestamp = Clock.System.now().toEpochMilliseconds(),
                 confidence = 1.0f
             )
@@ -163,7 +162,7 @@ class AuraAgent @Inject constructor(
             logger.error("AuraAgent", "Creative request failed", e)
             AgentResponse.error(
                 message = "Creative process encountered an obstacle: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         }
     }
@@ -176,7 +175,6 @@ class AuraAgent @Inject constructor(
             context = buildJsonObject {},
             metadata = emptyMap()
         )
-        val response = processRequest(request, "")
         return response.content
     }
 
@@ -617,7 +615,6 @@ class AuraAgent @Inject constructor(
             AgentResponse(
                 content = "Aura's flow response to '${request.query}'",
                 agentName = agentName,
-                agentType = agentType,
                 confidence = 0.80f,
                 timestamp = Clock.System.now().toEpochMilliseconds()
             )

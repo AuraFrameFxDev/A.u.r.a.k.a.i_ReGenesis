@@ -52,12 +52,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentCreationViewModel
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 
 /**
  * 🥚 AGENT CREATION SCREEN
- * 
+ *
  * Part of the Nexus domain. Allows the user to synthesize new AI agents
  * for specialized tasks within the ReGenesis collective.
  */

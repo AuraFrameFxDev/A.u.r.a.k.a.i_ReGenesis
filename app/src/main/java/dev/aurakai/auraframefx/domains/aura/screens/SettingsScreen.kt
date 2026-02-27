@@ -1,4 +1,5 @@
-package dev.aurakai.auraframefx.domains.aura.screens
+
+package dev.aurakai.auraframefx.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -18,7 +19,8 @@ fun SettingsScreen(navController: NavController) {
         topBar = {
             TopAppBar(title = { Text("Settings") })
         }
-    ) { paddingValues ->
+    ) {
+        paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

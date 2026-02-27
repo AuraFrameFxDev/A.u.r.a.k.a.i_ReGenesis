@@ -55,6 +55,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import kotlinx.coroutines.delay
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.aurakai.auraframefx.domains.genesis.fusion.ForgeState
 import dev.aurakai.auraframefx.domains.genesis.fusion.InterfaceForgeViewModel
 import kotlinx.coroutines.delay

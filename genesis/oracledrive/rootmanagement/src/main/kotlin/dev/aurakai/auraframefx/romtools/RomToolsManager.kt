@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.romtools
 
+import android.content.Context
+import android.net.Uri
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.romtools.retention.RetentionStatus
 import kotlinx.coroutines.flow.Flow
@@ -73,9 +75,7 @@ interface RomToolsManager {
     suspend fun installRecovery(): Result<Unit>
 }
 
-/**
- * Current state of the ROM tools system.
- */
+// Data classes
 data class RomToolsState(
     val isInitialized: Boolean = false,
     val capabilities: RomCapabilities = RomCapabilities(),
@@ -114,8 +114,8 @@ data class OperationProgress(
  */
 data class RomOperationRequest(
     val operation: RomOperation,
-    val uri: android.net.Uri? = null,
-    val context: android.content.Context
+    val uri: Uri? = null,
+    val context: Context
 )
 
 /**

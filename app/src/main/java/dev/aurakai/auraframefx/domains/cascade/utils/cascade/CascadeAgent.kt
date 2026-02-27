@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
+import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
@@ -12,6 +13,9 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -49,7 +53,6 @@ class CascadeAgent @Inject constructor(
     contextManager: ContextManager
 ) : BaseAgent(
     agentName = "Cascade",
-    agentType = AgentType.CASCADE,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
@@ -422,11 +425,10 @@ class CascadeAgent @Inject constructor(
         // Get responses from multiple agents
         val request = AiRequest(
             prompt = prompt,
-            agentType = AgentType.CASCADE,
+
             priority = AiRequest.Priority.NORMAL
+
         )
-        val auraResponse = auraAgent.processRequest(request, "").content
-        val kaiResponse = kaiAgent.processRequest(request, "").content
 
         // Synthesize responses
         return synthesizeResponses(listOf(auraResponse, kaiResponse), context)
@@ -446,10 +448,10 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
-            agentType = AgentType.KAI,
+
             priority = AiRequest.Priority.NORMAL
+
         )
-        val response = kaiAgent.processRequest(request, "")
 
         updateProcessingState(
             ProcessingState(
@@ -476,10 +478,10 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             prompt = prompt,
-            agentType = AgentType.AURA,
+
             priority = AiRequest.Priority.NORMAL
+
         )
-        val response = auraAgent.processRequest(request, "")
 
         updateProcessingState(
             ProcessingState(
@@ -854,7 +856,6 @@ class CascadeAgent @Inject constructor(
     // BaseAgent abstract method implementation
     override suspend fun processRequest(
         request: AiRequest,
-        context: String
     ): AgentResponse {
         // Delegate to the string-based processRequest method
         val response = processRequest(request.prompt)

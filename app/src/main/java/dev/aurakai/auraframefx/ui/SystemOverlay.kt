@@ -2,15 +2,7 @@ package dev.aurakai.auraframefx.ui
 
 import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,24 +10,24 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationPreferences
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.TextField
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.DropdownMenuItem
 import coil3.compose.AsyncImage
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationPreferences
 
 /**
  * SystemOverlay allows users to customize the system header image.
- * 
+ *
  * Note: Image transformation and custom picker legacy systems have been removed.
  * Current implementation uses Coil 3 for simple background loading.
  */
@@ -94,10 +86,7 @@ fun SystemOverlay() {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
                 // Image selection would typically use a system picker now
                 Button(onClick = { /* TODO: Launch system image picker */ }) {
                     Text("Select Image")
@@ -134,11 +123,7 @@ fun SystemOverlay() {
                                 DropdownMenuItem(text = { Text(scale.toString()) }, onClick = {
                                     headerImageScale = scale
                                     expanded = false
-                                    CustomizationPreferences.saveHeaderImage(
-                                        context,
-                                        headerImageUri,
-                                        headerImageScale
-                                    )
+                                    CustomizationPreferences.saveHeaderImage(context, headerImageUri, headerImageScale)
                                 })
                             }
                         }

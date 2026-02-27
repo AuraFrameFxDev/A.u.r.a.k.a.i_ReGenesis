@@ -78,6 +78,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.ui.customization.ComponentEditor
 import dev.aurakai.auraframefx.ui.customization.ComponentType
 import dev.aurakai.auraframefx.ui.customization.CustomizationState

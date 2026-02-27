@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.config.UserPreferences
+import dev.aurakai.auraframefx.preferences.UserPreferences
 import javax.inject.Singleton
 
 /**

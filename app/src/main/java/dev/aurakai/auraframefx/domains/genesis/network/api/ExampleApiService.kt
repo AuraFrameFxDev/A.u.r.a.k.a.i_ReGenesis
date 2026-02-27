@@ -1,16 +1,9 @@
 package dev.aurakai.auraframefx.domains.genesis.network.api
 
 import dev.aurakai.auraframefx.domains.genesis.network.KtorClient
-import io.ktor.client.request.delete
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.parameter
-import io.ktor.client.request.post
-import io.ktor.client.request.put
-import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,7 +15,7 @@ import javax.inject.Singleton
 class ExampleApiService @Inject constructor(
     private val ktorClient: KtorClient
 ) {
-
+    
     /**
      * Example GET request to fetch data.
      * 
@@ -35,7 +28,7 @@ class ExampleApiService @Inject constructor(
             header("X-Custom-Header", "CustomValue")
         }.bodyAsText()
     }
-
+    
     /**
      * Example POST request to send data.
      * 
@@ -48,7 +41,7 @@ class ExampleApiService @Inject constructor(
             setBody(data)
         }.bodyAsText()
     }
-
+    
     /**
      * Example PUT request to update data.
      * 
@@ -63,7 +56,7 @@ class ExampleApiService @Inject constructor(
             setBody(data)
         }.bodyAsText()
     }
-
+    
     /**
      * Example DELETE request to remove data.
      * 

@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 
 /**

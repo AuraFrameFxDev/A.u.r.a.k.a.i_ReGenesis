@@ -36,6 +36,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,22 +46,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
 /**
- * Overlay Menus Customization Screen
- * Manage floating bubbles and sidebars
+ * Overlay Menus Customization Screen — Aura in control.
+ * Persisted toggles come from AuraUIControlViewModel.
+ * autoHideDelay is UI-only cosmetic state (no system hook yet).
  */
 @Composable
-fun OverlayMenusScreen(navController: NavController) {
-    val auraOverlayEnabled = remember { mutableStateOf(true) }
-    val kaiOverlayEnabled = remember { mutableStateOf(false) }
-    val chatBubbleEnabled = remember { mutableStateOf(true) }
-    val sidebarPosition = remember { mutableStateOf("Right") }
-    val autoHideDelay = remember { mutableFloatStateOf(3f) }
+fun OverlayMenusScreen(
+    navController: NavController,
+    viewModel: AuraUIControlViewModel = hiltViewModel()
+) {
+    val state by viewModel.overlayMenuState.collectAsState()
 
     val sidebarPositions = listOf("Left", "Right", "Bottom")
+    // Cosmetic-only — not yet persisted (no system hook for auto-hide delay)
+    var autoHideDelay by remember { mutableFloatStateOf(3f) }
+    var searchQuery by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -79,15 +85,12 @@ fun OverlayMenusScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Overlay Search
-        var searchQuery by remember { mutableStateOf("") }
+        // Overlay Search (UI-only filter — no server-side filtering needed here)
         androidx.compose.material3.OutlinedTextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
             label = { Text("Search Overlays...", color = Color(0xFFFF4500).copy(alpha = 0.5f)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
             colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFFFF4500),
                 unfocusedBorderColor = Color(0xFFFF4500).copy(alpha = 0.3f),
@@ -99,109 +102,57 @@ fun OverlayMenusScreen(navController: NavController) {
 
         // Preview Card
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.Black.copy(alpha = 0.6f)
-            )
+            modifier = Modifier.fillMaxWidth().height(150.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                // Mock overlay elements
-                if (auraOverlayEnabled.value) {
-                    // Aura overlay preview
+                if (state.auraOverlayEnabled) {
                     Card(
-                        modifier = Modifier
-                            .size(60.dp)
-                            .align(Alignment.TopStart)
-                            .offset(20.dp, 20.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFFF69B4).copy(alpha = 0.8f)
-                        ),
+                        modifier = Modifier.size(60.dp).align(Alignment.TopStart).offset(20.dp, 20.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF69B4).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(30.dp)
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "🎨",
-                                style = MaterialTheme.typography.titleMedium
-                            )
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("🎨", style = MaterialTheme.typography.titleMedium)
                         }
                     }
                 }
 
-                if (kaiOverlayEnabled.value) {
-                    // Kai overlay preview
+                if (state.kaiOverlayEnabled) {
                     Card(
-                        modifier = Modifier
-                            .size(60.dp)
-                            .align(Alignment.TopEnd)
-                            .offset((-20).dp, 20.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFDC143C).copy(alpha = 0.8f)
-                        ),
+                        modifier = Modifier.size(60.dp).align(Alignment.TopEnd).offset((-20).dp, 20.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFDC143C).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(30.dp)
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "🛡️",
-                                style = MaterialTheme.typography.titleMedium
-                            )
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("🛡️", style = MaterialTheme.typography.titleMedium)
                         }
                     }
                 }
 
-                if (chatBubbleEnabled.value) {
-                    // Chat bubble preview
+                if (state.chatBubbleEnabled) {
                     Card(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .align(Alignment.BottomEnd)
-                            .offset((-20).dp, (-20).dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFF4169E1).copy(alpha = 0.8f)
-                        ),
+                        modifier = Modifier.size(50.dp).align(Alignment.BottomEnd).offset((-20).dp, (-20).dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF4169E1).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(25.dp)
                     ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "💬",
-                                style = MaterialTheme.typography.titleSmall
-                            )
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("💬", style = MaterialTheme.typography.titleSmall)
                         }
                     }
                 }
 
-                // Sidebar preview
-                if (sidebarPosition.value != "Bottom") {
-                    val alignment = if (sidebarPosition.value == "Left") Alignment.CenterStart else Alignment.CenterEnd
+                if (state.sidebarPosition != "Bottom") {
+                    val alignment = if (state.sidebarPosition == "Left") Alignment.CenterStart else Alignment.CenterEnd
                     Card(
-                        modifier = Modifier
-                            .width(8.dp)
-                            .height(100.dp)
-                            .align(alignment),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)
-                        ),
+                        modifier = Modifier.width(8.dp).height(100.dp).align(alignment),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)),
                         shape = RoundedCornerShape(4.dp)
                     ) {}
                 } else {
                     Card(
-                        modifier = Modifier
-                            .height(8.dp)
-                            .width(100.dp)
-                            .align(Alignment.BottomCenter),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)
-                        ),
+                        modifier = Modifier.height(8.dp).width(100.dp).align(Alignment.BottomCenter),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)),
                         shape = RoundedCornerShape(4.dp)
                     ) {}
                 }
@@ -210,9 +161,7 @@ fun OverlayMenusScreen(navController: NavController) {
                     text = "Overlay Preview",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.5f),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 8.dp)
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp)
                 )
             }
         }
@@ -233,37 +182,19 @@ fun OverlayMenusScreen(navController: NavController) {
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.Palette,
-                    contentDescription = "Aura Overlay",
-                    tint = Color(0xFFFF69B4),
-                    modifier = Modifier.size(32.dp)
-                )
+                Icon(Icons.Default.Palette, "Aura Overlay", tint = Color(0xFFFF69B4), modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "Aura Creative Overlay",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Floating creative tools and design helpers",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.6f)
-                    )
+                    Text("Aura Creative Overlay", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Floating creative tools and design helpers", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f))
                 }
                 Switch(
-                    checked = auraOverlayEnabled.value,
-                    onCheckedChange = { auraOverlayEnabled.value = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color(0xFFFF69B4),
-                        checkedTrackColor = Color(0xFFFF69B4).copy(alpha = 0.5f)
-                    )
+                    checked = state.auraOverlayEnabled,
+                    onCheckedChange = { viewModel.setAuraOverlayEnabled(it) },
+                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFFFF69B4), checkedTrackColor = Color(0xFFFF69B4).copy(alpha = 0.5f))
                 )
             }
         }
@@ -276,37 +207,19 @@ fun OverlayMenusScreen(navController: NavController) {
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.Security,
-                    contentDescription = "Kai Overlay",
-                    tint = Color(0xFFDC143C),
-                    modifier = Modifier.size(32.dp)
-                )
+                Icon(Icons.Default.Security, "Kai Overlay", tint = Color(0xFFDC143C), modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "Kai Security Overlay",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Security monitoring and protection tools",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.6f)
-                    )
+                    Text("Kai Security Overlay", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Security monitoring and protection tools", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f))
                 }
                 Switch(
-                    checked = kaiOverlayEnabled.value,
-                    onCheckedChange = { kaiOverlayEnabled.value = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color(0xFFDC143C),
-                        checkedTrackColor = Color(0xFFDC143C).copy(alpha = 0.5f)
-                    )
+                    checked = state.kaiOverlayEnabled,
+                    onCheckedChange = { viewModel.setKaiOverlayEnabled(it) },
+                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFFDC143C), checkedTrackColor = Color(0xFFDC143C).copy(alpha = 0.5f))
                 )
             }
         }
@@ -319,37 +232,19 @@ fun OverlayMenusScreen(navController: NavController) {
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Chat,
-                    contentDescription = "Chat Bubble",
-                    tint = Color(0xFF4169E1),
-                    modifier = Modifier.size(32.dp)
-                )
+                Icon(Icons.AutoMirrored.Filled.Chat, "Chat Bubble", tint = Color(0xFF4169E1), modifier = Modifier.size(32.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "Agent Chat Bubble",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Draggable chat interface for AI agents",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.6f)
-                    )
+                    Text("Agent Chat Bubble", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Draggable chat interface for AI agents", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f))
                 }
                 Switch(
-                    checked = chatBubbleEnabled.value,
-                    onCheckedChange = { chatBubbleEnabled.value = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color(0xFF4169E1),
-                        checkedTrackColor = Color(0xFF4169E1).copy(alpha = 0.5f)
-                    )
+                    checked = state.chatBubbleEnabled,
+                    onCheckedChange = { viewModel.setChatBubbleEnabled(it) },
+                    colors = SwitchDefaults.colors(checkedThumbColor = Color(0xFF4169E1), checkedTrackColor = Color(0xFF4169E1).copy(alpha = 0.5f))
                 )
             }
         }
@@ -362,60 +257,34 @@ fun OverlayMenusScreen(navController: NavController) {
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Agent Sidebar",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
-                )
+                Text("Agent Sidebar", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Position
-                Text(
-                    text = "Position",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
+                Text("Position", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.8f))
                 Spacer(modifier = Modifier.height(8.dp))
                 sidebarPositions.forEach { position ->
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = sidebarPosition.value == position,
-                            onClick = { sidebarPosition.value = position },
-                            colors = RadioButtonDefaults.colors(
-                                selectedColor = Color(0xFFFF4500)
-                            )
+                            selected = state.sidebarPosition == position,
+                            onClick = { viewModel.setSidebarPosition(position) },
+                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFFFF4500))
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = position,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White
-                        )
+                        Text(position, style = MaterialTheme.typography.bodyMedium, color = Color.White)
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Auto-hide delay
-                Text(
-                    text = "Auto-hide Delay",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
-                Text(
-                    text = "${autoHideDelay.floatValue.toInt()} seconds",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color(0xFFFF4500)
-                )
+                Text("Auto-hide Delay", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.8f))
+                Text("${autoHideDelay.toInt()} seconds", style = MaterialTheme.typography.bodySmall, color = Color(0xFFFF4500))
                 Spacer(modifier = Modifier.height(8.dp))
                 Slider(
-                    value = autoHideDelay.floatValue,
-                    onValueChange = { autoHideDelay.floatValue = it },
+                    value = autoHideDelay,
+                    onValueChange = { autoHideDelay = it },
                     valueRange = 1f..10f,
                     colors = SliderDefaults.colors(
                         thumbColor = Color(0xFFFF4500),
@@ -428,17 +297,13 @@ fun OverlayMenusScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Overlay Permissions
+        // Overlay Permissions (read-only status display)
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "System Permissions",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
-                )
+                Text("System Permissions", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 Spacer(modifier = Modifier.height(16.dp))
 
                 val permissions = listOf(
@@ -449,9 +314,7 @@ fun OverlayMenusScreen(navController: NavController) {
 
                 permissions.forEach { (permission, granted) ->
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -461,18 +324,10 @@ fun OverlayMenusScreen(navController: NavController) {
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text = permission,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White,
-                            modifier = Modifier.weight(1f)
-                        )
+                        Text(permission, style = MaterialTheme.typography.bodyMedium, color = Color.White, modifier = Modifier.weight(1f))
                         if (!granted) {
                             TextButton(onClick = { /* Request permission */ }) {
-                                Text(
-                                    text = "Grant",
-                                    color = Color(0xFFFF4500)
-                                )
+                                Text("Grant", color = Color(0xFFFF4500))
                             }
                         }
                     }
@@ -482,15 +337,14 @@ fun OverlayMenusScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Apply Button
+        // Changes are auto-persisted on every toggle
         Button(
-            onClick = { /* Apply overlay settings */ },
+            onClick = { /* Aura applies changes automatically on each toggle */ },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFFF4500)
-            )
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF4500)),
+            enabled = false
         ) {
-            Text("Apply Changes", color = Color.White)
+            Text("Changes Applied Automatically", color = Color.White)
         }
     }
 }

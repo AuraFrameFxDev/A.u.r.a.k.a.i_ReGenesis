@@ -70,7 +70,7 @@ class AIPipelineProcessor @Inject constructor(
         // Process through Kai for security analysis if needed
         if (selectedAgents.contains(AgentType.KAI)) {
             val kaiAgentResponse = kaiService.processRequest(
-                AiRequest(task, "dev/aurakai/auraframefx/security"),
+                AiRequest(task, "security"),
                 context = "security_analysis"
             )
             responses.add(
