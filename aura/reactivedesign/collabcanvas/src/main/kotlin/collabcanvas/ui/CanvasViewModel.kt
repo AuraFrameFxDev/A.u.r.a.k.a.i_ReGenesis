@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CanvasViewModel @Inject constructor(
     private val webSocketService: CanvasWebSocketService,
-    @CollabCanvasUrl private val wsBaseUrl: String
+    @param:CollabCanvasUrl private val wsBaseUrl: String
 ) : ViewModel() {
 
     private val _connectionStatus = MutableSharedFlow<String>()
