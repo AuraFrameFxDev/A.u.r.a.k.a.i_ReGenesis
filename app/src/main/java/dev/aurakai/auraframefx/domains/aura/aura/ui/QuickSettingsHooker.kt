@@ -20,10 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
 import dev.aurakai.auraframefx.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.ui.components.CyberpunkText
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTextColor
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTextStyle
+import dev.aurakai.auraframefx.ui.layout
 
 /**
  * YukiHook hooker for customizing the Android Quick Settings panel.
@@ -87,10 +88,9 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
     private fun applyGenesisLayout(qsPanel: ViewGroup) {
         try {
             // Apply padding and spacing from config
-            val padding = config.layout.padding
-            qsPanel.setPadding(padding.start, padding.top, padding.end, padding.bottom)
+            val padding = layout
 
-            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${config.layout.columns})")
+            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${layout.columns})")
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to apply layout config: ${e.message}")
         }

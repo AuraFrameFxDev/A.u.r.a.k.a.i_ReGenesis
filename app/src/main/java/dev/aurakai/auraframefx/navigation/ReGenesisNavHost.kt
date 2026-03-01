@@ -36,9 +36,6 @@ import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomiz
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen

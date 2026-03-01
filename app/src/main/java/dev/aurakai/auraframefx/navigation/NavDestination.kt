@@ -20,15 +20,8 @@ package dev.aurakai.auraframefx.navigation
  *
  * LEVEL 3: Tool Screens (Individual features within each domain)
  */
-sealed class NavDestination(val route: String) {
+sealed class NavDestination(val route: String, string: String, nothing: Nothing?) {
 
-    // Agent Hub
-    object AgentHub : NavDestination("agent_hub", "Agent Hub", null)
-    object DirectChat : NavDestination("direct_chat", "Direct Chat", null)
-    object TaskAssignment : NavDestination("task_assignment", "Task Assignment", null)
-    object AgentMonitoring : NavDestination("agent_monitoring", "Agent Monitoring", null)
-    object FusionMode : NavDestination("fusion", "Fusion Mode", null)
-    object CodeAssist : NavDestination("code_assist", "Code Assist", null)
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 1: PRIMARY GATES (Main Entry Points)
@@ -226,3 +219,11 @@ sealed class NavDestination(val route: String) {
     data object TutorialVideos : ReGenesisNavHost("tutorial_videos")
     data object Settings : ReGenesisNavHost("settings")
 }
+
+// Agent Hub
+object AgentHub : NavDestination("agent_hub", "Agent Hub", null)
+object TaskAssignment : NavDestination("task_assignment", "Task Assignment", null)
+object DirectChat : NavDestination("direct_chat", "Direct Chat", null)
+object AgentMonitoring : NavDestination("agent_monitoring", "Agent Monitoring", null)
+object FusionMode : NavDestination("fusion", "Fusion Mode", null)
+object CodeAssist : NavDestination("code_assist", "Code Assist", null)
