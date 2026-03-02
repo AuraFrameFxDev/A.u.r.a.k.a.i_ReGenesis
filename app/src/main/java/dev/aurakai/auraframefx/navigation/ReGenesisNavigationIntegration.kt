@@ -13,11 +13,7 @@ package dev.aurakai.auraframefx.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ColorBlendrScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconPickerScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyCategoryDetailScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyPickerScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.PixelLauncherEnhancedScreen
+// Imports removed due to missing screens
 
 // ============================================================================
 // AURA CUSTOMIZATION NAVIGATION GRAPH
@@ -35,25 +31,14 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     // ========================================
 
     composable(ReGenesisNavHost.IconifyPicker.route) {
-        IconifyPickerScreen(
-            onNavigateBack = onNavigateBack,
-            onNavigateToCategory = { category ->
-                navController.navigate(ReGenesisNavHost.IconifyCategory.createRoute(category))
-            }
-        )
+        // TODO: Re-add IconifyPickerScreen
     }
 
     composable(
         route = ReGenesisNavHost.IconifyCategory.route
     ) { backStackEntry ->
         val category = backStackEntry.arguments?.getString("category") ?: "Icon Packs"
-        IconifyCategoryDetailScreen(
-            categoryName = category,
-            onNavigateBack = onNavigateBack,
-            onNavigateToPicker = { cat ->
-                navController.navigate(ReGenesisNavHost.IconPicker.createRoute(cat))
-            }
-        )
+        // TODO: Re-add IconifyCategoryDetailScreen
     }
 
     // ========================================
@@ -61,9 +46,7 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     // ========================================
 
     composable(ReGenesisNavHost.ColorBlendr.route) {
-        ColorBlendrScreen(
-            onNavigateBack = onNavigateBack
-        )
+        // TODO: Re-add ColorBlendrScreen
     }
 
     // ========================================
@@ -71,17 +54,12 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     // ========================================
 
     composable(ReGenesisNavHost.PixelLauncherEnhanced.route) {
-        PixelLauncherEnhancedScreen(
-            onNavigateBack = onNavigateBack
-        )
+        // TODO: Re-add PixelLauncherEnhancedScreen
     }
 
     composable(ReGenesisNavHost.IconPicker.route) { backStackEntry ->
         val category = backStackEntry.arguments?.getString("category") ?: ""
-        IconPickerScreen(
-            category = category,
-            onNavigateBack = { navController.popBackStack() }
-        )
+        // TODO: Re-add IconPickerScreen
     }
 }
 

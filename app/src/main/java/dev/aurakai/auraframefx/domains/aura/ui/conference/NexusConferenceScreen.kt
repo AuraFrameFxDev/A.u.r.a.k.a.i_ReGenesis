@@ -14,8 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.cascade.trinity.TrinityViewModel
-import dev.aurakai.auraframefx.models.AgentMessage
+import dev.aurakai.auraframefx.domains.cascade.trinity.TrinityViewModel
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraPurple
+import dev.aurakai.auraframefx.domains.kai.ui.theme.KaiRed
+import dev.aurakai.auraframefx.domains.genesis.ui.theme.GenesisTeal
+import dev.aurakai.auraframefx.domains.cascade.ui.theme.CascadeGreen
 
 @Composable
 fun NexusConferenceScreen(

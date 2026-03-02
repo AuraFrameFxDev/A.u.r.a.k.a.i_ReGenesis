@@ -1,6 +1,3 @@
 package dev.aurakai.auraframefx.ui
 
-annotation class QuickSettingsConfig(abstract val showGenesisIndicator: Boolean) {
-}
-
-val layout: Any = TODO()
+annotation class QuickSettingsConfig(val showGenesisIndicator: Boolean)

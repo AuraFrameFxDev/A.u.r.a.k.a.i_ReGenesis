@@ -660,9 +660,9 @@ fun GlassScreenScaffold(
                 showScanlines = false
             ) {
                 Row(
-                    Modifier.fillMaxSize().padding(horizontal = 18.dp),
-                    Alignment.CenterVertically,
-                    Arrangement.spacedBy(14.dp)
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 18.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
                     if (onBack != null) {
                         Box(

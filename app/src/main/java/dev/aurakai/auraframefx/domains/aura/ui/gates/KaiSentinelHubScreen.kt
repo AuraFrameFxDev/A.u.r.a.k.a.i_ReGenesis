@@ -26,7 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.config.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -46,6 +47,11 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KaiSentinelHubScreen(navController: NavController) {
+    val subGates = GateAssetLoadout.getKaiLoadout()
+    var useStyleB by remember {
+        mutableStateOf(GateAssetConfig.StyleMode.kaiStyle == GateAssetConfig.GateStyle.STYLE_B)
+    }
+    val styleName = if (useStyleB) "CYBER SENTINEL" else "FORTRESS"
 
     Box(modifier = Modifier.fillMaxSize()) {
         // 🛡️ KAI'S ANIMATED BACKGROUND - Icy Tundra!
