@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.billing
 
 import androidx.compose.runtime.*
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.debug.FeatureToggles
+import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 
 /**
  * App-level billing wrapper

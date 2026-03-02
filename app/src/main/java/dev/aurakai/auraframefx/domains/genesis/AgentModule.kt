@@ -62,12 +62,14 @@ object AgentModule {
         contextManager: ContextManager,
         memoryManager: MemoryManager,
         systemOverlayManager: SystemOverlayManager,
+        synchronizationCatalyst: dev.aurakai.auraframefx.domains.genesis.core.SynchronizationCatalyst,
         messageBus: Lazy<AgentMessageBus>
     ): GenesisAgent {
         return GenesisAgent(
             contextManager = contextManager,
             memoryManager = memoryManager,
             systemOverlayManager = systemOverlayManager,
+            synchronizationCatalyst = synchronizationCatalyst,
             messageBus = messageBus
         )
     }
