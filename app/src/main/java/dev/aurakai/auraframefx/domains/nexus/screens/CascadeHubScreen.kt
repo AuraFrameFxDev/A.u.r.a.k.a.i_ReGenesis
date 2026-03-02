@@ -49,21 +49,21 @@ fun CascadeHubScreen(navController: NavController) {
             title = "Cascade Vision",
             subtitle = "Pattern Recognition HUD",
             icon = Icons.Default.RemoveRedEye,
-            destination = NavDestination.CascadeVision,
+            destination = "cascade_vision",
             color = Color(0xFF00FFD4)
         ),
         CascadeTool(
             title = "Data Monitoring",
             subtitle = "Real-time Stream Analysis",
             icon = Icons.Default.StackedLineChart,
-            destination = NavDestination.DataStreamMonitoring,
+            destination = dev.aurakai.auraframefx.navigation.NavDestination.DataStreamMonitoring.route,
             color = Color(0xFF00E5FF)
         ),
         CascadeTool(
             title = "Neural Link",
             subtitle = "Direct Matrix Interface",
             icon = Icons.Default.Hub,
-            destination = NavDestination.NeuralNetwork,
+            destination = dev.aurakai.auraframefx.navigation.NavDestination.NeuralNetwork.route,
             color = Color(0xFFB026FF)
         )
     )
@@ -108,7 +108,7 @@ fun CascadeHubScreen(navController: NavController) {
             ) {
                 items(tools) { tool ->
                     CascadeToolCard(tool) {
-                        navController.navigate(tool.destination.route)
+                        navController.navigate(tool.destination)
                     }
                 }
             }
@@ -162,6 +162,6 @@ private data class CascadeTool(
     val title: String,
     val subtitle: String,
     val icon: ImageVector,
-    val destination: NavDestination,
+    val destination: String,
     val color: Color
 )
