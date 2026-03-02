@@ -14,7 +14,7 @@
 
 package dev.aurakai.auraframefx.domains.aura.ui.screens.aura.catalogs
 
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.SettingType
+import dev.aurakai.auraframefx.domains.aura.lab.SettingType
 
 object IconifyExpandedCatalog {
 
@@ -326,7 +326,7 @@ object IconifyExpandedCatalog {
             "statusbar_clock_position",
             "Clock Position",
             "Left, Center, or Right",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -334,7 +334,7 @@ object IconifyExpandedCatalog {
             "statusbar_clock_am_pm_style",
             "AM/PM Style",
             "Show/hide AM/PM indicator",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -358,7 +358,7 @@ object IconifyExpandedCatalog {
             "statusbar_clock_date_format",
             "Date Format",
             "Customize date display",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -408,7 +408,7 @@ object IconifyExpandedCatalog {
             "statusbar_network_traffic_position",
             "Traffic Position",
             "Left or right side",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -440,7 +440,7 @@ object IconifyExpandedCatalog {
             "statusbar_logo",
             "Custom Logo",
             "Add custom logo to status bar",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             false,
             xpReward = 20
         ),
@@ -448,7 +448,7 @@ object IconifyExpandedCatalog {
             "statusbar_logo_position",
             "Logo Position",
             "Left or right placement",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -552,7 +552,7 @@ object IconifyExpandedCatalog {
             "qs_header_image",
             "Header Image",
             "Custom header background",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             false,
             xpReward = 25
         ),
@@ -593,7 +593,7 @@ object IconifyExpandedCatalog {
             "qs_brightness_slider_position",
             "Brightness Slider Position",
             "Top or bottom",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -665,7 +665,7 @@ object IconifyExpandedCatalog {
             "qs_footer_text",
             "Footer Custom Text",
             "Custom message in footer",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         )
@@ -712,7 +712,7 @@ object IconifyExpandedCatalog {
             "lockscreen_clock_date_format",
             "Date Format",
             "Customize date display",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -729,7 +729,7 @@ object IconifyExpandedCatalog {
             "lockscreen_depth_wallpaper_subject_file",
             "Depth Subject Image",
             "Foreground cutout image",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             true,
             true,
             xpReward = 30
@@ -794,7 +794,7 @@ object IconifyExpandedCatalog {
             "lockscreen_carrier_text_value",
             "Custom Carrier Text",
             "Replace carrier name",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -818,7 +818,7 @@ object IconifyExpandedCatalog {
             "lockscreen_charging_info_alignment",
             "Charging Info Alignment",
             "Left, center, or right",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -955,7 +955,7 @@ object IconifyExpandedCatalog {
             "navbar_style",
             "Navbar Style",
             "Stock, Pill, Invisible",
-            SettingType.LIST,
+            SettingType.SELECTION,
             true,
             xpReward = 20
         ),
@@ -1089,7 +1089,7 @@ object IconifyExpandedCatalog {
             "xposed_header_image",
             "QS Header Image (Xposed)",
             "Inject custom header via hook",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             false,
             true,
             requiresTrinityConsensus = true,
