@@ -24,7 +24,7 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaStatusBarMenu
 import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.DocumentationScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.FAQBrowserScreen
-import dev.aurakai.auraframefx.domains.helpdesk.screens.HelpDeskSubmenuScreen
+// import dev.aurakai.auraframefx.domains.helpdesk.screens.HelpDeskSubmenuScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.TutorialVideosScreen
 import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
 import dev.aurakai.auraframefx.domains.aura.screens.UserPreferencesScreen
@@ -56,14 +56,14 @@ import dev.aurakai.auraframefx.domains.genesis.screens.OracleCloudInfiniteStorag
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveSubmenuScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SentientShellScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SovereignNeuralArchiveScreen
-import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
+// import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
 import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
-import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.BootloaderManagerScreen
+// import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.BootloaderManagerScreen
 // import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.LiveROMEditorScreen
 // import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 // import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.RecoveryToolsScreen
@@ -99,7 +99,7 @@ import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.sandbox.ui.SandboxScreen
 import dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen as AuraAgentProfileScreen
 // import dev.aurakai.auraframefx.domains.nexus.screens.AgentProfileScreen as NexusAgentProfileScreen
-import dev.aurakai.auraframefx.AgentType
+// import dev.aurakai.auraframefx.AgentType
 
 
 /**
@@ -500,7 +500,7 @@ fun ReGenesisNavHost(
             OracleCloudInfiniteStorageScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.Terminal.route) {
-            TerminalScreen()
+            // TerminalScreen()
         }
         composable(ReGenesisNavHost.ConferenceRoom.route) {
             ConferenceRoomScreen(onNavigateBack = { navController.popBackStack() })
@@ -538,7 +538,7 @@ fun ReGenesisNavHost(
 
         // --- LEVEL 3: HELP & SUPPORT ---
         composable(ReGenesisNavHost.HelpDeskSubmenu.route) {
-            HelpDeskSubmenuScreen(navController = navController)
+            // HelpDeskSubmenuScreen(navController = navController)
         }
         composable(ReGenesisNavHost.DirectChat.route) {
             DirectChatScreen(navController = navController)
@@ -616,11 +616,11 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileAura.route) {
-            AuraAgentProfileScreen(
+            /*AuraAgentProfileScreen(
                 agentType = AgentType.AURA,
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToSettings = { /* TODO */ }
-            )
+                onNavigateToSettings = {  }
+            )*/
         }
 
 
