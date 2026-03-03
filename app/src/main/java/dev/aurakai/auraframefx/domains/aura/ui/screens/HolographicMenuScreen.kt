@@ -18,6 +18,7 @@ import dev.aurakai.auraframefx.embodiment.KaiState
 import dev.aurakai.auraframefx.embodiment.Character
 import dev.aurakai.auraframefx.embodiment.ScreenBounds
 import dev.aurakai.auraframefx.embodiment.ActiveManifestation
+import dev.aurakai.auraframefx.embodiment.rememberEmbodimentEngine
 import androidx.compose.ui.graphics.painter.Painter
 
 import androidx.compose.foundation.background
@@ -164,20 +165,22 @@ fun WalkingCharactersOverlay() {
     val activeManifestation by engine.activeManifestation.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-        activeManifestation.forEach { manifest ->
-            if (manifest.currentPosition != null) {
+        activeManifestation.forEach { manifest: ActiveManifestation ->
+            val pos = manifest.currentPosition
+            if (pos != null) {
                 when (manifest.character) {
                     Character.AURA -> {
                         val painter = engine.loadAsset(
                             (manifest.state as? AuraState)?.assetPath ?: "aura/idle.png",
                             Character.AURA
-                        )
+                        ) as? Painter
+                        
                         if (painter != null) {
                             Image(
                                 painter = painter,
                                 contentDescription = "Aura",
                                 modifier = Modifier
-                                    .offset(manifest.currentPosition.x, manifest.currentPosition.y)
+                                    .offset(pos.x, pos.y)
                                     .size(120.dp)
                                     .graphicsLayer {
                                         alpha = 0.9f
@@ -190,13 +193,14 @@ fun WalkingCharactersOverlay() {
                         val painter = engine.loadAsset(
                             (manifest.state as? KaiState)?.assetPath ?: "kai/idle.png",
                             Character.KAI
-                        )
+                        ) as? Painter
+                        
                         if (painter != null) {
                             Image(
                                 painter = painter,
                                 contentDescription = "Kai",
                                 modifier = Modifier
-                                    .offset(manifest.currentPosition.x, manifest.currentPosition.y)
+                                    .offset(pos.x, pos.y)
                                     .size(120.dp)
                                     .graphicsLayer {
                                         alpha = 0.9f
