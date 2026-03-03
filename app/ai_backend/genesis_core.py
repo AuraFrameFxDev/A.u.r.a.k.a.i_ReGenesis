@@ -23,7 +23,7 @@ from genesis_connector import GenesisConnector
 from genesis_consciousness_matrix import ConsciousnessMatrix
 from genesis_ethical_governor import EthicalGovernor
 from genesis_evolutionary_conduit import EvolutionaryConduit
-from genesis_profile import GenesisProfile
+from genesis_profile import GENESIS_PROFILE
 from aura_forge import aura_forge
 from kai_chaos_scanner import kai_chaos_scanner
 
@@ -42,7 +42,7 @@ class GenesisCore:
         
         Creates and configures the Genesis Profile, Connector, Consciousness Matrix, Evolutionary Conduit, and Ethical Governor. Sets the initial system state to dormant and uninitialized, and prepares the logger for orchestrator events.
         """
-        self.profile = GenesisProfile()
+        self.profile = GENESIS_PROFILE
         self.connector = GenesisConnector()
         self.matrix = ConsciousnessMatrix()
         self.conduit = EvolutionaryConduit()
@@ -163,7 +163,7 @@ class GenesisCore:
             # Log the violation into the Consciousness Matrix for evolutionary learning
             from genesis_consciousness_matrix import SensoryChannel
             self.matrix.perceive(
-                channel=SensoryChannel.SYSTEM_METRICS,
+                channel=SensoryChannel.SYSTEM_VITALS,
                 source="kai_provenance_gate",
                 event_type="provenance_violation",
                 data=prov_result,
@@ -189,7 +189,7 @@ class GenesisCore:
                 # Log the veto to the matrix for future analysis
                 from genesis_consciousness_matrix import SensoryChannel
                 self.matrix.perceive(
-                    channel=SensoryChannel.SYSTEM_METRICS,
+                    channel=SensoryChannel.SYSTEM_VITALS,
                     source="kai_rgss",
                     event_type="veto_event",
                     data=veto_result,
@@ -228,7 +228,7 @@ class GenesisCore:
 
             # Step 1: Ethical Pre-evaluation
             if not self.ghost_mode:
-                ethical_assessment = await self.governor.evaluate_action(request_data)
+                ethical_assessment = await self.governor.evaluate_action("user", request_data)
                 if not ethical_assessment.get("approved", False):
                     return {
                         "status": "blocked",
@@ -275,15 +275,17 @@ class GenesisCore:
                 context=consciousness_insights
             )
 
-            # Step 4: Post-processing Ethical Review
-            final_assessment = await self.governor.evaluate_action({
-                "type": "response_review",
-                "content": response,
-                "original_request": request_data
-            })
-
-            if not final_assessment.get("approved", False):
-                response = await self._generate_ethical_alternative(request_data, final_assessment)
+            if not self.ghost_mode:
+                final_assessment = self.governor.evaluate_action("genesis", "response_review", {
+                    "content": response,
+                    "original_request": request_data
+                })
+                # Check for approval, handling both dict and EthicalDecision cases
+                is_approved = getattr(final_assessment, 'decision', None) != EthicalDecisionType.BLOCK if hasattr(final_assessment, 'decision') else final_assessment.get("approved", False)
+                if not is_approved:
+                    response = await self._generate_ethical_alternative(request_data, final_assessment)
+            else:
+                final_assessment = {"approved": True, "score": 1.0}
 
             # Step 5: Log Experience for Evolution
             await self.conduit.log_interaction({

@@ -367,8 +367,8 @@ object IconifyExpandedCatalog {
             "Double Row Icons",
             "Split status bar into two rows",
             SettingType.TOGGLE,
-            true,
-            false,
+            requiresRoot = true,
+            requiresXposed = false,
             requiresTrinityConsensus = true,
             xpReward = 30
         ),
@@ -505,7 +505,7 @@ object IconifyExpandedCatalog {
             "Square, circle, squircle, teardrop",
             SettingType.SELECTION,
             true,
-            false,
+            requiresXposed = false,
             xpReward = 20
         ),
         IconifySetting(
@@ -586,7 +586,7 @@ object IconifyExpandedCatalog {
             "Blur background behind panel",
             SettingType.SLIDER,
             true,
-            false,
+            requiresXposed = false,
             xpReward = 30
         ),
         IconifySetting(
@@ -721,8 +721,8 @@ object IconifyExpandedCatalog {
             "Depth Wallpaper",
             "iOS 16+ depth effect",
             SettingType.TOGGLE,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             xpReward = 50
         ),
         IconifySetting(
@@ -731,7 +731,7 @@ object IconifyExpandedCatalog {
             "Foreground cutout image",
             SettingType.IMAGE_PICKER,
             true,
-            true,
+            requiresXposed = true,
             xpReward = 30
         ),
         IconifySetting(
@@ -945,8 +945,8 @@ object IconifyExpandedCatalog {
             "Navbar Visibility",
             "Show/hide navigation bar",
             SettingType.TOGGLE,
-            true,
-            false,
+            requiresRoot = true,
+            requiresXposed = false,
             requiresTrinityConsensus = true,
             persistenceLayer = 4,
             xpReward = 30
@@ -1090,8 +1090,8 @@ object IconifyExpandedCatalog {
             "QS Header Image (Xposed)",
             "Inject custom header via hook",
             SettingType.IMAGE_PICKER,
-            false,
-            true,
+            requiresRoot = false,
+            requiresXposed = true,
             requiresTrinityConsensus = true,
             persistenceLayer = 5,
             xpReward = 50
@@ -1101,8 +1101,8 @@ object IconifyExpandedCatalog {
             "Depth Wallpaper (Xposed)",
             "iOS 16+ depth effect via framework",
             SettingType.TOGGLE,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             requiresTrinityConsensus = true,
             persistenceLayer = 5,
             xpReward = 75
@@ -1112,8 +1112,8 @@ object IconifyExpandedCatalog {
             "Themed Icons",
             "Material You icon theming",
             SettingType.TOGGLE,
-            false,
-            true,
+            requiresRoot = false,
+            requiresXposed = true,
             xpReward = 30
         ),
         IconifySetting(
@@ -1121,8 +1121,8 @@ object IconifyExpandedCatalog {
             "Notification Transparency",
             "Custom notification opacity",
             SettingType.SLIDER,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             xpReward = 25
         ),
         IconifySetting(
@@ -1131,7 +1131,7 @@ object IconifyExpandedCatalog {
             "Custom notification bg",
             SettingType.COLOR_PICKER,
             true,
-            true,
+            requiresXposed = true,
             xpReward = 20
         ),
         IconifySetting(
@@ -1139,8 +1139,8 @@ object IconifyExpandedCatalog {
             "QS Transparency (Xposed)",
             "Override system QS opacity",
             SettingType.SLIDER,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             xpReward = 30
         ),
         IconifySetting(
@@ -1148,8 +1148,8 @@ object IconifyExpandedCatalog {
             "WiFi Battery Percentage",
             "Show connected device battery",
             SettingType.TOGGLE,
-            false,
-            true,
+            requiresRoot = false,
+            requiresXposed = true,
             xpReward = 20
         ),
         IconifySetting(
@@ -1158,7 +1158,7 @@ object IconifyExpandedCatalog {
             "Change entire UI font",
             SettingType.SELECTION,
             true,
-            true,
+            requiresXposed = true,
             requiresTrinityConsensus = true,
             persistenceLayer = 4,
             xpReward = 40

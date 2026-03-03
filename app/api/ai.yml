@@ -116,6 +116,16 @@ openapi: 3.1.0
       externalDocs:
         description: RGSS Guide
         url: https://docs.auraframefx.com/api/rgss
+    - name: ROM Tools
+      description: Boot image analysis, ROM structure inspection, and security scanning
+      externalDocs:
+        description: ROM Tools Guide
+        url: https://docs.auraframefx.com/api/romtools
+    - name: Sandbox
+      description: UI component experimentation and testing environment
+      externalDocs:
+        description: Sandbox Guide
+        url: https://docs.auraframefx.com/api/sandbox
     - name: System
       description: Health and operational status
   security:
@@ -131,6 +141,8 @@ openapi: 3.1.0
       tags: [ Oracle Drive, RGSS ]
     - name: Customization
       tags: [ System Customization ]
+    - name: ROM Engineering
+      tags: [ ROM Tools, Sandbox ]
     - name: Platform
       tags: [ Analytics, Security, Plugins ]
   paths:
@@ -811,6 +823,83 @@ openapi: 3.1.0
           '401':
             $ref: '#/components/responses/UnauthorizedError'
 
+    /ai/generate/unified:
+      post:
+        operationId: generateUnified
+        tags: [ AI Content ]
+        summary: Generate Unified Multi-Agent Response
+        description: |
+          Orchestrates multiple AI agents to produce a single, cohesive response.
+          The system automatically selects and coordinates the best agents for the prompt,
+          or you can specify which agents to involve.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnifiedGenerationRequest'
+              examples:
+                auto_orchestrated:
+                  value:
+                    prompt: "Analyze this code for bugs, security issues, and suggest performance improvements."
+                    context:
+                      code: "def process(data): return eval(data)"
+                      language: "python"
+                agent_specified:
+                  value:
+                    prompt: "Create a comprehensive security report with creative recommendations."
+                    agents: [ "Kai", "Genesis", "AuraShield" ]
+        responses:
+          '200':
+            description: Unified response generated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UnifiedGenerationResponse'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
+    /ai/generate/image-description:
+      post:
+        operationId: generateImageDescription
+        tags: [ AI Content ]
+        summary: Generate Image Description
+        description: |
+          Analyzes an image and generates a detailed textual description.
+          Useful for accessibility, content cataloging, and AI-powered image understanding.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateImageDescriptionRequest'
+              examples:
+                photo_analysis:
+                  value:
+                    imageUrl: "https://cdn.auraframefx.com/uploads/photo-001.jpg"
+                    context: "Product catalog image for e-commerce listing"
+        responses:
+          '200':
+            description: Image description generated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/GenerateImageDescriptionResponse'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
     # ============================================================
     # AI AGENTS
     # ============================================================
@@ -897,6 +986,122 @@ openapi: 3.1.0
             $ref: '#/components/responses/UnauthorizedError'
           '404':
             $ref: '#/components/responses/NotFoundError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
+    /agents/status:
+      get:
+        operationId: getAgentStatuses
+        tags: [ AI Agents ]
+        summary: Get Status of All AI Agents
+        description: Returns the current processing state, vision state, and last activity for every registered agent.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        responses:
+          '200':
+            description: Agent statuses retrieved successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    total: { type: integer }
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/AgentStatusInfo'
+                examples:
+                  all_agents:
+                    value:
+                      total: 3
+                      data:
+                        - agentType: "Aura"
+                          processingState: "idle"
+                          visionState: "active"
+                          lastActivity: "2025-10-01T08:15:00Z"
+                          currentTask: null
+                        - agentType: "Kai"
+                          processingState: "processing"
+                          visionState: "active"
+                          lastActivity: "2025-10-01T08:14:30Z"
+                          currentTask: "Security scan in progress"
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+
+    /agents/aura/empathy:
+      post:
+        operationId: processAuraEmpathy
+        tags: [ AI Agents ]
+        summary: Process Empathetic AI Analysis (Aura)
+        description: |
+          Submits input to Aura's empathy engine for emotional analysis.
+          Returns an empathy score, emotional breakdown, and context-aware recommendations.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuraEmpathyRequest'
+              examples:
+                user_message:
+                  value:
+                    input: "I'm feeling overwhelmed with work deadlines."
+                    context: "Workplace productivity assistant"
+                    sensitivity: MEDIUM
+        responses:
+          '200':
+            description: Empathetic analysis completed
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AuraEmpathyResponse'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
+    /agents/kai/security:
+      post:
+        operationId: performKaiSecurityAnalysis
+        tags: [ AI Agents ]
+        summary: Perform Kai Security Analysis
+        description: |
+          Invokes Kai's specialized security analysis engine to scan a target
+          for vulnerabilities, malware, privacy issues, or integrity violations.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KaiSecurityRequest'
+              examples:
+                vulnerability_scan:
+                  value:
+                    target: "/api/v2/user/data"
+                    scanType: VULNERABILITY
+                    depth: DEEP
+                malware_scan:
+                  value:
+                    target: "com.example.app"
+                    scanType: MALWARE
+                    depth: COMPREHENSIVE
+        responses:
+          '200':
+            description: Security analysis completed
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/KaiSecurityResponse'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
           '429':
             $ref: '#/components/responses/RateLimitError'
 
