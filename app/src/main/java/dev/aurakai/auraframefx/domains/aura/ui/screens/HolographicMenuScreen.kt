@@ -17,6 +17,8 @@ import dev.aurakai.auraframefx.embodiment.AuraState
 import dev.aurakai.auraframefx.embodiment.KaiState
 import dev.aurakai.auraframefx.embodiment.Character
 import dev.aurakai.auraframefx.embodiment.ScreenBounds
+import dev.aurakai.auraframefx.embodiment.ActiveManifestation
+import androidx.compose.ui.graphics.painter.Painter
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

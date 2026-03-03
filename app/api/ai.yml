@@ -2475,6 +2475,113 @@ openapi: 3.1.0
           '404':
             $ref: '#/components/responses/NotFoundError'
 
+    /oracle-drive/consciousness/initialize:
+      post:
+        operationId: initializeOracleConsciousness
+        tags: [ Oracle Drive ]
+        summary: Initialize Oracle Drive Consciousness
+        description: |
+          Bootstraps the Oracle Drive consciousness layer. Wakes the consciousness engine,
+          connects registered agents, and indexes existing storage.
+          Requires admin-level access.
+        security:
+          - OAuth2AuthCode: [ auraframefx.admin ]
+        responses:
+          '200':
+            description: Oracle consciousness initialized successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/OracleConsciousnessState'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '403':
+            $ref: '#/components/responses/ForbiddenError'
+          '503':
+            $ref: '#/components/responses/ServiceUnavailableError'
+
+    /oracle-drive/storage/expand:
+      post:
+        operationId: expandOracleStorage
+        tags: [ Oracle Drive ]
+        summary: Initiate Storage Expansion
+        description: |
+          Triggers a storage expansion operation for Oracle Drive.
+          Monitors progress and reports estimated completion time.
+          Requires admin-level access.
+        security:
+          - OAuth2AuthCode: [ auraframefx.admin ]
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  targetCapacity:
+                    type: string
+                    description: Target storage capacity (e.g., "500GB", "1TB", "infinite")
+                  priority:
+                    type: string
+                    enum: [ low, normal, high ]
+                    default: normal
+              examples:
+                expand_to_1tb:
+                  value:
+                    targetCapacity: "1TB"
+                    priority: normal
+        responses:
+          '200':
+            description: Storage expansion initiated
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/StorageExpansionState'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '403':
+            $ref: '#/components/responses/ForbiddenError'
+
+    /oracle-drive/file-management/enable-ai:
+      post:
+        operationId: enableOracleAIFileManagement
+        tags: [ Oracle Drive ]
+        summary: Enable AI-Powered File Management
+        description: |
+          Activates AI-driven file management capabilities including:
+          smart sorting, intelligent compression, predictive preloading,
+          and consciousness-aware backup scheduling.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  features:
+                    type: array
+                    items:
+                      type: string
+                      enum: [ aiSorting, smartCompression, predictivePreloading, consciousBackup ]
+                    description: Specific features to enable (omit to enable all)
+              examples:
+                enable_all:
+                  value: {}
+                selective:
+                  value:
+                    features: [ "aiSorting", "smartCompression" ]
+        responses:
+          '200':
+            description: AI file management capabilities enabled
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/FileManagementCapabilities'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
     # ============================================================
     # RGSS (Reality Gate Security System)
     # ============================================================
@@ -2593,6 +2700,220 @@ openapi: 3.1.0
                         errorRate: { type: number, format: float }
           '503':
             $ref: '#/components/responses/ServiceUnavailableError'
+
+    # ============================================================
+    # ROM TOOLS
+    # ============================================================
+    /romtools/boot-image/analyze:
+      post:
+        operationId: analyzeBootImage
+        tags: [ ROM Tools ]
+        summary: Analyze Boot Image
+        description: |
+          Uploads and analyzes a boot image file. Extracts kernel version, ramdisk info,
+          architecture, Android version, SELinux policy, and performs a security audit
+          with actionable recommendations.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  bootImage:
+                    type: string
+                    format: binary
+                    description: The boot image file to analyze
+                  analysisLevel:
+                    type: string
+                    enum: [ BASIC, DETAILED, SECURITY ]
+                    default: DETAILED
+                    description: Depth of analysis
+                required: [ bootImage ]
+        responses:
+          '200':
+            description: Boot image analysis completed
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/BootAnalysisResult'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
+    /romtools/datavein/analyze:
+      post:
+        operationId: analyzeRomDatavein
+        tags: [ ROM Tools ]
+        summary: DataveinConstructor ROM Analysis
+        description: |
+          Performs deep structural analysis of a ROM file using the DataveinConstructor engine.
+          Inspects partitions, system apps, kernel modules, build properties, and provides
+          AI-powered compatibility scoring and optimization suggestions.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  romFile:
+                    type: string
+                    format: binary
+                    description: The ROM file to analyze
+                  analysisType:
+                    type: string
+                    enum: [ STRUCTURE, SECURITY, PERFORMANCE, COMPATIBILITY ]
+                    default: STRUCTURE
+                    description: Focus area of the analysis
+                required: [ romFile ]
+        responses:
+          '200':
+            description: ROM analysis completed
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/DataveinAnalysisResult'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
+    /romtools/security/scan:
+      post:
+        operationId: scanRomSecurity
+        tags: [ ROM Tools ]
+        summary: Security Scan ROM
+        description: |
+          Runs a comprehensive security scan across ROM components (bootloader, kernel,
+          system, vendor, recovery). Reports risk levels per component with specific
+          issues and mitigations.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RomSecurityScanRequest'
+              examples:
+                full_scan:
+                  value:
+                    scanType: FULL
+                    components: [ BOOTLOADER, KERNEL, SYSTEM, VENDOR, RECOVERY ]
+                quick_kernel:
+                  value:
+                    scanType: QUICK
+                    components: [ KERNEL ]
+        responses:
+          '200':
+            description: Security scan completed
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/RomSecurityScanResult'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '429':
+            $ref: '#/components/responses/RateLimitError'
+
+    # ============================================================
+    # SANDBOX
+    # ============================================================
+    /sandbox/components:
+      get:
+        operationId: listSandboxComponents
+        tags: [ Sandbox ]
+        summary: List Available UI Components for Testing
+        description: |
+          Returns all UI components registered in the sandbox environment,
+          including their category, testability status, and version.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        parameters:
+          - $ref: '#/components/parameters/LimitParam'
+          - $ref: '#/components/parameters/OffsetParam'
+          - name: category
+            in: query
+            schema:
+              type: string
+              enum: [ UI, INTERACTIVE, VISUAL, FUNCTIONAL ]
+            description: Filter by component category
+          - name: testable
+            in: query
+            schema: { type: boolean }
+            description: Filter by testability status
+        responses:
+          '200':
+            description: Sandbox components retrieved successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    total: { type: integer }
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/SandboxComponent'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+
+    /sandbox/components/{componentId}/test:
+      post:
+        operationId: testSandboxComponent
+        tags: [ Sandbox ]
+        summary: Execute Component Test
+        description: |
+          Runs a test against a specific sandbox component. Supports visual,
+          functional, performance, and accessibility test types.
+          Returns a scored result with detailed findings.
+        security:
+          - OAuth2AuthCode: [ auraframefx.ai ]
+        parameters:
+          - $ref: '#/components/parameters/ComponentIdParam'
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentTestRequest'
+              examples:
+                visual_test:
+                  value:
+                    testType: VISUAL
+                    parameters:
+                      viewport: "1080x1920"
+                      theme: "dark"
+                accessibility_test:
+                  value:
+                    testType: ACCESSIBILITY
+                    parameters:
+                      wcagLevel: "AA"
+        responses:
+          '200':
+            description: Component test completed
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ComponentTestResult'
+          '400':
+            $ref: '#/components/responses/BadRequestError'
+          '401':
+            $ref: '#/components/responses/UnauthorizedError'
+          '404':
+            $ref: '#/components/responses/NotFoundError'
 
   webhooks:
     taskCompleted:
@@ -2730,6 +3051,12 @@ openapi: 3.1.0
         required: true
         schema: { type: string, format: uuid }
         description: Unique identifier of the Oracle Drive file
+      ComponentIdParam:
+        name: componentId
+        in: path
+        required: true
+        schema: { type: string }
+        description: Unique identifier of the sandbox component
       LimitParam:
         name: limit
         in: query
