@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.cascade.trinity.TrinityViewModel
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityViewModel
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraPurple
 import dev.aurakai.auraframefx.domains.kai.ui.theme.KaiRed
