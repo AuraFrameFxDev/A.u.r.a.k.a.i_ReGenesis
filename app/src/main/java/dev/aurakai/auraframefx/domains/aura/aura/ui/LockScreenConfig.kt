@@ -15,7 +15,7 @@
 
 package dev.aurakai.auraframefx.aura.ui
 
-import dev.aurakai.auraframefx.aura.animations.LockScreenConfigAnimation
+import dev.aurakai.auraframefx.domains.aura.aura.animations.LockScreenConfigAnimation
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
