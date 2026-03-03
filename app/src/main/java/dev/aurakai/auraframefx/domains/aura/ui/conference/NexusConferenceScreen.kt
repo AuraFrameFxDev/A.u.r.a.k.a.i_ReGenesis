@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityViewModel
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraPurple
-import dev.aurakai.auraframefx.domains.kai.ui.theme.KaiRed
-import dev.aurakai.auraframefx.domains.genesis.ui.theme.GenesisTeal
-import dev.aurakai.auraframefx.domains.cascade.ui.theme.CascadeGreen
+// Removed local color constants to fix conflicting declarations
 
 @Composable
 fun NexusConferenceScreen(

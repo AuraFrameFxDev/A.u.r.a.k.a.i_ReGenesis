@@ -24,8 +24,7 @@ import com.highcapable.yukihookapi.hook.log.YLog.info
 import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
-import dev.aurakai.auraframefx.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.ui.layout
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
 
 /**
  * YukiHook hooker for customizing the Android Quick Settings panel.
@@ -89,7 +88,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
     private fun applyGenesisLayout(qsPanel: ViewGroup) {
         try {
             // Apply padding and spacing from config
-            layout
+            val layout = config.layout
 
             info("QuickSettingsHooker: Applied Genesis layout config (columns: $layout)")
         } catch (e: Exception) {

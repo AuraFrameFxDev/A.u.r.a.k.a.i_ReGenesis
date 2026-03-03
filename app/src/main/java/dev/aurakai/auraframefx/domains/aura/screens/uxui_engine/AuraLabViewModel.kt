@@ -12,6 +12,16 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
+ * Defines the UI item model for Sandbox items.
+ */
+data class SandboxItem(
+    val name: String,
+    val type: String,
+    val safetyLevel: String,
+    val isActive: Boolean
+)
+
+/**
  * ViewModel for Aura's Lab (Sandbox Environment)
  *
  * Manages sandbox creation, deletion, and interaction with OracleDriveSandbox system
