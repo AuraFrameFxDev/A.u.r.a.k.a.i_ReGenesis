@@ -7,8 +7,8 @@ import dev.aurakai.auraframefx.domains.aura.BackgroundConfig
 import dev.aurakai.auraframefx.domains.aura.ClockConfig
 import dev.aurakai.auraframefx.domains.aura.LockScreenAnimation
 import dev.aurakai.auraframefx.domains.aura.LockScreenAnimationConfig
-import dev.aurakai.auraframefx.domains.aura.LockScreenConfig
 import dev.aurakai.auraframefx.domains.aura.LockScreenElementType
+import dev.aurakai.auraframefx.domains.aura.LockScreenModels
 import dev.aurakai.auraframefx.domains.aura.ui.HapticFeedbackConfig
 import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
@@ -37,8 +37,8 @@ class LockScreenCustomizer @Inject constructor(
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var isInitialized = false
 
-    private val _currentConfig = MutableStateFlow<LockScreenConfig?>(null)
-    val currentConfig: StateFlow<LockScreenConfig?> = _currentConfig
+    private val _currentConfig = MutableStateFlow<LockScreenModels?>(null)
+    val currentConfig: StateFlow<LockScreenModels?> = _currentConfig
 
     /**
      * Initializes the lock screen customizer with Genesis Protocol enhancements
@@ -276,9 +276,9 @@ class LockScreenCustomizer @Inject constructor(
      * Saves key configuration fields (visibility of Genesis elements, clock position,
      * haptic feedback enabled state, and animation type) and logs any failure without throwing.
      *
-     * @param config The LockScreenConfig to persist. Only selected fields are written to prefs.
+     * @param config The LockScreenModels to persist. Only selected fields are written to prefs.
      */
-    private fun saveConfiguration(config: LockScreenConfig) {
+    private fun saveConfiguration(config: LockScreenModels) {
         try {
             // Save to SharedPreferences
             // This would serialize the config to JSON or structured keys
@@ -294,8 +294,8 @@ class LockScreenCustomizer @Inject constructor(
         }
     }
 
-    private fun getDefaultConfig(): LockScreenConfig {
-        return LockScreenConfig(
+    private fun getDefaultConfig(): LockScreenModels {
+        return LockScreenModels(
             showGenesisElements = true,
             clockConfig = ClockConfig(),
             hapticFeedback = HapticFeedbackConfig(),
@@ -313,7 +313,7 @@ class LockScreenCustomizer @Inject constructor(
         // Initialize security features for lock screen
     }
 
-    private suspend fun applyConfiguration(config: LockScreenConfig) {
+    private suspend fun applyConfiguration(config: LockScreenModels) {
         AuraFxLogger.debug("LockScreenCustomizer", "Applying full lock screen configuration")
         // Implementation for applying the complete configuration
     }
