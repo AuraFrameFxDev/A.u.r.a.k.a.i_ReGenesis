@@ -8,8 +8,4 @@ annotation class AuraSettingsDataStore
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class IdentitySettingsDataStore
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
 annotation class AppStateDataStoreAnnotation
