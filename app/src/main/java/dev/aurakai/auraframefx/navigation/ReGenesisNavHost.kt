@@ -4,6 +4,7 @@ package dev.aurakai.auraframefx.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -296,13 +297,12 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.ReGenesisCustomization.route) {
-            // ReGenesisCustomizationHub(
-            //     onNavigateBack = { navController.popBackStack() },
-            //     onNavigateToIconify = { navController.navigate(ReGenesisNavHost.IconifyPicker.route) },
-            //     onNavigateToColorBlendr = { navController.navigate(ReGenesisNavHost.ColorBlendr.route) },
-            //     onNavigateToPLE = { navController.navigate(ReGenesisNavHost.PixelLauncherEnhanced.route) },
-            //     onNavigateToAnimations = { navController.navigate(ReGenesisNavHost.ChromaAnimations.route) }
-            // )
+            PlaceholderScreen(
+                title = "ReGenesis Customization",
+                subtitle = "Full Customization Hub",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // CONSOLIDATED: Only one entry for RomToolsHub
@@ -353,7 +353,12 @@ fun ReGenesisNavHost(
 
         // Gate 05: LSPosed Quick Toggles → LSPosed Submenu
         composable(ReGenesisNavHost.LsposedQuickToggles.route) {
-            // LSPosedSubmenuScreen(navController = navController)
+            PlaceholderScreen(
+                title = "LSPosed Quick Toggles",
+                subtitle = "Xposed Module Toggles",
+                accentColor = Color(0xFFFF6B00),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // Gate 06: Help Services
@@ -449,16 +454,31 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AuraLab.route) {
-            // AurasLabScreen(onBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Aura's Lab",
+                subtitle = "Sandbox UI Experiments",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.NotchBar.route) {
-            // NotchBarScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Notch Bar",
+                subtitle = "Dynamic Island Customization",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.StatusBar.route) {
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.QuickSettings.route) {
-            // QuickSettingsScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Quick Settings",
+                subtitle = "QS Panel Customization",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.ThemeEngine.route) {
             ThemeEngineScreen(onNavigateBack = { navController.popBackStack() })
@@ -468,16 +488,31 @@ fun ReGenesisNavHost(
 
         // --- LEVEL 3: KAI TOOLS ---
         composable(ReGenesisNavHost.ROMFlasher.route) {
-            // ROMFlasherScreen()
+            PlaceholderScreen(
+                title = "ROM Flasher",
+                subtitle = "Flash Custom ROMs",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.Bootloader.route) {
-            // BootloaderManagerScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Bootloader Manager",
+                subtitle = "Bootloader Controls",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.ModuleManager.route) {
             ModuleManagerScreen()
         }
         composable(ReGenesisNavHost.RecoveryTools.route) {
-            // RecoveryToolsScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Recovery Tools",
+                subtitle = "System Recovery Utilities",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.RootTools.route) {
             RootToolsTogglesScreen(navController = navController)
@@ -486,10 +521,20 @@ fun ReGenesisNavHost(
             SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.LSPosedHub.route) {
-            // LSPosedSubmenuScreen(navController = navController)
+            PlaceholderScreen(
+                title = "LSPosed Hub",
+                subtitle = "Xposed Module Management",
+                accentColor = Color(0xFFFF6B00),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.LSPosedModules.route) {
-            // LSPosedModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "LSPosed Modules",
+                subtitle = "Module Manager",
+                accentColor = Color(0xFFFF6B00),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // --- LEVEL 3: GENESIS TOOLS ---
@@ -529,10 +574,20 @@ fun ReGenesisNavHost(
             SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.SovereignRecovery.route) {
-            // SovereignRecoveryScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Sovereign Recovery",
+                subtitle = "Advanced Recovery Console",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisNavHost.SovereignShield.route) {
-            // SovereignShieldScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Sovereign Shield",
+                subtitle = "Advanced Security Shield",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
 
@@ -570,7 +625,12 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.DataStreamMonitoring.route) {
-            // DataStreamMonitoringScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Data Stream Monitoring",
+                subtitle = "Real-time Data Analysis",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.ModuleCreation.route) {
@@ -586,9 +646,12 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileNexus.route) {
-            /*NexusAgentProfileScreen(
+            PlaceholderScreen(
+                title = "Agent Profile",
+                subtitle = "Nexus Agent Identity",
+                accentColor = Color(0xFFB026FF),
                 onNavigateBack = { navController.popBackStack() }
-            )*/
+            )
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -616,11 +679,12 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileAura.route) {
-            /*AuraAgentProfileScreen(
-                agentType = AgentType.AURA,
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToSettings = {  }
-            )*/
+            PlaceholderScreen(
+                title = "Aura Profile",
+                subtitle = "Aura Agent Identity",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
 
@@ -628,7 +692,12 @@ fun ReGenesisNavHost(
         // ADDITIONAL KAI SCREENS (System Mastery!)
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.LiveROMEditor.route) {
-            // LiveROMEditorScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Live ROM Editor",
+                subtitle = "Real-time ROM Modifications",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.SystemJournal.route) {
@@ -651,7 +720,12 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.SovereignModuleManager.route) {
-            // SovereignModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Sovereign Module Manager",
+                subtitle = "Advanced Module Control",
+                accentColor = Color(0xFF00FF85),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.RomToolsSubmenu.route) {
@@ -670,11 +744,21 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.CascadeVision.route) {
-            // CascadeVisionScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Cascade Vision",
+                subtitle = "Pattern Recognition HUD",
+                accentColor = Color(0xFF00FFD4),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.CollabCanvas.route) {
-            // CollabCanvasScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Collab Canvas",
+                subtitle = "Collaborative Drawing Board",
+                accentColor = Color(0xFF00E5FF),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.OracleDriveSubmenu.route) {
@@ -685,7 +769,12 @@ fun ReGenesisNavHost(
         // ADDITIONAL LSPOSED SCREENS
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.HookManager.route) {
-            // HookManagerScreen(onNavigateBack = { navController.popBackStack() })
+            PlaceholderScreen(
+                title = "Hook Manager",
+                subtitle = "Xposed Hook Configuration",
+                accentColor = Color(0xFFFF6B00),
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.Sandbox.route) {
