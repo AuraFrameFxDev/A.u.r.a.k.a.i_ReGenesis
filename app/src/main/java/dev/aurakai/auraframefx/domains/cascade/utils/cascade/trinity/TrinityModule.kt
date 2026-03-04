@@ -14,6 +14,8 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIServ
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.SecurityMonitor
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceChainBuilder
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import javax.inject.Singleton
 
 /**
@@ -42,6 +44,8 @@ object TrinityModule {
         vertexAIClient: VertexAIClient,
         contextManager: ContextManager,
         securityContext: SecurityContext,
+        provenanceValidator: ProvenanceValidator,
+        provenanceChainBuilder: ProvenanceChainBuilder,
         @ApplicationContext applicationContext: Context,
         logger: AuraFxLogger,
     ): GenesisBridgeService {
@@ -51,6 +55,8 @@ object TrinityModule {
             vertexAIClient = vertexAIClient,
             contextManager = contextManager,
             securityContext = securityContext,
+            provenanceValidator = provenanceValidator,
+            provenanceChainBuilder = provenanceChainBuilder,
             applicationContext = applicationContext,
             logger = logger
         )
