@@ -35,7 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.navigation.NavDestination
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
@@ -49,21 +49,21 @@ fun CascadeHubScreen(navController: NavController) {
             title = "Cascade Vision",
             subtitle = "Pattern Recognition HUD",
             icon = Icons.Default.RemoveRedEye,
-            destination = "cascade_vision",
+            destination = ReGenesisNavHost.CascadeVision.route,
             color = Color(0xFF00FFD4)
         ),
         CascadeTool(
             title = "Data Monitoring",
             subtitle = "Real-time Stream Analysis",
             icon = Icons.Default.StackedLineChart,
-            destination = dev.aurakai.auraframefx.navigation.NavDestination.DataStreamMonitoring.route,
+            destination = ReGenesisNavHost.DataStreamMonitoring.route,
             color = Color(0xFF00E5FF)
         ),
         CascadeTool(
             title = "Neural Link",
             subtitle = "Direct Matrix Interface",
             icon = Icons.Default.Hub,
-            destination = dev.aurakai.auraframefx.navigation.NavDestination.NeuralNetwork.route,
+            destination = ReGenesisNavHost.NeuralNetwork.route,
             color = Color(0xFFB026FF)
         )
     )

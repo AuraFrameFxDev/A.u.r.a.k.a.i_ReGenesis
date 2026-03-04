@@ -126,28 +126,8 @@ fun KaiSentinelHubScreen(navController: NavController) {
                     modifier = Modifier.padding(horizontal = 32.dp)
                 )
 
-                // 🎠 SUB-GATE CAROUSEL
-                dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel(
-                    subGates = subGates,
-                    onGateSelected = { gate ->
-                        navController.navigate(gate.route)
-                    },
-                    useStyleB = useStyleB,
-                    cardHeight = 280.dp,
-                    domainColor = Color(0xFF00FF85),
-                    modifier = Modifier.weight(1f)
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "← SWIPE TO BROWSE • TAP ⇆ TO CHANGE STYLE →",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.White.copy(alpha = 0.4f),
-                    letterSpacing = 2.sp
-                )
-
                 Spacer(modifier = Modifier.height(32.dp))
+
                 // 🎠 SUB-GATE CAROUSEL
                 DomainSubGateCarousel(
                     subGates = subGates,
