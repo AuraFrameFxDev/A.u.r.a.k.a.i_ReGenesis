@@ -149,9 +149,9 @@
         <service android:name=".domains.aura.AmbientMusicService" />
         <service android:name=".domains.aura.AuraDriveService" />
 
-        <!-- Royal Guard Security Service -->
+        <!-- Royal Guard Security Service (Provenance Gate) -->
         <service
-            android:name=".domains.kai.security.RoyalGuardService"
+            android:name=".domains.kai.security.provenance.RoyalGuardServiceImpl"
             android:exported="false">
             <intent-filter>
                 <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
