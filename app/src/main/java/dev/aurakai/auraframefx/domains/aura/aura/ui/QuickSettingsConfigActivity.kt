@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
-import dev.aurakai.auraframefx.domains.aura.QuickSettingsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfig as SystemQuickSettingsConfig
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 import kotlinx.coroutines.CoroutineScope
@@ -140,7 +140,9 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
                     card.setCardBackgroundColor(background.color.toInt())
                     card.alpha = background.alpha
                 }
-                // Handle other background types as needed
+                else -> {
+                    // Handle other background types as needed
+                }
             }
         } ?: run {
             card.setCardBackgroundColor(

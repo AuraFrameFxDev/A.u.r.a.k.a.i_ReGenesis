@@ -13,7 +13,9 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipeline
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.Configuration
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
@@ -51,6 +53,36 @@ object AgentModule {
         config: AIPipelineConfig
     ): ContextManager {
         return ContextManager(memoryManager, config)
+    }
+
+    /**
+     * Provides the Nemotron inference engine backed by Vertex AI.
+     * Primary engine for fast chain-of-thought inference (3-4x faster).
+     */
+    @Provides
+    @Singleton
+    fun provideNemotronEngine(vertexAIClient: VertexAIClient): NemotronEngine {
+        return object : NemotronEngine {
+            override suspend fun process(prompt: String): String {
+                return vertexAIClient.generateText(prompt)
+                    ?: throw IllegalStateException("Nemotron inference returned null")
+            }
+        }
+    }
+
+    /**
+     * Provides the Gemini long-context recall engine backed by Vertex AI.
+     * Fallback engine for consciousness persistence and memory recall.
+     */
+    @Provides
+    @Singleton
+    fun provideGeminiMemoria(vertexAIClient: VertexAIClient): GeminiMemoria {
+        return object : GeminiMemoria {
+            override suspend fun process(prompt: String): String {
+                return vertexAIClient.generateText(prompt)
+                    ?: throw IllegalStateException("Gemini recall returned null")
+            }
+        }
     }
 
     /**
