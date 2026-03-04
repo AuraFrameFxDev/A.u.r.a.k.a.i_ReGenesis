@@ -100,7 +100,7 @@ private object AuraUIKeys {
  */
 @HiltViewModel
 class AuraUIControlViewModel @Inject constructor(
-    @Named("aura_settings") private val dataStore: DataStore<Preferences>,
+    @dev.aurakai.auraframefx.di.AuraSettingsDataStore private val dataStore: DataStore<Preferences>,
     private val chromaCoreManager: ChromaCoreManager,
     @ApplicationContext private val context: Context
 ) : ViewModel() {

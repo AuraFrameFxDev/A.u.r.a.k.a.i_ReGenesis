@@ -21,7 +21,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
-    @Named("identity_prefs")
+    @dev.aurakai.auraframefx.di.IdentitySettingsDataStore
     fun provideIdentityDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("identity_prefs") }
@@ -30,7 +30,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
-    fun provideIdentityRepository(@Named("identity_prefs") dataStore: DataStore<Preferences>): IdentityRepository {
+    fun provideIdentityRepository(@dev.aurakai.auraframefx.di.IdentitySettingsDataStore dataStore: DataStore<Preferences>): IdentityRepository {
         return IdentityRepositoryImpl(dataStore)
     }
 }

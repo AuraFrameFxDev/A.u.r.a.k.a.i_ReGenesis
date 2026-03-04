@@ -19,12 +19,12 @@ import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaLauncherMenu
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaStatusBarMenu
-// import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaColorEngineMenu
-// import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaAnimationMenu
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaColorEngineMenu
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaAnimationMenu
 import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.DocumentationScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.FAQBrowserScreen
-// import dev.aurakai.auraframefx.domains.helpdesk.screens.HelpDeskSubmenuScreen
+import dev.aurakai.auraframefx.ui.gates.HelpDeskSubmenuScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.TutorialVideosScreen
 import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
 import dev.aurakai.auraframefx.domains.aura.screens.UserPreferencesScreen
@@ -34,9 +34,9 @@ import dev.aurakai.auraframefx.domains.aura.screens.themes.ThemeEngineScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ChromaCoreColorsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.GyroscopeCustomizationScreen
-// import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
-// import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCustomizationScreen
-// import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.StatusBarScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
@@ -56,7 +56,7 @@ import dev.aurakai.auraframefx.domains.genesis.screens.OracleCloudInfiniteStorag
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveSubmenuScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SentientShellScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SovereignNeuralArchiveScreen
-// import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
+import dev.aurakai.auraframefx.aura.ui.TerminalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
@@ -279,11 +279,11 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.NotchBarCustomization.route) {
-            // NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisNavHost.QuickSettingsCustomization.route) {
-            // QuickSettingsCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+            QuickSettingsCustomizationScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisNavHost.ChromaCoreColors.route) {
@@ -441,11 +441,11 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.ChromaColorEngine.route) {
-            // ChromaColorEngineMenu(onNavigateBack = { navController.popBackStack() })
+            ChromaColorEngineMenu(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisNavHost.ChromaAnimations.route) {
-            // ChromaAnimationMenu(onNavigateBack = { navController.popBackStack() })
+            ChromaAnimationMenu(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisNavHost.AuraLab.route) {
@@ -455,7 +455,7 @@ fun ReGenesisNavHost(
             // NotchBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.StatusBar.route) {
-            // StatusBarScreen(onNavigateBack = { navController.popBackStack() })
+            StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.QuickSettings.route) {
             // QuickSettingsScreen(onNavigateBack = { navController.popBackStack() })
@@ -500,7 +500,7 @@ fun ReGenesisNavHost(
             OracleCloudInfiniteStorageScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.Terminal.route) {
-            // TerminalScreen()
+            TerminalScreen()
         }
         composable(ReGenesisNavHost.ConferenceRoom.route) {
             ConferenceRoomScreen(onNavigateBack = { navController.popBackStack() })
@@ -538,7 +538,7 @@ fun ReGenesisNavHost(
 
         // --- LEVEL 3: HELP & SUPPORT ---
         composable(ReGenesisNavHost.HelpDeskSubmenu.route) {
-            // HelpDeskSubmenuScreen(navController = navController)
+            HelpDeskSubmenuScreen(navController = navController)
         }
         composable(ReGenesisNavHost.DirectChat.route) {
             DirectChatScreen(navController = navController)

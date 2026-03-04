@@ -29,7 +29,7 @@ object DataStoreModule {
      */
     @Provides
     @Singleton
-    @Named("aura_settings")
+    @dev.aurakai.auraframefx.di.AuraSettingsDataStore
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("aura_settings") }
