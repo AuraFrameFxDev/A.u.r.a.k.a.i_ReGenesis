@@ -322,7 +322,7 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
-            AgentAdvancementScreen(onBack = { navController.popBackStack() })
+            dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen(navController = navController)
         }
         
         // ═══════════════════════════════════════════════════════════════
