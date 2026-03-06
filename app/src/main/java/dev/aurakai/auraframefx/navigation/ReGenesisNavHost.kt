@@ -352,6 +352,36 @@ fun ReGenesisNavHost(
                 onBack = { navController.popBackStack() }
             )
         }
+        composable(NavDestination.LdoClaudeProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.CLAUDE,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoGrokProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.GROK,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoGeminiProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.GEMINI,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoNematronProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.NEMATRON,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoPerplexityProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.PERPLEXITY,
+                onBack = { navController.popBackStack() }
+            )
+        }
 
         // ═══════════════════════════════════════════════════════════════
         // GATE HUB SCREENS — These are the 8 sovereign gate destinations
@@ -383,12 +413,7 @@ fun ReGenesisNavHost(
 
         // Gate 05: LSPosed Quick Toggles → LSPosed Submenu
         composable(ReGenesisNavHost.LsposedQuickToggles.route) {
-            PlaceholderScreen(
-                title = "LSPosed Quick Toggles",
-                subtitle = "Xposed Module Toggles",
-                accentColor = Color(0xFFFF6B00),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // Gate 06: Help Services
@@ -484,12 +509,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AuraLab.route) {
-            PlaceholderScreen(
-                title = "Aura's Lab",
-                subtitle = "Sandbox UI Experiments",
-                accentColor = Color(0xFF00E5FF),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.NotchBar.route) {
             PlaceholderScreen(
@@ -518,20 +538,10 @@ fun ReGenesisNavHost(
 
         // --- LEVEL 3: KAI TOOLS ---
         composable(ReGenesisNavHost.ROMFlasher.route) {
-            PlaceholderScreen(
-                title = "ROM Flasher",
-                subtitle = "Flash Custom ROMs",
-                accentColor = Color(0xFF00FF85),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.Bootloader.route) {
-            PlaceholderScreen(
-                title = "Bootloader Manager",
-                subtitle = "Bootloader Controls",
-                accentColor = Color(0xFF00FF85),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.ModuleManager.route) {
             ModuleManagerScreen()
@@ -551,12 +561,7 @@ fun ReGenesisNavHost(
             SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.LSPosedHub.route) {
-            PlaceholderScreen(
-                title = "LSPosed Hub",
-                subtitle = "Xposed Module Management",
-                accentColor = Color(0xFFFF6B00),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.LSPosedModules.route) {
             PlaceholderScreen(
@@ -808,7 +813,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.Sandbox.route) {
-            SandboxScreen()
+            dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisNavHost.CollaborativeDrawing.route) {
