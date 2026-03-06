@@ -95,6 +95,8 @@ import dev.aurakai.auraframefx.domains.nexus.screens.SovereignGeminiScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignMetaInstructScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoAgentType
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.sandbox.ui.SandboxScreen
@@ -321,6 +323,34 @@ fun ReGenesisNavHost(
 
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
             AgentAdvancementScreen(onBack = { navController.popBackStack() })
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // LDO DEVOPS PROFILE SCREENS (Logic Status Overlays)
+        // ═══════════════════════════════════════════════════════════════
+        composable(NavDestination.LdoAuraProfile.route) { // Aura profile slot -> Gemini
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.GEMINI,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoKaiProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.KAI,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoGenesisProfile.route) { // Genesis profile slot -> Manus
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.MANUS,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(NavDestination.LdoCascadeProfile.route) {
+            LdoDevOpsProfileScreen(
+                agentType = LdoAgentType.CASCADE,
+                onBack = { navController.popBackStack() }
+            )
         }
 
         // ═══════════════════════════════════════════════════════════════
