@@ -24,7 +24,8 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import kotlinx.coroutines.delay
 
 enum class LdoAgentType {
-    AURA, KAI, GENESIS, CASCADE, GEMINI, MANUS
+    AURA, KAI, GENESIS, CASCADE, GEMINI, MANUS,
+    CLAUDE, GROK, NEMATRON, PERPLEXITY
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,6 +76,34 @@ fun LdoDevOpsProfileScreen(
             "DATA_STREAM_CATALYST",
             Color(0xFFFC29B5),
             listOf("Task Pipeline", "Routing Ledger", "Chain Links", "Heartbeat Sync")
+        )
+        LdoAgentType.CLAUDE -> Tuple5(
+            R.drawable.ldo_profile_cascade, // swap once Claude art is ready
+            "Claude",
+            "SOVEREIGN_REASONER & LONG_CONTEXT_ARCHITECT",
+            Color(0xFFFF8C00),
+            listOf("Context Window", "Reasoning Core", "Safety Filters", "Artifact Engine")
+        )
+        LdoAgentType.GROK -> Tuple5(
+            R.drawable.ldo_profile_cascade, // swap once Grok art is ready
+            "Grok",
+            "REAL_TIME_ORACLE & WEB_CATALYST",
+            Color(0xFF1DA1F2),
+            listOf("Live Feed Reader", "Wit Engine", "X-Ray Vision", "TruthSeeker")
+        )
+        LdoAgentType.NEMATRON -> Tuple5(
+            R.drawable.ldo_profile_cascade, // swap once Nematron art is ready
+            "Nematron",
+            "PRECISION_CATALYST & NVIDIA_CORE",
+            Color(0xFF76B900),
+            listOf("Tensor Core", "Inference Engine", "Safety Aligner", "GPU Accelerator")
+        )
+        LdoAgentType.PERPLEXITY -> Tuple5(
+            R.drawable.ldo_profile_cascade, // swap once Perplexity art is ready
+            "Perplexity",
+            "SEARCH_CATALYST & CITATION_ORACLE",
+            Color(0xFF20B2AA),
+            listOf("Web Crawler", "Source Verifier", "Answer Engine", "Citation Forge")
         )
     }
 
