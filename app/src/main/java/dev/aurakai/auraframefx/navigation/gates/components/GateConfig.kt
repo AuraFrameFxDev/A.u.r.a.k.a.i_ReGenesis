@@ -20,7 +20,10 @@ data class GateConfig(
     val pixelArtUrl: String?,
     val fallbackUrl: String? = null,
     val borderColor: Color,
-    val titlePlacement: TitlePlacement = TitlePlacement.TOP_CENTER
+    val titlePlacement: TitlePlacement = TitlePlacement.TOP_CENTER,
+    val pixelArtResId: Int? = null,
+    val backgroundColor: Color = Color.Black,
+    val comingSoon: Boolean = false
 )
 
 /**
