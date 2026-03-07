@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.Image
+import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
 
 /**
  * ImmersiveGateCard — the replacement for bordered GateCard.
