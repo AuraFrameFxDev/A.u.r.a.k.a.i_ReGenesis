@@ -201,6 +201,7 @@
         </service>
 
         <!-- Receivers -->
+        <!-- Temporarily disabled: BootCompletedReceiver crashes with InstantiationException and IllegalStateException
         <receiver
             android:name=".domains.kai.BootCompletedReceiver"
             android:enabled="true"
@@ -209,6 +210,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        -->
 
         <!-- Integrity Violation Receiver -->
         <receiver
