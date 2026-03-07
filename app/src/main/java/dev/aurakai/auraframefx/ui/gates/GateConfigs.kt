@@ -17,7 +17,7 @@ object GateConfigs {
             gradientColors = listOf(subGate.accentColor, Color.Black),
             pixelArtUrl = null,
             borderColor = subGate.accentColor,
-            pixelArtResId = subGate.fallbackDrawable // Default to fallback if no specific is set or map accordingly
+            pixelArtResId = android.R.drawable.ic_menu_gallery // Default to fallback if no specific is set or map accordingly
         )
     }
 }

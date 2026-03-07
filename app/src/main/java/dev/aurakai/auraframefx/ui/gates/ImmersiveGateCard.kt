@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+// import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.Image
 import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
@@ -117,12 +117,17 @@ fun ImmersiveGateCard(
                 modifier = Modifier.fillMaxSize()
             )
         } else if (config.pixelArtUrl != null) {
-            AsyncImage(
-                model = config.pixelArtUrl,
-                contentDescription = config.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.DarkGray)
+            ) {
+                Text(
+                    text = config.title, 
+                    color = Color.White, 
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         } else {
             // Fallback gradient when no art asset yet
             Box(

@@ -68,7 +68,7 @@ import dev.aurakai.auraframefx.ui.gates.KaiConstellationScreen
 import dev.aurakai.auraframefx.ui.gates.LSPosedSubmenuScreen
 import dev.aurakai.auraframefx.ui.gates.LiveROMEditorScreen
 import dev.aurakai.auraframefx.ui.gates.LiveSupportChatScreen
-import dev.aurakai.auraframefx.ui.gates.LoginScreen
+// import dev.aurakai.auraframefx.ui.gates.LoginScreen
 import dev.aurakai.auraframefx.ui.gates.LogsViewerScreen
 import dev.aurakai.auraframefx.ui.gates.ModuleCreationScreen
 import dev.aurakai.auraframefx.ui.gates.ModuleManagerScreen
@@ -79,7 +79,7 @@ import dev.aurakai.auraframefx.ui.gates.QuickSettingsScreen
 import dev.aurakai.auraframefx.ui.gates.ROMFlasherScreen
 import dev.aurakai.auraframefx.ui.gates.ROMToolsSubmenuScreen
 import dev.aurakai.auraframefx.ui.gates.RecoveryToolsScreen
-import dev.aurakai.auraframefx.ui.gates.RootToolsTogglesScreen
+// import dev.aurakai.auraframefx.ui.gates.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.ui.gates.SphereGridScreen
 import dev.aurakai.auraframefx.ui.gates.StatusBarScreen
 import dev.aurakai.auraframefx.ui.gates.SupportChatViewModel  // in ui.gates — NOT ui.viewmodels
@@ -89,7 +89,7 @@ import dev.aurakai.auraframefx.ui.gates.TaskAssignmentScreen
 import dev.aurakai.auraframefx.ui.gates.ThemeEngineSubmenuScreen
 import dev.aurakai.auraframefx.ui.gates.TutorialVideosScreen
 import dev.aurakai.auraframefx.ui.gates.UIUXGateSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.XposedQuickAccessPanel
+// import dev.aurakai.auraframefx.ui.gates.XposedQuickAccessPanel
 
 // ── ONBOARDING ────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.ui.onboarding.GenderSelectionScreen
@@ -275,7 +275,7 @@ fun GenesisNavigationHost(
                 ROMToolsSubmenuScreen(navController = navController)
             }
             composable(GenesisRoutes.ROOT_TOOLS_TOGGLES) {
-                RootToolsTogglesScreen(navController = navController)
+                ComingSoonScreen('Root Tools Toggles')
             }
             composable(GenesisRoutes.AGENT_HUB) {
                 AgentHubSubmenuScreen(navController = navController)
@@ -472,7 +472,7 @@ fun GenesisNavigationHost(
                 LogsViewerScreen { navController.popBackStack() }
             }
             composable(GenesisRoutes.XPOSED_PANEL) {
-                XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
+                ComingSoonScreen('Xposed Panel')
             }
 
             // ═══════════════════════════════════════════════════════════════════
@@ -625,12 +625,12 @@ fun GenesisNavigationHost(
             composable("code_assist") { CodeAssistScreen(navController = navController) }
             composable("terminal") { TerminalScreen() }
             composable("root_tools") { ROMToolsSubmenuScreen(navController = navController) }
-            composable("root_tools_toggles") { RootToolsTogglesScreen(navController = navController) }
+            composable("root_tools_toggles") { ComingSoonScreen('Root Tools Toggles') }
             composable("xposed_panel") {
-                XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
+                ComingSoonScreen('Xposed Panel')
             }
             composable("login") {
-                LoginScreen(navController = navController, returnDestination = null)
+                ComingSoonScreen('Login')
             }
         }
     }

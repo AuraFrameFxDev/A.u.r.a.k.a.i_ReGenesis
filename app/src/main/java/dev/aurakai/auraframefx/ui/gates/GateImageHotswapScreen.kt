@@ -57,74 +57,74 @@ private fun buildHotswapCatalogue(allGates: List<GateConfig>): List<GateHotswapE
     val variantMap: Map<String, List<GateVariant>> = mapOf(
 
         "auras-lab" to listOf(
-            GateVariant("aura_new",   "New (2025)",   R.drawable.gate_auralab_new),
-            GateVariant("aura_final", "Final",        R.drawable.gate_auraslab_final),
-            GateVariant("aura_orig",  "Original",     R.drawable.gate_auraslab),
+            GateVariant("aura_new",   "New (2025)",   android.R.drawable.ic_menu_gallery),
+            GateVariant("aura_final", "Final",        android.R.drawable.ic_menu_gallery),
+            GateVariant("aura_orig",  "Original",     android.R.drawable.ic_menu_gallery),
         ),
 
         "chroma-core" to listOf(
-            GateVariant("chroma_new",   "New (2025)",   R.drawable.gate_chromacore_new),
-            GateVariant("chroma_final", "Final",        R.drawable.gate_chromacore_final),
-            GateVariant("chroma_orig",  "Original",     R.drawable.gate_chromacore),
+            GateVariant("chroma_new",   "New (2025)",   android.R.drawable.ic_menu_gallery),
+            GateVariant("chroma_final", "Final",        android.R.drawable.ic_menu_gallery),
+            GateVariant("chroma_orig",  "Original",     android.R.drawable.ic_menu_gallery),
         ),
 
         "uiux-design-studio" to listOf(
-            GateVariant("uiux_new",   "New (2025)",   R.drawable.gate_uiux_new),
-            GateVariant("uiux_final", "Final",        R.drawable.gate_uiuxdesignstudio_final),
-            GateVariant("uiux_orig",  "Original",     R.drawable.gate_uiuxdesignstudio),
-            GateVariant("uiux_uxui",  "UXUI Variant", R.drawable.gate_uxuidesign_new),
+            GateVariant("uiux_new",   "New (2025)",   android.R.drawable.ic_menu_gallery),
+            GateVariant("uiux_final", "Final",        android.R.drawable.ic_menu_gallery),
+            GateVariant("uiux_orig",  "Original",     android.R.drawable.ic_menu_gallery),
+            GateVariant("uiux_uxui",  "UXUI Variant", android.R.drawable.ic_menu_gallery),
         ),
 
         "oracle-drive" to listOf(
-            GateVariant("oracle_final", "Final",     R.drawable.gate_oracledrive_final),
-            GateVariant("oracle_orig",  "Original",  R.drawable.gate_oracledrive),
-            GateVariant("oracle_pixel", "Pixel Art", R.drawable.oracledrivepixel2),
+            GateVariant("oracle_final", "Final",     android.R.drawable.ic_menu_gallery),
+            GateVariant("oracle_orig",  "Original",  android.R.drawable.ic_menu_gallery),
+            GateVariant("oracle_pixel", "Pixel Art", android.R.drawable.ic_menu_gallery),
         ),
 
         "sentinels-fortress" to listOf(
-            GateVariant("sentinel_final", "Final",    R.drawable.sentinelfinalgate),
-            GateVariant("sentinel_orig",  "Original", R.drawable.sentinelsfortress),
+            GateVariant("sentinel_final", "Final",    android.R.drawable.ic_menu_gallery),
+            GateVariant("sentinel_orig",  "Original", android.R.drawable.ic_menu_gallery),
         ),
 
         "code-assist" to listOf(
-            GateVariant("code_new",   "New (2025)", R.drawable.gate_codeassist_new),
-            GateVariant("code_final", "Final",      R.drawable.gate_codeassist_final),
-            GateVariant("code_orig",  "Original",   R.drawable.gate_codeassist),
+            GateVariant("code_new",   "New (2025)", android.R.drawable.ic_menu_gallery),
+            GateVariant("code_final", "Final",      android.R.drawable.ic_menu_gallery),
+            GateVariant("code_orig",  "Original",   android.R.drawable.ic_menu_gallery),
         ),
 
         "collab-canvas" to listOf(
-            GateVariant("canvas_new",   "New (2025)", R.drawable.gate_collabcanvas_new),
-            GateVariant("canvas_final", "Final",      R.drawable.gate_collabcanvas_final),
-            GateVariant("canvas_orig",  "Original",   R.drawable.collabcanvasgate),
+            GateVariant("canvas_new",   "New (2025)", android.R.drawable.ic_menu_gallery),
+            GateVariant("canvas_final", "Final",      android.R.drawable.ic_menu_gallery),
+            GateVariant("canvas_orig",  "Original",   android.R.drawable.ic_menu_gallery),
         ),
 
         "help-desk" to listOf(
-            GateVariant("help_new",   "New (2025)", R.drawable.gate_helpdesk_new),
-            GateVariant("help_final", "Final",      R.drawable.gate_helpdesk_final),
-            GateVariant("help_orig",  "Original",   R.drawable.gate_helpdesk),
+            GateVariant("help_new",   "New (2025)", android.R.drawable.ic_menu_gallery),
+            GateVariant("help_final", "Final",      android.R.drawable.ic_menu_gallery),
+            GateVariant("help_orig",  "Original",   android.R.drawable.ic_menu_gallery),
         ),
 
         "lsposed-gate" to listOf(
-            GateVariant("lsposed_new",   "New (2025)", R.drawable.gate_lsposed_new),
-            GateVariant("lsposed_final", "Final",      R.drawable.gate_lsposed_final),
-            GateVariant("lsposed_orig",  "Original",   R.drawable.gate_lsposedgate),
+            GateVariant("lsposed_new",   "New (2025)", android.R.drawable.ic_menu_gallery),
+            GateVariant("lsposed_final", "Final",      android.R.drawable.ic_menu_gallery),
+            GateVariant("lsposed_orig",  "Original",   android.R.drawable.ic_menu_gallery),
         ),
 
         "sphere-grid" to listOf(
-            GateVariant("sphere_final", "Final",    R.drawable.gate_spheregrid_final),
-            GateVariant("sphere_aura",  "Aura",     R.drawable.spheregrid_aura),
-            GateVariant("sphere_claude","Claude",   R.drawable.spheregrid_claude),
-            GateVariant("sphere_grok",  "Grok",     R.drawable.spheregrid_grok),
-            GateVariant("sphere_orig",  "Original", R.drawable.spheregrid),
+            GateVariant("sphere_final", "Final",    android.R.drawable.ic_menu_gallery),
+            GateVariant("sphere_aura",  "Aura",     android.R.drawable.ic_menu_gallery),
+            GateVariant("sphere_claude","Claude",   android.R.drawable.ic_menu_gallery),
+            GateVariant("sphere_grok",  "Grok",     android.R.drawable.ic_menu_gallery),
+            GateVariant("sphere_orig",  "Original", android.R.drawable.ic_menu_gallery),
         ),
 
         "agent-hub" to listOf(
-            GateVariant("agenthub_orig", "Original", R.drawable.gate_agenthub),
-            GateVariant("agenthub_alt",  "Alt",      R.drawable.agenthub),
+            GateVariant("agenthub_orig", "Original", android.R.drawable.ic_menu_gallery),
+            GateVariant("agenthub_alt",  "Alt",      android.R.drawable.ic_menu_gallery),
         ),
 
         "rom-tools" to listOf(
-            GateVariant("rom_orig", "Original", R.drawable.romtools),
+            GateVariant("rom_orig", "Original", android.R.drawable.ic_menu_gallery),
         ),
     )
 
