@@ -54,7 +54,7 @@ fun LSPosedSubmenuScreen(onNavigateBack: () -> Unit = {}) {
         menuItems = menuItems,
         onItemClick = { /* TODO */ },
         onBackClick = onNavigateBack,
-        backgroundDrawable = R.drawable.bg_lsposed_hooks,
+        backgroundDrawable = null, // Using fallbackGradient for non-vector instead
         accentColor = Color(0xFFFF6B00)
     )
 }
