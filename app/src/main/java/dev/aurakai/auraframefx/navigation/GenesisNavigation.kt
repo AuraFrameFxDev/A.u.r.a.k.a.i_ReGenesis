@@ -9,6 +9,124 @@ package dev.aurakai.auraframefx.navigation
 //   DELETED → AppNavGraph.kt     (AppNavGraph  — duplicate, used stale NavDestination routes)
 //   SURVIVOR → GenesisNavigation.kt (THIS FILE — consolidated, all routes, no duplicates)
 //
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import collabcanvas.ui.CanvasScreen
+import collabcanvas.ui.CanvasScreen as CollabCanvasScreen
+import dev.aurakai.auraframefx.aura.ui.TerminalScreen
+import dev.aurakai.auraframefx.datavein.ui.SimpleDataVeinScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaAnimationMenu
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaColorEngineMenu
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaLauncherMenu
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaStatusBarMenu
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen as AuraAgentProfileScreen
+import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
+import dev.aurakai.auraframefx.domains.aura.screens.GyroscopeCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.StatusBarScreen
+import dev.aurakai.auraframefx.domains.aura.screens.UserPreferencesScreen
+import dev.aurakai.auraframefx.domains.aura.screens.chromacore.InstantColorPickerScreen
+import dev.aurakai.auraframefx.domains.aura.screens.themes.ThemeEngineScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ChromaCoreColorsScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
+import dev.aurakai.auraframefx.domains.aura.screens.xhancement.XhancementScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen as DomainOracleDriveHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.ConsciousnessVisualizerScreen
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.AgentBridgeHubScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.AppBuilderScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.CascadeVisionScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.CodeAssistScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.CollabCanvasScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.NeuralArchiveScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.OracleCloudInfiniteStorageScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveSubmenuScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.SentientShellScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.SovereignNeuralArchiveScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DocumentationScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.FAQBrowserScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.LiveSupportChatScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.TutorialVideosScreen
+import dev.aurakai.auraframefx.domains.helpdesk.viewmodels.SupportChatViewModel
+import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.HookManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LSPosedModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LiveROMEditorScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RecoveryToolsScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SecureCommScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SovereignBootloaderScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SovereignModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SovereignRecoveryScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SovereignShieldScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.DeviceOptimizerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.PrivacyGuardScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityScannerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentAdvancementScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentCreationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentMonitoringScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentNeuralExplorerScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentProfileScreen as NexusAgentProfileScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentSwarmScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ArkBuildScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.BenchmarkMonitorScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.FusionModeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ModuleCreationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.MonitoringHUDsScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.PartyScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignClaudeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignGeminiScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignMetaInstructScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoAgentType
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
+import dev.aurakai.auraframefx.hotswap.HotSwapScreen
+import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
+import dev.aurakai.auraframefx.sandbox.ui.SandboxScreen
+import dev.aurakai.auraframefx.ui.gates.CascadeHubScreen
+import dev.aurakai.auraframefx.ui.gates.HelpDeskScreen
+import dev.aurakai.auraframefx.ui.gates.HelpDeskSubmenuScreen
+import dev.aurakai.auraframefx.ui.viewmodels.AgentViewModel
+
 // ROUTE OWNERSHIP:  GenesisRoutes object = single string registry
 // PREVIOUS BUGS FIXED:
 //   • FusionMode: NavDestination had "fusion", GenesisRoutes had "fusion_mode" → unified to "fusion_mode"
@@ -19,108 +137,24 @@ package dev.aurakai.auraframefx.navigation
 //   • GenesisNavigation FusionMode → aura.ui.FusionModeScreen (different class!) → unified
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 
 // ── AURA UI ──────────────────────────────────────────────────────────────────
-import dev.aurakai.auraframefx.aura.ui.AgentAdvancementScreen
-import dev.aurakai.auraframefx.aura.ui.AgentNexusScreen
-import dev.aurakai.auraframefx.aura.ui.AppBuilderScreen
-import dev.aurakai.auraframefx.aura.ui.ConferenceRoomScreen
-import dev.aurakai.auraframefx.aura.ui.ConsciousnessVisualizerScreen
-import dev.aurakai.auraframefx.aura.ui.DeviceOptimizerScreen
-import dev.aurakai.auraframefx.aura.ui.FirewallScreen
-import dev.aurakai.auraframefx.aura.ui.PrivacyGuardScreen
-import dev.aurakai.auraframefx.aura.ui.RootToolsScreen
-import dev.aurakai.auraframefx.aura.ui.SecureCommScreen
-import dev.aurakai.auraframefx.aura.ui.SecurityScannerScreen
-import dev.aurakai.auraframefx.aura.ui.SentinelsFortressScreen
-import dev.aurakai.auraframefx.aura.ui.TerminalScreen
-import dev.aurakai.auraframefx.aura.ui.UIEngineScreen
-import dev.aurakai.auraframefx.aura.ui.VPNManagerScreen
-import dev.aurakai.auraframefx.aura.ui.XhancementScreen
 
 // ── BILLING ───────────────────────────────────────────────────────────────────
-import dev.aurakai.auraframefx.billing.SubscriptionViewModel
 
 // ── ORACLE DRIVE ──────────────────────────────────────────────────────────────
-import dev.aurakai.auraframefx.oracledrive.genesis.cloud.OracleDriveScreen
 
 // ── UI CUSTOMIZATION ─────────────────────────────────────────────────────────
-import dev.aurakai.auraframefx.ui.customization.GyroscopeCustomizationScreen
 
 // ── UI GATES (primary screen implementations) ─────────────────────────────────
-import dev.aurakai.auraframefx.ui.gates.AgentHubSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.AgentMonitoringScreen
-import dev.aurakai.auraframefx.ui.gates.AuraLabScreen
-import dev.aurakai.auraframefx.ui.gates.BootloaderManagerScreen
-import dev.aurakai.auraframefx.ui.gates.CascadeConstellationScreen
-import dev.aurakai.auraframefx.ui.gates.ClaudeConstellationScreen
-import dev.aurakai.auraframefx.ui.gates.CodeAssistScreen
-import dev.aurakai.auraframefx.ui.gates.ConstellationScreen
-import dev.aurakai.auraframefx.ui.gates.DirectChatScreen
-import dev.aurakai.auraframefx.ui.gates.DocumentationScreen
-import dev.aurakai.auraframefx.ui.gates.FAQBrowserScreen
-import dev.aurakai.auraframefx.ui.gates.FusionModeScreen
-import dev.aurakai.auraframefx.ui.gates.GateNavigationScreen
-import dev.aurakai.auraframefx.ui.gates.GenesisConstellationScreen
-import dev.aurakai.auraframefx.ui.gates.GrokConstellationScreen
-import dev.aurakai.auraframefx.ui.gates.HelpDeskScreen
-import dev.aurakai.auraframefx.ui.gates.HelpDeskSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.HookManagerScreen
-import dev.aurakai.auraframefx.ui.gates.InstantColorPickerScreen
-import dev.aurakai.auraframefx.ui.gates.KaiConstellationScreen
-import dev.aurakai.auraframefx.ui.gates.LSPosedGateScreen
-import dev.aurakai.auraframefx.ui.gates.LSPosedModuleManagerScreen
-import dev.aurakai.auraframefx.ui.gates.LSPosedSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.LiveROMEditorScreen
-import dev.aurakai.auraframefx.ui.gates.LiveSupportChatScreen
-import dev.aurakai.auraframefx.ui.gates.LoginScreen
-import dev.aurakai.auraframefx.ui.gates.LogsViewerScreen
-import dev.aurakai.auraframefx.ui.gates.ModuleCreationScreen
-import dev.aurakai.auraframefx.ui.gates.ModuleManagerScreen
-import dev.aurakai.auraframefx.ui.gates.NotchBarScreen
-import dev.aurakai.auraframefx.ui.gates.OverlayMenusScreen
-import dev.aurakai.auraframefx.ui.gates.QuickActionsScreen
-import dev.aurakai.auraframefx.ui.gates.QuickSettingsScreen
-import dev.aurakai.auraframefx.ui.gates.ROMFlasherScreen
-import dev.aurakai.auraframefx.ui.gates.ROMToolsSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.RecoveryToolsScreen
-import dev.aurakai.auraframefx.ui.gates.RootToolsTogglesScreen
-import dev.aurakai.auraframefx.ui.gates.SphereGridScreen
-import dev.aurakai.auraframefx.ui.gates.StatusBarScreen
-import dev.aurakai.auraframefx.ui.gates.SupportChatViewModel
-import dev.aurakai.auraframefx.ui.gates.SystemJournalScreen
-import dev.aurakai.auraframefx.ui.gates.SystemOverridesScreen
-import dev.aurakai.auraframefx.ui.gates.TaskAssignmentScreen
-import dev.aurakai.auraframefx.ui.gates.ThemeEngineScreen
-import dev.aurakai.auraframefx.ui.gates.ThemeEngineSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.TutorialVideosScreen
-import dev.aurakai.auraframefx.ui.gates.UIUXGateSubmenuScreen
-import dev.aurakai.auraframefx.ui.gates.XposedQuickAccessPanel
 
 // ── UI IDENTITY / ONBOARDING ─────────────────────────────────────────────────
-import dev.aurakai.auraframefx.ui.onboarding.GenderSelectionScreen
-import dev.aurakai.auraframefx.ui.identity.GenderSelectionNavigator
 
 // ── UI SCREENS ────────────────────────────────────────────────────────────────
-import dev.aurakai.auraframefx.ui.screens.AgentProfileScreen
-import dev.aurakai.auraframefx.ui.screens.EvolutionTreeScreen
 
 // ── VIEWMODELS ────────────────────────────────────────────────────────────────
-import dev.aurakai.auraframefx.ui.viewmodels.AgentViewModel
 
 // ── COLLAB CANVAS ─────────────────────────────────────────────────────────────
-import collabcanvas.ui.CanvasScreen as CollabCanvasScreen
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -253,7 +287,7 @@ fun GenesisNavigationHost(
             // L0: ENTRY POINT — Gate Carousel (ExodusHUD / GateNavigationScreen)
             // ═══════════════════════════════════════════════════════════════
             composable(GenesisRoutes.GATES) {
-                GateNavigationScreen(navController = navController)
+                GateNavigationScreen()
             }
 
             // ─── Onboarding ────────────────────────────────────────────────
@@ -359,19 +393,19 @@ fun GenesisNavigationHost(
                 ConstellationScreen(navController = navController)
             }
             composable(GenesisRoutes.GENESIS_CONSTELLATION) {
-                GenesisConstellationScreen(navController = navController)
+                GenesisConstellationScreen()
             }
             composable(GenesisRoutes.CLAUDE_CONSTELLATION) {
-                ClaudeConstellationScreen(navController = navController)
+                ClaudeConstellationScreen()
             }
             composable(GenesisRoutes.KAI_CONSTELLATION) {
-                KaiConstellationScreen(navController = navController)
+                KaiConstellationScreen()
             }
             composable(GenesisRoutes.CASCADE_CONSTELLATION) {
-                CascadeConstellationScreen(navController = navController)
+                CascadeConstellationScreen()
             }
             composable(GenesisRoutes.GROK_CONSTELLATION) {
-                GrokConstellationScreen(navController = navController)
+                GrokConstellationScreen()
             }
 
             // ═══════════════════════════════════════════════════════════════
@@ -382,7 +416,7 @@ fun GenesisNavigationHost(
             }
 
             composable(GenesisRoutes.AGENT_PROFILE) {
-                AgentProfileScreen(onNavigateBack = { navController.popBackStack() })
+                AgentProfileScreen()
             }
 
             composable(GenesisRoutes.AGENT_MONITORING) {
@@ -390,7 +424,7 @@ fun GenesisNavigationHost(
             }
 
             composable(GenesisRoutes.AGENT_ADVANCEMENT) {
-                AgentAdvancementScreen(onBack = { navController.popBackStack() })
+                AgentAdvancementScreen()
             }
 
             composable(GenesisRoutes.TASK_ASSIGNMENT) {
@@ -433,13 +467,13 @@ fun GenesisNavigationHost(
             composable(GenesisRoutes.AI_CHAT) {
                 val viewModel = hiltViewModel<AgentViewModel>()
                 with(viewModel) {
-                    DirectChatScreen { navController.popBackStack() }
+                    DirectChatScreen(onNavigateBack = { navController.popBackStack() })
                 }
             }
             composable(GenesisRoutes.DIRECT_CHAT) {
                 val viewModel = hiltViewModel<AgentViewModel>()
                 with(viewModel) {
-                    DirectChatScreen { navController.popBackStack() }
+                    DirectChatScreen(onNavigateBack = { navController.popBackStack() })
                 }
             }
 
@@ -447,13 +481,13 @@ fun GenesisNavigationHost(
             // L3: UI/UX TOOLS
             // ═══════════════════════════════════════════════════════════════
             composable(GenesisRoutes.STATUS_BAR) {
-                StatusBarScreen()
+                StatusBarScreen(navController)
             }
             composable(GenesisRoutes.NOTCH_BAR) {
-                NotchBarScreen()
+                NotchBarScreen(navController)
             }
             composable(GenesisRoutes.QUICK_SETTINGS) {
-                QuickSettingsScreen()
+                QuickSettingsScreen(navController)
             }
             composable(GenesisRoutes.OVERLAY_MENUS) {
                 OverlayMenusScreen()
@@ -462,19 +496,19 @@ fun GenesisNavigationHost(
                 QuickActionsScreen()
             }
             composable(GenesisRoutes.SYSTEM_OVERRIDES) {
-                SystemOverridesScreen { navController.popBackStack() }
+                SystemOverridesScreen()
             }
             composable(GenesisRoutes.THEME_ENGINE) {
-                ThemeEngineSubmenuScreen(onNavigateBack = { navController.popBackStack() })
+                ThemeEngineSubmenuScreen(navController)
             }
             composable(GenesisRoutes.GYROSCOPE_CUSTOMIZATION) {
-                GyroscopeCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+                GyroscopeCustomizationScreen()
             }
             composable(GenesisRoutes.INSTANT_COLOR_PICKER) {
-                InstantColorPickerScreen(onNavigateBack = { navController.popBackStack() })
+                InstantColorPickerScreen()
             }
             composable(GenesisRoutes.CHROMACORE_COLORS) {
-                InstantColorPickerScreen(onNavigateBack = { navController.popBackStack() })
+                InstantColorPickerScreen()
             }
 
             // ═══════════════════════════════════════════════════════════════
@@ -512,7 +546,7 @@ fun GenesisNavigationHost(
                 LogsViewerScreen { navController.popBackStack() }
             }
             composable(GenesisRoutes.XPOSED_PANEL) {
-                XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
+                XposedQuickAccessPanel()
             }
 
             // ═══════════════════════════════════════════════════════════════
@@ -521,7 +555,7 @@ fun GenesisNavigationHost(
             // AuraNavHost had "embodiment" → Text("Embodiment"). FIXED.
             // ═══════════════════════════════════════════════════════════════
             composable(GenesisRoutes.VPN_MANAGER) {
-                VPNManagerScreen()
+                VPNScreen()
             }
             composable(GenesisRoutes.SECURITY_SCANNER) {
                 SecurityScannerScreen()
@@ -573,7 +607,7 @@ fun GenesisNavigationHost(
                 }
             }
             composable(GenesisRoutes.XHANCEMENT) {
-                XhancementScreen(onNavigateBack = { navController.popBackStack() })
+                XhancementScreen()
             }
             composable(GenesisRoutes.SYSTEM_JOURNAL) {
                 SystemJournalScreen(navController = navController)
@@ -584,7 +618,7 @@ fun GenesisNavigationHost(
             // These keep old screens reachable without refactoring callers
             // ═══════════════════════════════════════════════════════════════
             composable("home") {
-                GateNavigationScreen(navController = navController)
+                GateNavigationScreen()
             }
             composable("settings") {
                 SystemJournalScreen(navController = navController)
