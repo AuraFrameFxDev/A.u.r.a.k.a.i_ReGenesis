@@ -459,8 +459,7 @@ fun GenesisNavigationHost(
             composable(GenesisRoutes.MODULE_CREATION) {
                 ModuleCreationScreen { navController.popBackStack() }
             composable(GenesisRoutes.HOOK_MANAGER) {
-                dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("HookManager") }
-                )
+                dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("HookManager")
             }
             composable(GenesisRoutes.LOGS_VIEWER) {
                 LogsViewerScreen { navController.popBackStack() }
@@ -587,7 +586,7 @@ fun GenesisNavigationHost(
             composable("overlay_menus") { OverlayMenusScreen() }
             composable("status_bar") { ComingSoonScreen("StatusBar") }
             composable("rom_flasher") { ComingSoonScreen("ROMFlasher") }
-            composable("module_manager") { dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("ModuleManager") }
+            composable("module_manager") { dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("ModuleManager")
             composable("quick_actions") { QuickActionsScreen() }
             composable("documentation") { DocumentationScreen { navController.popBackStack() } }
             composable("faq_browser") { FAQBrowserScreen { navController.popBackStack() } }
@@ -603,8 +602,7 @@ fun GenesisNavigationHost(
             composable("bootloader_manager") { BootloaderManagerScreen { navController.popBackStack() } }
             composable("live_rom_editor") { LiveROMEditorScreen { navController.popBackStack() } }
             composable("hook_manager") {
-                dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("HookManager") }
-                )
+                dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("HookManager")
             }
             composable("module_creation") { ModuleCreationScreen { navController.popBackStack() } }
             composable("system_overrides") { SystemOverridesScreen { navController.popBackStack() } }
