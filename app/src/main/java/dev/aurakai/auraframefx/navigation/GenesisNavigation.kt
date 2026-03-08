@@ -270,7 +270,7 @@ fun GenesisNavigationHost(
                 ComingSoonScreen("ROMToolsSubmenu")
             }
             composable(GenesisRoutes.ROOT_TOOLS_TOGGLES) {
-                ComingSoonScreen('Root Tools Toggles')
+                ComingSoonScreen("Root Tools Toggles")
             }
             composable(GenesisRoutes.AGENT_HUB) {
                 ComingSoonScreen("AgentHubSubmenu")
@@ -353,10 +353,8 @@ fun GenesisNavigationHost(
             composable("lineage_map") {
                 dev.aurakai.auraframefx.ui.gates.LineageMapScreen(navController) { navController.popBackStack() }
             }
-            }
             composable("gate_image_picker") {
                 dev.aurakai.auraframefx.ui.gates.GateDomainImagePicker(navController) { navController.popBackStack() }
-            }
             }
             composable("fusion") {
                 ComingSoonScreen("FusionMode")
@@ -416,7 +414,6 @@ fun GenesisNavigationHost(
             }
             composable(GenesisRoutes.SYSTEM_OVERRIDES) {
                 SystemOverridesScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.THEME_ENGINE) {
                 ThemeEngineSubmenuScreen(onNavigateBack = { navController.popBackStack() })
             }
@@ -442,10 +439,8 @@ fun GenesisNavigationHost(
             }
             composable(GenesisRoutes.LIVE_ROM_EDITOR) {
                 LiveROMEditorScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.RECOVERY_TOOLS) {
                 RecoveryToolsScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.BOOTLOADER_MANAGER) {
                 BootloaderManagerScreen { navController.popBackStack() }
             }
@@ -463,14 +458,12 @@ fun GenesisNavigationHost(
             }
             composable(GenesisRoutes.MODULE_CREATION) {
                 ModuleCreationScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.HOOK_MANAGER) {
                 dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("HookManager") }
                 )
             }
             composable(GenesisRoutes.LOGS_VIEWER) {
                 LogsViewerScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.XPOSED_PANEL) {
                 ComingSoonScreen('Xposed Panel')
             }
@@ -506,10 +499,8 @@ fun GenesisNavigationHost(
             }
             composable(GenesisRoutes.DOCUMENTATION) {
                 DocumentationScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.FAQ_BROWSER) {
                 FAQBrowserScreen { navController.popBackStack() }
-            }
             composable(GenesisRoutes.TUTORIAL_VIDEOS) {
                 TutorialVideosScreen { navController.popBackStack() }
             }
@@ -583,7 +574,6 @@ fun GenesisNavigationHost(
             composable("task_assignment") {
                 dev.aurakai.auraframefx.ui.gates.ConferenceRoomTaskScreen(navController) { navController.popBackStack() }
             }
-            }
             composable("agent_monitoring") { ComingSoonScreen("AgentMonitoring") }
             composable("fusion_mode") { ComingSoonScreen("FusionMode") }
             composable("theme_engine") {
@@ -631,15 +621,13 @@ fun GenesisNavigationHost(
             composable("terminal") {
                 dev.aurakai.auraframefx.ui.gates.TerminalGateScreen(navController) { navController.popBackStack() }
             }
-            }
             composable("root_tools") { ComingSoonScreen("ROMToolsSubmenu") }
-            composable("root_tools_toggles") { ComingSoonScreen('Root Tools Toggles') }
+            composable("root_tools_toggles") { ComingSoonScreen("Root Tools Toggles") }
             composable("xposed_panel") {
                 dev.aurakai.auraframefx.ui.gates.LsposedGateScreen(navController) { navController.popBackStack() }
             }
-            }
             composable("login") {
-                ComingSoonScreen('Login')
+                ComingSoonScreen("Login")
             }
         }
     }
