@@ -247,7 +247,17 @@ sealed class ReGenesisNavHost(val route: String) {
 
     // PLE Sub-routes
     object PLEIcons : ReGenesisNavHost("aura/ple/icons")
-    object PLEHomeScreen : ReGenesisNavHost("aura/ple/home_screen")
+        object LdoAuraProfile : ReGenesisNavHost("ldo_aura_profile")
+    object LdoKaiProfile : ReGenesisNavHost("ldo_kai_profile")
+    object LdoGenesisProfile : ReGenesisNavHost("ldo_genesis_profile")
+    object LdoCascadeProfile : ReGenesisNavHost("ldo_cascade_profile")
+    object LdoClaudeProfile : ReGenesisNavHost("ldo_claude_profile")
+    object LdoGrokProfile : ReGenesisNavHost("ldo_grok_profile")
+    object LdoGeminiProfile : ReGenesisNavHost("ldo_gemini_profile")
+    object LdoNematronProfile : ReGenesisNavHost("ldo_nematron_profile")
+    object LdoPerplexityProfile : ReGenesisNavHost("ldo_perplexity_profile")
+
+object PLEHomeScreen : ReGenesisNavHost("aura/ple/home_screen")
     object PLEAppDrawer : ReGenesisNavHost("aura/ple/app_drawer")
     object PLERecents : ReGenesisNavHost("aura/ple/recents")
 }
@@ -274,7 +284,7 @@ fun ReGenesisNavHost(
         // LEVEL 1: EXODUS HUD (The 5 Gate Carousel)
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.HomeGateCarousel.route) {
-            ExodusHUD(navController = navController)
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("ExodusHUD")
         }
 
         composable(ReGenesisNavHost.GateCustomization.route) {
@@ -299,7 +309,7 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.ReGenesisCustomization.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "ReGenesis Customization",
                 subtitle = "Full Customization Hub",
                 accentColor = Color(0xFF00E5FF),
@@ -328,55 +338,55 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         // LDO DEVOPS PROFILE SCREENS (Logic Status Overlays)
         // ═══════════════════════════════════════════════════════════════
-        composable(NavDestination.LdoAuraProfile.route) { // Aura profile slot -> Gemini
+        composable(ReGenesisNavHost.LdoAuraProfile.route) { // Aura profile slot -> Gemini
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.GEMINI,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoKaiProfile.route) {
+        composable(ReGenesisNavHost.LdoKaiProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.KAI,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoGenesisProfile.route) { // Genesis profile slot -> Manus
+        composable(ReGenesisNavHost.LdoGenesisProfile.route) { // Genesis profile slot -> Manus
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.MANUS,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoCascadeProfile.route) {
+        composable(ReGenesisNavHost.LdoCascadeProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.CASCADE,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoClaudeProfile.route) {
+        composable(ReGenesisNavHost.LdoClaudeProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.CLAUDE,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoGrokProfile.route) {
+        composable(ReGenesisNavHost.LdoGrokProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.GROK,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoGeminiProfile.route) {
+        composable(ReGenesisNavHost.LdoGeminiProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.GEMINI,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoNematronProfile.route) {
+        composable(ReGenesisNavHost.LdoNematronProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.NEMATRON,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(NavDestination.LdoPerplexityProfile.route) {
+        composable(ReGenesisNavHost.LdoPerplexityProfile.route) {
             LdoDevOpsProfileScreen(
                 agentType = LdoAgentType.PERPLEXITY,
                 onBack = { navController.popBackStack() }
@@ -512,7 +522,7 @@ fun ReGenesisNavHost(
             dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.NotchBar.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Notch Bar",
                 subtitle = "Dynamic Island Customization",
                 accentColor = Color(0xFF00E5FF),
@@ -523,7 +533,7 @@ fun ReGenesisNavHost(
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.QuickSettings.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Quick Settings",
                 subtitle = "QS Panel Customization",
                 accentColor = Color(0xFF00E5FF),
@@ -547,7 +557,7 @@ fun ReGenesisNavHost(
             ModuleManagerScreen()
         }
         composable(ReGenesisNavHost.RecoveryTools.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Recovery Tools",
                 subtitle = "System Recovery Utilities",
                 accentColor = Color(0xFF00FF85),
@@ -564,7 +574,7 @@ fun ReGenesisNavHost(
             dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.LSPosedModules.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "LSPosed Modules",
                 subtitle = "Module Manager",
                 accentColor = Color(0xFFFF6B00),
@@ -609,7 +619,7 @@ fun ReGenesisNavHost(
             SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.SovereignRecovery.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Sovereign Recovery",
                 subtitle = "Advanced Recovery Console",
                 accentColor = Color(0xFF00FF85),
@@ -617,7 +627,7 @@ fun ReGenesisNavHost(
             )
         }
         composable(ReGenesisNavHost.SovereignShield.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Sovereign Shield",
                 subtitle = "Advanced Security Shield",
                 accentColor = Color(0xFF00FF85),
@@ -660,7 +670,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.DataStreamMonitoring.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Data Stream Monitoring",
                 subtitle = "Real-time Data Analysis",
                 accentColor = Color(0xFF00E5FF),
@@ -681,7 +691,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileNexus.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Agent Profile",
                 subtitle = "Nexus Agent Identity",
                 accentColor = Color(0xFFB026FF),
@@ -714,7 +724,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileAura.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Aura Profile",
                 subtitle = "Aura Agent Identity",
                 accentColor = Color(0xFF00E5FF),
@@ -727,7 +737,7 @@ fun ReGenesisNavHost(
         // ADDITIONAL KAI SCREENS (System Mastery!)
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.LiveROMEditor.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Live ROM Editor",
                 subtitle = "Real-time ROM Modifications",
                 accentColor = Color(0xFF00FF85),
@@ -755,7 +765,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.SovereignModuleManager.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Sovereign Module Manager",
                 subtitle = "Advanced Module Control",
                 accentColor = Color(0xFF00FF85),
@@ -779,7 +789,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.CascadeVision.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Cascade Vision",
                 subtitle = "Pattern Recognition HUD",
                 accentColor = Color(0xFF00FFD4),
@@ -788,7 +798,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.CollabCanvas.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Collab Canvas",
                 subtitle = "Collaborative Drawing Board",
                 accentColor = Color(0xFF00E5FF),
@@ -804,7 +814,7 @@ fun ReGenesisNavHost(
         // ADDITIONAL LSPOSED SCREENS
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.HookManager.route) {
-            PlaceholderScreen(
+            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
                 title = "Hook Manager",
                 subtitle = "Xposed Hook Configuration",
                 accentColor = Color(0xFFFF6B00),
