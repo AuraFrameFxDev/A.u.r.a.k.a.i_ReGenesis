@@ -15,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.AssistantBubbleService
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraFrameFXTheme
-import dev.aurakai.auraframefx.navigation.GenesisNavigationHost
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.system.ShizukuManager
 import timber.log.Timber
 import javax.inject.Inject
@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 // 🚀 THE FIX: Actually display the navigation!
-                GenesisNavigationHost(navController = navController)
+                ReGenesisNavHost(navController = navController)
             }
         }
     }
