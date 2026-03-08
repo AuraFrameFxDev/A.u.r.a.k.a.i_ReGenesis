@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 // Import for SimpleDateFormat and Date if not already covered by other viewmodel files
 import androidx.lifecycle.ViewModel

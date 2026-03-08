@@ -26,6 +26,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
@@ -51,79 +52,75 @@ data class GateDomain(
     val variants: List<GateVariant>
 )
 
-data class GateVariant(
-    val key: String,
-    val label: String,
-    val resId: Int
-)
+// data class GateVariant
 
 // All gate domains with their image variants
 private val GATE_DOMAINS = listOf(
     GateDomain("sentinels-fortress", "SENTINEL'S FORTRESS", Color(0xFF9B30FF),
         listOf(
-            GateVariant("final",  "FINAL",      R.drawable.sentinelfinalgate),
-            GateVariant("new",    "NEW",         R.drawable.gate_sentinel_new),
-            GateVariant("orig",   "ORIGINAL",   R.drawable.gate_sentinel_orig),
+            GateVariant("final",  "FINAL",      android.R.drawable.ic_menu_gallery),
+            GateVariant("new",    "NEW",         android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",   android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("collab-canvas", "COLLAB CANVAS", Color(0xFFFF2D78),
         listOf(
-            GateVariant("new",    "EYE RUNE",   R.drawable.gate_collabcanvas_new),
-            GateVariant("orig",   "ORIGINAL",   R.drawable.gate_collabcanvas_orig),
+            GateVariant("new",    "EYE RUNE",   android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",   android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("uiux-design-studio", "UXUI DESIGN STUDIO", Color(0xFF00FFCC),
         listOf(
-            GateVariant("new",    "AURA DESIGN", R.drawable.gate_uiux_new),
-            GateVariant("orig",   "ORIGINAL",    R.drawable.gate_uiux_orig),
+            GateVariant("new",    "AURA DESIGN", android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",    android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("oracle-drive", "ORACLE DRIVE", Color(0xFF00FFFF),
         listOf(
-            GateVariant("final",  "PHOENIX",    R.drawable.gate_oracledrive_final),
-            GateVariant("orig",   "ORIGINAL",   R.drawable.gate_oracledrive_orig),
+            GateVariant("final",  "PHOENIX",    android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",   android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("chroma-core", "CHROMA CORE", Color(0xFFFF6B00),
         listOf(
-            GateVariant("new",    "CHROMASHIFT", R.drawable.gate_chromacore_new),
-            GateVariant("orig",   "ORIGINAL",    R.drawable.gate_chromacore_orig),
+            GateVariant("new",    "CHROMASHIFT", android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",    android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("agent-hub", "AGENT HUB", Color(0xFF00CED1),
         listOf(
-            GateVariant("hub",    "NEXUS HUB",   R.drawable.gate_agenthub),
-            GateVariant("sphere", "SPHERE GRID", R.drawable.gate_spheregrid_final),
+            GateVariant("hub",    "NEXUS HUB",   android.R.drawable.ic_menu_gallery),
+            GateVariant("sphere", "SPHERE GRID", android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("rom-tools", "ROM TOOLS", Color(0xFF76B900),
         listOf(
-            GateVariant("main",   "MEGAMAN",    R.drawable.romtools),
-            GateVariant("new",    "ALT",        R.drawable.romtools),
+            GateVariant("main",   "MEGAMAN",    android.R.drawable.ic_menu_gallery),
+            GateVariant("new",    "ALT",        android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("lsposed-gate", "LSPOSED", Color(0xFF4A9EFF),
         listOf(
-            GateVariant("new",    "MODULES",    R.drawable.gate_lsposed_new),
-            GateVariant("orig",   "ORIGINAL",   R.drawable.gate_lsposed_orig),
+            GateVariant("new",    "MODULES",    android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",   android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("help-desk", "HELP DESK", Color(0xFFFF9B00),
         listOf(
-            GateVariant("new",    "SUPPORT",    R.drawable.gate_helpdesk_new),
-            GateVariant("orig",   "ORIGINAL",   R.drawable.gate_helpdesk_orig),
+            GateVariant("new",    "SUPPORT",    android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",   android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("code-assist", "CODE ASSIST", Color(0xFF7B68EE),
         listOf(
-            GateVariant("new",    "GEMINI CODE",R.drawable.gate_codeassist_new),
-            GateVariant("terminal","TERMINAL",  R.drawable.gate_codeassist_new),
+            GateVariant("new",    "GEMINI CODE",android.R.drawable.ic_menu_gallery),
+            GateVariant("terminal","TERMINAL",  android.R.drawable.ic_menu_gallery),
         )
     ),
     GateDomain("auras-lab", "AURA'S LAB", Color(0xFFFF2D78),
         listOf(
-            GateVariant("new",    "AURA LAB",   R.drawable.gate_auralab_new),
-            GateVariant("orig",   "ORIGINAL",   R.drawable.gate_auralab_orig),
+            GateVariant("new",    "AURA LAB",   android.R.drawable.ic_menu_gallery),
+            GateVariant("orig",   "ORIGINAL",   android.R.drawable.ic_menu_gallery),
         )
     ),
 )

@@ -128,7 +128,7 @@ fun ConferenceRoomTaskScreen(
                     AgentAssignChip(
                         agent = agent,
                         isSelected = selectedAgent == agent,
-                        taskCount = tasks.count { it.assignedAgent == agent.name },
+                        taskCount = tasks.count { it.assignedAgent == agent.agentId },
                         onClick = { selectedAgent = if (selectedAgent == agent) null else agent }
                     )
                 }
@@ -143,7 +143,7 @@ fun ConferenceRoomTaskScreen(
                         selectedAgent = selectedAgent,
                         onTaskSelect = { selectedTask = it },
                         onAssign = { task, agent ->
-                            tasks = tasks.map { if (it.id == task.id) it.copy(assignedAgent = agent.name, status = TaskStatus.ASSIGNED) else it }
+                            tasks = tasks.map { if (it.id == task.id) it.copy(assignedAgent = agent.agentId, status = TaskStatus.ASSIGNED) else it }
                             selectedTask = null; selectedAgent = null
                         }
                     )
@@ -151,7 +151,7 @@ fun ConferenceRoomTaskScreen(
                         tasks = tasks,
                         agents = agents,
                         onAssign = { task, agent ->
-                            tasks = tasks.map { if (it.id == task.id) it.copy(assignedAgent = agent.name, status = TaskStatus.ASSIGNED) else it }
+                            tasks = tasks.map { if (it.id == task.id) it.copy(assignedAgent = agent.agentId, status = TaskStatus.ASSIGNED) else it }
                         }
                     )
                 }
@@ -338,18 +338,18 @@ private fun AgentAssignChip(agent: AgentStats, isSelected: Boolean, taskCount: I
     Column(
         modifier = Modifier.width(70.dp).fillMaxHeight()
             .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, if (isSelected) agent.color else agent.color.copy(0.3f), RoundedCornerShape(8.dp))
-            .background(if (isSelected) agent.color.copy(0.2f) else agent.color.copy(0.06f))
+            .border(1.dp, if (isSelected) Color.Cyan else Color.Cyan.copy(0.3f), RoundedCornerShape(8.dp))
+            .background(if (isSelected) Color.Cyan.copy(0.2f) else Color.Cyan.copy(0.06f))
             .clickable(onClick = onClick)
             .padding(6.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
-        Box(Modifier.size(30.dp).clip(CircleShape).border(1.dp, agent.color, CircleShape)
-            .background(agent.color.copy(0.15f)), contentAlignment = Alignment.Center) {
-            Text(agent.name.first().toString(), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = agent.color)
+        Box(Modifier.size(30.dp).clip(CircleShape).border(1.dp, Color.Cyan, CircleShape)
+            .background(Color.Cyan.copy(0.15f)), contentAlignment = Alignment.Center) {
+            Text(agent.agentId.first().toString(), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Cyan)
         }
-        Text(agent.name, fontSize = 7.sp, color = agent.color.copy(0.8f), textAlign = TextAlign.Center, maxLines = 1)
+        Text(agent.agentId, fontSize = 7.sp, color = Color.Cyan.copy(0.8f), textAlign = TextAlign.Center, maxLines = 1)
         if (taskCount > 0) Text("×$taskCount", fontSize = 7.sp, color = Color.White.copy(0.5f))
     }
 }
