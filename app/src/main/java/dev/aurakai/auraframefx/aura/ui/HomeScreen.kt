@@ -31,7 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.R
-import dev.aurakai.auraframefx.ui.components.HologramTransition
+import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 import dev.aurakai.auraframefx.ui.gates.GateConfigs
 import dev.aurakai.auraframefx.ui.gates.HomeBackdropManager
 import dev.aurakai.auraframefx.ui.gates.ImmersiveGateCard
