@@ -120,6 +120,7 @@ fun StatusBarScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         when (state.batteryStyle) {
                             "Icon" -> Icon(Icons.Default.BatteryStd, "Battery", tint = Color.White, modifier = Modifier.size(16.dp))
+
                             "Percentage" -> Text("85%", style = MaterialTheme.typography.bodySmall, color = Color.White, fontSize = 10.sp)
                             "Icon + %" -> {
                                 Icon(Icons.Default.BatteryStd, "Battery", tint = Color.White, modifier = Modifier.size(16.dp))

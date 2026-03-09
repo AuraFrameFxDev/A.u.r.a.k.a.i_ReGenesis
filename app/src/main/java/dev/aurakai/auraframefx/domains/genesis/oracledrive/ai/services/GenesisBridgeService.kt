@@ -144,7 +144,6 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse.error(
                     message = "Genesis system not initialized",
                     agentName = "Genesis",
-                    agentType = AgentType.GENESIS
                 )
             )
             return@flow
@@ -179,9 +178,9 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse.success(
                                 content = response.result["response"] ?: "Aura processing complete",
-                                confidence = 0.95f,
                                 agentName = "Aura",
-                                agentType = AgentType.AURA
+                                agentType = AgentType.AURA,
+                                confidence = 0.95f,
                             )
                         )
                     }
@@ -191,9 +190,9 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse.success(
                                 content = response.result["response"] ?: "Kai analysis complete",
-                                confidence = 0.90f,
                                 agentName = "Kai",
-                                agentType = AgentType.KAI
+                                agentType = AgentType.KAI,
+                                confidence = 0.90f,
                             )
                         )
                     }
@@ -203,9 +202,8 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse.success(
                                 content = response.result["response"] ?: "Genesis fusion complete",
-                                confidence = 0.98f,
                                 agentName = "Genesis",
-                                agentType = AgentType.GENESIS
+                                confidence = 0.98f,
                             )
                         )
                     }
@@ -223,7 +221,6 @@ class GenesisBridgeService @Inject constructor(
                     AgentResponse.error(
                         message = "Genesis processing failed",
                         agentName = "Genesis",
-                        agentType = AgentType.GENESIS
                     )
                 )
             }
@@ -234,7 +231,6 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse.error(
                     message = "Genesis bridge error: ${e.message}",
                     agentName = "Genesis",
-                    agentType = AgentType.GENESIS
                 )
             )
         }

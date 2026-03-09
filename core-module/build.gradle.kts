@@ -36,7 +36,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
-    
+
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 }

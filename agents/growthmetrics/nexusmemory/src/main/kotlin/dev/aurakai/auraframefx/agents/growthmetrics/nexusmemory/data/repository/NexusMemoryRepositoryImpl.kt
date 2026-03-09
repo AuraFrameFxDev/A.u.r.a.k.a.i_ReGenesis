@@ -20,7 +20,7 @@ class NexusMemoryRepositoryImpl @Inject constructor(
 
     override suspend fun saveMemory(content: String, type: MemoryType, tags: List<String>, importance: Float, key: String?): Long {
         val sensitive = tags.contains("sensitive") || tags.contains("secure")
-        
+
         val finalContent = if (sensitive) {
             val (encrypted, iv) = cryptoManager.encrypt(content.toByteArray(), memoryKey)
             // Store as IV:Ciphertext in Base64

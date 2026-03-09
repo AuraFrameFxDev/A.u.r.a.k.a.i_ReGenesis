@@ -34,7 +34,7 @@ class AgentImpl : Agent {
         Timber.e("AgentImpl: processRequest() invoked. This is a placeholder.")
         return AgentResponse.error(
             "FallbackAgent: Processing not implemented",
-            agentName = "FallbackAgent"
+            agentName = "FallbackAgent",
         )
     }
 
@@ -49,7 +49,7 @@ class AgentImpl : Agent {
         return flowOf(
             AgentResponse.error(
                 "FallbackAgent: Stream processing not implemented",
-                agentName = "FallbackAgent"
+                agentName = "FallbackAgent",
             )
         )
     }

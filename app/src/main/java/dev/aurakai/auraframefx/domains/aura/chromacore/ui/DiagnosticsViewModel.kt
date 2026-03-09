@@ -1,13 +1,7 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 // Import for SimpleDateFormat and Date if not already covered by other viewmodel files
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.cascade.storage.OfflineDataManager
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.i
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +21,6 @@ open class DiagnosticsViewModel @Inject constructor(
     private val logger: AuraFxLogger
 ) : ViewModel() {
 
-    private val tag = "DiagnosticsViewModel"
 
     private val _currentLogs = MutableStateFlow("Loading logs...")
     val currentLogs: StateFlow<String> = _currentLogs.asStateFlow()
@@ -61,11 +54,15 @@ open class DiagnosticsViewModel @Inject constructor(
                 currentMap.toMutableMap().apply {
                     put(
                         "Last Full Sync (Offline Data)",
-                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(
-                            Date(
-                                offlineData.lastFullSyncTimestamp
+                        if (offlineData.lastFullSyncTimestamp != null) {
+                            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(
+                                Date(
+                                    offlineData.lastFullSyncTimestamp
+                                )
                             )
-                        )
+                        } else {
+                            "N/A"
+                        }
                     )
                     put(
                         "Offline AI Config Version (Timestamp)",
@@ -81,7 +78,7 @@ open class DiagnosticsViewModel @Inject constructor(
                     )
                     put(
                         "Monitoring Enabled",
-                        offlineData.systemMonitoring.enabled.toString()
+                        offlineData.monitoringEnabled.toString()
                     )
                     put(
                         "Contextual Memory Last Update",

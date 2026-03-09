@@ -66,7 +66,6 @@ fun includeIfExists(path: String) {
 include(":app")
 
 // --- Core Modules ---
-include(":core")
 include(":core-module")
 include(":list")
 include(":utilities")

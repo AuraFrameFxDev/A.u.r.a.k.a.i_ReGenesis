@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -58,7 +56,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
@@ -236,7 +233,6 @@ fun HaloView(
                         (it.name.equals("cascade", true) && agentCategoryKey == AgentCapabilityCategory.ANALYSIS)
                     }
                     if (agentConfigIndex != -1) {
-                        val angle = (agentConfigIndex * 360f / agentConfigs.size + rotationAngle) % 360f
                         val x = center.x + radius * cos((angle * PI / 180f).toFloat())
                         val y = center.y + radius * sin((angle * PI / 180f).toFloat())
 
@@ -280,7 +276,6 @@ fun HaloView(
                                 val distance = (offset - nodeCenter).getDistance()
                                 if (distance < 24.dp.toPx()) {
                                     try {
-                                        draggingAgent = when (config.name.lowercase(Locale.ROOT)) {
                                             "aura" -> AgentCapabilityCategory.CREATIVE
                                             "kai" -> AgentCapabilityCategory.SECURITY
                                             "genesis" -> AgentCapabilityCategory.COORDINATION
@@ -501,10 +496,8 @@ fun HaloView(
                             color = NeonTeal
                         )
 
-                        TextField(value = selectedTask, onValueChange = { it.also { selectedTask = it } }, placeholder = { Text("Enter task description...") }, modifier = Modifier.fillMaxWidth(), colors = TextFieldDefaults.colors(
                                 focusedContainerColor = NeonTeal.copy(alpha = 0.1f),
                                 unfocusedContainerColor = NeonTeal.copy(alpha = 0.1f)
-                            ))
                     }
                 }
             }
@@ -660,7 +653,6 @@ fun HaloView(
 
             taskHistory.forEach { task ->
                 val agentNameFromHistory = task.substringAfter("[").substringBefore("]")
-                val foundAgentConfig = agentConfigs.find { it.name.equals(agentNameFromHistory, ignoreCase = true) }
                 if (foundAgentConfig != null) {
                     try {
                         val actualAgentCategory = when (foundAgentConfig.name.lowercase(Locale.ROOT)) {

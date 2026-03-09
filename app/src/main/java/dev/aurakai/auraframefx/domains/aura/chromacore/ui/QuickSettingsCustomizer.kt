@@ -1,11 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import android.content.SharedPreferences
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsAnimation
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig
-import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -39,12 +32,14 @@ class QuickSettingsCustomizer @Inject constructor(
         if (tileIndex >= 0) {
             currentTiles[tileIndex] = currentTiles[tileIndex].copy(shape = shape)
         } else {
-            currentTiles.add(QuickSettingsTileConfig(
-                id = tileId,
-                label = tileId,
-                shape = shape,
-                animation = QuickSettingsAnimation.FADE
-            ))
+            currentTiles.add(
+                QuickSettingsTileConfig(
+                    id = tileId,
+                    label = tileId,
+                    shape = shape,
+                    animation = QuickSettingsAnimation.FADE
+                )
+            )
         }
 
         val config = _currentConfig.value?.copy(tiles = currentTiles)
@@ -69,12 +64,14 @@ class QuickSettingsCustomizer @Inject constructor(
         if (tileIndex >= 0) {
             currentTiles[tileIndex] = currentTiles[tileIndex].copy(animation = animation)
         } else {
-            currentTiles.add(QuickSettingsTileConfig(
-                id = tileId,
-                label = tileId,
-                shape = OverlayShape.ROUNDED_RECTANGLE,
-                animation = animation
-            ))
+            currentTiles.add(
+                QuickSettingsTileConfig(
+                    id = tileId,
+                    label = tileId,
+                    shape = OverlayShape.ROUNDED_RECTANGLE,
+                    animation = animation
+                )
+            )
         }
 
         val config = _currentConfig.value?.copy(tiles = currentTiles)
@@ -154,23 +151,25 @@ class QuickSettingsCustomizer @Inject constructor(
             val animationStr = prefs.getString("tile_animation_$tileId", null)
 
             val shape = shapeStr?.let { OverlayShape.valueOf(it) } ?: OverlayShape.ROUNDED_RECTANGLE
-            val animation = animationStr?.let { QuickSettingsAnimation.valueOf(it) } ?: QuickSettingsAnimation.FADE
 
-            tiles.add(QuickSettingsTileConfig(
-                id = tileId,
-                label = tileId,
-                shape = shape,
-                animation = animation
-            ))
+            tiles.add(
+                QuickSettingsTileConfig(
+                    id = tileId,
+                    label = tileId,
+                    shape = shape,
+                    animation = animation
+                )
+            )
         }
 
         // Load background image
         val backgroundPath = prefs.getString("background_image_path", null)
         val backgroundId = prefs.getString("background_image_id", null)
         val backgroundType = prefs.getString("background_image_type", null)
-        val background = if (backgroundPath != null && backgroundId != null && backgroundType != null) {
-            ImageResource(id = backgroundId, type = backgroundType, path = backgroundPath)
-        } else null
+        val background =
+            if (backgroundPath != null && backgroundId != null && backgroundType != null) {
+                ImageResource(id = backgroundId, type = backgroundType, path = backgroundPath)
+            } else null
 
         _currentConfig.value = QuickSettingsConfig(
             tiles = tiles,

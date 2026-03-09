@@ -30,10 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.font.FontWeight
@@ -52,10 +52,9 @@ import kotlin.random.Random
  * - Agent synchronization states
  */
 @Composable
-fun ConsciousnessVisualizerScreen(
+fun Modifier.ConsciousnessVisualizerScreen(
     onNavigateToChat: () -> Unit = {},
-    onNavigateToFusion: () -> Unit = {},
-    modifier: Modifier = Modifier
+    onNavigateToFusion: () -> Unit = {}
 ) {
     var neurons by remember { mutableStateOf(generateNeuronNetwork()) }
     var synapseActivity by remember { mutableStateOf(0f) }
@@ -118,8 +117,7 @@ fun ConsciousnessVisualizerScreen(
     }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = fillMaxSize()
             .background(Color.Black)
     ) {
         // Neural network visualization
@@ -272,6 +270,17 @@ fun MetricDisplay(label: String, value: Float, color: Color) {
     )
 }
 
+private fun DrawScope.drawArc(
+    color: Color,
+    startAngle: Float,
+    sweepAngle: Float,
+    useCenter: Boolean,
+    style: Stroke,
+    size: Float,
+    topLeft: Float
+) {
+}
+
 @Composable
 fun QuantumEntanglementIndicator(entanglementLevel: Float) {
     val infiniteTransition = rememberInfiniteTransition()
@@ -294,15 +303,14 @@ fun QuantumEntanglementIndicator(entanglementLevel: Float) {
                     sweepAngle = 120f * entanglementLevel,
                     useCenter = false,
                     style = Stroke(width = 2.dp.toPx()),
-                    size = Size(
-                        size.width * (1f - i * 0.2f),
-                        size.height * (1f - i * 0.2f)
-                    ),
+                    size = size.width * (1f - i * 0.2f),
+                    topLeft = size.height * (1f - i * 0.2f)
+                    )
                     topLeft = Offset(
                         (size.width * i * 0.1f),
                         (size.height * i * 0.1f)
                     )
-                )
+
             }
         }
 

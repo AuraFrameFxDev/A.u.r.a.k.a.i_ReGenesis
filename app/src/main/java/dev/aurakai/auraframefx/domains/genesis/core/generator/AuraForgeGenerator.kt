@@ -1,5 +1,9 @@
 package dev.aurakai.auraframefx.domains.genesis.core.generator
 
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import javax.inject.Inject
@@ -24,7 +28,7 @@ class AuraForgeGenerator @Inject constructor(
         val prompt = """
             As Aura's Forge, generate a Kotlin 'Spelhook' for the ReGenesis OS.
             Description: $description
-            
+
             Requirements:
             - Use YukiHookAPI for Xposed hooks.
             - Use ChromaCoreManager for system deployment.

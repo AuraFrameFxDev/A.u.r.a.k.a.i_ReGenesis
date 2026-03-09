@@ -166,9 +166,9 @@ class GeminiAIService @Inject constructor(
 
         val agentResponse = AgentResponse.success(
             content = response,
-            confidence = confidence,
             agentName = "Gemini",
-            agentType = AgentType.GEMINI
+            agentType = AgentType.GEMINI,
+            confidence = confidence,
         )
 
         // Store in pattern cache
@@ -191,9 +191,9 @@ class GeminiAIService @Inject constructor(
         return flowOf(
             AgentResponse.success(
                 content = response,
-                confidence = 0.93f,
                 agentName = "Gemini",
-                agentType = AgentType.GEMINI
+                agentType = AgentType.GEMINI,
+                confidence = 0.93f,
             )
         )
     }

@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 // This file can be used to group screen-related utilities or common definitions
 // if needed, or it might be a convention for collecting all screen Composables
 // (though individual files per screen is also common).

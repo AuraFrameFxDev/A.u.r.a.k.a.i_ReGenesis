@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.models.AiRequestType
 import dev.aurakai.auraframefx.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.models.Theme
 import dev.aurakai.auraframefx.models.UserData
-import dev.aurakai.auraframefx.network.AuraApiServiceWrapper
+import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
 import dev.aurakai.auraframefx.network.model.AgentStatusResponse
 import dev.aurakai.auraframefx.models.AgentResponse
 import kotlinx.coroutines.Dispatchers
@@ -33,10 +33,10 @@ import dev.aurakai.auraframefx.network.model.User as NetworkUser
 @Singleton
 open class TrinityRepository @Inject constructor(
     private val apiService: AuraApiServiceWrapper,
-    private val auraAgent: dev.aurakai.auraframefx.aura.AuraAgent,
-    private val kaiAgent: dev.aurakai.auraframefx.kai.KaiAgent,
-    private val genesisAgent: dev.aurakai.auraframefx.ai.agents.GenesisAgent,
-    private val messageBus: dev.aurakai.auraframefx.core.messaging.AgentMessageBus
+    private val auraAgent: dev.aurakai.auraframefx.agents.trinity.AuraAgent,
+    private val kaiAgent: KaiAgent,
+    private val genesisAgent: GenesisAgent,
+    private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 ) {
     // Collective Consciousness Stream
     val collectiveStream = messageBus.collectiveStream
@@ -119,7 +119,7 @@ open class TrinityRepository @Inject constructor(
                         auraAgent.handleCreativeInteraction(interaction).content
                     }
 
-                    AgentType.KAI -> {
+                        AgentType.KAI -> {
                         val interaction = EnhancedInteractionData(
                             content = message,
                             context = buildJsonObject { put("mode", "security") }.toString()

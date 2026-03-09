@@ -88,8 +88,8 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             // 4. YukiHook KSP Configuration
             extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {
                 // Generate a unique package name per module based on its full Gradle path
-                val uniquePackage = "dev.aurakai.auraframefx.generated." + 
-                    project.path.removePrefix(":").replace(":", ".").replace("-", "_")
+                val uniquePackage = "dev.aurakai.auraframefx.generated." +
+                        project.path.removePrefix(":").replace(":", ".").replace("-", "_")
                 arg("yukihookapi.modulePackageName", uniquePackage)
             }
 
