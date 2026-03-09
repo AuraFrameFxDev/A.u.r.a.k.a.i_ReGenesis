@@ -64,7 +64,7 @@ fun GateCard(
                     model = resId,
                     contentDescription = config.title,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Fit  // Fit preserves full artwork frame — both cards match
                 )
             } else {
                 // Fallback gradient if no resource

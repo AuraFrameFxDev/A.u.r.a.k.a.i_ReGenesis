@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
+import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.CascadeAgent
@@ -299,6 +300,7 @@ class GenesisOrchestrator @Inject constructor(
             is AgentMessage -> {
                 AiRequest(
                     prompt = message.content,
+                    category = AgentCapabilityCategory.GENERIC, // Default or derive from message.type
                     type = AiRequestType.entries.find {
                         it.name.equals(
                             message.type,

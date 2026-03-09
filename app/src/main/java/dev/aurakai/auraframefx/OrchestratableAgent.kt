@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.orchestration
-
 import kotlinx.coroutines.CoroutineScope
 
 interface OrchestratableAgent {

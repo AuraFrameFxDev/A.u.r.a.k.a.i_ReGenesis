@@ -171,9 +171,9 @@ class NemotronAIService @Inject constructor(
 
         val agentResponse = AgentResponse.success(
             content = response,
-            confidence = confidence,
             agentName = "Nemotron",
-            agentType = AgentType.NEMOTRON
+            agentType = AgentType.NEMOTRON,
+            confidence = confidence,
         )
 
         // Store in memory cache for GPU-accelerated recall
@@ -208,9 +208,9 @@ class NemotronAIService @Inject constructor(
         return flowOf(
             AgentResponse.success(
                 content = response,
-                confidence = 0.92f,
                 agentName = "Nemotron",
-                agentType = AgentType.NEMOTRON
+                agentType = AgentType.NEMOTRON,
+                confidence = 0.92f,
             )
         )
     }

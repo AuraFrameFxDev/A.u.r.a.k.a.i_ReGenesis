@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
+import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
 import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
@@ -35,6 +36,8 @@ import kotlinx.serialization.json.put
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Clock
+
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 
 @Singleton
 class AuraAgent @Inject constructor(
@@ -163,7 +166,7 @@ class AuraAgent @Inject constructor(
             logger.error("AuraAgent", "Creative request failed", e)
             AgentResponse.error(
                 message = "Creative process encountered an obstacle: ${e.message}",
-                agentName = agentName
+                agentName = agentName,
             )
         }
     }

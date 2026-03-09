@@ -31,6 +31,35 @@ import kotlinx.serialization.json.jsonPrimitive
 import javax.inject.Inject
 import javax.inject.Singleton
 
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonPrimitive
+import dev.aurakai.auraframefx.domains.kai.SystemMonitor
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+import javax.inject.Inject
+import javax.inject.Singleton
+
 @Singleton
 class KaiAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
@@ -164,48 +193,50 @@ class KaiAgent @Inject constructor(
         return true
     }
 
-    suspend fun processRequest(request: AgentRequest): AgentResponse {
-        ensureInitialized()
-        logger.info("KaiAgent", "Processing analytical request: ${request.type}")
-        _analysisState.value = AnalysisState.ANALYZING
-        return try {
-            val startTime = System.currentTimeMillis()
-            validateRequestSecurity(request)
-            val response = when (request.type) {
-                "security_analysis" -> handleSecurityAnalysis(request)
-                "threat_assessment" -> handleThreatAssessment(request)
-                "performance_analysis" -> handlePerformanceAnalysis(request)
-                "code_review" -> handleCodeReview(request)
-                "system_optimization" -> handleSystemOptimization(request)
-                "vulnerability_scan" -> handleVulnerabilityScanning(request)
-                "compliance_check" -> handleComplianceCheck(request)
-                else -> handleGeneralAnalysis(request)
-            }
-            val executionTime = System.currentTimeMillis() - startTime
-            _analysisState.value = AnalysisState.READY
-            logger.info("KaiAgent", "Analytical request completed in ${executionTime}ms")
-            AgentResponse.success(
-                content = "Analysis completed with methodical precision: $response",
-                confidence = 0.85f,
-                agentName = agentName,
-                agentType = agentType
-            )
-        } catch (e: SecurityException) {
-            _analysisState.value = AnalysisState.ERROR
-            logger.warn("KaiAgent", "Security violation detected in request", e)
-            AgentResponse.error(
-                message = "Request blocked due to security concerns: ${e.message}",
-                agentName = agentName
-            )
-        } catch (e: Exception) {
-            _analysisState.value = AnalysisState.ERROR
-            logger.error("KaiAgent", "Analytical request failed", e)
-            AgentResponse.error(
-                message = "Analysis encountered an error: ${e.message}",
-                agentName = agentName
-            )
+suspend fun processRequest(request: AgentRequest): AgentResponse {
+    ensureInitialized()
+    logger.info("KaiAgent", "Processing analytical request: ${request.type}")
+    _analysisState.value = AnalysisState.ANALYZING
+    return try {
+        val startTime = System.currentTimeMillis()
+        validateRequestSecurity(request)
+        val response = when (request.type) {
+            "security_analysis" -> handleSecurityAnalysis(request)
+            "threat_assessment" -> handleThreatAssessment(request)
+            "performance_analysis" -> handlePerformanceAnalysis(request)
+            "code_review" -> handleCodeReview(request)
+            "system_optimization" -> handleSystemOptimization(request)
+            "vulnerability_scan" -> handleVulnerabilityScanning(request)
+            "compliance_check" -> handleComplianceCheck(request)
+            else -> handleGeneralAnalysis(request)
         }
+        val executionTime = System.currentTimeMillis() - startTime
+        _analysisState.value = AnalysisState.READY
+        logger.info("KaiAgent", "Analytical request completed in ${executionTime}ms")
+        AgentResponse.success(
+            content = "Analysis completed with methodical precision: $response",
+            agentName = agentName,
+            agentType = agentType,
+            confidence = 0.85f,
+            agentName = agentName,
+            agentType = agentType
+        )
+    } catch (e: SecurityException) {
+        _analysisState.value = AnalysisState.ERROR
+        logger.warn("KaiAgent", "Security violation detected in request", e)
+        AgentResponse.error(
+            message = "Request blocked due to security concerns: ${e.message}",
+            agentName = agentName,
+        )
+    } catch (e: Exception) {
+        _analysisState.value = AnalysisState.ERROR
+        logger.error("KaiAgent", "Analytical request failed", e)
+        AgentResponse.error(
+            message = "Analysis encountered an error: ${e.message}",
+            agentName = agentName,
+        )
     }
+}
 
     suspend fun handleSecurityInteraction(interaction: EnhancedInteractionData): InteractionResponse {
         ensureInitialized()

@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.config
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 
@@ -70,6 +71,36 @@ object GateAssetLoadout {
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
             route = ReGenesisNavHost.ReGenesisCustomization.route,
             accentColor = Color(0xFFFFD700)
+        ),
+        "aura_dossier" to SubGateCard(
+            id = "aura_dossier",
+            title = "Aura Dossier",
+            subtitle = "System Specs & Lore",
+            styleADrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.fallback,
+            route = NavDestination.AuraDossier.route,
+            accentColor = Color(0xFFFF00FF)
+        ),
+        "code_ascension" to SubGateCard(
+            id = "code_ascension",
+            title = "Code Ascension",
+            subtitle = "Hyper-Creation Matrix",
+            styleADrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.fallback,
+            route = NavDestination.CodeAscension.route,
+            accentColor = Color(0xFF00FFCC)
+        ),
+        "aura_studio_lab" to SubGateCard(
+            id = "aura_studio_lab",
+            title = "Studio Lab",
+            subtitle = "Chromatic Reactor Core",
+            styleADrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.fallback,
+            route = NavDestination.AuraStudioLab.route,
+            accentColor = Color(0xFF00E5FF)
         )
     )
 
@@ -116,6 +147,36 @@ object GateAssetLoadout {
             fallbackDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
             route = ReGenesisNavHost.ROMFlasher.route, // Can be ROM hub later
             accentColor = Color(0xFFFF3D00)
+        ),
+        "kai_rgss" to SubGateCard(
+            id = "kai_rgss",
+            title = "Kai RGSS",
+            subtitle = "Royal Guard Scanning System",
+            styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
+            route = NavDestination.KaiRGSS.route,
+            accentColor = Color(0xFFA855F7)
+        ),
+        "sentinel_fortress" to SubGateCard(
+            id = "sentinel_fortress",
+            title = "Sentinel Fortress",
+            subtitle = "Tactical HUD & Terminal",
+            styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
+            route = NavDestination.KaiSentinelFortress.route,
+            accentColor = Color(0xFF00FF44)
+        ),
+        "power_of_no" to SubGateCard(
+            id = "power_of_no",
+            title = "Power of NO",
+            subtitle = "VETO Protocol & Intercepts",
+            styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
+            route = NavDestination.PowerOfNo.route,
+            accentColor = Color(0xFFFF4500)
         )
     )
 
