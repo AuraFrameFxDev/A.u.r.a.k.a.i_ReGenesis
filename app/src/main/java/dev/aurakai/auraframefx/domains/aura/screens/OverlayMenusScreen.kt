@@ -168,7 +168,6 @@ fun OverlayMenusScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Controls
         Text(
             text = "Overlay Settings",
             style = MaterialTheme.typography.titleLarge,

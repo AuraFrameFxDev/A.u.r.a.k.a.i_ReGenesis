@@ -21,6 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.kai.viewmodels.SovereignModuleViewModel
 import dev.aurakai.auraframefx.domains.kai.ModuleStatus
 import dev.aurakai.auraframefx.domains.kai.ModuleType
@@ -35,7 +37,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @Composable
 fun SovereignModuleManagerScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignModuleViewModel = hiltViewModel()
+    viewModel: SovereignModuleViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val modules by viewModel.modules.collectAsState()
 

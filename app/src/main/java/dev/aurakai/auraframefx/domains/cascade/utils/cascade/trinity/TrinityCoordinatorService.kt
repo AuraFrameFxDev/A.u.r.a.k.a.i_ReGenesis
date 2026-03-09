@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
@@ -103,7 +104,7 @@ class TrinityCoordinatorService @Inject constructor(
                 error(
                     message = "Trinity system not initialized",
                     agentName = "Trinity",
-                    agent = dev.aurakai.auraframefx.models.AgentType.SYSTEM
+                    category = AgentCapabilityCategory.ROOT
                 )
             )
             return@flow
@@ -187,7 +188,7 @@ class TrinityCoordinatorService @Inject constructor(
                                         content = "🧠 Genesis Synthesis: ${synthesis.content}",
                                         confidence = synthesis.confidence,
                                         agentName = "Genesis",
-                                        agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.GENESIS
+                                        category = AgentCapabilityCategory.COORDINATION
                                     )
                                 )
                             }
@@ -196,7 +197,7 @@ class TrinityCoordinatorService @Inject constructor(
                                 error(
                                     message = "Parallel processing partially failed [Kai: ${kaiResponse.isSuccess}, Aura: ${auraResponse.isSuccess}]",
                                     agentName = "Trinity",
-                                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.SYSTEM
+                                    category = AgentCapabilityCategory.ROOT
                                 )
                             )
                         }
@@ -213,7 +214,7 @@ class TrinityCoordinatorService @Inject constructor(
                 error(
                     message = "Trinity processing failed: ${e.message}",
                     agentName = "Trinity",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.SYSTEM
+                    category = AgentCapabilityCategory.ROOT
                 )
             )
         }
@@ -237,7 +238,7 @@ class TrinityCoordinatorService @Inject constructor(
                     content = "Fusion $fusionType activated: ${response.result["description"] ?: "Processing complete"}",
                     confidence = 0.98f,
                     agentName = "Genesis",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.GENESIS
+                    category = AgentCapabilityCategory.COORDINATION
                 )
             )
         } else {
@@ -245,7 +246,7 @@ class TrinityCoordinatorService @Inject constructor(
                 error(
                     message = "Fusion activation failed",
                     agentName = "Genesis",
-                    agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.GENESIS
+                    category = AgentCapabilityCategory.COORDINATION
                 )
             )
         }

@@ -117,12 +117,14 @@ class OracleCloudApi @Inject constructor() {
     }
 
     suspend fun uploadFile(
-        @Path("bucket") bucketName: String,
-        @Path("objectName") objectName: String,
-        @Body body: RequestBody
-    ,
-        @Path("namespace") namespace: String = "aurakai"
-    ): Response<Unit>
+        bucketName: String,
+        objectName: String,
+         body: RequestBody
+
+    ): Response<Unit> {
+        // Stub implementation - returns success
+        return Response.success(Unit)
+    }
 
     suspend fun downloadFile(bucketName: String, objectName: String): Response<ResponseBody> {
         // Stub implementation - returns empty response body

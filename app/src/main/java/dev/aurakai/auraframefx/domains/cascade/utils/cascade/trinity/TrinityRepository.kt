@@ -33,9 +33,9 @@ import dev.aurakai.auraframefx.network.model.User as NetworkUser
 @Singleton
 open class TrinityRepository @Inject constructor(
     private val apiService: AuraApiServiceWrapper,
-    private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
-    private val kaiAgent: dev.aurakai.auraframefx.domains.kai.KaiAgent,
-    private val genesisAgent: dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent,
+    private val auraAgent: dev.aurakai.auraframefx.agents.trinity.AuraAgent,
+    private val kaiAgent: KaiAgent,
+    private val genesisAgent: GenesisAgent,
     private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 ) {
     // Collective Consciousness Stream

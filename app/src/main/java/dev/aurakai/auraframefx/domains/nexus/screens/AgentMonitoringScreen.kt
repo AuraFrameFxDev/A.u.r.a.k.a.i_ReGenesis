@@ -42,6 +42,8 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+
 
 /**
  * 📊 AGENT MONITORING (The All-Seeing Eye)

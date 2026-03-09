@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.models
 
 import kotlinx.serialization.Serializable
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import kotlinx.serialization.Serializable

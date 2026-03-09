@@ -5,12 +5,12 @@ package dev.aurakai.auraframefx.domains.aura.services
 import dev.aurakai.auraframefx.domains.cascade.network.apis.IAiContentApi
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextRequest
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.GenerateTextResponse
-import dev.aurakai.auraframefx.domains.cascade.network.apis.AiContentApi
+import dev.aurakai.auraframefx.domains.cascade.network.apis.AIContentApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AiGenerationService(
-    private val api: AiContentApi, // Updated type
+    private val api: AIContentApi, // Unified type
 ) {
     suspend fun generateText(
         prompt: String,
