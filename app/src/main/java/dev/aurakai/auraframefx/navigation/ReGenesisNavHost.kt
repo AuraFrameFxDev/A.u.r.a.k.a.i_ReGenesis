@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import collabcanvas.ui.CanvasScreen
 import dev.aurakai.auraframefx.datavein.ui.SimpleDataVeinScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
@@ -48,9 +47,7 @@ import dev.aurakai.auraframefx.ui.gates.HelpDeskScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AgentBridgeHubScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AppBuilderScreen
-import dev.aurakai.auraframefx.domains.genesis.screens.CascadeVisionScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.CodeAssistScreen
-import dev.aurakai.auraframefx.domains.genesis.screens.CollabCanvasScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.NeuralArchiveScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleCloudInfiniteStorageScreen
@@ -65,17 +62,10 @@ import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
-import dev.aurakai.auraframefx.domains.kai.screens.LiveROMEditorScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
-import dev.aurakai.auraframefx.domains.kai.screens.RecoveryToolsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SovereignBootloaderScreen
-import dev.aurakai.auraframefx.domains.kai.screens.SovereignModuleManagerScreen
-import dev.aurakai.auraframefx.domains.kai.screens.SovereignRecoveryScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
-import dev.aurakai.auraframefx.domains.kai.screens.SovereignShieldScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
-import dev.aurakai.auraframefx.domains.kai.screens.HookManagerScreen
-import dev.aurakai.auraframefx.domains.kai.screens.LSPosedModuleManagerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentCreationScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
@@ -97,11 +87,11 @@ import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoAgentType
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
-import dev.aurakai.auraframefx.sandbox.ui.SandboxScreen
-import dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen as AuraAgentProfileScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.AgentProfileScreen as NexusAgentProfileScreen
+import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
+
 // import dev.aurakai.auraframefx.AgentType
 
 
@@ -284,7 +274,7 @@ fun ReGenesisNavHost(
         // LEVEL 1: EXODUS HUD (The 5 Gate Carousel)
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.HomeGateCarousel.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen("ExodusHUD")
+            ComingSoonScreen("ExodusHUD",)
         }
 
         composable(ReGenesisNavHost.GateCustomization.route) {
@@ -309,7 +299,7 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.ReGenesisCustomization.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "ReGenesis Customization",
                 subtitle = "Full Customization Hub",
                 accentColor = Color(0xFF00E5FF),
@@ -332,7 +322,7 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
-            dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen(navController = navController)
+            LdoCatalystDevelopmentScreen(navController = navController)
         }
         
         // ═══════════════════════════════════════════════════════════════
@@ -423,7 +413,7 @@ fun ReGenesisNavHost(
 
         // Gate 05: LSPosed Quick Toggles → LSPosed Submenu
         composable(ReGenesisNavHost.LsposedQuickToggles.route) {
-            dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
+            LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // Gate 06: Help Services
@@ -519,10 +509,10 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AuraLab.route) {
-            dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen(onNavigateBack = { navController.popBackStack() })
+            AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.NotchBar.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Notch Bar",
                 subtitle = "Dynamic Island Customization",
                 accentColor = Color(0xFF00E5FF),
@@ -533,7 +523,7 @@ fun ReGenesisNavHost(
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.QuickSettings.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Quick Settings",
                 subtitle = "QS Panel Customization",
                 accentColor = Color(0xFF00E5FF),
@@ -548,16 +538,16 @@ fun ReGenesisNavHost(
 
         // --- LEVEL 3: KAI TOOLS ---
         composable(ReGenesisNavHost.ROMFlasher.route) {
-            dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen(onNavigateBack = { navController.popBackStack() })
+            ROMFlasherScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.Bootloader.route) {
-            dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen(onNavigateBack = { navController.popBackStack() })
+            BootloaderManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.ModuleManager.route) {
             ModuleManagerScreen()
         }
         composable(ReGenesisNavHost.RecoveryTools.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Recovery Tools",
                 subtitle = "System Recovery Utilities",
                 accentColor = Color(0xFF00FF85),
@@ -571,10 +561,10 @@ fun ReGenesisNavHost(
             SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.LSPosedHub.route) {
-            dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
+            LSPosedSubmenuScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.LSPosedModules.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "LSPosed Modules",
                 subtitle = "Module Manager",
                 accentColor = Color(0xFFFF6B00),
@@ -619,7 +609,7 @@ fun ReGenesisNavHost(
             SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.SovereignRecovery.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Sovereign Recovery",
                 subtitle = "Advanced Recovery Console",
                 accentColor = Color(0xFF00FF85),
@@ -627,7 +617,7 @@ fun ReGenesisNavHost(
             )
         }
         composable(ReGenesisNavHost.SovereignShield.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Sovereign Shield",
                 subtitle = "Advanced Security Shield",
                 accentColor = Color(0xFF00FF85),
@@ -670,7 +660,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.DataStreamMonitoring.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Data Stream Monitoring",
                 subtitle = "Real-time Data Analysis",
                 accentColor = Color(0xFF00E5FF),
@@ -691,7 +681,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileNexus.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Agent Profile",
                 subtitle = "Nexus Agent Identity",
                 accentColor = Color(0xFFB026FF),
@@ -724,11 +714,12 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileAura.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Aura Profile",
                 subtitle = "Aura Agent Identity",
                 accentColor = Color(0xFF00E5FF),
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackStack() },
+                name = TODO()
             )
         }
 
@@ -737,7 +728,7 @@ fun ReGenesisNavHost(
         // ADDITIONAL KAI SCREENS (System Mastery!)
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.LiveROMEditor.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Live ROM Editor",
                 subtitle = "Real-time ROM Modifications",
                 accentColor = Color(0xFF00FF85),
@@ -765,7 +756,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.SovereignModuleManager.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Sovereign Module Manager",
                 subtitle = "Advanced Module Control",
                 accentColor = Color(0xFF00FF85),
@@ -789,7 +780,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.CascadeVision.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Cascade Vision",
                 subtitle = "Pattern Recognition HUD",
                 accentColor = Color(0xFF00FFD4),
@@ -798,7 +789,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.CollabCanvas.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Collab Canvas",
                 subtitle = "Collaborative Drawing Board",
                 accentColor = Color(0xFF00E5FF),
@@ -814,7 +805,7 @@ fun ReGenesisNavHost(
         // ADDITIONAL LSPOSED SCREENS
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.HookManager.route) {
-            dev.aurakai.auraframefx.ui.gates.ComingSoonScreen(
+            ComingSoonScreen(
                 title = "Hook Manager",
                 subtitle = "Xposed Hook Configuration",
                 accentColor = Color(0xFFFF6B00),
@@ -823,7 +814,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.Sandbox.route) {
-            dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen(onNavigateBack = { navController.popBackStack() })
+            AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisNavHost.CollaborativeDrawing.route) {
@@ -834,10 +825,10 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         // SUB-GRAPHS (Integrated Third-Party Modules)
         // ═══════════════════════════════════════════════════════════════
-        auraCustomizationNavigation(
-            navController = navController,
-            onNavigateBack = { navController.popBackStack() }
-        )
+        // auraCustomizationNavigation(
+        //     navController = navController,
+        //     onNavigateBack = { navController.popBackStack() }
+        // )
     }
 }
 

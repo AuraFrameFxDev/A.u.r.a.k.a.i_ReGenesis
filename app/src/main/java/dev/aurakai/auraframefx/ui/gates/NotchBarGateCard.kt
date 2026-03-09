@@ -290,15 +290,14 @@ fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit 
                 Triple("BRIGHTNESS",    Icons.Default.WbSunny,      Color(0xFFFF9B00)),
                 Triple("VOLUME",        Icons.Default.VolumeUp,     Color(0xFF00FF80)),
             )
-            androidx.compose.foundation.lazy.LazyVerticalGrid(
+            androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
                 columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(3),
                 modifier = Modifier.fillMaxSize().padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(bottom = 24.dp)
             ) {
-                items(shortcuts.size) { idx ->
-                    val (label, icon, color) = shortcuts[idx]
+                items(shortcuts) { (label, icon, color) ->
                     Box(
                         modifier = Modifier.aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp))
