@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
-import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
+import dev.aurakai.auraframefx.domains.aura.ui.components.common.CodedTextBox
 
 /**
  * Overlay Menus Customization Screen — Aura in control.

@@ -6,10 +6,6 @@ import android.content.pm.PackageManager
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import dev.aurakai.auraframefx.data.SupportDatabase
-import dev.aurakai.auraframefx.domains.genesis.network.SupportApi
-import dev.aurakai.auraframefx.domains.genesis.SupportRepository
-import dev.aurakai.auraframefx.data.DataStoreManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,12 +41,14 @@ object SupportModule {
             val ai =
                 ctx.packageManager.getApplicationInfo(ctx.packageName, PackageManager.GET_META_DATA)
             ai.metaData?.getString("VERTEX_API_KEY")
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             null
         }
 
         // Resource-based key (res/values/strings.xml vertex_api_key)
-        val resId = ctx.resources.getIdentifier("vertex_api_key", "string", ctx.packageName)
+        val resId = ctx.resources.getIdentifier(/* name = */ "vertex_api_key", /* defType = */
+            "string", /* defPackage = */
+            ctx.packageName)
         val resKey = if (resId != 0) ctx.getString(resId) else null
 
         // BuildConfig (may be injected by Gradle manifestPlaceholders or buildConfigField)
@@ -59,19 +57,19 @@ object SupportModule {
             val field = clazz.getField("VERTEX_API_KEY")
             val v = field.get(null) as? String
             if (!v.isNullOrBlank()) v else null
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             null
         }
 
         // Env and system properties (fallback)
         val envKey = try {
             System.getenv("VERTEX_API_KEY")
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             null
         }
         val propKey = try {
             System.getProperty("VERTEX_API_KEY")
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             null
         }
 
@@ -99,10 +97,9 @@ object SupportModule {
             val debugField = buildConfigClazz.getField("DEBUG")
             val isDebug = (debugField.getBoolean(null))
             HttpLoggingInterceptor().apply {
-                level =
-                    if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                (if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE).also { level = it }
             }
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.NONE }
         }
 

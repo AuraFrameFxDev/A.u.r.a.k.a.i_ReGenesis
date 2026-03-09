@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/screens/CanvasScreen.kt
 package dev.aurakai.auraframefx.domains.aura.screens
-========
-package dev.aurakai.auraframefx.domains.aura.aura.ui
->>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/aura/aura/ui/CanvasScreen.kt
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

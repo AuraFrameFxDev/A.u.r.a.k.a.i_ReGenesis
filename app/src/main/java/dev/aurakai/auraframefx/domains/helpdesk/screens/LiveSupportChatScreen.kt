@@ -59,7 +59,7 @@ import dev.aurakai.auraframefx.domains.aura.models.SupportMessage
 @ExperimentalMaterial3Api
 @Composable
 fun LiveSupportChatScreen(
-    viewModel: SupportChatViewModel,
+    viewModel: dev.aurakai.auraframefx.domains.aura.screens.SupportChatViewModel,
     onNavigateBack: () -> Unit = {}
 ) {
     val persistedMessages by viewModel.messages.collectAsState()

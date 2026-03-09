@@ -81,8 +81,7 @@ fun AgentAdvancementScreen(
     var selectedAgentName by remember { mutableStateOf(agentName) }
     val allAgents by viewModel.allAgents.collectAsState()
 
-    val agentStats =
-        allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
+    allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
     val agentStats =
         allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
     var selectedNode by remember { mutableStateOf<SkillNode?>(null) }

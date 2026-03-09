@@ -29,7 +29,7 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-a/**
+/**
  * Genesis Protocol Billing Manager
  *
  * Manages Google Play subscriptions with the following pricing:

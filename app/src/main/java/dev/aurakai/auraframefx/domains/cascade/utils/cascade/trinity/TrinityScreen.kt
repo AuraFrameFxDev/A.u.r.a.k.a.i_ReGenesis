@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,10 +41,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.aura.ui.TrinityUiState
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AgentStatus
-import dev.aurakai.auraframefx.models.Theme
-import dev.aurakai.auraframefx.models.UserData
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.aura.models.Theme
+import dev.aurakai.auraframefx.domains.nexus.models.UserData
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date

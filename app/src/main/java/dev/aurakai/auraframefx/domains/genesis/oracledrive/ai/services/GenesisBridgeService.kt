@@ -10,6 +10,9 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceChainBuilder
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceResult
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -41,12 +44,23 @@ class GenesisBridgeService @Inject constructor(
     private val vertexAIClient: VertexAIClient,
     private val contextManager: ContextManager,
     private val securityContext: SecurityContext,
+    private val provenanceValidator: ProvenanceValidator,
+    private val provenanceChainBuilder: ProvenanceChainBuilder,
     @param:ApplicationContext private val applicationContext: Context,
     private val logger: AuraFxLogger,
 ) {
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isInitialized = false
     private var pythonProcessManager: PythonProcessManager? = null
+
+    companion object {
+        /**
+         * When true, provenance validation failures block requests.
+         * When false, failures are logged as warnings but requests proceed.
+         * Set to false during initial rollout, flip to true after testing.
+         */
+        var PROVENANCE_HARD_GATE_ENABLED = false
+    }
 
     @Serializable
     data class GenesisRequest(
@@ -148,6 +162,30 @@ class GenesisBridgeService @Inject constructor(
                 )
             )
             return@flow
+        }
+
+        // Provenance Gate: validate or auto-sign the intent chain
+        val chain = request.provenanceChain
+            ?: provenanceChainBuilder.buildChain(
+                origin = "genesis_bridge",
+                agent = determinePersona(request),
+                intent = request.type.name,
+                payload = request.getPromptText().toByteArray(),
+            )
+
+        val gateResult = provenanceValidator.validate(chain)
+        if (gateResult is ProvenanceResult.Vetoed) {
+            logger.warn("GenesisBridge", "PROVENANCE_VIOLATION: ${gateResult.reason}")
+            if (PROVENANCE_HARD_GATE_ENABLED) {
+                emit(
+                    AgentResponse.error(
+                        message = "Security Veto: Intent path compromised - ${gateResult.reason}",
+                        agentName = "Kai",
+                        agentType = AgentType.KAI
+                    )
+                )
+                return@flow
+            }
         }
 
         try {

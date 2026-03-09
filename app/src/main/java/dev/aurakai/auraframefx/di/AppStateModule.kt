@@ -34,7 +34,7 @@ object AppStateModule {
      */
     @Provides
     @Singleton
-    @Named("AppStateDataStore")
+    @dev.aurakai.auraframefx.di.AppStateDataStoreAnnotation
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.appStateDataStore
     }
@@ -44,7 +44,7 @@ object AppStateModule {
      */
     @Provides
     @Singleton
-    fun provideAppStateManager(@Named("AppStateDataStore") dataStore: DataStore<Preferences>): AppStateManager {
+    fun provideAppStateManager(@dev.aurakai.auraframefx.di.AppStateDataStoreAnnotation dataStore: DataStore<Preferences>): AppStateManager {
         return AppStateManager()
     }
 }

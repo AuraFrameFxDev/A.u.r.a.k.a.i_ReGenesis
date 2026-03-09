@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.aura.ui
 
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.Theme
-import dev.aurakai.auraframefx.models.UserData
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.aura.models.Theme
+import dev.aurakai.auraframefx.domains.nexus.models.UserData
 
 /**
  * Represents the UI state for the Trinity system.
@@ -36,7 +36,7 @@ sealed interface TrinityUiState {
      */
     data class Success(
         val user: UserData? = null,
-        val agentStatus: Map<String, dev.aurakai.auraframefx.models.AgentStatus> = emptyMap(),
+        val agentStatus: Map<String, dev.aurakai.auraframefx.domains.genesis.models.AgentStatus> = emptyMap(),
         val availableThemes: List<Theme> = emptyList(),
         val lastAgentResponse: AgentResponse? = null,
         val lastAgentType: String? = null,

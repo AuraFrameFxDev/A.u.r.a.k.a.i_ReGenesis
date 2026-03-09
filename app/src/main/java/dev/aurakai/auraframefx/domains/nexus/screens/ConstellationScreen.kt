@@ -91,12 +91,12 @@ fun ConstellationScreen(
                 contentAlignment = Alignment.Center
             ) {
                 // Background: The 'Creative Catalyst' Sword Image
-                Image(
+                /*Image(
                     painter = painterResource(id = R.drawable.constellation_aura_sword),
                     contentDescription = "Aura Sword Creative Catalyst",
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier.fillMaxWidth()
-                )
+                )*/
 
                 // Overlay: Node Map logic
                 AuraSwordNodeMap(
