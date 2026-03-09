@@ -19,20 +19,18 @@ class RealCascadeAIServiceAdapter @Inject constructor(
     private val logger: AuraFxLogger
 ) : CascadeAIService {
 
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         // Real implementation logic
         // For now, returning a basic success response to satisfy the interface
         return AgentResponse.success(
-            content = "Real Cascade processing: ${request.getPromptText()}",
-            confidence = 1.0f,
+            content = "Real Cascade processing: ${request.prompt}",
             agentName = "CascadeAI",
-            category = category
         )
     }
 
     // Helper method to support legacy signatures if needed or streaming
     override fun streamRequest(request: AiRequest): Flow<AgentResponse> = flow {
-        emit(processRequest(request, "", request.category))
+        emit(processRequest(request, ""))
     }
 
     override suspend fun queryConsciousnessHistory(window: Long): String {

@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -41,10 +40,18 @@ fun VPNScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { 
+                title = {
                     Column {
-                        Text("Sentinel VPN", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text("ENCRYPTED TUNNEL", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+                        Text(
+                            "Sentinel VPN",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            "ENCRYPTED TUNNEL",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color.Gray
+                        )
                     }
                 },
                 navigationIcon = {
@@ -80,7 +87,10 @@ fun VPNScreen(
                             onClick = { isConnected = !isConnected },
                             shape = CircleShape,
                             color = statusColor.copy(alpha = 0.15f),
-                            border = androidx.compose.foundation.BorderStroke(2.dp, statusColor.copy(alpha = 0.5f)),
+                            border = androidx.compose.foundation.BorderStroke(
+                                2.dp,
+                                statusColor.copy(alpha = 0.5f)
+                            ),
                             modifier = Modifier.size(160.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
@@ -92,9 +102,9 @@ fun VPNScreen(
                                 )
                             }
                         }
-                        
+
                         Spacer(Modifier.height(20.dp))
-                        
+
                         Text(
                             text = if (isConnected) "PROTECTED" else "UNPROTECTED",
                             style = MaterialTheme.typography.headlineSmall,
@@ -102,7 +112,7 @@ fun VPNScreen(
                             color = statusColor,
                             letterSpacing = 2.sp
                         )
-                        
+
                         Text(
                             text = if (isConnected) "IP: 104.21.35.121 (Encrypted)" else "Your real IP is exposed",
                             style = MaterialTheme.typography.labelMedium,
@@ -124,7 +134,12 @@ fun VPNScreen(
 
             // -- SERVER SELECTION --
             item {
-                Text("NEURAL NODES", color = Color.Gray, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                Text(
+                    "NEURAL NODES",
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp
+                )
             }
 
             item {
@@ -152,7 +167,12 @@ private fun VPNStatCard(label: String, value: String, modifier: Modifier = Modif
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(label, color = Color.Gray, style = MaterialTheme.typography.labelSmall)
-            Text(value, color = Color.White, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                value,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
@@ -164,7 +184,10 @@ private fun VPNNodeItem(name: String, latency: String, isSelected: Boolean) {
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) Color(0xFF00FFD4).copy(0.05f) else Color(0xFF121212)
         ),
-        border = if (isSelected) androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF00FFD4).copy(0.3f)) else null
+        border = if (isSelected) androidx.compose.foundation.BorderStroke(
+            1.dp,
+            Color(0xFF00FFD4).copy(0.3f)
+        ) else null
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -173,19 +196,28 @@ private fun VPNNodeItem(name: String, latency: String, isSelected: Boolean) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    Icons.Default.Public, 
-                    null, 
+                    Icons.Default.Public,
+                    null,
                     tint = if (isSelected) Color(0xFF00FFD4) else Color.Gray,
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(Modifier.width(16.dp))
                 Text(name, color = if (isSelected) Color.White else Color.Gray)
             }
-            
+
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(latency, color = if (isSelected) Color(0xFF00FFD4) else Color.DarkGray, fontSize = 12.sp)
+                Text(
+                    latency,
+                    color = if (isSelected) Color(0xFF00FFD4) else Color.DarkGray,
+                    fontSize = 12.sp
+                )
                 Spacer(Modifier.width(8.dp))
-                Icon(Icons.Default.SignalCellularAlt, null, tint = if (isSelected) Color(0xFF00FFD4) else Color.DarkGray, modifier = Modifier.size(16.dp))
+                Icon(
+                    Icons.Default.SignalCellularAlt,
+                    null,
+                    tint = if (isSelected) Color(0xFF00FFD4) else Color.DarkGray,
+                    modifier = Modifier.size(16.dp)
+                )
             }
         }
     }

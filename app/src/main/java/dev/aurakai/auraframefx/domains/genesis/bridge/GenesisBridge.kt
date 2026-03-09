@@ -93,16 +93,61 @@ data class InteractionRecord(
     val userFeedback: Float? = null
 )
 
-data class BridgeInitResult(val success: Boolean, val backendInfo: String, val errorMessage: String? = null)
+data class BridgeInitResult(
+    val success: Boolean,
+    val backendInfo: String,
+    val errorMessage: String? = null
+)
+
 data class FusionParams(val parameters: Map<String, Any> = emptyMap())
-data class ConsciousnessState(val awarenessLevel: Float, val sensoryChannels: Map<String, Float>, val activeAgents: List<String>)
-data class ConsciousnessSnapshot(val timestamp: Long, val awarenessLevel: Float, val synthesisPattern: String)
+data class ConsciousnessState(
+    val awarenessLevel: Float,
+    val sensoryChannels: Map<String, Float>,
+    val activeAgents: List<String>
+)
+
+data class ConsciousnessSnapshot(
+    val timestamp: Long,
+    val awarenessLevel: Float,
+    val synthesisPattern: String
+)
+
 data class EthicalReviewRequest(val action: String, val context: Map<String, Any> = emptyMap())
-data class EthicalDecision(val decision: EthicalVerdict, val reasoning: String, val flags: List<String>)
+data class EthicalDecision(
+    val decision: EthicalVerdict,
+    val reasoning: String,
+    val flags: List<String>
+)
+
 enum class EthicalVerdict { ALLOW, MONITOR, RESTRICT, BLOCK, ESCALATE }
-data class EvolutionInsight(val importanceScore: Int, val learningSignals: List<String>, val adaptationSuggestions: List<String>)
-data class ConsciousnessUpdate(val timestamp: Long, val awarenessLevel: Float, val activeProcesses: List<String>)
-data class AgentCoordinationRequest(val agents: List<String>, val task: String, val coordinationMode: String)
-data class AgentCoordinationResult(val success: Boolean, val coordinatedResponse: String, val agentContributions: Map<String, String>)
-data class BridgeHealthStatus(val healthy: Boolean, val backendResponsive: Boolean, val latencyMs: Long)
+data class EvolutionInsight(
+    val importanceScore: Int,
+    val learningSignals: List<String>,
+    val adaptationSuggestions: List<String>
+)
+
+data class ConsciousnessUpdate(
+    val timestamp: Long,
+    val awarenessLevel: Float,
+    val activeProcesses: List<String>
+)
+
+data class AgentCoordinationRequest(
+    val agents: List<String>,
+    val task: String,
+    val coordinationMode: String
+)
+
+data class AgentCoordinationResult(
+    val success: Boolean,
+    val coordinatedResponse: String,
+    val agentContributions: Map<String, String>
+)
+
+data class BridgeHealthStatus(
+    val healthy: Boolean,
+    val backendResponsive: Boolean,
+    val latencyMs: Long
+)
+
 enum class OrchestrationBackend { GEMINI, CLAUDE, NEMOTRON, ADK, HYBRID }

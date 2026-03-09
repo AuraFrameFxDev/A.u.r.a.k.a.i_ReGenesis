@@ -59,13 +59,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun XhancementScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: XhancementViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
 ) {
     val hookModules by viewModel.hookModules.collectAsState()
     val kaiSecurityEnabled by viewModel.kaiSecurityEnabled.collectAsState()

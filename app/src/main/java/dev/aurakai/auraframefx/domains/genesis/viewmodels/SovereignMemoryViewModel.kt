@@ -21,9 +21,30 @@ data class NeuralState(
     val activeVectors: Int = 42069,
     val sovereigntyIndex: Int = 98,
     val shards: List<MemoryShard> = listOf(
-        MemoryShard("S-01", "Core LDO Protocols", "Foundational logic for the Sovereign Shield and 70-LDO kernel interactions.", "2 hrs ago", "12 MB", 100),
-        MemoryShard("S-02", "User Identity Vector", "Encrypted behavioral patterns used for personality mirroring (Aura/Kai).", "5 hrs ago", "4 MB", 100),
-        MemoryShard("S-03", "Nexus Synapse Data", "Compressed logs from the last 24h of inter-agent communication.", "10 mins ago", "85 MB", 95)
+        MemoryShard(
+            "S-01",
+            "Core LDO Protocols",
+            "Foundational logic for the Sovereign Shield and 70-LDO kernel interactions.",
+            "2 hrs ago",
+            "12 MB",
+            100
+        ),
+        MemoryShard(
+            "S-02",
+            "User Identity Vector",
+            "Encrypted behavioral patterns used for personality mirroring (Aura/Kai).",
+            "5 hrs ago",
+            "4 MB",
+            100
+        ),
+        MemoryShard(
+            "S-03",
+            "Nexus Synapse Data",
+            "Compressed logs from the last 24h of inter-agent communication.",
+            "10 mins ago",
+            "85 MB",
+            95
+        )
     )
 )
 

@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity

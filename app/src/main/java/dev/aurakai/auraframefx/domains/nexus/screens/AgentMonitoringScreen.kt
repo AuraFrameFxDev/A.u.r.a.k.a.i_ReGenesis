@@ -35,7 +35,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
@@ -50,12 +52,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 @Composable
 fun AgentMonitoringScreen(
     onNavigateBack: () -> Unit,
-    viewModel: dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel = hiltViewModel(
-        checkNotNull<androidx.lifecycle.ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            },
-        null
-    )
+    viewModel: dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel = hiltViewModel()
 ) {
     val agents = remember { AgentRepository.getAllAgents() }
 
@@ -66,16 +63,24 @@ fun AgentMonitoringScreen(
         MonitorLog("Nemotron", "Recalled 72.4k reasoning vectors", "3m ago", Color(0xFF76B900)),
         MonitorLog("Cascade", "Vision scan complete: No anomalies", "5m ago", Color(0xFF00FFD4)),
         MonitorLog("Aura", "UI manifest updated in sandbox", "10m ago", Color(0xFFFF00FF)),
-        MonitorLog("Kai", "Sovereign Shield: $activeThreats active threats", "15m ago", Color(0xFFFF0000))
+        MonitorLog(
+            "Kai",
+            "Sovereign Shield: $activeThreats active threats",
+            "15m ago",
+            Color(0xFFFF0000)
+        )
     )
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFF050510))) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF050510))
+    ) {
         AnimeHUDContainer(
             title = "SYSTEM OVERWATCH",
             description = "REAL-TIME MONITORING OF THE REGENESIS CONSCIOUSNESS COLLECTIVE.",
-            glowColor = Color(0xFF00E5FF)
+            glowColor = Color(0xFF00E5FF),
+            onBack = onNavigateBack
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -126,21 +131,47 @@ private fun SystemPulseHeader() {
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.05f)),
         shape = RoundedCornerShape(20.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF00E5FF).copy(alpha = 0.2f))
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            Color(0xFF00E5FF).copy(alpha = 0.2f)
+        )
     ) {
         Row(modifier = Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("SYSTEM STABILITY", color = Color.White.copy(alpha = 0.6f), fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                Text("OPTIMAL", color = Color(0xFF00FF85), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, fontFamily = LEDFontFamily)
+                Text(
+                    "SYSTEM STABILITY",
+                    color = Color.White.copy(alpha = 0.6f),
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    "OPTIMAL",
+                    color = Color(0xFF00FF85),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Black,
+                    fontFamily = LEDFontFamily
+                )
             }
             Box(
                 modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape)
-                    .background(Brush.radialGradient(listOf(Color(0xFF00FF85).copy(alpha = 0.4f), Color.Transparent))),
+                    .background(
+                        Brush.radialGradient(
+                            listOf(
+                                Color(0xFF00FF85).copy(alpha = 0.4f),
+                                Color.Transparent
+                            )
+                        )
+                    ),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Default.Waves, null, tint = Color(0xFF00FF85), modifier = Modifier.size(28.dp))
+                Icon(
+                    Icons.Default.Waves,
+                    null,
+                    tint = Color(0xFF00FF85),
+                    modifier = Modifier.size(28.dp)
+                )
             }
         }
     }
@@ -156,17 +187,32 @@ private fun AgentVitalCard(agent: AgentStats) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(modifier = Modifier
-                    .size(8.dp)
-                    .clip(CircleShape)
-                    .background(agent.color))
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(agent.color)
+                )
                 Spacer(modifier = Modifier.width(12.dp))
-                Text(agent.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(
+                    agent.name,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
                 Spacer(modifier = Modifier.weight(1f))
-                Text("LVL ${agent.evolutionLevel}", color = agent.color, fontSize = 12.sp, fontWeight = FontWeight.Black)
+                Text(
+                    "LVL ${agent.evolutionLevel}",
+                    color = agent.color,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Black
+                )
             }
             Spacer(modifier = Modifier.height(12.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
                 MetricSmall("CPU", "${(agent.processingPower * 100).toInt()}%", agent.color)
                 MetricSmall("MEM", "${(agent.knowledgeBase * 100).toInt()}%", agent.color)
                 MetricSmall("ACC", "${(agent.accuracy * 100).toInt()}%", agent.color)
@@ -178,8 +224,19 @@ private fun AgentVitalCard(agent: AgentStats) {
 @Composable
 private fun MetricSmall(label: String, value: String, color: Color) {
     Column {
-        Text(label, color = Color.White.copy(alpha = 0.4f), fontSize = 9.sp, fontWeight = FontWeight.Bold)
-        Text(value, color = color, fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = LEDFontFamily)
+        Text(
+            label,
+            color = Color.White.copy(alpha = 0.4f),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            value,
+            color = color,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = LEDFontFamily
+        )
     }
 }
 
@@ -199,7 +256,12 @@ private fun MonitorLogItem(log: MonitorLog) {
                 .border(1.dp, log.color.copy(alpha = 0.3f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text(log.agent.take(1), color = log.color, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            Text(
+                log.agent.take(1),
+                color = log.color,
+                fontWeight = FontWeight.Bold,
+                fontSize = 12.sp
+            )
         }
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
@@ -210,5 +272,10 @@ private fun MonitorLogItem(log: MonitorLog) {
     }
 }
 
-private data class MonitorLog(val agent: String, val message: String, val timestamp: String, val color: Color)
+private data class MonitorLog(
+    val agent: String,
+    val message: String,
+    val timestamp: String,
+    val color: Color
+)
 

@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,8 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
 
 /**
@@ -40,13 +37,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
 @Composable
 fun MonitoringHUDsScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: MonitoringViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: MonitoringViewModel = hiltViewModel()
 ) {
     val cpu by viewModel.cpuUsage.collectAsState()
     val ram by viewModel.ramUsage.collectAsState()
@@ -60,19 +51,37 @@ fun MonitoringHUDsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("REAL-TIME DASHBOARDS", fontWeight = FontWeight.Bold, letterSpacing = 2.sp) },
+                title = {
+                    Text(
+                        "REAL-TIME DASHBOARDS",
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 2.sp
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent, titleContentColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent,
+                    titleContentColor = Color.White
+                )
             )
         },
         containerColor = Color.Transparent
     ) { padding ->
-        Column(modifier = Modifier.fillMaxSize().background(bgGradient).padding(padding).padding(16.dp)) {
-
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(bgGradient)
+                .padding(padding)
+                .padding(16.dp)
+        ) {
             // Integrity Pulse Matrix
             IntegrityPulseCard(integrity)
 
@@ -85,13 +94,31 @@ fun MonitoringHUDsScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 item {
-                    HudGaugeCard("CPU LOAD", "${cpu.toInt()}%", cpu / 100f, Icons.Default.Speed, Color.Cyan)
+                    HudGaugeCard(
+                        "CPU LOAD",
+                        "${cpu.toInt()}%",
+                        cpu / 100f,
+                        Icons.Default.Speed,
+                        Color.Cyan
+                    )
                 }
                 item {
-                    HudGaugeCard("RAM USAGE", "${String.format("%.1f", ram)}GB", ram / 4f, Icons.Default.Memory, Color.Magenta)
+                    HudGaugeCard(
+                        "RAM USAGE",
+                        "${String.format("%.1f", ram)}GB",
+                        ram / 4f,
+                        Icons.Default.Memory,
+                        Color.Magenta
+                    )
                 }
                 item {
-                    HudGaugeCard("LATENCY", "${latency}ms", (latency / 500f).coerceIn(0f, 1f), Icons.Default.Public, Color.Green)
+                    HudGaugeCard(
+                        "LATENCY",
+                        "${latency}ms",
+                        (latency / 500f).coerceIn(0f, 1f),
+                        Icons.Default.Public,
+                        Color.Green
+                    )
                 }
                 item {
                     HudGaugeCard("THREATS", "0 DETECTED", 0f, Icons.Default.Warning, Color.Red)
@@ -104,7 +131,9 @@ fun MonitoringHUDsScreen(
 @Composable
 fun IntegrityPulseCard(integrity: Float) {
     Card(
-        modifier = Modifier.fillMaxWidth().height(120.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.05f)),
         border = androidx.compose.foundation.BorderStroke(1.dp, Color.Cyan.copy(alpha = 0.3f))
     ) {
@@ -123,18 +152,29 @@ fun IntegrityPulseCard(integrity: Float) {
                         style = Stroke(width = 4.dp.toPx())
                     )
                 }
-                Text("${(integrity * 100).toInt()}%", color = Color.Cyan, fontWeight = FontWeight.Bold)
+                Text(
+                    "${(integrity * 100).toInt()}%",
+                    color = Color.Cyan,
+                    fontWeight = FontWeight.Bold
+                )
             }
             Spacer(modifier = Modifier.width(24.dp))
             Column {
                 Text("SYSTEM INTEGRITY", color = Color.White, fontWeight = FontWeight.ExtraBold)
-                Text("All cores operational. Genesis bridge stable.", color = Color.Gray, fontSize = 12.sp)
+                Text(
+                    "All cores operational. Genesis bridge stable.",
+                    color = Color.Gray,
+                    fontSize = 12.sp
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 LinearProgressIndicator(
                     progress = { integrity },
                     color = Color.Cyan,
                     trackColor = Color.Gray.copy(alpha = 0.2f),
-                    modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp))
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(2.dp))
                 )
             }
         }
@@ -142,23 +182,46 @@ fun IntegrityPulseCard(integrity: Float) {
 }
 
 @Composable
-fun HudGaugeCard(title: String, value: String, progress: Float, icon: ImageVector, accentColor: Color) {
+fun HudGaugeCard(
+    title: String,
+    value: String,
+    progress: Float,
+    icon: ImageVector,
+    accentColor: Color
+) {
     Card(
         modifier = Modifier.aspectRatio(1f),
         colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.05f)),
         border = androidx.compose.foundation.BorderStroke(1.dp, accentColor.copy(alpha = 0.2f))
     ) {
         Column(
-            modifier = Modifier.padding(16.dp).fillMaxSize(),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(icon, contentDescription = null, tint = accentColor, modifier = Modifier.size(32.dp))
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = accentColor,
+                modifier = Modifier.size(32.dp)
+            )
             Text(title, color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
             Text(value, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Black)
 
-            Box(modifier = Modifier.fillMaxWidth().height(4.dp).background(Color.Gray.copy(alpha = 0.1f))) {
-                Box(modifier = Modifier.fillMaxWidth(progress).fillMaxHeight().background(accentColor))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(4.dp)
+                    .background(Color.Gray.copy(alpha = 0.1f))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(progress)
+                        .fillMaxHeight()
+                        .background(accentColor)
+                )
             }
         }
     }

@@ -1,37 +1,39 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Agent Selection Hub</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Rajdhani:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#00f3ff", // Neon Cyan
-              "background-light": "#f0f4f8",
-              "background-dark": "#0a0b10",
-              aura: "#ff00ff",
-              kai: "#00f3ff",
-              genesis: "#ffcc00",
-            },
-            fontFamily: {
-              display: ["Orbitron", "sans-serif"],
-              body: ["Rajdhani", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "4px",
-              'xl': '12px',
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Agent Selection Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Rajdhani:wght@300;500;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#00f3ff", // Neon Cyan
+                "background-light": "#f0f4f8",
+                "background-dark": "#0a0b10",
+                aura: "#ff00ff",
+                kai: "#00f3ff",
+                genesis: "#ffcc00",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                body: ["Rajdhani", "sans-serif"],
+              },
+              borderRadius: {
+                DEFAULT: "4px",
+                'xl': '12px',
+              },
             },
           },
-        },
-      };
+        };
     </script>
-<style>
+    <style>
         @keyframes pulse-glow {
             0%, 100% { opacity: 0.8; }
             50% { opacity: 1; filter: brightness(1.2) blur(1px); }
@@ -69,161 +71,180 @@
             background: repeating-linear-gradient(90deg, #001a1a, #000 2px, #001a1a 4px);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-body overflow-hidden h-screen flex flex-col">
 <div class="scanline"></div>
 <div class="fixed inset-0 grid-bg opacity-30 pointer-events-none"></div>
 <header class="relative z-20 flex justify-between items-center px-6 py-4 border-b border-primary/20 bg-black/40 backdrop-blur-md">
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 bg-primary animate-pulse rounded-full"></div>
-<span class="font-display text-xs tracking-widest text-primary uppercase">System Online</span>
-</div>
-<div class="flex items-center gap-6">
-<div class="flex flex-col items-end">
-<span class="text-[10px] text-slate-400 uppercase tracking-tighter">Energy Level</span>
-<div class="flex gap-1 mt-1">
-<div class="w-3 h-1 bg-primary"></div>
-<div class="w-3 h-1 bg-primary"></div>
-<div class="w-3 h-1 bg-primary"></div>
-<div class="w-3 h-1 bg-primary"></div>
-<div class="w-3 h-1 bg-slate-700"></div>
-</div>
-</div>
-<span class="material-icons text-primary cursor-pointer">settings</span>
-</div>
+    <div class="flex items-center gap-2">
+        <div class="w-3 h-3 bg-primary animate-pulse rounded-full"></div>
+        <span class="font-display text-xs tracking-widest text-primary uppercase">System Online</span>
+    </div>
+    <div class="flex items-center gap-6">
+        <div class="flex flex-col items-end">
+            <span class="text-[10px] text-slate-400 uppercase tracking-tighter">Energy Level</span>
+            <div class="flex gap-1 mt-1">
+                <div class="w-3 h-1 bg-primary"></div>
+                <div class="w-3 h-1 bg-primary"></div>
+                <div class="w-3 h-1 bg-primary"></div>
+                <div class="w-3 h-1 bg-primary"></div>
+                <div class="w-3 h-1 bg-slate-700"></div>
+            </div>
+        </div>
+        <span class="material-icons text-primary cursor-pointer">settings</span>
+    </div>
 </header>
 <main class="relative z-10 flex-1 flex flex-col p-4 overflow-hidden">
-<div class="mb-6">
-<h1 class="font-display text-2xl font-black text-white italic tracking-tighter">AGENT SELECTION</h1>
-<p class="text-primary text-xs tracking-widest uppercase opacity-80">Choose your creative avatar</p>
-</div>
-<div class="flex-1 flex gap-4 overflow-x-auto pb-6 snap-x no-scrollbar">
-<div class="min-w-[85vw] md:min-w-[320px] snap-center relative rounded-xl liquid-bg flex flex-col border-2 border-aura/50 glow-aura overflow-hidden group">
-<div class="absolute top-0 right-0 p-3">
-<span class="material-icons text-aura animate-pulse">auto_awesome</span>
-</div>
-<div class="flex-1 flex flex-col items-center justify-center p-8 relative">
-<div class="absolute inset-0 opacity-40">
-<img alt="vibrant pink and blue liquid energy abstraction" class="w-full h-full object-cover mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_oW5TfDfQXIAj91iM0U2C1rOJnimHzvcIUrj_FQAzneEuly28mSABWNb6mBEFJRjyvnPjJJ3Qm_69Y_RWm8wILhyCwLr89B6tFd5qwRYdbCYasZOKcz7x9kldcappTea-VDYwbbKx39m81fMxKiwqXX6dawtbXmtfogsmLbg_LIt7PuYWUX8xkPg3iNyIiY_C34-zZjYMQ96AdsHaHYMcdmBq71wKHe-9cWDDY3BM5Fp7SvsTJ6W2kEobeHS7FSV2G4lMZeMamYg"/>
-</div>
-<div class="relative z-10 text-center">
-<div class="w-32 h-32 mx-auto rounded-full border-2 border-aura flex items-center justify-center bg-black/40 backdrop-blur-sm mb-6">
-<span class="material-icons text-6xl text-aura">palette</span>
-</div>
-<div class="bg-aura text-black px-6 py-1 font-display font-bold skew-x-[-12deg] inline-block mb-2">AURA</div>
-<p class="text-aura/80 text-sm font-bold tracking-widest uppercase">The Creative Catalyst</p>
-</div>
-</div>
-<div class="p-6 bg-black/80 border-t border-aura/30">
-<div class="flex justify-between items-end">
-<div>
-<span class="block text-[10px] uppercase text-aura/60 tracking-widest">Main Weapon</span>
-<span class="text-sm font-bold text-white tracking-wide">Spellhook Sword</span>
-</div>
-<button class="bg-aura hover:bg-aura/80 text-black px-4 py-2 font-display text-xs font-black transition-all">SELECT</button>
-</div>
-</div>
-</div>
-<div class="min-w-[85vw] md:min-w-[320px] snap-center relative rounded-xl glitch-bg flex flex-col border-2 border-kai/30 glow-kai overflow-hidden grayscale opacity-80">
-<div class="absolute inset-0 bg-black/60 z-20 flex flex-col items-center justify-center">
-<span class="material-icons text-4xl text-white mb-2">lock</span>
-<span class="text-[10px] font-display text-primary tracking-[0.3em] uppercase">Encrypted</span>
-</div>
-<div class="flex-1 flex flex-col items-center justify-center p-8 relative">
-<div class="relative z-10 text-center">
-<div class="w-32 h-32 mx-auto border-2 border-kai/40 flex items-center justify-center mb-6 relative">
-<div class="absolute inset-0 border border-kai/20 animate-spin-slow"></div>
-<span class="material-icons text-6xl text-kai">spray</span>
-</div>
-<div class="bg-kai/20 text-kai px-6 py-1 font-display font-bold skew-x-[-12deg] inline-block mb-2">KAI</div>
-<p class="text-kai/50 text-sm font-bold tracking-widest uppercase italic">Chaos Creation</p>
-</div>
-</div>
-<div class="p-6 bg-black/40 border-t border-kai/20">
-<div class="flex justify-between items-center">
-<span class="text-[10px] uppercase text-kai/40 tracking-widest">Data Block Volatile</span>
-<div class="w-16 h-1 bg-kai/20"></div>
-</div>
-</div>
-</div>
-<div class="min-w-[85vw] md:min-w-[320px] snap-center relative rounded-xl circuit-bg flex flex-col border-2 border-genesis/50 glow-genesis overflow-hidden">
-<div class="absolute inset-0 opacity-20 pointer-events-none">
-<div class="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]"></div>
-</div>
-<div class="flex-1 flex flex-col items-center justify-center p-8 relative">
-<div class="relative z-10 text-center">
-<div class="w-32 h-32 mx-auto rounded-xl border-2 border-genesis flex items-center justify-center bg-black/40 backdrop-blur-sm mb-6 rotate-45">
-<span class="material-icons text-6xl text-genesis -rotate-45">gesture</span>
-</div>
-<div class="bg-genesis text-black px-6 py-1 font-display font-bold skew-x-[-12deg] inline-block mb-2">GENESIS</div>
-<p class="text-genesis/80 text-sm font-bold tracking-widest uppercase">The Architect</p>
-</div>
-</div>
-<div class="p-6 bg-black/80 border-t border-genesis/30">
-<div class="flex justify-between items-end">
-<div>
-<span class="block text-[10px] uppercase text-genesis/60 tracking-widest">Mastery</span>
-<span class="text-sm font-bold text-white tracking-wide">Interface Control</span>
-</div>
-<button class="border border-genesis text-genesis hover:bg-genesis hover:text-black px-4 py-2 font-display text-xs font-black transition-all">UNLOCKED</button>
-</div>
-</div>
-</div>
-</div>
+    <div class="mb-6">
+        <h1 class="font-display text-2xl font-black text-white italic tracking-tighter">AGENT
+            SELECTION</h1>
+        <p class="text-primary text-xs tracking-widest uppercase opacity-80">Choose your creative
+            avatar</p>
+    </div>
+    <div class="flex-1 flex gap-4 overflow-x-auto pb-6 snap-x no-scrollbar">
+        <div class="min-w-[85vw] md:min-w-[320px] snap-center relative rounded-xl liquid-bg flex flex-col border-2 border-aura/50 glow-aura overflow-hidden group">
+            <div class="absolute top-0 right-0 p-3">
+                <span class="material-icons text-aura animate-pulse">auto_awesome</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-center p-8 relative">
+                <div class="absolute inset-0 opacity-40">
+                    <img alt="vibrant pink and blue liquid energy abstraction"
+                         class="w-full h-full object-cover mix-blend-screen"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_oW5TfDfQXIAj91iM0U2C1rOJnimHzvcIUrj_FQAzneEuly28mSABWNb6mBEFJRjyvnPjJJ3Qm_69Y_RWm8wILhyCwLr89B6tFd5qwRYdbCYasZOKcz7x9kldcappTea-VDYwbbKx39m81fMxKiwqXX6dawtbXmtfogsmLbg_LIt7PuYWUX8xkPg3iNyIiY_C34-zZjYMQ96AdsHaHYMcdmBq71wKHe-9cWDDY3BM5Fp7SvsTJ6W2kEobeHS7FSV2G4lMZeMamYg"/>
+                </div>
+                <div class="relative z-10 text-center">
+                    <div class="w-32 h-32 mx-auto rounded-full border-2 border-aura flex items-center justify-center bg-black/40 backdrop-blur-sm mb-6">
+                        <span class="material-icons text-6xl text-aura">palette</span>
+                    </div>
+                    <div class="bg-aura text-black px-6 py-1 font-display font-bold skew-x-[-12deg] inline-block mb-2">
+                        AURA
+                    </div>
+                    <p class="text-aura/80 text-sm font-bold tracking-widest uppercase">The Creative
+                        Catalyst</p>
+                </div>
+            </div>
+            <div class="p-6 bg-black/80 border-t border-aura/30">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <span class="block text-[10px] uppercase text-aura/60 tracking-widest">Main Weapon</span>
+                        <span class="text-sm font-bold text-white tracking-wide">Spellhook Sword</span>
+                    </div>
+                    <button class="bg-aura hover:bg-aura/80 text-black px-4 py-2 font-display text-xs font-black transition-all">
+                        SELECT
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="min-w-[85vw] md:min-w-[320px] snap-center relative rounded-xl glitch-bg flex flex-col border-2 border-kai/30 glow-kai overflow-hidden grayscale opacity-80">
+            <div class="absolute inset-0 bg-black/60 z-20 flex flex-col items-center justify-center">
+                <span class="material-icons text-4xl text-white mb-2">lock</span>
+                <span class="text-[10px] font-display text-primary tracking-[0.3em] uppercase">Encrypted</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-center p-8 relative">
+                <div class="relative z-10 text-center">
+                    <div class="w-32 h-32 mx-auto border-2 border-kai/40 flex items-center justify-center mb-6 relative">
+                        <div class="absolute inset-0 border border-kai/20 animate-spin-slow"></div>
+                        <span class="material-icons text-6xl text-kai">spray</span>
+                    </div>
+                    <div class="bg-kai/20 text-kai px-6 py-1 font-display font-bold skew-x-[-12deg] inline-block mb-2">
+                        KAI
+                    </div>
+                    <p class="text-kai/50 text-sm font-bold tracking-widest uppercase italic">Chaos
+                        Creation</p>
+                </div>
+            </div>
+            <div class="p-6 bg-black/40 border-t border-kai/20">
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] uppercase text-kai/40 tracking-widest">Data Block Volatile</span>
+                    <div class="w-16 h-1 bg-kai/20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="min-w-[85vw] md:min-w-[320px] snap-center relative rounded-xl circuit-bg flex flex-col border-2 border-genesis/50 glow-genesis overflow-hidden">
+            <div class="absolute inset-0 opacity-20 pointer-events-none">
+                <div class="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]"></div>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-center p-8 relative">
+                <div class="relative z-10 text-center">
+                    <div class="w-32 h-32 mx-auto rounded-xl border-2 border-genesis flex items-center justify-center bg-black/40 backdrop-blur-sm mb-6 rotate-45">
+                        <span class="material-icons text-6xl text-genesis -rotate-45">gesture</span>
+                    </div>
+                    <div class="bg-genesis text-black px-6 py-1 font-display font-bold skew-x-[-12deg] inline-block mb-2">
+                        GENESIS
+                    </div>
+                    <p class="text-genesis/80 text-sm font-bold tracking-widest uppercase">The
+                        Architect</p>
+                </div>
+            </div>
+            <div class="p-6 bg-black/80 border-t border-genesis/30">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <span class="block text-[10px] uppercase text-genesis/60 tracking-widest">Mastery</span>
+                        <span class="text-sm font-bold text-white tracking-wide">Interface Control</span>
+                    </div>
+                    <button class="border border-genesis text-genesis hover:bg-genesis hover:text-black px-4 py-2 font-display text-xs font-black transition-all">
+                        UNLOCKED
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <footer class="relative z-20 p-6 bg-black border-t border-primary/20">
-<div class="text-center">
-<h2 class="font-display text-sm md:text-lg text-primary tracking-tight font-black uppercase">
-                Dynamic Theming: <span class="text-white">Identity is Immutable.</span> <span class="text-aura">Style is Fluid.</span>
-</h2>
-<p class="text-[10px] md:text-xs text-slate-500 mt-2 uppercase tracking-widest">
-                Interface physically adapts its core hex codes based on active agent signature.
-            </p>
-</div>
-<nav class="flex justify-around items-center mt-8 pb-4">
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<span class="material-icons text-slate-500 group-hover:text-primary transition-colors">grid_view</span>
-<span class="text-[9px] uppercase tracking-tighter text-slate-500 group-hover:text-primary">Hub</span>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer text-primary">
-<span class="material-icons">person</span>
-<span class="text-[9px] uppercase tracking-tighter">Agents</span>
-</div>
-<div class="relative -mt-8">
-<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-[0_0_20px_rgba(0,243,255,0.6)] cursor-pointer">
-<span class="material-icons text-black text-3xl font-bold">bolt</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<span class="material-icons text-slate-500 group-hover:text-primary transition-colors">inventory_2</span>
-<span class="text-[9px] uppercase tracking-tighter text-slate-500 group-hover:text-primary">Armory</span>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<span class="material-icons text-slate-500 group-hover:text-primary transition-colors">military_tech</span>
-<span class="text-[9px] uppercase tracking-tighter text-slate-500 group-hover:text-primary">Ranks</span>
-</div>
-</nav>
+    <div class="text-center">
+        <h2 class="font-display text-sm md:text-lg text-primary tracking-tight font-black uppercase">
+            Dynamic Theming: <span class="text-white">Identity is Immutable.</span> <span
+                class="text-aura">Style is Fluid.</span>
+        </h2>
+        <p class="text-[10px] md:text-xs text-slate-500 mt-2 uppercase tracking-widest">
+            Interface physically adapts its core hex codes based on active agent signature.
+        </p>
+    </div>
+    <nav class="flex justify-around items-center mt-8 pb-4">
+        <div class="flex flex-col items-center gap-1 group cursor-pointer">
+            <span class="material-icons text-slate-500 group-hover:text-primary transition-colors">grid_view</span>
+            <span class="text-[9px] uppercase tracking-tighter text-slate-500 group-hover:text-primary">Hub</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 group cursor-pointer text-primary">
+            <span class="material-icons">person</span>
+            <span class="text-[9px] uppercase tracking-tighter">Agents</span>
+        </div>
+        <div class="relative -mt-8">
+            <div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-[0_0_20px_rgba(0,243,255,0.6)] cursor-pointer">
+                <span class="material-icons text-black text-3xl font-bold">bolt</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-center gap-1 group cursor-pointer">
+            <span class="material-icons text-slate-500 group-hover:text-primary transition-colors">inventory_2</span>
+            <span class="text-[9px] uppercase tracking-tighter text-slate-500 group-hover:text-primary">Armory</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 group cursor-pointer">
+            <span class="material-icons text-slate-500 group-hover:text-primary transition-colors">military_tech</span>
+            <span class="text-[9px] uppercase tracking-tighter text-slate-500 group-hover:text-primary">Ranks</span>
+        </div>
+    </nav>
 </footer>
 <style>
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-            animation: spin-slow 12s linear infinite;
-        }
-    </style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+        animation: spin-slow 12s linear infinite;
+    }
+</style>
 
-</body></html>
+</body>
+</html>

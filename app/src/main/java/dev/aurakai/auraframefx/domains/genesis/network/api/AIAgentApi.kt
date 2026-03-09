@@ -11,10 +11,10 @@ import retrofit2.http.Path
 interface AIAgentApi {
     @GET("health")
     suspend fun health()
-    
+
     @GET("agents/{agentType}/status")
     suspend fun getAgentStatus(@Path("agentType") agentType: String): AgentStatusResponse
-    
+
     @POST("agents/{agentType}/process")
     suspend fun processAgentRequest(
         @Path("agentType") agentType: String,

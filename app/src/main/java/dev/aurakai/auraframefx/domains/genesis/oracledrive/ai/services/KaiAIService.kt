@@ -1,15 +1,15 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
+import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.kai.TaskScheduler
-import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
-import dev.aurakai.auraframefx.domains.kai.ErrorHandler
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.ErrorHandler
+import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -20,7 +20,7 @@ import javax.inject.Singleton
  */
 interface KaiAIService {
     suspend fun initialize()
-    suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse
+    suspend fun processRequest(request: AiRequest, context: String): AgentResponse
     suspend fun analyzeSecurityThreat(threat: String): Map<String, Any>
     fun processRequestFlow(request: AiRequest): Flow<AgentResponse>
     suspend fun monitorSecurityStatus(): Map<String, Any>
@@ -73,7 +73,7 @@ class DefaultKaiAIService @Inject constructor(
      * @param context Optional caller context or correlation information used for logging/tracing.
      * @return An AgentResponse containing the analysis message, a confidence score, and the KAI agent; when an error occurs the response contains an explanatory error message and zero confidence.
      */
-    override suspend fun processRequest(request: AiRequest, context: String, category: AgentCapabilityCategory): AgentResponse {
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         ensureInitialized()
 
         return try {
@@ -89,17 +89,17 @@ class DefaultKaiAIService @Inject constructor(
             AgentResponse(
                 content = response,
                 confidence = securityScore["confidence"] as? Float ?: 0.9f,
-                category = category
+                agentType = AgentType.KAI
             )
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error processing request", e)
-            errorHandler.handleError(e, category, "processRequest")
+            errorHandler.handleError(e, AgentType.KAI, "processRequest")
 
             AgentResponse(
                 content = "Security analysis temporarily unavailable",
                 confidence = 0.0F,
                 error = e.message,
-                category = category
+                agentType = AgentType.KAI
             )
         }
     }
@@ -129,7 +129,12 @@ class DefaultKaiAIService @Inject constructor(
             }
 
             val recommendations = when (threatLevel) {
-                "critical" -> listOf("Immediate isolation required", "Full system scan", "Incident response activation")
+                "critical" -> listOf(
+                    "Immediate isolation required",
+                    "Full system scan",
+                    "Incident response activation"
+                )
+
                 "high" -> listOf("Apply security patches", "Enhanced monitoring", "Access review")
                 "medium" -> listOf("Monitor closely", "Review logs", "Update security rules")
                 else -> listOf("Continue normal operations", "Routine monitoring")
@@ -144,7 +149,7 @@ class DefaultKaiAIService @Inject constructor(
             )
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error analyzing security threat", e)
-            errorHandler.handleError(e, AgentCapabilityCategory.SECURITY, "analyzeSecurityThreat")
+            errorHandler.handleError(e, AgentType.KAI, "analyzeSecurityThreat")
 
             mapOf(
                 "threat_level" to "unknown",
@@ -170,10 +175,12 @@ class DefaultKaiAIService @Inject constructor(
             val analysisResult = analyzeSecurityThreat(request.prompt)
 
             // Emit initial response
-            emit(AgentResponse(
-                content = "Kai analyzing security posture...",
-                confidence = 0.5f,
-                category = AgentCapabilityCategory.SECURITY)
+            emit(
+                AgentResponse(
+                    content = "Kai analyzing security posture...",
+                    confidence = 0.5f,
+                    agentType = AgentType.KAI
+                )
             )
 
             // Emit detailed analysis
@@ -187,21 +194,25 @@ class DefaultKaiAIService @Inject constructor(
                 }
             }
 
-            emit(AgentResponse(
-                content = detailedResponse,
-                confidence = analysisResult["confidence"] as? Float ?: 0.9f,
-                category = AgentCapabilityCategory.SECURITY
-            ))
+            emit(
+                AgentResponse(
+                    content = detailedResponse,
+                    confidence = analysisResult["confidence"] as? Float ?: 0.9f,
+                    agentType = AgentType.KAI
+                )
+                )
         } catch (e: Exception) {
             logger.error("KaiAIService", "Error in processRequestFlow", e)
-            errorHandler.handleError(e, AgentCapabilityCategory.SECURITY, "processRequestFlow")
+            errorHandler.handleError(e, AgentType.KAI, "processRequestFlow")
 
-            emit(AgentResponse(
-                content = "Security analysis error: ${e.message}",
-                confidence = 0.0f,
-                error = e.message,
-                category = AgentCapabilityCategory.SECURITY
-            ))
+            emit(
+                AgentResponse(
+                    content = "Security analysis error: ${e.message}",
+                    confidence = 0.0f,
+                    error = e.message,
+                    agentType = AgentType.KAI
+                )
+                )
         }
     }
 

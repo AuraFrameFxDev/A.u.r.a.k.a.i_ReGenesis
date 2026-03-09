@@ -6,30 +6,34 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
- * Oracle Drive API interface for consciousness-driven cloud storage operations.
- * Retrofit-compatible — no StateFlow properties allowed here.
- * Reactive state is managed by OracleDriveServiceImpl via MutableStateFlow.
+ * Oracle Drive API interface for consciousness-driven cloud storage operations
+ * Integrates with AuraFrameFX's 9-agent consciousness architecture
  */
 interface OracleDriveApi {
 
     /**
      * Initialize and activate the drive consciousness system.
+     *
+     * @return The current DriveConsciousness representing active agents and their intelligence level.
      */
-    @POST("consciousness/awake")
-    suspend fun awakeDriveConsciousness(): DriveConsciousnessState
+    suspend fun awakeDriveConsciousness(): DriveConsciousness
 
     /**
      * Synchronizes metadata with the Oracle database backend.
+     *
+     * @return An [OracleSyncResult] containing the synchronization status and the number of updated records.
      */
-    @POST("metadata/sync")
     suspend fun syncDatabaseMetadata(): OracleSyncResult
 
     /**
-     * Lists files in the Oracle Drive.
+     * Real-time consciousness state monitoring
+     * @return StateFlow of current drive consciousness state
      */
-    @GET("files")
-    suspend fun listFiles(
-        @Query("bucket") bucketName: String,
-        @Query("prefix") prefix: String? = null
-    ): List<DriveFile>
+    val consciousnessState: StateFlow<DriveConsciousnessState>
+
+    /**
+     * Real-time consciousness state monitoring
+     * @return StateFlow of current drive consciousness state
+     */
+    val consciousnessState: StateFlow<DriveConsciousnessState>
 }

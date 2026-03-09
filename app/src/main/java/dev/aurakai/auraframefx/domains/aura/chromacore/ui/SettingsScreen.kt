@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import dev.aurakai.auraframefx.R // Corrected import
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AppDimensions
 
 /**
  * Settings screen for the AuraFrameFX app

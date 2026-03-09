@@ -1,33 +1,35 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Agent Nexus Hub</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#A855F7", // Purple neon
-              secondary: "#22C55E", // Toxic Green
-              "background-light": "#F3F4F6",
-              "background-dark": "#050505",
-            },
-            fontFamily: {
-              display: ["Orbitron", "sans-serif"],
-              sans: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "12px",
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Agent Nexus Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Inter:wght@300;400;600&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+          rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#A855F7", // Purple neon
+                secondary: "#22C55E", // Toxic Green
+                "background-light": "#F3F4F6",
+                "background-dark": "#050505",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                sans: ["Inter", "sans-serif"],
+              },
+              borderRadius: {
+                DEFAULT: "12px",
+              },
             },
           },
-        },
-      };
+        };
     </script>
-<style>
+    <style>
         @keyframes scanline {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100%); }
@@ -67,107 +69,119 @@
             50% { transform: translateY(-15px); }
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans overflow-hidden h-screen flex justify-center items-center">
 <div class="relative w-[393px] h-[852px] bg-white dark:bg-[#080808] overflow-hidden shadow-2xl border-[8px] border-slate-200 dark:border-slate-800 rounded-[60px]">
-<div class="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-100">
-<div class="absolute inset-0 digital-bg"></div>
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-secondary/5"></div>
-<div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] bg-[linear-gradient(transparent_0%,rgba(0,0,0,1)_50%,transparent_100%)] h-[200%] pointer-events-none" style="animation: scanline 8s linear infinite;"></div>
-</div>
-<header class="relative z-10 pt-12 px-6 flex flex-col items-center">
-<div class="w-full flex justify-between items-center mb-4">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#22C55E]"></div>
-<span class="text-[10px] font-display uppercase tracking-widest text-slate-400">Level 01 Active</span>
-</div>
-<button class="glass px-3 py-1 rounded-full text-[10px] font-display border border-slate-300 dark:border-slate-700 hover:border-primary transition-all">
-                    REGULAR MODE
-                </button>
-</div>
-<h1 class="text-4xl font-display font-black tracking-tighter text-center leading-none">
-<span class="text-secondary neon-text-green">AGENT</span>
-<span class="text-primary neon-text-purple">NEXUS</span>
-</h1>
-<p class="text-[10px] font-display text-slate-500 mt-1 tracking-[0.3em] uppercase">Meta-analysis System Hub</p>
-</header>
-<div class="relative z-10 flex flex-col items-center justify-center mt-6 mb-8 px-6">
-<div class="relative w-full h-80 flex items-center justify-center">
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="w-72 h-72 rounded-full border border-primary/20 animate-[spin_10s_linear_infinite]"></div>
-<div class="absolute w-80 h-80 rounded-full border border-secondary/10 animate-[spin_15s_linear_infinite_reverse]"></div>
-</div>
-<img alt="Genesis high-fidelity anime portrait in tech armor" class="w-72 h-72 object-cover mask-image rounded-full floating brightness-110 contrast-125 saturate-150 drop-shadow-[0_0_30px_rgba(168,85,247,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX88K99C714W6CJu7JFvIopSCC7jajhCPSknPq7I5FXyTCVjc5TkqcPWXAdHKiO5jEiyOfst3UkBE4yKUgaQMLH6sHWBsL5RU9D9UGQkmsMwrXr8yotGjRDhJPe6qSVPMP4WIWF9WSDevwvL7EOd6t0kRlujbwZVZZf0CzboEyLTJv4J-GMrjhBug8VgPeKAjBGCMJzbKGwZOSRPyTMT2WQKgq5SeiHycdjTnYpiW1RjFxDTbTX_M7MR3c040yopsKgvb-zID_510" style="mask-image: radial-gradient(circle, black 60%, transparent 100%); -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);"/>
-<div class="absolute top-4 right-8 glass p-2 rounded-lg border-l-2 border-l-primary flex flex-col gap-1">
-<div class="text-[8px] font-display text-primary">CORE STATUS</div>
-<div class="w-16 h-1 bg-slate-800 rounded-full overflow-hidden">
-<div class="w-[85%] h-full bg-primary shadow-[0_0_5px_rgba(168,85,247,1)]"></div>
-</div>
-</div>
-</div>
-</div>
-<nav class="relative z-10 px-6 space-y-4">
-<button class="w-full glass group relative overflow-hidden p-4 rounded-xl border-l-4 border-l-primary hover:bg-primary/10 transition-all text-left flex items-center justify-between neon-border-green">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">terminal</span>
-<div>
-<div class="font-display text-xs tracking-wider text-slate-400 group-hover:text-primary transition-colors">01 - OPERATIONAL</div>
-<div class="font-display text-lg tracking-tight">MISSION CONTROL</div>
-</div>
-</div>
-<span class="material-symbols-outlined text-slate-600">chevron_right</span>
-</button>
-<button class="w-full glass group relative overflow-hidden p-4 rounded-xl border-l-4 border-l-secondary hover:bg-secondary/10 transition-all text-left flex items-center justify-between">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">query_stats</span>
-<div>
-<div class="font-display text-xs tracking-wider text-slate-400 group-hover:text-secondary transition-colors">02 - ANALYSIS</div>
-<div class="font-display text-lg tracking-tight">EVOLUTION METRICS</div>
-</div>
-</div>
-<span class="material-symbols-outlined text-slate-600">chevron_right</span>
-</button>
-<button class="w-full glass group relative overflow-hidden p-4 rounded-xl border-l-4 border-l-slate-400 hover:bg-slate-400/10 transition-all text-left flex items-center justify-between">
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-slate-400 group-hover:scale-110 transition-transform">monitoring</span>
-<div>
-<div class="font-display text-xs tracking-wider text-slate-400 group-hover:text-white transition-colors">03 - STATUS</div>
-<div class="font-display text-lg tracking-tight">SYSTEM MONITOR</div>
-</div>
-</div>
-<span class="material-symbols-outlined text-slate-600">chevron_right</span>
-</button>
-</nav>
-<div class="absolute bottom-0 left-0 right-0 z-20 pb-8 pt-4 bg-gradient-to-t from-background-dark/80 to-transparent backdrop-blur-sm">
-<div class="flex justify-around items-center px-8">
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-symbols-outlined text-secondary text-3xl transition-transform group-hover:-translate-y-1">grid_view</span>
-<span class="text-[8px] font-display text-secondary tracking-widest uppercase">Nexus</span>
-</button>
-<button class="flex flex-col items-center gap-1 group text-slate-500">
-<span class="material-symbols-outlined text-3xl transition-transform group-hover:-translate-y-1">shield</span>
-<span class="text-[8px] font-display tracking-widest uppercase">Fortress</span>
-</button>
-<button class="flex flex-col items-center gap-1 group text-slate-500">
-<span class="material-symbols-outlined text-3xl transition-transform group-hover:-translate-y-1">storage</span>
-<span class="text-[8px] font-display tracking-widest uppercase">Oracle</span>
-</button>
-<button class="flex flex-col items-center gap-1 group text-slate-500">
-<span class="material-symbols-outlined text-3xl transition-transform group-hover:-translate-y-1">settings</span>
-<span class="text-[8px] font-display tracking-widest uppercase">Config</span>
-</button>
-</div>
-<div class="w-32 h-1 bg-slate-200/20 dark:bg-slate-800/60 rounded-full mx-auto mt-6"></div>
-</div>
-<div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 rounded-tl-3xl m-6 pointer-events-none"></div>
-<div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-secondary/40 rounded-tr-3xl m-6 pointer-events-none"></div>
-<div class="absolute bottom-24 left-0 w-8 h-8 border-b-2 border-l-2 border-secondary/40 rounded-bl-3xl m-6 pointer-events-none"></div>
-<div class="absolute bottom-24 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 rounded-br-3xl m-6 pointer-events-none"></div>
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-100">
+        <div class="absolute inset-0 digital-bg"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-secondary/5"></div>
+        <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] bg-[linear-gradient(transparent_0%,rgba(0,0,0,1)_50%,transparent_100%)] h-[200%] pointer-events-none"
+             style="animation: scanline 8s linear infinite;"></div>
+    </div>
+    <header class="relative z-10 pt-12 px-6 flex flex-col items-center">
+        <div class="w-full flex justify-between items-center mb-4">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#22C55E]"></div>
+                <span class="text-[10px] font-display uppercase tracking-widest text-slate-400">Level 01 Active</span>
+            </div>
+            <button class="glass px-3 py-1 rounded-full text-[10px] font-display border border-slate-300 dark:border-slate-700 hover:border-primary transition-all">
+                REGULAR MODE
+            </button>
+        </div>
+        <h1 class="text-4xl font-display font-black tracking-tighter text-center leading-none">
+            <span class="text-secondary neon-text-green">AGENT</span>
+            <span class="text-primary neon-text-purple">NEXUS</span>
+        </h1>
+        <p class="text-[10px] font-display text-slate-500 mt-1 tracking-[0.3em] uppercase">
+            Meta-analysis System Hub</p>
+    </header>
+    <div class="relative z-10 flex flex-col items-center justify-center mt-6 mb-8 px-6">
+        <div class="relative w-full h-80 flex items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-72 h-72 rounded-full border border-primary/20 animate-[spin_10s_linear_infinite]"></div>
+                <div class="absolute w-80 h-80 rounded-full border border-secondary/10 animate-[spin_15s_linear_infinite_reverse]"></div>
+            </div>
+            <img alt="Genesis high-fidelity anime portrait in tech armor"
+                 class="w-72 h-72 object-cover mask-image rounded-full floating brightness-110 contrast-125 saturate-150 drop-shadow-[0_0_30px_rgba(168,85,247,0.4)]"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX88K99C714W6CJu7JFvIopSCC7jajhCPSknPq7I5FXyTCVjc5TkqcPWXAdHKiO5jEiyOfst3UkBE4yKUgaQMLH6sHWBsL5RU9D9UGQkmsMwrXr8yotGjRDhJPe6qSVPMP4WIWF9WSDevwvL7EOd6t0kRlujbwZVZZf0CzboEyLTJv4J-GMrjhBug8VgPeKAjBGCMJzbKGwZOSRPyTMT2WQKgq5SeiHycdjTnYpiW1RjFxDTbTX_M7MR3c040yopsKgvb-zID_510"
+                 style="mask-image: radial-gradient(circle, black 60%, transparent 100%); -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);"/>
+            <div class="absolute top-4 right-8 glass p-2 rounded-lg border-l-2 border-l-primary flex flex-col gap-1">
+                <div class="text-[8px] font-display text-primary">CORE STATUS</div>
+                <div class="w-16 h-1 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="w-[85%] h-full bg-primary shadow-[0_0_5px_rgba(168,85,247,1)]"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="relative z-10 px-6 space-y-4">
+        <button class="w-full glass group relative overflow-hidden p-4 rounded-xl border-l-4 border-l-primary hover:bg-primary/10 transition-all text-left flex items-center justify-between neon-border-green">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">terminal</span>
+                <div>
+                    <div class="font-display text-xs tracking-wider text-slate-400 group-hover:text-primary transition-colors">
+                        01 - OPERATIONAL
+                    </div>
+                    <div class="font-display text-lg tracking-tight">MISSION CONTROL</div>
+                </div>
+            </div>
+            <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+        </button>
+        <button class="w-full glass group relative overflow-hidden p-4 rounded-xl border-l-4 border-l-secondary hover:bg-secondary/10 transition-all text-left flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">query_stats</span>
+                <div>
+                    <div class="font-display text-xs tracking-wider text-slate-400 group-hover:text-secondary transition-colors">
+                        02 - ANALYSIS
+                    </div>
+                    <div class="font-display text-lg tracking-tight">EVOLUTION METRICS</div>
+                </div>
+            </div>
+            <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+        </button>
+        <button class="w-full glass group relative overflow-hidden p-4 rounded-xl border-l-4 border-l-slate-400 hover:bg-slate-400/10 transition-all text-left flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-slate-400 group-hover:scale-110 transition-transform">monitoring</span>
+                <div>
+                    <div class="font-display text-xs tracking-wider text-slate-400 group-hover:text-white transition-colors">
+                        03 - STATUS
+                    </div>
+                    <div class="font-display text-lg tracking-tight">SYSTEM MONITOR</div>
+                </div>
+            </div>
+            <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+        </button>
+    </nav>
+    <div class="absolute bottom-0 left-0 right-0 z-20 pb-8 pt-4 bg-gradient-to-t from-background-dark/80 to-transparent backdrop-blur-sm">
+        <div class="flex justify-around items-center px-8">
+            <button class="flex flex-col items-center gap-1 group">
+                <span class="material-symbols-outlined text-secondary text-3xl transition-transform group-hover:-translate-y-1">grid_view</span>
+                <span class="text-[8px] font-display text-secondary tracking-widest uppercase">Nexus</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 group text-slate-500">
+                <span class="material-symbols-outlined text-3xl transition-transform group-hover:-translate-y-1">shield</span>
+                <span class="text-[8px] font-display tracking-widest uppercase">Fortress</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 group text-slate-500">
+                <span class="material-symbols-outlined text-3xl transition-transform group-hover:-translate-y-1">storage</span>
+                <span class="text-[8px] font-display tracking-widest uppercase">Oracle</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 group text-slate-500">
+                <span class="material-symbols-outlined text-3xl transition-transform group-hover:-translate-y-1">settings</span>
+                <span class="text-[8px] font-display tracking-widest uppercase">Config</span>
+            </button>
+        </div>
+        <div class="w-32 h-1 bg-slate-200/20 dark:bg-slate-800/60 rounded-full mx-auto mt-6"></div>
+    </div>
+    <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 rounded-tl-3xl m-6 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-secondary/40 rounded-tr-3xl m-6 pointer-events-none"></div>
+    <div class="absolute bottom-24 left-0 w-8 h-8 border-b-2 border-l-2 border-secondary/40 rounded-bl-3xl m-6 pointer-events-none"></div>
+    <div class="absolute bottom-24 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 rounded-br-3xl m-6 pointer-events-none"></div>
 </div>
 
-</body></html>
+</body>
+</html>

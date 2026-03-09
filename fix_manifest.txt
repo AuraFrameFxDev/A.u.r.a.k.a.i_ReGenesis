@@ -1,0 +1,29 @@
+MANIFEST FIXES NEEDED:
+
+1. Change Line 47:
+   FROM: android:name="dev.aurakai.auraframefx.aurakaiapplication.AurakaiApplication"
+   TO:   android:name=".app.AurakaiApplication"
+
+2. Change Line 94:
+   FROM: android:name=".services.GenesisAccessibilityService"
+   TO:   android:name=".domains.genesis.GenesisAccessibilityService"
+
+3. Change Line 118:
+   FROM: android:name=".app.VertexSyncService"
+   TO:   android:name=".domains.genesis.services.VertexSyncService"
+
+4. Change Line 139:
+   FROM: android:name=".oracledrive.genesis.ai.GenesisBackendService"
+   TO:   android:name=".domains.genesis.oracledrive.ai.GenesisBackendService"
+
+5. Change Line 141:
+   FROM: android:name=".services.AuraDriveService"
+   TO:   android:name=".domains.aura.AuraDriveService"
+
+6. Change Line 145:
+   FROM: android:name=".security.RoyalGuardService"
+   TO:   android:name=".domains.kai.security.RoyalGuardService"
+
+7. Change Line 211:
+   FROM: android:name=".security.IntegrityViolationReceiver"
+   TO:   android:name=".domains.kai.security.IntegrityViolationReceiver"

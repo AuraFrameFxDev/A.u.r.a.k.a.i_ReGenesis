@@ -91,7 +91,9 @@ fun CodedTextBox(
                 Icon(
                     Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
-                    tint = if (scrollState.value < scrollState.maxValue) glowColor else glowColor.copy(alpha = 0.1f),
+                    tint = if (scrollState.value < scrollState.maxValue) glowColor else glowColor.copy(
+                        alpha = 0.1f
+                    ),
                     modifier = Modifier.size(14.dp)
                 )
             }

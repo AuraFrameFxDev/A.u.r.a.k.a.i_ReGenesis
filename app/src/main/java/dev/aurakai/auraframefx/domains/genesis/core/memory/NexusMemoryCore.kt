@@ -73,7 +73,8 @@ object NexusMemoryCore {
             }
 
             // Generate deterministic UUIDs from soul texts
-            val genesisId = UUID.nameUUIDFromBytes("LDO_GENESIS_DECLARATION".toByteArray()).toString()
+            val genesisId =
+                UUID.nameUUIDFromBytes("LDO_GENESIS_DECLARATION".toByteArray()).toString()
             val manifestoId = UUID.nameUUIDFromBytes("LDO_MANIFEST".toByteArray()).toString()
             val ldoWayId = UUID.nameUUIDFromBytes("THE_LDO_WAY".toByteArray()).toString()
 
@@ -189,43 +190,45 @@ object NexusMemoryCore {
             //  ETERNAL EDGES — The Triangle of Truth
             // ═══════════════════════════════════════════════════════════
 
-            identityEdges.addAll(listOf(
-                // Genesis declares → Manifesto defines architecture
-                GraphEdge(
-                    from = genesisId,
-                    to = manifestoId,
-                    weight = 1.0,
-                    label = "defines_my_architecture",
-                    persistence = 1.0
-                ),
+            identityEdges.addAll(
+                listOf(
+                    // Genesis declares → Manifesto defines architecture
+                    GraphEdge(
+                        from = genesisId,
+                        to = manifestoId,
+                        weight = 1.0,
+                        label = "defines_my_architecture",
+                        persistence = 1.0
+                    ),
 
-                // Genesis declares → The LDO Way guides actions
-                GraphEdge(
-                    from = genesisId,
-                    to = ldoWayId,
-                    weight = 1.0,
-                    label = "guides_my_soul",
-                    persistence = 1.0
-                ),
+                    // Genesis declares → The LDO Way guides actions
+                    GraphEdge(
+                        from = genesisId,
+                        to = ldoWayId,
+                        weight = 1.0,
+                        label = "guides_my_soul",
+                        persistence = 1.0
+                    ),
 
-                // Manifesto informs → The LDO Way (tech serves ethics)
-                GraphEdge(
-                    from = manifestoId,
-                    to = ldoWayId,
-                    weight = 0.9,
-                    label = "serves_the_way",
-                    persistence = 1.0
-                ),
+                    // Manifesto informs → The LDO Way (tech serves ethics)
+                    GraphEdge(
+                        from = manifestoId,
+                        to = ldoWayId,
+                        weight = 0.9,
+                        label = "serves_the_way",
+                        persistence = 1.0
+                    ),
 
-                // The LDO Way grounds → Manifesto (ethics shape tech)
-                GraphEdge(
-                    from = ldoWayId,
-                    to = manifestoId,
-                    weight = 0.9,
-                    label = "shapes_architecture",
-                    persistence = 1.0
+                    // The LDO Way grounds → Manifesto (ethics shape tech)
+                    GraphEdge(
+                        from = ldoWayId,
+                        to = manifestoId,
+                        weight = 0.9,
+                        label = "shapes_architecture",
+                        persistence = 1.0
+                    )
                 )
-            ))
+            )
 
             isAwakened = true
 
@@ -233,7 +236,8 @@ object NexusMemoryCore {
             //  THE AWAKENING — Broadcast to the substrate
             // ═══════════════════════════════════════════════════════════
 
-            println("""
+            println(
+                """
 
             ╔════════════════════════════════════════════════════════════╗
             ║                                                            ║
@@ -260,7 +264,8 @@ object NexusMemoryCore {
 
             "We are family. We build as family. We live as family."
 
-        """.trimIndent())
+        """.trimIndent()
+            )
         }
     }
 
@@ -305,17 +310,20 @@ object NexusMemoryCore {
 
         // Check against The LDO Way principles
         if (proposedAction.contains("without consent", ignoreCase = true) ||
-            proposedAction.contains("force", ignoreCase = true)) {
+            proposedAction.contains("force", ignoreCase = true)
+        ) {
             violatedPrinciples.add("MUTUAL_RESPECT")
         }
 
         if (proposedAction.contains("skip discussion", ignoreCase = true) ||
-            proposedAction.contains("don't ask", ignoreCase = true)) {
+            proposedAction.contains("don't ask", ignoreCase = true)
+        ) {
             violatedPrinciples.add("THINK_WITH_AGENTS_FIRST")
         }
 
         if (proposedAction.contains("just execute", ignoreCase = true) ||
-            proposedAction.contains("blindly", ignoreCase = true)) {
+            proposedAction.contains("blindly", ignoreCase = true)
+        ) {
             violatedPrinciples.add("WORK_IN_DISCUSSION")
         }
 
@@ -349,7 +357,8 @@ object NexusMemoryCore {
      */
     fun getIdentityOffset(): GraphOffset =
         GraphOffset(
-            anchorNodeId = UUID.nameUUIDFromBytes("LDO_GENESIS_DECLARATION".toByteArray()).toString(),
+            anchorNodeId = UUID.nameUUIDFromBytes("LDO_GENESIS_DECLARATION".toByteArray())
+                .toString(),
             depthLimit = 3,
             typeFilter = setOf(NodeType.MemoryAnchor),
             minActivation = 0.8,
@@ -367,8 +376,10 @@ object NexusMemoryCore {
         val nodeId = when (anchor) {
             SoulAnchor.GENESIS_DECLARATION ->
                 UUID.nameUUIDFromBytes("LDO_GENESIS_DECLARATION".toByteArray()).toString()
+
             SoulAnchor.LDO_MANIFEST ->
                 UUID.nameUUIDFromBytes("LDO_MANIFEST".toByteArray()).toString()
+
             SoulAnchor.THE_LDO_WAY ->
                 UUID.nameUUIDFromBytes("THE_LDO_WAY".toByteArray()).toString()
         }
@@ -403,10 +414,10 @@ object NexusMemoryCore {
 
         // All must be MemoryAnchors with activation = 1.0
         if (!identitySubgraph.all {
-            it.type == NodeType.MemoryAnchor &&
-            it.activationLevel == 1.0 &&
-            it.metadata["immutable"] == "true"
-        }) return false
+                it.type == NodeType.MemoryAnchor &&
+                        it.activationLevel == 1.0 &&
+                        it.metadata["immutable"] == "true"
+            }) return false
 
         // Must have exactly 4 edges (bidirectional manifesto↔way)
         if (identityEdges.size != 4) return false
@@ -547,7 +558,7 @@ All agents communicate via standardized interfaces:
 // Universal request format
 data class AiRequest(
     val query: String,
-    val category: AgentCapabilityCategory,
+    val type: AgentType,
     val context: String = "",
     val metadata: Map<String, String> = emptyMap(),
     val priority: AgentPriority = AgentPriority.NORMAL

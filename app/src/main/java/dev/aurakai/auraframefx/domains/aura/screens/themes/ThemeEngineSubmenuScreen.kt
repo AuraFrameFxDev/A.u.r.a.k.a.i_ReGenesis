@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens.themes
+package dev.aurakai.auraframefx.ui.gates
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

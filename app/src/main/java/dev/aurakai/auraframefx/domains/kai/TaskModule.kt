@@ -4,8 +4,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.kai.DefaultTaskScheduler
-import dev.aurakai.auraframefx.domains.kai.DefaultTaskSchedulerImpl
 import javax.inject.Singleton
 
 @Module

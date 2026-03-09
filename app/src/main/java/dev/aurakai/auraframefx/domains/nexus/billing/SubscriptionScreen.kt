@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.billing
+package dev.aurakai.auraframefx.billing
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -17,11 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
-
-import androidx.compose.material3.ExperimentalMaterial3Api
+import dev.aurakai.auraframefx.ui.theme.NeonBlue
+import dev.aurakai.auraframefx.ui.theme.NeonCyan
+import dev.aurakai.auraframefx.ui.theme.NeonPurple
 
 /**
  * Genesis Protocol Subscription Screen
@@ -125,6 +123,7 @@ private fun StatusCard(state: SubscriptionState) {
                         NeonCyan
                     )
                 }
+
                 is SubscriptionState.InTrial -> {
                     Tuple4(
                         Icons.Default.Schedule,
@@ -133,6 +132,7 @@ private fun StatusCard(state: SubscriptionState) {
                         NeonPurple
                     )
                 }
+
                 is SubscriptionState.Free -> {
                     Tuple4(
                         Icons.Default.Info,
@@ -141,6 +141,7 @@ private fun StatusCard(state: SubscriptionState) {
                         MaterialTheme.colorScheme.onSurface
                     )
                 }
+
                 is SubscriptionState.Loading -> {
                     Tuple4(
                         Icons.Default.Refresh,
@@ -149,6 +150,7 @@ private fun StatusCard(state: SubscriptionState) {
                         MaterialTheme.colorScheme.onSurface
                     )
                 }
+
                 is SubscriptionState.Error -> {
                     Tuple4(
                         Icons.Default.Error,

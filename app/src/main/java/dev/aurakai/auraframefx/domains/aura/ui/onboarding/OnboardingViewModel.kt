@@ -57,17 +57,17 @@ open class OnboardingViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 Timber.i("Completing gender selection: ${identity.displayName}")
-                
+
                 // Save to preferences
                 // userPreferencesManager.setGenderIdentity(identity.name)
                 // userPreferencesManager.setOnboardingComplete(true)
-                
+
                 _onboardingState.value = _onboardingState.value.copy(
                     selectedIdentity = identity,
                     isComplete = true,
                     currentStep = OnboardingStep.COMPLETE
                 )
-                
+
                 Timber.i("Onboarding complete with identity: ${identity.displayName}")
             } catch (e: Exception) {
                 Timber.e(e, "Failed to complete gender selection")

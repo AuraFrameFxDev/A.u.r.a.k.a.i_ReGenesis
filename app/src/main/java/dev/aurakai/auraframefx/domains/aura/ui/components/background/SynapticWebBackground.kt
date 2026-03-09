@@ -27,23 +27,23 @@ fun SynapticWebBackground(
         val height = size.height
         val hexSize = 60.dp.toPx()
         val strokeWidth = 1.dp.toPx()
-        
+
         // Grid Calculation
         val cols = (width / (hexSize * 1.5)).toInt() + 2
         val rows = (height / (hexSize * 1.732)).toInt() + 2
-        
+
         for (i in 0 until cols) {
             for (j in 0 until rows) {
                 val x = i * hexSize * 1.5f
                 val y = j * hexSize * 1.732f + (if (i % 2 == 1) hexSize * 0.866f else 0f)
-                
+
                 drawHexagon(
                     center = Offset(x, y),
                     size = hexSize,
                     color = glowColor.copy(alpha = 0.1f),
                     strokeWidth = strokeWidth
                 )
-                
+
                 // Draw connection nodes (synapses)
                 drawCircle(
                     color = glowColor.copy(alpha = 0.2f),

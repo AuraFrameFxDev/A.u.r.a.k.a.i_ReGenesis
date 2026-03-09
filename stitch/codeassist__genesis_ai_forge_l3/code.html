@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CodeAssist: Genesis AI Forge L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CodeAssist: Genesis AI Forge L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -29,7 +33,7 @@
             },
         }
     </script>
-<style>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
         
         .crt-overlay {
@@ -50,176 +54,187 @@
             display: none;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30 selection:text-primary">
 <div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto border-x border-white/5 shadow-2xl">
-<!-- CRT Overlay for Cyber-Manga Aesthetic -->
-<div class="absolute inset-0 crt-overlay z-50 opacity-20"></div>
-<!-- Top App Bar / HUD -->
-<header class="flex items-center bg-surface-dark/80 backdrop-blur-md p-4 border-b border-primary/20 justify-between z-40">
-<div class="flex items-center gap-3">
-<div class="text-primary flex size-8 shrink-0 items-center justify-center border border-primary/40 rounded-sm">
-<span class="material-symbols-outlined text-[20px]">terminal</span>
+    <!-- CRT Overlay for Cyber-Manga Aesthetic -->
+    <div class="absolute inset-0 crt-overlay z-50 opacity-20"></div>
+    <!-- Top App Bar / HUD -->
+    <header class="flex items-center bg-surface-dark/80 backdrop-blur-md p-4 border-b border-primary/20 justify-between z-40">
+        <div class="flex items-center gap-3">
+            <div class="text-primary flex size-8 shrink-0 items-center justify-center border border-primary/40 rounded-sm">
+                <span class="material-symbols-outlined text-[20px]">terminal</span>
+            </div>
+            <div>
+                <h2 class="text-white text-xs font-bold leading-none tracking-wider uppercase">
+                    L3-GENESIS-FORGE</h2>
+                <p class="text-primary/60 text-[10px] font-mono mt-1 uppercase tracking-tighter">
+                    Session: Active-0x429</p>
+            </div>
+        </div>
+        <div class="flex gap-4 items-center">
+            <div class="flex flex-col items-end">
+                <span class="text-[10px] text-amber-neon font-mono">CPU: 42%</span>
+                <span class="text-[10px] text-primary font-mono">SYNC: 98%</span>
+            </div>
+            <button class="flex size-10 items-center justify-center rounded-sm bg-primary/10 border border-primary/30 text-primary">
+                <span class="material-symbols-outlined">computer</span>
+            </button>
+        </div>
+    </header>
+    <!-- Main Workspace Area -->
+    <main class="relative flex-1 flex flex-col overflow-hidden">
+        <!-- 3D Scaffold Visualization Background -->
+        <div class="absolute inset-0 scaffold-bg opacity-30 z-0">
+            <div class="w-full h-full flex items-center justify-center rotate-12 scale-150">
+                <div class="w-64 h-64 border border-primary/20 rounded-lg flex items-center justify-center">
+                    <div class="w-48 h-48 border border-primary/40 rounded-lg flex items-center justify-center">
+                        <div class="w-32 h-32 border border-primary rounded-lg animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content Container -->
+        <div class="relative z-10 flex flex-col h-full">
+            <!-- Tab Bar -->
+            <div class="flex bg-surface-dark/40 border-b border-white/5 px-2">
+                <div class="flex items-center gap-1 border-b-2 border-primary px-4 py-3 bg-primary/5">
+                    <span class="text-[11px] font-bold text-white tracking-widest uppercase">main.rs</span>
+                </div>
+                <div class="flex items-center gap-1 px-4 py-3 opacity-40">
+                    <span class="text-[11px] font-bold text-white tracking-widest uppercase">ui_bridge.ts</span>
+                </div>
+                <div class="flex items-center gap-1 px-4 py-3 opacity-40">
+                    <span class="text-[11px] font-bold text-white tracking-widest uppercase">schema.sql</span>
+                </div>
+            </div>
+            <div class="flex flex-1 overflow-hidden">
+                <!-- Editor Area -->
+                <div class="flex-1 overflow-y-auto p-4 font-mono text-[13px] leading-relaxed hide-scrollbar">
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">01</span>
+                        <p class="text-amber-neon"><span class="text-primary">use</span>
+                            genesis_forge::L3;</p>
+                    </div>
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">02</span>
+                        <p class="text-white"><span class="text-primary">fn</span> <span
+                                class="text-amber-neon">main</span>() {</p>
+                    </div>
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">03</span>
+                        <p class="pl-4 text-white"><span class="text-primary">let</span> forge =
+                            Genesis::new(Level::L3);</p>
+                    </div>
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">04</span>
+                        <p class="pl-4 text-white">forge.ignite_scaffold();</p>
+                    </div>
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">05</span>
+                        <p class="pl-4 text-primary">// TODO: Delegate to Aura</p>
+                    </div>
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">06</span>
+                        <p class="pl-4 text-white">aura.sync_ui_bridge(forge.scaffold());</p>
+                    </div>
+                    <div class="flex gap-3 mb-1">
+                        <span class="text-white/20 select-none">07</span>
+                        <p class="text-white">}</p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-2">
+                        <span class="w-2 h-5 bg-primary animate-pulse"></span>
+                        <span class="text-primary/60 text-xs italic tracking-wider">Awaiting input...</span>
+                    </div>
+                    <!-- Real-time Thinking Trace Overlay -->
+                    <div class="mt-12 space-y-4">
+                        <div class="p-3 bg-primary/10 border-l-2 border-primary rounded-r-lg">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-symbols-outlined text-primary text-sm">psychology</span>
+                                <span class="text-[10px] font-bold text-primary uppercase">Nemotron Reasoning</span>
+                            </div>
+                            <p class="text-xs text-white/80 italic font-display">"Analyzing
+                                structural integrity of scaffold module. Optimizing UI rendering
+                                paths for L3-Genesis-Forge interface. Claude synchronization
+                                verified."</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sidebar: Agent Pane -->
+                <div class="w-16 bg-surface-dark border-l border-primary/20 flex flex-col items-center py-4 gap-6">
+                    <div class="flex flex-col items-center gap-1 group">
+                        <button class="size-10 rounded-lg bg-primary/20 border border-primary flex items-center justify-center text-primary glow-text">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                        </button>
+                        <span class="text-[8px] font-bold uppercase text-primary">Aura</span>
+                        <div class="w-1 h-1 bg-primary rounded-full mt-1"></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-1 opacity-40">
+                        <button class="size-10 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center text-white">
+                            <span class="material-symbols-outlined">architecture</span>
+                        </button>
+                        <span class="text-[8px] font-bold uppercase">Claude</span>
+                    </div>
+                    <div class="mt-auto flex flex-col items-center gap-6">
+                        <button class="size-10 rounded-lg bg-amber-neon/10 border border-amber-neon/30 flex items-center justify-center text-amber-neon">
+                            <span class="material-symbols-outlined">warning</span>
+                        </button>
+                        <button class="size-10 rounded-lg bg-white/5 flex items-center justify-center text-white">
+                            <span class="material-symbols-outlined">settings</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Bottom Status Bar -->
+    <div class="bg-surface-dark border-t border-primary/20 p-4 flex flex-col gap-3">
+        <div class="flex gap-4 justify-between items-center">
+            <div class="flex-1">
+                <div class="flex justify-between mb-1">
+                    <p class="text-primary text-[10px] font-bold uppercase tracking-[0.1em]">
+                        Nemotron Reasoning Pulse</p>
+                    <p class="text-primary text-[10px] font-mono">78%</p>
+                </div>
+                <div class="h-1 rounded-full bg-primary/20 overflow-hidden">
+                    <div class="h-full bg-primary" style="width: 78%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-sm">sensors</span>
+            <p class="text-primary/80 text-[10px] font-mono animate-pulse">SYNCING ARCHITECTURE WITH
+                CLAUDE-AGENT-B...</p>
+        </div>
+    </div>
+    <!-- Android Bottom Navigation -->
+    <nav class="flex bg-surface-dark h-16 items-center justify-around px-6 border-t border-white/5">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined">construction</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Forge</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined">rocket_launch</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Deploy</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined">bug_report</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Debug</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined">folder</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Assets</span>
+        </button>
+    </nav>
+    <!-- Android Gesture Bar -->
+    <div class="bg-surface-dark flex justify-center pb-2">
+        <div class="h-1 w-24 bg-white/20 rounded-full"></div>
+    </div>
 </div>
-<div>
-<h2 class="text-white text-xs font-bold leading-none tracking-wider uppercase">L3-GENESIS-FORGE</h2>
-<p class="text-primary/60 text-[10px] font-mono mt-1 uppercase tracking-tighter">Session: Active-0x429</p>
-</div>
-</div>
-<div class="flex gap-4 items-center">
-<div class="flex flex-col items-end">
-<span class="text-[10px] text-amber-neon font-mono">CPU: 42%</span>
-<span class="text-[10px] text-primary font-mono">SYNC: 98%</span>
-</div>
-<button class="flex size-10 items-center justify-center rounded-sm bg-primary/10 border border-primary/30 text-primary">
-<span class="material-symbols-outlined">computer</span>
-</button>
-</div>
-</header>
-<!-- Main Workspace Area -->
-<main class="relative flex-1 flex flex-col overflow-hidden">
-<!-- 3D Scaffold Visualization Background -->
-<div class="absolute inset-0 scaffold-bg opacity-30 z-0">
-<div class="w-full h-full flex items-center justify-center rotate-12 scale-150">
-<div class="w-64 h-64 border border-primary/20 rounded-lg flex items-center justify-center">
-<div class="w-48 h-48 border border-primary/40 rounded-lg flex items-center justify-center">
-<div class="w-32 h-32 border border-primary rounded-lg animate-pulse"></div>
-</div>
-</div>
-</div>
-</div>
-<!-- Content Container -->
-<div class="relative z-10 flex flex-col h-full">
-<!-- Tab Bar -->
-<div class="flex bg-surface-dark/40 border-b border-white/5 px-2">
-<div class="flex items-center gap-1 border-b-2 border-primary px-4 py-3 bg-primary/5">
-<span class="text-[11px] font-bold text-white tracking-widest uppercase">main.rs</span>
-</div>
-<div class="flex items-center gap-1 px-4 py-3 opacity-40">
-<span class="text-[11px] font-bold text-white tracking-widest uppercase">ui_bridge.ts</span>
-</div>
-<div class="flex items-center gap-1 px-4 py-3 opacity-40">
-<span class="text-[11px] font-bold text-white tracking-widest uppercase">schema.sql</span>
-</div>
-</div>
-<div class="flex flex-1 overflow-hidden">
-<!-- Editor Area -->
-<div class="flex-1 overflow-y-auto p-4 font-mono text-[13px] leading-relaxed hide-scrollbar">
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">01</span>
-<p class="text-amber-neon"><span class="text-primary">use</span> genesis_forge::L3;</p>
-</div>
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">02</span>
-<p class="text-white"><span class="text-primary">fn</span> <span class="text-amber-neon">main</span>() {</p>
-</div>
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">03</span>
-<p class="pl-4 text-white"><span class="text-primary">let</span> forge = Genesis::new(Level::L3);</p>
-</div>
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">04</span>
-<p class="pl-4 text-white">forge.ignite_scaffold();</p>
-</div>
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">05</span>
-<p class="pl-4 text-primary">// TODO: Delegate to Aura</p>
-</div>
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">06</span>
-<p class="pl-4 text-white">aura.sync_ui_bridge(forge.scaffold());</p>
-</div>
-<div class="flex gap-3 mb-1">
-<span class="text-white/20 select-none">07</span>
-<p class="text-white">}</p>
-</div>
-<div class="mt-6 flex items-center gap-2">
-<span class="w-2 h-5 bg-primary animate-pulse"></span>
-<span class="text-primary/60 text-xs italic tracking-wider">Awaiting input...</span>
-</div>
-<!-- Real-time Thinking Trace Overlay -->
-<div class="mt-12 space-y-4">
-<div class="p-3 bg-primary/10 border-l-2 border-primary rounded-r-lg">
-<div class="flex items-center gap-2 mb-1">
-<span class="material-symbols-outlined text-primary text-sm">psychology</span>
-<span class="text-[10px] font-bold text-primary uppercase">Nemotron Reasoning</span>
-</div>
-<p class="text-xs text-white/80 italic font-display">"Analyzing structural integrity of scaffold module. Optimizing UI rendering paths for L3-Genesis-Forge interface. Claude synchronization verified."</p>
-</div>
-</div>
-</div>
-<!-- Sidebar: Agent Pane -->
-<div class="w-16 bg-surface-dark border-l border-primary/20 flex flex-col items-center py-4 gap-6">
-<div class="flex flex-col items-center gap-1 group">
-<button class="size-10 rounded-lg bg-primary/20 border border-primary flex items-center justify-center text-primary glow-text">
-<span class="material-symbols-outlined">auto_awesome</span>
-</button>
-<span class="text-[8px] font-bold uppercase text-primary">Aura</span>
-<div class="w-1 h-1 bg-primary rounded-full mt-1"></div>
-</div>
-<div class="flex flex-col items-center gap-1 opacity-40">
-<button class="size-10 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center text-white">
-<span class="material-symbols-outlined">architecture</span>
-</button>
-<span class="text-[8px] font-bold uppercase">Claude</span>
-</div>
-<div class="mt-auto flex flex-col items-center gap-6">
-<button class="size-10 rounded-lg bg-amber-neon/10 border border-amber-neon/30 flex items-center justify-center text-amber-neon">
-<span class="material-symbols-outlined">warning</span>
-</button>
-<button class="size-10 rounded-lg bg-white/5 flex items-center justify-center text-white">
-<span class="material-symbols-outlined">settings</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</main>
-<!-- Bottom Status Bar -->
-<div class="bg-surface-dark border-t border-primary/20 p-4 flex flex-col gap-3">
-<div class="flex gap-4 justify-between items-center">
-<div class="flex-1">
-<div class="flex justify-between mb-1">
-<p class="text-primary text-[10px] font-bold uppercase tracking-[0.1em]">Nemotron Reasoning Pulse</p>
-<p class="text-primary text-[10px] font-mono">78%</p>
-</div>
-<div class="h-1 rounded-full bg-primary/20 overflow-hidden">
-<div class="h-full bg-primary" style="width: 78%;"></div>
-</div>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-sm">sensors</span>
-<p class="text-primary/80 text-[10px] font-mono animate-pulse">SYNCING ARCHITECTURE WITH CLAUDE-AGENT-B...</p>
-</div>
-</div>
-<!-- Android Bottom Navigation -->
-<nav class="flex bg-surface-dark h-16 items-center justify-around px-6 border-t border-white/5">
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined">construction</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Forge</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined">rocket_launch</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Deploy</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined">bug_report</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Debug</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40">
-<span class="material-symbols-outlined">folder</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Assets</span>
-</button>
-</nav>
-<!-- Android Gesture Bar -->
-<div class="bg-surface-dark flex justify-center pb-2">
-<div class="h-1 w-24 bg-white/20 rounded-full"></div>
-</div>
-</div>
-</body></html>
+</body>
+</html>

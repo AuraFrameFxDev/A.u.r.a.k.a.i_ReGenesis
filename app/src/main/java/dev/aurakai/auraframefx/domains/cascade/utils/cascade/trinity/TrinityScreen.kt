@@ -55,13 +55,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrinityScreen(
-    viewModel: TrinityViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: TrinityViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -179,7 +173,7 @@ fun TrinityScreen(
                     state.lastAgentResponse?.let { response ->
                         item {
                             LastAgentResponse(
-                                agentType = state.lastAgentCategory ?: "Unknown",
+                                agentType = state.lastAgentType ?: "Unknown",
                                 response = response
                             )
                         }
@@ -295,8 +289,8 @@ private fun ThemeItem(theme: Theme, onThemeSelected: () -> Unit) {
                 // Removed description as it's not in DomainTheme
             }
 
-            if (theme.isDark) {
-                 Text("Dark", style = MaterialTheme.typography.labelSmall)
+            if (theme.isDark) { // Using isDark instead of isActive
+                Text("Dark", style = MaterialTheme.typography.labelSmall)
             }
         }
     }

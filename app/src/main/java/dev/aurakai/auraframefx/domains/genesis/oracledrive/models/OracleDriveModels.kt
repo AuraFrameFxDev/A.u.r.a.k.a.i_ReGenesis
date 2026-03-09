@@ -350,7 +350,7 @@ data class FederatedDevice(
      */
     fun isReachable(): Boolean =
         status == DeviceStatus.ONLINE &&
-        (System.currentTimeMillis() - lastSeen) < 60_000 // Seen in last minute
+                (System.currentTimeMillis() - lastSeen) < 60_000 // Seen in last minute
 }
 
 /**

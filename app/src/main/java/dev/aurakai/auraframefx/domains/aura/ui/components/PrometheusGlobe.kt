@@ -42,16 +42,6 @@ fun PrometheusGlobe(
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "GlobeRotation")
 
-    val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(4000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "Rotation"
-    )
-
     val pulse by infiniteTransition.animateFloat(
         initialValue = 0.15f,
         targetValue = 0.3f,

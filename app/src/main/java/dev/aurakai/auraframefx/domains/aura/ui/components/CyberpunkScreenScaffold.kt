@@ -1,17 +1,26 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.backgrounds.DataRibbonsBackground
-import dev.aurakai.auraframefx.domains.aura.ui.components.HexagonGridBackground
 import dev.aurakai.auraframefx.domains.aura.ui.components.effects.HoloHUDOverlay
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 
@@ -47,6 +56,7 @@ fun CyberpunkScreenScaffold(
                     accentColor = if (agentDomain == AgentDomain.AURA) Color.Cyan else Color.White // Basic logic for accent
                 )
             }
+
             BackgroundType.FORTRESS_GRID -> {
                 // Reuse existing HexagonGridBackground but tweaked for "Fortress"
                 HexagonGridBackground(
@@ -58,15 +68,16 @@ fun CyberpunkScreenScaffold(
             // For now, mapping other types to existing or DataRibbons as fallback/placeholder
             // Ideally we would implement ChaosLightning and CommandCenter separately
             BackgroundType.CHAOS_LIGHTNING -> {
-                 // Placeholder: Using DataRibbons but more chaotic params if possible, or just default
-                 DataRibbonsBackground(
+                // Placeholder: Using DataRibbons but more chaotic params if possible, or just default
+                DataRibbonsBackground(
                     baseColor = agentDomain.primaryColor,
                     accentColor = Color.Magenta,
                     speedMin = 0.5f,
                     speedMax = 1.2f,
                     ribbons = 12
-                 )
+                )
             }
+
             BackgroundType.COMMAND_CENTER -> {
                 // Placeholder: Cleaner look
                 HexagonGridBackground(
@@ -76,14 +87,15 @@ fun CyberpunkScreenScaffold(
                     alpha = 0.15f
                 )
             }
-             BackgroundType.CONSTELLATION -> {
-                 // Calm background
-                 DataRibbonsBackground(
-                     baseColor = agentDomain.primaryColor,
-                     ribbons = 3,
-                     speedMax = 0.3f
-                 )
-             }
+
+            BackgroundType.CONSTELLATION -> {
+                // Calm background
+                DataRibbonsBackground(
+                    baseColor = agentDomain.primaryColor,
+                    ribbons = 3,
+                    speedMax = 0.3f
+                )
+            }
         }
 
         // 2. Optional HUD Overlay
@@ -95,7 +107,7 @@ fun CyberpunkScreenScaffold(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-             // Top Bar
+            // Top Bar
             TopAppBar(
                 title = {
                     Column {

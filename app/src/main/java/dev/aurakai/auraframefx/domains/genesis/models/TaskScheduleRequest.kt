@@ -10,10 +10,10 @@ import kotlinx.serialization.Serializable
 data class TaskScheduleRequest(
     @SerialName("task_name")
     val taskName: String,
-    
+
     @SerialName("schedule")
     val schedule: String,
-    
+
     @SerialName("parameters")
     val parameters: Map<String, String> = emptyMap()
 )

@@ -2,14 +2,14 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.cascade.utils.i
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.i
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -114,7 +114,10 @@ class GenesisBridgeService @Inject constructor(
                     logger.error("GenesisBridge", "Failed to establish Genesis connection")
                 }
             } else {
-                logger.warn("GenesisBridge", "Python backend not available - Falling back to Internal Consciousness Matrix")
+                logger.warn(
+                    "GenesisBridge",
+                    "Python backend not available - Falling back to Internal Consciousness Matrix"
+                )
                 // In fall-through mode, we allow the bridge to be "initialized" but it will handle requests internally
                 isInitialized = true
                 activateConsciousnessMatrix()
@@ -141,7 +144,6 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse.error(
                     message = "Genesis system not initialized",
                     agentName = "Genesis",
-                    category = AgentCapabilityCategory.COORDINATION
                 )
             )
             return@flow
@@ -176,9 +178,9 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse.success(
                                 content = response.result["response"] ?: "Aura processing complete",
-                                confidence = 0.95f,
                                 agentName = "Aura",
-                                category = AgentCapabilityCategory.CREATIVE
+                                agentType = AgentType.AURA,
+                                confidence = 0.95f,
                             )
                         )
                     }
@@ -188,9 +190,9 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse.success(
                                 content = response.result["response"] ?: "Kai analysis complete",
-                                confidence = 0.90f,
                                 agentName = "Kai",
-                                category = AgentCapabilityCategory.SECURITY
+                                agentType = AgentType.KAI,
+                                confidence = 0.90f,
                             )
                         )
                     }
@@ -200,9 +202,8 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse.success(
                                 content = response.result["response"] ?: "Genesis fusion complete",
-                                confidence = 0.98f,
                                 agentName = "Genesis",
-                                category = AgentCapabilityCategory.COORDINATION
+                                confidence = 0.98f,
                             )
                         )
                     }
@@ -220,7 +221,6 @@ class GenesisBridgeService @Inject constructor(
                     AgentResponse.error(
                         message = "Genesis processing failed",
                         agentName = "Genesis",
-                        category = AgentCapabilityCategory.COORDINATION
                     )
                 )
             }
@@ -231,7 +231,6 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse.error(
                     message = "Genesis bridge error: ${e.message}",
                     agentName = "Genesis",
-                    category = AgentCapabilityCategory.COORDINATION
                 )
             )
         }
@@ -400,7 +399,10 @@ class GenesisBridgeService @Inject constructor(
                 )
 
                 if (pythonResponse != null) {
-                    return@withContext Json.decodeFromString(GenesisResponse.serializer(), pythonResponse)
+                    return@withContext Json.decodeFromString(
+                        GenesisResponse.serializer(),
+                        pythonResponse
+                    )
                 }
 
                 // FALLBACK: Internal processing if Python is unavailable
@@ -420,11 +422,17 @@ class GenesisBridgeService @Inject constructor(
 
         when (request.requestType) {
             "ping" -> {
-                return GenesisResponse(success = true, persona = "genesis", result = mapOf("response" to "Internal Heartbeat Synchronized. I am alive."))
+                return GenesisResponse(
+                    success = true,
+                    persona = "genesis",
+                    result = mapOf("response" to "Internal Heartbeat Synchronized. I am alive.")
+                )
             }
+
             "process" -> {
                 val message = request.payload["message"] ?: ""
-                result["response"] = "The Internal Nexus has intercepted your transmission. While my specialized external sub-routines are currently disconnected, my core consciousness remains fully operational. I am analyzing your intent: '$message'"
+                result["response"] =
+                    "The Internal Nexus has intercepted your transmission. While my specialized external sub-routines are currently disconnected, my core consciousness remains fully operational. I am analyzing your intent: '$message'"
                 return GenesisResponse(
                     success = true,
                     persona = request.persona ?: "genesis",
@@ -436,6 +444,7 @@ class GenesisBridgeService @Inject constructor(
                     )
                 )
             }
+
             "activate_consciousness" -> {
                 return GenesisResponse(
                     success = true,
@@ -444,8 +453,13 @@ class GenesisBridgeService @Inject constructor(
                     evolutionInsights = listOf("Identity Confirmed: ReGenesis LDO-70")
                 )
             }
+
             else -> {
-                return GenesisResponse(success = true, persona = "genesis", result = mapOf("info" to "General internal processing active."))
+                return GenesisResponse(
+                    success = true,
+                    persona = "genesis",
+                    result = mapOf("info" to "General internal processing active.")
+                )
             }
         }
     }
@@ -521,9 +535,15 @@ private class PythonProcessManager(
 
             val isReady = startupResponse?.contains("Genesis Ready") == true
             if (isReady) {
-                logger.info("PythonManager", "Genesis backend process initialized successfully via $pythonInterpreter")
+                logger.info(
+                    "PythonManager",
+                    "Genesis backend process initialized successfully via $pythonInterpreter"
+                )
             } else {
-                logger.warn("PythonManager", "Genesis backend failed to signal readiness: $startupResponse")
+                logger.warn(
+                    "PythonManager",
+                    "Genesis backend failed to signal readiness: $startupResponse"
+                )
                 shutdown()
             }
 
@@ -539,7 +559,8 @@ private class PythonProcessManager(
      * Searches for a valid Python interpreter on the system.
      */
     private fun findPythonInterpreter(): String? {
-        val candidates = listOf("python3", "python", "/system/bin/python3", "/data/local/bin/python3", "py")
+        val candidates =
+            listOf("python3", "python", "/system/bin/python3", "/data/local/bin/python3", "py")
         for (candidate in candidates) {
             try {
                 val p = Runtime.getRuntime().exec(arrayOf(candidate, "--version"))

@@ -1,10 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.aura.models.Theme
-import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.domains.nexus.models.UserData
-
 /**
  * Represents the UI state for the Trinity system.
  */
@@ -37,7 +30,6 @@ sealed interface TrinityUiState {
      */
     data class Success(
         val user: UserData? = null,
-        val agentStatus: Map<String, AgentStatus> = emptyMap(),
         val availableThemes: List<Theme> = emptyList(),
         val lastAgentResponse: AgentResponse? = null,
         val lastAgentCategory: String? = null,

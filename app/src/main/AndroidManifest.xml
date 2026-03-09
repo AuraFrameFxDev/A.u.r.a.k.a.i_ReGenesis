@@ -81,7 +81,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/Theme.dev.aurakai.auraframefx">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,7 +91,7 @@
 
         <!-- Services -->
         <service
-            android:name=".services.GenesisAccessibilityService"
+            android:name=".domains.genesis.GenesisAccessibilityService"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
@@ -121,7 +121,7 @@
             android:exported="true" />
 
         <service
-            android:name=".app.VertexSyncService"
+            android:name=".domains.genesis.services.VertexSyncService"
             android:exported="false" />
         <service
             android:name=".domains.kai.security.IntegrityMonitorService"
@@ -142,15 +142,15 @@
             android:foregroundServiceType="dataSync" />
 
         <service
-            android:name=".oracledrive.genesis.ai.GenesisBackendService"
+            android:name=".domains.genesis.oracledrive.ai.GenesisBackendService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
         <service android:name=".domains.aura.AmbientMusicService" />
-        <service android:name=".services.AuraDriveService" />
+        <service android:name=".domains.aura.AuraDriveService" />
 
         <!-- Royal Guard Security Service -->
         <service
-            android:name=".security.RoyalGuardService"
+            android:name=".domains.kai.security.RoyalGuardService"
             android:exported="false">
             <intent-filter>
                 <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
@@ -211,7 +211,7 @@
 
         <!-- Integrity Violation Receiver -->
         <receiver
-            android:name=".security.IntegrityViolationReceiver"
+            android:name=".domains.kai.security.IntegrityViolationReceiver"
             android:exported="false"
             android:permission="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION">
             <intent-filter>

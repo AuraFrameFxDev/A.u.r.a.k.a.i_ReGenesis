@@ -54,8 +54,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryEntity
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryType
@@ -80,13 +78,7 @@ import java.util.Locale
 @Composable
 fun NeuralArchiveScreen(
     navController: NavController,
-    viewModel: NeuralArchiveViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: NeuralArchiveViewModel = hiltViewModel()
 ) {
     val filteredMemories by viewModel.filteredMemories.collectAsState()
     val memoryStats by viewModel.memoryStats.collectAsState()
@@ -578,7 +570,10 @@ private fun MemoryDetailDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(text = "Type: ${memory.type.name}", color = primaryColor.copy(alpha = 0.8f))
-                Text(text = "Created: ${formatFullTimestamp(memory.timestamp)}", color = primaryColor.copy(alpha = 0.6f))
+                Text(
+                    text = "Created: ${formatFullTimestamp(memory.timestamp)}",
+                    color = primaryColor.copy(alpha = 0.6f)
+                )
 
                 HorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
 
@@ -599,7 +594,10 @@ private fun MemoryDetailDialog(
                 }
 
                 HorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
-                Text("Importance: ${(memory.importance * 100).toInt()}%", color = primaryColor.copy(alpha = 0.7f))
+                Text(
+                    "Importance: ${(memory.importance * 100).toInt()}%",
+                    color = primaryColor.copy(alpha = 0.7f)
+                )
                 ImportanceIndicator(importance = memory.importance, color = primaryColor)
             }
         },

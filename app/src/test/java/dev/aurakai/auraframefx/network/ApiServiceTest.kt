@@ -308,7 +308,8 @@ class ApiServiceTest {
         @DisplayName("Should handle JWT format OAuth token")
         fun shouldHandleJwtFormatOAuthToken() {
             // Given
-            val jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.signature"
+            val jwtToken =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.signature"
 
             // When
             apiService.setOAuthToken(jwtToken)
@@ -676,10 +677,10 @@ class ApiServiceTest {
         fun shouldSupportTokenRotationScenario() {
             // When - Simulating token rotation
             apiService.setApiToken("old-token")
-            val service1 = apiService.createService()
+            apiService.createService()
 
             apiService.setApiToken("new-token")
-            val service2 = apiService.createService()
+            apiService.createService()
 
             // Then
             val apiTokenField = ApiService::class.java.getDeclaredField("apiToken")

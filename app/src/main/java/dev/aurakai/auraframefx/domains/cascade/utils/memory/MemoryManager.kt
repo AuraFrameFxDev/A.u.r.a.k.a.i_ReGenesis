@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.domains.cascade.utils.memory
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory.MemoryItem
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory.MemoryQuery
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory.MemoryRetrievalResult
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryStats
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryStats
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.concurrent.ConcurrentHashMap
@@ -69,8 +69,10 @@ open class MemoryManager @Inject constructor(
     }
 
     private fun updateStats() {
-        val oldest = memoryStore.values.minByOrNull { it.timestamp.toEpochMilliseconds() }?.timestamp?.toEpochMilliseconds()
-        val newest = memoryStore.values.maxByOrNull { it.timestamp.toEpochMilliseconds() }?.timestamp?.toEpochMilliseconds()
+        val oldest =
+            memoryStore.values.minByOrNull { it.timestamp.toEpochMilliseconds() }?.timestamp?.toEpochMilliseconds()
+        val newest =
+            memoryStore.values.maxByOrNull { it.timestamp.toEpochMilliseconds() }?.timestamp?.toEpochMilliseconds()
 
         _memoryStats.value = MemoryStats(
             totalItems = memoryStore.size,

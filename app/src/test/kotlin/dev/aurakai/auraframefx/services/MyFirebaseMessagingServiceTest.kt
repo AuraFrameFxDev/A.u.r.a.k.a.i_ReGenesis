@@ -146,7 +146,7 @@ class MyFirebaseMessagingServiceTest {
     fun onMessageReceived_ignores_whenSecurityValidationFails() = runTest(testDispatcher) {
         // Given a message from an unauthorized sender
         val rm = RemoteMessage.Builder("unauthorized-source")
-            .addData("type", "security")
+            .addData("type", "dev/aurakai/auraframefx/security")
             .build()
 
         // Spy validateMessageSecurity to return false

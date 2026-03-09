@@ -67,7 +67,7 @@ class AIPipelineConfigTest {
         assertEquals(10, config.contextWindowSize)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test custom priority threshold`() {
         val config = AIPipelineConfig(priorityThreshold = 0.9f)
         assertEquals(0.9f, config.priorityThreshold, 0.001f)
@@ -90,13 +90,13 @@ class AIPipelineConfigTest {
         assertEquals(1.0f, totalWeight, 0.001f)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test custom max active tasks`() {
         val config = AIPipelineConfig(maxActiveTasks = 20)
         assertEquals(20, config.maxActiveTasks)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test custom agent priorities`() {
         val customPriorities = mapOf(
             AgentType.GENESIS to 0.5f,
@@ -122,7 +122,7 @@ class AIPipelineConfigTest {
         assertEquals(5, config.maxRetrievedItems)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test custom MemoryRetrievalConfig`() {
         val config = MemoryRetrievalConfig(
             maxContextLength = 5000,
@@ -166,7 +166,7 @@ class AIPipelineConfigTest {
         assertEquals(0.95f, config.decayRate, 0.001f)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test ContextChainingConfig in AIPipelineConfig`() {
         val chainingConfig = ContextChainingConfig(maxChainLength = 15)
         val pipelineConfig = AIPipelineConfig(contextChainingConfig = chainingConfig)
@@ -175,7 +175,7 @@ class AIPipelineConfigTest {
     }
 
     // Edge Cases and Validation Tests
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test zero maxRetries`() {
         val config = AIPipelineConfig(maxRetries = 0)
         assertEquals(0, config.maxRetries)
@@ -205,7 +205,7 @@ class AIPipelineConfigTest {
         assertTrue(config.agentPriorities.isEmpty())
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test single agent priority`() {
         val config = AIPipelineConfig(
             agentPriorities = mapOf(AgentType.GENESIS to 1.0f)
@@ -235,7 +235,7 @@ class AIPipelineConfigTest {
         assertNotEquals(config1, config3)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test MemoryRetrievalConfig copy functionality`() {
         val original = MemoryRetrievalConfig(maxContextLength = 2000)
         val modified = original.copy(maxContextLength = 5000)
@@ -254,7 +254,7 @@ class AIPipelineConfigTest {
     }
 
     // Complex Configuration Tests
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test fully customized pipeline configuration`() {
         val memoryConfig = MemoryRetrievalConfig(
             maxContextLength = 5000,
@@ -300,7 +300,7 @@ class AIPipelineConfigTest {
         assertEquals(1.0f, config.agentPriorities[AgentType.GENESIS], 0.001f)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `test configuration immutability through copy`() {
         val config1 = AIPipelineConfig()
         val config2 = config1.copy(maxRetries = 10)

@@ -2,15 +2,16 @@ package dev.aurakai.auraframefx.domains.kai
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
-  * Default implementation of ErrorHandler for the AuraFrameFx system.
-  *
-  * Provides centralized error handling with logging and optional recovery strategies.
-  * This implementation serves as the primary error handler throughout the application.
-  */
+ * Default implementation of ErrorHandler for the AuraFrameFx system.
+ *
+ * Provides centralized error handling with logging and optional recovery strategies.
+ * This implementation serves as the primary error handler throughout the application.
+ */
 @Singleton
 class DefaultErrorHandler @Inject constructor(
     private val logger: AuraFxLogger
@@ -20,13 +21,22 @@ class DefaultErrorHandler @Inject constructor(
         private const val TAG = "DefaultErrorHandler"
     }
 
-    override fun handleError(error: Throwable, agent: AgentCapabilityCategory, context: String) {
+    override fun handleError(error: Throwable, agent: AgentType, context: String) {
         logger.error(TAG, "Error from agent $agent in context: $context", error)
         handleCriticalActions(error)
     }
 
-    override fun handleError(error: Throwable, agent: AgentCapabilityCategory, context: String, metadata: Map<String, String>) {
-        logger.error(TAG, "Error from agent $agent in context: $context (Metadata: $metadata)", error)
+    override fun handleError(
+        error: Throwable,
+        agent: AgentType,
+        context: String,
+        metadata: Map<String, String>
+    ) {
+        logger.error(
+            TAG,
+            "Error from agent $agent in context: $context (Metadata: $metadata)",
+            error
+        )
         handleCriticalActions(error)
     }
 

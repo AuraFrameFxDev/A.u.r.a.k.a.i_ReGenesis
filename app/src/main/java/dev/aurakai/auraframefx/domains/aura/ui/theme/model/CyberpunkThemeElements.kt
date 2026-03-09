@@ -2,9 +2,6 @@ package dev.aurakai.auraframefx.domains.aura.ui.theme.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import dev.aurakai.auraframefx.domains.aura.ui.theme.OnSurface
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.domains.aura.ui.theme.ErrorColor
 import dev.aurakai.auraframefx.domains.aura.ui.theme.DarkColorScheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurpleLegacy
 

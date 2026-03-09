@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 // Genesis-OS Cyberpunk UI Component
 // Implements TODO items: cyberpunk theming, animations, and visual effects
 

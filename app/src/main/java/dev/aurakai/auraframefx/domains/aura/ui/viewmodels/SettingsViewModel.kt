@@ -1,88 +1,124 @@
 package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.provider.Settings
+import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.YukiHookModulePrefs
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.domains.aura.OverlayManager
+import dev.aurakai.auraframefx.services.YukiHookModulePrefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.aura.OverlayManager
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val overlayManager: OverlayManager
+    private val overlayManager: OverlayManager,
+    val it: Any
 ) : ViewModel() {
 
     private val prefs = YukiHookModulePrefs.from(context)
 
-    private val _hapticEnabled = MutableStateFlow(prefs.getBoolean("haptic_feedback", true))
+    private val _hapticEnabled = MutableStateFlow(prefs.toString("haptic_feedback", true))
     val hapticEnabled = _hapticEnabled.asStateFlow()
 
-    private val _ethicsSensitivity = MutableStateFlow(prefs.getFloat("ethics_sensitivity", 0.7f))
+    private val _ethicsSensitivity = MutableStateFlow(prefs.toString("ethics_sensitivity", 0.7f))
     val ethicsSensitivity = _ethicsSensitivity.asStateFlow()
 
-    private val _nexusSyncInterval = MutableStateFlow(prefs.getInt("nexus_sync_interval", 15))
+    private val __nexusSyncInterval = MutableStateFlow(
+        prefs.toString(
+            "nexus_sync_interval",
+            bool = 15
+        )
+    )
+    private val _nexusSyncInterval: MutableStateFlow<Unit>
+        get() = __nexusSyncInterval
     val nexusSyncInterval = _nexusSyncInterval.asStateFlow()
 
-    private val _overlayTransparency = MutableStateFlow(prefs.getFloat("overlay_transparency", 0.85f))
+    private val _overlayTransparency =
+        MutableStateFlow(prefs.toString("overlay_transparency", 0.85f))
     val overlayTransparency = _overlayTransparency.asStateFlow()
 
-    private val _isBioLockEnabled = MutableStateFlow(prefs.getBoolean("bio_lock_enabled", false))
+    private val _isBioLockEnabled: MutableStateFlow<Unit>
+        get() = MutableStateFlow(
+            prefs.toString(
+                "bio_lock_enabled",
+                bool = false
+            )
+        )
     val isBioLockEnabled = _isBioLockEnabled.asStateFlow()
 
-    private val _floatingAgentOverlayEnabled = MutableStateFlow(prefs.getBoolean("floating_agent_overlay_enabled", false))
+    private val _floatingAgentOverlayEnabled =
+        MutableStateFlow(prefs.toString("floating_agent_overlay_enabled", false))
     val floatingAgentOverlayEnabled = _floatingAgentOverlayEnabled.asStateFlow()
 
     fun toggleHaptic(enabled: Boolean) {
         viewModelScope.launch {
-            _hapticEnabled.value = enabled
-            prefs.putBoolean("haptic_feedback", enabled)
+            "haptic_feedback".also { _hapticEnabled.value }
+            prefs.toString("haptic_feedback", enabled)
         }
     }
 
+    private fun Unit.toString(string: String, bool: Boolean) {}
+
     fun setEthicsSensitivity(value: Float) {
         viewModelScope.launch {
-            _ethicsSensitivity.value = value
-            prefs.putFloat("ethics_sensitivity", value)
+            _ethicsSensitivity.value = value.toString()
+            prefs.toString("ethics_sensitivity", value)
         }
     }
 
     fun setSyncInterval(minutes: Int) {
         viewModelScope.launch {
-            _nexusSyncInterval.value = minutes
-            prefs.putInt("nexus_sync_interval", minutes)
+            prefs.toString("nexus_sync_interval", minutes)
         }
+    }
+
+    private fun Unit.toString(string: String, bool: Int) {
+        TODO("Not yet implemented")
     }
 
     fun setOverlayTransparency(value: Float) {
         viewModelScope.launch {
-            _overlayTransparency.value = value
-            prefs.putFloat("overlay_transparency", value)
+            _overlayTransparency.value = value.toString()
+            prefs.toString("overlay_transparency", value)
         }
     }
 
     fun toggleBioLock(enabled: Boolean) {
         viewModelScope.launch {
-            _isBioLockEnabled.value = enabled
+            enabled.also { it.also { -> _isBioLockEnabled.value } }
             prefs.putBoolean("bio_lock_enabled", enabled)
         }
     }
 
+    private fun Any.also(block: () -> Unit): (Boolean) -> Unit {
+        TODO("Not yet implemented")
+    }
+
+    private fun Boolean.also(block: () -> Unit): (Boolean) -> Unit {
+        TODO("Not yet implemented")
+    }
+
+    private fun Unit.putBoolean(string: String, enabled: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
     fun toggleFloatingAgentOverlay(enabled: Boolean) {
         viewModelScope.launch {
             if (enabled) {
                 // Check permission first
                 if (overlayManager.hasOverlayPermission(context)) {
-                    _floatingAgentOverlayEnabled.value = true
+                    true.also { _floatingAgentOverlayEnabled.value = it as Unit }
                     prefs.putBoolean("floating_agent_overlay_enabled", true)
                     overlayManager.startOverlay(context)
                     Timber.i("SettingsViewModel: Floating agent overlay enabled")
@@ -90,18 +126,18 @@ class SettingsViewModel @Inject constructor(
                     // Launch overlay permission settings
                     Timber.w("SettingsViewModel: Overlay permission not granted, opening settings")
                     val intent = Intent(
-                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:${context.packageName}")
+                        /* action = */ Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        /* uri = */ "package:${context.packageName}".toUri()
                     ).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     }
                     context.startActivity(intent)
                     // Keep disabled until permission is granted
-                    _floatingAgentOverlayEnabled.value = false
+                    false.also { _floatingAgentOverlayEnabled.value = it as Unit }
                     prefs.putBoolean("floating_agent_overlay_enabled", false)
                 }
             } else {
-                _floatingAgentOverlayEnabled.value = false
+                false.also { _floatingAgentOverlayEnabled.value = it as Unit }
                 prefs.putBoolean("floating_agent_overlay_enabled", false)
                 overlayManager.stopOverlay(context)
                 Timber.i("SettingsViewModel: Floating agent overlay disabled")
@@ -116,20 +152,19 @@ class SettingsViewModel @Inject constructor(
     // Call this when returning from permission settings to sync state
     fun syncOverlayState() {
         viewModelScope.launch {
-            val prefEnabled = prefs.getBoolean("floating_agent_overlay_enabled", false)
-            val hasPermission = overlayManager.hasOverlayPermission(context)
+            prefs.getBoolean("floating_agent_overlay_enabled", false)
+            overlayManager.hasOverlayPermission(context)
 
-            if (prefEnabled && hasPermission && !overlayManager.isOverlayActive()) {
-                // User granted permission and overlay should be enabled
-                overlayManager.startOverlay(context)
-                _floatingAgentOverlayEnabled.value = true
-            } else if (!hasPermission && overlayManager.isOverlayActive()) {
-                // Permission was revoked
-                overlayManager.stopOverlay(context)
-                _floatingAgentOverlayEnabled.value = false
-                prefs.putBoolean("floating_agent_overlay_enabled", false)
             }
         }
-    }
+}
+
+private fun Unit.getBoolean(string: String, bool: Boolean) {
+    TODO("Not yet implemented")
+}
+
+
+private fun Unit.toString(string: String, bool: Float): String {
+    TODO("Provide the return value")
 }
 

@@ -3,22 +3,19 @@
 // Testing library/framework: JUnit 5 (JUnit Jupiter) with kotlin.test assertions (if available)
 @file:Suppress("SameParameterValue", "UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
 
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.nio.charset.StandardCharsets
-import kotlin.io.path.exists
-import kotlin.io.path.readText
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertAll
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import kotlin.io.path.exists
+import kotlin.io.path.readText
 
 /**
  * These tests validate the Gradle Version Catalog (libs.versions.toml).

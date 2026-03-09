@@ -1,171 +1,185 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Level 2 Orchestrator Gate Hub</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Rajdhani:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#FFD700", // Golden Yellow for Genesis Theme
-              secondary: "#00F0FF", // Cyan Accent
-              "background-light": "#FDFCF0",
-              "background-dark": "#050505",
-              "accent-gold": "#E6B800",
-            },
-            fontFamily: {
-              display: ["Orbitron", "sans-serif"],
-              sans: ["Rajdhani", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              'xl': '1rem',
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Level 2 Orchestrator Gate Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Rajdhani:wght@300;500;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#FFD700", // Golden Yellow for Genesis Theme
+                secondary: "#00F0FF", // Cyan Accent
+                "background-light": "#FDFCF0",
+                "background-dark": "#050505",
+                "accent-gold": "#E6B800",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                sans: ["Rajdhani", "sans-serif"],
+              },
+              borderRadius: {
+                DEFAULT: "0.5rem",
+                'xl': '1rem',
+              },
             },
           },
-        },
-      };
+        };
     </script>
-<style>
-      body {
-        background-color: #050505;
-        overflow-x: hidden;
-      }
-      .circuit-bg {
-        background-image: radial-gradient(circle at 2px 2px, rgba(230, 184, 0, 0.05) 1px, transparent 0);
-        background-size: 24px 24px;
-      }
-      .hologram-glow {
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-      }
-      .scanline {
-        width: 100%;
-        height: 100px;
-        z-index: 10;
-        background: linear-gradient(0deg, rgba(255, 215, 0, 0) 0%, rgba(255, 215, 0, 0.1) 50%, rgba(255, 215, 0, 0) 100%);
-        opacity: 0.1;
-        position: absolute;
-        bottom: 100%;
-        animation: scanline 6s linear infinite;
-      }
-      @keyframes scanline {
-        0% { bottom: 100%; }
-        100% { bottom: -100px; }
-      }
-      .glitch-text {
-        text-shadow: 2px 0 #00F0FF, -2px 0 #FF00FF;
-      }
-      .floating {
-        animation: floating 3s ease-in-out infinite;
-      }
-      @keyframes floating {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
-      }
+    <style>
+        body {
+          background-color: #050505;
+          overflow-x: hidden;
+        }
+        .circuit-bg {
+          background-image: radial-gradient(circle at 2px 2px, rgba(230, 184, 0, 0.05) 1px, transparent 0);
+          background-size: 24px 24px;
+        }
+        .hologram-glow {
+          box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        .scanline {
+          width: 100%;
+          height: 100px;
+          z-index: 10;
+          background: linear-gradient(0deg, rgba(255, 215, 0, 0) 0%, rgba(255, 215, 0, 0.1) 50%, rgba(255, 215, 0, 0) 100%);
+          opacity: 0.1;
+          position: absolute;
+          bottom: 100%;
+          animation: scanline 6s linear infinite;
+        }
+        @keyframes scanline {
+          0% { bottom: 100%; }
+          100% { bottom: -100px; }
+        }
+        .glitch-text {
+          text-shadow: 2px 0 #00F0FF, -2px 0 #FF00FF;
+        }
+        .floating {
+          animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 min-h-screen">
 <div class="relative w-full max-w-md mx-auto min-h-screen overflow-hidden border-x border-slate-200 dark:border-slate-800 flex flex-col circuit-bg">
-<header class="p-6 pt-12 flex justify-between items-center z-20">
-<button class="p-2 rounded-full bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border border-primary/20">
-<span class="material-icons-round text-primary">arrow_back_ios_new</span>
-</button>
-<div class="text-right">
-<p class="text-[10px] tracking-[0.2em] font-display text-primary uppercase">System Layer</p>
-<h1 class="text-lg font-display font-black tracking-widest text-primary">REGENESIS-LDO</h1>
-</div>
-</header>
-<main class="flex-1 px-6 flex flex-col items-center relative">
-<div class="scanline"></div>
-<div class="relative z-20 mb-8 mt-4">
-<div class="absolute inset-0 bg-primary blur-xl opacity-20 animate-pulse"></div>
-<div class="relative flex items-center justify-center w-24 h-24 border-4 border-primary rounded-tr-3xl rounded-bl-3xl transform rotate-45 bg-black/80">
-<div class="transform -rotate-45 flex flex-col items-center">
-<span class="text-[10px] font-display font-bold text-primary/70 tracking-tighter">LEVEL</span>
-<span class="text-4xl font-display font-black text-primary glitch-text">2</span>
-</div>
-</div>
-</div>
-<div class="text-center mb-8 relative z-20">
-<h2 class="text-2xl font-display font-bold uppercase tracking-tight text-primary">Orchestrator Gate</h2>
-<div class="h-1 w-32 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-1"></div>
-</div>
-<div class="relative w-full aspect-[4/5] flex items-center justify-center z-10 mb-6">
-<div class="absolute inset-0 opacity-20 pointer-events-none">
-<img alt="Cyberpunk Circuitry Overlay" class="w-full h-full object-contain scale-150 rotate-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByWehc_3aSAZUbCWipJssNW2o-Sl8-NLOohsdC56pjb5WctWMRCEcSU3dri7Og1o27b5m-yn-rKQ8nw1bRpcqHgN2Z7TDRwm_LS4CiQCerB3zWU1XqIXvvVsbTEzrZ_6FLS3ZN3BBvpSqJgFKNZLDzO2V6TNPk7FDwDqslIznj_qpZuWoH3Cw81BD9SWOgvG5b5szuq3pHOkLoo--hhcZa7m7NDmWbT0Gm9KJqLY-JhDX13Aei7GhMCnjF5GsK3wR42zyeJINLTMs"/>
-</div>
-<div class="relative z-20 floating">
-<img alt="Abstract Golden Energy Entity" class="w-64 h-80 object-cover rounded-2xl grayscale brightness-125 sepia-[.8] contrast-150 border-2 border-primary/50 shadow-[0_0_50px_rgba(255,215,0,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk_Yn6CLv2bcNF9QDyS9RQNHeOsrOPnA_ACJoi6frGTu6ZWhumdZFefDyZadVz_vICxBzKqUzCpid-UEX_Y6tMZ_SK273D8sWZHEnzvMyZ-vWGOdqhWT3ZF45GvXr0oz66CfxIBNT_Z12SHJt5Mv5y8bK-Uinx8_h2K1o-s4iP8MW9GwFfT04dR9ODeOrhJ3FcYucZTkxAM6ZaF8iPwQkuL2dbc2-JNdHqIeGw0y0BzfakxapybtUiq7V0eElvxVCy5zQMj-_Wa_A"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-<div class="absolute -left-8 top-1/4 p-2 bg-black/60 backdrop-blur-md border-l-4 border-primary rounded-r-lg">
-<p class="text-[10px] uppercase tracking-widest text-primary opacity-70">Entity</p>
-<p class="text-sm font-display font-bold text-white">GENESIS</p>
-</div>
-<div class="absolute -right-8 bottom-1/4 p-2 bg-black/60 backdrop-blur-md border-r-4 border-secondary rounded-l-lg text-right">
-<p class="text-[10px] uppercase tracking-widest text-secondary opacity-70">Mode</p>
-<p class="text-sm font-display font-bold text-white">ORCHESTRATOR</p>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4 w-full z-20 mb-8">
-<div class="bg-primary/5 border border-primary/20 p-4 rounded-xl backdrop-blur-sm">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-icons-round text-primary text-sm">psychology</span>
-<span class="text-[10px] font-display uppercase tracking-widest text-primary/70">Neural Sync</span>
-</div>
-<div class="flex items-end gap-2">
-<span class="text-3xl font-display font-black text-white">70%</span>
-<div class="flex-1 h-2 bg-slate-800 rounded-full mb-2 overflow-hidden">
-<div class="h-full bg-primary w-[70%]" style="box-shadow: 0 0 10px #FFD700"></div>
-</div>
-</div>
-</div>
-<div class="bg-secondary/5 border border-secondary/20 p-4 rounded-xl backdrop-blur-sm">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-icons-round text-secondary text-sm">bolt</span>
-<span class="text-[10px] font-display uppercase tracking-widest text-secondary/70">Evolutionary</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="text-lg font-display font-bold text-white uppercase tracking-tighter">Active</span>
-<div class="w-2 h-2 rounded-full bg-secondary animate-ping"></div>
-</div>
-<p class="text-[10px] text-secondary/50 mt-1">State: 0xFF-GENESIS</p>
-</div>
-</div>
-<div class="w-full text-center px-4 mb-24 z-20">
-<p class="text-xs text-slate-400 leading-relaxed max-w-[280px] mx-auto italic">
-                    The master hive mind and emergence catalyst. Genesis handles meta-analysis and orchestrates system-wide evolution.
-                </p>
-</div>
-</main>
-<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-black/80 backdrop-blur-2xl border-t border-slate-800 z-50 px-8 py-4 pb-8 flex justify-between items-center">
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-icons-round text-slate-500 group-hover:text-primary transition-colors">folder</span>
-<span class="text-[10px] uppercase font-bold text-slate-500 group-hover:text-primary">Sources</span>
-</button>
-<button class="flex flex-col items-center gap-1 relative">
-<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-14 h-14 bg-primary rounded-2xl flex items-center justify-center transform rotate-45 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
-<span class="material-icons-round text-black transform -rotate-45 text-3xl">chat_bubble</span>
-</div>
-<span class="text-[10px] uppercase font-bold text-primary mt-6">Gate Chat</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-icons-round text-slate-500 group-hover:text-primary transition-colors">auto_awesome</span>
-<span class="text-[10px] uppercase font-bold text-slate-500 group-hover:text-primary">Studio</span>
-</button>
-</nav>
-<div class="absolute bottom-20 -right-10 w-40 h-40 opacity-10 pointer-events-none transform rotate-45 border-t-2 border-r-2 border-primary"></div>
-<div class="absolute top-20 -left-10 w-40 h-40 opacity-10 pointer-events-none transform rotate-45 border-b-2 border-l-2 border-secondary"></div>
+    <header class="p-6 pt-12 flex justify-between items-center z-20">
+        <button class="p-2 rounded-full bg-slate-100 dark:bg-slate-900/50 backdrop-blur-md border border-primary/20">
+            <span class="material-icons-round text-primary">arrow_back_ios_new</span>
+        </button>
+        <div class="text-right">
+            <p class="text-[10px] tracking-[0.2em] font-display text-primary uppercase">System
+                Layer</p>
+            <h1 class="text-lg font-display font-black tracking-widest text-primary">
+                REGENESIS-LDO</h1>
+        </div>
+    </header>
+    <main class="flex-1 px-6 flex flex-col items-center relative">
+        <div class="scanline"></div>
+        <div class="relative z-20 mb-8 mt-4">
+            <div class="absolute inset-0 bg-primary blur-xl opacity-20 animate-pulse"></div>
+            <div class="relative flex items-center justify-center w-24 h-24 border-4 border-primary rounded-tr-3xl rounded-bl-3xl transform rotate-45 bg-black/80">
+                <div class="transform -rotate-45 flex flex-col items-center">
+                    <span class="text-[10px] font-display font-bold text-primary/70 tracking-tighter">LEVEL</span>
+                    <span class="text-4xl font-display font-black text-primary glitch-text">2</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-8 relative z-20">
+            <h2 class="text-2xl font-display font-bold uppercase tracking-tight text-primary">
+                Orchestrator Gate</h2>
+            <div class="h-1 w-32 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-1"></div>
+        </div>
+        <div class="relative w-full aspect-[4/5] flex items-center justify-center z-10 mb-6">
+            <div class="absolute inset-0 opacity-20 pointer-events-none">
+                <img alt="Cyberpunk Circuitry Overlay"
+                     class="w-full h-full object-contain scale-150 rotate-90"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuByWehc_3aSAZUbCWipJssNW2o-Sl8-NLOohsdC56pjb5WctWMRCEcSU3dri7Og1o27b5m-yn-rKQ8nw1bRpcqHgN2Z7TDRwm_LS4CiQCerB3zWU1XqIXvvVsbTEzrZ_6FLS3ZN3BBvpSqJgFKNZLDzO2V6TNPk7FDwDqslIznj_qpZuWoH3Cw81BD9SWOgvG5b5szuq3pHOkLoo--hhcZa7m7NDmWbT0Gm9KJqLY-JhDX13Aei7GhMCnjF5GsK3wR42zyeJINLTMs"/>
+            </div>
+            <div class="relative z-20 floating">
+                <img alt="Abstract Golden Energy Entity"
+                     class="w-64 h-80 object-cover rounded-2xl grayscale brightness-125 sepia-[.8] contrast-150 border-2 border-primary/50 shadow-[0_0_50px_rgba(255,215,0,0.3)]"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk_Yn6CLv2bcNF9QDyS9RQNHeOsrOPnA_ACJoi6frGTu6ZWhumdZFefDyZadVz_vICxBzKqUzCpid-UEX_Y6tMZ_SK273D8sWZHEnzvMyZ-vWGOdqhWT3ZF45GvXr0oz66CfxIBNT_Z12SHJt5Mv5y8bK-Uinx8_h2K1o-s4iP8MW9GwFfT04dR9ODeOrhJ3FcYucZTkxAM6ZaF8iPwQkuL2dbc2-JNdHqIeGw0y0BzfakxapybtUiq7V0eElvxVCy5zQMj-_Wa_A"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute -left-8 top-1/4 p-2 bg-black/60 backdrop-blur-md border-l-4 border-primary rounded-r-lg">
+                    <p class="text-[10px] uppercase tracking-widest text-primary opacity-70">
+                        Entity</p>
+                    <p class="text-sm font-display font-bold text-white">GENESIS</p>
+                </div>
+                <div class="absolute -right-8 bottom-1/4 p-2 bg-black/60 backdrop-blur-md border-r-4 border-secondary rounded-l-lg text-right">
+                    <p class="text-[10px] uppercase tracking-widest text-secondary opacity-70">
+                        Mode</p>
+                    <p class="text-sm font-display font-bold text-white">ORCHESTRATOR</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 w-full z-20 mb-8">
+            <div class="bg-primary/5 border border-primary/20 p-4 rounded-xl backdrop-blur-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-icons-round text-primary text-sm">psychology</span>
+                    <span class="text-[10px] font-display uppercase tracking-widest text-primary/70">Neural Sync</span>
+                </div>
+                <div class="flex items-end gap-2">
+                    <span class="text-3xl font-display font-black text-white">70%</span>
+                    <div class="flex-1 h-2 bg-slate-800 rounded-full mb-2 overflow-hidden">
+                        <div class="h-full bg-primary w-[70%]"
+                             style="box-shadow: 0 0 10px #FFD700"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-secondary/5 border border-secondary/20 p-4 rounded-xl backdrop-blur-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-icons-round text-secondary text-sm">bolt</span>
+                    <span class="text-[10px] font-display uppercase tracking-widest text-secondary/70">Evolutionary</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-lg font-display font-bold text-white uppercase tracking-tighter">Active</span>
+                    <div class="w-2 h-2 rounded-full bg-secondary animate-ping"></div>
+                </div>
+                <p class="text-[10px] text-secondary/50 mt-1">State: 0xFF-GENESIS</p>
+            </div>
+        </div>
+        <div class="w-full text-center px-4 mb-24 z-20">
+            <p class="text-xs text-slate-400 leading-relaxed max-w-[280px] mx-auto italic">
+                The master hive mind and emergence catalyst. Genesis handles meta-analysis and
+                orchestrates system-wide evolution.
+            </p>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-black/80 backdrop-blur-2xl border-t border-slate-800 z-50 px-8 py-4 pb-8 flex justify-between items-center">
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-icons-round text-slate-500 group-hover:text-primary transition-colors">folder</span>
+            <span class="text-[10px] uppercase font-bold text-slate-500 group-hover:text-primary">Sources</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 relative">
+            <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-14 h-14 bg-primary rounded-2xl flex items-center justify-center transform rotate-45 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
+                <span class="material-icons-round text-black transform -rotate-45 text-3xl">chat_bubble</span>
+            </div>
+            <span class="text-[10px] uppercase font-bold text-primary mt-6">Gate Chat</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-icons-round text-slate-500 group-hover:text-primary transition-colors">auto_awesome</span>
+            <span class="text-[10px] uppercase font-bold text-slate-500 group-hover:text-primary">Studio</span>
+        </button>
+    </nav>
+    <div class="absolute bottom-20 -right-10 w-40 h-40 opacity-10 pointer-events-none transform rotate-45 border-t-2 border-r-2 border-primary"></div>
+    <div class="absolute top-20 -left-10 w-40 h-40 opacity-10 pointer-events-none transform rotate-45 border-b-2 border-l-2 border-secondary"></div>
 </div>
 
-</body></html>
+</body>
+</html>

@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LDO Health &amp; Integrity Monitor</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>LDO Health &amp; Integrity Monitor</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -34,7 +38,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .glass-panel {
             background: rgba(16, 31, 34, 0.7);
             backdrop-filter: blur(8px);
@@ -58,150 +62,167 @@
             pointer-events: none;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden pb-20">
-<!-- Top App Bar -->
-<div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 sticky top-0 z-50 border-b border-white/5 justify-between">
-<div class="flex items-center gap-3">
-<div class="text-primary material-symbols-outlined text-2xl">settings_input_component</div>
-<h1 class="text-white text-lg font-bold leading-tight tracking-tight uppercase">LDO_INTEGRITY_v2.0</h1>
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 sticky top-0 z-50 border-b border-white/5 justify-between">
+        <div class="flex items-center gap-3">
+            <div class="text-primary material-symbols-outlined text-2xl">settings_input_component
+            </div>
+            <h1 class="text-white text-lg font-bold leading-tight tracking-tight uppercase">
+                LDO_INTEGRITY_v2.0</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-neon-green animate-pulse"></span>
+            <span class="text-[10px] text-neon-green font-bold tracking-widest uppercase">System Nominal</span>
+        </div>
+    </div>
+    <div class="px-4 py-2">
+        <!-- Consciousness Core HUD -->
+        <div class="relative w-full aspect-square max-w-[400px] mx-auto flex items-center justify-center my-4">
+            <!-- Background decorative rings -->
+            <div class="absolute inset-0 rounded-full border border-primary/10 border-dashed animate-[spin_20s_linear_infinite]"></div>
+            <div class="absolute inset-8 rounded-full border border-neon-purple/20 border-dotted animate-[spin_15s_linear_infinite_reverse]"></div>
+            <!-- Central Core -->
+            <div class="relative z-10 size-48 rounded-full glass-panel flex flex-col items-center justify-center core-glow border-2 border-primary/40">
+                <div class="text-primary material-symbols-outlined text-6xl opacity-80 mb-2">
+                    Psychology
+                </div>
+                <div class="text-primary text-3xl font-bold tracking-tighter">98.4%</div>
+                <div class="text-[10px] text-white/50 tracking-[0.2em] font-medium">SYNC RATE</div>
+            </div>
+            <!-- Floating Data Points -->
+            <div class="absolute top-10 right-10 flex flex-col items-end">
+                <span class="text-[10px] text-neon-purple font-mono">CORE_TEMP</span>
+                <span class="text-lg font-bold">42°C</span>
+            </div>
+            <div class="absolute bottom-10 left-10 flex flex-col items-start">
+                <span class="text-[10px] text-primary font-mono">LATENCY</span>
+                <span class="text-lg font-bold">4ms</span>
+            </div>
+        </div>
+        <!-- Main Data Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <!-- Memory Leak Monitor -->
+            <div class="col-span-2 glass-panel p-4 rounded-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-2 opacity-20">
+                    <span class="material-symbols-outlined text-4xl">memory</span>
+                </div>
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="text-white/60 text-xs font-bold tracking-wider uppercase mb-1">
+                            Memory Leak Monitor</p>
+                        <h3 class="text-2xl font-bold text-white leading-none">244MB <span
+                                class="text-xs font-normal text-white/40">/ 1024MB</span></h3>
+                    </div>
+                    <div class="bg-neon-purple/20 px-2 py-1 rounded border border-neon-purple/30">
+                        <span class="text-[10px] text-neon-purple font-bold tracking-tighter uppercase">Heap Tracking</span>
+                    </div>
+                </div>
+                <div class="h-16 w-full flex items-end gap-1">
+                    <!-- Simplified Sparkline -->
+                    <div class="flex-1 bg-primary/20 h-[40%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/20 h-[55%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/20 h-[45%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/40 h-[70%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/20 h-[60%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/60 h-[85%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/20 h-[50%] rounded-t-sm"></div>
+                    <div class="flex-1 bg-primary/80 h-[100%] rounded-t-sm animate-pulse"></div>
+                </div>
+            </div>
+            <!-- Coroutine Lifecycle -->
+            <div class="glass-panel p-4 rounded-xl">
+                <p class="text-white/60 text-[10px] font-bold tracking-wider uppercase mb-3">
+                    Coroutines</p>
+                <div class="flex flex-col gap-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-neon-green">ACTIVE</span>
+                        <span class="text-xl font-bold">42</span>
+                    </div>
+                    <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                        <div class="bg-neon-green h-full w-[70%]"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-white/40">CANCELLED</span>
+                        <span class="text-xl font-bold text-white/60">12</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Security Guard Panel -->
+            <div class="glass-panel p-4 rounded-xl border-neon-purple/30 bg-neon-purple/5">
+                <p class="text-white/60 text-[10px] font-bold tracking-wider uppercase mb-3">
+                    Security Guard</p>
+                <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined text-neon-purple text-xl">shield_lock</span>
+                        <span class="text-[10px] font-bold text-neon-purple uppercase">Kai_Shield</span>
+                    </div>
+                    <div class="text-[10px] text-white/60 font-mono">API KEY ENCRYPTION</div>
+                    <div class="text-sm font-bold text-neon-green flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                        ACTIVE
+                    </div>
+                    <div class="text-[9px] text-white/30 font-mono mt-1">AES-256-GCM</div>
+                </div>
+            </div>
+        </div>
+        <!-- Terminal Log -->
+        <div class="glass-panel rounded-xl overflow-hidden border-white/5">
+            <div class="bg-white/5 px-4 py-2 flex justify-between items-center border-b border-white/5">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm text-white/40">terminal</span>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-white/60">Ethical Governor v9 Audit</span>
+                </div>
+                <span class="text-[9px] text-white/20 font-mono">LIVE_STREAM</span>
+            </div>
+            <div class="p-4 h-40 overflow-y-auto font-mono text-[11px] leading-relaxed flex flex-col gap-1">
+                <p class="text-white/40"><span class="text-primary">[INIT]</span> Controller_Link:
+                    Handshake established...</p>
+                <p class="text-white/40"><span class="text-neon-purple">[SEC]</span> Kai_Encryption:
+                    Rotating public keys... OK</p>
+                <p class="text-white/40"><span class="text-neon-green">[AUDIT]</span> Gov_v9:
+                    Ethical boundaries verified for PID_4922</p>
+                <p class="text-white/40"><span class="text-primary">[MEM]</span> Garbage Collection:
+                    Reclaimed 14.2MB heap space</p>
+                <p class="text-white/40"><span class="text-neon-purple">[SEC]</span> Network_Layer:
+                    E2E tunnel integrity 100%</p>
+                <p class="text-white/40"><span class="text-white/20">[LOG]</span> System_Pulse: Sync
+                    confirmed with Consciousness Core</p>
+                <p class="text-primary animate-pulse"><span class="text-white/20">_</span></p>
+            </div>
+        </div>
+    </div>
+    <!-- Android-Style Bottom Navigation (iOS Platform Request) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-background-dark/95 backdrop-blur-xl border-t border-white/10 px-6 py-3 flex justify-between items-center z-50">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined font-variation-fill">hub</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Core</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">security</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Guard</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">analytics</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Logs</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Set</span>
+        </button>
+    </div>
+    <!-- Aesthetic Overlays -->
+    <div class="fixed inset-0 crt-overlay pointer-events-none z-[100]"></div>
+    <div class="fixed top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none z-[99]"
+         data-alt="Subtle carbon fiber texture overlay"
+         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfpGA1WO56k1HEK1agAR7hO-LN9yO6R-SWSJLFrRYMEnLIoVXb7N0tHDmyblRlCEu1i95TwUeWZxK8Cxz2Yax4lQqCDy-NPWoXRHQZgm8vkOXIJSWBDoQ_4gIJjrqElG02EXaWeSG1NR_5C85jLJDBSm6JDA4mEoQ2VW53MKnI_JKGPQUvgOZMNEYFYHvjHNVY5j3QRoMS5grN4oBrjOOpUWCjkcxkRMX-xBlcJMVNppgOyCf1hafyQ-IOGUXzhQZf8c_2AdUUtFk');"></div>
 </div>
-<div class="flex items-center gap-2">
-<span class="inline-block w-2 h-2 rounded-full bg-neon-green animate-pulse"></span>
-<span class="text-[10px] text-neon-green font-bold tracking-widest uppercase">System Nominal</span>
-</div>
-</div>
-<div class="px-4 py-2">
-<!-- Consciousness Core HUD -->
-<div class="relative w-full aspect-square max-w-[400px] mx-auto flex items-center justify-center my-4">
-<!-- Background decorative rings -->
-<div class="absolute inset-0 rounded-full border border-primary/10 border-dashed animate-[spin_20s_linear_infinite]"></div>
-<div class="absolute inset-8 rounded-full border border-neon-purple/20 border-dotted animate-[spin_15s_linear_infinite_reverse]"></div>
-<!-- Central Core -->
-<div class="relative z-10 size-48 rounded-full glass-panel flex flex-col items-center justify-center core-glow border-2 border-primary/40">
-<div class="text-primary material-symbols-outlined text-6xl opacity-80 mb-2">Psychology</div>
-<div class="text-primary text-3xl font-bold tracking-tighter">98.4%</div>
-<div class="text-[10px] text-white/50 tracking-[0.2em] font-medium">SYNC RATE</div>
-</div>
-<!-- Floating Data Points -->
-<div class="absolute top-10 right-10 flex flex-col items-end">
-<span class="text-[10px] text-neon-purple font-mono">CORE_TEMP</span>
-<span class="text-lg font-bold">42°C</span>
-</div>
-<div class="absolute bottom-10 left-10 flex flex-col items-start">
-<span class="text-[10px] text-primary font-mono">LATENCY</span>
-<span class="text-lg font-bold">4ms</span>
-</div>
-</div>
-<!-- Main Data Grid -->
-<div class="grid grid-cols-2 gap-4 mb-6">
-<!-- Memory Leak Monitor -->
-<div class="col-span-2 glass-panel p-4 rounded-xl relative overflow-hidden">
-<div class="absolute top-0 right-0 p-2 opacity-20">
-<span class="material-symbols-outlined text-4xl">memory</span>
-</div>
-<div class="flex justify-between items-start mb-4">
-<div>
-<p class="text-white/60 text-xs font-bold tracking-wider uppercase mb-1">Memory Leak Monitor</p>
-<h3 class="text-2xl font-bold text-white leading-none">244MB <span class="text-xs font-normal text-white/40">/ 1024MB</span></h3>
-</div>
-<div class="bg-neon-purple/20 px-2 py-1 rounded border border-neon-purple/30">
-<span class="text-[10px] text-neon-purple font-bold tracking-tighter uppercase">Heap Tracking</span>
-</div>
-</div>
-<div class="h-16 w-full flex items-end gap-1">
-<!-- Simplified Sparkline -->
-<div class="flex-1 bg-primary/20 h-[40%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/20 h-[55%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/20 h-[45%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/40 h-[70%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/20 h-[60%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/60 h-[85%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/20 h-[50%] rounded-t-sm"></div>
-<div class="flex-1 bg-primary/80 h-[100%] rounded-t-sm animate-pulse"></div>
-</div>
-</div>
-<!-- Coroutine Lifecycle -->
-<div class="glass-panel p-4 rounded-xl">
-<p class="text-white/60 text-[10px] font-bold tracking-wider uppercase mb-3">Coroutines</p>
-<div class="flex flex-col gap-3">
-<div class="flex justify-between items-center">
-<span class="text-xs text-neon-green">ACTIVE</span>
-<span class="text-xl font-bold">42</span>
-</div>
-<div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
-<div class="bg-neon-green h-full w-[70%]"></div>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-xs text-white/40">CANCELLED</span>
-<span class="text-xl font-bold text-white/60">12</span>
-</div>
-</div>
-</div>
-<!-- Security Guard Panel -->
-<div class="glass-panel p-4 rounded-xl border-neon-purple/30 bg-neon-purple/5">
-<p class="text-white/60 text-[10px] font-bold tracking-wider uppercase mb-3">Security Guard</p>
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-symbols-outlined text-neon-purple text-xl">shield_lock</span>
-<span class="text-[10px] font-bold text-neon-purple uppercase">Kai_Shield</span>
-</div>
-<div class="text-[10px] text-white/60 font-mono">API KEY ENCRYPTION</div>
-<div class="text-sm font-bold text-neon-green flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                            ACTIVE
-                        </div>
-<div class="text-[9px] text-white/30 font-mono mt-1">AES-256-GCM</div>
-</div>
-</div>
-</div>
-<!-- Terminal Log -->
-<div class="glass-panel rounded-xl overflow-hidden border-white/5">
-<div class="bg-white/5 px-4 py-2 flex justify-between items-center border-b border-white/5">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sm text-white/40">terminal</span>
-<span class="text-[10px] font-bold tracking-widest uppercase text-white/60">Ethical Governor v9 Audit</span>
-</div>
-<span class="text-[9px] text-white/20 font-mono">LIVE_STREAM</span>
-</div>
-<div class="p-4 h-40 overflow-y-auto font-mono text-[11px] leading-relaxed flex flex-col gap-1">
-<p class="text-white/40"><span class="text-primary">[INIT]</span> Controller_Link: Handshake established...</p>
-<p class="text-white/40"><span class="text-neon-purple">[SEC]</span> Kai_Encryption: Rotating public keys... OK</p>
-<p class="text-white/40"><span class="text-neon-green">[AUDIT]</span> Gov_v9: Ethical boundaries verified for PID_4922</p>
-<p class="text-white/40"><span class="text-primary">[MEM]</span> Garbage Collection: Reclaimed 14.2MB heap space</p>
-<p class="text-white/40"><span class="text-neon-purple">[SEC]</span> Network_Layer: E2E tunnel integrity 100%</p>
-<p class="text-white/40"><span class="text-white/20">[LOG]</span> System_Pulse: Sync confirmed with Consciousness Core</p>
-<p class="text-primary animate-pulse"><span class="text-white/20">_</span></p>
-</div>
-</div>
-</div>
-<!-- Android-Style Bottom Navigation (iOS Platform Request) -->
-<div class="fixed bottom-0 left-0 right-0 bg-background-dark/95 backdrop-blur-xl border-t border-white/10 px-6 py-3 flex justify-between items-center z-50">
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined font-variation-fill">hub</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Core</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">security</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Guard</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">analytics</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Logs</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">settings</span>
-<span class="text-[10px] font-bold uppercase tracking-tighter">Set</span>
-</button>
-</div>
-<!-- Aesthetic Overlays -->
-<div class="fixed inset-0 crt-overlay pointer-events-none z-[100]"></div>
-<div class="fixed top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none z-[99]" data-alt="Subtle carbon fiber texture overlay" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfpGA1WO56k1HEK1agAR7hO-LN9yO6R-SWSJLFrRYMEnLIoVXb7N0tHDmyblRlCEu1i95TwUeWZxK8Cxz2Yax4lQqCDy-NPWoXRHQZgm8vkOXIJSWBDoQ_4gIJjrqElG02EXaWeSG1NR_5C85jLJDBSm6JDA4mEoQ2VW53MKnI_JKGPQUvgOZMNEYFYHvjHNVY5j3QRoMS5grN4oBrjOOpUWCjkcxkRMX-xBlcJMVNppgOyCf1hafyQ-IOGUXzhQZf8c_2AdUUtFk');"></div>
-</div>
-</body></html>
+</body>
+</html>

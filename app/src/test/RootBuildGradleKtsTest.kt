@@ -537,14 +537,15 @@ class RootBuildGradleKtsTest {
         @DisplayName("Plugin versions use stable releases (not beta or rc)")
         fun pluginVersionsAreStable() {
             // Check Kotlin versions are stable
-            val kotlinVersionPattern = Regex("""org\.jetbrains\.kotlin\.[a-z.]+"\) version "(\S+)"""")
+            val kotlinVersionPattern =
+                Regex("""org\.jetbrains\.kotlin\.[a-z.]+"\) version "(\S+)"""")
             val kotlinVersions = kotlinVersionPattern.findAll(script)
 
             kotlinVersions.forEach { match ->
                 val version = match.groupValues[1]
                 assertFalse(
                     version.contains("-beta", ignoreCase = true) ||
-                    version.contains("-rc", ignoreCase = true),
+                            version.contains("-rc", ignoreCase = true),
                     "Kotlin plugin version should be stable: $version"
                 )
             }
@@ -555,7 +556,7 @@ class RootBuildGradleKtsTest {
             assertNotNull(hiltVersion, "Should find Hilt version")
             assertFalse(
                 hiltVersion!!.contains("-beta", ignoreCase = true) ||
-                hiltVersion.contains("-rc", ignoreCase = true),
+                        hiltVersion.contains("-rc", ignoreCase = true),
                 "Hilt version should be stable: $hiltVersion"
             )
         }
@@ -589,8 +590,10 @@ class RootBuildGradleKtsTest {
 
             // Check Java version consistency
             val javaVersionPattern = Regex("""JavaVersion\.VERSION_(\d+)""")
-            val appJavaVersions = javaVersionPattern.findAll(appBlock).map { it.groupValues[1] }.toSet()
-            val libJavaVersions = javaVersionPattern.findAll(libBlock).map { it.groupValues[1] }.toSet()
+            val appJavaVersions =
+                javaVersionPattern.findAll(appBlock).map { it.groupValues[1] }.toSet()
+            val libJavaVersions =
+                javaVersionPattern.findAll(libBlock).map { it.groupValues[1] }.toSet()
 
             assertEquals(
                 appJavaVersions,
@@ -600,8 +603,10 @@ class RootBuildGradleKtsTest {
 
             // Check Kotlin JVM target consistency
             val kotlinTargetPattern = Regex("""JvmTarget\.JVM_(\d+)""")
-            val appKotlinTargets = kotlinTargetPattern.findAll(appBlock).map { it.groupValues[1] }.toSet()
-            val libKotlinTargets = kotlinTargetPattern.findAll(libBlock).map { it.groupValues[1] }.toSet()
+            val appKotlinTargets =
+                kotlinTargetPattern.findAll(appBlock).map { it.groupValues[1] }.toSet()
+            val libKotlinTargets =
+                kotlinTargetPattern.findAll(libBlock).map { it.groupValues[1] }.toSet()
 
             assertEquals(
                 appKotlinTargets,
@@ -762,14 +767,20 @@ class RootBuildGradleKtsTest {
         @DisplayName("CompileOptions and KotlinCompile configuration are properly nested")
         fun configurationProperlyNested() {
             // Check that compileOptions is inside extensions.configure
-            val compileOptionsPattern = Regex("""extensions\.configure<[^>]+>\s*\{[^}]*compileOptions\s*\{""", RegexOption.DOT_MATCHES_ALL)
+            val compileOptionsPattern = Regex(
+                """extensions\.configure<[^>]+>\s*\{[^}]*compileOptions\s*\{""",
+                RegexOption.DOT_MATCHES_ALL
+            )
             assertTrue(
                 compileOptionsPattern.containsMatchIn(script),
                 "compileOptions should be nested inside extensions.configure"
             )
 
             // Check that compilerOptions is inside tasks configuration
-            val compilerOptionsPattern = Regex("""tasks\.withType<[^>]+>\(\)\.configureEach\s*\{[^}]*compilerOptions\s*\{""", RegexOption.DOT_MATCHES_ALL)
+            val compilerOptionsPattern = Regex(
+                """tasks\.withType<[^>]+>\(\)\.configureEach\s*\{[^}]*compilerOptions\s*\{""",
+                RegexOption.DOT_MATCHES_ALL
+            )
             assertTrue(
                 compilerOptionsPattern.containsMatchIn(script),
                 "compilerOptions should be nested inside tasks.withType configuration"

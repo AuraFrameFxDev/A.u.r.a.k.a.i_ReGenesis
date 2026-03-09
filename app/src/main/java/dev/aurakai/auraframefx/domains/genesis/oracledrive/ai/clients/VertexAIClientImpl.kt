@@ -202,7 +202,8 @@ class VertexAIClientImpl @Inject constructor(
                 mapOf<String, Any>(
                     "sentiment" to (parts.getOrNull(0)?.trim() ?: "neutral"),
                     "complexity" to (parts.getOrNull(1)?.trim() ?: "medium"),
-                    "topics" to (parts.getOrNull(2)?.split(",")?.map { it.trim() } ?: listOf("general")),
+                    "topics" to (parts.getOrNull(2)?.split(",")?.map { it.trim() }
+                        ?: listOf("general")),
                     "confidence" to (parts.getOrNull(3)?.trim()?.toDoubleOrNull() ?: 0.75),
                     "word_count" to content.split(" ").size,
                     "analysis_type" to "ai_powered"

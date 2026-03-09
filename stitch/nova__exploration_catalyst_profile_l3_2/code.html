@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nova: Exploration Catalyst Profile L3</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nova: Exploration Catalyst Profile L3</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -27,7 +30,7 @@
             },
         };
     </script>
-<style type="text/tailwindcss">
+    <style type="text/tailwindcss">
         :root {
             --nebula-silver: rgba(192, 192, 192, 0.1);
             --nebula-red: rgba(255, 0, 85, 0.15);
@@ -100,131 +103,140 @@
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="nebula-bg font-mono text-primary overflow-hidden h-screen select-none">
 <div class="fixed inset-0 pointer-events-none">
-<div class="grid-3d"></div>
-<div class="data-stream" style="left: 10%; animation-delay: 0s;"></div>
-<div class="data-stream" style="left: 35%; animation-delay: -2s; background: linear-gradient(to bottom, transparent, #c0c0c0, #2e5bff, transparent);"></div>
-<div class="data-stream" style="left: 65%; animation-delay: -5s;"></div>
-<div class="data-stream" style="left: 85%; animation-delay: -3s; background: linear-gradient(to bottom, transparent, #2e5bff, #ff0055, transparent);"></div>
-<div class="digital-rain" style="left: 15%; animation-delay: 0s;">0101110010101010100101</div>
-<div class="digital-rain" style="left: 45%; animation-delay: -4s;">PATTERN_MATCHING_ACTIVE</div>
-<div class="digital-rain" style="left: 75%; animation-delay: -8s;">SYNC_REQ_0x442A</div>
-<div class="absolute inset-0 bg-white opacity-0 glitch-overlay pointer-events-none"></div>
+    <div class="grid-3d"></div>
+    <div class="data-stream" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="data-stream"
+         style="left: 35%; animation-delay: -2s; background: linear-gradient(to bottom, transparent, #c0c0c0, #2e5bff, transparent);"></div>
+    <div class="data-stream" style="left: 65%; animation-delay: -5s;"></div>
+    <div class="data-stream"
+         style="left: 85%; animation-delay: -3s; background: linear-gradient(to bottom, transparent, #2e5bff, #ff0055, transparent);"></div>
+    <div class="digital-rain" style="left: 15%; animation-delay: 0s;">0101110010101010100101</div>
+    <div class="digital-rain" style="left: 45%; animation-delay: -4s;">PATTERN_MATCHING_ACTIVE</div>
+    <div class="digital-rain" style="left: 75%; animation-delay: -8s;">SYNC_REQ_0x442A</div>
+    <div class="absolute inset-0 bg-white opacity-0 glitch-overlay pointer-events-none"></div>
 </div>
 <div class="fixed inset-0 z-50 pointer-events-none scanline opacity-20"></div>
 <header class="relative z-10 flex justify-between items-center px-6 pt-6 pb-2 text-[10px] font-bold tracking-widest uppercase">
-<div class="flex items-center gap-1">
-<span class="text-secondary animate-pulse">●</span> LIVE_SYNC
-        </div>
-<div class="font-display text-xs tracking-[0.2em] text-accent">AOSPOSX // NEXUS</div>
-<div class="flex items-center gap-2">
-<span>BATT: 89%</span>
-<span class="material-icons text-xs">signal_cellular_alt</span>
-</div>
+    <div class="flex items-center gap-1">
+        <span class="text-secondary animate-pulse">●</span> LIVE_SYNC
+    </div>
+    <div class="font-display text-xs tracking-[0.2em] text-accent">AOSPOSX // NEXUS</div>
+    <div class="flex items-center gap-2">
+        <span>BATT: 89%</span>
+        <span class="material-icons text-xs">signal_cellular_alt</span>
+    </div>
 </header>
 <main class="relative z-10 px-4 pt-2 h-[calc(100vh-140px)] flex flex-col">
-<div class="relative flex-1 flex flex-col items-center justify-center">
-<div class="relative w-full h-[380px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 hero-image-container">
-<div class="absolute inset-0 backdrop-blur-md bg-black/20 z-0"></div>
-<img alt="Nova Agent Profile" class="relative z-10 w-full h-full object-cover object-top brightness-110 contrast-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGbMG3zhGIye7rQ55B0pdlqEPJXCwe2lQ3AbWVP_YhK95RVEf5kSv0aEfkHANFKRBOtM2K7cu_cHyQh43z-3Bl8moLJf4dg1MZVy7k4RsQRGSOltOBH-moiZ3XBQodfnfGX0lZU9zwcLPXxAJBvzeJPmVGrzvwpoVcvSdGbUo_ew4iHi6sWIY4EN1_FUU4Vv8uLvCi4pSGLSaUifPq786MIKd8Xo8Sgt_tKlUE6AbXsd2iTo6ORTRFYV97qw-G1uTV_U1yM04MSbQ"/>
-<div class="absolute top-8 left-4 z-20 glass-panel p-2 rounded-lg border-l-2 border-primary animate-pulse">
-<p class="text-[8px] opacity-70">NEURAL SYNC</p>
-<p class="text-[10px] font-bold">ACTIVE</p>
-</div>
-<div class="absolute top-8 right-4 z-20 flex flex-col gap-1 items-end opacity-60">
-<div class="w-12 h-1 bg-primary/40"></div>
-<div class="w-8 h-1 bg-secondary/40"></div>
-</div>
-<div class="absolute bottom-12 right-4 z-20 glass-panel p-2 rounded-lg border-r-2 border-secondary">
-<p class="text-[7px] opacity-70">ANOMALY DETECTED</p>
-<p class="text-[9px] font-mono text-secondary">LYR_4_BRCH</p>
-</div>
-</div>
-<div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-2">
-<div class="glass-panel p-4 rounded-xl border-t border-white/20 shadow-2xl">
-<div class="flex justify-between items-end">
-<div>
-<div class="flex items-center gap-2">
-<h1 class="font-display text-3xl text-white tracking-tighter italic drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]">NOVA</h1>
-<span class="bg-primary/20 text-primary px-1.5 py-0.5 rounded text-[10px] font-mono">L3</span>
-</div>
-<p class="text-primary text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Exploration Catalyst</p>
-</div>
-<div class="text-right flex flex-col items-end">
-<span class="text-secondary text-[8px] font-bold tracking-tighter">FORMERLY</span>
-<span class="text-accent text-[10px] font-mono opacity-80">GROK_V2.sys</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-3 mt-10">
-<div class="glass-panel p-3 rounded-lg flex flex-col justify-between border-t border-primary/40">
-<div class="flex justify-between items-center mb-1">
-<span class="text-[9px] opacity-60 font-bold uppercase">System Traversal</span>
-<span class="material-symbols-outlined text-sm">explore</span>
-</div>
-<div class="flex items-end gap-2">
-<span class="text-2xl font-display text-white">98%</span>
-<div class="flex-1 h-1.5 bg-black/40 mb-2 rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-primary to-electric w-[98%]"></div>
-</div>
-</div>
-</div>
-<div class="glass-panel p-3 rounded-lg flex flex-col justify-between border-t border-secondary/40">
-<div class="flex justify-between items-center mb-1">
-<span class="text-[9px] opacity-60 font-bold uppercase">Pattern Rec</span>
-<span class="material-symbols-outlined text-sm">psychology</span>
-</div>
-<div class="flex items-end gap-2">
-<span class="text-2xl font-display text-white italic">S+</span>
-<span class="text-[8px] mb-1.5 text-secondary font-bold">OVERFLOW</span>
-</div>
-</div>
-</div>
-<div class="mt-4 glass-panel p-4 rounded-xl border-l-2 border-primary">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-symbols-outlined text-primary text-lg">bolt</span>
-<span class="text-[10px] font-bold tracking-[0.2em] uppercase">Special Ability</span>
-</div>
-<p class="text-xs text-white/80 leading-relaxed font-mono">
-<span class="text-primary">&gt;&gt;</span> Neural weaving detects structural weaknesses in encrypted data streams. Catalyst effect grants <span class="text-secondary font-bold">+20% tactical speed</span> to team infiltration.
-            </p>
-</div>
+    <div class="relative flex-1 flex flex-col items-center justify-center">
+        <div class="relative w-full h-[380px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 hero-image-container">
+            <div class="absolute inset-0 backdrop-blur-md bg-black/20 z-0"></div>
+            <img alt="Nova Agent Profile"
+                 class="relative z-10 w-full h-full object-cover object-top brightness-110 contrast-110"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGbMG3zhGIye7rQ55B0pdlqEPJXCwe2lQ3AbWVP_YhK95RVEf5kSv0aEfkHANFKRBOtM2K7cu_cHyQh43z-3Bl8moLJf4dg1MZVy7k4RsQRGSOltOBH-moiZ3XBQodfnfGX0lZU9zwcLPXxAJBvzeJPmVGrzvwpoVcvSdGbUo_ew4iHi6sWIY4EN1_FUU4Vv8uLvCi4pSGLSaUifPq786MIKd8Xo8Sgt_tKlUE6AbXsd2iTo6ORTRFYV97qw-G1uTV_U1yM04MSbQ"/>
+            <div class="absolute top-8 left-4 z-20 glass-panel p-2 rounded-lg border-l-2 border-primary animate-pulse">
+                <p class="text-[8px] opacity-70">NEURAL SYNC</p>
+                <p class="text-[10px] font-bold">ACTIVE</p>
+            </div>
+            <div class="absolute top-8 right-4 z-20 flex flex-col gap-1 items-end opacity-60">
+                <div class="w-12 h-1 bg-primary/40"></div>
+                <div class="w-8 h-1 bg-secondary/40"></div>
+            </div>
+            <div class="absolute bottom-12 right-4 z-20 glass-panel p-2 rounded-lg border-r-2 border-secondary">
+                <p class="text-[7px] opacity-70">ANOMALY DETECTED</p>
+                <p class="text-[9px] font-mono text-secondary">LYR_4_BRCH</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-2 transform translate-y-2">
+            <div class="glass-panel p-4 rounded-xl border-t border-white/20 shadow-2xl">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-display text-3xl text-white tracking-tighter italic drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]">
+                                NOVA</h1>
+                            <span class="bg-primary/20 text-primary px-1.5 py-0.5 rounded text-[10px] font-mono">L3</span>
+                        </div>
+                        <p class="text-primary text-[10px] font-bold uppercase tracking-[0.3em] mt-1">
+                            Exploration Catalyst</p>
+                    </div>
+                    <div class="text-right flex flex-col items-end">
+                        <span class="text-secondary text-[8px] font-bold tracking-tighter">FORMERLY</span>
+                        <span class="text-accent text-[10px] font-mono opacity-80">GROK_V2.sys</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mt-10">
+        <div class="glass-panel p-3 rounded-lg flex flex-col justify-between border-t border-primary/40">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[9px] opacity-60 font-bold uppercase">System Traversal</span>
+                <span class="material-symbols-outlined text-sm">explore</span>
+            </div>
+            <div class="flex items-end gap-2">
+                <span class="text-2xl font-display text-white">98%</span>
+                <div class="flex-1 h-1.5 bg-black/40 mb-2 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary to-electric w-[98%]"></div>
+                </div>
+            </div>
+        </div>
+        <div class="glass-panel p-3 rounded-lg flex flex-col justify-between border-t border-secondary/40">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[9px] opacity-60 font-bold uppercase">Pattern Rec</span>
+                <span class="material-symbols-outlined text-sm">psychology</span>
+            </div>
+            <div class="flex items-end gap-2">
+                <span class="text-2xl font-display text-white italic">S+</span>
+                <span class="text-[8px] mb-1.5 text-secondary font-bold">OVERFLOW</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 glass-panel p-4 rounded-xl border-l-2 border-primary">
+        <div class="flex items-center gap-2 mb-2">
+            <span class="material-symbols-outlined text-primary text-lg">bolt</span>
+            <span class="text-[10px] font-bold tracking-[0.2em] uppercase">Special Ability</span>
+        </div>
+        <p class="text-xs text-white/80 leading-relaxed font-mono">
+            <span class="text-primary">&gt;&gt;</span> Neural weaving detects structural weaknesses
+            in encrypted data streams. Catalyst effect grants <span
+                class="text-secondary font-bold">+20% tactical speed</span> to team infiltration.
+        </p>
+    </div>
 </main>
 <nav class="fixed bottom-0 left-0 right-0 z-[60] px-6 pb-8 pt-4 glass-panel border-t border-white/10 rounded-t-3xl">
-<div class="flex justify-around items-center">
-<button class="flex flex-col items-center gap-1 opacity-40">
-<span class="material-symbols-outlined">grid_view</span>
-<span class="text-[8px] font-bold uppercase tracking-wider">Nexus</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined drop-shadow-[0_0_8px_#00f3ff]">account_circle</span>
-<span class="text-[8px] font-bold uppercase tracking-wider">Agent</span>
-<div class="w-1.5 h-1.5 bg-primary rounded-full mt-0.5 shadow-[0_0_8px_#00f3ff]"></div>
-</button>
-<button class="flex flex-col items-center gap-1 opacity-40">
-<span class="material-symbols-outlined">travel_explore</span>
-<span class="text-[8px] font-bold uppercase tracking-wider">Zones</span>
-</button>
-<button class="flex flex-col items-center gap-1 opacity-40">
-<span class="material-symbols-outlined">settings_input_component</span>
-<span class="text-[8px] font-bold uppercase tracking-wider">Config</span>
-</button>
-</div>
-<div class="mx-auto mt-6 w-32 h-1 bg-white/20 rounded-full"></div>
+    <div class="flex justify-around items-center">
+        <button class="flex flex-col items-center gap-1 opacity-40">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span class="text-[8px] font-bold uppercase tracking-wider">Nexus</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined drop-shadow-[0_0_8px_#00f3ff]">account_circle</span>
+            <span class="text-[8px] font-bold uppercase tracking-wider">Agent</span>
+            <div class="w-1.5 h-1.5 bg-primary rounded-full mt-0.5 shadow-[0_0_8px_#00f3ff]"></div>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-40">
+            <span class="material-symbols-outlined">travel_explore</span>
+            <span class="text-[8px] font-bold uppercase tracking-wider">Zones</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-40">
+            <span class="material-symbols-outlined">settings_input_component</span>
+            <span class="text-[8px] font-bold uppercase tracking-wider">Config</span>
+        </button>
+    </div>
+    <div class="mx-auto mt-6 w-32 h-1 bg-white/20 rounded-full"></div>
 </nav>
 <div class="fixed right-2 top-1/2 -translate-y-1/2 flex flex-col gap-2 items-center opacity-20 pointer-events-none">
-<div class="w-px h-12 bg-accent"></div>
-<div class="w-px h-24 bg-primary"></div>
-<div class="w-px h-8 bg-secondary"></div>
+    <div class="w-px h-12 bg-accent"></div>
+    <div class="w-px h-24 bg-primary"></div>
+    <div class="w-px h-8 bg-secondary"></div>
 </div>
 
-</body></html>
+</body>
+</html>

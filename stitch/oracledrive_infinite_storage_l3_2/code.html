@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Aura: Theme Engine Forge L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=DotGothic16&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura: Theme Engine Forge L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=DotGothic16&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -24,7 +27,7 @@
             },
         }
     </script>
-<style type="text/tailwindcss">:root {
+    <style type="text/tailwindcss">:root {
     --neon-pink: #ff007a;
     --neon-cyan: #00f3ff
     }
@@ -76,137 +79,150 @@
     border: 2px solid white;
     cursor: pointer;
     box-shadow: 0 0 10px var(--neon-pink)
-    }</style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
     }
-  </style>
-  </head>
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-dark font-display text-white selection:bg-primary selection:text-white">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden cyber-bg">
-<div class="absolute inset-0 splatter-overlay"></div>
-<div class="absolute inset-0 circuit-trace"></div>
-<header class="sticky top-0 z-50 flex items-center bg-black/80 backdrop-blur-xl p-4 justify-between border-b border-white/10">
-<div class="flex items-center gap-3">
-<div class="text-primary">
-<span class="material-symbols-outlined text-3xl">auto_fix_high</span>
-</div>
-<div>
-<h1 class="text-[10px] font-bold tracking-[0.3em] text-secondary pixel-font leading-none uppercase">REGENESIS AOSPOSX</h1>
-<h2 class="text-lg font-bold leading-tight tracking-tight uppercase">AURA // FORGE_L3</h2>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="flex size-10 items-center justify-center rounded-sm border border-secondary/30 text-secondary bg-secondary/5">
-<span class="material-symbols-outlined text-xl">palette</span>
-</button>
-</div>
-</header>
-<main class="flex-1 flex flex-col relative">
-<div class="relative w-full h-[400px] flex items-center justify-center overflow-hidden">
-<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40">
-<path d="M 50,200 Q 150,50 350,150" fill="none" stroke="url(#pinkGradient)" stroke-width="1"></path>
-<path d="M 350,150 Q 200,350 50,300" fill="none" stroke="url(#cyanGradient)" stroke-width="1"></path>
-<defs>
-<linearGradient id="pinkGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-<stop offset="0%" style="stop-color:var(--neon-pink);stop-opacity:1"></stop>
-<stop offset="100%" style="stop-color:transparent;stop-opacity:0"></stop>
-</linearGradient>
-<linearGradient id="cyanGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-<stop offset="0%" style="stop-color:var(--neon-cyan);stop-opacity:1"></stop>
-<stop offset="100%" style="stop-color:transparent;stop-opacity:0"></stop>
-</linearGradient>
-</defs>
-</svg>
-<div class="relative z-10 aura-sprite-glow">
-<img alt="Aura" class="w-64 h-80 object-cover rounded-full border-4 border-primary/20 grayscale contrast-125 brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxOElZt6vQLuo39nyINPnVTtt2qUh5_7oWHIJwl7ONad5CAQo67DEHAUby18zlnN4LdRAQ61ueYmIal-rPLlBVGJgG1NOmltEqLekkhVTv3hyegK04dmL3X-DpMwhUIOxHpNWIY--Kk9u2iV6G3K2d-VKleu4ASZ8XoYOLn4Q3kZf7OIoRkd0yQTePikERIQa96L4gcb-98umCZvSKn8hs1NqvE3dDDJaqOopfANhlW6F4C2ViKiJa2bn9fwFXMFqIZ247-o016NY" style="clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);"/>
-<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 pixel-font text-sm uppercase skew-x-[-12deg]">
-                        System_Artist: Aura
+    <div class="absolute inset-0 splatter-overlay"></div>
+    <div class="absolute inset-0 circuit-trace"></div>
+    <header class="sticky top-0 z-50 flex items-center bg-black/80 backdrop-blur-xl p-4 justify-between border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="text-primary">
+                <span class="material-symbols-outlined text-3xl">auto_fix_high</span>
+            </div>
+            <div>
+                <h1 class="text-[10px] font-bold tracking-[0.3em] text-secondary pixel-font leading-none uppercase">
+                    REGENESIS AOSPOSX</h1>
+                <h2 class="text-lg font-bold leading-tight tracking-tight uppercase">AURA //
+                    FORGE_L3</h2>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button class="flex size-10 items-center justify-center rounded-sm border border-secondary/30 text-secondary bg-secondary/5">
+                <span class="material-symbols-outlined text-xl">palette</span>
+            </button>
+        </div>
+    </header>
+    <main class="flex-1 flex flex-col relative">
+        <div class="relative w-full h-[400px] flex items-center justify-center overflow-hidden">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40">
+                <path d="M 50,200 Q 150,50 350,150" fill="none" stroke="url(#pinkGradient)"
+                      stroke-width="1"></path>
+                <path d="M 350,150 Q 200,350 50,300" fill="none" stroke="url(#cyanGradient)"
+                      stroke-width="1"></path>
+                <defs>
+                    <linearGradient id="pinkGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:var(--neon-pink);stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:transparent;stop-opacity:0"></stop>
+                    </linearGradient>
+                    <linearGradient id="cyanGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:var(--neon-cyan);stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:transparent;stop-opacity:0"></stop>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="relative z-10 aura-sprite-glow">
+                <img alt="Aura"
+                     class="w-64 h-80 object-cover rounded-full border-4 border-primary/20 grayscale contrast-125 brightness-110"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxOElZt6vQLuo39nyINPnVTtt2qUh5_7oWHIJwl7ONad5CAQo67DEHAUby18zlnN4LdRAQ61ueYmIal-rPLlBVGJgG1NOmltEqLekkhVTv3hyegK04dmL3X-DpMwhUIOxHpNWIY--Kk9u2iV6G3K2d-VKleu4ASZ8XoYOLn4Q3kZf7OIoRkd0yQTePikERIQa96L4gcb-98umCZvSKn8hs1NqvE3dDDJaqOopfANhlW6F4C2ViKiJa2bn9fwFXMFqIZ247-o016NY"
+                     style="clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);"/>
+                <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 pixel-font text-sm uppercase skew-x-[-12deg]">
+                    System_Artist: Aura
+                </div>
+            </div>
+            <div class="absolute left-4 top-12 theme-card p-2 w-28 rounded-sm rotate-[-6deg] opacity-80">
+                <div class="h-16 bg-gradient-to-br from-[#ff00e5] to-[#00f3ff] mb-1"></div>
+                <p class="pixel-font text-[8px] uppercase">Neon Pulse</p>
+            </div>
+            <div class="absolute right-4 top-20 theme-card p-2 w-28 rounded-sm rotate-[8deg] opacity-80">
+                <div class="h-16 bg-gray-900 border border-secondary/40 mb-1 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary/40">visibility_off</span>
+                </div>
+                <p class="pixel-font text-[8px] uppercase">Sentinel Dark</p>
+            </div>
+            <div class="absolute left-8 bottom-12 theme-card p-2 w-24 rounded-sm rotate-[-3deg] opacity-60">
+                <div class="h-14 bg-white/10 mb-1"></div>
+                <p class="pixel-font text-[8px] uppercase">Ghost V4</p>
+            </div>
+        </div>
+        <div class="px-6 pb-8 space-y-6">
+            <div class="flex items-center justify-between border-l-2 border-primary pl-4">
+                <div>
+                    <h3 class="pixel-font text-primary text-xs tracking-widest uppercase">Kernel
+                        Param</h3>
+                    <h4 class="text-xl font-bold tracking-tighter uppercase italic">UI Morphing</h4>
+                </div>
+                <div class="text-right">
+                    <span class="pixel-font text-secondary text-xs">STATUS: WEAVING</span>
+                </div>
+            </div>
+            <div class="space-y-4 bg-white/5 p-6 rounded-sm border border-white/10 relative">
+                <div class="flex justify-between items-end pixel-font text-[10px] text-white/60">
+                    <span class="text-secondary">ORDER</span>
+                    <span class="text-primary">CHAOS</span>
+                </div>
+                <input class="w-full h-1 bg-white/20 appearance-none morph-slider" max="100" min="0"
+                       type="range" value="42"/>
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-2">
+                        <div class="size-2 bg-secondary animate-pulse"></div>
+                        <div class="size-2 bg-secondary/40"></div>
+                        <div class="size-2 bg-secondary/20"></div>
                     </div>
-</div>
-<div class="absolute left-4 top-12 theme-card p-2 w-28 rounded-sm rotate-[-6deg] opacity-80">
-<div class="h-16 bg-gradient-to-br from-[#ff00e5] to-[#00f3ff] mb-1"></div>
-<p class="pixel-font text-[8px] uppercase">Neon Pulse</p>
-</div>
-<div class="absolute right-4 top-20 theme-card p-2 w-28 rounded-sm rotate-[8deg] opacity-80">
-<div class="h-16 bg-gray-900 border border-secondary/40 mb-1 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary/40">visibility_off</span>
-</div>
-<p class="pixel-font text-[8px] uppercase">Sentinel Dark</p>
-</div>
-<div class="absolute left-8 bottom-12 theme-card p-2 w-24 rounded-sm rotate-[-3deg] opacity-60">
-<div class="h-14 bg-white/10 mb-1"></div>
-<p class="pixel-font text-[8px] uppercase">Ghost V4</p>
-</div>
-</div>
-<div class="px-6 pb-8 space-y-6">
-<div class="flex items-center justify-between border-l-2 border-primary pl-4">
-<div>
-<h3 class="pixel-font text-primary text-xs tracking-widest uppercase">Kernel Param</h3>
-<h4 class="text-xl font-bold tracking-tighter uppercase italic">UI Morphing</h4>
-</div>
-<div class="text-right">
-<span class="pixel-font text-secondary text-xs">STATUS: WEAVING</span>
-</div>
-</div>
-<div class="space-y-4 bg-white/5 p-6 rounded-sm border border-white/10 relative">
-<div class="flex justify-between items-end pixel-font text-[10px] text-white/60">
-<span class="text-secondary">ORDER</span>
-<span class="text-primary">CHAOS</span>
-</div>
-<input class="w-full h-1 bg-white/20 appearance-none morph-slider" max="100" min="0" type="range" value="42"/>
-<div class="flex justify-between items-center">
-<div class="flex gap-2">
-<div class="size-2 bg-secondary animate-pulse"></div>
-<div class="size-2 bg-secondary/40"></div>
-<div class="size-2 bg-secondary/20"></div>
-</div>
-<p class="pixel-font text-xs text-white/80 uppercase">Entropy Index: <span class="text-primary">42.08%</span></p>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div class="p-4 border border-white/10 bg-black flex flex-col gap-2 group cursor-pointer overflow-hidden relative">
-<div class="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100">
-<span class="material-symbols-outlined text-secondary text-sm">north_east</span>
-</div>
-<span class="material-symbols-outlined text-secondary">grid_view</span>
-<p class="pixel-font text-[10px] uppercase">Layout Morph</p>
-</div>
-<div class="p-4 border border-white/10 bg-black flex flex-col gap-2 group cursor-pointer overflow-hidden relative">
-<div class="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100">
-<span class="material-symbols-outlined text-primary text-sm">north_east</span>
-</div>
-<span class="material-symbols-outlined text-primary">dynamic_form</span>
-<p class="pixel-font text-[10px] uppercase">Style Synthesis</p>
-</div>
-</div>
-</div>
-</main>
-<nav class="fixed bottom-0 left-0 right-0 h-20 bg-black border-t-2 border-primary/20 flex items-center justify-around px-6 z-50">
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
-<span class="material-symbols-outlined text-2xl">terminal</span>
-<span class="pixel-font text-[9px] uppercase">Terminal</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
-<span class="material-symbols-outlined text-2xl">database</span>
-<span class="pixel-font text-[9px] uppercase">Storage</span>
-</button>
-<button class="relative flex flex-col items-center gap-1 text-primary">
-<div class="absolute -top-4 size-1 bg-primary shadow-[0_0_8px_var(--neon-pink)]"></div>
-<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">auto_awesome_motion</span>
-<span class="pixel-font text-[9px] uppercase">Forge</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
-<span class="material-symbols-outlined text-2xl">hub</span>
-<span class="pixel-font text-[9px] uppercase">Network</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
-<span class="material-symbols-outlined text-2xl">fingerprint</span>
-<span class="pixel-font text-[9px] uppercase">Identity</span>
-</button>
-</nav>
-<div class="h-24"></div>
+                    <p class="pixel-font text-xs text-white/80 uppercase">Entropy Index: <span
+                            class="text-primary">42.08%</span></p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 border border-white/10 bg-black flex flex-col gap-2 group cursor-pointer overflow-hidden relative">
+                    <div class="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100">
+                        <span class="material-symbols-outlined text-secondary text-sm">north_east</span>
+                    </div>
+                    <span class="material-symbols-outlined text-secondary">grid_view</span>
+                    <p class="pixel-font text-[10px] uppercase">Layout Morph</p>
+                </div>
+                <div class="p-4 border border-white/10 bg-black flex flex-col gap-2 group cursor-pointer overflow-hidden relative">
+                    <div class="absolute top-0 right-0 p-1 opacity-0 group-hover:opacity-100">
+                        <span class="material-symbols-outlined text-primary text-sm">north_east</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary">dynamic_form</span>
+                    <p class="pixel-font text-[10px] uppercase">Style Synthesis</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-0 left-0 right-0 h-20 bg-black border-t-2 border-primary/20 flex items-center justify-around px-6 z-50">
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
+            <span class="material-symbols-outlined text-2xl">terminal</span>
+            <span class="pixel-font text-[9px] uppercase">Terminal</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
+            <span class="material-symbols-outlined text-2xl">database</span>
+            <span class="pixel-font text-[9px] uppercase">Storage</span>
+        </button>
+        <button class="relative flex flex-col items-center gap-1 text-primary">
+            <div class="absolute -top-4 size-1 bg-primary shadow-[0_0_8px_var(--neon-pink)]"></div>
+            <span class="material-symbols-outlined text-2xl"
+                  style="font-variation-settings: 'FILL' 1">auto_awesome_motion</span>
+            <span class="pixel-font text-[9px] uppercase">Forge</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
+            <span class="material-symbols-outlined text-2xl">hub</span>
+            <span class="pixel-font text-[9px] uppercase">Network</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-secondary transition-colors">
+            <span class="material-symbols-outlined text-2xl">fingerprint</span>
+            <span class="pixel-font text-[9px] uppercase">Identity</span>
+        </button>
+    </nav>
+    <div class="h-24"></div>
 </div>
 
-</body></html>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.ui.theme
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 
 /**
  * Cyberpunk text color scheme for themed text components.

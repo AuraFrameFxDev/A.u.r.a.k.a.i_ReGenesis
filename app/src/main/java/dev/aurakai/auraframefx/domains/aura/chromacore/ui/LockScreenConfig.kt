@@ -13,9 +13,7 @@
     "UnusedImport"
 )
 
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
-import dev.aurakai.auraframefx.domains.aura.animations.LockScreenConfigAnimation
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

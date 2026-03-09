@@ -16,7 +16,8 @@ class RecoveryManagerImpl @Inject constructor() : RecoveryManager {
     override fun checkRecoveryAccess(): Boolean {
         // Real check for recovery environment or system property
         return try {
-            val process = Runtime.getRuntime().exec("su -c '[ -d /cache/recovery ] || [ -d /system/recovery ]'")
+            val process = Runtime.getRuntime()
+                .exec("su -c '[ -d /cache/recovery ] || [ -d /system/recovery ]'")
             process.waitFor() == 0
         } catch (e: Exception) {
             false
@@ -25,7 +26,8 @@ class RecoveryManagerImpl @Inject constructor() : RecoveryManager {
     
     override fun isCustomRecoveryInstalled(): Boolean {
         // Real detection targeting popular custom recoveries
-        val cmd = "su -c 'grep -E \"TWRP|OrangeFox|SkyHawk|LineageOS Recovery\" /proc/version || [ -f /sbin/twrp ] || [ -f /system/bin/twrp ]'"
+        val cmd =
+            "su -c 'grep -E \"TWRP|OrangeFox|SkyHawk|LineageOS Recovery\" /proc/version || [ -f /sbin/twrp ] || [ -f /system/bin/twrp ]'"
         return try {
             val process = Runtime.getRuntime().exec(cmd)
             val result = process.waitFor() == 0

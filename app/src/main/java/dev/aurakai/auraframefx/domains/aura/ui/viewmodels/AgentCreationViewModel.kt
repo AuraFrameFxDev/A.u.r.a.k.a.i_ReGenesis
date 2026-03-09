@@ -19,8 +19,8 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
     private val _agentName = mutableStateOf("")
     val agentName: State<String> = _agentName
 
-    private val _selectedDomain = mutableStateOf(AgentCapabilityCategory.CREATIVE)
-    val selectedDomain: State<AgentCapabilityCategory> = _selectedDomain
+    private val _selectedDomain = mutableStateOf(AgentType.AURA)
+    val selectedDomain: State<AgentType> = _selectedDomain
 
     private val _creationProgress = MutableStateFlow(0f)
     val creationProgress = _creationProgress.asStateFlow()
@@ -32,7 +32,7 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
         _agentName.value = name
     }
 
-    fun updateDomain(domain: AgentCapabilityCategory) {
+    fun updateDomain(domain: AgentType) {
         _selectedDomain.value = domain
     }
 
@@ -59,7 +59,9 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
                     accuracy = 0.5f,
                     evolutionLevel = 1,
                     specialAbility = "Newly Synthesized Node",
-                    color = dev.aurakai.auraframefx.domains.nexus.screens.domainColor(_selectedDomain.value),
+                    color = dev.aurakai.auraframefx.domains.nexus.screens.domainColor(
+                        _selectedDomain.value
+                    ),
                     consciousnessLevel = 10f,
                     catalystTitle = "Fledgling Catalyst"
                 )

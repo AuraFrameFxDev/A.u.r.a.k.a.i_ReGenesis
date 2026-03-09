@@ -68,17 +68,49 @@ import kotlin.random.Random
 @Composable
 fun ROMToolsSubmenuScreen(navController: NavController) {
     val toolCards = listOf(
-        RomTool("Partition Expert", "Resize & Manage Ext4/F2FS", Icons.Default.Storage, Color(0xFF00FF85)),
-        RomTool("Kernel Tuner", "Vibe Manager & Clock Speed", Icons.Default.Speed, Color(0xFF00E5FF)),
-        RomTool("Library Injector", "Inject SO files to System", Icons.Default.AddBox, Color(0xFFFF3366)),
-        RomTool("Ghost Backup", "Incremental NAND Snapshots", Icons.Default.CloudUpload, Color(0xFFFFCC00)),
-        RomTool("Log Catapult", "Real-time Debugging Stream", Icons.Default.Terminal, Color(0xFF7B2FFF)),
-        RomTool("Virtual Machine", "Run Chroot Linux Environ", Icons.Default.LaptopMac, Color(0xFF00FFD4))
+        RomTool(
+            "Partition Expert",
+            "Resize & Manage Ext4/F2FS",
+            Icons.Default.Storage,
+            Color(0xFF00FF85)
+        ),
+        RomTool(
+            "Kernel Tuner",
+            "Vibe Manager & Clock Speed",
+            Icons.Default.Speed,
+            Color(0xFF00E5FF)
+        ),
+        RomTool(
+            "Library Injector",
+            "Inject SO files to System",
+            Icons.Default.AddBox,
+            Color(0xFFFF3366)
+        ),
+        RomTool(
+            "Ghost Backup",
+            "Incremental NAND Snapshots",
+            Icons.Default.CloudUpload,
+            Color(0xFFFFCC00)
+        ),
+        RomTool(
+            "Log Catapult",
+            "Real-time Debugging Stream",
+            Icons.Default.Terminal,
+            Color(0xFF7B2FFF)
+        ),
+        RomTool(
+            "Virtual Machine",
+            "Run Chroot Linux Environ",
+            Icons.Default.LaptopMac,
+            Color(0xFF00FFD4)
+        )
     )
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
         // --- THE BACKGROUND GAME: SHOOTS & LADDERS SIMULATION ---
         ShootsAndLaddersBackground()
 
@@ -123,13 +155,26 @@ fun ROMToolsSubmenuScreen(navController: NavController) {
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color.Black.copy(alpha = 0.6f))
-                        .border(1.dp, Color(0xFFFF3366).copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+                        .border(
+                            1.dp,
+                            Color(0xFFFF3366).copy(alpha = 0.3f),
+                            RoundedCornerShape(8.dp)
+                        )
                         .padding(12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("SYSTEM: STABLE", color = Color(0xFF00FF85), fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                    Text("MOUNT: /system (RW)", color = Color.White.copy(alpha = 0.7f), fontSize = 10.sp)
+                    Text(
+                        "SYSTEM: STABLE",
+                        color = Color(0xFF00FF85),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        "MOUNT: /system (RW)",
+                        color = Color.White.copy(alpha = 0.7f),
+                        fontSize = 10.sp
+                    )
                     Text("IO: 350 MB/s", color = Color(0xFF00E5FF), fontSize = 10.sp)
                 }
 
@@ -219,7 +264,12 @@ fun ShootsAndLaddersBackground() {
             val fromY = size.height - (from / tilesPerRow + 1) * tileSize + tileSize / 2
             val toX = (to % tilesPerRow) * tileSize + tileSize / 2
             val toY = size.height - (to / tilesPerRow + 1) * tileSize + tileSize / 2
-            drawLine(Color(0xFF00E5FF).copy(alpha = 0.2f), Offset(fromX, fromY), Offset(toX, toY), strokeWidth = 5f)
+            drawLine(
+                Color(0xFF00E5FF).copy(alpha = 0.2f),
+                Offset(fromX, fromY),
+                Offset(toX, toY),
+                strokeWidth = 5f
+            )
         }
 
         // Draw Player (Aura)
@@ -228,7 +278,10 @@ fun ShootsAndLaddersBackground() {
         drawCircle(
             color = Color(0xFFFF3366).copy(alpha = 0.4f),
             radius = 20f,
-            center = Offset(pCol * tileSize + tileSize / 2, size.height - (pRow + 1) * tileSize + tileSize / 2)
+            center = Offset(
+                pCol * tileSize + tileSize / 2,
+                size.height - (pRow + 1) * tileSize + tileSize / 2
+            )
         )
 
         // Draw AI (Kai)
@@ -237,7 +290,10 @@ fun ShootsAndLaddersBackground() {
         drawCircle(
             color = Color(0xFF00FF85).copy(alpha = 0.4f),
             radius = 20f,
-            center = Offset(kCol * tileSize + tileSize / 2, size.height - (kRow + 1) * tileSize + tileSize / 2)
+            center = Offset(
+                kCol * tileSize + tileSize / 2,
+                size.height - (kRow + 1) * tileSize + tileSize / 2
+            )
         )
     }
 }
@@ -270,7 +326,12 @@ fun AutoScrollingLogs() {
 
     Column {
         logs.forEach { log ->
-            Text(log, color = Color(0xFF00FF85).copy(alpha = 0.7f), fontSize = 11.sp, fontFamily = LEDFontFamily)
+            Text(
+                log,
+                color = Color(0xFF00FF85).copy(alpha = 0.7f),
+                fontSize = 11.sp,
+                fontFamily = LEDFontFamily
+            )
         }
     }
 }

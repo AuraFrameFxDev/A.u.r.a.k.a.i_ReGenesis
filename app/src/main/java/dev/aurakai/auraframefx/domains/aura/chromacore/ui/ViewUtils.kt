@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import dev.aurakai.auraframefx.R
+import dev.aurakai.auraframefx.aura.ui.ViewUtils.setViewTag
 
 /**
  * Utility class for view-related operations.

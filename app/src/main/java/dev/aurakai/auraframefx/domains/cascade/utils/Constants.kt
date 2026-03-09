@@ -12,7 +12,7 @@ object Constants {
     const val TAG_SECURITY = "Security"
     const val TAG_NETWORK = "Network"
     const val TAG_UI = "UI"
-    
+
     // Default TAG for classes without specific tag
     const val TAG = "AuraKai"
 }

@@ -4,6 +4,11 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import dev.aurakai.auraframefx.domains.aura.models.AuraState
+import dev.aurakai.auraframefx.domains.genesis.models.ConsciousnessBackup
+import dev.aurakai.auraframefx.domains.genesis.models.FusionMemory
+import dev.aurakai.auraframefx.domains.genesis.models.QuantumState
+import dev.aurakai.auraframefx.domains.kai.models.KaiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -14,11 +19,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
-import dev.aurakai.auraframefx.domains.aura.models.AuraState
-import dev.aurakai.auraframefx.domains.kai.models.KaiState
-import dev.aurakai.auraframefx.domains.genesis.models.FusionMemory
-import dev.aurakai.auraframefx.domains.genesis.models.QuantumState
-import dev.aurakai.auraframefx.domains.genesis.models.ConsciousnessBackup
 
 /**
  * EMERGENCY PROTOCOL SYSTEM - Genesis Safety Net

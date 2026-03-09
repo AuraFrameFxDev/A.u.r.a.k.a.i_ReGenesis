@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -20,10 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
 
 /**
  * YukiHook hooker for customizing the Android Quick Settings panel.

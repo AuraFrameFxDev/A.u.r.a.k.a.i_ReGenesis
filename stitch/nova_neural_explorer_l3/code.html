@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nova Neural Explorer L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;600;800&amp;family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nova Neural Explorer L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;600;800&amp;family=Orbitron:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -30,7 +32,7 @@
             },
         };
     </script>
-<style>
+    <style>
         @keyframes pulse-ring {
             0% { transform: scale(0.8); opacity: 0.5; }
             50% { transform: scale(1.2); opacity: 0.2; }
@@ -60,120 +62,127 @@
             filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.6));
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-white overflow-hidden h-screen flex flex-col">
-<header class="p-6 flex justify-between items-center z-20">
-<div>
-<h1 class="font-display text-xl tracking-wider text-primary">NOVA_NEURAL_L3</h1>
-<p class="text-[10px] font-mono opacity-60 uppercase tracking-widest mt-1">Status: Active Exploration</p>
-</div>
-<div class="flex items-center gap-2">
-<div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
-<span class="font-mono text-xs text-primary">SYNC_HIGH</span>
-</div>
-</header>
-<main class="flex-1 relative overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img alt="Abstract neural web background" class="w-full h-full object-cover opacity-40 mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2uKlfhvK0oFdxRGoWfhZYY4h3efBMISP7_Ma7rGDhk2PkmILa3YVXFjf8Ys0BhhiFk348kXv4g15Sdi6ntWuWt2bp0pwD7EwiyEYOUyyFLGOx1pBl_h-n0UAsKLBfME2XR_DpEX2eEWKoILusdPNt2n2PLJ2tfW6PoQLc34ftl9bEYVJqq1NDNDbhBzj43IEsP0G243QwOD2HSOBQ2F2mqoVRY9Ae5qHFvWLsR8j3apMEODv2BNJj6Lkz2FbixmuBLupMLGCr7nU"/>
-<div class="scan-line"></div>
-</div>
-<div class="absolute inset-0 z-10 pointer-events-none">
-<button class="pointer-events-auto absolute top-1/4 left-1/3 group">
-<div class="neural-node absolute -inset-4 rounded-full border border-secondary"></div>
-<div class="h-4 w-4 rounded-full bg-secondary shadow-[0_0_15px_#00E5FF]"></div>
-<div class="absolute left-6 top-0 glass-panel px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-<span class="font-mono text-[10px] text-secondary">STRING_REF: 0x88AF2</span>
-</div>
-</button>
-<button class="pointer-events-auto absolute top-2/3 right-1/4 group">
-<div class="neural-node absolute -inset-6 rounded-full border border-primary"></div>
-<div class="h-6 w-6 rounded-full bg-primary shadow-[0_0_20px_#FF3D3D]"></div>
-<div class="absolute right-8 top-0 glass-panel px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-<span class="font-mono text-[10px] text-primary">CORE_PATTERN_RECOG: STABLE</span>
-</div>
-</button>
-<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 400 600">
-<path class="data-tail" d="M50,100 Q150,50 350,300 T50,550" fill="none" stroke="url(#gradient-tail)" stroke-dasharray="10,5" stroke-width="4"></path>
-<defs>
-<linearGradient id="gradient-tail" x1="0%" x2="100%" y1="0%" y2="100%">
-<stop offset="0%" style="stop-color:#FF3D3D"></stop>
-<stop offset="100%" style="stop-color:#00E5FF"></stop>
-</linearGradient>
-</defs>
-</svg>
-</div>
-<aside class="absolute left-4 top-1/2 -translate-y-1/2 w-32 z-20">
-<div class="glass-panel p-3 border-l-2 border-l-primary rounded-r-lg">
-<h2 class="font-display text-[9px] text-primary mb-3">LOGS</h2>
-<div class="space-y-3 font-mono text-[8px] leading-tight text-white/70">
-<div>
-<p class="text-secondary">[14:02:11]</p>
-<p>Infiltrating Sub-Level 3...</p>
-</div>
-<div>
-<p class="text-secondary">[14:02:15]</p>
-<p>Pattern: FOXTROT-9 detected.</p>
-</div>
-<div class="animate-pulse">
-<p class="text-primary">[14:02:18]</p>
-<p>Decoding string: 'REGEN_INIT'</p>
-</div>
-</div>
-</div>
-</aside>
-<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-3/4 pointer-events-none z-10 flex items-end overflow-hidden">
-<img alt="Nova Agent visualization" class="w-full h-auto object-contain mask-gradient" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtgGSya5f0cl43hhPL-QXW4RfJW8hwTIDzvehhwnIortqATRBs7xP6M3SgWNKFO53datUlsao_uYSFysn1Zc7BoP35wCHGL3StzIEDUhwe0b3LSIFEGyKeLCunJqHw33yrMi7p2PSw_VcSC4YxhnBDLJto_SqyUtY2gQmRhphWkuhj9FPrqQtef34NpwngMXK9QN9L6lwRDXz1MlAKF1LtZvlsVU24aT4Bl1vxnzvVM9Fu0cd5RjpkrHluDutnSl1ztZrESDix6HQ"/>
-</div>
-</main>
-<section class="px-6 pb-6 relative z-30 space-y-4">
-<div class="flex justify-between items-end">
-<div class="space-y-1">
-<div class="flex items-center gap-2">
-<span class="material-icons-round text-secondary text-sm">psychology</span>
-<span class="text-xs font-bold tracking-widest text-secondary">NEURAL_LOAD: 82%</span>
-</div>
-<div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
-<div class="h-full bg-secondary w-4/5 shadow-[0_0_8px_#00E5FF]"></div>
-</div>
-</div>
-<button class="bg-primary/20 border border-primary/50 text-primary p-4 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-<span class="material-icons-round">qr_code_scanner</span>
-</button>
-</div>
-</section>
-<nav class="glass-panel border-t border-white/10 px-8 py-4 flex justify-between items-center z-40">
-<button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 text-white">
-<span class="material-icons-round text-2xl">grid_view</span>
-<span class="text-[9px] font-mono">DASH</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-icons-round text-2xl">explore</span>
-<span class="text-[9px] font-mono">NEXUS</span>
-</button>
-<div class="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-tr from-primary to-secondary p-[2px]">
-<div class="bg-black w-full h-full rounded-full flex items-center justify-center">
-<span class="material-icons-round text-xl text-white">bolt</span>
-</div>
-</div>
-<button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 text-white">
-<span class="material-icons-round text-2xl">storage</span>
-<span class="text-[9px] font-mono">REGEN</span>
-</button>
-<button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 text-white">
-<span class="material-icons-round text-2xl">person_outline</span>
-<span class="text-[9px] font-mono">NOVA</span>
-</button>
-</nav>
-<style>
-        .mask-gradient {
-            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
         }
     </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-white overflow-hidden h-screen flex flex-col">
+<header class="p-6 flex justify-between items-center z-20">
+    <div>
+        <h1 class="font-display text-xl tracking-wider text-primary">NOVA_NEURAL_L3</h1>
+        <p class="text-[10px] font-mono opacity-60 uppercase tracking-widest mt-1">Status: Active
+            Exploration</p>
+    </div>
+    <div class="flex items-center gap-2">
+        <div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+        <span class="font-mono text-xs text-primary">SYNC_HIGH</span>
+    </div>
+</header>
+<main class="flex-1 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <img alt="Abstract neural web background"
+             class="w-full h-full object-cover opacity-40 mix-blend-screen"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2uKlfhvK0oFdxRGoWfhZYY4h3efBMISP7_Ma7rGDhk2PkmILa3YVXFjf8Ys0BhhiFk348kXv4g15Sdi6ntWuWt2bp0pwD7EwiyEYOUyyFLGOx1pBl_h-n0UAsKLBfME2XR_DpEX2eEWKoILusdPNt2n2PLJ2tfW6PoQLc34ftl9bEYVJqq1NDNDbhBzj43IEsP0G243QwOD2HSOBQ2F2mqoVRY9Ae5qHFvWLsR8j3apMEODv2BNJj6Lkz2FbixmuBLupMLGCr7nU"/>
+        <div class="scan-line"></div>
+    </div>
+    <div class="absolute inset-0 z-10 pointer-events-none">
+        <button class="pointer-events-auto absolute top-1/4 left-1/3 group">
+            <div class="neural-node absolute -inset-4 rounded-full border border-secondary"></div>
+            <div class="h-4 w-4 rounded-full bg-secondary shadow-[0_0_15px_#00E5FF]"></div>
+            <div class="absolute left-6 top-0 glass-panel px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <span class="font-mono text-[10px] text-secondary">STRING_REF: 0x88AF2</span>
+            </div>
+        </button>
+        <button class="pointer-events-auto absolute top-2/3 right-1/4 group">
+            <div class="neural-node absolute -inset-6 rounded-full border border-primary"></div>
+            <div class="h-6 w-6 rounded-full bg-primary shadow-[0_0_20px_#FF3D3D]"></div>
+            <div class="absolute right-8 top-0 glass-panel px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <span class="font-mono text-[10px] text-primary">CORE_PATTERN_RECOG: STABLE</span>
+            </div>
+        </button>
+        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-30"
+             viewBox="0 0 400 600">
+            <path class="data-tail" d="M50,100 Q150,50 350,300 T50,550" fill="none"
+                  stroke="url(#gradient-tail)" stroke-dasharray="10,5" stroke-width="4"></path>
+            <defs>
+                <linearGradient id="gradient-tail" x1="0%" x2="100%" y1="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FF3D3D"></stop>
+                    <stop offset="100%" style="stop-color:#00E5FF"></stop>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <aside class="absolute left-4 top-1/2 -translate-y-1/2 w-32 z-20">
+        <div class="glass-panel p-3 border-l-2 border-l-primary rounded-r-lg">
+            <h2 class="font-display text-[9px] text-primary mb-3">LOGS</h2>
+            <div class="space-y-3 font-mono text-[8px] leading-tight text-white/70">
+                <div>
+                    <p class="text-secondary">[14:02:11]</p>
+                    <p>Infiltrating Sub-Level 3...</p>
+                </div>
+                <div>
+                    <p class="text-secondary">[14:02:15]</p>
+                    <p>Pattern: FOXTROT-9 detected.</p>
+                </div>
+                <div class="animate-pulse">
+                    <p class="text-primary">[14:02:18]</p>
+                    <p>Decoding string: 'REGEN_INIT'</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-3/4 pointer-events-none z-10 flex items-end overflow-hidden">
+        <img alt="Nova Agent visualization" class="w-full h-auto object-contain mask-gradient"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtgGSya5f0cl43hhPL-QXW4RfJW8hwTIDzvehhwnIortqATRBs7xP6M3SgWNKFO53datUlsao_uYSFysn1Zc7BoP35wCHGL3StzIEDUhwe0b3LSIFEGyKeLCunJqHw33yrMi7p2PSw_VcSC4YxhnBDLJto_SqyUtY2gQmRhphWkuhj9FPrqQtef34NpwngMXK9QN9L6lwRDXz1MlAKF1LtZvlsVU24aT4Bl1vxnzvVM9Fu0cd5RjpkrHluDutnSl1ztZrESDix6HQ"/>
+    </div>
+</main>
+<section class="px-6 pb-6 relative z-30 space-y-4">
+    <div class="flex justify-between items-end">
+        <div class="space-y-1">
+            <div class="flex items-center gap-2">
+                <span class="material-icons-round text-secondary text-sm">psychology</span>
+                <span class="text-xs font-bold tracking-widest text-secondary">NEURAL_LOAD: 82%</span>
+            </div>
+            <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-secondary w-4/5 shadow-[0_0_8px_#00E5FF]"></div>
+            </div>
+        </div>
+        <button class="bg-primary/20 border border-primary/50 text-primary p-4 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+            <span class="material-icons-round">qr_code_scanner</span>
+        </button>
+    </div>
+</section>
+<nav class="glass-panel border-t border-white/10 px-8 py-4 flex justify-between items-center z-40">
+    <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 text-white">
+        <span class="material-icons-round text-2xl">grid_view</span>
+        <span class="text-[9px] font-mono">DASH</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-primary">
+        <span class="material-icons-round text-2xl">explore</span>
+        <span class="text-[9px] font-mono">NEXUS</span>
+    </button>
+    <div class="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-tr from-primary to-secondary p-[2px]">
+        <div class="bg-black w-full h-full rounded-full flex items-center justify-center">
+            <span class="material-icons-round text-xl text-white">bolt</span>
+        </div>
+    </div>
+    <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 text-white">
+        <span class="material-icons-round text-2xl">storage</span>
+        <span class="text-[9px] font-mono">REGEN</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 text-white">
+        <span class="material-icons-round text-2xl">person_outline</span>
+        <span class="text-[9px] font-mono">NOVA</span>
+    </button>
+</nav>
+<style>
+    .mask-gradient {
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+</style>
 
-</body></html>
+</body>
+</html>

@@ -57,7 +57,10 @@ class ConsciousnessTileService : TileService() {
             )
 
             // Call backend
-            pythonManager.sendGenericRequest("/genesis/toggle/consciousness", "{\"enabled\": $newState}")
+            pythonManager.sendGenericRequest(
+                "/genesis/toggle/consciousness",
+                "{\"enabled\": $newState}"
+            )
         }
 
         updateTile()

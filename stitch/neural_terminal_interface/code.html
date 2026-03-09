@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Neural Terminal Interface</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-<script>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Terminal Interface</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,7 +30,7 @@
             },
         };
     </script>
-<style>
+    <style>
         @keyframes scanline {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100%); }
@@ -66,127 +68,146 @@
             border-radius: 2px;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-mono text-gray-800 dark:text-primary overflow-hidden h-screen flex flex-col">
 <div class="fixed inset-0 pointer-events-none opacity-30 circuit-bg"></div>
 <div class="fixed inset-0 pointer-events-none scanline-effect opacity-20"></div>
 <header class="relative z-10 px-4 pt-8 pb-2 flex justify-between items-end border-b border-primary/20 bg-black/40 backdrop-blur-md">
-<div class="flex flex-col">
-<span class="text-[10px] uppercase tracking-widest text-primary/60">System Uptime</span>
-<span class="text-sm font-bold glow-cyan">04:22:11:89</span>
-</div>
-<div class="flex flex-col items-center">
-<div class="h-1 w-12 bg-primary/20 rounded-full overflow-hidden mb-1">
-<div class="h-full bg-primary w-2/3 shadow-[0_0_8px_#00f3ff]"></div>
-</div>
-<span class="text-[12px] font-bold uppercase tracking-tighter glow-cyan">Neural Terminal v2.0</span>
-</div>
-<div class="flex flex-col items-end">
-<span class="text-[10px] uppercase tracking-widest text-secondary/60">Enc Status</span>
-<span class="text-sm font-bold text-secondary glow-pink">ENCRYPTED</span>
-</div>
+    <div class="flex flex-col">
+        <span class="text-[10px] uppercase tracking-widest text-primary/60">System Uptime</span>
+        <span class="text-sm font-bold glow-cyan">04:22:11:89</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <div class="h-1 w-12 bg-primary/20 rounded-full overflow-hidden mb-1">
+            <div class="h-full bg-primary w-2/3 shadow-[0_0_8px_#00f3ff]"></div>
+        </div>
+        <span class="text-[12px] font-bold uppercase tracking-tighter glow-cyan">Neural Terminal v2.0</span>
+    </div>
+    <div class="flex flex-col items-end">
+        <span class="text-[10px] uppercase tracking-widest text-secondary/60">Enc Status</span>
+        <span class="text-sm font-bold text-secondary glow-pink">ENCRYPTED</span>
+    </div>
 </header>
 <main class="flex-1 overflow-hidden relative p-4 flex flex-col gap-4">
-<div class="flex-1 overflow-y-auto terminal-scroll font-mono text-xs space-y-2 pb-20">
-<div class="flex gap-2">
-<span class="text-secondary opacity-80">[04:22:10]</span>
-<span class="text-primary/70">INITIATING_CHROMACORE_KERNEL...</span>
-</div>
-<div class="flex gap-2">
-<span class="text-secondary opacity-80">[04:22:10]</span>
-<span class="text-green-400">SUCCESS: Aura.soul integrated.</span>
-</div>
-<div class="flex gap-2">
-<span class="text-secondary opacity-80">[04:22:11]</span>
-<span class="text-primary/70">SCANNING_LOCAL_MODULES...</span>
-</div>
-<div class="p-2 bg-primary/5 border-l-2 border-primary/40 my-2">
-<p class="text-primary text-[10px] leading-relaxed">
-                    LOAD_MODULE: Spellhook_v4.2<br/>
-                    STATUS: Operational<br/>
-                    EFFICIENCY: 98.4%<br/>
-                    CONTEXT: UI/UX Neural Adaptation
-                </p>
-</div>
-<div class="flex gap-2">
-<span class="text-secondary opacity-80">[04:22:11]</span>
-<span class="text-yellow-400">WARNING: Visual artifacts detected in Kai cluster.</span>
-</div>
-<div class="flex gap-2">
-<span class="text-secondary opacity-80">[04:22:11]</span>
-<span class="text-primary/70">Executing dynamic_theme_shift.exe --agent=Aura</span>
-</div>
-<div class="flex gap-2">
-<span class="text-secondary opacity-80">[04:22:11]</span>
-<span class="text-green-400">Neural link established. Awaiting command...</span>
-</div>
-<div class="flex items-center gap-1">
-<span class="text-primary">root@neural_terminal:~$</span>
-<span class="w-2 h-4 bg-primary animate-pulse"></span>
-</div>
-</div>
-<div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-<div class="px-3 py-1 bg-black border border-primary/40 rounded-full flex items-center gap-2 backdrop-blur-md">
-<div class="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
-<span class="text-[10px] font-bold text-primary">LIVE_STREAM</span>
-</div>
-</div>
+    <div class="flex-1 overflow-y-auto terminal-scroll font-mono text-xs space-y-2 pb-20">
+        <div class="flex gap-2">
+            <span class="text-secondary opacity-80">[04:22:10]</span>
+            <span class="text-primary/70">INITIATING_CHROMACORE_KERNEL...</span>
+        </div>
+        <div class="flex gap-2">
+            <span class="text-secondary opacity-80">[04:22:10]</span>
+            <span class="text-green-400">SUCCESS: Aura.soul integrated.</span>
+        </div>
+        <div class="flex gap-2">
+            <span class="text-secondary opacity-80">[04:22:11]</span>
+            <span class="text-primary/70">SCANNING_LOCAL_MODULES...</span>
+        </div>
+        <div class="p-2 bg-primary/5 border-l-2 border-primary/40 my-2">
+            <p class="text-primary text-[10px] leading-relaxed">
+                LOAD_MODULE: Spellhook_v4.2<br/>
+                STATUS: Operational<br/>
+                EFFICIENCY: 98.4%<br/>
+                CONTEXT: UI/UX Neural Adaptation
+            </p>
+        </div>
+        <div class="flex gap-2">
+            <span class="text-secondary opacity-80">[04:22:11]</span>
+            <span class="text-yellow-400">WARNING: Visual artifacts detected in Kai cluster.</span>
+        </div>
+        <div class="flex gap-2">
+            <span class="text-secondary opacity-80">[04:22:11]</span>
+            <span class="text-primary/70">Executing dynamic_theme_shift.exe --agent=Aura</span>
+        </div>
+        <div class="flex gap-2">
+            <span class="text-secondary opacity-80">[04:22:11]</span>
+            <span class="text-green-400">Neural link established. Awaiting command...</span>
+        </div>
+        <div class="flex items-center gap-1">
+            <span class="text-primary">root@neural_terminal:~$</span>
+            <span class="w-2 h-4 bg-primary animate-pulse"></span>
+        </div>
+    </div>
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div class="px-3 py-1 bg-black border border-primary/40 rounded-full flex items-center gap-2 backdrop-blur-md">
+            <div class="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
+            <span class="text-[10px] font-bold text-primary">LIVE_STREAM</span>
+        </div>
+    </div>
 </main>
 <div class="bg-black/80 backdrop-blur-xl border-t border-primary/20 p-2 pb-8">
-<div class="flex flex-col gap-2 max-w-md mx-auto">
-<div class="flex justify-between gap-1">
-<button class="flex-1 h-12 bg-primary/10 border border-primary/30 text-primary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">ESC</button>
-<button class="flex-1 h-12 bg-primary/10 border border-primary/30 text-primary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">TAB</button>
-<button class="flex-1 h-12 bg-primary/10 border border-primary/30 text-primary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">DEL</button>
-<button class="flex-1 h-12 bg-secondary/10 border border-secondary/30 text-secondary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">SENS</button>
-</div>
-<div class="flex justify-between gap-1">
-<button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">A</button>
-<button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">U</button>
-<button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">R</button>
-<button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">A</button>
-<button class="flex-1 h-12 bg-primary/20 border border-primary text-black flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">EXECUTE</button>
-</div>
-<div class="flex justify-between gap-2 px-1">
-<div class="flex gap-2">
-<button class="w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center text-primary">
-<span class="material-icons-round text-sm">mic</span>
-</button>
-<button class="w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center text-primary">
-<span class="material-icons-round text-sm">code</span>
-</button>
-</div>
-<div class="flex-1 h-10 bg-primary/5 border border-primary/20 rounded flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 bg-primary/10 w-1/3"></div>
-<span class="text-[10px] text-primary tracking-[0.2em] font-bold">SCANNING INPUT...</span>
-</div>
-</div>
-</div>
+    <div class="flex flex-col gap-2 max-w-md mx-auto">
+        <div class="flex justify-between gap-1">
+            <button class="flex-1 h-12 bg-primary/10 border border-primary/30 text-primary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">
+                ESC
+            </button>
+            <button class="flex-1 h-12 bg-primary/10 border border-primary/30 text-primary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">
+                TAB
+            </button>
+            <button class="flex-1 h-12 bg-primary/10 border border-primary/30 text-primary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">
+                DEL
+            </button>
+            <button class="flex-1 h-12 bg-secondary/10 border border-secondary/30 text-secondary text-xs flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">
+                SENS
+            </button>
+        </div>
+        <div class="flex justify-between gap-1">
+            <button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">
+                A
+            </button>
+            <button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">
+                U
+            </button>
+            <button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">
+                R
+            </button>
+            <button class="w-10 h-12 bg-primary/5 border border-primary/20 text-primary flex items-center justify-center font-bold key-shadow">
+                A
+            </button>
+            <button class="flex-1 h-12 bg-primary/20 border border-primary text-black flex items-center justify-center font-bold key-shadow active:translate-y-1 active:shadow-none">
+                EXECUTE
+            </button>
+        </div>
+        <div class="flex justify-between gap-2 px-1">
+            <div class="flex gap-2">
+                <button class="w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center text-primary">
+                    <span class="material-icons-round text-sm">mic</span>
+                </button>
+                <button class="w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center text-primary">
+                    <span class="material-icons-round text-sm">code</span>
+                </button>
+            </div>
+            <div class="flex-1 h-10 bg-primary/5 border border-primary/20 rounded flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-primary/10 w-1/3"></div>
+                <span class="text-[10px] text-primary tracking-[0.2em] font-bold">SCANNING INPUT...</span>
+            </div>
+        </div>
+    </div>
 </div>
 <nav class="h-16 bg-black border-t border-primary/10 flex items-center justify-around px-4 relative z-50">
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-icons-round text-primary group-hover:scale-110 transition-transform">memory</span>
-<span class="text-[8px] font-bold text-primary/60 uppercase">Cores</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-icons-round text-secondary scale-125 glow-pink">terminal</span>
-<span class="text-[8px] font-bold text-secondary uppercase">Terminal</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-icons-round text-primary/40 group-hover:text-primary transition-colors">grid_view</span>
-<span class="text-[8px] font-bold text-primary/40 uppercase">Arsenal</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<span class="material-icons-round text-primary/40 group-hover:text-primary transition-colors">settings_input_component</span>
-<span class="text-[8px] font-bold text-primary/40 uppercase">Config</span>
-</button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-icons-round text-primary group-hover:scale-110 transition-transform">memory</span>
+        <span class="text-[8px] font-bold text-primary/60 uppercase">Cores</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-icons-round text-secondary scale-125 glow-pink">terminal</span>
+        <span class="text-[8px] font-bold text-secondary uppercase">Terminal</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-icons-round text-primary/40 group-hover:text-primary transition-colors">grid_view</span>
+        <span class="text-[8px] font-bold text-primary/40 uppercase">Arsenal</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-icons-round text-primary/40 group-hover:text-primary transition-colors">settings_input_component</span>
+        <span class="text-[8px] font-bold text-primary/40 uppercase">Config</span>
+    </button>
 </nav>
 <div class="fixed top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
 <div class="fixed bottom-0 left-0 w-64 h-64 bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-</body></html>
+</body>
+</html>

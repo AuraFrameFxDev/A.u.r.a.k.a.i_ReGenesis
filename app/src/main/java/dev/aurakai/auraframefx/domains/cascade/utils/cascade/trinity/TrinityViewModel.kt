@@ -20,7 +20,8 @@ open class TrinityViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     // Persistent history of the collective brainstorming session
-    private val _messageHistory = MutableStateFlow<List<dev.aurakai.auraframefx.domains.cascade.models.AgentMessage>>(emptyList())
+    private val _messageHistory =
+        MutableStateFlow<List<dev.aurakai.auraframefx.models.AgentMessage>>(emptyList())
     val messageHistory = _messageHistory.asStateFlow()
 
     // The Nervous System: Real-time multi-agent message stream
@@ -129,7 +130,7 @@ open class TrinityViewModel @Inject constructor(
                     updateState {
                         it.copy(
                             lastAgentResponse = response,
-                            lastAgentCategory = agentType
+                            lastAgentType = agentType
                         )
                     }
                 }.onFailure { error ->

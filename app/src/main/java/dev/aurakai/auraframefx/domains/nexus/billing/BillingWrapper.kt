@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.billing
+package dev.aurakai.auraframefx.billing
 
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,13 +16,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.debug
  */
 @Composable
 fun BillingWrapper(
-    viewModel: SubscriptionViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: SubscriptionViewModel = hiltViewModel(),
     content: @Composable () -> Unit
 ) {
     val subscriptionState by viewModel.subscriptionState.collectAsState()

@@ -1,8 +1,17 @@
 package dev.aurakai.auraframefx.navigation.gates.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +54,8 @@ fun GateCard(
         Box(modifier = Modifier.fillMaxSize()) {
             // Background Image
             val resId = context.resources.getIdentifier(
-                config.pixelArtUrl ?: config.fallbackUrl ?: "", 
-                "drawable", 
+                config.pixelArtUrl ?: config.fallbackUrl ?: "",
+                "drawable",
                 context.packageName
             )
 
@@ -55,7 +64,7 @@ fun GateCard(
                     model = resId,
                     contentDescription = config.title,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Fit  // Fit preserves full artwork frame — both cards match
                 )
             } else {
                 // Fallback gradient if no resource
@@ -100,7 +109,7 @@ fun GateCard(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 4.sp
                 )
-                
+
                 Text(
                     text = config.subtitle.uppercase(),
                     color = config.glowColor,
@@ -117,9 +126,9 @@ fun GateCard(
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.height(24.dp))
-                
+
                 Text(
                     text = "DOUBLE TAP TO CORE",
                     color = config.glowColor,

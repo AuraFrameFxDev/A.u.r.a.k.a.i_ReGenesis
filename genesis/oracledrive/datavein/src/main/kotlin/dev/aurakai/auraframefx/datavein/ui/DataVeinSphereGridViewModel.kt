@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.datavein.ui
 
-import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.datavein.model.DataVeinNode
 import dev.aurakai.auraframefx.datavein.model.GridData
 import dev.aurakai.auraframefx.datavein.model.NodeConnection
@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -81,19 +82,19 @@ class DataVeinSphereGridViewModel @Inject constructor() : ViewModel() {
      */
     fun activateNode(nodeId: String) {
         viewModelScope.launch {
-            val currentGrid = _gridData.value
-            val updatedNodes = currentGrid.nodes.map { node ->
-                if (node.id == nodeId && node.isUnlocked) {
-                    node.copy(
-                        activated = true,
-                        xp = minOf(node.xp + 100, 1000) // Gain XP for activation
-                    )
-                } else {
-                    node
+            _gridData.update { currentGrid ->
+                val updatedNodes = currentGrid.nodes.map { node ->
+                    if (node.id == nodeId && node.isUnlocked) {
+                        node.copy(
+                            activated = true,
+                            xp = minOf(node.xp + 100, 1000) // Gain XP for activation
+                        )
+                    } else {
+                        node
+                    }
                 }
+                currentGrid.copy(nodes = updatedNodes)
             }
-
-            _gridData.value = currentGrid.copy(nodes = updatedNodes)
 
             // Check for newly unlocked nodes
             checkAndUnlockConnectedNodes(nodeId)
@@ -104,27 +105,27 @@ class DataVeinSphereGridViewModel @Inject constructor() : ViewModel() {
      * Unlock nodes connected to an activated node (FFX-style progression)
      */
     private fun checkAndUnlockConnectedNodes(activatedNodeId: String) {
-        val currentGrid = _gridData.value
-        currentGrid.nodes.find { it.id == activatedNodeId && it.activated }
-            ?: return
+        _gridData.update { currentGrid ->
+            val activatedNode = currentGrid.nodes.find { it.id == activatedNodeId && it.activated }
+            if (activatedNode == null) return@update currentGrid
 
-        // Find connected nodes that should be unlocked
-        val connectedNodeIds = currentGrid.connections
-            .filter { it.from == activatedNodeId || it.to == activatedNodeId }
-            .map { if (it.from == activatedNodeId) it.to else it.from }
+            // Find connected nodes that should be unlocked
+            val connectedNodeIds = currentGrid.connections
+                .filter { it.from == activatedNodeId || it.to == activatedNodeId }
+                .map { if (it.from == activatedNodeId) it.to else it.from }
 
-        val updatedNodes = currentGrid.nodes.map { node ->
-            if (node.id in connectedNodeIds && !node.isUnlocked) {
-                node.copy(
-                    isUnlocked = true,
-                    connectedPaths = node.connectedPaths + activatedNodeId
-                )
-            } else {
-                node
+            val updatedNodes = currentGrid.nodes.map { node ->
+                if (node.id in connectedNodeIds && !node.isUnlocked) {
+                    node.copy(
+                        isUnlocked = true,
+                        connectedPaths = node.connectedPaths + activatedNodeId
+                    )
+                } else {
+                    node
+                }
             }
+            currentGrid.copy(nodes = updatedNodes)
         }
-
-        _gridData.value = currentGrid.copy(nodes = updatedNodes)
     }
 
     /**

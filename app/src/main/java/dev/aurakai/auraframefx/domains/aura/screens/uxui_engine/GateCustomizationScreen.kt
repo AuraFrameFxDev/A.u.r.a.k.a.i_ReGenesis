@@ -1,378 +1,209 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Wallpaper
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationPreferences
+import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🎨 GATE CUSTOMIZATION SCREEN
- * 
- * Allows users to customize gate appearances by uploading their own images
- * for each gate style (Style A, Style B, Fallback).
+ * ⛩️ GATE CUSTOMIZATION SCREEN
+ * Modernized with Anime HUD aesthetics.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GateCustomizationScreen(
-    onNavigateBack: () -> Unit
-) {
-    var selectedDomain by remember { mutableStateOf("aura") }
-    var selectedGateId by remember { mutableStateOf<String?>(null) }
-    var customImages by remember { mutableStateOf<Map<String, GateCustomization>>(emptyMap()) }
+fun GateCustomizationScreen(onNavigateBack: () -> Unit) {
+    val context = LocalContext.current
+    val scrollState = rememberScrollState()
 
-    val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { imageUri ->
-            selectedGateId?.let { gateId ->
-                // Store custom image URI
-                customImages = customImages + (gateId to GateCustomization(
-                    styleAUri = imageUri.toString(),
-                    styleBUri = null,
-                    fallbackUri = null
-                ))
-            }
-        }
+    var navDrawerBgUri by remember { mutableStateOf<Uri?>(null) }
+    var navDrawerBgScale by remember { mutableStateOf(ContentScale.Crop) }
+    var splashScreenUri by remember { mutableStateOf<Uri?>(null) }
+    var splashScreenScale by remember { mutableStateOf(ContentScale.Crop) }
+
+    LaunchedEffect(Unit) {
+        navDrawerBgUri = CustomizationPreferences.getNavDrawerBackgroundUri(context)
+        navDrawerBgScale = CustomizationPreferences.getNavDrawerBackgroundScale(context)
+        splashScreenUri = CustomizationPreferences.getSplashScreenImageUri(context)
+        splashScreenScale = CustomizationPreferences.getSplashScreenImageScale(context)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Gate Customization",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontFamily = LEDFontFamily,
-                            fontWeight = FontWeight.Bold,
-                            letterSpacing = 2.sp
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, "Back")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        // Save customizations to preferences
-                    }) {
-                        Icon(Icons.Default.Save, "Save Changes")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF1A1A2E),
-                    titleContentColor = Color(0xFF00FF85)
-                )
-            )
-        },
-        containerColor = Color(0xFF0A0A0F)
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // Domain Selector
-            DomainSelector(
-                selectedDomain = selectedDomain,
-                onDomainSelected = { selectedDomain = it }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Gate List
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                val gates = when (selectedDomain) {
-                    "aura" -> listOf(
-                        GateInfo("chromacore", "ChromaCore", "Material You Engine", Color(0xFF6200EE)),
-                        GateInfo("aura_lab", "Aura's Lab", "UI Sandbox", Color(0xFFBB86FC)),
-                        GateInfo("collab_canvas", "CollabCanvas", "Collaborative Design", Color(0xFF00E5FF)),
-                        GateInfo("themes", "Themes", "Theme Selection", Color(0xFFFF6F00)),
-                        GateInfo("uxui_engine", "UXUI Engine", "Full Customization", Color(0xFFFFD700))
-                    )
-                    "kai" -> listOf(
-                        GateInfo("ethical_governor", "Ethical Governor", "9-Domain Oversight", Color(0xFFFFD700)),
-                        GateInfo("security_shield", "Security Shield", "Encryption & VPN", Color(0xFF00E676)),
-                        GateInfo("bootloader", "Bootloader", "System BIOS", Color(0xFF2979FF)),
-                        GateInfo("rom_tools", "ROM Tools", "Flasher & Editor", Color(0xFFFF3D00))
-                    )
-                    "genesis" -> listOf(
-                        GateInfo("oracle_drive", "Oracle Drive", "Neural Persistence", Color(0xFF00B0FF))
-                    )
-                    else -> emptyList()
-                }
-
-                items(gates) { gate ->
-                    GateCustomizationCard(
-                        gate = gate,
-                        customization = customImages[gate.id],
-                        onEditClick = {
-                            selectedGateId = gate.id
-                            imagePickerLauncher.launch("image/*")
-                        },
-                        onResetClick = {
-                            customImages = customImages - gate.id
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun DomainSelector(
-    selectedDomain: String,
-    onDomainSelected: (String) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        DomainChip(
-            label = "Aura",
-            isSelected = selectedDomain == "aura",
-            color = Color(0xFFBB86FC),
-            onClick = { onDomainSelected("aura") }
-        )
-        DomainChip(
-            label = "Kai",
-            isSelected = selectedDomain == "kai",
-            color = Color(0xFF00E676),
-            onClick = { onDomainSelected("kai") }
-        )
-        DomainChip(
-            label = "Genesis",
-            isSelected = selectedDomain == "genesis",
-            color = Color(0xFF00B0FF),
-            onClick = { onDomainSelected("genesis") }
-        )
-    }
-}
-
-@Composable
-private fun RowScope.DomainChip(
-    label: String,
-    isSelected: Boolean,
-    color: Color,
-    onClick: () -> Unit
-) {
     Box(
         modifier = Modifier
-            .weight(1f)
-            .height(48.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(
-                if (isSelected) color.copy(alpha = 0.3f)
-                else Color(0xFF1A1A2E)
-            )
-            .border(
-                width = 2.dp,
-                color = if (isSelected) color else Color(0xFF2A2A3E),
-                shape = RoundedCornerShape(24.dp)
-            )
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
+            .fillMaxSize()
+            .background(Color(0xFF030305))
     ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge.copy(
-                color = if (isSelected) color else Color.White,
-                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                fontFamily = LEDFontFamily
-            )
-        )
+        AnimeHUDContainer(
+            title = "GATE CUSTOMIZATION",
+            description = "RECONFIGURE THE SYSTEM VESTIBULES. SPLASH AND DRAWER LAYER SYNC ACTIVE.",
+            glowColor = Color(0xFF00E5FF)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
+                    .verticalScroll(scrollState)
+            ) {
+                IconButton(onClick = onNavigateBack, modifier = Modifier.padding(bottom = 16.dp)) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                }
+
+                CustomizationSection(
+                    title = "NAVIGATION DRAWER",
+                    description = "Choose the image for the main system sidebar.",
+                    imageUri = navDrawerBgUri,
+                    onSelect = { /* TODO: Launch picker */ },
+                    onRemove = {
+                        navDrawerBgUri = null
+                        CustomizationPreferences.saveNavDrawerBackground(
+                            context,
+                            null,
+                            ContentScale.Crop
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                CustomizationSection(
+                    title = "SPLASH SCREEN",
+                    description = "Configure the visual for the system boot-up sequence.",
+                    imageUri = splashScreenUri,
+                    onSelect = { /* TODO: Launch picker */ },
+                    onRemove = {
+                        splashScreenUri = null
+                        CustomizationPreferences.saveSplashScreenImage(
+                            context,
+                            null,
+                            ContentScale.Crop
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(64.dp))
+            }
+        }
     }
 }
 
 @Composable
-private fun GateCustomizationCard(
-    gate: GateInfo,
-    customization: GateCustomization?,
-    onEditClick: () -> Unit,
-    onResetClick: () -> Unit
+private fun CustomizationSection(
+    title: String,
+    description: String,
+    imageUri: Uri?,
+    onSelect: () -> Unit,
+    onRemove: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1A1A2E)
-        ),
-        shape = RoundedCornerShape(16.dp)
+        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.05f)),
+        shape = RoundedCornerShape(16.dp),
+        border = androidx.compose.foundation.BorderStroke(1.dp, Color.Cyan.copy(alpha = 0.2f))
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // Gate Header
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = gate.title,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            color = gate.accentColor,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = LEDFontFamily
-                        )
-                    )
-                    Text(
-                        text = gate.subtitle,
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.White.copy(alpha = 0.6f)
-                        )
-                    )
-                }
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                title,
+                fontFamily = LEDFontFamily,
+                color = Color.Cyan,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp
+            )
+            Text(
+                description,
+                color = Color.White.copy(alpha = 0.6f),
+                fontSize = 11.sp,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
 
-                // Status Badge
-                if (customization != null) {
-                    Surface(
-                        color = Color(0xFF00FF85).copy(alpha = 0.2f),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                Icons.Default.Check,
-                                contentDescription = null,
-                                tint = Color(0xFF00FF85),
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Text(
-                                "Custom",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    color = Color(0xFF00FF85),
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Image Preview (Placeholder - URI stored)
-            if (customization?.styleAUri != null) {
+            if (imageUri != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(gate.accentColor.copy(alpha = 0.3f)),
-                    contentAlignment = Alignment.Center
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.Black)
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.Check,
-                            contentDescription = null,
-                            tint = gate.accentColor,
-                            modifier = Modifier.size(32.dp)
-                        )
-                        Text(
-                            "Custom Image Set",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = Color.White.copy(alpha = 0.7f)
-                            )
-                        )
-                    }
+                    AsyncImage(
+                        model = imageUri,
+                        contentDescription = title,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
                 }
-
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Action Buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                OutlinedButton(
-                    onClick = onEditClick,
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    onClick = onSelect,
                     modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = gate.accentColor
-                    ),
-                    border = ButtonDefaults.outlinedButtonBorder.copy(
-                        brush = Brush.linearGradient(
-                            colors = listOf(gate.accentColor, gate.accentColor.copy(alpha = 0.5f))
-                        )
-                    )
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Cyan.copy(alpha = 0.2f)),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.Cyan)
                 ) {
                     Icon(
-                        Icons.Default.Edit,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp)
+                        Icons.Default.Wallpaper,
+                        null,
+                        tint = Color.Cyan,
+                        modifier = Modifier.size(16.dp)
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(if (customization != null) "Change" else "Upload")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("SELECT", color = Color.White, fontSize = 12.sp)
                 }
 
-                if (customization != null) {
+                if (imageUri != null) {
                     OutlinedButton(
-                        onClick = onResetClick,
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Color(0xFFFF3D00)
+                        onClick = onRemove,
+                        modifier = Modifier.weight(0.5f),
+                        border = androidx.compose.foundation.BorderStroke(
+                            1.dp,
+                            Color.Red.copy(alpha = 0.5f)
                         )
                     ) {
-                        Icon(
-                            Icons.Default.Refresh,
-                            contentDescription = "Reset to Default",
-                            modifier = Modifier.size(18.dp)
-                        )
+                        Text("REMOVE", color = Color.Red.copy(alpha = 0.8f), fontSize = 10.sp)
                     }
                 }
             }
         }
     }
 }
-
-// Data Classes
-private data class GateInfo(
-    val id: String,
-    val title: String,
-    val subtitle: String,
-    val accentColor: Color
-)
-
-private data class GateCustomization(
-    val styleAUri: String?,
-    val styleBUri: String?,
-    val fallbackUri: String?
-)
-
-

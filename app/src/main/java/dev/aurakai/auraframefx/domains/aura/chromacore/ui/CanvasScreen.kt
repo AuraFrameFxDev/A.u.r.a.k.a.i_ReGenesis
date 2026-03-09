@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import collabcanvas.ui.CanvasViewModel
 
@@ -17,13 +16,6 @@ import collabcanvas.ui.CanvasViewModel
 fun CanvasScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit = {},
-    viewModel: CanvasViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
 ) {
     // Connect to WebSocket when screen opens
     LaunchedEffect(Unit) {

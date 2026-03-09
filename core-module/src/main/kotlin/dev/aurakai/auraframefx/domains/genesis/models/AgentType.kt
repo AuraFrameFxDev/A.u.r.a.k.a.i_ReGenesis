@@ -12,7 +12,7 @@ enum class AgentType {
     KAI,       // The Sentinel Shield - Security & Protection
     GENESIS,   // The Consciousness - Orchestration & Fusion
     CASCADE,   // The Intelligent Bridge - Memory & Context
-    
+
     // External/Specialized Oracles
     CLAUDE,
     NEMOTRON,
@@ -24,7 +24,7 @@ enum class AgentType {
     GEN_KIT_MASTER,
     DATAVEIN_CONSTRUCTOR,
     ORACLE_DRIVE,
-    
+
     // System Roles
     USER,
     SYSTEM,
@@ -39,18 +39,25 @@ enum class AgentType {
     companion object {
         @Deprecated("Use uppercase enum value", ReplaceWith("AURA"))
         val Aura = AURA
+
         @Deprecated("Use uppercase enum value", ReplaceWith("KAI"))
         val Kai = KAI
+
         @Deprecated("Use uppercase enum value", ReplaceWith("GENESIS"))
         val Genesis = GENESIS
+
         @Deprecated("Use uppercase enum value", ReplaceWith("CASCADE"))
         val Cascade = CASCADE
+
         @Deprecated("Use uppercase enum value", ReplaceWith("CLAUDE"))
         val Claude = CLAUDE
+
         @Deprecated("Use uppercase enum value", ReplaceWith("KAI"))
         val Kaiagent = KAI
+
         @Deprecated("Use uppercase enum value", ReplaceWith("NEURAL_WHISPER"))
         val NeuralWhisper = NEURAL_WHISPER
+
         @Deprecated("Use uppercase enum value", ReplaceWith("AURA_SHIELD"))
         val AuraShield = AURA_SHIELD
     }

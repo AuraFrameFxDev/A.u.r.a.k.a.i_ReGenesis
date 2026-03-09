@@ -1,15 +1,28 @@
 package dev.aurakai.colorblendr
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.scale
@@ -23,7 +36,6 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
-import kotlin.math.pow
 import kotlin.math.sin
 
 /**
@@ -128,10 +140,12 @@ object ChromaCoreEnhanced {
     }
 
     private fun relativeLuminance(color: Color): Float {
-        val r = if (color.red <= 0.03928f) color.red / 12.92f else ((color.red + 0.055) / 1.055).pow(2.4).toFloat()
-        val g = if (color.green <= 0.03928f) color.green / 12.92f else ((color.green + 0.055) / 1.055)
-            .pow(2.4).toFloat()
-        val b = if (color.blue <= 0.03928f) color.blue / 12.92f else Math.pow(((color.blue + 0.055) / 1.055).toDouble(), 2.4).toFloat()
+        val r =
+            if (color.red <= 0.03928f) color.red / 12.92f else Math.pow(((color.red + 0.055) / 1.055).toDouble(
+                ), 2.4).toFloat()
+        val g = if (color.green <= 0.03928f) color.green / 12.92f else Math.pow(((color.green + 0.055) / 1.055).toDouble(), 2.4).toFloat()
+        val b = if (color.blue <= 0.03928f) color.blue / 12.92f else ((color.blue + 0.055) / 1.055)
+            .pow( 2.4).toFloat()
 
         return 0.2126f * r + 0.7152f * g + 0.0722f * b
     }
@@ -164,12 +178,11 @@ object ChromaCoreEnhanced {
  * - Proper touch targets (48dp minimum)
  */
 @Composable
-fun NeonGlowOrb(
+fun Modifier.NeonGlowOrb(
     color: Color,
     size: Float = 120f,
     onClick: (() -> Unit)? = null,
-    contentDescription: String = "Neon orb",
-    modifier: Modifier = Modifier
+    contentDescription: String = "Neon orb"
 ) {
     val haptic = LocalHapticFeedback.current
     val interactionSource = remember { MutableInteractionSource() }
@@ -204,8 +217,7 @@ fun NeonGlowOrb(
     )
 
     Box(
-        modifier = modifier
-            .size((size * 1.5f).dp) // Larger touch target (48dp minimum)
+        modifier = size((size * 1.5f).dp) // Larger touch target (48dp minimum)
             .semantics {
                 this.contentDescription = contentDescription
                 this.role = Role.Button
@@ -337,7 +349,7 @@ fun AnimatedOrbField(
                         alpha = 0.6f + 0.4f * sin((index * PI / colors.size).toFloat())
                     }
             ) {
-                NeonGlowOrb(
+                Modifier.NeonGlowOrb(
                     color = color,
                     size = 80f + (index * 20f)
                 )

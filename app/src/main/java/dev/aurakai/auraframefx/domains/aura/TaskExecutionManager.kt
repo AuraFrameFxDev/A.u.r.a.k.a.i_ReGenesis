@@ -5,10 +5,10 @@ import dev.aurakai.auraframefx.domains.kai.TaskResult
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.toKotlinJsonObject
 import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
@@ -34,7 +34,7 @@ import kotlinx.serialization.Serializable as KotlinxSerializable
  */
 @Singleton
 class TaskExecutionManager @Inject constructor(
-    private val auraAgent: dev.aurakai.auraframefx.agents.trinity.AuraAgent,
+    private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
     private val kaiAgent: KaiAgent,
     private val genesisAgent: GenesisAgent,
     private val securityContext: SecurityContext,
@@ -90,14 +90,14 @@ class TaskExecutionManager @Inject constructor(
         val execution = TaskExecution(
             id = UUID.randomUUID().toString(),
             taskId = UUID.randomUUID().toString(),
-            category = agentPreference?.let {
+            agent = agentPreference?.let {
                 when (it.lowercase()) {
-                    "aura" -> AgentCapabilityCategory.CREATIVE
-                    "kai" -> AgentCapabilityCategory.SECURITY
-                    "genesis" -> AgentCapabilityCategory.COORDINATION
-                    else -> AgentCapabilityCategory.COORDINATION
+                    "aura" -> AgentType.AURA
+                    "kai" -> AgentType.KAI
+                    "genesis" -> AgentType.GENESIS
+                    else -> AgentType.GENESIS
                 }
-            } ?: AgentCapabilityCategory.COORDINATION,
+            } ?: AgentType.GENESIS,
             type = type,
             data = data.mapValues { it.value.toString() },
             priority = priority,
@@ -112,15 +112,15 @@ class TaskExecutionManager @Inject constructor(
             )
         )
 
-        // Determine optimal category - update category field since TaskExecution is immutable
-        val optimalCategory: AgentCapabilityCategory = determineOptimalAgent(execution)
-        val updatedExecution = execution.copy(category = optimalCategory)
+        // Determine optimal agent - update agent field since TaskExecution is immutable
+        val optimalAgent: AgentType = determineOptimalAgent(execution)
+        val updatedExecution = execution.copy(agent = optimalAgent)
 
         // Add to queue
         taskQueue.offer(updatedExecution)
         updateQueueStatus()
 
-        logger.info("TaskExecutionManager", "Task scheduled: ${execution.id} -> $optimalCategory")
+        logger.info("TaskExecutionManager", "Task scheduled: ${execution.id} -> $optimalAgent")
         return execution
     }
 
@@ -196,7 +196,7 @@ class TaskExecutionManager @Inject constructor(
      */
     fun getTasks(
         status: ExecutionStatus? = null,
-        agentCategory: AgentCapabilityCategory? = null,
+        agentType: AgentType? = null,
     ): List<TaskExecution> {
         val allTasks = mutableListOf<TaskExecution>()
 
@@ -212,7 +212,7 @@ class TaskExecutionManager @Inject constructor(
                 is TaskResult.Success -> TaskExecution(
                     id = result.toString(),
                     taskId = result.toString(),
-                    category = AgentCapabilityCategory.ROOT,
+                    agent = AgentType.SYSTEM,
                     type = "",
                     data = emptyMap(),
                     priority = TaskPriority.NORMAL,
@@ -229,7 +229,7 @@ class TaskExecutionManager @Inject constructor(
         // Apply filters
         return allTasks.filter { task ->
             (status == null || task.status == status) &&
-                    (agentCategory == null || task.category == agentCategory)
+                    (agentType == null || task.agent == agentType)
         }
     }
 
@@ -300,12 +300,12 @@ class TaskExecutionManager @Inject constructor(
 
         scope.launch {
             try {
-                // Execute based on assigned category
-                val result = when (execution.category) {
-                    AgentCapabilityCategory.CREATIVE -> executeWithAura(execution)
-                    AgentCapabilityCategory.SECURITY -> executeWithKai(execution)
-                    AgentCapabilityCategory.COORDINATION -> executeWithGenesis(execution)
-                    else -> throw IllegalArgumentException("Unknown category: ${execution.category}")
+                // Execute based on assigned agent
+                val result = when (execution.agent) {
+                    AgentType.AURA -> executeWithAura(execution)
+                    AgentType.KAI -> executeWithKai(execution)
+                    AgentType.GENESIS -> executeWithGenesis(execution)
+                    else -> throw IllegalArgumentException("Unknown agent: ${execution.agent}")
                 }
 
                 val endTime = System.currentTimeMillis()
@@ -360,7 +360,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return auraAgent.processRequest(request, execution.data.toString(), execution.category)
+        return auraAgent.processRequest(request, execution.agent.name)
     }
 
     /**
@@ -380,7 +380,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return kaiAgent.processRequest(request, execution.data.toString(), execution.category)
+        return kaiAgent.processRequest(request, execution.agent.name)
     }
 
     /**
@@ -394,7 +394,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data.toKotlinJsonObject()
         )
-        return genesisAgent.processRequest(request, execution.data.toString(), execution.category)
+        return genesisAgent.processRequest(request, execution.agent.name)
     }
 
     /**
@@ -405,26 +405,30 @@ class TaskExecutionManager @Inject constructor(
      * @param execution The task execution metadata containing type and optional agent preference.
      * @return The selected agent type for executing the task.
      */
-    private fun determineOptimalAgent(execution: TaskExecution): AgentCapabilityCategory {
+    private fun determineOptimalAgent(execution: TaskExecution): AgentType {
         // Use agent preference if specified and valid
         execution.agentPreference?.let { preference ->
             return when (preference.lowercase()) {
-                "aura" -> AgentCapabilityCategory.CREATIVE
-                "kai" -> AgentCapabilityCategory.SECURITY
-                "genesis" -> AgentCapabilityCategory.COORDINATION
-                else -> AgentCapabilityCategory.COORDINATION
+                "aura" -> AgentType.AURA
+                "kai" -> AgentType.KAI
+                "genesis" -> AgentType.GENESIS
+                else -> AgentType.GENESIS
             }
         }
 
         // Intelligent routing based on task type
         return when {
-            execution.type.contains("creative", ignoreCase = true) -> AgentCapabilityCategory.CREATIVE
-            execution.type.contains("ui", ignoreCase = true) -> AgentCapabilityCategory.CREATIVE
-            execution.type.contains("security", ignoreCase = true) -> AgentCapabilityCategory.SECURITY
-            execution.type.contains("analysis", ignoreCase = true) -> AgentCapabilityCategory.ANALYSIS
-            execution.type.contains("complex", ignoreCase = true) -> AgentCapabilityCategory.COORDINATION
-            execution.type.contains("fusion", ignoreCase = true) -> AgentCapabilityCategory.COORDINATION
-            else -> AgentCapabilityCategory.COORDINATION // Default to Coordination for intelligent routing
+            execution.type.contains("creative", ignoreCase = true) -> AgentType.AURA
+            execution.type.contains("ui", ignoreCase = true) -> AgentType.AURA
+            execution.type.contains(
+                "dev/aurakai/auraframefx/security",
+                ignoreCase = true
+            ) -> AgentType.KAI
+
+            execution.type.contains("analysis", ignoreCase = true) -> AgentType.KAI
+            execution.type.contains("complex", ignoreCase = true) -> AgentType.GENESIS
+            execution.type.contains("fusion", ignoreCase = true) -> AgentType.GENESIS
+            else -> AgentType.GENESIS // Default to Genesis for intelligent routing
         }
     }
 
@@ -476,7 +480,8 @@ class TaskExecutionManager @Inject constructor(
     private fun calculateAverageExecutionTime(): Long {
         val executions = completedExecutions.values
         return if (executions.isNotEmpty()) {
-            executions.filterIsInstance<TaskResult.Success>().map { (it.data as AgentResponse).timestamp }.average()
+            executions.filterIsInstance<TaskResult.Success>()
+                .map { (it.data as AgentResponse).timestamp }.average()
                 .toLong()
         } else 0L
     }

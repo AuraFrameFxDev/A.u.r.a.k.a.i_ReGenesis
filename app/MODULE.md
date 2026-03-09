@@ -93,7 +93,7 @@ app/
 
 ### Core Components
 
-#### ReGenesisApplication
+#### AurakaiApplication
 Main Application class that initializes:
 - Hilt dependency injection
 - YukiHook Xposed framework

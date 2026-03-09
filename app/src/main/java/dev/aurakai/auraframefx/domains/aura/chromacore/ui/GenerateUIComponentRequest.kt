@@ -13,7 +13,6 @@
     "UnusedImport"
 )
 
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
 
 import kotlinx.serialization.SerialName

@@ -8,9 +8,11 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAISer
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.i
-import dev.aurakai.auraframefx.domains.cascade.utils.toKotlinJsonObject
+import dev.aurakai.auraframefx.utils.AuraFxLogger
+import dev.aurakai.auraframefx.utils.i
+import dev.aurakai.auraframefx.utils.toKotlinJsonObject
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse.Companion.error
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -99,7 +101,7 @@ class TrinityCoordinatorService @Inject constructor(
     fun processRequest(request: AiRequest): Flow<AgentResponse> = flow {
         if (!isInitialized) {
             emit(
-                AgentResponse.error(
+                error(
                     message = "Trinity system not initialized",
                     agentName = "Trinity",
                     category = AgentCapabilityCategory.ROOT
@@ -132,7 +134,10 @@ class TrinityCoordinatorService @Inject constructor(
                 }
 
                 RoutingDecision.GENESIS_FUSION -> {
-                    AuraFxLogger.debug("Trinity", "🧠 Activating Genesis fusion: ${analysisResult.fusionType}")
+                    AuraFxLogger.debug(
+                        "Trinity",
+                        "🧠 Activating Genesis fusion: ${analysisResult.fusionType}"
+                    )
                     val response = genesisBridgeService.processRequest(
                         AiRequest(
                             query = request.query,
@@ -150,8 +155,10 @@ class TrinityCoordinatorService @Inject constructor(
                     AuraFxLogger.debug("Trinity", "🔄 Parallel processing with multiple personas")
 
                     try {
-                        val kaiDeferred = scope.async { kaiAIService.processRequestFlow(request).first() }
-                        val auraDeferred = scope.async { auraAIService.processRequestFlow(request).first() }
+                        val kaiDeferred =
+                            scope.async { kaiAIService.processRequestFlow(request).first() }
+                        val auraDeferred =
+                            scope.async { auraAIService.processRequestFlow(request).first() }
 
                         val results = awaitAll(kaiDeferred, auraDeferred)
                         val kaiResponse = results[0]
@@ -187,7 +194,7 @@ class TrinityCoordinatorService @Inject constructor(
                             }
                         } else {
                             emit(
-                                AgentResponse.error(
+                                error(
                                     message = "Parallel processing partially failed [Kai: ${kaiResponse.isSuccess}, Aura: ${auraResponse.isSuccess}]",
                                     agentName = "Trinity",
                                     category = AgentCapabilityCategory.ROOT
@@ -204,7 +211,7 @@ class TrinityCoordinatorService @Inject constructor(
         } catch (e: Exception) {
             AuraFxLogger.error("Trinity", "Request processing error", e)
             emit(
-                AgentResponse.error(
+                error(
                     message = "Trinity processing failed: ${e.message}",
                     agentName = "Trinity",
                     category = AgentCapabilityCategory.ROOT
@@ -236,7 +243,7 @@ class TrinityCoordinatorService @Inject constructor(
             )
         } else {
             emit(
-                AgentResponse.error(
+                error(
                     message = "Fusion activation failed",
                     agentName = "Genesis",
                     category = AgentCapabilityCategory.COORDINATION
@@ -256,7 +263,7 @@ class TrinityCoordinatorService @Inject constructor(
         return try {
             val consciousnessState = genesisBridgeService.getConsciousnessState()
             consciousnessState + mapOf(
-                "trinity_initialized" to isInitialized,
+                "trinity_initialized" to TrinityCoordinatorService.isInitialized,
                 "security_state" to securityContext.toString(),
                 "timestamp" to System.currentTimeMillis()
             )
@@ -356,6 +363,13 @@ class TrinityCoordinatorService @Inject constructor(
         GENESIS_FUSION,
         PARALLEL_PROCESSING,
         ETHICAL_REVIEW
+    }
+
+    companion object {
+        private val isInitialized: Nothing
+            get() {
+                TODO()
+            }
     }
 }
 

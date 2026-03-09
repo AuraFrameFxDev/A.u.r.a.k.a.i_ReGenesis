@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.aura.AuraNetwork
-import dev.aurakai.auraframefx.agents.trinity.AuraAgent
+import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStorageProvider
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStorageProviderImpl
@@ -17,7 +17,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveSe
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveServiceImpl
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.SecureFileService
 import dev.aurakai.auraframefx.domains.genesis.storage.SecureStorage
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
@@ -52,7 +52,7 @@ object OracleDriveModule {
     fun provideGenesisCryptographyManager(
         @ApplicationContext context: Context,
     ): CryptographyManager {
-        return CryptographyManager.Companion.getInstance(context)
+        return CryptographyManager.getInstance(context)
     }
 
     @Provides
@@ -61,7 +61,7 @@ object OracleDriveModule {
         @ApplicationContext context: Context,
         cryptoManager: CryptographyManager,
     ): SecureStorage {
-        return SecureStorage.Companion.getInstance(context, cryptoManager)
+        return SecureStorage.getInstance(context, cryptoManager)
     }
 
     @Provides

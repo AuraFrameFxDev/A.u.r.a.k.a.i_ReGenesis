@@ -453,7 +453,8 @@ class OracleDriveSandbox @Inject constructor(
 
             // Using Gson for simple persistence as it's already in the classpath
             val gson = com.google.gson.Gson()
-            val type = object : com.google.gson.reflect.TypeToken<List<SandboxEnvironment>>() {}.type
+            val type =
+                object : com.google.gson.reflect.TypeToken<List<SandboxEnvironment>>() {}.type
             val loadedSandboxes: List<SandboxEnvironment> = gson.fromJson(jsonContent, type)
 
             if (loadedSandboxes.isNotEmpty()) {
@@ -491,7 +492,10 @@ class OracleDriveSandbox @Inject constructor(
      * @param sandbox The sandbox environment for which to create isolation.
      */
     private suspend fun createIsolatedEnvironment(sandbox: SandboxEnvironment) {
-        AuraFxLogger.debug("OracleDriveSandbox", "Creating isolated environment for ${sandbox.name}")
+        AuraFxLogger.debug(
+            "OracleDriveSandbox",
+            "Creating isolated environment for ${sandbox.name}"
+        )
 
         // Create sandbox directory structure
         val sandboxRoot = File("/data/data/${context.packageName}/sandboxes/${sandbox.id}")
@@ -502,13 +506,19 @@ class OracleDriveSandbox @Inject constructor(
         File(sandboxRoot, "work").apply { mkdirs() }
         File(sandboxRoot, "merged").apply { mkdirs() }
 
-        AuraFxLogger.debug("OracleDriveSandbox", "Created overlay filesystem: upper=${upperDir.path}")
+        AuraFxLogger.debug(
+            "OracleDriveSandbox",
+            "Created overlay filesystem: upper=${upperDir.path}"
+        )
 
         // Initialize process isolation
         AuraFxLogger.debug("OracleDriveSandbox", "Configuring process isolation for sandbox")
 
         // Set up resource limits
-        AuraFxLogger.debug("OracleDriveSandbox", "Applying resource limits (CPU: 50%, Memory: 512MB)")
+        AuraFxLogger.debug(
+            "OracleDriveSandbox",
+            "Applying resource limits (CPU: 50%, Memory: 512MB)"
+        )
 
         // Configure network isolation
         AuraFxLogger.debug("OracleDriveSandbox", "Setting up network namespace isolation")
@@ -538,16 +548,23 @@ class OracleDriveSandbox @Inject constructor(
         // Sophisticated risk assessment based on multiple factors
 
         // Critical system paths
-        val criticalPaths = listOf("/boot", "/system/bin", "/system/lib", "/init", "/system/framework")
+        val criticalPaths =
+            listOf("/boot", "/system/bin", "/system/lib", "/init", "/system/framework")
         if (criticalPaths.any { targetFile.startsWith(it) }) {
-            AuraFxLogger.warn("OracleDriveSandbox", "CRITICAL: Modifying critical system path: $targetFile")
+            AuraFxLogger.warn(
+                "OracleDriveSandbox",
+                "CRITICAL: Modifying critical system path: $targetFile"
+            )
             return RiskLevel.CRITICAL
         }
 
         // High risk paths
         val highRiskPaths = listOf("/system", "/vendor", "/product")
         if (highRiskPaths.any { targetFile.startsWith(it) }) {
-            AuraFxLogger.warn("OracleDriveSandbox", "HIGH RISK: Modifying system partition: $targetFile")
+            AuraFxLogger.warn(
+                "OracleDriveSandbox",
+                "HIGH RISK: Modifying system partition: $targetFile"
+            )
             return RiskLevel.HIGH
         }
 
@@ -560,7 +577,10 @@ class OracleDriveSandbox @Inject constructor(
         // Analyze content for suspicious patterns
         val contentStr = String(content.take(1024).toByteArray())
         if (contentStr.contains("su") || contentStr.contains("root") || contentStr.contains("/system/xbin")) {
-            AuraFxLogger.warn("OracleDriveSandbox", "HIGH RISK: Suspicious content patterns detected")
+            AuraFxLogger.warn(
+                "OracleDriveSandbox",
+                "HIGH RISK: Suspicious content patterns detected"
+            )
             return RiskLevel.HIGH
         }
 
@@ -570,7 +590,10 @@ class OracleDriveSandbox @Inject constructor(
             return RiskLevel.MEDIUM
         }
 
-        AuraFxLogger.debug("OracleDriveSandbox", "LOW RISK: Standard file modification: $targetFile")
+        AuraFxLogger.debug(
+            "OracleDriveSandbox",
+            "LOW RISK: Standard file modification: $targetFile"
+        )
         return RiskLevel.LOW
     }
 
@@ -602,18 +625,28 @@ class OracleDriveSandbox @Inject constructor(
             // Size limit check (max 50MB)
             val maxSize = 50 * 1024 * 1024
             if (file.length() > maxSize) {
-                AuraFxLogger.warn("OracleDriveSandbox", "File too large (${file.length()} bytes), truncating")
+                AuraFxLogger.warn(
+                    "OracleDriveSandbox",
+                    "File too large (${file.length()} bytes), truncating"
+                )
                 // Read only first 50MB
                 file.inputStream().use { it.readBytes().take(maxSize).toByteArray() }
             } else {
                 // Read entire file safely
                 file.readBytes().also {
-                    AuraFxLogger.debug("OracleDriveSandbox", "Read ${it.size} bytes from $targetFile")
+                    AuraFxLogger.debug(
+                        "OracleDriveSandbox",
+                        "Read ${it.size} bytes from $targetFile"
+                    )
                 }
             }
 
         } catch (e: SecurityException) {
-            AuraFxLogger.error("OracleDriveSandbox", "Security exception reading file: $targetFile", e)
+            AuraFxLogger.error(
+                "OracleDriveSandbox",
+                "Security exception reading file: $targetFile",
+                e
+            )
             ByteArray(0)
         } catch (e: Exception) {
             AuraFxLogger.error("OracleDriveSandbox", "Error reading file: $targetFile", e)
@@ -633,7 +666,10 @@ class OracleDriveSandbox @Inject constructor(
         sandbox: SandboxEnvironment,
         modification: SystemModification,
     ) {
-        AuraFxLogger.debug("OracleDriveSandbox", "Applying modification in sandbox: ${modification.description}")
+        AuraFxLogger.debug(
+            "OracleDriveSandbox",
+            "Applying modification in sandbox: ${modification.description}"
+        )
 
         try {
             // Write to sandbox overlay filesystem (upper layer)
@@ -703,7 +739,10 @@ class OracleDriveSandbox @Inject constructor(
      * @return A TestResult indicating the simulated outcome and any warnings.
      */
     private suspend fun testModification(modification: SystemModification): TestResult {
-        AuraFxLogger.debug("OracleDriveSandbox", "Testing modification: ${modification.description}")
+        AuraFxLogger.debug(
+            "OracleDriveSandbox",
+            "Testing modification: ${modification.description}"
+        )
 
         val warnings = mutableListOf<String>()
         val errors = mutableListOf<String>()
@@ -736,7 +775,7 @@ class OracleDriveSandbox @Inject constructor(
 
         // Test 6: Size reasonableness
         if (modification.id.length > 100 * 1024 * 1024) { // >100MB
-            warnings.add("Very large modification (${modification.id.length / (1024*1024)}MB)")
+            warnings.add("Very large modification (${modification.id.length / (1024 * 1024)}MB)")
         }
 
         val status = when {
@@ -745,7 +784,10 @@ class OracleDriveSandbox @Inject constructor(
             else -> "Passed"
         }
 
-        i("OracleDriveSandbox", "Test result: $status (${warnings.size} warnings, ${errors.size} errors)")
+        i(
+            "OracleDriveSandbox",
+            "Test result: $status (${warnings.size} warnings, ${errors.size} errors)"
+        )
 
         return TestResult(
             status = status,
@@ -812,7 +854,10 @@ class OracleDriveSandbox @Inject constructor(
 
         // Block if too many failed attempts
         if (failedAttempts >= 3) {
-            AuraFxLogger.error("OracleDriveSandbox", "Too many failed confirmation attempts - locked out")
+            AuraFxLogger.error(
+                "OracleDriveSandbox",
+                "Too many failed confirmation attempts - locked out"
+            )
             return false
         }
 
@@ -822,10 +867,13 @@ class OracleDriveSandbox @Inject constructor(
                 putInt("failed_confirmation_attempts", failedAttempts + 1)
                     .putLong("last_confirmation_attempt", System.currentTimeMillis())
             }
-            AuraFxLogger.warn("OracleDriveSandbox", "Confirmation failed - attempt ${failedAttempts + 1}/3")
+            AuraFxLogger.warn(
+                "OracleDriveSandbox",
+                "Confirmation failed - attempt ${failedAttempts + 1}/3"
+            )
         } else {
             // Reset on success
-            prefs.edit {putInt("failed_confirmation_attempts", 0)}
+            prefs.edit { putInt("failed_confirmation_attempts", 0) }
             i("OracleDriveSandbox", "Confirmation code verified successfully")
         }
 
@@ -839,7 +887,10 @@ class OracleDriveSandbox @Inject constructor(
      * @return A [SafetyCheck] indicating whether the sandbox is safe for real system application, with a reason for the decision.
      */
     private suspend fun performFinalSafetyCheck(sandbox: SandboxEnvironment): SafetyCheck {
-        i("OracleDriveSandbox", "Performing comprehensive final safety check for sandbox: ${sandbox.name}")
+        i(
+            "OracleDriveSandbox",
+            "Performing comprehensive final safety check for sandbox: ${sandbox.name}"
+        )
 
         val issues = mutableListOf<String>()
 
@@ -868,7 +919,10 @@ class OracleDriveSandbox @Inject constructor(
 
         if (failedTests.isNotEmpty()) {
             issues.add("${failedTests.size} modifications failed testing")
-            AuraFxLogger.error("OracleDriveSandbox", "Safety check FAILED: ${failedTests.size} tests failed")
+            AuraFxLogger.error(
+                "OracleDriveSandbox",
+                "Safety check FAILED: ${failedTests.size} tests failed"
+            )
             return SafetyCheck(isSafe = false, reason = "Modifications failed testing")
         }
 
@@ -885,8 +939,14 @@ class OracleDriveSandbox @Inject constructor(
                 File("/system/bin/su").exists()
 
         if (!isRooted) {
-            AuraFxLogger.warn("OracleDriveSandbox", "Device not rooted - system modifications will fail")
-            return SafetyCheck(isSafe = false, reason = "Device not rooted - cannot apply system modifications")
+            AuraFxLogger.warn(
+                "OracleDriveSandbox",
+                "Device not rooted - system modifications will fail"
+            )
+            return SafetyCheck(
+                isSafe = false,
+                reason = "Device not rooted - cannot apply system modifications"
+            )
         }
 
         // Check 7: Backup verification
@@ -902,7 +962,10 @@ class OracleDriveSandbox @Inject constructor(
             issues.joinToString("; ")
         }
 
-        i("OracleDriveSandbox", "Final safety check result: ${if (isSafe) "PASS" else "FAIL"} - $reason")
+        i(
+            "OracleDriveSandbox",
+            "Final safety check result: ${if (isSafe) "PASS" else "FAIL"} - $reason"
+        )
 
         return SafetyCheck(isSafe = isSafe, reason = reason)
     }
@@ -944,10 +1007,17 @@ class OracleDriveSandbox @Inject constructor(
                     } else {
                         // Mark for deletion on rollback (new file)
                         backupMap[mod.targetFile] = byteArrayOf() // Empty marker
-                        AuraFxLogger.debug("OracleDriveSandbox", "New file marker: ${mod.targetFile}")
+                        AuraFxLogger.debug(
+                            "OracleDriveSandbox",
+                            "New file marker: ${mod.targetFile}"
+                        )
                     }
                 } catch (e: Exception) {
-                    AuraFxLogger.error("OracleDriveSandbox", "Backup failed for ${mod.targetFile}", e)
+                    AuraFxLogger.error(
+                        "OracleDriveSandbox",
+                        "Backup failed for ${mod.targetFile}",
+                        e
+                    )
                     throw Exception("Backup phase failed: ${e.message}")
                 }
             }
@@ -977,7 +1047,11 @@ class OracleDriveSandbox @Inject constructor(
                     )
 
                 } catch (e: Exception) {
-                    AuraFxLogger.error("OracleDriveSandbox", "Modification failed for ${mod.targetFile}", e)
+                    AuraFxLogger.error(
+                        "OracleDriveSandbox",
+                        "Modification failed for ${mod.targetFile}",
+                        e
+                    )
                     throw Exception("Application phase failed at ${mod.targetFile}: ${e.message}")
                 }
             }
@@ -1011,7 +1085,11 @@ class OracleDriveSandbox @Inject constructor(
                         AuraFxLogger.debug("OracleDriveSandbox", "Rollback: Restored $path")
                     }
                 } catch (rollbackError: Exception) {
-                    AuraFxLogger.error("OracleDriveSandbox", "Rollback failed for $path", rollbackError)
+                    AuraFxLogger.error(
+                        "OracleDriveSandbox",
+                        "Rollback failed for $path",
+                        rollbackError
+                    )
                     rollbackSuccess = false
                 }
             }

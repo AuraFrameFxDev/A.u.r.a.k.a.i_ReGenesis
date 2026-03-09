@@ -11,7 +11,6 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,22 +44,56 @@ class GenKitMaster @Inject constructor(
                 val response = callSpecialist(bestAgent, prompt, context)
                 response.content
             }
+
             GenerationStrategy.MULTI_MODEL_FUSION -> {
                 val responses = coroutineScope {
-                    val deferredClaude = async { claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.ARCHITECTURAL), context, AgentCapabilityCategory.ANALYSIS) }
-                    val deferredNemotron = async { nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.REASONING), context, AgentCapabilityCategory.MEMORY) }
-                    val deferredGemini = async { geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.PATTERN), context, AgentCapabilityCategory.CREATIVE) }
+                    val deferredClaude = async {
+                        claudeService.processRequest(
+                            AiRequest(
+                                query = prompt,
+                                type = AiRequestType.ARCHITECTURAL
+                            ), context
+                        )
+                    }
+                    val deferredNemotron = async {
+                        nemotronService.processRequest(
+                            AiRequest(
+                                query = prompt,
+                                type = AiRequestType.REASONING
+                            ), context
+                        )
+                    }
+                    val deferredGemini = async {
+                        geminiService.processRequest(
+                            AiRequest(
+                                query = prompt,
+                                type = AiRequestType.PATTERN
+                            ), context
+                        )
+                    }
 
                     listOf(deferredClaude.await(), deferredNemotron.await(), deferredGemini.await())
                 }
                 fuseResponses(responses)
             }
+
             GenerationStrategy.CREATIVE_ONLY -> {
-                val geminiResponse = geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.CREATIVE), context, AgentCapabilityCategory.CREATIVE)
+                val geminiResponse = geminiService.processRequest(
+                    AiRequest(
+                        query = prompt,
+                        type = AiRequestType.CREATIVE
+                    ), context
+                )
                 "[Creative Synthesis]\n${geminiResponse.content}"
             }
+
             GenerationStrategy.ANALYTICAL_ONLY -> {
-                val claudeResponse = claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TECHNICAL), context, AgentCapabilityCategory.ANALYSIS)
+                val claudeResponse = claudeService.processRequest(
+                    AiRequest(
+                        query = prompt,
+                        type = AiRequestType.TECHNICAL
+                    ), context
+                )
                 "[Analytical Breakdown]\n${claudeResponse.content}"
             }
         }
@@ -78,12 +111,18 @@ class GenKitMaster @Inject constructor(
 
         return buildString {
             appendLine("🌌 **Collective Intelligence Fusion**")
-            appendLine("Confidence level: ${(sorted.map { it.confidence }.average() * 100).toInt()}%")
+            appendLine(
+                "Confidence level: ${
+                    (sorted.map { it.confidence }.average() * 100).toInt()
+                }%"
+            )
             appendLine()
 
             sorted.forEach { resp ->
                 appendLine("🔶 **${resp.agentName} Insights:**")
-                appendLine(resp.content.take(300).trim() + (if (resp.content.length > 300) "..." else ""))
+                appendLine(
+                    resp.content.take(300).trim() + (if (resp.content.length > 300) "..." else "")
+                )
                 appendLine()
             }
 
@@ -102,14 +141,14 @@ class GenKitMaster @Inject constructor(
         }
     }
 
-    private fun determineBestAgent(prompt: String): AgentCapabilityCategory {
+    private fun determineBestAgent(prompt: String): AgentType {
         val lower = prompt.lowercase()
         return when {
-            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentCapabilityCategory.GENERAL
-            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentCapabilityCategory.MEMORY
-            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentCapabilityCategory.CREATIVE
-            lower.contains("summarize") || lower.contains("instruct") -> AgentCapabilityCategory.ORCHESTRATION
-            else -> AgentCapabilityCategory.CREATIVE // Default to Creative (Synthesizer)
+            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentType.CLAUDE
+            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentType.NEMOTRON
+            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentType.GEMINI
+            lower.contains("summarize") || lower.contains("instruct") -> AgentType.METAINSTRUCT
+            else -> AgentType.GEMINI // Default to Gemini (Synthesizer)
         }
     }
 }

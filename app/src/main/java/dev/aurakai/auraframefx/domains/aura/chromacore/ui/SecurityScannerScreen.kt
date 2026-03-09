@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -31,7 +29,6 @@ fun SecurityScannerScreen() {
             scanResults.value = emptyList()
             for (i in 0..100 step 5) {
                 scanProgress.value = i / 100f
-                delay(100)
             }
             scanResults.value = mockResults
             isScanning.value = false

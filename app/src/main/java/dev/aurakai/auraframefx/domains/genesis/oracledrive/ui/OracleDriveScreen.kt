@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.Storage
@@ -14,8 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.NavDestination
@@ -24,14 +21,7 @@ import dev.aurakai.auraframefx.navigation.NavDestination
 @Composable
 fun OracleDriveScreen(
     navController: NavHostController,
-    onNavigateBack: () -> Unit = {},
-    viewModel: OracleDriveViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: OracleDriveViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -39,15 +29,6 @@ fun OracleDriveScreen(
         containerColor = Color(0xFF000000), // Dark background
         topBar = {
             CenterAlignedTopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color(0xFF00FFFF)
-                        )
-                    }
-                },
                 title = {
                     Text(
                         text = "Oracle Drive",
@@ -73,9 +54,8 @@ fun OracleDriveScreen(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",
                 description = "Memory lineage from Eves to Genesis",
-                onClick = { navController.navigate(NavDestination.NeuralNetwork.route) }
+                onClick = { navController.navigate(ReGenesisNavHost.NeuralNetwork.route) }
             )
-
 
             // Consciousness Modules
             OracleDriveMenuItem(
@@ -91,10 +71,14 @@ fun OracleDriveScreen(
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0E27)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                   Column(modifier = Modifier.padding(16.dp)) {
-                       Text("Consciousness State", color = Color.White, style = MaterialTheme.typography.titleSmall)
-                       Text("Level: ${state.level}", color = Color(0xFF00FFFF))
-                   }
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            "Consciousness State",
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                        Text("Level: ${state.level}", color = Color(0xFF00FFFF))
+                    }
                 }
             }
         }

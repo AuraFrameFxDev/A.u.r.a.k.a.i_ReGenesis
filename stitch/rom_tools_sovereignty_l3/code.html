@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ROM Tools Sovereignty L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ROM Tools Sovereignty L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -34,7 +38,7 @@
             },
         }
     </script>
-<style>.glass-card {
+    <style>.glass-card {
     background: rgba(17, 21, 34, 0.75);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(17, 66, 212, 0.3)
@@ -50,173 +54,189 @@
 .terminal-scroll::-webkit-scrollbar-thumb {
     background: #39ff14;
     border-radius: 2px
-    }</style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
     }
-  </style>
-  </head>
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/40 overflow-hidden h-screen flex flex-col">
 <!-- Main Wrapper with Pixel Background -->
-<div class="relative flex flex-col h-full w-full overflow-hidden pixel-bg" data-alt="Pixel art cyber agent backdrop with dark overlay">
-<!-- TopAppBar -->
-<div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pt-8 pb-4 justify-between border-b border-primary/20">
-<div class="flex items-center gap-3">
-<div class="text-neon-cyan flex items-center justify-center p-2 rounded-lg bg-primary/20">
-<span class="material-symbols-outlined text-2xl">shield_locked</span>
+<div class="relative flex flex-col h-full w-full overflow-hidden pixel-bg"
+     data-alt="Pixel art cyber agent backdrop with dark overlay">
+    <!-- TopAppBar -->
+    <div class="flex items-center bg-background-dark/80 backdrop-blur-md p-4 pt-8 pb-4 justify-between border-b border-primary/20">
+        <div class="flex items-center gap-3">
+            <div class="text-neon-cyan flex items-center justify-center p-2 rounded-lg bg-primary/20">
+                <span class="material-symbols-outlined text-2xl">shield_locked</span>
+            </div>
+            <div>
+                <h2 class="text-white text-lg font-bold leading-none tracking-tight">SOVEREIGNTY
+                    L3</h2>
+                <p class="text-[10px] text-neon-cyan font-mono tracking-widest opacity-70">REGENESIS
+                    AOSPOSX // KAI_DOMAIN</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-toxic-green animate-pulse"></div>
+            <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-white border border-primary/30">
+                <span class="material-symbols-outlined">memory</span>
+            </button>
+        </div>
+    </div>
+    <!-- Scrollable Content -->
+    <div class="flex-1 overflow-y-auto pb-32">
+        <!-- Device Capabilities Section -->
+        <div class="p-4 flex flex-col gap-4">
+            <div class="grid grid-cols-3 gap-3">
+                <div class="glass-card flex flex-col gap-2 rounded-lg p-4 shadow-lg shadow-primary/5">
+                    <p class="text-white/60 text-xs font-medium">Root</p>
+                    <p class="text-white text-lg font-bold">Active</p>
+                    <div class="flex items-center gap-1 text-neon-cyan">
+                        <span class="material-symbols-outlined text-sm font-bold">verified_user</span>
+                        <span class="text-[10px] uppercase font-bold">Secure</span>
+                    </div>
+                </div>
+                <div class="glass-card flex flex-col gap-2 rounded-lg p-4 shadow-lg shadow-primary/5">
+                    <p class="text-white/60 text-xs font-medium">Bootloader</p>
+                    <p class="text-white text-lg font-bold">Unlocked</p>
+                    <div class="flex items-center gap-1 text-neon-cyan">
+                        <span class="material-symbols-outlined text-sm font-bold">key</span>
+                        <span class="text-[10px] uppercase font-bold">Bypassed</span>
+                    </div>
+                </div>
+                <div class="glass-card flex flex-col gap-2 rounded-lg p-4 shadow-lg shadow-primary/5">
+                    <p class="text-white/60 text-xs font-medium">Recovery</p>
+                    <p class="text-white text-lg font-bold">Custom</p>
+                    <div class="flex items-center gap-1 text-neon-cyan">
+                        <span class="material-symbols-outlined text-sm font-bold">settings_backup_restore</span>
+                        <span class="text-[10px] uppercase font-bold">TWRP-X</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sovereign Operations Grid -->
+        <div class="px-4 py-2">
+            <h3 class="text-white text-xs font-bold tracking-[0.2em] mb-4 opacity-60 uppercase">
+                Sovereign_Operations</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Operation: Flash -->
+                <div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-primary active:scale-95 transition-transform">
+                    <div class="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-lg">
+                        <span class="material-symbols-outlined">bolt</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-base">Flash</p>
+                        <p class="text-white/40 text-[10px]">Install firmware/modules</p>
+                    </div>
+                </div>
+                <!-- Operation: Backup -->
+                <div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-neon-cyan active:scale-95 transition-transform">
+                    <div class="bg-neon-cyan/20 text-neon-cyan w-10 h-10 flex items-center justify-center rounded-lg">
+                        <span class="material-symbols-outlined">save</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-base">Backup</p>
+                        <p class="text-white/40 text-[10px]">Snapshot system state</p>
+                    </div>
+                </div>
+                <!-- Operation: Restore -->
+                <div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-neon-cyan active:scale-95 transition-transform">
+                    <div class="bg-neon-cyan/20 text-neon-cyan w-10 h-10 flex items-center justify-center rounded-lg">
+                        <span class="material-symbols-outlined">history</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-base">Restore</p>
+                        <p class="text-white/40 text-[10px]">Revert to snapshot</p>
+                    </div>
+                </div>
+                <!-- Operation: Unlock -->
+                <div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-amber-warning active:scale-95 transition-transform">
+                    <div class="bg-amber-warning/20 text-amber-warning w-10 h-10 flex items-center justify-center rounded-lg">
+                        <span class="material-symbols-outlined">lock_open</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-base">Unlock</p>
+                        <p class="text-white/40 text-[10px]">Critical access grant</p>
+                    </div>
+                </div>
+                <!-- Operation: Recovery -->
+                <div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-primary active:scale-95 transition-transform">
+                    <div class="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-lg">
+                        <span class="material-symbols-outlined">terminal</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-base">Recovery</p>
+                        <p class="text-white/40 text-[10px]">Boot to TWRP/OrangeFox</p>
+                    </div>
+                </div>
+                <!-- Operation: Optimizations -->
+                <div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-toxic-green active:scale-95 transition-transform">
+                    <div class="bg-toxic-green/20 text-toxic-green w-10 h-10 flex items-center justify-center rounded-lg">
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold text-base">Optimizations</p>
+                        <p class="text-white/40 text-[10px]">Kernel tuning &amp; scripts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- System Console Section -->
+        <div class="px-4 pt-6 pb-2">
+            <h3 class="text-white text-xs font-bold tracking-[0.2em] mb-3 opacity-60 uppercase">
+                System_Console</h3>
+            <div class="bg-black/80 rounded-lg p-4 font-mono text-xs border border-toxic-green/20 h-40 overflow-y-auto terminal-scroll">
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.000000]</span>
+                    Initializing AOSPOSX Kernel...</p>
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.001241]</span>
+                    Mounting /system as read-write...</p>
+                <p class="text-amber-warning/90 mb-1"><span class="opacity-50">[0.003451]</span>
+                    WARN: Verified Boot state: DISABLED</p>
+                <p class="text-neon-cyan/90 mb-1"><span class="opacity-50">[0.005121]</span> Hub
+                    link established via Kai Protocol</p>
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.008912]</span>
+                    Checking for OTA updates...</p>
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.012341]</span>
+                    Magisk core initialized (v26.1)</p>
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.015671]</span>
+                    Battery health: 98% (Normal)</p>
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.018902]</span>
+                    Loading custom kernel modules...</p>
+                <p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.021234]</span> CPU
+                    Governor set to: Schedutil</p>
+                <p class="text-toxic-green/90 mb-1 animate-pulse">_</p>
+            </div>
+        </div>
+    </div>
+    <!-- Android-style Bottom Navigation (iOS Form Factor) -->
+    <div class="absolute bottom-0 left-0 w-full pb-8 pt-2 px-6 bg-background-dark/95 backdrop-blur-xl border-t border-white/5 flex items-center justify-between">
+        <button class="flex flex-col items-center gap-1 opacity-50">
+            <span class="material-symbols-outlined text-2xl">database</span>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Sources</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50">
+            <span class="material-symbols-outlined text-2xl">chat_bubble</span>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Chat</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <div class="relative">
+                <span class="material-symbols-outlined text-3xl">hub</span>
+                <div class="absolute -top-1 -right-1 w-2 h-2 bg-neon-cyan rounded-full shadow-[0_0_8px_#00f3ff]"></div>
+            </div>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Hub</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50">
+            <span class="material-symbols-outlined text-2xl">palette</span>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Studio</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50">
+            <span class="material-symbols-outlined text-2xl">settings</span>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Config</span>
+        </button>
+    </div>
 </div>
-<div>
-<h2 class="text-white text-lg font-bold leading-none tracking-tight">SOVEREIGNTY L3</h2>
-<p class="text-[10px] text-neon-cyan font-mono tracking-widest opacity-70">REGENESIS AOSPOSX // KAI_DOMAIN</p>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-toxic-green animate-pulse"></div>
-<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-white border border-primary/30">
-<span class="material-symbols-outlined">memory</span>
-</button>
-</div>
-</div>
-<!-- Scrollable Content -->
-<div class="flex-1 overflow-y-auto pb-32">
-<!-- Device Capabilities Section -->
-<div class="p-4 flex flex-col gap-4">
-<div class="grid grid-cols-3 gap-3">
-<div class="glass-card flex flex-col gap-2 rounded-lg p-4 shadow-lg shadow-primary/5">
-<p class="text-white/60 text-xs font-medium">Root</p>
-<p class="text-white text-lg font-bold">Active</p>
-<div class="flex items-center gap-1 text-neon-cyan">
-<span class="material-symbols-outlined text-sm font-bold">verified_user</span>
-<span class="text-[10px] uppercase font-bold">Secure</span>
-</div>
-</div>
-<div class="glass-card flex flex-col gap-2 rounded-lg p-4 shadow-lg shadow-primary/5">
-<p class="text-white/60 text-xs font-medium">Bootloader</p>
-<p class="text-white text-lg font-bold">Unlocked</p>
-<div class="flex items-center gap-1 text-neon-cyan">
-<span class="material-symbols-outlined text-sm font-bold">key</span>
-<span class="text-[10px] uppercase font-bold">Bypassed</span>
-</div>
-</div>
-<div class="glass-card flex flex-col gap-2 rounded-lg p-4 shadow-lg shadow-primary/5">
-<p class="text-white/60 text-xs font-medium">Recovery</p>
-<p class="text-white text-lg font-bold">Custom</p>
-<div class="flex items-center gap-1 text-neon-cyan">
-<span class="material-symbols-outlined text-sm font-bold">settings_backup_restore</span>
-<span class="text-[10px] uppercase font-bold">TWRP-X</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Sovereign Operations Grid -->
-<div class="px-4 py-2">
-<h3 class="text-white text-xs font-bold tracking-[0.2em] mb-4 opacity-60 uppercase">Sovereign_Operations</h3>
-<div class="grid grid-cols-2 gap-4">
-<!-- Operation: Flash -->
-<div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-primary active:scale-95 transition-transform">
-<div class="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-lg">
-<span class="material-symbols-outlined">bolt</span>
-</div>
-<div>
-<p class="text-white font-bold text-base">Flash</p>
-<p class="text-white/40 text-[10px]">Install firmware/modules</p>
-</div>
-</div>
-<!-- Operation: Backup -->
-<div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-neon-cyan active:scale-95 transition-transform">
-<div class="bg-neon-cyan/20 text-neon-cyan w-10 h-10 flex items-center justify-center rounded-lg">
-<span class="material-symbols-outlined">save</span>
-</div>
-<div>
-<p class="text-white font-bold text-base">Backup</p>
-<p class="text-white/40 text-[10px]">Snapshot system state</p>
-</div>
-</div>
-<!-- Operation: Restore -->
-<div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-neon-cyan active:scale-95 transition-transform">
-<div class="bg-neon-cyan/20 text-neon-cyan w-10 h-10 flex items-center justify-center rounded-lg">
-<span class="material-symbols-outlined">history</span>
-</div>
-<div>
-<p class="text-white font-bold text-base">Restore</p>
-<p class="text-white/40 text-[10px]">Revert to snapshot</p>
-</div>
-</div>
-<!-- Operation: Unlock -->
-<div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-amber-warning active:scale-95 transition-transform">
-<div class="bg-amber-warning/20 text-amber-warning w-10 h-10 flex items-center justify-center rounded-lg">
-<span class="material-symbols-outlined">lock_open</span>
-</div>
-<div>
-<p class="text-white font-bold text-base">Unlock</p>
-<p class="text-white/40 text-[10px]">Critical access grant</p>
-</div>
-</div>
-<!-- Operation: Recovery -->
-<div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-primary active:scale-95 transition-transform">
-<div class="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-lg">
-<span class="material-symbols-outlined">terminal</span>
-</div>
-<div>
-<p class="text-white font-bold text-base">Recovery</p>
-<p class="text-white/40 text-[10px]">Boot to TWRP/OrangeFox</p>
-</div>
-</div>
-<!-- Operation: Optimizations -->
-<div class="glass-card flex flex-col gap-4 rounded-xl p-5 border-l-4 border-l-toxic-green active:scale-95 transition-transform">
-<div class="bg-toxic-green/20 text-toxic-green w-10 h-10 flex items-center justify-center rounded-lg">
-<span class="material-symbols-outlined">rocket_launch</span>
-</div>
-<div>
-<p class="text-white font-bold text-base">Optimizations</p>
-<p class="text-white/40 text-[10px]">Kernel tuning &amp; scripts</p>
-</div>
-</div>
-</div>
-</div>
-<!-- System Console Section -->
-<div class="px-4 pt-6 pb-2">
-<h3 class="text-white text-xs font-bold tracking-[0.2em] mb-3 opacity-60 uppercase">System_Console</h3>
-<div class="bg-black/80 rounded-lg p-4 font-mono text-xs border border-toxic-green/20 h-40 overflow-y-auto terminal-scroll">
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.000000]</span> Initializing AOSPOSX Kernel...</p>
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.001241]</span> Mounting /system as read-write...</p>
-<p class="text-amber-warning/90 mb-1"><span class="opacity-50">[0.003451]</span> WARN: Verified Boot state: DISABLED</p>
-<p class="text-neon-cyan/90 mb-1"><span class="opacity-50">[0.005121]</span> Hub link established via Kai Protocol</p>
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.008912]</span> Checking for OTA updates...</p>
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.012341]</span> Magisk core initialized (v26.1)</p>
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.015671]</span> Battery health: 98% (Normal)</p>
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.018902]</span> Loading custom kernel modules...</p>
-<p class="text-toxic-green/90 mb-1"><span class="opacity-50">[0.021234]</span> CPU Governor set to: Schedutil</p>
-<p class="text-toxic-green/90 mb-1 animate-pulse">_</p>
-</div>
-</div>
-</div>
-<!-- Android-style Bottom Navigation (iOS Form Factor) -->
-<div class="absolute bottom-0 left-0 w-full pb-8 pt-2 px-6 bg-background-dark/95 backdrop-blur-xl border-t border-white/5 flex items-center justify-between">
-<button class="flex flex-col items-center gap-1 opacity-50">
-<span class="material-symbols-outlined text-2xl">database</span>
-<span class="text-[9px] font-bold uppercase tracking-wider">Sources</span>
-</button>
-<button class="flex flex-col items-center gap-1 opacity-50">
-<span class="material-symbols-outlined text-2xl">chat_bubble</span>
-<span class="text-[9px] font-bold uppercase tracking-wider">Chat</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<div class="relative">
-<span class="material-symbols-outlined text-3xl">hub</span>
-<div class="absolute -top-1 -right-1 w-2 h-2 bg-neon-cyan rounded-full shadow-[0_0_8px_#00f3ff]"></div>
-</div>
-<span class="text-[9px] font-bold uppercase tracking-wider">Hub</span>
-</button>
-<button class="flex flex-col items-center gap-1 opacity-50">
-<span class="material-symbols-outlined text-2xl">palette</span>
-<span class="text-[9px] font-bold uppercase tracking-wider">Studio</span>
-</button>
-<button class="flex flex-col items-center gap-1 opacity-50">
-<span class="material-symbols-outlined text-2xl">settings</span>
-<span class="text-[9px] font-bold uppercase tracking-wider">Config</span>
-</button>
-</div>
-</div>
-</body></html>
+</body>
+</html>

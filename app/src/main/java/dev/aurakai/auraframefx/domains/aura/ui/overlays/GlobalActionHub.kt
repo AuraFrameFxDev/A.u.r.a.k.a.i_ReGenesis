@@ -1,20 +1,30 @@
 package dev.aurakai.auraframefx.domains.aura.ui.overlays
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Adjust
+import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,9 +34,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentPrimaryColors
-import dev.aurakai.auraframefx.domains.aura.ui.theme.getAgentColor
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.getAgentColor
 
 /**
  * ⚡ GLOBAL ACTION HUB (5-Action Protocol)
@@ -41,7 +50,7 @@ fun GlobalActionHub(
 ) {
     val agentColor = getAgentColor(activeAgentName)
     val animatedColor by animateColorAsState(targetValue = agentColor, label = "agentColor")
-    
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -61,7 +70,11 @@ fun GlobalActionHub(
                 .border(
                     width = 1.dp,
                     brush = Brush.horizontalGradient(
-                        listOf(animatedColor.copy(alpha = 0.1f), animatedColor, animatedColor.copy(alpha = 0.1f))
+                        listOf(
+                            animatedColor.copy(alpha = 0.1f),
+                            animatedColor,
+                            animatedColor.copy(alpha = 0.1f)
+                        )
                     ),
                     shape = RoundedCornerShape(36.dp)
                 )
@@ -71,7 +84,7 @@ fun GlobalActionHub(
         ) {
             ActionHubItem("VOICE", Icons.Default.Mic, animatedColor) { onActionClick("voice") }
             ActionHubItem("CONNECT", Icons.Default.Link, animatedColor) { onActionClick("connect") }
-            
+
             // Central Pulse (Authority Core)
             Box(
                 modifier = Modifier
@@ -89,9 +102,17 @@ fun GlobalActionHub(
                     modifier = Modifier.size(32.dp)
                 )
             }
-            
-            ActionHubItem("ASSIGN", Icons.Default.Assignment, animatedColor) { onActionClick("assign") }
-            ActionHubItem("CREATE", Icons.Default.AddCircle, animatedColor) { onActionClick("create") }
+
+            ActionHubItem(
+                "ASSIGN",
+                Icons.Default.Assignment,
+                animatedColor
+            ) { onActionClick("assign") }
+            ActionHubItem(
+                "CREATE",
+                Icons.Default.AddCircle,
+                animatedColor
+            ) { onActionClick("create") }
         }
     }
 }

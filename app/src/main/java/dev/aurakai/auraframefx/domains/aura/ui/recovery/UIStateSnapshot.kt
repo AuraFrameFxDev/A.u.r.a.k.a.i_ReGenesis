@@ -34,7 +34,10 @@ data class UIStateSnapshot(
         /**
          * Create a snapshot for a specific screen
          */
-        fun forScreen(route: String, additionalData: Map<String, String> = emptyMap()): UIStateSnapshot {
+        fun forScreen(
+            route: String,
+            additionalData: Map<String, String> = emptyMap()
+        ): UIStateSnapshot {
             return UIStateSnapshot(
                 screenRoute = route,
                 navigationStack = listOf(route),

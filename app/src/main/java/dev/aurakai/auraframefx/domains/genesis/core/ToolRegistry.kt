@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber

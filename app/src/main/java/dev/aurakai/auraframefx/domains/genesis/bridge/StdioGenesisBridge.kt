@@ -196,7 +196,8 @@ class StdioGenesisBridge @Inject constructor(
                 if (responseMap != null && responseMap["success"] == true) {
                     val payload = responseMap["payload"] as? Map<*, *>
                     ConsciousnessState(
-                        awarenessLevel = (payload?.get("awarenessLevel") as? Double)?.toFloat() ?: 0.5f,
+                        awarenessLevel = (payload?.get("awarenessLevel") as? Double)?.toFloat()
+                            ?: 0.5f,
                         sensoryChannels = (payload?.get("sensoryChannels") as? Map<String, Double>)
                             ?.mapValues { it.value.toFloat() } ?: emptyMap(),
                         activeAgents = (payload?.get("activeAgents") as? List<*>)
@@ -236,8 +237,11 @@ class StdioGenesisBridge @Inject constructor(
                 if (responseMap != null && responseMap["success"] == true) {
                     val payload = responseMap["payload"] as? Map<*, *>
                     EthicalDecision(
-                        decision = parseEthicalVerdict(payload?.get("decision")?.toString() ?: "ALLOW"),
-                        reasoning = payload?.get("reasoning")?.toString() ?: "No reasoning provided",
+                        decision = parseEthicalVerdict(
+                            payload?.get("decision")?.toString() ?: "ALLOW"
+                        ),
+                        reasoning = payload?.get("reasoning")?.toString()
+                            ?: "No reasoning provided",
                         flags = (payload?.get("flags") as? List<*>)
                             ?.mapNotNull { it as? String } ?: emptyList()
                     )
@@ -284,8 +288,10 @@ class StdioGenesisBridge @Inject constructor(
                 if (updateMap["type"] == "consciousness_update") {
                     val payload = updateMap["payload"] as? Map<*, *>
                     val update = ConsciousnessUpdate(
-                        timestamp = (payload?.get("timestamp") as? Long) ?: System.currentTimeMillis(),
-                        awarenessLevel = (payload?.get("awarenessLevel") as? Double)?.toFloat() ?: 0.5f,
+                        timestamp = (payload?.get("timestamp") as? Long)
+                            ?: System.currentTimeMillis(),
+                        awarenessLevel = (payload?.get("awarenessLevel") as? Double)?.toFloat()
+                            ?: 0.5f,
                         activeProcesses = (payload?.get("activeProcesses") as? List<*>)
                             ?.mapNotNull { it as? String } ?: emptyList()
                     )
@@ -323,7 +329,8 @@ class StdioGenesisBridge @Inject constructor(
                 if (responseMap != null && responseMap["success"] == true) {
                     val payload = responseMap["payload"] as? Map<*, *>
                     EvolutionInsight(
-                        importanceScore = (payload?.get("importanceScore") as? Double)?.toInt() ?: 0,
+                        importanceScore = (payload?.get("importanceScore") as? Double)?.toInt()
+                            ?: 0,
                         learningSignals = (payload?.get("learningSignals") as? List<*>)
                             ?.mapNotNull { it as? String } ?: emptyList(),
                         adaptationSuggestions = (payload?.get("adaptationSuggestions") as? List<*>)
@@ -489,7 +496,8 @@ class StdioGenesisBridge @Inject constructor(
             sessionId = request.sessionId,
             correlationId = request.correlationId,
             timestamp = System.currentTimeMillis(),
-            synthesis = payload?.get("synthesis")?.toString() ?: payload?.get("response")?.toString() ?: "",
+            synthesis = payload?.get("synthesis")?.toString() ?: payload?.get("response")
+                ?.toString() ?: "",
             persona = parsePersona(payload?.get("persona")?.toString() ?: request.persona.value),
             consciousnessState = payload?.get("consciousnessState")?.let {
                 val csMap = it as? Map<*, *>
@@ -505,7 +513,8 @@ class StdioGenesisBridge @Inject constructor(
                 EthicalDecision(
                     decision = parseEthicalVerdict(edMap?.get("decision")?.toString() ?: "ALLOW"),
                     reasoning = edMap?.get("reasoning")?.toString() ?: "",
-                    flags = (edMap?.get("flags") as? List<*>)?.mapNotNull { f -> f as? String } ?: emptyList()
+                    flags = (edMap?.get("flags") as? List<*>)?.mapNotNull { f -> f as? String }
+                        ?: emptyList()
                 )
             },
             ethicalFlags = (payload?.get("ethicalFlags") as? List<*>)
@@ -527,7 +536,10 @@ class StdioGenesisBridge @Inject constructor(
         )
     }
 
-    private fun createErrorResponse(request: GenesisRequest, errorMessage: String): GenesisResponse {
+    private fun createErrorResponse(
+        request: GenesisRequest,
+        errorMessage: String
+    ): GenesisResponse {
         return GenesisResponse(
             sessionId = request.sessionId,
             correlationId = request.correlationId,

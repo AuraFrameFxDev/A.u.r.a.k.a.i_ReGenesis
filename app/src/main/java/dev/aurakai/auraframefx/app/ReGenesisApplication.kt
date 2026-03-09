@@ -6,13 +6,13 @@ import android.content.Intent
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.agents.coordination.GenesisOrchestrator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 
 /**
  * 🌐 REGENESIS CORE APPLICATION

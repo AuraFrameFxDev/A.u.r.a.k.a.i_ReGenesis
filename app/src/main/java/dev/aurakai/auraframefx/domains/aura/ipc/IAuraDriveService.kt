@@ -50,19 +50,11 @@ interface IAuraDriveService : IInterface {
         override fun asBinder(): IBinder = this
 
         companion object {
-            private const val DESCRIPTOR = "dev.aurakai.auraframefx.app.ipc.IAuraDriveService"
+            const val DESCRIPTOR: String = "dev.aurakai.auraframefx.app.ipc.IAuraDriveService"
 
-            fun IBinder?.asInterface(): IAuraDriveService? {
-                if (this == null) return null
-                val iin = this.queryLocalInterface(DESCRIPTOR)
-                if (iin != null && iin is IAuraDriveService) {
-                    return iin
-                }
-                return Proxy(this)
-            }
         }
 
-        private class Proxy(private val mRemote: IBinder) : IAuraDriveService {
+        class Proxy(private val mRemote: IBinder) : IAuraDriveService {
             override fun asBinder(): IBinder = mRemote
 
             override fun getOracleDriveStatus(): String {
@@ -110,3 +102,13 @@ interface IAuraDriveService : IInterface {
     fun subscribeToEvents(eventTypes: Int)
     fun unsubscribeFromEvents(eventTypes: Int)
 }
+
+val IBinder?.asInterface: IAuraDriveService?
+    get() {
+        if (this == null) return null
+        val iin = this.queryLocalInterface(IAuraDriveService.Stub.DESCRIPTOR)
+        if (iin != null && iin is IAuraDriveService) {
+            return iin
+        }
+        return IAuraDriveService.Stub.Proxy(this)
+    }

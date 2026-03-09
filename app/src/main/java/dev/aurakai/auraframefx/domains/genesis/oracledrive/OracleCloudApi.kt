@@ -1,6 +1,19 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive
 
+import javax.inject.Singleton
+
 /**
- * Type alias — canonical implementation lives in .cloud package.
  */
-typealias OracleCloudApi = dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleCloudApi
+@Singleton
+interface OracleCloudApi
+
+// Data classes for API responses
+data class ListObjectsResponse(
+    val objects: List<ObjectSummary>
+)
+
+data class ObjectSummary(
+    val name: String,
+    val size: Long,
+    val timeCreated: String
+)

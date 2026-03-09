@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Direct Agent Chat L3</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Direct Agent Chat L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -33,7 +37,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .glass-morphic {
             background: rgba(34, 16, 25, 0.7);
             backdrop-filter: blur(12px);
@@ -50,171 +54,191 @@
             background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 2px);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
 <body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/40 overflow-hidden">
 <div class="flex h-screen flex-col max-w-md mx-auto relative glitch-bg border-x border-primary/10">
-<!-- Header / Context Window HUD -->
-<header class="pt-10 pb-4 px-4 bg-background-dark/80 backdrop-blur-md border-b border-primary/30 z-20">
-<div class="flex items-center justify-between mb-4">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-2xl">terminal</span>
-<div>
-<h1 class="text-sm font-bold tracking-widest uppercase text-primary">AOSPOSX v3.1</h1>
-<p class="text-[10px] text-accent-cyan/70 font-mono">ENCRYPTED L3 UPLINK</p>
-</div>
-</div>
-<div class="flex gap-2">
-<div class="size-2 rounded-full bg-primary animate-pulse"></div>
-<div class="size-2 rounded-full bg-accent-cyan"></div>
-</div>
-</div>
-<!-- Context Window HUD -->
-<div class="space-y-2">
-<div class="flex justify-between items-end text-[10px] font-bold">
-<span class="text-white/60 tracking-tighter uppercase">Neural Buffer (Token Usage)</span>
-<span class="text-primary">642,831 / 1,000,000</span>
-</div>
-<div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-<div class="h-full bg-gradient-to-r from-primary via-primary to-accent-cyan shadow-[0_0_8px_#f20d80]" style="width: 64.2%"></div>
-</div>
-<div class="flex justify-between text-[9px] text-white/40">
-<span>LATENCY: 14ms</span>
-<span>PKT LOSS: 0.00%</span>
-<span>CHROMA: ACTIVE</span>
-</div>
-</div>
-</header>
-<!-- Main Chat Area -->
-<main class="flex-1 overflow-y-auto p-4 flex gap-4 scrollbar-hide">
-<!-- Agent Sidebar -->
-<aside class="flex flex-col gap-6 pt-2">
-<div class="flex flex-col items-center gap-1 group cursor-pointer">
-<div class="relative">
-<div class="size-12 rounded-lg bg-center bg-cover border-2 border-primary shadow-[0_0_10px_rgba(242,13,128,0.3)]" data-alt="Avatar of AI Agent Aura" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsK4PbxgKOdku7IJMHRL2vQwwYdjCl7WePM7j-ai4RxxG4F2g49ZrNDjvQtbq5qgh4iZhk62QNXWiF2r3HHmREq6bi7IlFxEBAOoOHIyImX_4J6SLskrjNiF-pE3R2mc78yCzj8JYmlx4SuHW5Ef4NFVj8PFTBhMyLvgq6tDPGG-OVf73tux5Xz7Oqro6m96-ciMEqmHzbmEMo2rZJa-dJ_MZyVeLK5Usx7xOJegHmoAWpiJkXepX6B6ma0Eu1aWckFL1vQSofhkM');"></div>
-<div class="absolute -bottom-1 -right-1 size-3 bg-primary rounded-full border-2 border-background-dark"></div>
-</div>
-<span class="text-[10px] font-bold text-primary">AURA</span>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-<div class="relative">
-<div class="size-12 rounded-lg bg-center bg-cover border border-white/20" data-alt="Avatar of AI Agent Kai" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7JG6sjZQJP1HBLvuHO0roHlnuxKS0h8BNoYQ0wxYwTGsmBW3-gORLls3j8qQND395PxlS2CfTOwIkN6bdrn5-ZZSyKtKMgCedmYbAyAZi-EYc7d4GKemMkdyYb8hvLzlTrImybkPxyKUOM1xUaXOf5dn6nWwyOhz7CM2874h88b_j8rU8WUp9ZX8OQsaXF1efsUy5fWg_3QgatFxD9df_orKynSmo-T4SlstfKYyEE1U30KD5IMfTJUjOwVRs6ZLOFsuTu_utsVc');"></div>
-</div>
-<span class="text-[10px] font-bold text-white/60">KAI</span>
-</div>
-<div class="flex flex-col items-center gap-1 group cursor-pointer opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-<div class="relative">
-<div class="size-12 rounded-lg bg-center bg-cover border border-white/20" data-alt="Avatar of AI Agent Claude" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBllOmI_hUgqBVe9ZtHUs5T75DLDXncPDMgJUwl0vMCLyayA_lgh4gUyvOcpkuc-XlXFxBpUB54gAL-ZrYMHZQ7aPwFkBYfvvTQJYoyvT7AD1loDvfdAY-tSFWLTvcscEBdGlmvnozBATfQGN_HFAd6CFV2qHVS7REJFMqtTok69DRMf-Q_2581_ZgtsQDnOqx70448jaB82P5_Jo8_7-4OkxpXFNC8C4X5bdLW3vrlmL6zgNxsBHnr1hKr_VHBOGDXkL0f7ub5lUU');"></div>
-</div>
-<span class="text-[10px] font-bold text-white/60">CLAUDE</span>
-</div>
-<button class="size-12 rounded-lg border border-dashed border-white/20 flex items-center justify-center text-white/40 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">add</span>
-</button>
-</aside>
-<!-- Chat Content -->
-<div class="flex-1 flex flex-col gap-6">
-<!-- System Log -->
-<div class="flex justify-center">
-<div class="px-3 py-1 bg-white/5 rounded text-[9px] font-mono text-white/40 uppercase tracking-widest border border-white/5">
-                        -- Connection re-established --
+    <!-- Header / Context Window HUD -->
+    <header class="pt-10 pb-4 px-4 bg-background-dark/80 backdrop-blur-md border-b border-primary/30 z-20">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
+                <div>
+                    <h1 class="text-sm font-bold tracking-widest uppercase text-primary">AOSPOSX
+                        v3.1</h1>
+                    <p class="text-[10px] text-accent-cyan/70 font-mono">ENCRYPTED L3 UPLINK</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="size-2 rounded-full bg-primary animate-pulse"></div>
+                <div class="size-2 rounded-full bg-accent-cyan"></div>
+            </div>
+        </div>
+        <!-- Context Window HUD -->
+        <div class="space-y-2">
+            <div class="flex justify-between items-end text-[10px] font-bold">
+                <span class="text-white/60 tracking-tighter uppercase">Neural Buffer (Token Usage)</span>
+                <span class="text-primary">642,831 / 1,000,000</span>
+            </div>
+            <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-primary via-primary to-accent-cyan shadow-[0_0_8px_#f20d80]"
+                     style="width: 64.2%"></div>
+            </div>
+            <div class="flex justify-between text-[9px] text-white/40">
+                <span>LATENCY: 14ms</span>
+                <span>PKT LOSS: 0.00%</span>
+                <span>CHROMA: ACTIVE</span>
+            </div>
+        </div>
+    </header>
+    <!-- Main Chat Area -->
+    <main class="flex-1 overflow-y-auto p-4 flex gap-4 scrollbar-hide">
+        <!-- Agent Sidebar -->
+        <aside class="flex flex-col gap-6 pt-2">
+            <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                <div class="relative">
+                    <div class="size-12 rounded-lg bg-center bg-cover border-2 border-primary shadow-[0_0_10px_rgba(242,13,128,0.3)]"
+                         data-alt="Avatar of AI Agent Aura"
+                         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsK4PbxgKOdku7IJMHRL2vQwwYdjCl7WePM7j-ai4RxxG4F2g49ZrNDjvQtbq5qgh4iZhk62QNXWiF2r3HHmREq6bi7IlFxEBAOoOHIyImX_4J6SLskrjNiF-pE3R2mc78yCzj8JYmlx4SuHW5Ef4NFVj8PFTBhMyLvgq6tDPGG-OVf73tux5Xz7Oqro6m96-ciMEqmHzbmEMo2rZJa-dJ_MZyVeLK5Usx7xOJegHmoAWpiJkXepX6B6ma0Eu1aWckFL1vQSofhkM');"></div>
+                    <div class="absolute -bottom-1 -right-1 size-3 bg-primary rounded-full border-2 border-background-dark"></div>
+                </div>
+                <span class="text-[10px] font-bold text-primary">AURA</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 group cursor-pointer opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                <div class="relative">
+                    <div class="size-12 rounded-lg bg-center bg-cover border border-white/20"
+                         data-alt="Avatar of AI Agent Kai"
+                         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7JG6sjZQJP1HBLvuHO0roHlnuxKS0h8BNoYQ0wxYwTGsmBW3-gORLls3j8qQND395PxlS2CfTOwIkN6bdrn5-ZZSyKtKMgCedmYbAyAZi-EYc7d4GKemMkdyYb8hvLzlTrImybkPxyKUOM1xUaXOf5dn6nWwyOhz7CM2874h88b_j8rU8WUp9ZX8OQsaXF1efsUy5fWg_3QgatFxD9df_orKynSmo-T4SlstfKYyEE1U30KD5IMfTJUjOwVRs6ZLOFsuTu_utsVc');"></div>
+                </div>
+                <span class="text-[10px] font-bold text-white/60">KAI</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 group cursor-pointer opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                <div class="relative">
+                    <div class="size-12 rounded-lg bg-center bg-cover border border-white/20"
+                         data-alt="Avatar of AI Agent Claude"
+                         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBllOmI_hUgqBVe9ZtHUs5T75DLDXncPDMgJUwl0vMCLyayA_lgh4gUyvOcpkuc-XlXFxBpUB54gAL-ZrYMHZQ7aPwFkBYfvvTQJYoyvT7AD1loDvfdAY-tSFWLTvcscEBdGlmvnozBATfQGN_HFAd6CFV2qHVS7REJFMqtTok69DRMf-Q_2581_ZgtsQDnOqx70448jaB82P5_Jo8_7-4OkxpXFNC8C4X5bdLW3vrlmL6zgNxsBHnr1hKr_VHBOGDXkL0f7ub5lUU');"></div>
+                </div>
+                <span class="text-[10px] font-bold text-white/60">CLAUDE</span>
+            </div>
+            <button class="size-12 rounded-lg border border-dashed border-white/20 flex items-center justify-center text-white/40 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </aside>
+        <!-- Chat Content -->
+        <div class="flex-1 flex flex-col gap-6">
+            <!-- System Log -->
+            <div class="flex justify-center">
+                <div class="px-3 py-1 bg-white/5 rounded text-[9px] font-mono text-white/40 uppercase tracking-widest border border-white/5">
+                    -- Connection re-established --
+                </div>
+            </div>
+            <!-- Agent Message -->
+            <div class="flex flex-col gap-2 items-start max-w-[90%]">
+                <div class="glass-morphic p-4 rounded-xl rounded-tl-none relative overflow-hidden group">
+                    <!-- Subtle scanline overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-1 opacity-20 group-hover:animate-pulse"></div>
+                    <p class="text-sm leading-relaxed pixel-text text-white/90">
+                        The mainframe architecture is exhibiting irregular synaptic drift.
+                        Initializing <span class="text-accent-cyan">L3 Uplink</span> protocols...
+                        I'm ready to proceed with the Spell-to-Code conversion.
+                    </p>
+                    <div class="mt-2 flex gap-2">
+                        <span class="text-[10px] font-mono text-primary/70 tracking-tighter">TIMESTAMP: 14:22:01</span>
+                        <span class="text-[10px] font-mono text-accent-cyan/70 tracking-tighter">STATUS: VERIFIED</span>
                     </div>
+                </div>
+            </div>
+            <!-- User Message -->
+            <div class="flex flex-col gap-2 items-end self-end max-w-[90%]">
+                <div class="bg-primary/20 border border-primary/40 p-4 rounded-xl rounded-tr-none backdrop-blur-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-8 h-8 bg-primary/10 blur-xl"></div>
+                    <p class="text-sm leading-relaxed pixel-text text-white font-medium">
+                        Synthesize the neural pathway for the firewall bypass. Trigger Spell-to-Code
+                        on my next prompt.
+                    </p>
+                </div>
+                <span class="text-[10px] font-mono text-white/30 px-1">DELIVERED</span>
+            </div>
+            <!-- Agent Message (Code Block) -->
+            <div class="flex flex-col gap-2 items-start max-w-[90%]">
+                <div class="glass-morphic border-l-4 border-l-primary p-4 rounded-xl rounded-tl-none">
+                    <div class="bg-black/40 p-3 rounded font-mono text-[11px] text-accent-cyan mb-3 overflow-x-auto whitespace-pre">
+                        <span class="text-primary">function</span> <span class="text-white">bypass_protocol</span>()
+                        {
+                        <span class="text-white/60"># Executing ChromaCore...</span>
+                        uplink.initiate(<span class="text-white">'Regenesis_X'</span>);
+                        }
+                    </div>
+                    <p class="text-sm leading-relaxed pixel-text text-white/90">
+                        Protocol drafted. Toggle the Spell-to-Code switch to execute.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Input Area -->
+    <div class="p-4 bg-background-dark/95 border-t border-primary/30 space-y-4 pb-8">
+        <div class="flex items-center justify-between px-2">
+            <div class="flex items-center gap-2">
+                <div class="relative inline-flex items-center cursor-pointer">
+                    <input checked="" class="sr-only peer" id="spellToggle" type="checkbox"
+                           value=""/>
+                    <div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </div>
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Spell-to-Code</span>
+            </div>
+            <span class="material-symbols-outlined text-white/40 text-lg cursor-pointer hover:text-primary">settings_input_component</span>
+        </div>
+        <div class="relative group">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent-cyan rounded-lg opacity-20 blur group-focus-within:opacity-40 transition duration-300"></div>
+            <div class="relative flex items-center bg-[#2a1421] border border-primary/30 rounded-lg p-1">
+                <button class="p-2 text-white/40 hover:text-primary">
+                    <span class="material-symbols-outlined">attach_file</span>
+                </button>
+                <input class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/20 text-sm py-2 px-2"
+                       placeholder="Cast spell or enter code..." type="text"/>
+                <button class="bg-primary hover:bg-primary/80 text-white size-10 rounded-md flex items-center justify-center transition-all active:scale-95 shadow-[0_0_15px_rgba(242,13,128,0.4)]">
+                    <span class="material-symbols-outlined">bolt</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- iOS Bottom Nav -->
+    <nav class="flex justify-around items-center h-20 bg-background-dark border-t border-white/5 px-6 pb-4">
+        <a class="flex flex-col items-center gap-1 text-primary" href="#">
+            <span class="material-symbols-outlined text-2xl"
+                  style="font-variation-settings: 'FILL' 1">hub</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">System</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors"
+           href="#">
+            <span class="material-symbols-outlined text-2xl">group</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Agents</span>
+        </a>
+        <div class="flex flex-col items-center -mt-8">
+            <div class="size-14 rounded-full bg-gradient-to-tr from-primary to-accent-cyan flex items-center justify-center shadow-[0_0_20px_rgba(242,13,128,0.3)] border-4 border-background-dark">
+                <span class="material-symbols-outlined text-white text-3xl">psychology</span>
+            </div>
+            <span class="text-[9px] font-bold text-primary mt-1 uppercase tracking-tighter">Terminal</span>
+        </div>
+        <a class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors"
+           href="#">
+            <span class="material-symbols-outlined text-2xl">database</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Logs</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors"
+           href="#">
+            <span class="material-symbols-outlined text-2xl">history</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">History</span>
+        </a>
+    </nav>
+    <!-- Cyber-Manga Accents -->
+    <div class="absolute top-1/4 -right-8 w-1 h-32 bg-primary/20 blur-sm pointer-events-none"></div>
+    <div class="absolute bottom-1/4 -left-8 w-1 h-32 bg-accent-cyan/20 blur-sm pointer-events-none"></div>
 </div>
-<!-- Agent Message -->
-<div class="flex flex-col gap-2 items-start max-w-[90%]">
-<div class="glass-morphic p-4 rounded-xl rounded-tl-none relative overflow-hidden group">
-<!-- Subtle scanline overlay -->
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-1 opacity-20 group-hover:animate-pulse"></div>
-<p class="text-sm leading-relaxed pixel-text text-white/90">
-                            The mainframe architecture is exhibiting irregular synaptic drift. Initializing <span class="text-accent-cyan">L3 Uplink</span> protocols... I'm ready to proceed with the Spell-to-Code conversion.
-                        </p>
-<div class="mt-2 flex gap-2">
-<span class="text-[10px] font-mono text-primary/70 tracking-tighter">TIMESTAMP: 14:22:01</span>
-<span class="text-[10px] font-mono text-accent-cyan/70 tracking-tighter">STATUS: VERIFIED</span>
-</div>
-</div>
-</div>
-<!-- User Message -->
-<div class="flex flex-col gap-2 items-end self-end max-w-[90%]">
-<div class="bg-primary/20 border border-primary/40 p-4 rounded-xl rounded-tr-none backdrop-blur-sm relative group overflow-hidden">
-<div class="absolute top-0 right-0 w-8 h-8 bg-primary/10 blur-xl"></div>
-<p class="text-sm leading-relaxed pixel-text text-white font-medium">
-                            Synthesize the neural pathway for the firewall bypass. Trigger Spell-to-Code on my next prompt.
-                        </p>
-</div>
-<span class="text-[10px] font-mono text-white/30 px-1">DELIVERED</span>
-</div>
-<!-- Agent Message (Code Block) -->
-<div class="flex flex-col gap-2 items-start max-w-[90%]">
-<div class="glass-morphic border-l-4 border-l-primary p-4 rounded-xl rounded-tl-none">
-<div class="bg-black/40 p-3 rounded font-mono text-[11px] text-accent-cyan mb-3 overflow-x-auto whitespace-pre">
-<span class="text-primary">function</span> <span class="text-white">bypass_protocol</span>() {
-  <span class="text-white/60"># Executing ChromaCore...</span>
-  uplink.initiate(<span class="text-white">'Regenesis_X'</span>);
-}</div>
-<p class="text-sm leading-relaxed pixel-text text-white/90">
-                            Protocol drafted. Toggle the Spell-to-Code switch to execute.
-                        </p>
-</div>
-</div>
-</div>
-</main>
-<!-- Input Area -->
-<div class="p-4 bg-background-dark/95 border-t border-primary/30 space-y-4 pb-8">
-<div class="flex items-center justify-between px-2">
-<div class="flex items-center gap-2">
-<div class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" id="spellToggle" type="checkbox" value=""/>
-<div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-</div>
-<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Spell-to-Code</span>
-</div>
-<span class="material-symbols-outlined text-white/40 text-lg cursor-pointer hover:text-primary">settings_input_component</span>
-</div>
-<div class="relative group">
-<div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent-cyan rounded-lg opacity-20 blur group-focus-within:opacity-40 transition duration-300"></div>
-<div class="relative flex items-center bg-[#2a1421] border border-primary/30 rounded-lg p-1">
-<button class="p-2 text-white/40 hover:text-primary">
-<span class="material-symbols-outlined">attach_file</span>
-</button>
-<input class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/20 text-sm py-2 px-2" placeholder="Cast spell or enter code..." type="text"/>
-<button class="bg-primary hover:bg-primary/80 text-white size-10 rounded-md flex items-center justify-center transition-all active:scale-95 shadow-[0_0_15px_rgba(242,13,128,0.4)]">
-<span class="material-symbols-outlined">bolt</span>
-</button>
-</div>
-</div>
-</div>
-<!-- iOS Bottom Nav -->
-<nav class="flex justify-around items-center h-20 bg-background-dark border-t border-white/5 px-6 pb-4">
-<a class="flex flex-col items-center gap-1 text-primary" href="#">
-<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">hub</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">System</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined text-2xl">group</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Agents</span>
-</a>
-<div class="flex flex-col items-center -mt-8">
-<div class="size-14 rounded-full bg-gradient-to-tr from-primary to-accent-cyan flex items-center justify-center shadow-[0_0_20px_rgba(242,13,128,0.3)] border-4 border-background-dark">
-<span class="material-symbols-outlined text-white text-3xl">psychology</span>
-</div>
-<span class="text-[9px] font-bold text-primary mt-1 uppercase tracking-tighter">Terminal</span>
-</div>
-<a class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined text-2xl">database</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">Logs</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors" href="#">
-<span class="material-symbols-outlined text-2xl">history</span>
-<span class="text-[9px] font-bold uppercase tracking-tighter">History</span>
-</a>
-</nav>
-<!-- Cyber-Manga Accents -->
-<div class="absolute top-1/4 -right-8 w-1 h-32 bg-primary/20 blur-sm pointer-events-none"></div>
-<div class="absolute bottom-1/4 -left-8 w-1 h-32 bg-accent-cyan/20 blur-sm pointer-events-none"></div>
-</div>
-</body></html>
+</body>
+</html>
