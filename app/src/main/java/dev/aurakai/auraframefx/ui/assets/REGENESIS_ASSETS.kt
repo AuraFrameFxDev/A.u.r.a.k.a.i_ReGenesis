@@ -1,9 +1,9 @@
 package dev.aurakai.auraframefx.ui.assets
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.ui.theme.AuraNeonCyan
-import dev.aurakai.auraframefx.ui.theme.GenesisNeonMagenta
-import dev.aurakai.auraframefx.ui.theme.KaiNeonGreen
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentPrimaryColors.AuraCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentPrimaryColors.GenesisGold
+import dev.aurakai.auraframefx.domains.aura.ui.theme.KaiNeonGreen
 
 /**
  * Global Registry for localized asset definitions (Lottie, Drawables, Colors).
@@ -12,8 +12,8 @@ import dev.aurakai.auraframefx.ui.theme.KaiNeonGreen
 object REGENESIS_ASSETS {
     
     // Core Agent Colors
-    val COLOR_AURA = AuraNeonCyan
-    val COLOR_GENESIS = GenesisNeonMagenta
+    val COLOR_AURA = AuraCyan
+    val COLOR_GENESIS = GenesisGold
     val COLOR_KAI = KaiNeonGreen
     
     // Global Drawables (To be populated)
