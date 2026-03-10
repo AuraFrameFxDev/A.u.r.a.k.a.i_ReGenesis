@@ -14,6 +14,8 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.Configuration
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
+import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
@@ -51,6 +53,28 @@ object AgentModule {
         config: AIPipelineConfig
     ): ContextManager {
         return ContextManager(memoryManager, config)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNemotronEngine(): NemotronEngine {
+        return object : NemotronEngine {
+            override suspend fun process(prompt: String): String {
+                // TODO: Wire actual Nemotron bindings
+                return "Nemotron Processing: $prompt"
+            }
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideGeminiMemoria(): GeminiMemoria {
+        return object : GeminiMemoria {
+            override suspend fun process(prompt: String): String {
+                // TODO: Wire actual Gemini Memoria bindings
+                return "Gemini Memoria Recall: $prompt"
+            }
+        }
     }
 
     /**

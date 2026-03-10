@@ -20,6 +20,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
+    @javax.inject.Named("identity")
     fun provideIdentityDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("identity_prefs") }
@@ -28,7 +29,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
-    fun provideIdentityRepository(dataStore: DataStore<Preferences>): IdentityRepository {
+    fun provideIdentityRepository(@javax.inject.Named("identity") dataStore: DataStore<Preferences>): IdentityRepository {
         return IdentityRepositoryImpl(dataStore)
     }
 }
