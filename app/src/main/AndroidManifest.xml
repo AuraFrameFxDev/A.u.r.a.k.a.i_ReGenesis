@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AGP 9.0: 'package' attribute removed - namespace defined in build.gradle.kts -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Required Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Optional Permissions -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Optional Features -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" />
+
+    <!-- Custom permission declaration -->
+    <permission
+        android:name="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION"
+        android:protectionLevel="signature" />
+
+    <!-- AGP 9.0: Using fully qualified Application class name for reliable resolution -->
+    <application
+        android:name="dev.aurakai.auraframefx.aurakaiapplication.AurakaiApplication"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/AuraKai"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.dev.aurakai.auraframefx"
+        tools:targetApi="36">
+
+        <!-- Xposed Module Metadata -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="82" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
+
+        <!-- YukiHook API Metadata -->
+        <meta-data
+            android:name="yukihookapi_module"
+            android:value="true" />
+        <meta-data
+            android:name="yukihookapi_module_name"
+            android:value="Genesis-OS AI Framework" />
+        <meta-data
+            android:name="yukihookapi_module_version"
+            android:value="1.0.0" />
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.dev.aurakai.auraframefx">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Services -->
+        <service
+            android:name=".services.GenesisAccessibilityService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <service
+            android:name=".services.GenesisAssistantService"
+            android:label="@string/genesis_assistant_label"
+            android:permission="android.permission.BIND_VOICE_INTERACTION"
+            android:exported="true">
+            <meta-data
+                android:name="android.voice_interaction"
+                android:resource="@xml/assistant_service_config" />
+            <intent-filter>
+                <action android:name="android.service.voice.VoiceInteractionService" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.GenesisVoiceInteractionSessionService"
+            android:permission="android.permission.BIND_VOICE_INTERACTION"
+            android:exported="true" />
+
+        <service
+            android:name=".app.VertexSyncService"
+            android:exported="false" />
+        <service
+            android:name=".services.security.IntegrityMonitorService"
+            android:exported="false" />
+        <service
+            android:name=".services.BackupService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".oracledrive.genesis.ai.GenesisBackendService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <service android:name=".services.AmbientMusicService" />
+        <service android:name=".services.AuraDriveService" />
+
+        <!-- Receivers -->
+        <receiver
+            android:name=".receivers.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Integrity Violation Receiver -->
+        <receiver
+            android:name=".security.IntegrityViolationReceiver"
+            android:exported="false"
+            android:permission="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION">
+            <intent-filter>
+                <action android:name="dev.aurakai.auraframefx.action.INTEGRITY_VIOLATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
