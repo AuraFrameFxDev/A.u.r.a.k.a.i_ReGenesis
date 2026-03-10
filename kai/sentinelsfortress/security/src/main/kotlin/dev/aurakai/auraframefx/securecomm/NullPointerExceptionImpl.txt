@@ -1,0 +1,8 @@
+package dev.aurakai.auraframefx.securecomm;
+
+public class NullPointerExceptionImpl extends NullPointerException {
+    public NullPointerExceptionImpl(String s) {
+        super(s);
+    }
+}
+

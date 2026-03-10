@@ -1,0 +1,54 @@
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.aab
+*.apk
+output-metadata.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
+
+# Native / CMake / build artifacts (additional recommended rules)
+**/.cxx/
+**/build/intermediates/
+*.ninja
+*.ninja_log
+*.ninja_deps
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+*.bin
+*.o
+*.so
+*.a
+**/*.so
+**/*.a
+
+# Keep local SDK/NDK and sensitive files ignored
+keystore.jks
