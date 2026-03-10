@@ -1,0 +1,58 @@
+# ROM Tools domain paths
+/romtools/boot-image/analyze:
+  post:
+    operationId: romAnalyzeBootImage
+    summary: Analyze boot image
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              bootImage: { type: string, format: binary, description: Boot image file }
+              analysisLevel: { type: string, enum: [ BASIC, DETAILED, SECURITY ], default: DETAILED }
+            required: [ bootImage ]
+    responses:
+      '200': { description: Analysis complete, content: { application/json: { schema: { $ref: '#/components/schemas/BootAnalysisResult' } } } }
+      '400': { description: Invalid input, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/romtools/datavein/analyze:
+  post:
+    operationId: romAnalyzeDatavein
+    summary: DataveinConstructor ROM analysis
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              romFile: { type: string, format: binary }
+              analysisType: { type: string, enum: [ STRUCTURE, SECURITY, PERFORMANCE, COMPATIBILITY ], default: STRUCTURE }
+            required: [ romFile ]
+    responses:
+      '200': { description: Analysis complete, content: { application/json: { schema: { $ref: '#/components/schemas/DataveinAnalysisResult' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/romtools/security/scan:
+  post:
+    operationId: romSecurityScan
+    summary: Security scan ROM
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/SecurityScanRequest' }
+    responses:
+      '200': { description: Security scan results, content: { application/json: { schema: { $ref: '#/components/schemas/SecurityScanResult' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+

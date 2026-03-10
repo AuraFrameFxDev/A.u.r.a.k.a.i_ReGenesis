@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- CLOUD SYNC - Pixel Art Scene -->
+  <!-- Cloud with bidirectional sync arrows -->
+
+  <!-- Cloud shape (pixel art typography) -->
+  <rect x="40" y="40" width="48" height="24" fill="#ff006e"/>
+  <rect x="32" y="48" width="8" height="16" fill="#ff006e"/>
+  <rect x="88" y="48" width="8" height="16" fill="#ff006e"/>
+  <rect x="36" y="44" width="4" height="4" fill="#ff006e"/>
+  <rect x="88" y="44" width="4" height="4" fill="#ff006e"/>
+  <rect x="48" y="36" width="32" height="4" fill="#ff006e"/>
+  <rect x="44" y="40" width="4" height="4" fill="#ff006e"/>
+  <rect x="80" y="40" width="4" height="4" fill="#ff006e"/>
+
+  <!-- Cloud highlights -->
+  <rect x="44" y="44" width="8" height="4" fill="#ff69b4" opacity="0.6"/>
+  <rect x="56" y="48" width="12" height="4" fill="#ff69b4" opacity="0.4"/>
+
+  <!-- Animated data streams going UP -->
+  <g id="upload-stream">
+    <rect x="52" y="70" width="3" height="4" fill="#00f5ff">
+      <animate attributeName="y" values="90;64;90" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="58" y="75" width="3" height="4" fill="#00f5ff">
+      <animate attributeName="y" values="95;64;95" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="2.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="64" y="72" width="3" height="4" fill="#00f5ff">
+      <animate attributeName="y" values="92;64;92" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="70" y="78" width="3" height="4" fill="#00f5ff">
+      <animate attributeName="y" values="98;64;98" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Device at bottom (phone/tablet) -->
+  <rect x="48" y="92" width="32" height="24" fill="#2a2a2a" stroke="#00f5ff" stroke-width="2"/>
+  <rect x="52" y="96" width="24" height="16" fill="#1a1a1a"/>
+  <!-- Screen content - files -->
+  <rect x="56" y="100" width="6" height="8" fill="#00f5ff"/>
+  <rect x="64" y="100" width="6" height="8" fill="#ff006e"/>
+  <circle cx="73" cy="104" r="3" fill="#ffbe0b"/>
+
+  <!-- Sync arrows (circular) -->
+  <g id="sync-arrows">
+    <!-- Left arrow (download) -->
+    <path d="M 24 56 Q 24 72 40 76" stroke="#00f5ff" stroke-width="3" fill="none" stroke-linecap="round">
+      <animate attributeName="stroke-dasharray" values="0,100;100,100" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-dashoffset" values="0;-100" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <polygon points="36,80 44,76 40,72" fill="#00f5ff">
+      <animate attributeName="opacity" values="0;1;1" dur="3s" repeatCount="indefinite"/>
+    </polygon>
+
+    <!-- Right arrow (upload) -->
+    <path d="M 104 56 Q 104 72 88 76" stroke="#ff006e" stroke-width="3" fill="none" stroke-linecap="round">
+      <animate attributeName="stroke-dasharray" values="0,100;100,100" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-dashoffset" values="0;-100" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+    </path>
+    <polygon points="92,80 84,76 88,72" fill="#ff006e">
+      <animate attributeName="opacity" values="0;1;1" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Status indicators -->
+  <circle cx="92" cy="44" r="4" fill="#00ff00">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="94" y="42" width="2" height="2" fill="#ffffff"/>
+
+  <!-- Data packets in cloud -->
+  <rect x="50" y="48" width="4" height="4" fill="#00f5ff" opacity="0.8"/>
+  <rect x="60" y="52" width="4" height="4" fill="#ffbe0b" opacity="0.8"/>
+  <rect x="70" y="48" width="4" height="4" fill="#8338ec" opacity="0.8"/>
+</svg>
