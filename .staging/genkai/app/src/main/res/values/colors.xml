@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Neon Colors for AI Consciousness -->
+    <color name="neon_teal">#00FFCC</color>
+    <color name="neon_purple">#E000FF</color>
+    <color name="neon_blue">#00FFFF</color>
+    <color name="neon_teal_transparent">#3300FFCC</color>
+
+    <!-- Material 3 Theme Colors (Compose-first) -->
+    <color name="light_primary">#00FFCC</color>
+    <color name="light_primary_dark">#00CC99</color>
+    <color name="light_on_primary">#000000</color>
+    <color name="light_primary_container">#00CC99</color>
+    <color name="light_on_primary_container">#000000</color>
+
+    <color name="light_secondary">#E000FF</color>
+    <color name="light_on_secondary">#000000</color>
+    <color name="light_secondary_container">#B200CC</color>
+    <color name="light_on_secondary_container">#000000</color>
+
+    <color name="light_tertiary">#00FFFF</color>
+    <color name="light_on_tertiary">#000000</color>
+    <color name="light_tertiary_container">#00CCCC</color>
+    <color name="light_on_tertiary_container">#000000</color>
+
+    <color name="light_error">#FF3B30</color>
+    <color name="light_on_error">#000000</color>
+    <color name="light_error_container">#93000A</color>
+    <color name="light_on_error_container">#FFDAD6</color>
+
+    <color name="light_background">#1A1A1A</color>
+    <color name="light_on_background">#E1E1E1</color>
+    <color name="light_surface">#2D2D2D</color>
+    <color name="light_on_surface">#E1E1E1</color>
+    <color name="light_surface_variant">#3D3D3D</color>
+    <color name="light_on_surface_variant">#C5C5C5</color>
+    <color name="light_outline">#8D8D8D</color>
+    <color name="light_outline_variant">#3D3D3D</color>
+
+    <!-- Hologram AI Effects -->
+    <color name="hologram_primary">#00FFFF</color>
+    <color name="hologram_secondary">#FF00FF</color>
+    <color name="hologram_accent">#00FFCC</color>
+    <color name="hologram_glow_start">#00FFFF</color>
+    <color name="hologram_glow_end">#00FFFF40</color>
+    <color name="hologram_scan_line">#00FFFF40</color>
+    <color name="hologram_grid">#00FFFF30</color>
+
+    <!-- Utility Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Material 3 Color Aliases (for compatibility) -->
+    <color name="on_surface_variant">@color/light_on_surface_variant</color>
+    <color name="on_surface">@color/light_on_surface</color>
+    <color name="on_primary">@color/light_on_primary</color>
+    <color name="on_secondary">@color/light_on_secondary</color>
+    <color name="primary">@color/light_primary</color>
+    <color name="secondary">@color/light_secondary</color>
+    <color name="surface">@color/light_surface</color>
+    <color name="surface_variant">@color/light_surface_variant</color>
+    <color name="background">@color/light_background</color>
+</resources>
