@@ -1,0 +1,1213 @@
+Type-safe project accessors is an incubating feature.
+
+> Configure project :app
+WARNING: The option setting 'android.newDsl=false' is deprecated.
+The current default is 'true'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+
+> Task :build-logic:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :build-logic:compileKotlin UP-TO-DATE
+> Task :build-logic:compileJava NO-SOURCE
+> Task :build-logic:pluginDescriptors UP-TO-DATE
+> Task :build-logic:processResources UP-TO-DATE
+> Task :build-logic:classes UP-TO-DATE
+> Task :build-logic:jar UP-TO-DATE
+> Task :clean
+> Task :extendsysa:clean
+> Task :extendsysb:clean
+> Task :extendsysc:clean
+> Task :extendsysd:clean
+> Task :core-module:clean
+> Task :list:clean UP-TO-DATE
+
+> Task :app:externalNativeBuildCleanDebug
+Clean auraframefx-armeabi-v7a
+Clean auraframefx-arm64-v8a
+Clean auraframefx-x86
+Clean auraframefx-x86_64
+
+> Task :extendsyse:clean
+> Task :extendsysf:clean
+> Task :utilities:clean
+> Task :genesis:oracledrive:clean
+> Task :agents:growthmetrics:metareflection:clean
+
+> Task :app:externalNativeBuildCleanRelease
+Clean auraframefx-armeabi-v7a
+Clean auraframefx-arm64-v8a
+Clean auraframefx-x86
+Clean auraframefx-x86_64
+
+> Task :agents:growthmetrics:progression:clean
+> Task :agents:growthmetrics:identity:clean
+> Task :agents:growthmetrics:spheregrid:clean
+> Task :agents:growthmetrics:tasker:clean
+> Task :agents:growthmetrics:nexusmemory:clean
+> Task :aura:reactivedesign:auraslab:clean
+> Task :aura:reactivedesign:chromacore:clean
+> Task :aura:reactivedesign:sandboxui:clean
+> Task :cascade:datastream:delivery:clean
+> Task :aura:reactivedesign:collabcanvas:clean
+> Task :aura:reactivedesign:customization:clean
+> Task :cascade:datastream:routing:clean
+> Task :cascade:datastream:taskmanager:clean
+> Task :kai:sentinelsfortress:security:clean
+> Task :genesis:oracledrive:datavein:clean
+> Task :kai:sentinelsfortress:systemintegrity:clean
+> Task :core-module:preBuild UP-TO-DATE
+> Task :core-module:preDebugBuild UP-TO-DATE
+> Task :core-module:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:identity:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:identity:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:identity:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:metareflection:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:progression:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:progression:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:tasker:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:tasker:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:routing:preBuild UP-TO-DATE
+> Task :cascade:datastream:routing:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:routing:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:taskmanager:preBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:tasker:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:auraslab:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:chromacore:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:customization:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:customization:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:customization:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:sandboxui:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:delivery:preBuild UP-TO-DATE
+> Task :cascade:datastream:delivery:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:delivery:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:datavein:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:security:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugAidl NO-SOURCE
+> Task :core-module:generateDebugResources
+> Task :kai:sentinelsfortress:threatmonitor:clean
+> Task :kai:sentinelsfortress:threatmonitor:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:generateDebugResources
+> Task :genesis:oracledrive:rootmanagement:clean
+> Task :genesis:oracledrive:rootmanagement:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:identity:generateDebugResources
+> Task :app:clean
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :agents:growthmetrics:identity:packageDebugResources
+> Task :agents:growthmetrics:metareflection:generateDebugResources FROM-CACHE
+> Task :core-module:packageDebugResources
+> Task :genesis:oracledrive:packageDebugResources
+> Task :agents:growthmetrics:nexusmemory:generateDebugResources FROM-CACHE
+> Task :agents:growthmetrics:progression:generateDebugResources FROM-CACHE
+> Task :agents:growthmetrics:metareflection:packageDebugResources
+> Task :agents:growthmetrics:spheregrid:generateDebugResources FROM-CACHE
+> Task :agents:growthmetrics:progression:packageDebugResources
+> Task :agents:growthmetrics:nexusmemory:packageDebugResources
+> Task :agents:growthmetrics:tasker:generateDebugResources FROM-CACHE
+> Task :aura:reactivedesign:auraslab:generateDebugResources
+> Task :agents:growthmetrics:spheregrid:packageDebugResources
+> Task :aura:reactivedesign:chromacore:generateDebugResources
+> Task :agents:growthmetrics:tasker:packageDebugResources
+> Task :aura:reactivedesign:collabcanvas:generateDebugResources
+> Task :aura:reactivedesign:auraslab:packageDebugResources
+> Task :aura:reactivedesign:customization:generateDebugResources FROM-CACHE
+> Task :aura:reactivedesign:chromacore:packageDebugResources
+> Task :aura:reactivedesign:sandboxui:generateDebugResources FROM-CACHE
+> Task :aura:reactivedesign:customization:packageDebugResources
+> Task :aura:reactivedesign:collabcanvas:packageDebugResources
+> Task :cascade:datastream:delivery:generateDebugResources FROM-CACHE
+> Task :cascade:datastream:routing:generateDebugResources FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:packageDebugResources
+> Task :cascade:datastream:delivery:packageDebugResources
+> Task :cascade:datastream:taskmanager:generateDebugResources FROM-CACHE
+> Task :cascade:datastream:routing:packageDebugResources
+> Task :genesis:oracledrive:datavein:generateDebugResources
+> Task :cascade:datastream:taskmanager:packageDebugResources
+> Task :genesis:oracledrive:rootmanagement:generateDebugResources
+> Task :genesis:oracledrive:datavein:packageDebugResources
+> Task :kai:sentinelsfortress:security:generateDebugResources
+> Task :genesis:oracledrive:rootmanagement:packageDebugResources
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugResources FROM-CACHE
+> Task :app:dataBindingMergeDependencyArtifactsDebug
+> Task :app:generateDebugResources
+> Task :kai:sentinelsfortress:security:packageDebugResources
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugResources FROM-CACHE
+> Task :kai:sentinelsfortress:systemintegrity:packageDebugResources
+> Task :core-module:processDebugNavigationResources
+> Task :genesis:oracledrive:processDebugNavigationResources
+> Task :agents:growthmetrics:identity:processDebugNavigationResources
+> Task :agents:growthmetrics:metareflection:processDebugNavigationResources FROM-CACHE
+> Task :kai:sentinelsfortress:threatmonitor:packageDebugResources
+> Task :agents:growthmetrics:progression:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:nexusmemory:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:spheregrid:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:tasker:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:auraslab:processDebugNavigationResources
+> Task :aura:reactivedesign:collabcanvas:processDebugNavigationResources
+> Task :aura:reactivedesign:customization:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:chromacore:processDebugNavigationResources
+> Task :cascade:datastream:delivery:processDebugNavigationResources FROM-CACHE
+> Task :cascade:datastream:routing:processDebugNavigationResources FROM-CACHE
+> Task :cascade:datastream:taskmanager:processDebugNavigationResources FROM-CACHE
+> Task :app:injectCrashlyticsMappingFileIdDebug
+> Task :genesis:oracledrive:datavein:processDebugNavigationResources
+> Task :genesis:oracledrive:rootmanagement:processDebugNavigationResources
+> Task :kai:sentinelsfortress:systemintegrity:processDebugNavigationResources FROM-CACHE
+> Task :kai:sentinelsfortress:threatmonitor:processDebugNavigationResources FROM-CACHE
+> Task :kai:sentinelsfortress:security:processDebugNavigationResources
+> Task :app:injectCrashlyticsVersionControlInfoDebug
+> Task :app:processDebugGoogleServices
+> Task :core-module:parseDebugLocalResources
+> Task :genesis:oracledrive:parseDebugLocalResources
+> Task :app:compileDebugAidl
+> Task :agents:growthmetrics:identity:parseDebugLocalResources
+> Task :agents:growthmetrics:identity:generateDebugRFile
+> Task :genesis:oracledrive:generateDebugRFile
+> Task :core-module:generateDebugRFile
+> Task :agents:growthmetrics:metareflection:parseDebugLocalResources FROM-CACHE
+> Task :agents:growthmetrics:progression:parseDebugLocalResources FROM-CACHE
+> Task :agents:growthmetrics:nexusmemory:parseDebugLocalResources FROM-CACHE
+> Task :agents:growthmetrics:metareflection:generateDebugRFile
+> Task :agents:growthmetrics:nexusmemory:generateDebugRFile
+> Task :agents:growthmetrics:spheregrid:parseDebugLocalResources FROM-CACHE
+> Task :agents:growthmetrics:tasker:parseDebugLocalResources FROM-CACHE
+> Task :agents:growthmetrics:progression:generateDebugRFile
+> Task :aura:reactivedesign:auraslab:parseDebugLocalResources
+> Task :agents:growthmetrics:spheregrid:generateDebugRFile
+> Task :agents:growthmetrics:tasker:generateDebugRFile
+> Task :aura:reactivedesign:collabcanvas:parseDebugLocalResources
+> Task :aura:reactivedesign:chromacore:parseDebugLocalResources
+> Task :aura:reactivedesign:auraslab:generateDebugRFile
+> Task :aura:reactivedesign:customization:parseDebugLocalResources FROM-CACHE
+> Task :aura:reactivedesign:chromacore:generateDebugRFile
+> Task :aura:reactivedesign:collabcanvas:generateDebugRFile
+> Task :aura:reactivedesign:sandboxui:parseDebugLocalResources FROM-CACHE
+> Task :cascade:datastream:delivery:parseDebugLocalResources FROM-CACHE
+> Task :aura:reactivedesign:customization:generateDebugRFile
+> Task :cascade:datastream:routing:parseDebugLocalResources FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:generateDebugRFile
+> Task :cascade:datastream:delivery:generateDebugRFile
+> Task :cascade:datastream:taskmanager:parseDebugLocalResources FROM-CACHE
+> Task :cascade:datastream:routing:generateDebugRFile
+> Task :genesis:oracledrive:datavein:parseDebugLocalResources
+> Task :genesis:oracledrive:rootmanagement:parseDebugLocalResources
+> Task :cascade:datastream:taskmanager:generateDebugRFile
+> Task :kai:sentinelsfortress:security:parseDebugLocalResources
+> Task :genesis:oracledrive:datavein:generateDebugRFile
+> Task :genesis:oracledrive:rootmanagement:generateDebugRFile
+> Task :kai:sentinelsfortress:threatmonitor:parseDebugLocalResources FROM-CACHE
+> Task :kai:sentinelsfortress:systemintegrity:parseDebugLocalResources FROM-CACHE
+> Task :kai:sentinelsfortress:security:generateDebugRFile
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugRFile
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugRFile
+> Task :genesis:oracledrive:generateDebugBuildConfig
+> Task :core-module:generateDebugBuildConfig
+> Task :agents:growthmetrics:identity:generateDebugBuildConfig
+> Task :genesis:oracledrive:kspDebugKotlin UP-TO-DATE
+> Task :core-module:kspDebugKotlin
+> Task :agents:growthmetrics:identity:kspDebugKotlin
+> Task :core-module:javaPreCompileDebug
+> Task :genesis:oracledrive:javaPreCompileDebug
+> Task :genesis:oracledrive:compileDebugKotlin
+> Task :core-module:compileDebugKotlin
+> Task :agents:growthmetrics:identity:compileDebugKotlin
+> Task :genesis:oracledrive:compileDebugJavaWithJavac
+> Task :core-module:compileDebugJavaWithJavac
+> Task :genesis:oracledrive:transformDebugClassesWithAsm
+> Task :genesis:oracledrive:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:identity:javaPreCompileDebug FROM-CACHE
+> Task :core-module:transformDebugClassesWithAsm
+> Task :core-module:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:metareflection:generateDebugBuildConfig
+> Task :agents:growthmetrics:metareflection:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:compileDebugKotlin NO-SOURCE
+> Task :agents:growthmetrics:metareflection:javaPreCompileDebug FROM-CACHE
+> Task :agents:growthmetrics:metareflection:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:identity:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:metareflection:transformDebugClassesWithAsm
+> Task :agents:growthmetrics:metareflection:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:nexusmemory:generateDebugBuildConfig
+> Task :app:packageDebugResources
+> Task :app:processDebugNavigationResources
+> Task :agents:growthmetrics:identity:transformDebugClassesWithAsm
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugBuildConfig
+> Task :agents:growthmetrics:identity:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:nexusmemory:javaPreCompileDebug FROM-CACHE
+> Task :agents:growthmetrics:metareflection:bundleLibRuntimeToJarDebug
+> Task :agents:growthmetrics:progression:generateDebugBuildConfig
+> Task :app:generateDebugRFile
+> Task :agents:growthmetrics:progression:javaPreCompileDebug FROM-CACHE
+> Task :agents:growthmetrics:spheregrid:generateDebugBuildConfig
+> Task :agents:growthmetrics:spheregrid:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:compileDebugKotlin NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:javaPreCompileDebug FROM-CACHE
+> Task :agents:growthmetrics:tasker:generateDebugBuildConfig
+> Task :cascade:datastream:routing:generateDebugBuildConfig
+> Task :cascade:datastream:routing:kspDebugKotlin UP-TO-DATE
+> Task :cascade:datastream:routing:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:routing:javaPreCompileDebug FROM-CACHE
+> Task :cascade:datastream:routing:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:spheregrid:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:nexusmemory:kspDebugKotlin
+> Task :cascade:datastream:routing:transformDebugClassesWithAsm
+> Task :cascade:datastream:routing:bundleLibCompileToJarDebug
+> Task :cascade:datastream:routing:bundleLibRuntimeToJarDebug
+> Task :cascade:datastream:taskmanager:generateDebugBuildConfig
+> Task :cascade:datastream:taskmanager:kspDebugKotlin UP-TO-DATE
+> Task :cascade:datastream:taskmanager:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:taskmanager:javaPreCompileDebug FROM-CACHE
+> Task :agents:growthmetrics:spheregrid:transformDebugClassesWithAsm
+> Task :agents:growthmetrics:spheregrid:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:progression:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:progression:compileDebugKotlin NO-SOURCE
+> Task :agents:growthmetrics:progression:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:spheregrid:bundleLibRuntimeToJarDebug
+> Task :cascade:datastream:taskmanager:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:progression:transformDebugClassesWithAsm
+> Task :agents:growthmetrics:progression:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:tasker:javaPreCompileDebug FROM-CACHE
+> Task :aura:reactivedesign:auraslab:generateDebugBuildConfig
+> Task :aura:reactivedesign:auraslab:kspDebugKotlin UP-TO-DATE
+> Task :cascade:datastream:taskmanager:transformDebugClassesWithAsm
+> Task :cascade:datastream:taskmanager:bundleLibCompileToJarDebug
+> Task :agents:growthmetrics:tasker:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:tasker:compileDebugKotlin NO-SOURCE
+> Task :app:mergeDebugResources
+> Task :agents:growthmetrics:tasker:compileDebugJavaWithJavac
+> Task :cascade:datastream:taskmanager:bundleLibRuntimeToJarDebug
+> Task :agents:growthmetrics:tasker:transformDebugClassesWithAsm
+> Task :agents:growthmetrics:tasker:bundleLibCompileToJarDebug
+> Task :aura:reactivedesign:auraslab:javaPreCompileDebug FROM-CACHE
+> Task :aura:reactivedesign:chromacore:generateDebugBuildConfig
+> Task :aura:reactivedesign:chromacore:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:compileDebugKotlin
+> Task :aura:reactivedesign:auraslab:compileDebugKotlin
+> Task :agents:growthmetrics:nexusmemory:compileDebugJavaWithJavac
+> Task :aura:reactivedesign:chromacore:compileDebugKotlin
+> Task :aura:reactivedesign:chromacore:javaPreCompileDebug FROM-CACHE
+> Task :agents:growthmetrics:nexusmemory:transformDebugClassesWithAsm
+> Task :aura:reactivedesign:auraslab:compileDebugJavaWithJavac
+> Task :agents:growthmetrics:nexusmemory:bundleLibCompileToJarDebug
+> Task :aura:reactivedesign:collabcanvas:generateDebugBuildConfig
+> Task :aura:reactivedesign:chromacore:compileDebugJavaWithJavac
+> Task :aura:reactivedesign:auraslab:transformDebugClassesWithAsm
+> Task :aura:reactivedesign:auraslab:bundleLibCompileToJarDebug
+> Task :aura:reactivedesign:collabcanvas:javaPreCompileDebug FROM-CACHE
+> Task :aura:reactivedesign:customization:generateDebugBuildConfig
+> Task :aura:reactivedesign:customization:kspDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:transformDebugClassesWithAsm
+> Task :aura:reactivedesign:chromacore:bundleLibCompileToJarDebug
+> Task :aura:reactivedesign:customization:javaPreCompileDebug FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:generateDebugBuildConfig
+> Task :aura:reactivedesign:sandboxui:kspDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:compileDebugKotlin NO-SOURCE
+> Task :aura:reactivedesign:sandboxui:javaPreCompileDebug FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:compileDebugJavaWithJavac
+> Task :aura:reactivedesign:sandboxui:transformDebugClassesWithAsm
+> Task :aura:reactivedesign:sandboxui:bundleLibCompileToJarDebug
+> Task :cascade:datastream:delivery:generateDebugBuildConfig
+> Task :cascade:datastream:delivery:kspDebugKotlin UP-TO-DATE
+> Task :cascade:datastream:delivery:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:delivery:javaPreCompileDebug FROM-CACHE
+> Task :aura:reactivedesign:collabcanvas:kspDebugKotlin
+> Task :cascade:datastream:delivery:compileDebugJavaWithJavac
+> Task :cascade:datastream:delivery:transformDebugClassesWithAsm
+> Task :cascade:datastream:delivery:bundleLibCompileToJarDebug
+> Task :genesis:oracledrive:datavein:generateDebugBuildConfig
+> Task :app:dataBindingGenBaseClassesDebug
+> Task :genesis:oracledrive:datavein:javaPreCompileDebug FROM-CACHE
+> Task :genesis:oracledrive:rootmanagement:generateDebugBuildConfig
+> Task :genesis:oracledrive:datavein:kspDebugKotlin
+> Task :aura:reactivedesign:customization:compileDebugKotlin
+> Task :aura:reactivedesign:customization:compileDebugJavaWithJavac
+> Task :aura:reactivedesign:customization:transformDebugClassesWithAsm
+> Task :aura:reactivedesign:customization:bundleLibCompileToJarDebug
+> Task :genesis:oracledrive:rootmanagement:javaPreCompileDebug
+> Task :kai:sentinelsfortress:security:generateDebugBuildConfig
+> Task :genesis:oracledrive:rootmanagement:kspDebugKotlin
+> Task :kai:sentinelsfortress:security:kspDebugKotlin
+> Task :aura:reactivedesign:collabcanvas:compileDebugKotlin
+> Task :genesis:oracledrive:datavein:compileDebugKotlin
+> Task :aura:reactivedesign:collabcanvas:compileDebugJavaWithJavac
+> Task :genesis:oracledrive:datavein:compileDebugJavaWithJavac
+> Task :genesis:oracledrive:datavein:transformDebugClassesWithAsm
+> Task :genesis:oracledrive:datavein:bundleLibCompileToJarDebug
+> Task :kai:sentinelsfortress:security:javaPreCompileDebug FROM-CACHE
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugBuildConfig
+> Task :kai:sentinelsfortress:systemintegrity:kspDebugKotlin UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugKotlin NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:javaPreCompileDebug FROM-CACHE
+> Task :kai:sentinelsfortress:security:compileDebugKotlin
+> Task :aura:reactivedesign:collabcanvas:transformDebugClassesWithAsm
+> Task :aura:reactivedesign:collabcanvas:bundleLibCompileToJarDebug
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugBuildConfig
+> Task :kai:sentinelsfortress:threatmonitor:javaPreCompileDebug FROM-CACHE
+> Task :app:javaPreCompileDebug
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :core-module:generateDebugAssets UP-TO-DATE
+> Task :core-module:mergeDebugAssets
+> Task :genesis:oracledrive:generateDebugAssets UP-TO-DATE
+> Task :genesis:oracledrive:mergeDebugAssets
+> Task :agents:growthmetrics:identity:generateDebugAssets UP-TO-DATE
+> Task :agents:growthmetrics:identity:mergeDebugAssets
+> Task :agents:growthmetrics:metareflection:generateDebugAssets UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:mergeDebugAssets
+> Task :agents:growthmetrics:nexusmemory:generateDebugAssets UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:mergeDebugAssets
+> Task :agents:growthmetrics:progression:generateDebugAssets UP-TO-DATE
+> Task :agents:growthmetrics:progression:mergeDebugAssets
+> Task :agents:growthmetrics:spheregrid:generateDebugAssets UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:mergeDebugAssets
+> Task :agents:growthmetrics:tasker:generateDebugAssets UP-TO-DATE
+> Task :agents:growthmetrics:tasker:mergeDebugAssets
+> Task :aura:reactivedesign:auraslab:generateDebugAssets UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:mergeDebugAssets
+> Task :aura:reactivedesign:chromacore:generateDebugAssets UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:mergeDebugAssets
+> Task :aura:reactivedesign:collabcanvas:generateDebugAssets UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:mergeDebugAssets
+> Task :aura:reactivedesign:customization:generateDebugAssets UP-TO-DATE
+> Task :aura:reactivedesign:customization:mergeDebugAssets
+> Task :aura:reactivedesign:sandboxui:generateDebugAssets UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:mergeDebugAssets
+> Task :cascade:datastream:delivery:generateDebugAssets UP-TO-DATE
+> Task :cascade:datastream:delivery:mergeDebugAssets
+> Task :cascade:datastream:routing:generateDebugAssets UP-TO-DATE
+> Task :cascade:datastream:routing:mergeDebugAssets
+> Task :cascade:datastream:taskmanager:generateDebugAssets UP-TO-DATE
+> Task :cascade:datastream:taskmanager:mergeDebugAssets
+> Task :genesis:oracledrive:datavein:generateDebugAssets UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugJavaWithJavac
+> Task :genesis:oracledrive:datavein:mergeDebugAssets
+> Task :genesis:oracledrive:rootmanagement:generateDebugAssets UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:mergeDebugAssets
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugAssets UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugAssets
+> Task :kai:sentinelsfortress:systemintegrity:transformDebugClassesWithAsm
+> Task :kai:sentinelsfortress:systemintegrity:bundleLibCompileToJarDebug
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugAssets UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugAssets
+> Task :aura:reactivedesign:auraslab:bundleLibRuntimeToJarDebug
+> Task :app:l8DexDesugarLibDebug
+> Task :aura:reactivedesign:collabcanvas:bundleLibRuntimeToJarDebug
+> Task :kai:sentinelsfortress:security:compileDebugJavaWithJavac
+> Task :kai:sentinelsfortress:security:transformDebugClassesWithAsm
+> Task :kai:sentinelsfortress:security:bundleLibCompileToJarDebug
+> Task :kai:sentinelsfortress:security:bundleLibRuntimeToJarDebug
+> Task :kai:sentinelsfortress:security:generateDebugAssets UP-TO-DATE
+> Task :kai:sentinelsfortress:security:mergeDebugAssets
+> Task :kai:sentinelsfortress:threatmonitor:kspDebugKotlin UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugKotlin NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugJavaWithJavac
+> Task :aura:reactivedesign:chromacore:bundleLibRuntimeToJarDebug
+> Task :aura:reactivedesign:customization:bundleLibRuntimeToJarDebug
+> Task :app:mergeDebugAssets
+> Task :kai:sentinelsfortress:threatmonitor:transformDebugClassesWithAsm
+> Task :kai:sentinelsfortress:threatmonitor:bundleLibCompileToJarDebug
+> Task :aura:reactivedesign:sandboxui:bundleLibRuntimeToJarDebug
+> Task :kai:sentinelsfortress:threatmonitor:bundleLibRuntimeToJarDebug
+> Task :kai:sentinelsfortress:systemintegrity:bundleLibRuntimeToJarDebug
+> Task :genesis:oracledrive:bundleLibRuntimeToJarDebug
+> Task :app:compressDebugAssets
+> Task :cascade:datastream:delivery:bundleLibRuntimeToJarDebug
+> Task :genesis:oracledrive:datavein:bundleLibRuntimeToJarDebug
+> Task :agents:growthmetrics:tasker:bundleLibRuntimeToJarDebug
+> Task :agents:growthmetrics:progression:bundleLibRuntimeToJarDebug
+> Task :agents:growthmetrics:nexusmemory:bundleLibRuntimeToJarDebug
+> Task :agents:growthmetrics:identity:bundleLibRuntimeToJarDebug
+> Task :core-module:bundleLibRuntimeToJarDebug
+> Task :app:desugarDebugFileDependencies
+> Task :aura:reactivedesign:auraslab:processDebugJavaRes
+> Task :aura:reactivedesign:collabcanvas:processDebugJavaRes
+> Task :aura:reactivedesign:auraslab:createFullJarDebug
+> Task :aura:reactivedesign:collabcanvas:createFullJarDebug
+> Task :aura:reactivedesign:chromacore:processDebugJavaRes
+> Task :aura:reactivedesign:customization:processDebugJavaRes
+> Task :aura:reactivedesign:chromacore:createFullJarDebug
+> Task :aura:reactivedesign:customization:createFullJarDebug
+> Task :aura:reactivedesign:sandboxui:processDebugJavaRes NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:processDebugJavaRes NO-SOURCE
+> Task :aura:reactivedesign:sandboxui:createFullJarDebug
+> Task :kai:sentinelsfortress:threatmonitor:createFullJarDebug
+> Task :kai:sentinelsfortress:systemintegrity:processDebugJavaRes NO-SOURCE
+> Task :kai:sentinelsfortress:security:processDebugJavaRes
+> Task :kai:sentinelsfortress:systemintegrity:createFullJarDebug
+> Task :kai:sentinelsfortress:security:createFullJarDebug
+> Task :genesis:oracledrive:processDebugJavaRes
+> Task :cascade:datastream:delivery:processDebugJavaRes NO-SOURCE
+> Task :cascade:datastream:delivery:createFullJarDebug
+> Task :genesis:oracledrive:datavein:processDebugJavaRes
+> Task :agents:growthmetrics:tasker:processDebugJavaRes NO-SOURCE
+> Task :genesis:oracledrive:datavein:createFullJarDebug
+> Task :cascade:datastream:taskmanager:processDebugJavaRes NO-SOURCE
+> Task :agents:growthmetrics:tasker:createFullJarDebug
+> Task :cascade:datastream:routing:processDebugJavaRes NO-SOURCE
+> Task :cascade:datastream:taskmanager:createFullJarDebug
+> Task :agents:growthmetrics:progression:processDebugJavaRes NO-SOURCE
+> Task :cascade:datastream:routing:createFullJarDebug
+> Task :genesis:oracledrive:createFullJarDebug
+> Task :agents:growthmetrics:metareflection:processDebugJavaRes NO-SOURCE
+> Task :agents:growthmetrics:progression:createFullJarDebug
+> Task :agents:growthmetrics:spheregrid:processDebugJavaRes NO-SOURCE
+> Task :agents:growthmetrics:metareflection:createFullJarDebug
+> Task :agents:growthmetrics:spheregrid:createFullJarDebug
+> Task :agents:growthmetrics:nexusmemory:processDebugJavaRes
+> Task :agents:growthmetrics:identity:processDebugJavaRes
+> Task :core-module:processDebugJavaRes
+> Task :agents:growthmetrics:nexusmemory:createFullJarDebug
+> Task :agents:growthmetrics:identity:createFullJarDebug
+> Task :core-module:createFullJarDebug
+> Task :genesis:oracledrive:writeDebugAarMetadata
+> Task :agents:growthmetrics:identity:writeDebugAarMetadata
+> Task :core-module:writeDebugAarMetadata
+> Task :agents:growthmetrics:nexusmemory:writeDebugAarMetadata
+> Task :agents:growthmetrics:progression:writeDebugAarMetadata
+> Task :agents:growthmetrics:metareflection:writeDebugAarMetadata
+> Task :agents:growthmetrics:spheregrid:writeDebugAarMetadata
+> Task :agents:growthmetrics:tasker:writeDebugAarMetadata
+> Task :aura:reactivedesign:auraslab:writeDebugAarMetadata
+> Task :aura:reactivedesign:chromacore:writeDebugAarMetadata
+> Task :aura:reactivedesign:collabcanvas:writeDebugAarMetadata
+> Task :aura:reactivedesign:customization:writeDebugAarMetadata
+> Task :cascade:datastream:delivery:writeDebugAarMetadata
+> Task :aura:reactivedesign:sandboxui:writeDebugAarMetadata
+> Task :cascade:datastream:routing:writeDebugAarMetadata
+> Task :genesis:oracledrive:datavein:writeDebugAarMetadata
+> Task :cascade:datastream:taskmanager:writeDebugAarMetadata
+> Task :genesis:oracledrive:rootmanagement:writeDebugAarMetadata
+> Task :kai:sentinelsfortress:security:writeDebugAarMetadata
+> Task :kai:sentinelsfortress:systemintegrity:writeDebugAarMetadata
+> Task :kai:sentinelsfortress:threatmonitor:writeDebugAarMetadata
+
+> Task :genesis:oracledrive:rootmanagement:compileDebugKotlin
+w: file:///C:/Users/Wehtt/Downloads/Finale/genesis/oracledrive/rootmanagement/src/main/kotlin/dev/aurakai/auraframefx/romtools/bootloader/BootloaderManager.kt:41:5 This annotation is currently applied to the value parameter only, but in the future it will also be applied to field.
+- To opt in to applying to both value parameter and field, add '-Xannotation-default-target=param-property' to your compiler arguments.
+- To keep applying to the value parameter only, use the '@param:' annotation target.
+
+See https://youtrack.jetbrains.com/issue/KT-73255 for more details.
+w: file:///C:/Users/Wehtt/Downloads/Finale/genesis/oracledrive/rootmanagement/src/main/kotlin/dev/aurakai/auraframefx/romtools/bootloader/BootloaderSafetyManager.kt:34:5 This annotation is currently applied to the value parameter only, but in the future it will also be applied to field.
+- To opt in to applying to both value parameter and field, add '-Xannotation-default-target=param-property' to your compiler arguments.
+- To keep applying to the value parameter only, use the '@param:' annotation target.
+
+See https://youtrack.jetbrains.com/issue/KT-73255 for more details.
+w: file:///C:/Users/Wehtt/Downloads/Finale/genesis/oracledrive/rootmanagement/src/main/kotlin/dev/aurakai/auraframefx/romtools/ui/RomToolsScreen.kt:81:77 'fun <reified VM : ViewModel> hiltViewModel(viewModelStoreOwner: ViewModelStoreOwner = ..., key: String? = ...): VM' is deprecated. Moved to package: androidx.hilt.lifecycle.viewmodel.compose.
+
+> Task :core-module:extractDeepLinksDebug
+> Task :genesis:oracledrive:extractDeepLinksDebug FROM-CACHE
+> Task :app:compileDebugNavigationResources
+> Task :core-module:processDebugManifest
+> Task :agents:growthmetrics:identity:extractDeepLinksDebug FROM-CACHE
+> Task :agents:growthmetrics:identity:processDebugManifest
+> Task :agents:growthmetrics:metareflection:extractDeepLinksDebug FROM-CACHE
+> Task :agents:growthmetrics:metareflection:processDebugManifest
+> Task :agents:growthmetrics:nexusmemory:extractDeepLinksDebug FROM-CACHE
+> Task :genesis:oracledrive:processDebugManifest
+> Task :agents:growthmetrics:progression:extractDeepLinksDebug FROM-CACHE
+> Task :agents:growthmetrics:progression:processDebugManifest
+> Task :agents:growthmetrics:nexusmemory:processDebugManifest
+> Task :agents:growthmetrics:spheregrid:extractDeepLinksDebug FROM-CACHE
+> Task :app:mapDebugSourceSetPaths
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :agents:growthmetrics:tasker:extractDeepLinksDebug FROM-CACHE
+> Task :agents:growthmetrics:spheregrid:processDebugManifest
+> Task :aura:reactivedesign:auraslab:extractDeepLinksDebug FROM-CACHE
+> Task :agents:growthmetrics:tasker:processDebugManifest
+> Task :aura:reactivedesign:chromacore:extractDeepLinksDebug FROM-CACHE
+> Task :aura:reactivedesign:auraslab:processDebugManifest
+> Task :aura:reactivedesign:collabcanvas:extractDeepLinksDebug FROM-CACHE
+> Task :aura:reactivedesign:chromacore:processDebugManifest
+> Task :aura:reactivedesign:customization:extractDeepLinksDebug FROM-CACHE
+> Task :aura:reactivedesign:collabcanvas:processDebugManifest
+> Task :aura:reactivedesign:sandboxui:extractDeepLinksDebug FROM-CACHE
+> Task :aura:reactivedesign:customization:processDebugManifest
+> Task :cascade:datastream:delivery:extractDeepLinksDebug FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:processDebugManifest
+> Task :cascade:datastream:routing:extractDeepLinksDebug FROM-CACHE
+> Task :cascade:datastream:delivery:processDebugManifest
+> Task :cascade:datastream:taskmanager:extractDeepLinksDebug FROM-CACHE
+> Task :cascade:datastream:routing:processDebugManifest
+> Task :genesis:oracledrive:datavein:extractDeepLinksDebug FROM-CACHE
+> Task :app:checkDebugAarMetadata
+> Task :kai:sentinelsfortress:security:extractDeepLinksDebug FROM-CACHE
+> Task :cascade:datastream:taskmanager:processDebugManifest
+> Task :kai:sentinelsfortress:systemintegrity:extractDeepLinksDebug FROM-CACHE
+> Task :genesis:oracledrive:datavein:processDebugManifest
+> Task :kai:sentinelsfortress:threatmonitor:extractDeepLinksDebug FROM-CACHE
+> Task :kai:sentinelsfortress:security:processDebugManifest
+> Task :kai:sentinelsfortress:systemintegrity:processDebugManifest
+> Task :kai:sentinelsfortress:threatmonitor:processDebugManifest
+> Task :genesis:oracledrive:compileDebugLibraryResources
+> Task :agents:growthmetrics:identity:compileDebugLibraryResources
+> Task :core-module:compileDebugLibraryResources
+> Task :agents:growthmetrics:nexusmemory:compileDebugLibraryResources FROM-CACHE
+> Task :agents:growthmetrics:progression:compileDebugLibraryResources FROM-CACHE
+> Task :agents:growthmetrics:metareflection:compileDebugLibraryResources FROM-CACHE
+> Task :agents:growthmetrics:tasker:compileDebugLibraryResources FROM-CACHE
+> Task :agents:growthmetrics:spheregrid:compileDebugLibraryResources FROM-CACHE
+> Task :aura:reactivedesign:auraslab:compileDebugLibraryResources
+> Task :aura:reactivedesign:customization:compileDebugLibraryResources FROM-CACHE
+> Task :aura:reactivedesign:chromacore:compileDebugLibraryResources
+> Task :aura:reactivedesign:collabcanvas:compileDebugLibraryResources
+> Task :cascade:datastream:delivery:compileDebugLibraryResources FROM-CACHE
+> Task :aura:reactivedesign:sandboxui:compileDebugLibraryResources FROM-CACHE
+> Task :cascade:datastream:routing:compileDebugLibraryResources FROM-CACHE
+> Task :cascade:datastream:taskmanager:compileDebugLibraryResources FROM-CACHE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugLibraryResources FROM-CACHE
+> Task :genesis:oracledrive:datavein:compileDebugLibraryResources
+> Task :kai:sentinelsfortress:security:compileDebugLibraryResources
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugLibraryResources FROM-CACHE
+> Task :aura:reactivedesign:auraslab:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:rootmanagement:compileDebugJavaWithJavac
+> Task :genesis:oracledrive:rootmanagement:processDebugJavaRes
+> Task :genesis:oracledrive:rootmanagement:extractDeepLinksDebug FROM-CACHE
+> Task :genesis:oracledrive:rootmanagement:processDebugManifest
+> Task :aura:reactivedesign:collabcanvas:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:rootmanagement:compileDebugLibraryResources
+> Task :genesis:oracledrive:rootmanagement:transformDebugClassesWithAsm
+> Task :genesis:oracledrive:rootmanagement:bundleLibCompileToJarDebug
+> Task :genesis:oracledrive:rootmanagement:bundleLibRuntimeToJarDebug
+> Task :app:checkDebugDuplicateClasses
+> Task :genesis:oracledrive:rootmanagement:createFullJarDebug
+> Task :aura:reactivedesign:chromacore:bundleLibRuntimeToDirDebug
+> Task :aura:reactivedesign:customization:bundleLibRuntimeToDirDebug
+> Task :aura:reactivedesign:sandboxui:bundleLibRuntimeToDirDebug
+> Task :kai:sentinelsfortress:threatmonitor:bundleLibRuntimeToDirDebug
+> Task :kai:sentinelsfortress:security:bundleLibRuntimeToDirDebug
+> Task :app:processDebugMainManifest
+> Task :kai:sentinelsfortress:systemintegrity:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:bundleLibRuntimeToDirDebug
+> Task :cascade:datastream:delivery:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:tasker:bundleLibRuntimeToDirDebug
+> Task :cascade:datastream:taskmanager:bundleLibRuntimeToDirDebug
+> Task :cascade:datastream:routing:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:progression:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:metareflection:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:datavein:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:rootmanagement:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:nexusmemory:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:spheregrid:bundleLibRuntimeToDirDebug
+> Task :core-module:bundleLibRuntimeToDirDebug
+> Task :app:processDebugManifest
+> Task :app:processDebugManifestForPackage
+> Task :agents:growthmetrics:identity:bundleLibRuntimeToDirDebug
+> Task :core-module:mergeDebugJniLibFolders
+> Task :core-module:mergeDebugNativeLibs NO-SOURCE
+> Task :genesis:oracledrive:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:mergeDebugNativeLibs NO-SOURCE
+> Task :core-module:copyDebugJniLibsProjectOnly
+> Task :genesis:oracledrive:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:identity:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:metareflection:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:identity:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:metareflection:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:identity:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:metareflection:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:progression:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:nexusmemory:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:progression:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:progression:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:nexusmemory:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:spheregrid:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:spheregrid:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:tasker:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:tasker:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:tasker:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:auraslab:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:auraslab:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:auraslab:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:chromacore:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:chromacore:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:chromacore:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:collabcanvas:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:collabcanvas:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:customization:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:customization:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:customization:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:sandboxui:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:sandboxui:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:sandboxui:copyDebugJniLibsProjectOnly
+> Task :cascade:datastream:delivery:mergeDebugJniLibFolders
+> Task :cascade:datastream:delivery:mergeDebugNativeLibs NO-SOURCE
+> Task :cascade:datastream:delivery:copyDebugJniLibsProjectOnly
+> Task :cascade:datastream:routing:mergeDebugJniLibFolders
+> Task :cascade:datastream:routing:mergeDebugNativeLibs NO-SOURCE
+> Task :cascade:datastream:routing:copyDebugJniLibsProjectOnly
+> Task :cascade:datastream:taskmanager:mergeDebugJniLibFolders
+> Task :cascade:datastream:taskmanager:mergeDebugNativeLibs NO-SOURCE
+> Task :cascade:datastream:taskmanager:copyDebugJniLibsProjectOnly
+> Task :genesis:oracledrive:datavein:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:datavein:mergeDebugNativeLibs NO-SOURCE
+> Task :genesis:oracledrive:datavein:copyDebugJniLibsProjectOnly
+> Task :genesis:oracledrive:rootmanagement:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:rootmanagement:mergeDebugNativeLibs NO-SOURCE
+> Task :genesis:oracledrive:rootmanagement:copyDebugJniLibsProjectOnly
+> Task :kai:sentinelsfortress:security:mergeDebugJniLibFolders
+> Task :kai:sentinelsfortress:security:mergeDebugNativeLibs NO-SOURCE
+> Task :kai:sentinelsfortress:security:copyDebugJniLibsProjectOnly
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugJniLibFolders
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugNativeLibs NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:copyDebugJniLibsProjectOnly
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugJniLibFolders
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugNativeLibs NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:copyDebugJniLibsProjectOnly
+> Task :core-module:checkDebugAarMetadata
+> Task :app:mergeLibDexDebug
+> Task :app:configureCMakeDebug[arm64-v8a]
+> Task :app:processDebugResources
+> Task :core-module:stripDebugDebugSymbols NO-SOURCE
+> Task :core-module:copyDebugJniLibsProjectAndLocalJars
+> Task :app:buildCMakeDebug[arm64-v8a]
+> Task :app:configureCMakeDebug[armeabi-v7a]
+> Task :app:kspDebugKotlin
+> Task :app:buildCMakeDebug[armeabi-v7a]
+> Task :app:configureCMakeDebug[x86]
+> Task :app:mergeExtDexDebug
+> Task :app:buildCMakeDebug[x86]
+> Task :app:configureCMakeDebug[x86_64]
+> Task :extendsysa:preBuild UP-TO-DATE
+> Task :extendsysa:preDebugBuild UP-TO-DATE
+> Task :extendsysa:checkDebugAarMetadata
+> Task :extendsysa:compileDebugAidl NO-SOURCE
+> Task :extendsysa:mergeDebugJniLibFolders
+> Task :extendsysa:mergeDebugNativeLibs NO-SOURCE
+> Task :extendsysa:stripDebugDebugSymbols NO-SOURCE
+> Task :extendsysa:copyDebugJniLibsProjectAndLocalJars
+> Task :extendsysa:generateDebugBuildConfig
+> Task :extendsysa:generateDebugResources
+> Task :extendsysa:packageDebugResources
+> Task :extendsysa:processDebugNavigationResources
+> Task :extendsysa:parseDebugLocalResources
+> Task :extendsysa:generateDebugRFile
+> Task :app:buildCMakeDebug[x86_64]
+> Task :extendsysa:extractDebugAnnotations
+> Task :core-module:extractDebugAnnotations
+> Task :core-module:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsysa:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsysa:generateDebugAssets UP-TO-DATE
+> Task :core-module:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :core-module:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :core-module:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsysa:mergeDebugAssets
+> Task :core-module:prepareLintJarForPublish UP-TO-DATE
+> Task :extendsysa:compileDebugKotlin NO-SOURCE
+> Task :extendsysa:javaPreCompileDebug
+> Task :core-module:mergeDebugJavaResource
+> Task :core-module:syncDebugLibJars
+> Task :extendsysa:compileDebugJavaWithJavac
+> Task :extendsysa:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :extendsysa:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :extendsysa:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsysa:prepareLintJarForPublish UP-TO-DATE
+> Task :core-module:bundleDebugAar
+> Task :core-module:assembleDebug
+> Task :extendsysa:processDebugJavaRes NO-SOURCE
+> Task :extendsysa:mergeDebugJavaResource
+> Task :extendsysa:processDebugManifest
+> Task :extendsysb:preBuild UP-TO-DATE
+> Task :extendsysb:preDebugBuild UP-TO-DATE
+> Task :extendsysa:syncDebugLibJars
+> Task :extendsysa:writeDebugAarMetadata
+> Task :extendsysa:bundleDebugAar
+> Task :extendsysa:assembleDebug
+> Task :extendsysb:compileDebugAidl NO-SOURCE
+> Task :extendsysb:mergeDebugJniLibFolders
+> Task :extendsysb:mergeDebugNativeLibs NO-SOURCE
+> Task :extendsysb:stripDebugDebugSymbols NO-SOURCE
+> Task :extendsysb:copyDebugJniLibsProjectAndLocalJars
+> Task :extendsysb:generateDebugBuildConfig
+> Task :extendsysb:generateDebugResources
+> Task :extendsysb:packageDebugResources
+> Task :extendsysb:processDebugNavigationResources
+> Task :extendsysb:checkDebugAarMetadata
+> Task :extendsysb:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsysb:generateDebugAssets UP-TO-DATE
+> Task :extendsysb:parseDebugLocalResources
+> Task :extendsysc:preBuild UP-TO-DATE
+> Task :extendsysc:preDebugBuild UP-TO-DATE
+> Task :extendsysb:mergeDebugAssets
+> Task :extendsysc:checkDebugAarMetadata
+> Task :extendsysb:javaPreCompileDebug FROM-CACHE
+> Task :extendsysb:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsysb:prepareLintJarForPublish UP-TO-DATE
+> Task :extendsysb:generateDebugRFile
+> Task :extendsysb:extractDebugAnnotations
+> Task :extendsysb:compileDebugKotlin NO-SOURCE
+> Task :extendsysb:processDebugManifest
+> Task :extendsysc:compileDebugAidl NO-SOURCE
+> Task :extendsysc:mergeDebugJniLibFolders
+> Task :extendsysc:mergeDebugNativeLibs NO-SOURCE
+> Task :extendsysc:stripDebugDebugSymbols NO-SOURCE
+> Task :extendsysc:copyDebugJniLibsProjectAndLocalJars
+> Task :extendsysc:generateDebugBuildConfig
+> Task :extendsysc:generateDebugResources
+> Task :extendsysc:packageDebugResources
+> Task :extendsysc:processDebugNavigationResources
+> Task :extendsysc:parseDebugLocalResources
+> Task :extendsysc:generateDebugRFile
+> Task :extendsysc:extractDebugAnnotations
+> Task :extendsysc:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsysc:generateDebugAssets UP-TO-DATE
+> Task :extendsysc:mergeDebugAssets
+> Task :extendsysc:compileDebugKotlin NO-SOURCE
+> Task :extendsysc:javaPreCompileDebug FROM-CACHE
+> Task :extendsysb:compileDebugJavaWithJavac
+> Task :extendsysb:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :extendsysb:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :extendsysb:processDebugJavaRes NO-SOURCE
+> Task :extendsysb:mergeDebugJavaResource
+> Task :extendsysb:syncDebugLibJars
+> Task :extendsysb:writeDebugAarMetadata
+> Task :extendsysb:bundleDebugAar
+> Task :extendsysb:assembleDebug
+> Task :extendsysd:preBuild UP-TO-DATE
+> Task :extendsysd:preDebugBuild UP-TO-DATE
+> Task :extendsysc:compileDebugJavaWithJavac
+> Task :extendsysc:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :extendsysc:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :extendsysc:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsysc:prepareLintJarForPublish UP-TO-DATE
+> Task :extendsysd:checkDebugAarMetadata
+> Task :extendsysc:processDebugJavaRes NO-SOURCE
+> Task :extendsysc:mergeDebugJavaResource
+> Task :extendsysc:processDebugManifest
+> Task :extendsysd:compileDebugAidl NO-SOURCE
+> Task :extendsysc:syncDebugLibJars
+> Task :extendsysd:mergeDebugJniLibFolders
+> Task :extendsysd:mergeDebugNativeLibs NO-SOURCE
+> Task :extendsysc:writeDebugAarMetadata
+> Task :extendsysd:stripDebugDebugSymbols NO-SOURCE
+> Task :extendsysd:copyDebugJniLibsProjectAndLocalJars
+> Task :extendsysc:bundleDebugAar
+> Task :extendsysc:assembleDebug
+> Task :extendsyse:preBuild UP-TO-DATE
+> Task :extendsyse:preDebugBuild UP-TO-DATE
+> Task :extendsysd:generateDebugBuildConfig
+> Task :extendsysd:generateDebugResources
+> Task :extendsyse:checkDebugAarMetadata
+> Task :extendsyse:compileDebugAidl NO-SOURCE
+> Task :extendsyse:mergeDebugJniLibFolders
+> Task :extendsyse:mergeDebugNativeLibs NO-SOURCE
+> Task :extendsyse:stripDebugDebugSymbols NO-SOURCE
+> Task :extendsyse:copyDebugJniLibsProjectAndLocalJars
+> Task :extendsyse:generateDebugBuildConfig
+> Task :extendsysd:packageDebugResources
+> Task :extendsyse:generateDebugResources
+> Task :extendsysd:processDebugNavigationResources
+> Task :extendsysd:parseDebugLocalResources
+> Task :extendsysd:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsysd:generateDebugAssets UP-TO-DATE
+> Task :extendsysd:mergeDebugAssets
+> Task :extendsysd:javaPreCompileDebug FROM-CACHE
+> Task :extendsysd:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsysd:prepareLintJarForPublish UP-TO-DATE
+> Task :extendsyse:packageDebugResources
+> Task :extendsyse:processDebugNavigationResources
+> Task :extendsysd:writeDebugAarMetadata
+> Task :extendsysd:generateDebugRFile
+> Task :extendsyse:parseDebugLocalResources
+> Task :extendsysd:extractDebugAnnotations
+> Task :extendsysd:processDebugManifest
+> Task :extendsysd:compileDebugKotlin NO-SOURCE
+> Task :extendsyse:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsyse:generateDebugAssets UP-TO-DATE
+> Task :extendsyse:mergeDebugAssets
+> Task :extendsyse:javaPreCompileDebug FROM-CACHE
+> Task :extendsyse:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsyse:prepareLintJarForPublish UP-TO-DATE
+> Task :extendsyse:generateDebugRFile
+> Task :extendsyse:extractDebugAnnotations
+> Task :extendsyse:compileDebugKotlin NO-SOURCE
+> Task :extendsyse:processDebugManifest
+> Task :extendsysf:preBuild UP-TO-DATE
+> Task :extendsysf:preDebugBuild UP-TO-DATE
+> Task :extendsysf:checkDebugAarMetadata
+> Task :extendsysf:compileDebugAidl NO-SOURCE
+> Task :extendsysf:mergeDebugJniLibFolders
+> Task :extendsysf:mergeDebugNativeLibs NO-SOURCE
+> Task :extendsysf:stripDebugDebugSymbols NO-SOURCE
+> Task :extendsysf:copyDebugJniLibsProjectAndLocalJars
+> Task :extendsysf:generateDebugBuildConfig
+> Task :extendsysf:generateDebugResources
+> Task :extendsysf:packageDebugResources
+> Task :extendsysf:processDebugNavigationResources
+> Task :extendsysf:parseDebugLocalResources
+> Task :extendsysf:generateDebugRFile
+> Task :extendsysf:extractDebugAnnotations
+> Task :extendsysf:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :extendsysf:generateDebugAssets UP-TO-DATE
+> Task :extendsysf:mergeDebugAssets
+> Task :extendsysf:compileDebugKotlin NO-SOURCE
+> Task :extendsysf:javaPreCompileDebug FROM-CACHE
+> Task :extendsysd:compileDebugJavaWithJavac
+> Task :extendsysd:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :extendsysd:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :extendsysd:processDebugJavaRes NO-SOURCE
+> Task :extendsysd:mergeDebugJavaResource
+> Task :extendsysd:syncDebugLibJars
+> Task :extendsyse:compileDebugJavaWithJavac
+> Task :extendsyse:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :extendsyse:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :extendsyse:processDebugJavaRes NO-SOURCE
+> Task :extendsysd:bundleDebugAar
+> Task :extendsysd:assembleDebug
+> Task :extendsyse:mergeDebugJavaResource
+> Task :utilities:preBuild UP-TO-DATE
+> Task :utilities:preDebugBuild UP-TO-DATE
+> Task :extendsyse:writeDebugAarMetadata
+> Task :extendsyse:syncDebugLibJars
+> Task :utilities:checkDebugAarMetadata
+> Task :utilities:compileDebugAidl NO-SOURCE
+> Task :extendsyse:bundleDebugAar
+> Task :extendsyse:assembleDebug
+> Task :utilities:mergeDebugJniLibFolders
+> Task :utilities:mergeDebugNativeLibs NO-SOURCE
+> Task :utilities:stripDebugDebugSymbols NO-SOURCE
+> Task :utilities:copyDebugJniLibsProjectAndLocalJars
+> Task :genesis:oracledrive:checkDebugAarMetadata
+> Task :genesis:oracledrive:stripDebugDebugSymbols NO-SOURCE
+> Task :utilities:generateDebugBuildConfig
+> Task :genesis:oracledrive:copyDebugJniLibsProjectAndLocalJars
+> Task :utilities:generateDebugResources FROM-CACHE
+> Task :genesis:oracledrive:extractDebugAnnotations
+> Task :genesis:oracledrive:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :genesis:oracledrive:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :genesis:oracledrive:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :utilities:packageDebugResources
+> Task :genesis:oracledrive:prepareDebugArtProfile UP-TO-DATE
+> Task :genesis:oracledrive:prepareLintJarForPublish UP-TO-DATE
+> Task :utilities:processDebugNavigationResources FROM-CACHE
+> Task :utilities:parseDebugLocalResources FROM-CACHE
+> Task :genesis:oracledrive:mergeDebugJavaResource
+> Task :utilities:generateDebugRFile
+> Task :utilities:kspDebugKotlin UP-TO-DATE
+> Task :utilities:extractDebugAnnotations
+> Task :utilities:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :utilities:generateDebugAssets UP-TO-DATE
+> Task :genesis:oracledrive:syncDebugLibJars
+> Task :utilities:mergeDebugAssets
+> Task :utilities:compileDebugKotlin NO-SOURCE
+> Task :utilities:javaPreCompileDebug FROM-CACHE
+> Task :extendsysf:compileDebugJavaWithJavac
+> Task :extendsysf:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:bundleDebugAar
+> Task :extendsysf:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :extendsysf:prepareDebugArtProfile UP-TO-DATE
+> Task :extendsysf:prepareLintJarForPublish UP-TO-DATE
+> Task :extendsysf:processDebugManifest
+> Task :extendsysf:processDebugJavaRes NO-SOURCE
+> Task :extendsysf:mergeDebugJavaResource
+> Task :utilities:compileDebugJavaWithJavac
+> Task :extendsysf:syncDebugLibJars
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :extendsysf:writeDebugAarMetadata
+> Task :extendsysf:bundleDebugAar
+> Task :extendsysf:assembleDebug
+> Task :utilities:prepareDebugArtProfile UP-TO-DATE
+> Task :utilities:prepareLintJarForPublish UP-TO-DATE
+> Task :app:mergeDebugNativeLibs
+> Task :app:stripDebugDebugSymbols
+> Task :utilities:processDebugJavaRes NO-SOURCE
+> Task :utilities:mergeDebugJavaResource
+> Task :utilities:writeDebugAarMetadata
+> Task :genesis:oracledrive:assembleDebug
+> Task :utilities:processDebugManifest
+> Task :utilities:transformDebugClassesWithAsm
+> Task :utilities:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :utilities:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :utilities:syncDebugLibJars
+> Task :agents:growthmetrics:metareflection:checkDebugAarMetadata
+> Task :utilities:bundleDebugAar
+> Task :utilities:assembleDebug
+> Task :agents:growthmetrics:identity:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:metareflection:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:identity:copyDebugJniLibsProjectAndLocalJars
+> Task :agents:growthmetrics:metareflection:copyDebugJniLibsProjectAndLocalJars
+> Task :agents:growthmetrics:identity:checkDebugAarMetadata
+> Task :agents:growthmetrics:metareflection:extractDebugAnnotations
+> Task :agents:growthmetrics:metareflection:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:checkDebugAarMetadata
+> Task :agents:growthmetrics:nexusmemory:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:copyDebugJniLibsProjectAndLocalJars
+> Task :agents:growthmetrics:metareflection:mergeDebugJavaResource
+> Task :agents:growthmetrics:metareflection:syncDebugLibJars
+> Task :agents:growthmetrics:identity:extractDebugAnnotations
+> Task :agents:growthmetrics:identity:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :agents:growthmetrics:identity:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:identity:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:identity:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:identity:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:bundleDebugAar
+> Task :agents:growthmetrics:metareflection:assembleDebug
+> Task :agents:growthmetrics:identity:mergeDebugJavaResource
+> Task :agents:growthmetrics:nexusmemory:extractDebugAnnotations
+> Task :agents:growthmetrics:nexusmemory:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :agents:growthmetrics:progression:checkDebugAarMetadata
+> Task :agents:growthmetrics:progression:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:progression:copyDebugJniLibsProjectAndLocalJars
+> Task :agents:growthmetrics:progression:extractDebugAnnotations
+> Task :agents:growthmetrics:progression:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :agents:growthmetrics:progression:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:progression:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:progression:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:progression:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:mergeDebugJavaResource
+> Task :agents:growthmetrics:progression:mergeDebugJavaResource
+> Task :agents:growthmetrics:progression:syncDebugLibJars
+> Task :agents:growthmetrics:progression:bundleDebugAar
+> Task :agents:growthmetrics:progression:assembleDebug
+> Task :agents:growthmetrics:spheregrid:checkDebugAarMetadata
+> Task :agents:growthmetrics:spheregrid:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:copyDebugJniLibsProjectAndLocalJars
+> Task :agents:growthmetrics:spheregrid:extractDebugAnnotations
+> Task :agents:growthmetrics:spheregrid:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:identity:syncDebugLibJars
+> Task :agents:growthmetrics:spheregrid:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:syncDebugLibJars
+> Task :agents:growthmetrics:spheregrid:mergeDebugJavaResource
+> Task :agents:growthmetrics:nexusmemory:bundleDebugAar
+> Task :agents:growthmetrics:nexusmemory:assembleDebug
+> Task :agents:growthmetrics:identity:bundleDebugAar
+> Task :agents:growthmetrics:identity:assembleDebug
+> Task :agents:growthmetrics:spheregrid:syncDebugLibJars
+> Task :aura:reactivedesign:auraslab:checkDebugAarMetadata
+> Task :aura:reactivedesign:auraslab:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:bundleDebugAar
+> Task :agents:growthmetrics:spheregrid:assembleDebug
+> Task :aura:reactivedesign:auraslab:copyDebugJniLibsProjectAndLocalJars
+> Task :aura:reactivedesign:auraslab:extractDebugAnnotations
+> Task :aura:reactivedesign:auraslab:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:prepareDebugArtProfile UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:prepareLintJarForPublish UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:checkDebugAarMetadata
+> Task :aura:reactivedesign:chromacore:stripDebugDebugSymbols NO-SOURCE
+> Task :aura:reactivedesign:chromacore:copyDebugJniLibsProjectAndLocalJars
+> Task :aura:reactivedesign:auraslab:mergeDebugJavaResource
+> Task :aura:reactivedesign:chromacore:extractDebugAnnotations
+> Task :agents:growthmetrics:tasker:stripDebugDebugSymbols NO-SOURCE
+> Task :agents:growthmetrics:tasker:copyDebugJniLibsProjectAndLocalJars
+> Task :agents:growthmetrics:tasker:checkDebugAarMetadata
+> Task :aura:reactivedesign:chromacore:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:tasker:extractDebugAnnotations
+> Task :aura:reactivedesign:chromacore:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:tasker:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:tasker:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:tasker:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :agents:growthmetrics:tasker:prepareDebugArtProfile UP-TO-DATE
+> Task :agents:growthmetrics:tasker:prepareLintJarForPublish UP-TO-DATE
+> Task :agents:growthmetrics:tasker:mergeDebugJavaResource
+> Task :aura:reactivedesign:chromacore:mergeDebugJavaResource
+> Task :agents:growthmetrics:tasker:syncDebugLibJars
+> Task :agents:growthmetrics:tasker:bundleDebugAar
+> Task :agents:growthmetrics:tasker:assembleDebug
+> Task :aura:reactivedesign:auraslab:syncDebugLibJars
+> Task :aura:reactivedesign:collabcanvas:checkDebugAarMetadata
+> Task :aura:reactivedesign:collabcanvas:stripDebugDebugSymbols NO-SOURCE
+> Task :aura:reactivedesign:auraslab:bundleDebugAar
+> Task :aura:reactivedesign:auraslab:assembleDebug
+> Task :aura:reactivedesign:collabcanvas:copyDebugJniLibsProjectAndLocalJars
+> Task :aura:reactivedesign:chromacore:syncDebugLibJars
+> Task :aura:reactivedesign:customization:checkDebugAarMetadata
+> Task :aura:reactivedesign:customization:stripDebugDebugSymbols NO-SOURCE
+> Task :aura:reactivedesign:customization:copyDebugJniLibsProjectAndLocalJars
+> Task :aura:reactivedesign:chromacore:bundleDebugAar
+> Task :aura:reactivedesign:chromacore:assembleDebug
+> Task :aura:reactivedesign:sandboxui:checkDebugAarMetadata
+> Task :aura:reactivedesign:sandboxui:stripDebugDebugSymbols NO-SOURCE
+> Task :aura:reactivedesign:sandboxui:copyDebugJniLibsProjectAndLocalJars
+> Task :aura:reactivedesign:sandboxui:extractDebugAnnotations
+> Task :aura:reactivedesign:sandboxui:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:prepareDebugArtProfile UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:prepareLintJarForPublish UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:mergeDebugJavaResource
+> Task :aura:reactivedesign:customization:extractDebugAnnotations
+> Task :aura:reactivedesign:customization:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :aura:reactivedesign:customization:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:customization:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :aura:reactivedesign:customization:prepareDebugArtProfile UP-TO-DATE
+> Task :aura:reactivedesign:customization:prepareLintJarForPublish UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:syncDebugLibJars
+> Task :aura:reactivedesign:collabcanvas:extractDebugAnnotations
+> Task :aura:reactivedesign:sandboxui:bundleDebugAar
+> Task :aura:reactivedesign:sandboxui:assembleDebug
+> Task :aura:reactivedesign:customization:mergeDebugJavaResource
+> Task :aura:reactivedesign:collabcanvas:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:mergeDebugGeneratedProguardFiles
+> Task :cascade:datastream:delivery:checkDebugAarMetadata
+> Task :aura:reactivedesign:collabcanvas:mergeDebugConsumerProguardFiles
+> Task :cascade:datastream:delivery:stripDebugDebugSymbols NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:prepareDebugArtProfile UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:prepareLintJarForPublish UP-TO-DATE
+> Task :cascade:datastream:delivery:copyDebugJniLibsProjectAndLocalJars
+> Task :cascade:datastream:delivery:extractDebugAnnotations
+> Task :cascade:datastream:delivery:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :cascade:datastream:delivery:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :cascade:datastream:delivery:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :cascade:datastream:delivery:prepareDebugArtProfile UP-TO-DATE
+> Task :cascade:datastream:delivery:prepareLintJarForPublish UP-TO-DATE
+> Task :cascade:datastream:delivery:mergeDebugJavaResource
+> Task :aura:reactivedesign:collabcanvas:mergeDebugJavaResource
+> Task :cascade:datastream:delivery:syncDebugLibJars
+> Task :cascade:datastream:delivery:bundleDebugAar
+> Task :cascade:datastream:delivery:assembleDebug
+> Task :cascade:datastream:routing:checkDebugAarMetadata
+> Task :cascade:datastream:routing:stripDebugDebugSymbols NO-SOURCE
+> Task :cascade:datastream:routing:copyDebugJniLibsProjectAndLocalJars
+> Task :cascade:datastream:routing:extractDebugAnnotations
+> Task :cascade:datastream:routing:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :cascade:datastream:routing:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :cascade:datastream:routing:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :cascade:datastream:routing:prepareDebugArtProfile UP-TO-DATE
+> Task :cascade:datastream:routing:prepareLintJarForPublish UP-TO-DATE
+> Task :cascade:datastream:routing:mergeDebugJavaResource
+> Task :cascade:datastream:routing:syncDebugLibJars
+> Task :cascade:datastream:routing:bundleDebugAar
+> Task :cascade:datastream:routing:assembleDebug
+> Task :cascade:datastream:taskmanager:checkDebugAarMetadata
+> Task :cascade:datastream:taskmanager:stripDebugDebugSymbols NO-SOURCE
+> Task :cascade:datastream:taskmanager:copyDebugJniLibsProjectAndLocalJars
+> Task :cascade:datastream:taskmanager:extractDebugAnnotations
+> Task :cascade:datastream:taskmanager:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :cascade:datastream:taskmanager:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :cascade:datastream:taskmanager:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :cascade:datastream:taskmanager:prepareDebugArtProfile UP-TO-DATE
+> Task :cascade:datastream:taskmanager:prepareLintJarForPublish UP-TO-DATE
+> Task :cascade:datastream:taskmanager:mergeDebugJavaResource
+> Task :cascade:datastream:taskmanager:syncDebugLibJars
+> Task :cascade:datastream:taskmanager:bundleDebugAar
+> Task :cascade:datastream:taskmanager:assembleDebug
+> Task :genesis:oracledrive:datavein:checkDebugAarMetadata
+> Task :genesis:oracledrive:datavein:stripDebugDebugSymbols NO-SOURCE
+> Task :aura:reactivedesign:customization:syncDebugLibJars
+> Task :genesis:oracledrive:datavein:copyDebugJniLibsProjectAndLocalJars
+> Task :aura:reactivedesign:customization:bundleDebugAar
+> Task :aura:reactivedesign:customization:assembleDebug
+> Task :genesis:oracledrive:datavein:extractDebugAnnotations
+> Task :genesis:oracledrive:datavein:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:checkDebugAarMetadata
+> Task :genesis:oracledrive:rootmanagement:stripDebugDebugSymbols NO-SOURCE
+> Task :genesis:oracledrive:datavein:mergeDebugGeneratedProguardFiles
+> Task :genesis:oracledrive:rootmanagement:copyDebugJniLibsProjectAndLocalJars
+> Task :genesis:oracledrive:datavein:mergeDebugConsumerProguardFiles
+> Task :genesis:oracledrive:datavein:prepareDebugArtProfile UP-TO-DATE
+> Task :genesis:oracledrive:datavein:prepareLintJarForPublish UP-TO-DATE
+> Task :genesis:oracledrive:datavein:mergeDebugJavaResource
+> Task :genesis:oracledrive:datavein:syncDebugLibJars
+> Task :genesis:oracledrive:datavein:bundleDebugAar
+> Task :genesis:oracledrive:datavein:assembleDebug
+> Task :kai:sentinelsfortress:security:checkDebugAarMetadata
+> Task :kai:sentinelsfortress:security:stripDebugDebugSymbols NO-SOURCE
+> Task :kai:sentinelsfortress:security:copyDebugJniLibsProjectAndLocalJars
+> Task :genesis:oracledrive:rootmanagement:extractDebugAnnotations
+> Task :genesis:oracledrive:rootmanagement:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:mergeDebugGeneratedProguardFiles
+> Task :genesis:oracledrive:rootmanagement:mergeDebugConsumerProguardFiles
+> Task :genesis:oracledrive:rootmanagement:prepareDebugArtProfile UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:prepareLintJarForPublish UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:mergeDebugJavaResource
+> Task :kai:sentinelsfortress:security:extractDebugAnnotations
+> Task :kai:sentinelsfortress:security:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:security:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :kai:sentinelsfortress:security:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :kai:sentinelsfortress:security:prepareDebugArtProfile UP-TO-DATE
+> Task :kai:sentinelsfortress:security:prepareLintJarForPublish UP-TO-DATE
+> Task :kai:sentinelsfortress:security:mergeDebugJavaResource
+> Task :genesis:oracledrive:rootmanagement:syncDebugLibJars
+> Task :aura:reactivedesign:collabcanvas:syncDebugLibJars
+> Task :genesis:oracledrive:rootmanagement:bundleDebugAar
+> Task :genesis:oracledrive:rootmanagement:assembleDebug
+> Task :aura:reactivedesign:collabcanvas:bundleDebugAar
+> Task :aura:reactivedesign:collabcanvas:assembleDebug
+> Task :kai:sentinelsfortress:threatmonitor:checkDebugAarMetadata
+> Task :kai:sentinelsfortress:systemintegrity:checkDebugAarMetadata
+> Task :kai:sentinelsfortress:systemintegrity:stripDebugDebugSymbols NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:stripDebugDebugSymbols NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:copyDebugJniLibsProjectAndLocalJars
+> Task :kai:sentinelsfortress:systemintegrity:copyDebugJniLibsProjectAndLocalJars
+> Task :kai:sentinelsfortress:systemintegrity:extractDebugAnnotations
+> Task :kai:sentinelsfortress:threatmonitor:extractDebugAnnotations
+> Task :kai:sentinelsfortress:systemintegrity:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:prepareDebugArtProfile UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:prepareLintJarForPublish UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugJavaResource
+> Task :kai:sentinelsfortress:systemintegrity:syncDebugLibJars
+> Task :kai:sentinelsfortress:systemintegrity:bundleDebugAar
+> Task :kai:sentinelsfortress:systemintegrity:assembleDebug
+> Task :kai:sentinelsfortress:threatmonitor:prepareDebugArtProfile UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:prepareLintJarForPublish UP-TO-DATE
+> Task :kai:sentinelsfortress:security:syncDebugLibJars
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugJavaResource
+> Task :kai:sentinelsfortress:security:bundleDebugAar
+> Task :kai:sentinelsfortress:security:assembleDebug
+> Task :kai:sentinelsfortress:threatmonitor:syncDebugLibJars
+> Task :kai:sentinelsfortress:threatmonitor:bundleDebugAar
+> Task :kai:sentinelsfortress:threatmonitor:assembleDebug
+> Task :app:compileDebugKotlin
+
+> Task :app:compileDebugKotlin FAILED
+Kotlin build report is written to file:///C:/Users/Wehtt/Downloads/Finale/build/reports/kotlin-build/aurakai-reactive-intelligence-build-2025-12-25-16-35-15-0.txt
+940 actionable tasks: 691 executed, 95 from cache, 154 up-to-date

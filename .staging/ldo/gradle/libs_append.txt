@@ -1,0 +1,3 @@
+﻿foojayresolver = { group = "org.gradle.toolchains", name = "foojay-resolver", version.ref = "foojay Resolver" }
+compose-compiler-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+jetbrains-kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }

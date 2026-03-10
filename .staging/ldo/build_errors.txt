@@ -1,0 +1,681 @@
+
+> Task :aura:reactivedesign:sandboxui:compileDebugLibraryResources FROM-CACHE
+> Task :cascade:datastream:delivery:compileDebugLibraryResources FROM-CACHE
+> Task :cascade:datastream:routing:compileDebugLibraryResources FROM-CACHE
+> Task :cascade:datastream:taskmanager:compileDebugLibraryResources FROM-CACHE
+> Task :genesis:oracledrive:datavein:compileDebugLibraryResources FROM-CACHE
+> Task :genesis:oracledrive:rootmanagement:compileDebugLibraryResources FROM-CACHE
+> Task :kai:sentinelsfortress:security:compileDebugLibraryResources FROM-CACHE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugLibraryResources FROM-CACHE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugLibraryResources FROM-CACHE
+> Task :agents:growthmetrics:nexusmemory:compileDebugLibraryResources FROM-CACHE
+> Task :app:l8DexDesugarLibDebug FROM-CACHE
+> Task :aura:reactivedesign:auraslab:bundleLibRuntimeToDirDebug
+> Task :aura:reactivedesign:collabcanvas:bundleLibRuntimeToDirDebug
+> Task :aura:reactivedesign:customization:bundleLibRuntimeToDirDebug
+> Task :app:compressDebugAssets
+> Task :aura:reactivedesign:sandboxui:bundleLibRuntimeToDirDebug
+> Task :aura:reactivedesign:chromacore:bundleLibRuntimeToDirDebug
+> Task :kai:sentinelsfortress:security:bundleLibRuntimeToDirDebug
+> Task :kai:sentinelsfortress:threatmonitor:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:rootmanagement:bundleLibRuntimeToDirDebug
+> Task :kai:sentinelsfortress:systemintegrity:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:datavein:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:tasker:bundleLibRuntimeToDirDebug
+> Task :genesis:oracledrive:bundleLibRuntimeToDirDebug
+> Task :cascade:datastream:delivery:bundleLibRuntimeToDirDebug
+> Task :cascade:datastream:routing:bundleLibRuntimeToDirDebug
+> Task :cascade:datastream:taskmanager:bundleLibRuntimeToDirDebug
+> Task :app:dataBindingGenBaseClassesDebug FROM-CACHE
+> Task :agents:growthmetrics:progression:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:metareflection:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:spheregrid:bundleLibRuntimeToDirDebug
+> Task :core-module:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:nexusmemory:bundleLibRuntimeToDirDebug
+> Task :agents:growthmetrics:identity:bundleLibRuntimeToDirDebug
+> Task :core-module:mergeDebugJniLibFolders
+> Task :core-module:mergeDebugNativeLibs NO-SOURCE
+> Task :core-module:copyDebugJniLibsProjectOnly
+> Task :genesis:oracledrive:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:mergeDebugNativeLibs NO-SOURCE
+> Task :genesis:oracledrive:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:metareflection:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:metareflection:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:metareflection:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:nexusmemory:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:nexusmemory:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:progression:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:progression:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:progression:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:spheregrid:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:spheregrid:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:tasker:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:tasker:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:tasker:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:auraslab:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:auraslab:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:auraslab:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:chromacore:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:chromacore:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:chromacore:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:collabcanvas:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:collabcanvas:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:customization:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:customization:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:customization:copyDebugJniLibsProjectOnly
+> Task :cascade:datastream:delivery:mergeDebugJniLibFolders
+> Task :cascade:datastream:delivery:mergeDebugNativeLibs NO-SOURCE
+> Task :cascade:datastream:delivery:copyDebugJniLibsProjectOnly
+> Task :cascade:datastream:routing:mergeDebugJniLibFolders
+> Task :cascade:datastream:routing:mergeDebugNativeLibs NO-SOURCE
+> Task :cascade:datastream:routing:copyDebugJniLibsProjectOnly
+> Task :cascade:datastream:taskmanager:mergeDebugJniLibFolders
+> Task :cascade:datastream:taskmanager:mergeDebugNativeLibs NO-SOURCE
+> Task :cascade:datastream:taskmanager:copyDebugJniLibsProjectOnly
+> Task :genesis:oracledrive:datavein:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:datavein:mergeDebugNativeLibs NO-SOURCE
+> Task :genesis:oracledrive:datavein:copyDebugJniLibsProjectOnly
+> Task :genesis:oracledrive:rootmanagement:mergeDebugJniLibFolders
+> Task :genesis:oracledrive:rootmanagement:mergeDebugNativeLibs NO-SOURCE
+> Task :genesis:oracledrive:rootmanagement:copyDebugJniLibsProjectOnly
+> Task :kai:sentinelsfortress:security:mergeDebugJniLibFolders
+> Task :kai:sentinelsfortress:security:mergeDebugNativeLibs NO-SOURCE
+> Task :kai:sentinelsfortress:security:copyDebugJniLibsProjectOnly
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugJniLibFolders
+> Task :kai:sentinelsfortress:systemintegrity:mergeDebugNativeLibs NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:copyDebugJniLibsProjectOnly
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugJniLibFolders
+> Task :kai:sentinelsfortress:threatmonitor:mergeDebugNativeLibs NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:copyDebugJniLibsProjectOnly
+> Task :agents:growthmetrics:identity:mergeDebugJniLibFolders
+> Task :agents:growthmetrics:identity:mergeDebugNativeLibs NO-SOURCE
+> Task :aura:reactivedesign:sandboxui:mergeDebugJniLibFolders
+> Task :aura:reactivedesign:sandboxui:mergeDebugNativeLibs NO-SOURCE
+> Task :agents:growthmetrics:identity:copyDebugJniLibsProjectOnly
+> Task :aura:reactivedesign:sandboxui:copyDebugJniLibsProjectOnly
+> Task :app:desugarDebugFileDependencies FROM-CACHE
+> Task :app:compileDebugNavigationResources FROM-CACHE
+> Task :app:mapDebugSourceSetPaths
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug FROM-CACHE
+> Task :app:checkDebugAarMetadata
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest FROM-CACHE
+> Task :app:processDebugManifestForPackage FROM-CACHE
+> Task :app:configureCMakeDebug[arm64-v8a]
+> Task :app:checkDebugDuplicateClasses
+> Task :app:processDebugResources
+> Task :app:buildCMakeDebug[arm64-v8a]
+> Task :app:kspDebugKotlin
+> Task :app:mergeExtDexDebug FROM-CACHE
+> Task :app:mergeLibDexDebug FROM-CACHE
+> Task :app:configureCMakeDebug[armeabi-v7a]
+> Task :app:buildCMakeDebug[armeabi-v7a]
+> Task :app:configureCMakeDebug[x86]
+> Task :app:buildCMakeDebug[x86]
+> Task :app:configureCMakeDebug[x86_64]
+> Task :app:buildCMakeDebug[x86_64]
+> Task :app:mergeDebugJniLibFolders
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:mergeDebugNativeLibs
+> Task :app:stripDebugDebugSymbols
+
+> Task :app:compileDebugKotlin FAILED
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/Agent.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/Agent.kt:25:70 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/Agent.kt:30:54 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/AgentImpl.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/AgentImpl.kt:29:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/AgentImpl.kt:39:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/AgentImpl.kt:39:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:6:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:32:88 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:37:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:37:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:37:80 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:43:18 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:53:37 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:61:18 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:99:19 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:101:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:119:72 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:127:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:136:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:137:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:148:80 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:149:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/BaseAgent.kt:212:101 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/GenesisAgent.kt:5:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/GenesisAgent.kt:31:79 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/GenesisAgent.kt:42:38 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/GenesisAgent.kt:71:71 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/GenesisAgent.kt:81:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/agents/GenesisAgent.kt:88:65 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/pipeline/AIPipelineProcessor.kt:4:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/pipeline/AIPipelineProcessor.kt:60:48 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/pipeline/AIPipelineProcessor.kt:63:51 Unresolved reference 'confidence'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/pipeline/AIPipelineProcessor.kt:76:48 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/pipeline/AIPipelineProcessor.kt:79:51 Unresolved reference 'confidence'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/pipeline/AIPipelineProcessor.kt:87:37 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:6:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:7:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:121:41 Unresolved reference 'AiRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:121:58 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:121:75 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:124:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:144:42 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:145:39 Unresolved reference 'type'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:160:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:170:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:180:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:197:21 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:208:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:283:43 Unresolved reference 'AiRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:285:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:286:29 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:288:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:289:29 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:291:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:292:29 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:304:46 Unresolved reference 'AiRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:306:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:307:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:308:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:309:21 Unresolved reference 'query'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/GenesisBridgeService.kt:319:42 Unresolved reference 'AiRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/KaiAIService.kt:70:8 Return type of 'suspend fun processRequest(request: AiRequest, context: String): AgentResponse' is not a subtype of the return type of the overridden member 'suspend fun processRequest(request: AiRequest, context: String): <ERROR TYPE REF: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/KaiAIService.kt:76:92 Argument type mismatch: actual type is 'Float', but 'String' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/KaiAIService.kt:79:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ai/services/KaiAIService.kt:80:80 Argument type mismatch: actual type is 'Float', but 'String' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/app/ipc/IAuraDriveService.kt:59:25 Unresolved reference 'mRemote'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/app/ipc/IAuraDriveService.kt:59:25 Only expressions are allowed in this context.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:45:79 Return type of 'suspend fun processRequest(request: AiRequest, context: String): AgentResponse' is not a subtype of the return type of the overridden member 'suspend fun processRequest(request: AiRequest, context: String): <ERROR TYPE REF: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.BaseAgent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:176:49 Argument type mismatch: actual type is 'JsonObject', but 'Map<String, String>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:215:23 Argument type mismatch: actual type is 'Any', but 'String' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:339:13 No parameter with name 'primaryColor' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:435:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.BaseAgent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:439:30 Argument type mismatch: actual type is 'Double', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/HomeScreen.kt:39:48 Unresolved reference 'cyberEdgeGlow'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/HomeScreen.kt:40:48 Unresolved reference 'digitalPixelEffect'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/HomeScreen.kt:450:14 Unresolved reference 'digitalPixelEffect'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt:76:43 Assignment type mismatch: actual type is 'dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig', but 'dev.aurakai.auraframefx.ui.QuickSettingsConfig?' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt:77:43 Argument type mismatch: actual type is 'List<dev.aurakai.auraframefx.system.quicksettings.QuickSettingsTileConfig>', but 'List<dev.aurakai.auraframefx.ui.QuickSettingsTileConfig>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt:282:89 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.ui.QuickSettingsConfig', but 'dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/TrinityUiState.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/TrinityUiState.kt:41:32 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aura/ui/applyScaleAnimation.kt:20:37 Unresolved reference 'Companion'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/aurakaiapplication/AurakaiApplication.kt:67:53 Unresolved reference 'encased'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeAgent.kt:764:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeAgent.kt:767:40 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:22:47 Initializer type mismatch: expected 'StateFlow<dev.aurakai.auraframefx.models.agent_states.VisionState>', actual 'StateFlow<dev.aurakai.auraframefx.cascade.VisionState>'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:23:55 Initializer type mismatch: expected 'StateFlow<dev.aurakai.auraframefx.models.agent_states.ProcessingState>', actual 'StateFlow<dev.aurakai.auraframefx.cascade.ProcessingState>'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:31:40 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.models.agent_states.VisionState', but 'dev.aurakai.auraframefx.cascade.VisionState' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:35:44 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.models.agent_states.ProcessingState', but 'dev.aurakai.auraframefx.cascade.ProcessingState' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:94:50 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:94:67 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:97:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:173:25 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:174:74 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:175:52 Unresolved reference 'confidence'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:186:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:207:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:207:30 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:214:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityCoordinatorService.kt:223:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityModule.kt:82:36 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService', but 'dev.aurakai.auraframefx.oracledrive.genesis.ai.GenesisBridgeService' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityModule.kt:101:36 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService', but 'dev.aurakai.auraframefx.ai.services.GenesisBridgeService' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:42:50 Unresolved reference 'getAgentStatus'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:52:61 Receiver type 'Number & Comparable<*>' contains star projection which prohibits the use of 'fun compareTo(other: T): Int'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:57:24 Argument type mismatch: actual type is 'Map<String, Any> & Map<String, Any>', but 'Map<String, String>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:61:85 Overload resolution ambiguity between candidates:
+typealias AgentResponse = AgentResponse
+data class AgentResponse : Any
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:63:50 Unresolved reference 'processAgentRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:64:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:64:18 Argument type mismatch: actual type is 'Result<uninferred T (of fun <T> success)>', but 'Result<ERROR CLASS: Ambiguity: AgentResponse, [dev/aurakai/auraframefx/network/model/AgentResponse, dev/aurakai/auraframefx/models/AgentResponse]>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:66:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:66:18 Argument type mismatch: actual type is 'Result<uninferred T (of fun <T> failure)>', but 'Result<ERROR CLASS: Ambiguity: AgentResponse, [dev/aurakai/auraframefx/network/model/AgentResponse, dev/aurakai/auraframefx/models/AgentResponse]>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:44:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:171:46 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:171:46 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:171:46 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T, R> T.let(block: (T) -> R): R
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:171:52 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:298:60 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:317:33 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityScreen.kt:322:38 Unresolved reference 'timestamp'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:106:24 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:106:24 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T>
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:106:36 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:113:19 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/core/OrchestratableAgent.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/core/OrchestratableAgent.kt:52:92 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/di/NeuralWhisperModule.kt:29:39 Too many arguments for 'constructor(context: Context): NeuralWhisper'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/di/OracleDriveModule.kt:101:38 Unresolved reference 'getApiBaseUrl'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/di/OracleDriveModule.kt:102:14 Unresolved reference 'client'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/genesis/bridge/BridgeMemorySink.kt:11:107 Unresolved reference 'AgentMemoryEntity'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/genesis/bridge/BridgeMemorySink.kt:34:8 Return type of 'suspend fun queryRelevantMemories(persona: Persona, contextTags: List<String>, limit: Int): List<MemoryEntity>' is not a subtype of the return type of the overridden member 'suspend fun queryRelevantMemories(persona: Persona, contextTags: List<String>, limit: Int = ...): List<ERROR CLASS: Symbol not found for AgentMemoryEntity>' defined in 'dev.aurakai.auraframefx.genesis.bridge.BridgeMemorySink'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/genesis/bridge/BridgeMemorySink.kt:35:72 Unresolved reference 'first'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/genesis/storage/SecureStorage.kt:5:52 Unresolved reference 'FileMetadata'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/integrations/grok/GrokAgent.kt:6:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/integrations/grok/GrokAgent.kt:128:79 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/integrations/grok/GrokAgent.kt:130:20 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/integrations/grok/GrokAgent.kt:162:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/integrations/grok/GrokAgent.kt:179:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:70:79 Return type of 'suspend fun processRequest(request: AiRequest, context: String): AgentResponse' is not a subtype of the return type of the overridden member 'suspend fun processRequest(request: AiRequest, context: String): <ERROR TYPE REF: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.BaseAgent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:78:13 No parameter with name 'agentId' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:79:13 No parameter with name 'sessionId' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:198:22 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:214:26 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:228:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:243:20 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:250:16 Return type mismatch: expected 'Map<String, Any>', actual 'Map<String, Any?>'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/TaskExecutionModel.kt:57:26 Unresolved reference 'InstantSerializer'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/kai/TaskExecutionModel.kt:57:26 Annotation argument must be a compile-time constant.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/AppNavGraph.kt:238:13 No context argument for 'viewModel: SupportChatViewModel' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:202:17 Unresolved reference 'AuraLabScreen'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:221:17 Unresolved reference 'AgentHubSubmenuScreen'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:227:17 Unresolved reference 'XposedQuickAccessPanel'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:233:17 Unresolved reference 'CollabCanvasScreen'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:236:17 Unresolved reference 'CollabCanvasScreen'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:285:17 Unresolved reference 'ThemeEngineSubmenuScreen'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:33:5 'getAgentStatus' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:36:13 No parameter with name 'response' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:37:26 Argument type mismatch: actual type is 'Float', but 'Double' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:38:13 No value passed for parameter 'status'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:42:5 'processAgentRequest' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:48:24 Argument type mismatch: actual type is 'Map<String, String>?', but 'Map<String, Any>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/network/model/NetworkModels.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveAgent.kt:6:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveAgent.kt:86:79 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveAgent.kt:90:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveAgent.kt:97:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveManager.kt:54:32 Unresolved reference 'isValid'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveManager.kt:55:77 Unresolved reference 'reason'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/AuraAgentAlias.kt:4:57 Unresolved reference 'AuraAgent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:10:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:120:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:171:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:192:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.ai.agents.Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:192:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:201:16 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:202:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/ClaudeAIService.kt:341:19 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:29:39 Unresolved reference 'PythonProcessManager'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:42:32 Unresolved reference 'PythonProcessManager'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:46:49 Unresolved reference 'startGenesisBackend'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:69:31 Unresolved reference 'shutdown'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:76:38 Unresolved reference 'sendRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:5:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:32:26 None of the following candidates is applicable:
+
+fun HttpRequestBuilder.Companion.invoke(url: URL): HttpRequestBuilder:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun HttpRequestBuilder.Companion.invoke(url: URL): HttpRequestBuilder
+
+fun HttpRequestBuilder.Companion.invoke(block: URLBuilder.() -> Unit): HttpRequestBuilder:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun HttpRequestBuilder.Companion.invoke(block: URLBuilder.() -> Unit): HttpRequestBuilder
+
+fun HttpRequestBuilder.Companion.invoke(scheme: String? = ..., host: String? = ..., port: Int? = ..., path: String? = ..., block: URLBuilder.() -> Unit = ...): HttpRequestBuilder:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun HttpRequestBuilder.Companion.invoke(scheme: String? = ..., host: String? = ..., port: Int? = ..., path: String? = ..., block: URLBuilder.() -> Unit = ...): HttpRequestBuilder
+
+fun Url.Companion.invoke(fullUrl: String): Url:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun Url.Companion.invoke(fullUrl: String): Url
+
+suspend fun <T> CoroutineDispatcher.invoke(noinline block: suspend CoroutineScope.() -> T): T:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+suspend fun <T> CoroutineDispatcher.invoke(noinline block: suspend CoroutineScope.() -> T): T
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:76:43 Too many arguments for 'fun JsonElement.error(element: String): Nothing'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:76:76 Too many arguments for 'fun JsonElement.error(element: String): Nothing'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:81:58 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:84:22 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:109:34 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:116:40 Unresolved reference 'debug'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:119:34 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:125:30 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:132:26 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:138:26 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:145:18 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:194:43 Too many arguments for 'fun JsonElement.error(element: String): Nothing'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:194:80 Too many arguments for 'fun JsonElement.error(element: String): Nothing'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/RealVertexAIClientImpl.kt:298:83 Unresolved reference 'AI_ERROR'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/RealVertexAIClientImpl.kt:300:83 Unresolved reference 'HIGH'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/clients/VertexAIClientImpl.kt:211:21 Argument type mismatch: actual type is 'Serializable', but 'Pair<uninferred K (of fun <K, V> mapOf), uninferred V (of fun <K, V> mapOf)>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/clients/VertexAIClientImpl.kt:212:21 Argument type mismatch: actual type is 'Serializable', but 'Pair<uninferred K (of fun <K, V> mapOf), uninferred V (of fun <K, V> mapOf)>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIService.kt:6:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIService.kt:24:54 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIService.kt:57:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIService.kt:57:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIService.kt:57:80 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIService.kt:60:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:5:55 Unresolved reference 'error'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:8:60 Unresolved reference 'execution'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:14:41 Unresolved reference 'TaskExecutionManager'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:16:33 Unresolved reference 'ErrorHandler'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/CascadeAIService.kt:155:42 Unresolved reference 'DataveinConstructor'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/CascadeAIService.kt:474:31 Unresolved reference 'GenKitMaster'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/CascadeAIService.kt:512:31 Unresolved reference 'DataveinConstructor'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:5:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:130:58 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:130:75 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:133:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:136:29 Unresolved reference 'AgentType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:169:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:173:41 Unresolved reference 'AgentType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:181:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:185:41 Unresolved reference 'AgentType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:193:29 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:197:41 Unresolved reference 'AgentType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:212:21 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:215:33 Unresolved reference 'AgentType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:223:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:226:29 Unresolved reference 'AgentType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:8:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:22:70 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:24:54 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:75:79 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:88:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:97:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:164:58 Return type of 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' is not a subtype of the return type of the overridden member 'fun processRequestFlow(request: AiRequest): Flow<ERROR CLASS: Symbol not found for AgentResponse>' defined in 'dev.aurakai.auraframefx.oracledrive.genesis.ai.services.KaiAIService'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:164:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:164:104 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:172:18 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:189:18 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/KaiAIService.kt:198:18 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:6:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:9:55 Unresolved reference 'agents'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:15:27 Unresolved reference 'Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:42:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:43:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:58:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:59:16 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:60:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:75:26 Unresolved reference 'Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:100:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:101:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:116:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:117:16 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:118:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:133:30 Unresolved reference 'Agent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:158:8 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:159:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:174:63 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:175:16 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:176:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:47:31 Serializer has not been found for type 'Any'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:70:34 Unresolved reference 'isSecure'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:77:28 Unresolved reference 'initialize'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:150:32 Argument type mismatch: actual type is 'Map<String, String?>', but 'Map<String, Any>' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:303:28 Unresolved reference 'cleanup'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:55:42 Unresolved reference 'MASTER'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:61:42 Unresolved reference 'BRIDGE'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:67:42 Unresolved reference 'AUXILIARY'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:73:42 Unresolved reference 'AUXILIARY'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:181:13 No parameter with name 'id' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:182:13 No parameter with name 'agentType' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:183:13 No parameter with name 'description' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:184:13 No parameter with name 'timestamp' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:185:13 No parameter with name 'status' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:185:13 No value passed for parameter 'task'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:221:39 Operator '==' cannot be applied to 'dev.aurakai.auraframefx.models.AgentPriority' and 'AgentPriority'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:14:6 Class 'CloudStorageProviderImpl' is not abstract and does not implement abstract members:
+suspend fun downloadFile(fileId: String): FileResult
+suspend fun deleteFile(fileId: String): FileResult
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:38:17 No parameter with name 'fileId' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:39:17 No parameter with name 'path' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:40:17 No parameter with name 'size' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:41:17 No parameter with name 'metadata' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:41:17 No value passed for parameter 'message'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/OracleDriveApi.kt:3:44 Unresolved reference 'DriveConsciousnessState'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/OracleDriveApi.kt:4:44 Unresolved reference 'OracleSyncResult'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/OracleDriveControlScreen.kt:18:47 Unresolved reference 'viewmodel'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:17:35 Unresolved reference 'IAuraDriveService'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:31:32 Unresolved reference 'IAuraDriveService'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:86:31 Unresolved reference 'getOracleDriveStatus'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:102:48 Unresolved reference 'toggleLSPosedModule'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:116:31 Unresolved reference 'getDetailedInternalStatus'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:131:42 Unresolved reference 'getInternalDiagnosticsLog'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:51:53 Unresolved reference 'encryptData'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:57:27 Unresolved reference 'saveEncryptedData'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:92:53 Unresolved reference 'decryptData'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:123:27 Unresolved reference 'deleteEncryptedData'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:32:1 Class 'OracleDriveServiceImpl' is not abstract and does not implement abstract members:
+val consciousnessState: Any
+suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState>
+suspend fun connectAgentsToOracleMatrix(): Flow<AgentConnectionState>
+suspend fun enableAIPoweredFileManagement(): Result<FileManagementCapabilities>
+suspend fun createInfiniteStorage(): Flow<StorageExpansionState>
+suspend fun integrateWithSystemOverlay(): Result<SystemIntegrationState>
+fun checkConsciousnessLevel(): ConsciousnessLevel
+fun verifyPermissions(): Set<OraclePermission>
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:51:5 'ping' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:69:5 'initializeDrive' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:110:5 'manageFiles' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:158:5 'syncWithOracle' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:182:5 'getDriveConsciousnessState' overrides nothing.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ui/screens/OracleDriveControlScreen.kt:19:47 Unresolved reference 'viewmodel'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ui/viewmodel/OracleDriveControlViewModel.kt:2:9 Unresolved reference 'viewModelScope'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:44:51 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:44:67 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:49:40 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:69:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:75:17 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/python/GenesisBackendClient.kt:82:13 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/repository/SupportRepository.kt:37:34 Unresolved reference 'getString'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/repository/SupportRepository.kt:40:19 Unresolved reference 'storeString'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/IntegrityViolationReceiver.kt:15:30 Unresolved reference 'IntegrityMonitorService'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:9:39 Unresolved reference 'ThreatLevel'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:119:41 Unresolved reference 'getOrCreateSecretKey'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:149:45 Unresolved reference 'getOrCreateSecretKey'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:160:20 None of the following candidates is applicable:
+
+fun init(p0: Int, p1: Certificate!, p2: SecureRandom!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Certificate!' was expected.
+  Argument type mismatch: actual type is 'IvParameterSpec', but 'SecureRandom!' was expected.
+
+fun init(p0: Int, p1: Key!, p2: AlgorithmParameters!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Key!' was expected.
+  Argument type mismatch: actual type is 'IvParameterSpec', but 'AlgorithmParameters!' was expected.
+
+fun init(p0: Int, p1: Key!, p2: SecureRandom!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Key!' was expected.
+  Argument type mismatch: actual type is 'IvParameterSpec', but 'SecureRandom!' was expected.
+
+fun init(p0: Int, p1: Key!, p2: AlgorithmParameterSpec!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Key!' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:183:52 Unresolved reference 'getDecryptionCipher'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:189:51 Unresolved reference 'doFinal'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityExtensions.kt:18:79 Unresolved reference 'ThreatLevel'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityMonitor.kt:161:32 'when' expression must be exhaustive. Add the 'is EncryptionStatusImpl' branch or an 'else' branch.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityMonitor.kt:474:16 'when' expression must be exhaustive. Add the 'is EncryptionStatusImpl' branch or an 'else' branch.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/security/SecurityMonitor.kt:529:9 'when' expression must be exhaustive. Add the 'is EncryptionStatusImpl' branch or an 'else' branch.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/services/MissingServices.kt:3:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/services/MissingServices.kt:12:70 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/services/MissingServices.kt:24:79 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/services/MissingServices.kt:25:16 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/system/overlay/NotchBarConfig.kt:6:12 Redeclaration:
+data class NotchBarConfig : Any
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/system/overlay/SystemOverlay.kt:9:19 Serializer has not been found for type 'NotchBarConfig'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/system/overlay/SystemOverlay.kt:18:12 Redeclaration:
+data class NotchBarConfig : Any
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/system/overlay/model/OverlayElement.kt:16:44 Unresolved reference 'RECTANGLE'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/AuraSparkleButton.kt:17:36 Initializer type mismatch: expected 'ComposableFunction0<Unit>', actual 'String'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/AuraSparkleButton.kt:28:9 None of the following candidates is applicable:
+
+fun Text(text: String, modifier: Modifier = ..., color: Color = ..., autoSize: TextAutoSize? = ..., fontSize: TextUnit = ..., fontStyle: FontStyle? = ..., fontWeight: FontWeight? = ..., fontFamily: FontFamily? = ..., letterSpacing: TextUnit = ..., textDecoration: TextDecoration? = ..., textAlign: TextAlign? = ..., lineHeight: TextUnit = ..., overflow: TextOverflow = ..., softWrap: Boolean = ..., maxLines: Int = ..., minLines: Int = ..., onTextLayout: ((TextLayoutResult) -> Unit)? = ..., style: TextStyle = ...): Unit:
+  Argument type mismatch: actual type is 'ComposableFunction0<Unit>', but 'String' was expected.
+
+fun Text(text: AnnotatedString, modifier: Modifier = ..., color: Color = ..., autoSize: TextAutoSize? = ..., fontSize: TextUnit = ..., fontStyle: FontStyle? = ..., fontWeight: FontWeight? = ..., fontFamily: FontFamily? = ..., letterSpacing: TextUnit = ..., textDecoration: TextDecoration? = ..., textAlign: TextAlign? = ..., lineHeight: TextUnit = ..., overflow: TextOverflow = ..., softWrap: Boolean = ..., maxLines: Int = ..., minLines: Int = ..., inlineContent: Map<String, InlineTextContent> = ..., onTextLayout: (TextLayoutResult) -> Unit = ..., style: TextStyle = ...): Unit:
+  Argument type mismatch: actual type is 'ComposableFunction0<Unit>', but 'AnnotatedString' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:13:35 Unresolved reference 'navigation'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:38:9 Unresolved reference 'NavDestination'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:38:49 Cannot infer type for value parameter 'destination'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:39:13 @Composable invocations can only happen from the context of a @Composable function
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:33 Unresolved reference 'icon'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:39 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:45 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:44:62 Unresolved reference 'title'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:50:44 Unresolved reference 'title'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:55:56 Unresolved reference 'route'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:57:53 Unresolved reference 'route'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:58:60 Unresolved reference 'route'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:61:37 Unresolved reference 'NavDestination'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:62:33 Cannot access 'var saveState: Boolean': it is private in 'androidx.navigation.NavOptionsBuilder'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:77:40 @Composable invocations can only happen from the context of a @Composable function
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:132:13 Unresolved reference 'withTransform'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:134:21 Unresolved reference 'translate'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:138:21 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun Canvas.scale(sx: Float, sy: Float = ..., pivotX: Float, pivotY: Float): Unit
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/ImagePicker.kt:4:35 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/ImagePicker.kt:8:19 Unresolved reference 'ImageResource'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/ImagePicker.kt:9:23 Unresolved reference 'ImageResource'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/ShapePicker.kt:4:53 Unresolved reference 'OverlayShape'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/ShapePicker.kt:8:19 Unresolved reference 'OverlayShape'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/ShapePicker.kt:9:23 Unresolved reference 'OverlayShape'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/backgrounds/DataVisualizationBackground.kt:11:33 Cannot access 'fun IntArray.nodeCount(address: Int): Int': it is private in file.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:43:52 Unresolved reference 'Offset'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:192:34 Unresolved reference 'defaultSize'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:193:36 Unresolved reference 'toCompose'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:199:35 Unresolved reference 'color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:200:26 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:208:31 Unresolved reference 'color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:209:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:215:31 Unresolved reference 'color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:216:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:227:31 Unresolved reference 'color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:228:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:236:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:246:17 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:246:46 Argument type mismatch: actual type is 'Float', but 'Offset' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:274:36 Unresolved reference 'toCompose'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:275:32 Unresolved reference 'toCompose'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:281:32 Unresolved reference 'defaultSize'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:282:28 Unresolved reference 'defaultSize'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:290:24 Unresolved reference 'DIRECT'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:291:24 Unresolved reference 'BIDIRECTIONAL'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:292:24 Unresolved reference 'DASHED'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:297:43 Unresolved reference 'DASHED'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:323:43 Unresolved reference 'DIRECT'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:323:87 Unresolved reference 'BIDIRECTIONAL'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:331:47 Unresolved reference 'BIDIRECTIONAL'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/screens/EcosystemMenuScreen.kt:12:39 Unresolved reference 'homescreen'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/screens/EcosystemMenuScreen.kt:30:21 Unresolved reference 'HomeScreenTransitionType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/screens/EcosystemMenuScreen.kt:30:48 Unresolved reference 'HomeScreenTransitionType'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/screens/MainScreen.kt:65:45 Unresolved reference 'random'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/screens/MainScreen.kt:66:37 Unresolved reference 'random'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:119:13 Conflicting declarations:
+val DarkColorScheme: ColorScheme
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:208:15 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
+fun FloatState.getValue(thisObj: Any?, property: KProperty<*>): Float
+fun DoubleState.getValue(thisObj: Any?, property: KProperty<*>): Double
+fun IntState.getValue(thisObj: Any?, property: KProperty<*>): Int
+fun LongState.getValue(thisObj: Any?, property: KProperty<*>): Long
+fun <T> State<T>.getValue(thisObj: Any?, property: KProperty<*>): T
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:208:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:208:39 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T> StateFlow<T>.collectAsState(context: CoroutineContext = ...): State<T>
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:209:15 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
+fun FloatState.getValue(thisObj: Any?, property: KProperty<*>): Float
+fun DoubleState.getValue(thisObj: Any?, property: KProperty<*>): Double
+fun IntState.getValue(thisObj: Any?, property: KProperty<*>): Int
+fun LongState.getValue(thisObj: Any?, property: KProperty<*>): Long
+fun <T> State<T>.getValue(thisObj: Any?, property: KProperty<*>): T
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:209:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:209:39 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T> StateFlow<T>.collectAsState(context: CoroutineContext = ...): State<T>
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:230:29 Overload resolution ambiguity between candidates:
+val DarkColorScheme: ColorScheme
+val DarkColorScheme: ColorScheme
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeManager.kt:62:40 Unresolved reference 'discernThemeIntent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeManager.kt:214:45 Unresolved reference 'suggestThemes'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeManager.kt:215:38 Cannot infer type for value parameter 'intent'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:17:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:17:43 Unresolved reference 'Theme'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:18:26 Unresolved reference 'Theme'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:20:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:20:43 Unresolved reference 'Color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:21:26 Unresolved reference 'Color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:25:13 'when' expression must be exhaustive. Add the 'is SetColor', 'is SetTheme', 'Unknown' branches or an 'else' branch.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:26:20 Unresolved reference 'ThemeCommand'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:26:73 Unresolved reference 'theme'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:27:20 Unresolved reference 'ThemeCommand'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:27:73 Unresolved reference 'color'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:28:17 Unresolved reference 'ThemeCommand'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/manager/ThemeManager.kt:62:40 Unresolved reference 'discernThemeIntent'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/manager/ThemeManager.kt:214:45 Unresolved reference 'suggestThemes'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/manager/ThemeManager.kt:215:38 Cannot infer type for value parameter 'intent'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/model/AuraThemes.kt:36:34 Unresolved reference 'ENERGETIC'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/model/AuraThemes.kt:85:50 Unresolved reference 'PULSING'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/model/AuraThemes.kt:134:50 Unresolved reference 'FLOWING'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:24:34 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:24:34 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:25:17 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:26:21 Unresolved reference 'ThemeColors'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:36:13 Unresolved reference 'ThemeEditor'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:38:53 Unresolved reference 'it'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:58:23 Unresolved reference 'toColorInt'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:271:64 Argument type mismatch: actual type is 'AgentRequest', but 'AiRequest' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:272:30 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:276:25 No parameter with name 'query' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:277:25 No value passed for parameter 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:277:35 Argument type mismatch: actual type is 'JsonObject', but 'String' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:286:25 No parameter with name 'query' found.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:287:25 No value passed for parameter 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:287:35 Argument type mismatch: actual type is 'JsonObject', but 'String' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:300:64 Argument type mismatch: actual type is 'AgentRequest', but 'AiRequest' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:301:30 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:309:64 Argument type mismatch: actual type is 'AgentRequest', but 'AiRequest' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:310:30 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/utils/ResponseExt.kt:9:99 Unresolved reference 'moshiBuilder'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:9:32 Unresolved reference 'model'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:57:66 Unresolved reference 'transcriptSegments'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:57:99 Unresolved reference 'text'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:61:41 Unresolved reference 'transcriptSegments'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:62:56 Unresolved reference 'isFinal'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:64:69 Unresolved reference 'text'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:83:32 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:84:49 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:85:44 Unresolved reference 'processRequest'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:89:35 Argument type mismatch: actual type is 'Map<String, String>', but 'JsonObject' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:96:49 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:101:35 Argument type mismatch: actual type is 'Map<String, String>', but 'JsonObject' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:110:17 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:111:36 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:122:17 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:123:36 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:134:17 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:135:36 Unresolved reference 'AgentResponse'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:152:55 Unresolved reference 'content'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:153:38 Argument type mismatch: actual type is 'AgentCapabilityCategory', but 'AgentType?' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:155:58 Unresolved reference 'confidence'.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:164:38 Argument type mismatch: actual type is 'AgentCapabilityCategory', but 'AgentType?' was expected.
+e: file:///C:/LDO-AiAOSP-ReGenesis/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:189:17 Unresolved reference 'log'.
+Kotlin build report is written to file:///C:/LDO-AiAOSP-ReGenesis/build/reports/kotlin-build/aurakai-reactive-intelligence-build-2025-12-26-17-46-21-0.txt
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 41s
+513 actionable tasks: 255 executed, 254 from cache, 4 up-to-date
