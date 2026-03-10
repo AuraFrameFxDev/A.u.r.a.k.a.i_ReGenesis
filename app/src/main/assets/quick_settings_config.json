@@ -1,0 +1,129 @@
+{
+  "tiles": [
+    {
+      "id": "wifi",
+      "label": "Wi-Fi",
+      "shape": "ROUNDED_RECT",
+      "animation": "PULSE",
+      "enabled": true,
+      "enableClicks": true,
+      "icon": {
+        "type": "vector",
+        "resource": "@drawable/ic_wifi"
+      },
+      "background": {
+        "type": "gradient",
+        "colors": [
+          "#4A90E2",
+          "#357ABD"
+        ],
+        "cornerRadius": 16,
+        "elevation": 4
+      },
+      "hapticFeedback": {
+        "onPress": true,
+        "onToggle": true,
+        "intensity": 0.7
+      },
+      "animationConfig": {
+        "scale": 0.95,
+        "duration": 150,
+        "interpolator": "fast_out_slow_in"
+      }
+    },
+    {
+      "id": "bluetooth",
+      "label": "Bluetooth",
+      "shape": "CIRCLE",
+      "animation": "BOUNCE",
+      "enabled": false,
+      "enableClicks": true,
+      "icon": {
+        "type": "vector",
+        "resource": "@drawable/ic_bluetooth"
+      },
+      "background": {
+        "type": "solid",
+        "color": "#9C27B0",
+        "cornerRadius": 24
+      },
+      "stateIndicators": {
+        "enabled": {
+          "color": "#4CAF50",
+          "icon": "@drawable/ic_check_circle"
+        },
+        "disabled": {
+          "color": "#F44336",
+          "icon": "@drawable/ic_cancel"
+        }
+      }
+    }
+  ],
+  "background": {
+    "type": "blur",
+    "color": "#1A000000",
+    "blurRadius": 24,
+    "cornerRadius": 32,
+    "margin": 8,
+    "elevation": 8,
+    "animation": {
+      "type": "fade",
+      "duration": 300,
+      "interpolator": "linear_out_slow_in"
+    }
+  },
+  "layout": {
+    "columns": 4,
+    "rows": 2,
+    "spacing": 8,
+    "padding": 12
+  },
+  "theme": {
+    "type": "dynamic",
+    "light": {
+      "textColor": "#DE000000",
+      "secondaryTextColor": "8A000000",
+      "backgroundColor": "#F5F5F5"
+    },
+    "dark": {
+      "textColor": "#FFFFFFFF",
+      "secondaryTextColor": "B3FFFFFF",
+      "backgroundColor": "#1F1F1F"
+    },
+    "accentColor": "#2196F3",
+    "elevation": 4
+  },
+  "animations": {
+    "tilePress": {
+      "type": "scale",
+      "scale": 0.95,
+      "duration": 150,
+      "interpolator": "fast_out_slow_in"
+    },
+    "tileToggle": {
+      "type": "bounce",
+      "scale": 1.1,
+      "duration": 200,
+      "bounciness": 0.2
+    },
+    "panelExpand": {
+      "type": "fade_and_translate",
+      "duration": 300,
+      "interpolator": "decelerate"
+    }
+  },
+  "hapticFeedback": {
+    "enabled": true,
+    "intensity": 0.5,
+    "vibrateOnPress": true,
+    "vibrateOnToggle": true
+  },
+  "accessibility": {
+    "contentDescription": "Quick settings tile: %s",
+    "stateDescription": "%s is %s",
+    "enabledStates": {
+      "on": "on",
+      "off": "off"
+    }
+  }
+}

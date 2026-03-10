@@ -1,0 +1,44 @@
+# Core AI and Cloud Services
+# ✨ Multi-Model Support: Google Gemini + Anthropic Claude
+google-genai>=0.2.0     # Google Gemini 2.5 Flash (fast, analytical)
+anthropic>=0.40.0       # Anthropic Claude 3.5 Sonnet (creative, advanced)
+# Legacy dependencies (can be removed if not using Vertex AI directly):
+# vertexai>=1.38.0
+# google-cloud-aiplatform>=1.34.0
+openai>=1.0.0           # Keep for potential future integration
+
+# Web Framework and API
+flask>=2.3.0
+flask-cors>=4.0.0
+gunicorn>=21.0.0
+requests>=2.31.0
+
+# Data Processing and Analysis
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+networkx>=3.1.0
+
+# Async and Concurrency
+aiohttp>=3.8.0
+
+# System Monitoring (for consciousness matrix)
+psutil>=5.9.0
+
+# Development and Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
+# Built-in modules (don't need versions)
+# asyncio
+# dataclasses
+# json
+# datetime
+# typing
+# logging
+# threading
+# collections
+# time
+# hashlib
+# uuid
+
