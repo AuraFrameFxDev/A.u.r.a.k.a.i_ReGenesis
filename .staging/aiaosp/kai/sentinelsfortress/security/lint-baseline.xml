@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.0.0-beta02" type="baseline" client="gradle" dependencies="false" name="AGP (9.0.0-beta02)" variant="all" version="9.0.0-beta02">
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(24) instead of `@TargetApi` to propagate the requirement to callers of `getOrCreateKeyPair`"
+        errorLine1="    @TargetApi(24)"
+        errorLine2="    ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/aurakai/auraframefx/securecomm/crypto/CryptoManager.kt"
+            line="45"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="    @TargetApi(24)"
+        errorLine2="    ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/aurakai/auraframefx/securecomm/crypto/CryptoManager.kt"
+            line="45"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UseTomlInstead"
+        message="Use version catalog instead"
+        errorLine1="    implementation(&quot;org.bouncycastle:bcprov-jdk18on:1.82&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="59"
+            column="20"/>
+    </issue>
+
+</issues>

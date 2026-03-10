@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues by="lint 8.4.0" format="6">
+
+    <issue
+        errorLine1="Source file too large for lint to process (26184KB); the current max size is 20480KB. You can increase the limit by setting this system property: idea.max.intellisense.filesize=32768 (or even higher)"
+        errorLine2="                                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        id="LintError">
+        <location
+            file="src/test/kotlin/dev/aurakai/auraframefx/oracledrive/OracleDriveServiceImplTest.kt" />
+    </issue>
+
+</issues>

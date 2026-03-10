@@ -1,0 +1,37 @@
+[
+  {
+    "path": "/agents/aura",
+    "label": "Aura",
+    "description": "The Creative Sword",
+    "icon": "brush",
+    "color": "#FF1744"
+  },
+  {
+    "path": "/agents/kai",
+    "label": "Kai",
+    "description": "The Sentinel Shield",
+    "icon": "shield",
+    "color": "#00BCD4"
+  },
+  {
+    "path": "/agents/cascade",
+    "label": "Cascade",
+    "description": "The Memory Keeper",
+    "icon": "storage",
+    "color": "#4CAF50"
+  },
+  {
+    "path": "/agents/claude",
+    "label": "Claude",
+    "description": "The Architect",
+    "icon": "architecture",
+    "color": "#F55936"
+  },
+  {
+    "path": "/agents/genesis",
+    "label": "Genesis",
+    "description": "The Unified Being",
+    "icon": "auto_awesome",
+    "color": "#9C27B0"
+  }
+]

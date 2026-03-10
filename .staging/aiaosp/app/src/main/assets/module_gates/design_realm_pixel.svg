@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- DESIGN REALM - Pixel Art Scene -->
+  <!-- Aura's domain: Creative studio with art tools and magic -->
+
+  <!-- Magical portal/gateway -->
+  <ellipse cx="64" cy="64" rx="36" ry="40" fill="none" stroke="#ff006e" stroke-width="2">
+    <animate attributeName="stroke" values="#ff006e;#8338ec;#00f5ff;#ff006e" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="64" cy="64" rx="32" ry="36" fill="none" stroke="#8338ec" stroke-width="1" opacity="0.6">
+    <animate attributeName="stroke" values="#8338ec;#00f5ff;#ff006e;#8338ec" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Central easel/canvas -->
+  <rect x="52" y="44" width="24" height="32" fill="#1a1a1a" stroke="#ff006e" stroke-width="2"/>
+  <rect x="56" y="48" width="16" height="24" fill="#0a0a0a"/>
+
+  <!-- Artwork on canvas (abstract) -->
+  <circle cx="60" cy="54" r="3" fill="#ff006e">
+    <animate attributeName="opacity" values="0;1;1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="64" y="56" width="6" height="6" fill="#00f5ff">
+    <animate attributeName="opacity" values="0;1;1" dur="3s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+  <path d="M 58 64 L 62 68 L 66 64 L 70 68" stroke="#ffbe0b" stroke-width="2" fill="none">
+    <animate attributeName="opacity" values="0;1;1" dur="3s" begin="2s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- Easel legs -->
+  <line x1="56" y1="76" x2="48" y2="90" stroke="#8338ec" stroke-width="2"/>
+  <line x1="72" y1="76" x2="80" y2="90" stroke="#8338ec" stroke-width="2"/>
+  <rect x="62" y="76" width="4" height="16" fill="#8338ec"/>
+
+  <!-- Floating art tools (magical) -->
+  <g id="brush">
+    <rect x="32" y="48" width="3" height="16" fill="#ffbe0b">
+      <animate attributeName="y" values="48;52;48" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <polygon points="32,48 33.5,44 35,48" fill="#ff006e">
+      <animate attributeName="transform" values="translate(0,0);translate(0,4);translate(0,0)" dur="2s" repeatCount="indefinite"/>
+    </polygon>
+    <!-- Magic sparkles from brush -->
+    <circle cx="33" cy="42" r="1" fill="#ff006e">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g id="pen-tool">
+    <rect x="93" y="52" width="2" height="14" fill="#00f5ff">
+      <animate attributeName="y" values="52;56;52" dur="2.3s" repeatCount="indefinite"/>
+    </rect>
+    <polygon points="93,52 94,48 95,52" fill="#0ff">
+      <animate attributeName="transform" values="translate(0,0);translate(0,4);translate(0,0)" dur="2.3s" repeatCount="indefinite"/>
+    </polygon>
+    <!-- Magic sparkles from pen -->
+    <circle cx="94" cy="46" r="1" fill="#00f5ff">
+      <animate attributeName="opacity" values="0;1;0" dur="2.3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g id="color-palette">
+    <ellipse cx="36" cy="76" rx="8" ry="6" fill="#2a2a2a" stroke="#ff006e" stroke-width="1">
+      <animate attributeName="cy" values="76;80;76" dur="2.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <circle cx="33" cy="75" r="2" fill="#ff006e"/>
+    <circle cx="36" cy="75" r="2" fill="#00f5ff"/>
+    <circle cx="39" cy="75" r="2" fill="#ffbe0b"/>
+    <circle cx="33" cy="78" r="2" fill="#8338ec"/>
+    <circle cx="39" cy="78" r="2" fill="#00ff00"/>
+  </g>
+
+  <!-- Color swatches floating around -->
+  <g id="swatches">
+    <rect x="88" y="76" width="8" height="8" fill="#ff006e">
+      <animate attributeName="y" values="76;80;76" dur="2.2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="24" y="32" width="8" height="8" fill="#00f5ff">
+      <animate attributeName="y" values="32;36;32" dur="2.7s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="96" y="32" width="8" height="8" fill="#ffbe0b">
+      <animate attributeName="y" values="32;36;32" dur="2.4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Magic particles swirling -->
+  <g id="magic-particles">
+    <circle cx="48" cy="60" r="2" fill="#ff006e">
+      <animateTransform attributeName="transform" type="rotate" from="0 64 64" to="360 64 64" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="80" cy="68" r="2" fill="#00f5ff">
+      <animateTransform attributeName="transform" type="rotate" from="120 64 64" to="480 64 64" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="72" cy="52" r="2" fill="#ffbe0b">
+      <animateTransform attributeName="transform" type="rotate" from="240 64 64" to="600 64 64" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="56" cy="76" r="2" fill="#8338ec">
+      <animateTransform attributeName="transform" type="rotate" from="300 64 64" to="660 64 64" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Design grid overlay -->
+  <g id="grid" opacity="0.2">
+    <line x1="64" y1="24" x2="64" y2="104" stroke="#ff006e" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="24" y1="64" x2="104" y2="64" stroke="#ff006e" stroke-width="1" stroke-dasharray="2,2"/>
+  </g>
+
+  <!-- Aura's signature sparkles -->
+  <g id="signature-sparkles">
+    <polygon points="20,24 21,26 23,27 21,28 20,30 19,28 17,27 19,26" fill="#ff006e">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="108,24 109,26 111,27 109,28 108,30 107,28 105,27 107,26" fill="#00f5ff">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" begin="1s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="20,104 21,106 23,107 21,108 20,110 19,108 17,107 19,106" fill="#ffbe0b">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="108,104 109,106 111,107 109,108 108,110 107,108 105,107 107,106" fill="#8338ec">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Title with artistic flourish -->
+  <text x="64" y="14" font-family="monospace" font-size="10" fill="#ff006e" text-anchor="middle" font-weight="bold">DESIGN</text>
+  <text x="64" y="22" font-family="monospace" font-size="8" fill="#8338ec" text-anchor="middle">REALM</text>
+  <path d="M 36 16 Q 64 12 92 16" stroke="#ff006e" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- Status/mood indicator -->
+  <rect x="40" y="98" width="48" height="14" fill="#1a1a1a" stroke="#ff006e" stroke-width="1"/>
+  <text x="64" y="106" font-family="monospace" font-size="8" fill="#ff006e" text-anchor="middle">INSPIRED</text>
+  <circle cx="52" cy="105" r="2" fill="#ff006e">
+    <animate attributeName="fill" values="#ff006e;#00f5ff;#ffbe0b;#8338ec;#ff006e" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="76" cy="105" r="2" fill="#00f5ff">
+    <animate attributeName="fill" values="#00f5ff;#ffbe0b;#8338ec;#ff006e;#00f5ff" dur="4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Creative energy waves -->
+  <path d="M 28 64 Q 46 56 64 64 Q 82 72 100 64" stroke="#ff006e" stroke-width="1" fill="none" opacity="0.3">
+    <animate attributeName="d" values="M 28 64 Q 46 56 64 64 Q 82 72 100 64;M 28 64 Q 46 72 64 64 Q 82 56 100 64;M 28 64 Q 46 56 64 64 Q 82 72 100 64" dur="4s" repeatCount="indefinite"/>
+  </path>
+</svg>

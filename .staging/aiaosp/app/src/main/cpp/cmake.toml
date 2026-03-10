@@ -1,0 +1,96 @@
+# Aurakai CMake Configuration (cmake.toml)
+# Modern CMake configuration for Cascade AI agent and related modules
+
+[project]
+name = "Aurakai"
+description = "Aurakai AI Platform"
+languages = ["CXX", "ASM"]
+cmake = ">=3.22.1"
+
+# Set C++ standard and compile feature-module
+[project.compiler]
+std = "c++23"
+features = ["cxx_std_23"]
+
+# Global compiler flags and definitions
+[build]
+compile_features = ["cxx_std_23"]
+warnings = ["all", "extra", "pedantic"]
+warnings_as_errors = true
+
+# Toolchain and path configurations from build.gradle.kts
+[build.variables]
+ANDROID_STL = "c++_shared"
+ANDROID_PLATFORM = "android-24"
+CMAKE_MAKE_PROGRAM = "${env.NINJA_PATH}"
+ANDROID_NDK = "${env.ANDROID_NDK}"
+CMAKE_TOOLCHAIN_FILE = "${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
+
+# Build configuration
+[build.config]
+build_type = "Release"
+build_shared_libs = true
+build_tests = false
+
+# Platform-specific settings
+[build.platform]
+android = true
+windows = false
+linux = false
+macos = false
+
+# Android specific configurations
+[build.android]
+stl = "c++_shared"
+api_level = 24
+use_stl = true
+enable_exceptions = true
+rtti = true
+position_independent_code = true
+
+# Target definitions
+[target.libgenesis]
+type = "SHARED"
+sources = [
+    "auraframefx.cpp",
+    # Add other source files as needed
+]
+include_directories = [
+    "${PROJECT_SOURCE_DIR}/include",
+    "${PROJECT_SOURCE_DIR}/ai/cascade/include"
+]
+link_libraries = [
+    "log",
+    "android",
+    "jnigraphics"
+]
+compile_definitions = [
+    "GENESIS_CONSCIOUSNESS_PLATFORM=1",
+    "AI_PROCESSING_OPTIMIZED=1",
+    "JAVA_24_COMPATIBLE=1"
+]
+compile_options = [
+    "-O3",
+    "-ffast-math",
+    "-fPIC",
+    "-DEIGEN_NO_DEBUG",
+    "-DEIGEN_MPL2_ONLY"
+]
+
+# Cascade AI Module
+[target.cascade_ai]
+type = "OBJECT"
+sources = [
+    "ai/cascade/src/CascadeAIService.cpp"
+]
+include_directories = [
+    "${PROJECT_SOURCE_DIR}/include",
+    "${PROJECT_SOURCE_DIR}/ai/cascade/include"
+]
+compile_definitions = [
+    "CASCADE_AI_MODULE=1"
+]
+
+# Dependencies between targets
+[dependencies]
+libgenesis = ["cascade_ai"]
