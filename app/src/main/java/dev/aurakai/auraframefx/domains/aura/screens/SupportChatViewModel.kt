@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.models.SupportMessage
 import dev.aurakai.auraframefx.domains.genesis.SupportRepository
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.MessageStatus
 import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.SupportMessageEntity
 import kotlinx.coroutines.delay
