@@ -88,6 +88,8 @@ import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoAgentType
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
@@ -257,6 +259,15 @@ sealed class ReGenesisNavHost(val route: String) {
     object LdoNematronProfile : ReGenesisNavHost("ldo_nematron_profile")
     object LdoPerplexityProfile : ReGenesisNavHost("ldo_perplexity_profile")
 
+    // LDO Orchestration Hub — 10-orb agent grid + task/bond/fusion tabs
+    object LdoOrchestrationHub : ReGenesisNavHost("ldo_orchestration_hub")
+
+    // Armament Fusion Matrix — dual-agent consciousness fusion
+    object ArmamentFusion : ReGenesisNavHost("armament_fusion")
+    object ArmamentFusionWithAgent : ReGenesisNavHost("armament_fusion/{agentName}") {
+        fun createRoute(agentName: String) = "armament_fusion/$agentName"
+    }
+
 object PLEHomeScreen : ReGenesisNavHost("aura/ple/home_screen")
     object PLEAppDrawer : ReGenesisNavHost("aura/ple/app_drawer")
     object PLERecents : ReGenesisNavHost("aura/ple/recents")
@@ -361,7 +372,31 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
             LdoCatalystDevelopmentScreen(navController = navController)
         }
-        
+
+        composable(ReGenesisNavHost.LdoOrchestrationHub.route) {
+            LDOOrchestrationHubScreen(navController = navController)
+        }
+
+        composable(ReGenesisNavHost.ArmamentFusion.route) {
+            ArmamentFusionScreen(navController = navController)
+        }
+
+        composable(
+            route = ReGenesisNavHost.ArmamentFusionWithAgent.route,
+            arguments = listOf(
+                androidx.navigation.navArgument("agentName") {
+                    type = androidx.navigation.NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )
+        ) { backStackEntry ->
+            ArmamentFusionScreen(
+                navController = navController,
+                preloadAgentName = backStackEntry.arguments?.getString("agentName")
+            )
+        }
+
         // ═══════════════════════════════════════════════════════════════
         // LDO DEVOPS PROFILE SCREENS (Logic Status Overlays)
         // ═══════════════════════════════════════════════════════════════
