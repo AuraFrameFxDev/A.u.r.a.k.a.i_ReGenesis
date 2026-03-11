@@ -7,9 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.aura.AuraAgent
-import dev.aurakai.auraframefx.ai.agents.GenesisAgent
-import dev.aurakai.auraframefx.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.genesis.security.CryptographyManager
 import dev.aurakai.auraframefx.genesis.storage.SecureStorage
 import dev.aurakai.auraframefx.oracledrive.api.OracleDriveApi
@@ -19,7 +19,7 @@ import dev.aurakai.auraframefx.oracledrive.service.OracleDriveService
 import dev.aurakai.auraframefx.oracledrive.service.SecureFileService
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStorageProvider
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStorageProviderImpl
-import dev.aurakai.auraframefx.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
