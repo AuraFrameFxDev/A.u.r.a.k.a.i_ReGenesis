@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.preferences
 
-import dev.aurakai.auraframefx.config.UserPreferences
+import dev.aurakai.auraframefx.domains.nexus.config.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

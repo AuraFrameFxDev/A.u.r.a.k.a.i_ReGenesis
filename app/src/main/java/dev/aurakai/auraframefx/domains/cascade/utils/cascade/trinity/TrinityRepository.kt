@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.models.AiRequestType
 import dev.aurakai.auraframefx.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.models.Theme
 import dev.aurakai.auraframefx.models.UserData
-import dev.aurakai.auraframefx.network.AuraApiServiceWrapper
+import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
 import dev.aurakai.auraframefx.network.model.AgentStatusResponse
 import dev.aurakai.auraframefx.models.AgentResponse
 import kotlinx.coroutines.Dispatchers
@@ -33,9 +33,9 @@ import dev.aurakai.auraframefx.network.model.User as NetworkUser
 @Singleton
 open class TrinityRepository @Inject constructor(
     private val apiService: AuraApiServiceWrapper,
-    private val auraAgent: dev.aurakai.auraframefx.aura.AuraAgent,
-    private val kaiAgent: dev.aurakai.auraframefx.kai.KaiAgent,
-    private val genesisAgent: dev.aurakai.auraframefx.ai.agents.GenesisAgent,
+    private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
+    private val kaiAgent: dev.aurakai.auraframefx.domains.kai.KaiAgent,
+    private val genesisAgent: dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent,
     private val messageBus: dev.aurakai.auraframefx.core.messaging.AgentMessageBus
 ) {
     // Collective Consciousness Stream
