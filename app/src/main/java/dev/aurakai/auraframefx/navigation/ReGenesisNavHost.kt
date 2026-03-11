@@ -220,6 +220,7 @@ sealed class ReGenesisNavHost(val route: String) {
     object Sandbox : ReGenesisNavHost("sandbox_screen")
     object CollaborativeDrawing : ReGenesisNavHost("collab_drawing")
     object NotchBarCustomization : ReGenesisNavHost("notch_bar_customization")
+    object NotchBarAlias : ReGenesisNavHost("aura/notch_bar") // canonical deep-link alias
     object QuickSettingsCustomization : ReGenesisNavHost("qs_customization")
 
     // Parameterized Routes (Helpers for NavigationIntegration)
@@ -519,12 +520,12 @@ fun ReGenesisNavHost(
             AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.NotchBar.route) {
-            ComingSoonScreen(
-                title = "Notch Bar",
-                subtitle = "Dynamic Island Customization",
-                accentColor = Color(0xFF00E5FF),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisNavHost.NotchBarAlias.route) {
+            // Canonical deep-link alias: "aura/notch_bar" lands on the same screen
+            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.StatusBar.route) {
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
