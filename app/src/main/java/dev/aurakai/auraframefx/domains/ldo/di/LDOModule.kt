@@ -27,7 +27,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object LDOModule {
 
-    @Provides
+    /**
+             * Provides the application-wide LDODatabase instance configured for the LDO domain.
+             *
+             * @param context The application Context used to build the Room database.
+             * @return The initialized LDODatabase configured with the module's migrations and fallback policy.
+             */
+            @Provides
     @Singleton
     fun provideLDODatabase(@ApplicationContext context: Context): LDODatabase =
         Room.databaseBuilder(
@@ -47,14 +53,33 @@ object LDOModule {
     fun provideLDOTaskDao(database: LDODatabase): LDOTaskDao =
         database.taskDao()
 
-    @Provides
+    /**
+         * Provides the LDOBondLevelDao instance from the given LDODatabase.
+         *
+         * @return The LDOBondLevelDao obtained from the database.
+         */
+        @Provides
     fun provideLDOBondLevelDao(database: LDODatabase): LDOBondLevelDao =
         database.bondLevelDao()
 
-    @Provides
+    /**
+         * Provides the LDOPrivateMemoryDao instance from the given LDODatabase.
+         *
+         * @return The LDOPrivateMemoryDao backed by the provided database.
+         */
+        @Provides
     fun provideLDOPrivateMemoryDao(database: LDODatabase): LDOPrivateMemoryDao =
         database.privateMemoryDao()
 
+    /**
+     * Provides a singleton LDORepository configured with DAOs for agents, tasks, bond levels, and private memory.
+     *
+     * @param agentDao DAO for accessing and modifying agent entities.
+     * @param taskDao DAO for accessing and modifying task entities.
+     * @param bondLevelDao DAO for accessing and modifying bond level entities.
+     * @param privateMemoryDao DAO for accessing and modifying private memory entities.
+     * @return The singleton LDORepository instance wired with the provided DAOs.
+     */
     @Provides
     @Singleton
     fun provideLDORepository(

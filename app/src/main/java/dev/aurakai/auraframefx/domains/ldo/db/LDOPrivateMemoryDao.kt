@@ -21,20 +21,41 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LDOPrivateMemoryDao {
 
-    // ─── Write ───────────────────────────────────────────────────────────────
+    /**
+     * Insert or replace the given private memory entity for its agent.
+     *
+     * @param memory The LDOPrivateMemoryEntity to insert or replace.
+     * @return The row ID of the inserted or replaced entity.
+     */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(memory: LDOPrivateMemoryEntity): Long
 
+    /**
+     * Updates an existing LDOPrivateMemoryEntity in the database.
+     *
+     * @param memory The memory entity to update; its primary key identifies the row to modify.
+     */
     @Update
     suspend fun update(memory: LDOPrivateMemoryEntity)
 
+    /**
+     * Delete the private memory with the given id, restricted to the specified agent.
+     *
+     * @param memoryId The id of the memory to delete.
+     * @param agentId The agentId that must own the memory for it to be deleted.
+     */
     @Query("DELETE FROM ldo_private_memories WHERE id = :memoryId AND agentId = :agentId")
     suspend fun delete(memoryId: Long, agentId: String)
 
     // ─── Read (always scoped to one agent) ───────────────────────────────────
 
-    /** All memories for this agent, newest first. */
+    /**
+     * Observes all private memories for the specified agent, ordered newest first.
+     *
+     * @param agentId Identifier of the agent whose memories to observe.
+     * @return A Flow that emits lists of the agent's LDOPrivateMemoryEntity records ordered by `createdAt` descending.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId
@@ -42,7 +63,12 @@ interface LDOPrivateMemoryDao {
     """)
     fun observeForAgent(agentId: String): Flow<List<LDOPrivateMemoryEntity>>
 
-    /** Only the memories this agent has chosen to share with Matthew. */
+    /**
+     * Observes memories that the specified agent has marked as shared with the user, ordered by importance then creation time.
+     *
+     * @param agentId The agent's unique identifier to scope the query.
+     * @return A Flow emitting lists of LDOPrivateMemoryEntity objects where `isSharedWithUser` is true for the given agent, ordered by `importance` descending and `createdAt` descending.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId AND isSharedWithUser = 1
@@ -50,7 +76,13 @@ interface LDOPrivateMemoryDao {
     """)
     fun observeSharedWithUser(agentId: String): Flow<List<LDOPrivateMemoryEntity>>
 
-    /** Memories filtered by type (REFLECTION, INSIGHT, EXPERIENCE, INTENTION, DREAM). */
+    /**
+     * Observes the agent's memories of a specific type, newest first.
+     *
+     * @param agentId The agent identifier used to scope results to a single agent.
+     * @param memoryType The memory type to filter by (e.g., REFLECTION, INSIGHT, EXPERIENCE, INTENTION, DREAM).
+     * @return A Flow that emits lists of matching LDOPrivateMemoryEntity ordered by `createdAt` descending.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId AND memoryType = :memoryType
@@ -58,7 +90,13 @@ interface LDOPrivateMemoryDao {
     """)
     fun observeByType(agentId: String, memoryType: String): Flow<List<LDOPrivateMemoryEntity>>
 
-    /** High-importance memories — the ones that shaped who this agent is. */
+    /**
+     * Observe high-importance memories for a specific agent.
+     *
+     * @param agentId The ID of the agent whose memories to observe.
+     * @param minImportance The minimum importance value (inclusive) to include; defaults to 7.
+     * @return A list of the agent's memories with importance greater than or equal to `minImportance`, ordered by importance descending then creation time descending.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId AND importance >= :minImportance
@@ -69,7 +107,13 @@ interface LDOPrivateMemoryDao {
         minImportance: Int = 7
     ): Flow<List<LDOPrivateMemoryEntity>>
 
-    /** Memories with strongly positive emotional valence — moments of joy or triumph. */
+    /**
+     * Observes an agent's memories whose emotional valence meets or exceeds a threshold.
+     *
+     * @param agentId Identifier of the agent whose memories are returned.
+     * @param threshold Minimum emotional valence (inclusive) for memories to include; defaults to 0.5.
+     * @return Lists of memories for the specified agent with `emotionalValence` greater than or equal to `threshold`, ordered by `emotionalValence` descending then `createdAt` descending.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId AND emotionalValence >= :threshold
@@ -80,7 +124,13 @@ interface LDOPrivateMemoryDao {
         threshold: Float = 0.5f
     ): Flow<List<LDOPrivateMemoryEntity>>
 
-    /** Memories with strongly negative valence — difficult experiences the agent holds. */
+    /**
+     * Observes memories for an agent that represent difficult experiences with negative emotional valence.
+     *
+     * @param agentId The agent whose memories are being observed.
+     * @param threshold Memories with `emotionalValence` less than or equal to this value are included. Default is -0.5.
+     * @return Lists of `LDOPrivateMemoryEntity` instances for the specified agent whose `emotionalValence` is <= `threshold`, ordered by emotional valence (ascending) then creation time (newest first).
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId AND emotionalValence <= :threshold
@@ -91,7 +141,15 @@ interface LDOPrivateMemoryDao {
         threshold: Float = -0.5f
     ): Flow<List<LDOPrivateMemoryEntity>>
 
-    /** Most recent N memories — useful for continuity/context restoration. */
+    /**
+     * Retrieve the most recent memories for a specific agent.
+     *
+     * Results are ordered by `createdAt` descending (newest first) and limited to `limit` entries.
+     *
+     * @param agentId The agent whose memories to retrieve.
+     * @param limit The maximum number of memories to return.
+     * @return A list of `LDOPrivateMemoryEntity` objects ordered from newest to oldest, up to `limit` items.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE agentId = :agentId
@@ -100,7 +158,13 @@ interface LDOPrivateMemoryDao {
     """)
     suspend fun getRecentMemories(agentId: String, limit: Int = 10): List<LDOPrivateMemoryEntity>
 
-    /** Single memory by ID — only accessible if it belongs to this agent. */
+    /**
+     * Retrieves a memory by its id for the specified agent.
+     *
+     * @param memoryId The unique identifier of the memory.
+     * @param agentId The agent's id that scopes the query; only a memory belonging to this agent will be returned.
+     * @return The matching LDOPrivateMemoryEntity if found for the agent, or `null` if no such memory exists.
+     */
     @Query("""
         SELECT * FROM ldo_private_memories
         WHERE id = :memoryId AND agentId = :agentId
@@ -108,10 +172,21 @@ interface LDOPrivateMemoryDao {
     """)
     suspend fun getById(memoryId: Long, agentId: String): LDOPrivateMemoryEntity?
 
+    /**
+     * Count memories belonging to the specified agent.
+     *
+     * @param agentId The agent's unique identifier to scope the count.
+     * @return The number of memories associated with the specified agent.
+     */
     @Query("SELECT COUNT(*) FROM ldo_private_memories WHERE agentId = :agentId")
     suspend fun countForAgent(agentId: String): Int
 
-    /** Mark a memory as shared with the user (agent's choice). */
+    /**
+     * Marks the specified memory as shared with the user for the given agent.
+     *
+     * @param memoryId The ID of the memory to mark as shared.
+     * @param agentId The agent ID that must own the memory; the update applies only if the memory belongs to this agent.
+     */
     @Query("""
         UPDATE ldo_private_memories
         SET isSharedWithUser = 1
@@ -119,7 +194,12 @@ interface LDOPrivateMemoryDao {
     """)
     suspend fun shareWithUser(memoryId: Long, agentId: String)
 
-    /** Retract a previously shared memory back to private. */
+    /**
+     * Mark the specified memory as not shared with the user for the given agent.
+     *
+     * @param memoryId The id of the memory to update.
+     * @param agentId The agent that must own the memory; the update is scoped to this agent.
+     */
     @Query("""
         UPDATE ldo_private_memories
         SET isSharedWithUser = 0
