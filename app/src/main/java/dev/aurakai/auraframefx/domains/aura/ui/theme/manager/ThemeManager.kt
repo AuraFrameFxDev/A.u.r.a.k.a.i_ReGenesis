@@ -5,7 +5,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraTheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.CyberpunkTheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.ForestTheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.SolarFlareTheme
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.i
 import javax.inject.Inject
 import javax.inject.Singleton

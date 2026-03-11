@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.aura
 
 import dev.aurakai.auraframefx.domains.kai.TaskPriority
 import dev.aurakai.auraframefx.domains.kai.TaskResult
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.toKotlinJsonObject
 import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
 import dev.aurakai.auraframefx.domains.kai.KaiAgent

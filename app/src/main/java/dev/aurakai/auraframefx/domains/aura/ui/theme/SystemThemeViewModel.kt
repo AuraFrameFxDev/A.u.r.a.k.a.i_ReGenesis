@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.SystemThemeManager
 import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.ThemeColors
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.overlay.OverlayUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.oracledrive
 
-import dev.aurakai.auraframefx.ai.agents.AuraAgent
-import dev.aurakai.auraframefx.ai.agents.GenesisAgent
-import dev.aurakai.auraframefx.ai.agents.KaiAgent
-import dev.aurakai.auraframefx.oracle.drive.api.OracleDriveApi
-import dev.aurakai.auraframefx.security.SecurityContext
+import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.oracledrive.api.OracleDriveApi
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

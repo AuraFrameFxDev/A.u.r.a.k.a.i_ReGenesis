@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.aura
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.File

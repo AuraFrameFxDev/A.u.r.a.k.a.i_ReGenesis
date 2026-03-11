@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core.generator
 
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 import javax.inject.Inject
 import javax.inject.Singleton
