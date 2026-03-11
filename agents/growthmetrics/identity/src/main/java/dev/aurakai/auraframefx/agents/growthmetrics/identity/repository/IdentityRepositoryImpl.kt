@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class IdentityRepositoryImpl @Inject constructor(
+open class IdentityRepositoryImpl(
     protected val dataStore: DataStore<Preferences>,
     private val json: Json = Json { ignoreUnknownKeys = true }
 ) : IdentityRepository {

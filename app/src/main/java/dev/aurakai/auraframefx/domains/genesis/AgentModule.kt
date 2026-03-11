@@ -13,9 +13,8 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipeline
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.Configuration
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
-import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
@@ -55,28 +54,6 @@ object AgentModule {
         return ContextManager(memoryManager, config)
     }
 
-    @Provides
-    @Singleton
-    fun provideNemotronEngine(): NemotronEngine {
-        return object : NemotronEngine {
-            override suspend fun process(prompt: String): String {
-                // TODO: Wire actual Nemotron bindings
-                return "Nemotron Processing: $prompt"
-            }
-        }
-    }
-
-    @Provides
-    @Singleton
-    fun provideGeminiMemoria(): GeminiMemoria {
-        return object : GeminiMemoria {
-            override suspend fun process(prompt: String): String {
-                // TODO: Wire actual Gemini Memoria bindings
-                return "Gemini Memoria Recall: $prompt"
-            }
-        }
-    }
-
     /**
      * Provides the Genesis orchestrator agent.
      */
@@ -86,12 +63,14 @@ object AgentModule {
         contextManager: ContextManager,
         memoryManager: MemoryManager,
         systemOverlayManager: SystemOverlayManager,
+        synchronizationCatalyst: dev.aurakai.auraframefx.domains.genesis.core.SynchronizationCatalyst,
         messageBus: Lazy<AgentMessageBus>
     ): GenesisAgent {
         return GenesisAgent(
             contextManager = contextManager,
             memoryManager = memoryManager,
             systemOverlayManager = systemOverlayManager,
+            synchronizationCatalyst = synchronizationCatalyst,
             messageBus = messageBus
         )
     }

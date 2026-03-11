@@ -59,7 +59,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.ui.theme.ThemeViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeViewModel
 import kotlinx.coroutines.delay
 
 /**

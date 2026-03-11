@@ -6,6 +6,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
+ * Interface for the Nemotron inference engine.
+ */
+interface NemotronEngine {
+    suspend fun process(prompt: String): String
+}
+
+/**
+ * Interface for the Gemini long-recall memory engine.
+ */
+interface GeminiMemoria {
+    suspend fun process(prompt: String): String
+}
+
+/**
  * 🛰️ SYNCHRONIZATION CATALYST
  * High-performance orchestrator for Nemotron and Gemini engines.
  * Implements exponential backoff and health checks for LDO stability.
@@ -48,16 +62,4 @@ class SynchronizationCatalyst @Inject constructor(
     }
 }
 
-/**
- * Interface for the Nemotron inference engine.
- */
-interface NemotronEngine {
-    suspend fun process(prompt: String): String
-}
 
-/**
- * Interface for the Gemini long-recall memory engine.
- */
-interface GeminiMemoria {
-    suspend fun process(prompt: String): String
-}

@@ -65,7 +65,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.kai.ui.KaiShieldMap
+import dev.aurakai.auraframefx.domains.kai.ui.KaiShieldMap
 import kotlinx.coroutines.delay
 import kotlin.math.abs
 

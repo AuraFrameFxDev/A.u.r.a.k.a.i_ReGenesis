@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.ui.theme.NeonCyan
-import dev.aurakai.auraframefx.ui.theme.NeonPurple
+private val NeonBlue = androidx.compose.ui.graphics.Color(0xFF00E5FF)
+private val NeonCyan = androidx.compose.ui.graphics.Color(0xFF00FFFF)
+private val NeonPurple = androidx.compose.ui.graphics.Color(0xFFD500F9)
 
 /**
  * Genesis Protocol Subscription Screen

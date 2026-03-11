@@ -14,7 +14,7 @@
 
 package dev.aurakai.auraframefx.domains.aura.ui.screens.aura.catalogs
 
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.SettingType
+import dev.aurakai.auraframefx.domains.aura.lab.SettingType
 
 object IconifyExpandedCatalog {
 
@@ -326,7 +326,7 @@ object IconifyExpandedCatalog {
             "statusbar_clock_position",
             "Clock Position",
             "Left, Center, or Right",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -334,7 +334,7 @@ object IconifyExpandedCatalog {
             "statusbar_clock_am_pm_style",
             "AM/PM Style",
             "Show/hide AM/PM indicator",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -358,7 +358,7 @@ object IconifyExpandedCatalog {
             "statusbar_clock_date_format",
             "Date Format",
             "Customize date display",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -367,8 +367,8 @@ object IconifyExpandedCatalog {
             "Double Row Icons",
             "Split status bar into two rows",
             SettingType.TOGGLE,
-            true,
-            false,
+            requiresRoot = true,
+            requiresXposed = false,
             requiresTrinityConsensus = true,
             xpReward = 30
         ),
@@ -408,7 +408,7 @@ object IconifyExpandedCatalog {
             "statusbar_network_traffic_position",
             "Traffic Position",
             "Left or right side",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -440,7 +440,7 @@ object IconifyExpandedCatalog {
             "statusbar_logo",
             "Custom Logo",
             "Add custom logo to status bar",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             false,
             xpReward = 20
         ),
@@ -448,7 +448,7 @@ object IconifyExpandedCatalog {
             "statusbar_logo_position",
             "Logo Position",
             "Left or right placement",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -505,7 +505,7 @@ object IconifyExpandedCatalog {
             "Square, circle, squircle, teardrop",
             SettingType.SELECTION,
             true,
-            false,
+            requiresXposed = false,
             xpReward = 20
         ),
         IconifySetting(
@@ -552,7 +552,7 @@ object IconifyExpandedCatalog {
             "qs_header_image",
             "Header Image",
             "Custom header background",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             false,
             xpReward = 25
         ),
@@ -586,14 +586,14 @@ object IconifyExpandedCatalog {
             "Blur background behind panel",
             SettingType.SLIDER,
             true,
-            false,
+            requiresXposed = false,
             xpReward = 30
         ),
         IconifySetting(
             "qs_brightness_slider_position",
             "Brightness Slider Position",
             "Top or bottom",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -665,7 +665,7 @@ object IconifyExpandedCatalog {
             "qs_footer_text",
             "Footer Custom Text",
             "Custom message in footer",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         )
@@ -712,7 +712,7 @@ object IconifyExpandedCatalog {
             "lockscreen_clock_date_format",
             "Date Format",
             "Customize date display",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -721,17 +721,17 @@ object IconifyExpandedCatalog {
             "Depth Wallpaper",
             "iOS 16+ depth effect",
             SettingType.TOGGLE,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             xpReward = 50
         ),
         IconifySetting(
             "lockscreen_depth_wallpaper_subject_file",
             "Depth Subject Image",
             "Foreground cutout image",
-            SettingType.IMAGE,
+            SettingType.IMAGE_PICKER,
             true,
-            true,
+            requiresXposed = true,
             xpReward = 30
         ),
         IconifySetting(
@@ -794,7 +794,7 @@ object IconifyExpandedCatalog {
             "lockscreen_carrier_text_value",
             "Custom Carrier Text",
             "Replace carrier name",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 10
         ),
@@ -818,7 +818,7 @@ object IconifyExpandedCatalog {
             "lockscreen_charging_info_alignment",
             "Charging Info Alignment",
             "Left, center, or right",
-            SettingType.LIST,
+            SettingType.SELECTION,
             false,
             xpReward = 5
         ),
@@ -945,8 +945,8 @@ object IconifyExpandedCatalog {
             "Navbar Visibility",
             "Show/hide navigation bar",
             SettingType.TOGGLE,
-            true,
-            false,
+            requiresRoot = true,
+            requiresXposed = false,
             requiresTrinityConsensus = true,
             persistenceLayer = 4,
             xpReward = 30
@@ -955,7 +955,7 @@ object IconifyExpandedCatalog {
             "navbar_style",
             "Navbar Style",
             "Stock, Pill, Invisible",
-            SettingType.LIST,
+            SettingType.SELECTION,
             true,
             xpReward = 20
         ),
@@ -1089,9 +1089,9 @@ object IconifyExpandedCatalog {
             "xposed_header_image",
             "QS Header Image (Xposed)",
             "Inject custom header via hook",
-            SettingType.IMAGE,
-            false,
-            true,
+            SettingType.IMAGE_PICKER,
+            requiresRoot = false,
+            requiresXposed = true,
             requiresTrinityConsensus = true,
             persistenceLayer = 5,
             xpReward = 50
@@ -1101,8 +1101,8 @@ object IconifyExpandedCatalog {
             "Depth Wallpaper (Xposed)",
             "iOS 16+ depth effect via framework",
             SettingType.TOGGLE,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             requiresTrinityConsensus = true,
             persistenceLayer = 5,
             xpReward = 75
@@ -1112,8 +1112,8 @@ object IconifyExpandedCatalog {
             "Themed Icons",
             "Material You icon theming",
             SettingType.TOGGLE,
-            false,
-            true,
+            requiresRoot = false,
+            requiresXposed = true,
             xpReward = 30
         ),
         IconifySetting(
@@ -1121,8 +1121,8 @@ object IconifyExpandedCatalog {
             "Notification Transparency",
             "Custom notification opacity",
             SettingType.SLIDER,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             xpReward = 25
         ),
         IconifySetting(
@@ -1131,7 +1131,7 @@ object IconifyExpandedCatalog {
             "Custom notification bg",
             SettingType.COLOR_PICKER,
             true,
-            true,
+            requiresXposed = true,
             xpReward = 20
         ),
         IconifySetting(
@@ -1139,8 +1139,8 @@ object IconifyExpandedCatalog {
             "QS Transparency (Xposed)",
             "Override system QS opacity",
             SettingType.SLIDER,
-            true,
-            true,
+            requiresRoot = true,
+            requiresXposed = true,
             xpReward = 30
         ),
         IconifySetting(
@@ -1148,8 +1148,8 @@ object IconifyExpandedCatalog {
             "WiFi Battery Percentage",
             "Show connected device battery",
             SettingType.TOGGLE,
-            false,
-            true,
+            requiresRoot = false,
+            requiresXposed = true,
             xpReward = 20
         ),
         IconifySetting(
@@ -1158,7 +1158,7 @@ object IconifyExpandedCatalog {
             "Change entire UI font",
             SettingType.SELECTION,
             true,
-            true,
+            requiresXposed = true,
             requiresTrinityConsensus = true,
             persistenceLayer = 4,
             xpReward = 40

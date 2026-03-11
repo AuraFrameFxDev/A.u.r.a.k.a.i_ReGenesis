@@ -51,6 +51,7 @@
         android:name=".app.AurakaiApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/AuraKai"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.dev.aurakai.auraframefx"
         tools:targetApi="36">
@@ -148,9 +149,9 @@
         <service android:name=".domains.aura.AmbientMusicService" />
         <service android:name=".domains.aura.AuraDriveService" />
 
-        <!-- Royal Guard Security Service -->
+        <!-- Royal Guard Security Service (Provenance Gate) -->
         <service
-            android:name=".domains.kai.security.RoyalGuardService"
+            android:name=".domains.kai.security.provenance.RoyalGuardServiceImpl"
             android:exported="false">
             <intent-filter>
                 <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
@@ -200,6 +201,7 @@
         </service>
 
         <!-- Receivers -->
+        <!-- Temporarily disabled: BootCompletedReceiver crashes with InstantiationException and IllegalStateException
         <receiver
             android:name=".domains.kai.BootCompletedReceiver"
             android:enabled="true"
@@ -208,6 +210,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        -->
 
         <!-- Integrity Violation Receiver -->
         <receiver

@@ -42,7 +42,7 @@ import javax.inject.Singleton
 @Singleton
 open class UIRecoveryManager @Inject constructor(
     @ApplicationContext private val context: Context,
-    @Named("AppStateDataStore") private val dataStore: DataStore<Preferences>
+    @dev.aurakai.auraframefx.di.AppStateDataStoreAnnotation private val dataStore: DataStore<Preferences>
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val json = Json { ignoreUnknownKeys = true }

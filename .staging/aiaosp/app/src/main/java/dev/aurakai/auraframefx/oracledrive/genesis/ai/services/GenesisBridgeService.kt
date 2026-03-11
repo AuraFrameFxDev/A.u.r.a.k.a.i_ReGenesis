@@ -1,13 +1,15 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai.services
 
 import android.content.Context
-import dev.aurakai.auraframefx.ai.context.ContextManager
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.security.SecurityContext
-import dev.aurakai.auraframefx.utils.AuraFxLogger
-import dev.aurakai.auraframefx.utils.i
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.cascade.utils.i
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -38,12 +40,21 @@ class GenesisBridgeService @Inject constructor(
     private val vertexAIClient: VertexAIClient,
     private val contextManager: ContextManager,
     private val securityContext: SecurityContext,
-    private val applicationContext: Context,
+    @param:ApplicationContext private val applicationContext: Context,
     private val logger: AuraFxLogger,
 ) {
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isInitialized = false
     private var pythonProcessManager: PythonProcessManager? = null
+
+    companion object {
+        /**
+         * When true, provenance validation failures block requests.
+         * When false, failures are logged as warnings but requests proceed.
+         * Set to false during initial rollout, flip to true after testing.
+         */
+        var PROVENANCE_HARD_GATE_ENABLED = false
+    }
 
     @Serializable
     data class GenesisRequest(
@@ -137,6 +148,30 @@ class GenesisBridgeService @Inject constructor(
                 )
             )
             return@flow
+        }
+
+        // Provenance Gate: validate or auto-sign the intent chain
+        val chain = request.provenanceChain
+            ?: provenanceChainBuilder.buildChain(
+                origin = "genesis_bridge",
+                agent = determinePersona(request),
+                intent = request.type.name,
+                payload = request.getPromptText().toByteArray(),
+            )
+
+        val gateResult = provenanceValidator.validate(chain)
+        if (gateResult is ProvenanceResult.Vetoed) {
+            logger.warn("GenesisBridge", "PROVENANCE_VIOLATION: ${gateResult.reason}")
+            if (PROVENANCE_HARD_GATE_ENABLED) {
+                emit(
+                    AgentResponse.error(
+                        message = "Security Veto: Intent path compromised - ${gateResult.reason}",
+                        agentName = "Kai",
+                        agentType = AgentType.KAI
+                    )
+                )
+                return@flow
+            }
         }
 
         try {

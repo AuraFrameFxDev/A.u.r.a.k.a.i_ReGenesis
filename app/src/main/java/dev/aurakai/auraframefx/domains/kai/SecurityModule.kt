@@ -7,10 +7,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
+import dev.aurakai.auraframefx.domains.kai.security.KeystoreEncryptionManager
 import dev.aurakai.auraframefx.domains.kai.security.KeystoreManager
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.oracledrive.EncryptionManager as OracleDriveEncryptionManager
-import dev.aurakai.auraframefx.oracledrive.NoopEncryptionManager as OracleDriveNoopEncryptionManager
+import dev.aurakai.auraframefx.domains.kai.security.NoopEncryptionManager
 import javax.inject.Singleton
 
 @Module
@@ -38,15 +38,15 @@ object SecurityModule {
     @Singleton
     fun provideEncryptionManager(
         @ApplicationContext context: Context
-    ): OracleDriveEncryptionManager {
-        return OracleDriveNoopEncryptionManager
+    ): EncryptionManager {
+        return NoopEncryptionManager
     }
 
     @Provides
     @Singleton
     @javax.inject.Named("OracleDrive")
-    fun provideOracleDriveEncryptionManager(): OracleDriveEncryptionManager {
-        return OracleDriveNoopEncryptionManager
+    fun provideOracleDriveEncryptionManager(): dev.aurakai.auraframefx.domains.genesis.oracledrive.security.EncryptionManager {
+        return dev.aurakai.auraframefx.domains.genesis.oracledrive.security.EncryptionManager()
     }
 }
 
