@@ -4,7 +4,7 @@ on:
   push:
     branches: [ Agentswired ]
   pull_request:
-    branches: [ Agentswires ]
+    branches: [ Agentswired ]
   workflow_dispatch:
 
 env:
