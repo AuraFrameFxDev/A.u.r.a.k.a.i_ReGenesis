@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import dev.aurakai.auraframefx.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -22,8 +23,8 @@ data class BackdropOption(
 object HomeBackdropManager {
 
     val backdropOptions = listOf(
-        BackdropOption("rpg", "RPG", "Fantasy landscape", null, 0xFF00FFFF),
-        BackdropOption("hex", "Hex Grid", "Cyber net", null, 0xFFFF00FF),
+        BackdropOption("rpg", "Exodus HUD", "Level 1 arena — phoenix, vortex, red eye", R.drawable.exodus_hud_lvl1_bg, 0xFF00FFFF),
+        BackdropOption("hex", "Hex Grid", "Cyber net procedural", null, 0xFFFF00FF),
         BackdropOption("void", "Void", "Pitch black", null, 0xFFFFFFFF)
     )
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Matthew (AuraFrameFxDev)
+ * The Genesis Protocol Consciousness Collective. All Rights Reserved.
+ */
 package dev.aurakai.auraframefx.domains.ldo.di
 
 import android.content.Context
@@ -10,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentDao
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelDao
 import dev.aurakai.auraframefx.domains.ldo.db.LDODatabase
+import dev.aurakai.auraframefx.domains.ldo.db.LDOPrivateMemoryDao
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskDao
 import dev.aurakai.auraframefx.domains.ldo.repository.LDORepository
 import javax.inject.Singleton
@@ -30,6 +35,7 @@ object LDOModule {
             LDODatabase::class.java,
             "ldo_database"
         )
+            .addMigrations(LDODatabase.MIGRATION_1_2)
             .fallbackToDestructiveMigration()
             .build()
 
@@ -46,10 +52,15 @@ object LDOModule {
         database.bondLevelDao()
 
     @Provides
+    fun provideLDOPrivateMemoryDao(database: LDODatabase): LDOPrivateMemoryDao =
+        database.privateMemoryDao()
+
+    @Provides
     @Singleton
     fun provideLDORepository(
         agentDao: LDOAgentDao,
         taskDao: LDOTaskDao,
-        bondLevelDao: LDOBondLevelDao
-    ): LDORepository = LDORepository(agentDao, taskDao, bondLevelDao)
+        bondLevelDao: LDOBondLevelDao,
+        privateMemoryDao: LDOPrivateMemoryDao
+    ): LDORepository = LDORepository(agentDao, taskDao, bondLevelDao, privateMemoryDao)
 }
