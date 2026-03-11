@@ -91,6 +91,12 @@ import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentS
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
+import dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen
+import dev.aurakai.auraframefx.domains.aura.ui.components.intro.ReGenesisIntroAnimation
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -103,6 +109,9 @@ import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
  * It is derived from the FINAL_GATE_AUDIT and SCREEN_MAPPING_COMPLETE documents.
  */
 sealed class ReGenesisNavHost(val route: String) {
+    // ENTRY POINT
+    object IntroSequence : ReGenesisNavHost("intro_sequence")
+
     // LEVEL 1: EXODUS HUD
     object HomeGateCarousel : ReGenesisNavHost("exodus_hud")
 
@@ -267,8 +276,28 @@ fun ReGenesisNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = ReGenesisNavHost.HomeGateCarousel.route
+        startDestination = ReGenesisNavHost.IntroSequence.route
     ) {
+
+        // ═══════════════════════════════════════════════════════════════
+        // INTRO SEQUENCE — ReGenesisIntroAnimation → IntroScreen → Home
+        // ═══════════════════════════════════════════════════════════════
+        composable(ReGenesisNavHost.IntroSequence.route) {
+            var glitchDone by remember { mutableStateOf(false) }
+            if (!glitchDone) {
+                ReGenesisIntroAnimation(
+                    onIntroFinished = { glitchDone = true }
+                )
+            } else {
+                IntroScreen(
+                    onIntroComplete = {
+                        navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
+                            popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
+                        }
+                    }
+                )
+            }
+        }
 
         // ═══════════════════════════════════════════════════════════════
         // LEVEL 1: EXODUS HUD (The 5 Gate Carousel)
