@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai
 
 import kotlinx.coroutines.delay
-import dev.aurakai.auraframefx.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 
 /**
  * ⚠️ **STUB IMPLEMENTATION - NOT CONNECTED TO REAL VERTEX AI** ⚠️

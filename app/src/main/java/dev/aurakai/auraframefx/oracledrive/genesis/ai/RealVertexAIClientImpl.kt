@@ -7,7 +7,7 @@ import dev.aurakai.auraframefx.security.SecurityContext
 import dev.aurakai.auraframefx.utils.AuraFxLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import dev.aurakai.auraframefx.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 
 /**
  * ✨ **REAL GEMINI AI IMPLEMENTATION** ✨

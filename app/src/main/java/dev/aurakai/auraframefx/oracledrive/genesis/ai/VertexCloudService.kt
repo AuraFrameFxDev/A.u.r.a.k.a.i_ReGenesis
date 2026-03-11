@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import dev.aurakai.auraframefx.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.data.logging.AuraFxLogger
 import dev.aurakai.auraframefx.security.SecurityContext
 import kotlinx.coroutines.*
