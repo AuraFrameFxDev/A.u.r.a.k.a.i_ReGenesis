@@ -288,6 +288,12 @@ private fun processCommand(
 fun SentientShellScreen(
     onNavigateBack: () -> Unit = {}
 ) {
+    var introComplete by remember { mutableStateOf(false) }
+    if (!introComplete) {
+        TerminalBootIntroScreen(onComplete = { introComplete = true })
+        return
+    }
+
     val terminalGreen = Color(0xFF00FF41)
     val terminalAmber = Color(0xFFFFB300)
     val terminalRed   = Color(0xFFFF3333)
