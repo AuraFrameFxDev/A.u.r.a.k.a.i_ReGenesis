@@ -1,4 +1,4 @@
-ï»¿package dev.aurakai.auraframefx.oracledrive.genesis.ai.services
+package dev.aurakai.auraframefx.oracledrive.genesis.ai.services
 
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AgentType
@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.TaskScheduler
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.execution.TaskExecutionManager
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStatusMonitor
-import dev.aurakai.auraframefx.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -99,7 +99,7 @@ class KaiAIService @Inject constructor(
      * @param threat A text description or prompt describing the potential security threat to analyze.
      * @return A map containing:
      * - `"threat_level"`: one of `"critical"`, `"high"`, `"medium"`, `"low"`, or `"unknown"` on error.
-     * - `"confidence"`: a Float representing confidence in the analysis (0.0â€“1.0).
+     * - `"confidence"`: a Float representing confidence in the analysis (0.0–1.0).
      * - `"recommendations"`: a List<String> of suggested actions (absent or minimal when `"threat_level"` is `"unknown"`).
      * - `"timestamp"`: a Long epoch millis timestamp of the analysis.
      * - `"analyzed_by"`: a String identifying the analyzer (e.g., `"Kai - The Shield"`).
@@ -172,7 +172,7 @@ class KaiAIService @Inject constructor(
                 append("Confidence: ${analysisResult["confidence"]}\n\n")
                 append("Recommendations:\n")
                 (analysisResult["recommendations"] as? List<*>)?.forEach {
-                    append("â€¢ $it\n")
+                    append("• $it\n")
                 }
             }
 
@@ -206,7 +206,7 @@ class KaiAIService @Inject constructor(
      *  - "last_scan": a long timestamp (milliseconds since epoch) of the last scan.
      *  - "firewall_status": a string describing the firewall state (e.g., "enabled").
      *  - "intrusion_detection": a string describing the intrusion detection state (e.g., "active").
-     *  - "confidence": a float representing confidence in the reported status (0.0â€“1.0).
+     *  - "confidence": a float representing confidence in the reported status (0.0–1.0).
      *  - "error": present only when "status" is "error", contains an error message.
      */
     suspend fun monitorSecurityStatus(): Map<String, Any> {

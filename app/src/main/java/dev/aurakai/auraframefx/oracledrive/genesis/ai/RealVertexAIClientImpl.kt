@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.oracledrive.genesis.ai
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.generationConfig
 import dev.aurakai.auraframefx.config.VertexAIConfig
-import dev.aurakai.auraframefx.security.SecurityContext
-import dev.aurakai.auraframefx.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient

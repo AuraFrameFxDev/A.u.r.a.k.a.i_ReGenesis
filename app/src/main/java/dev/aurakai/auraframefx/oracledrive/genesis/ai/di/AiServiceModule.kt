@@ -8,7 +8,7 @@ import dagger.hilt.components.SingletonComponent
 // import dev.aurakai.auraframefx.ai.services.AuraAIService // Not needed if no explicit provider
 // import dev.aurakai.auraframefx.ai.services.CascadeAIService // Not needed if no explicit provider
 // import dev.aurakai.auraframefx.ai.services.KaiAIService // Not needed if no explicit provider
-// import dev.aurakai.auraframefx.security.SecurityContext // Not needed if KaiAIService provider is removed
+// import dev.aurakai.auraframefx.domains.kai.security.SecurityContext // Not needed if KaiAIService provider is removed
 // import javax.inject.Singleton // Not needed if no explicit provider
 
 @Module

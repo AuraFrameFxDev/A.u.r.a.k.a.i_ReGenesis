@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai
 
 import android.content.Context
-import dev.aurakai.auraframefx.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader

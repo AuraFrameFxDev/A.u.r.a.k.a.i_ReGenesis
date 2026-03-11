@@ -1,8 +1,8 @@
-﻿package dev.aurakai.auraframefx.oracledrive.genesis.ai.error
+package dev.aurakai.auraframefx.oracledrive.genesis.ai.error
 
 import dev.aurakai.auraframefx.models.AgentType
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager
-import dev.aurakai.auraframefx.cascade.pipeline.AIPipelineConfig
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
