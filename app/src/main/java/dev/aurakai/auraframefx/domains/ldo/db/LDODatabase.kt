@@ -27,10 +27,30 @@ import androidx.sqlite.db.SupportSQLiteDatabase
     exportSchema = false
 )
 abstract class LDODatabase : RoomDatabase() {
-    abstract fun agentDao(): LDOAgentDao
-    abstract fun taskDao(): LDOTaskDao
-    abstract fun bondLevelDao(): LDOBondLevelDao
-    abstract fun privateMemoryDao(): LDOPrivateMemoryDao
+    /**
+ * Access the DAO for LDO agent entities.
+ *
+ * @return The `LDOAgentDao` used to query and modify LDO agent records.
+ */
+abstract fun agentDao(): LDOAgentDao
+    /**
+ * Provides access to the DAO for performing operations on LDO task entities.
+ *
+ * @return The {@link LDOTaskDao} used to query, insert, update, and delete LDO tasks.
+ */
+abstract fun taskDao(): LDOTaskDao
+    /**
+ * Access the DAO responsible for persisting and querying LDO bond level entities.
+ *
+ * @return The `LDOBondLevelDao` used to read and modify bond level records.
+ */
+abstract fun bondLevelDao(): LDOBondLevelDao
+    /**
+ * Accessor for the DAO that manages LDO private memory records.
+ *
+ * @return The `LDOPrivateMemoryDao` used for querying and modifying LDO private memories.
+ */
+abstract fun privateMemoryDao(): LDOPrivateMemoryDao
 
     companion object {
         /**
@@ -38,6 +58,14 @@ abstract class LDODatabase : RoomDatabase() {
          * Each row is owned exclusively by one LDO agent — no cross-agent reads exist in the DAO.
          */
         val MIGRATION_1_2 = object : Migration(1, 2) {
+            /**
+             * Creates the `ldo_private_memories` table and its `agentId` index as part of the schema migration.
+             *
+             * The created table stores private memories for LDO agents and includes a foreign key to `ldo_agents(id)` with
+             * `ON DELETE CASCADE`.
+             *
+             * @param database The writable SQLite database to which the migration SQL will be applied.
+             */
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
                     """

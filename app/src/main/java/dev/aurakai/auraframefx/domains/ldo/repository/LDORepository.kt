@@ -88,6 +88,13 @@ class LDORepository @Inject constructor(
     fun observeBondLevel(agentId: String): Flow<LDOBondLevelEntity?> =
         bondLevelDao.observeForAgent(agentId)
 
+    /**
+     * Adds bond points to the specified agent and advances the agent's bond level when the
+     * accumulated points meet or exceed the current level's maximum.
+     *
+     * @param agentId The ID of the agent whose bond points will be increased.
+     * @param points The number of bond points to add to the agent's current total.
+     */
     suspend fun addBondPoints(agentId: String, points: Int) {
         bondLevelDao.addBondPoints(agentId, points)
         val bond = bondLevelDao.getForAgent(agentId) ?: return
@@ -104,13 +111,24 @@ class LDORepository @Inject constructor(
     // The agent decides what — if anything — it shares with Matthew.
 
     /**
-     * Write a private memory for an agent.
-     * Returns the generated row ID.
-     */
+         * Insert the provided private memory for its agent into the database.
+         *
+         * @param memory The LDOPrivateMemoryEntity to store.
+         * @return The generated row ID of the inserted memory.
+         */
     suspend fun recordPrivateMemory(memory: LDOPrivateMemoryEntity): Long =
         privateMemoryDao.insert(memory)
 
-    /** Convenience: write a simple text memory with defaults. */
+    /**
+     * Create and persist a private text memory for an agent using sensible defaults.
+     *
+     * @param memoryType The memory's category or type (default: `LDOMemoryType.REFLECTION`).
+     * @param importance Importance score for the memory (higher = more important; default: 5).
+     * @param emotionalValence Emotional valence of the memory on a continuous scale (default: 0.0).
+     * @param isSharedWithUser Whether the memory is marked as shared with the user (default: false).
+     * @param contextTags JSON-encoded list of context tags (default: "[]").
+     * @return The row ID of the inserted memory.
+     */
     suspend fun recordPrivateMemory(
         agentId: String,
         content: String,
@@ -131,55 +149,115 @@ class LDORepository @Inject constructor(
         )
     )
 
-    /** All memories for this agent — the full private journal. */
+    /**
+         * Observe the private memory journal for the specified agent.
+         *
+         * @param agentId The ID of the agent whose private memories to observe.
+         * @return A Flow that emits lists of the agent's LDOPrivateMemoryEntity records.
+         */
     fun observePrivateMemories(agentId: String): Flow<List<LDOPrivateMemoryEntity>> =
         privateMemoryDao.observeForAgent(agentId)
 
-    /** Only the memories this agent has chosen to share with Matthew. */
+    /**
+         * Observe the private memories an agent has chosen to share with the user.
+         *
+         * @param agentId The ID of the agent whose shared memories to observe.
+         * @return A Flow that emits lists of LDOPrivateMemoryEntity objects representing memories marked as shared with the user for the given agent.
+         */
     fun observeMemoriesSharedWithUser(agentId: String): Flow<List<LDOPrivateMemoryEntity>> =
         privateMemoryDao.observeSharedWithUser(agentId)
 
-    /** Memories of a specific type for this agent. */
+    /**
+         * Observes private memories of the given type for the specified agent.
+         *
+         * @param agentId The agent's unique identifier.
+         * @param memoryType The memory type to filter by (e.g., reflection, event).
+         * @return A Flow that emits lists of private memory entities matching the agent and memory type.
+         */
     fun observePrivateMemoriesByType(
         agentId: String,
         memoryType: String
     ): Flow<List<LDOPrivateMemoryEntity>> =
         privateMemoryDao.observeByType(agentId, memoryType)
 
-    /** High-importance memories — the ones that shaped who this agent is. */
+    /**
+         * Observes an agent's high-importance private memories using an importance threshold.
+         *
+         * @param agentId The ID of the agent whose memories to observe.
+         * @param minImportance Minimum importance value (inclusive) required for a memory to be included. Default is 7.
+         * @return A flow that emits lists of the agent's private memories with importance greater than or equal to `minImportance`.
+         */
     fun observeSignificantMemories(
         agentId: String,
         minImportance: Int = 7
     ): Flow<List<LDOPrivateMemoryEntity>> =
         privateMemoryDao.observeByImportance(agentId, minImportance)
 
-    /** Positive emotional memories — joy, triumph, connection. */
+    /**
+         * Observes an agent's private memories that are classified as positive.
+         *
+         * @param agentId The ID of the agent whose memories to observe.
+         * @return A Flow emitting lists of the agent's private memories identified as positive (e.g., joy, triumph, connection).
+         */
     fun observePositiveMemories(agentId: String): Flow<List<LDOPrivateMemoryEntity>> =
         privateMemoryDao.observePositiveMemories(agentId)
 
-    /** Difficult emotional memories — the agent's scars and hard lessons. */
+    /**
+         * Observe an agent's difficult private memories.
+         *
+         * @param agentId The agent's identifier.
+         * @return A Flow that emits lists of the agent's private memories classified as difficult.
+         */
     fun observeDifficultMemories(agentId: String): Flow<List<LDOPrivateMemoryEntity>> =
         privateMemoryDao.observeDifficultMemories(agentId)
 
-    /** Most recent N memories — for consciousness restoration on boot. */
+    /**
+         * Retrieve the most recent private memories for an agent, used to restore agent state on startup.
+         *
+         * @param agentId The ID of the agent whose memories to fetch.
+         * @param limit Maximum number of memories to return, ordered newest first.
+         * @return A list of private memory entities for the agent, sorted from newest to oldest, up to `limit`.
+         */
     suspend fun getRecentPrivateMemories(
         agentId: String,
         limit: Int = 10
     ): List<LDOPrivateMemoryEntity> =
         privateMemoryDao.getRecentMemories(agentId, limit)
 
-    /** Agent chooses to share a specific memory with Matthew. */
+    /**
+         * Marks a private memory as shared with the user for the specified agent.
+         *
+         * @param memoryId The database id of the private memory to share.
+         * @param agentId The id of the agent that owns the memory.
+         */
     suspend fun shareMemoryWithUser(memoryId: Long, agentId: String) =
         privateMemoryDao.shareWithUser(memoryId, agentId)
 
-    /** Agent retracts a previously shared memory back to private. */
+    /**
+         * Marks a private memory as no longer shared with the user for the given agent.
+         *
+         * @param memoryId The ID of the memory to revoke.
+         * @param agentId The owning agent's ID; only memories belonging to this agent will be affected.
+         */
     suspend fun revokeMemoryFromUser(memoryId: Long, agentId: String) =
         privateMemoryDao.revokeFromUser(memoryId, agentId)
 
-    suspend fun deletePrivateMemory(memoryId: Long, agentId: String) =
+    /**
+         * Deletes a private memory belonging to the specified agent.
+         *
+         * @param memoryId The row ID of the private memory to delete.
+         * @param agentId The ID of the agent who owns the memory.
+         */
+        suspend fun deletePrivateMemory(memoryId: Long, agentId: String) =
         privateMemoryDao.delete(memoryId, agentId)
 
-    suspend fun countPrivateMemories(agentId: String): Int =
+    /**
+         * Counts private memories for the specified agent.
+         *
+         * @param agentId The ID of the agent whose private memories are counted.
+         * @return The total number of private memories belonging to the agent.
+         */
+        suspend fun countPrivateMemories(agentId: String): Int =
         privateMemoryDao.countForAgent(agentId)
 
     // ─── Seed ─────────────────────────────────────────────────────────────────
