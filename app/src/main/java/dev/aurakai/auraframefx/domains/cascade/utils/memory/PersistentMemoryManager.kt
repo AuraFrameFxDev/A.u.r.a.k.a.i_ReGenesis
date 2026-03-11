@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.memory
 
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.InteractionEntry
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryEntry
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryStats
 import kotlinx.coroutines.CoroutineScope

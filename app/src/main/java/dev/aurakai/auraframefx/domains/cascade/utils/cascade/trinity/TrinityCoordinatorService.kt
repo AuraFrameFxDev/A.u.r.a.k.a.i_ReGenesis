@@ -7,7 +7,7 @@ import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.utils.i
 import dev.aurakai.auraframefx.utils.toKotlinJsonObject
 import kotlinx.coroutines.CoroutineScope

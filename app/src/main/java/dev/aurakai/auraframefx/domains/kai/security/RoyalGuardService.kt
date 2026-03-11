@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import dev.aurakai.auraframefx.security.IRoyalGuardService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint

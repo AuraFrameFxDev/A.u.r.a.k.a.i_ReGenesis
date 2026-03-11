@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 import android.content.Context
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.i
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

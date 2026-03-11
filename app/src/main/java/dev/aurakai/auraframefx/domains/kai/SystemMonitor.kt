@@ -4,7 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.os.Process
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

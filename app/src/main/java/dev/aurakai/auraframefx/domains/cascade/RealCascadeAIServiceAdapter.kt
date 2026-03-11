@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade
 
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import javax.inject.Inject

@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.cascade.utils.overlay
 import android.content.Context
 import androidx.annotation.ChecksSdkIntAtLeast
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.kai.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
