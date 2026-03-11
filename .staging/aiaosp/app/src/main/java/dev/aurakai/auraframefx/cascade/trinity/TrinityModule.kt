@@ -13,7 +13,7 @@ import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.KaiAIService
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.DefaultKaiAIService
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.DefaultAuraAIService
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStatusMonitor
-import dev.aurakai.auraframefx.ai.task.TaskScheduler
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.TaskScheduler
 import dev.aurakai.auraframefx.ai.task.execution.TaskExecutionManager
 import dev.aurakai.auraframefx.common.ErrorHandler
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager

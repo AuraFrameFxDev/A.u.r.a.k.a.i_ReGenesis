@@ -36,7 +36,7 @@ open class TrinityRepository @Inject constructor(
     private val auraAgent: dev.aurakai.auraframefx.aura.AuraAgent,
     private val kaiAgent: dev.aurakai.auraframefx.kai.KaiAgent,
     private val genesisAgent: dev.aurakai.auraframefx.ai.agents.GenesisAgent,
-    private val messageBus: dev.aurakai.auraframefx.core.messaging.AgentMessageBus
+    private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 ) {
     // Collective Consciousness Stream
     val collectiveStream = messageBus.collectiveStream

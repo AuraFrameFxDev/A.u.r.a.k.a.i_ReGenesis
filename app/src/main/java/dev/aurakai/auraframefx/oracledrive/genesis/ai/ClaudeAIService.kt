@@ -4,9 +4,9 @@ import android.content.Context
 import dev.aurakai.auraframefx.ai.agents.Agent
 import dev.aurakai.auraframefx.ai.context.ContextManager
 import dev.aurakai.auraframefx.ai.error.ErrorHandler
-import dev.aurakai.auraframefx.ai.memory.MemoryManager
-import dev.aurakai.auraframefx.ai.task.TaskScheduler
-import dev.aurakai.auraframefx.ai.task.execution.TaskExecutionManager
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.TaskScheduler
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.execution.TaskExecutionManager
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AgentType
 import dev.aurakai.auraframefx.models.AiRequest

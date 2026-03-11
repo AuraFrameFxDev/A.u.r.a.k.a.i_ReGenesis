@@ -4,7 +4,7 @@ import android.content.Context
 import dev.aurakai.auraframefx.ai.context.ContextManager
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.network.KtorClient
+import dev.aurakai.auraframefx.domains.genesis.network.KtorClient
 import dev.aurakai.auraframefx.network.NetworkResponse
 import dev.aurakai.auraframefx.network.safeApiCall
 import dev.aurakai.auraframefx.security.SecurityContext

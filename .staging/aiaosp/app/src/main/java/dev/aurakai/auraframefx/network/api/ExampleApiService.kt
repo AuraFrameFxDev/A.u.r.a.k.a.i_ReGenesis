@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.network.api
 
-import dev.aurakai.auraframefx.network.KtorClient
+import dev.aurakai.auraframefx.domains.genesis.network.KtorClient
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*

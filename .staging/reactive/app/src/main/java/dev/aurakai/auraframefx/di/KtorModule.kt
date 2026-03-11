@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.network.KtorClient
+import dev.aurakai.auraframefx.domains.genesis.network.KtorClient
 import javax.inject.Singleton
 
 /**
