@@ -57,7 +57,7 @@ import dev.aurakai.auraframefx.domains.genesis.screens.SovereignNeuralArchiveScr
 import dev.aurakai.auraframefx.aura.ui.TerminalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
-import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
+import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
@@ -714,7 +714,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.RomToolsSubmenu.route) {
-            ROMToolsSubmenuScreen(navController = navController)
+            RomToolsScreen()
         }
 
         // ═══════════════════════════════════════════════════════════════

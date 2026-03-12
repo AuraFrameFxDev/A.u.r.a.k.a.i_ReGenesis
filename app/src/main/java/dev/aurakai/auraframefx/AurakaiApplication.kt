@@ -2,6 +2,8 @@ package dev.aurakai.auraframefx
 
 import android.app.Application
 import android.util.Log
+import com.highcapable.yukihookapi.YukiHookAPI
+import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 
 private const val TAG = "AurakaiApplication"
 
@@ -10,7 +12,11 @@ class AurakaiApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "AurakaiApplication: Application started.")
-        checkHookEnvironment()
+
+        if (FeatureToggles.XPOSED_ENABLED) {
+            YukiHookAPI.encapsulate(this)
+            checkHookEnvironment()
+        }
     }
 
     private fun checkHookEnvironment() {
