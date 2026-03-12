@@ -90,7 +90,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPickerViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
@@ -144,7 +146,13 @@ data class IconifyCategory(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IconifyHubScreen(
-    viewModel: IconPickerViewModel = hiltViewModel(),
+    viewModel: IconPickerViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
     onNavigateBack: () -> Unit = {},
     onNavigateToCategory: (String) -> Unit = {}
 ) {

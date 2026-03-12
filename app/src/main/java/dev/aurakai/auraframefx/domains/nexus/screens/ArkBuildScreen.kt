@@ -35,14 +35,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.ArkBuildViewModel
 import dev.aurakai.auraframefx.domains.nexus.models.core.ArkStatus
 
 @Composable
 fun ArkBuildScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: ArkBuildViewModel = hiltViewModel()
+    viewModel: ArkBuildViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val projectState by viewModel.arkProject.collectAsState()
 

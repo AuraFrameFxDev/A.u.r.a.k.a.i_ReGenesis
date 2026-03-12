@@ -56,8 +56,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.romtools.BackupInfo
 import dev.aurakai.auraframefx.romtools.OperationProgress
 import dev.aurakai.auraframefx.romtools.RomCapabilities
@@ -80,7 +83,13 @@ import timber.log.Timber
 @Composable
 fun RomToolsScreen(
     modifier: Modifier = Modifier,
-    romToolsViewModel: RomToolsViewModel = hiltViewModel(),
+    romToolsViewModel: RomToolsViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    ),
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val romToolsState by romToolsViewModel.romToolsState.collectAsStateWithLifecycle()

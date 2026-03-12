@@ -24,7 +24,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
 
 /**
@@ -37,7 +39,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
 @Composable
 fun MonitoringHUDsScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: MonitoringViewModel = hiltViewModel()
+    viewModel: MonitoringViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val cpu by viewModel.cpuUsage.collectAsState()
     val ram by viewModel.ramUsage.collectAsState()
