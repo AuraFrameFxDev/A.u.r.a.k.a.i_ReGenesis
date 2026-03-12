@@ -8,5 +8,9 @@ enum class AgentType {
     AURA,
     KAI,
     GENESIS,
-    CASCADE
+    CASCADE,
+    CLAUDE,
+    NEURAL_WHISPER,
+    GROK,
+    GEMINI
 }

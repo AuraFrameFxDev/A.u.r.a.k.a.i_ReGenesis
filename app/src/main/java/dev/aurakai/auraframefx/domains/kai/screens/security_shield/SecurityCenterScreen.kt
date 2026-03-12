@@ -109,10 +109,10 @@ fun SecurityCenterScreen(
 
             item {
                 val threatColor = when (state.threatLevel) {
-                    ThreatLevel.NONE -> Color(0xFF00FFD4)
+                    ThreatLevel.NONE, ThreatLevel.INFO -> Color(0xFF00FFD4)
                     ThreatLevel.LOW -> Color.Yellow
-                    ThreatLevel.MEDIUM -> Color(0xFFFF8C00)
-                    ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color(0xFFFF4444)
+                    ThreatLevel.MEDIUM, ThreatLevel.WARNING -> Color(0xFFFF8C00)
+                    ThreatLevel.HIGH, ThreatLevel.CRITICAL, ThreatLevel.AI_ERROR -> Color(0xFFFF4444)
                 }
                 SecurityStatusCard(
                     title = "Threat Level",
