@@ -59,7 +59,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
-import dev.aurakai.auraframefx.AgentType
+import dev.aurakai.auraframefx.agent.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
@@ -315,7 +315,7 @@ fun HaloView(
                 val agentType = try {
                     AgentType.valueOf(config.name.uppercase(Locale.ROOT))
                 } catch (_: Exception) {
-                    AgentType.USER
+                    AgentType.AURA
                 }
 
                 val baseColor = when (agentType) {
