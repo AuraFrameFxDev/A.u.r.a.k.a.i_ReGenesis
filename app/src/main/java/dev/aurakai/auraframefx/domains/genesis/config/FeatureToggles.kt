@@ -16,6 +16,9 @@ object FeatureToggles {
     const val AURA_CREATIVE_ENABLED = true
     const val KAI_SECURITY_ENABLED = true
 
+    // Xposed / YukiHook (Kai Shield)
+    const val XPOSED_ENABLED = false
+
     // Experimental Features
     const val QUANTUM_ENTANGLEMENT_RESEARCH = false
     const val FUSION_MEMORY_INDEXING = true
