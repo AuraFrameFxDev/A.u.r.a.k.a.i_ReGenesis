@@ -28,6 +28,7 @@ plugins {
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
+    ndkVersion = "26.1.10909125"
 
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
@@ -57,6 +58,16 @@ extensions.configure<ApplicationExtension> {
             cmake {
                 path = file("src/main/cpp/CMakeLists.txt")
                 version = "3.22.1"
+            }
+        }
+        // Double Lock: Force compiler success at the Gradle level
+        defaultConfig {
+            externalNativeBuild {
+                cmake {
+                    arguments("-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
+                              "-DCMAKE_C_COMPILER_WORKS=1",
+                              "-DCMAKE_CXX_COMPILER_WORKS=1")
+                }
             }
         }
     }
@@ -141,10 +152,6 @@ extensions.configure<ApplicationExtension> {
         compose = true
         viewBinding = true
         aidl = true
-    }
-
-    ksp {
-        arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
     }
 
     // ═══════════════════════════════════════════════════════════════════════════

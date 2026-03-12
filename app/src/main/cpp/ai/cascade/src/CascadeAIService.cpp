@@ -10,7 +10,8 @@
 
 
 namespace genesis::cascade {
-
+    // Native Implementation logic here
+}
     class CascadeAIService::Impl {
     public:
         /**
@@ -185,7 +186,7 @@ namespace genesis::cascade {
         return pImpl_ ? pImpl_->processRequest(env, request) : nullptr;
     }
 
-} // namespace genesis::cascade
+} } // namespace genesis::cascade
 
 
 // JNI Implementation
