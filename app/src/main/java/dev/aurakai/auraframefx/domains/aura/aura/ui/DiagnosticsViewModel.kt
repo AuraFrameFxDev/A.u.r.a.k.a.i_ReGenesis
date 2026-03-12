@@ -153,7 +153,7 @@ open class DiagnosticsViewModel @Inject constructor(
             try {
                 // AuraFxLogger.clearAllLogs() // Not supported
                 _currentLogs.value = "Logs cleared (mock)."
-                i("DiagnosticsVM", "All logs cleared by user (mock)")
+                logger.info("DiagnosticsVM", "All logs cleared by user (mock)")
             } catch (e: Exception) {
                 _currentLogs.value = "Error clearing logs: ${e.message}"
                 logger.error("DiagnosticsVM", "Failed to clear logs: ${e.message}")
@@ -174,7 +174,7 @@ open class DiagnosticsViewModel @Inject constructor(
                     "Cloud reachability: DISCONNECTED"
                 }
                 _currentLogs.value += "\n$message"
-                i("DiagnosticsVM", message)
+                logger.info("DiagnosticsVM", message)
             } catch (e: Exception) {
                 val errorMsg = "Error checking cloud reachability: ${e.message}"
                 _currentLogs.value += "\n$errorMsg"
