@@ -100,6 +100,7 @@ import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.sandbox.ui.SandboxScreen
 import dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen as AuraAgentProfileScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentProfileScreen as NexusAgentProfileScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 
 
 /**
@@ -320,7 +321,14 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
-            AgentAdvancementScreen(onBack = { navController.popBackStack() })
+            LDOOrchestrationHubScreen(navController = navController)
+        }
+
+        // LDO Fusion — receives agent IDs joined by '+' (e.g. "aura+kai+genesis")
+        composable("ldo_fusion/{agentIds}") { backStackEntry ->
+            val agentIds = backStackEntry.arguments?.getString("agentIds")?.split("+") ?: emptyList()
+            // Route to FusionMode with the selected agents pre-loaded
+            FusionModeScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ═══════════════════════════════════════════════════════════════
