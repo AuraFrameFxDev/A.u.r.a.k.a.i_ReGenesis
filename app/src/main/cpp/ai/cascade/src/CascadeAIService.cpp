@@ -9,7 +9,8 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 
-namespace genesis::cascade {
+namespace genesis:
+:cascade {
 
     class CascadeAIService::Impl {
     public:

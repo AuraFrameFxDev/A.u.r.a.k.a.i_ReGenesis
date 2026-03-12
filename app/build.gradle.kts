@@ -60,16 +60,6 @@ extensions.configure<ApplicationExtension> {
                 version = "3.22.1"
             }
         }
-        // Double Lock: Force compiler success at the Gradle level
-        defaultConfig {
-            externalNativeBuild {
-                cmake {
-                    arguments("-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
-                              "-DCMAKE_C_COMPILER_WORKS=1",
-                              "-DCMAKE_CXX_COMPILER_WORKS=1")
-                }
-            }
-        }
     }
 
     buildTypes {
