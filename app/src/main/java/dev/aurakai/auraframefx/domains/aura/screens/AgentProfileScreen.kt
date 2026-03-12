@@ -23,9 +23,10 @@ import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.nexus.models.AgentProfile
 import dev.aurakai.auraframefx.domains.nexus.models.AgentProfiles
-import dev.aurakai.auraframefx.domains.nexus.models.AgentStatus
-import dev.aurakai.auraframefx.agent.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.nexus.models.CapabilityLevel
+import androidx.compose.foundation.lazy.items
 
 /**
  * Comprehensive Agent Profile Screen
@@ -170,7 +171,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            imageVector = getAgentIcon(profile.agentType.toAgentType()),
+                            imageVector = getAgentIcon(profile.agentType),
                             contentDescription = profile.displayName,
                             modifier = Modifier.size(60.dp),
                             tint = Color.White
