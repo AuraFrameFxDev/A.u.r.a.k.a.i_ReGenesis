@@ -8,11 +8,11 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.ui.debug.model.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import kotlin.math.sqrt
 
 @DisplayName("GraphNode Tests")
@@ -37,7 +37,7 @@ class GraphNodeTest {
 
     @Nested
     @DisplayName("GraphNode Construction")
-    inner class GraphNodeConstruction {
+    class GraphNodeConstruction {
 
         @Test
         @DisplayName("should create node with all required parameters")
@@ -417,7 +417,7 @@ class OffsetTest {
 
     @Nested
     @DisplayName("Offset Construction")
-    inner class OffsetConstruction {
+    class OffsetConstruction {
 
         @Test
         @DisplayName("should create offset with positive coordinates")
@@ -467,7 +467,7 @@ class OffsetTest {
 
     @Nested
     @DisplayName("Plus Operator")
-    inner class PlusOperator {
+    class PlusOperator {
 
         @Test
         @DisplayName("should add two positive offsets")
@@ -551,7 +551,7 @@ class OffsetTest {
 
     @Nested
     @DisplayName("Minus Operator")
-    inner class MinusOperator {
+    class MinusOperator {
 
         @Test
         @DisplayName("should subtract two positive offsets")
@@ -628,7 +628,7 @@ class OffsetTest {
 
     @Nested
     @DisplayName("Times Operator")
-    inner class TimesOperator {
+    class TimesOperator {
 
         @Test
         @DisplayName("should multiply by positive factor")
@@ -717,7 +717,7 @@ class OffsetTest {
 
     @Nested
     @DisplayName("Distance Calculation")
-    inner class DistanceCalculation {
+    class DistanceCalculation {
 
         @Test
         @DisplayName("should calculate distance between two points")
@@ -821,7 +821,7 @@ class OffsetTest {
 
     @Nested
     @DisplayName("Data Class Behavior")
-    inner class DataClassBehavior {
+    class DataClassBehavior {
 
         @Test
         @DisplayName("should implement equals correctly")
@@ -956,7 +956,7 @@ class ConnectionTest {
 
     @Nested
     @DisplayName("Data Class Behavior")
-    inner class DataClassBehavior {
+    class DataClassBehavior {
 
         @Test
         @DisplayName("should implement equals correctly")

@@ -25,7 +25,7 @@ dependencies {
 
     // Root/System access
     implementation(libs.libsu.core)
-    implementation(libs.libsu.io)
+    implementation(libs.libsu.nio)
 
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))

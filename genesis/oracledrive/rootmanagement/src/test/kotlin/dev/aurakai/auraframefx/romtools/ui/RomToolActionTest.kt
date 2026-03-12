@@ -1,4 +1,4 @@
-//package dev.aurakai.auraframefx.romtools.ui
+package dev.aurakai.auraframefx.romtools.ui//package dev.aurakai.auraframefx.romtools.ui
 //
 //import dev.aurakai.auraframefx.romtools.RomCapabilities
 //import org.junit.Assert.*

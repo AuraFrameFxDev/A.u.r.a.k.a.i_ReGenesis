@@ -1,5 +1,7 @@
 #include <jni.h>
 #include <android/log.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #define LOG_TAG "ROMTools-Native"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -37,10 +39,16 @@ Java_dev_aurakai_auraframefx_romtools_ROMToolsNative_analyzeBootImage(JNIEnv *en
                                                                       jobject /* this */,
                                                                       jstring path) {
     const char *bootPath = env->GetStringUTFChars(path, 0);
-    LOGI("Analyzing boot image: %s", bootPath);
+    
+    struct stat buffer;
+    if (stat(bootPath, &buffer) != 0) {
+        LOGI("Boot image NOT found at: %s", bootPath);
+        env->ReleaseStringUTFChars(path, bootPath);
+        return JNI_FALSE;
+    }
+    
+    LOGI("Boot image found. Size: %lld bytes", (long long)buffer.st_size);
     env->ReleaseStringUTFChars(path, bootPath);
-
-    // TODO: Implement actual boot image analysis
     return JNI_TRUE;
 }
 

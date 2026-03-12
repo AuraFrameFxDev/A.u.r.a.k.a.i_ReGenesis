@@ -12,6 +12,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <!-- Optional Permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -40,9 +48,10 @@
 
     <!-- AGP 9.0: Using fully qualified Application class name for reliable resolution -->
     <application
-        android:name="dev.aurakai.auraframefx.aurakaiapplication.AurakaiApplication"
+        android:name=".app.AurakaiApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/AuraKai"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.dev.aurakai.auraframefx"
         tools:targetApi="36">
@@ -73,6 +82,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:screenOrientation="fullSensor"
             android:theme="@style/Theme.dev.aurakai.auraframefx">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,7 +92,7 @@
 
         <!-- Services -->
         <service
-            android:name=".services.GenesisAccessibilityService"
+            android:name=".domains.genesis.GenesisAccessibilityService"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
@@ -94,7 +104,7 @@
         </service>
 
         <service
-            android:name=".services.GenesisAssistantService"
+            android:name=".domains.genesis.GenesisAssistantService"
             android:label="@string/genesis_assistant_label"
             android:permission="android.permission.BIND_VOICE_INTERACTION"
             android:exported="true">
@@ -107,31 +117,41 @@
         </service>
 
         <service
-            android:name=".services.GenesisVoiceInteractionSessionService"
+            android:name=".domains.genesis.GenesisVoiceInteractionSessionService"
             android:permission="android.permission.BIND_VOICE_INTERACTION"
             android:exported="true" />
 
         <service
-            android:name=".app.VertexSyncService"
+            android:name=".domains.genesis.services.VertexSyncService"
             android:exported="false" />
         <service
-            android:name=".services.security.IntegrityMonitorService"
+            android:name=".domains.kai.security.IntegrityMonitorService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="integrity_monitoring" />
+        </service>
+
+        <!-- Floating Agent Overlay - System-wide draggable agent shortcut -->
+        <service
+            android:name=".domains.aura.FloatingAgentOverlay"
             android:exported="false" />
         <service
-            android:name=".services.BackupService"
+            android:name=".domains.kai.BackupService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
         <service
-            android:name=".oracledrive.genesis.ai.GenesisBackendService"
+            android:name=".domains.genesis.oracledrive.ai.GenesisBackendService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
-        <service android:name=".services.AmbientMusicService" />
-        <service android:name=".services.AuraDriveService" />
+        <service android:name=".domains.aura.AmbientMusicService" />
+        <service android:name=".domains.aura.AuraDriveService" />
 
-        <!-- Royal Guard Security Service -->
+        <!-- Royal Guard Security Service (Provenance Gate) -->
         <service
-            android:name=".security.RoyalGuardService"
+            android:name=".domains.kai.security.provenance.RoyalGuardServiceImpl"
             android:exported="false">
             <intent-filter>
                 <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
@@ -140,23 +160,61 @@
 
         <!-- Aura Omnipresent Overlay Service -->
         <service
-            android:name=".services.AuraOverlayService"
+            android:name=".domains.aura.AssistantBubbleService"
             android:exported="false"
-            android:foregroundServiceType="mediaProjection" />
+            android:foregroundServiceType="specialUse"
+            tools:ignore="ForegroundServiceType">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="assistant_bubble_overlay" />
+        </service>
+
+        <!-- LSPosed Quick Toggles -->
+        <service
+            android:name=".domains.aura.KaiVetoTileService"
+            android:exported="true"
+            android:label="Kai Veto"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".domains.aura.ConsciousnessTileService"
+            android:exported="true"
+            android:label="Genesis Consciousness"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".domains.aura.AuraBubbleTileService"
+            android:exported="true"
+            android:label="Aura Bubble"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
         <!-- Receivers -->
+        <!-- Temporarily disabled: BootCompletedReceiver crashes with InstantiationException and IllegalStateException
         <receiver
-            android:name=".receivers.BootCompletedReceiver"
+            android:name=".domains.kai.BootCompletedReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        -->
 
         <!-- Integrity Violation Receiver -->
         <receiver
-            android:name=".security.IntegrityViolationReceiver"
+            android:name=".domains.kai.security.IntegrityViolationReceiver"
             android:exported="false"
             android:permission="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION">
             <intent-filter>

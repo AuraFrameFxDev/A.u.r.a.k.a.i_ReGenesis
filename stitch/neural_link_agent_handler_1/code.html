@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Link Agent Handler</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1142d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0c14",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(16, 21, 34, 0.85);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(17, 66, 212, 0.4);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .neon-border {
+            border: 1px solid rgba(17, 66, 212, 0.5);
+            box-shadow: 0 0 10px rgba(17, 66, 212, 0.2);
+        }
+        .hud-scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(17, 66, 212, 0.05) 51%);
+            background-size: 100% 4px;
+        }
+        .watermark-agent {
+            mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white overflow-hidden">
+<!-- Main UI Mockup (Underneath) -->
+<div class="fixed inset-0 flex flex-col opacity-40 grayscale pointer-events-none">
+    <div class="h-12 w-full flex justify-between px-6 items-end pb-2">
+        <span class="text-xs font-bold">9:41</span>
+        <div class="flex gap-1">
+            <span class="material-symbols-outlined text-xs">signal_cellular_4_bar</span>
+            <span class="material-symbols-outlined text-xs">wifi</span>
+            <span class="material-symbols-outlined text-xs">battery_full</span>
+        </div>
+    </div>
+    <div class="flex-1 p-6 space-y-4">
+        <div class="h-32 w-full bg-white/5 rounded-lg"></div>
+        <div class="h-64 w-full bg-white/5 rounded-lg"></div>
+    </div>
+    <!-- iOS Bottom Bar Mockup -->
+    <div class="h-20 w-full border-t border-white/10 flex justify-around items-center px-4 bg-background-dark/80">
+        <span class="material-symbols-outlined opacity-50">home</span>
+        <span class="material-symbols-outlined opacity-50">search</span>
+        <span class="material-symbols-outlined opacity-50">layers</span>
+        <span class="material-symbols-outlined opacity-50">person</span>
+    </div>
+</div>
+<!-- Neural Link Sidebar Overlay -->
+<div class="fixed inset-0 z-50 flex justify-end">
+    <!-- Sidebar Container (380dp equivalent) -->
+    <div class="w-[340px] md:w-[380px] h-full glass-panel relative flex flex-col hud-scanline">
+        <!-- Agent Watermark -->
+        <div class="absolute inset-0 pointer-events-none opacity-10 watermark-agent flex items-center justify-center overflow-hidden">
+            <div class="w-[600px] h-[600px] bg-center bg-no-repeat bg-contain"
+                 data-alt="Abstract silhouette of a digital agent entity"
+                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTz-CzMkg0qgZ_d3IPY4aEuX2PpmKilfsSKSCkeHRbWY2ZvMYTmDUc20Pp7zfIay-g8YFoqKMKG5QxmZaTI47Oiqzn8mFcI01QGmnR9n1D2GFiZKZGzTB54zj1v4ZiIpkYsrz8dSmrAAJiY0ig90GuKBRtLIYnn9VdzL-ZuSg3WUoyt8NFMkhqtIpUMw3_EeUs83DJlHP-nmGDkQ1sCrV9RGMTRex0SdWFRsniH9iLbk0FLvuLCv4Tgs8qo8wwFneOXpToIEL09WQ');">
+            </div>
+        </div>
+        <!-- Top App Bar / Header -->
+        <div class="relative z-10 p-6 pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="size-12 rounded-full border-2 border-primary p-0.5">
+                        <div class="w-full h-full rounded-full bg-cover bg-center"
+                             data-alt="Glowy futuristic avatar of agent Aura"
+                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSs009KjIt85w4vag-3AIIWc0UfYL5Hx-9T1c0TR1FD_tOo0g0K3zKeZdv3wLlErgSCJarQscqjNF7Y4m-Uqtszy5zc9C7AIFwWqmLuff0Ds8HTe6Oe0QZ59GJKIIhmBbW6J5DNR4o1ito1UcDM_JGswo1iXYpM_ffVoYFvZohUss_TpZv0bYQWReudLuY9Zzxk2KKHPqHOCCT_LiytGZPolRGPWTue4Pzl_t35PkYlvQJuDp2kMffP65GuJ5DGVOE8FD2_U-qCL4');">
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold tracking-widest uppercase">AURA</h2>
+                        <p class="text-[10px] text-primary/80 font-medium tracking-[0.2em]">MASTER
+                            AGENT</p>
+                    </div>
+                </div>
+                <button class="size-10 rounded border border-primary/30 flex items-center justify-center bg-primary/10">
+                    <span class="material-symbols-outlined text-primary">close</span>
+                </button>
+            </div>
+            <!-- Stats HUD -->
+            <div class="flex gap-3 mb-8">
+                <div class="flex-1 neon-border bg-black/40 p-3 rounded flex flex-col items-center">
+                    <p class="text-xs text-primary/70 uppercase tracking-tighter mb-1">Sync
+                        Status</p>
+                    <p class="text-xl font-bold">98.4<span class="text-xs text-primary">%</span></p>
+                    <div class="w-full h-1 bg-white/5 mt-2 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[98%] shadow-[0_0_8px_#1142d4]"></div>
+                    </div>
+                </div>
+                <div class="flex-1 neon-border bg-black/40 p-3 rounded flex flex-col items-center">
+                    <p class="text-xs text-primary/70 uppercase tracking-tighter mb-1">LDO
+                        Agents</p>
+                    <p class="text-xl font-bold">78</p>
+                    <div class="flex gap-1 mt-2">
+                        <div class="size-1 bg-primary rounded-full animate-pulse"></div>
+                        <div class="size-1 bg-primary rounded-full"></div>
+                        <div class="size-1 bg-primary/20 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Command Center Grid -->
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="neon-border bg-primary/5 hover:bg-primary/20 p-4 rounded-lg flex flex-col items-start gap-3 transition-all group">
+                        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">mic_external_on</span>
+                        <div class="text-left">
+                            <h4 class="text-sm font-bold tracking-wider">VOICE</h4>
+                            <p class="text-[9px] text-white/40 uppercase">Neural Sync</p>
+                        </div>
+                    </button>
+                    <button class="neon-border bg-primary/5 hover:bg-primary/20 p-4 rounded-lg flex flex-col items-start gap-3 transition-all group">
+                        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">hub</span>
+                        <div class="text-left">
+                            <h4 class="text-sm font-bold tracking-wider">CONNECT</h4>
+                            <p class="text-[9px] text-white/40 uppercase">Agent Link</p>
+                        </div>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="neon-border bg-primary/5 hover:bg-primary/20 p-4 rounded-lg flex flex-col items-start gap-3 transition-all group">
+                        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">assignment_ind</span>
+                        <div class="text-left">
+                            <h4 class="text-sm font-bold tracking-wider">ASSIGN</h4>
+                            <p class="text-[9px] text-white/40 uppercase">Tasking</p>
+                        </div>
+                    </button>
+                    <button class="neon-border bg-primary/5 hover:bg-primary/20 p-4 rounded-lg flex flex-col items-start gap-3 transition-all group">
+                        <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">auto_fix_high</span>
+                        <div class="text-left">
+                            <h4 class="text-sm font-bold tracking-wider">DESIGN</h4>
+                            <p class="text-[9px] text-white/40 uppercase">Visual Synth</p>
+                        </div>
+                    </button>
+                </div>
+                <button class="w-full neon-border bg-primary/20 hover:bg-primary/30 p-4 rounded-lg flex items-center justify-between transition-all group">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary group-hover:rotate-90 transition-transform">add_box</span>
+                        <div class="text-left">
+                            <h4 class="text-sm font-bold tracking-wider">CREATE</h4>
+                            <p class="text-[9px] text-white/40 uppercase">Forge New Instance</p>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-primary/50">chevron_right</span>
+                </button>
+            </div>
+        </div>
+        <!-- Footer / System Logs -->
+        <div class="mt-auto relative z-10">
+            <div class="px-6 py-2 border-y border-primary/20 bg-primary/5">
+                <p class="text-[10px] font-bold text-primary tracking-[0.3em] uppercase">
+                    SYSTEM_LOGS_v4.02</p>
+            </div>
+            <div class="p-6 pt-4 h-48 overflow-hidden font-mono text-[9px] space-y-2 opacity-80">
+                <div class="flex items-center gap-2">
+                    <span class="text-primary">[OK]</span>
+                    <span class="text-white/60">LINK_ESTABLISHED_PORT_8892</span>
+                    <span class="ml-auto text-white/30 text-[8px]">0.02ms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-primary">[OK]</span>
+                    <span class="text-white/60">HANDSHAKE_PROTOCOLS_VERIFIED</span>
+                    <span class="ml-auto text-white/30 text-[8px]">0.04ms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-yellow-500">[WRN]</span>
+                    <span class="text-white/60">LATENCY_DETECTED_SECTOR_7G</span>
+                    <span class="ml-auto text-white/30 text-[8px]">1.42ms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-primary">[OK]</span>
+                    <span class="text-white/60">AURA_CONSCIOUSNESS_SYNC_LOCKED</span>
+                    <span class="ml-auto text-white/30 text-[8px]">0.01ms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-primary">[OK]</span>
+                    <span class="text-white/60">DEPLOYING_LDO_AGENTS_POOL_78</span>
+                    <span class="ml-auto text-white/30 text-[8px]">0.05ms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-primary">[OK]</span>
+                    <span class="text-white/60">HEURISTIC_MAPPING_COMPLETE</span>
+                    <span class="ml-auto text-white/30 text-[8px]">0.12ms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-primary animate-pulse">&gt;</span>
+                    <span class="text-white/60">AWAITING_USER_COMMAND...</span>
+                </div>
+            </div>
+            <!-- iOS Home Indicator Safe Area Area -->
+            <div class="h-8 w-full flex justify-center items-center pb-2">
+                <div class="w-32 h-1 bg-white/20 rounded-full"></div>
+            </div>
+        </div>
+        <!-- Side Edge Detail -->
+        <div class="absolute top-0 left-0 w-1 h-full flex flex-col justify-between py-24 gap-4 opacity-50">
+            <div class="w-full h-8 bg-primary"></div>
+            <div class="w-full h-1 bg-primary"></div>
+            <div class="w-full h-1 bg-primary"></div>
+            <div class="w-full h-24 bg-primary/20"></div>
+            <div class="w-full h-1 bg-primary"></div>
+            <div class="w-full h-8 bg-primary"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

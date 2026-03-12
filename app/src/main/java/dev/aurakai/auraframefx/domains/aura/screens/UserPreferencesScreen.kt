@@ -1,10 +1,8 @@
-package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.domains.aura.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -19,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 
 /**
  * User Preferences Screen
@@ -99,7 +98,8 @@ fun UserPreferencesScreen(
                     description = "Login settings and password management",
                     icon = Icons.Default.Lock,
                     onClick = {
-                        navController.navigate("login")
+                        // TODO: Navigate to login screen when implemented
+                        navController.navigate(ReGenesisNavHost.UserPreferences.route)
                     }
                 )
             }

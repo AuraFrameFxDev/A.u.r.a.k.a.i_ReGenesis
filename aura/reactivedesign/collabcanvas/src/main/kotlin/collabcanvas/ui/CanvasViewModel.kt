@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import collabcanvas.CanvasWebSocketEvent
 import collabcanvas.CanvasWebSocketService
+import collabcanvas.di.CollabCanvasUrl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class CanvasViewModel @Inject constructor(
-    private val webSocketService: CanvasWebSocketService
+    private val webSocketService: CanvasWebSocketService,
+    @param:CollabCanvasUrl private val wsBaseUrl: String
 ) : ViewModel() {
 
     private val _connectionStatus = MutableSharedFlow<String>()
@@ -42,9 +44,8 @@ class CanvasViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                // TODO: Get WebSocket URL from configuration
-                // For now, using localhost with default port
-                val wsUrl = "ws://localhost:8080/canvas/$canvasId"
+                // Construct WebSocket URL from injected base URL
+                val wsUrl = "$wsBaseUrl/canvas/$canvasId"
 
                 Timber.d("Connecting to collaborative canvas: $wsUrl")
                 webSocketService.connect(wsUrl)

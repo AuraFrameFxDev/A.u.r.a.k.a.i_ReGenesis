@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Module Gates L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Rajdhani:wght@300;500;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00E5FF",
+                        secondary: "#FF00FF",
+                        accent: "#7000FF",
+                        "background-light": "#f0f2f5",
+                        "background-dark": "#020617",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        body: ["Rajdhani", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .neon-border-primary {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3), inset 0 0 5px rgba(0, 229, 255, 0.2);
+            border: 1px solid rgba(0, 229, 255, 0.5);
+        }
+        .neon-border-secondary {
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3), inset 0 0 5px rgba(255, 0, 255, 0.2);
+            border: 1px solid rgba(255, 0, 255, 0.5);
+        }
+        .pixel-corners {
+            clip-path: polygon(0 10px, 10px 10px, 10px 0, calc(100% - 10px) 0, calc(100% - 10px) 10px, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 10px calc(100% - 10px), 0 calc(100% - 10px));
+        }
+        .paint-splatter {
+            position: absolute;
+            filter: blur(40px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+        body {
+            background: radial-gradient(circle at top right, #1e1b4b, #020617);
+            overflow-x: hidden;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="font-body text-slate-200 min-h-screen">
+<div class="paint-splatter bg-primary w-64 h-64 top-[-50px] left-[-50px] rounded-full animate-pulse-slow"></div>
+<div class="paint-splatter bg-secondary w-80 h-80 bottom-20 right-[-100px] rounded-full animate-pulse-slow"
+     style="animation-delay: 2s;"></div>
+<div class="h-12 w-full"></div>
+<main class="px-6 pb-24">
+    <header class="flex flex-col items-center mb-8 relative">
+        <div class="absolute -top-4 opacity-20 text-[120px] font-black text-primary select-none pointer-events-none">
+            AURA
+        </div>
+        <div class="w-32 h-32 rotate-45 border-2 border-primary glass flex items-center justify-center mb-4 neon-border-primary animate-float">
+            <div class="-rotate-45 text-center">
+                <span class="block font-display text-xs text-primary font-bold tracking-widest">LVL</span>
+                <span class="block font-display text-4xl text-white font-black leading-none">2</span>
+            </div>
+        </div>
+        <h1 class="font-display text-xl tracking-[0.2em] text-primary uppercase text-center mb-1">
+            Module Gates</h1>
+        <p class="text-xs text-primary/60 font-medium uppercase tracking-widest text-center">Aura's
+            Design Interface</p>
+    </header>
+    <div class="space-y-8">
+        <div class="group relative">
+            <div class="absolute inset-0 bg-secondary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative glass rounded-2xl overflow-hidden neon-border-secondary transition-transform duration-300 hover:scale-[1.02]">
+                <div class="h-64 relative">
+                    <img alt="CollabCanvas Artwork"
+                         class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnbb06s7gnMTxpEX30xObPEply1ggxBAAV7qIIT1JlYZmt5fqYAtukViujgvINW8ww9F63FYLh2m3CA0cWIUCBCYvA0yUCfKX18Ah9ScsZkwfSv3mN64yZGAzAvjd6B6mdv7QouwIxo3ilwjObLZufwj351vhmrrVercMxBJahWFV2YEC_3pFtguHPZslz9oUquEZKMx3u8H7hzfLFvpBTwG0x98DjJ4FkUwQrGZdahb0mGBLANe9RtoXtbwYRWkwo8BhlqZTtCjc"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+                    <div class="absolute top-4 right-4 bg-secondary text-white text-[10px] font-bold px-2 py-1 rounded-sm font-display">
+                        ACTIVE SESSION
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-end mb-3">
+                        <div>
+                            <h2 class="font-display text-2xl text-white uppercase tracking-tighter">
+                                CollabCanvas</h2>
+                            <p class="text-primary text-xs font-bold uppercase tracking-widest">
+                                Multiuser Creation</p>
+                        </div>
+                        <button class="bg-primary text-background-dark px-4 py-2 rounded-sm font-display text-xs font-black flex items-center gap-2 hover:bg-white transition-colors">
+                            ENTER <span class="material-icons text-sm">arrow_forward_ios</span>
+                        </button>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed border-l-2 border-secondary/40 pl-4 italic">
+                        Creative chaos where paint splatters and dripping neon come alive. Explore
+                        Root like never before.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="glass rounded-xl overflow-hidden neon-border-primary group">
+                <div class="h-32 overflow-hidden">
+                    <img alt="ChromaCore Artwork"
+                         class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUpmGCIqsngXq7TTBrckqgM5ijyUlFNUM4_yw9y66nnkx68ALOPbWqa7BYLM-bKHvUyjP1KRthFe8OrJUy5OrBryuLpa0T61O8DGmwe_wyNAE1sA4agof_yw2UTtfHh2AIZ95eh1MK93oCft_xRem7z3XK5FeuntOekuxUidFZ59bZCoAhKgeHsk2I514-44DP7RNnju4d7mi_elUV24JmiQB4yivSn7x7ChGY_DLyP4oQJTzSExabd6XUcAd7ykRtiqSgKYG1qGo"/>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-display text-xs text-white uppercase truncate">ChromaCore</h3>
+                    <p class="text-[9px] text-primary font-bold uppercase opacity-60">
+                        ColorBlender</p>
+                </div>
+            </div>
+            <div class="glass rounded-xl overflow-hidden neon-border-primary group">
+                <div class="h-32 overflow-hidden">
+                    <img alt="AuraLab Artwork"
+                         class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwHPSWf0PSY07YJnwBZkmgkHvOhdceqUSGkMoT9QmEAoOOTtzVILC_SLQLNlKETTMp0SWb1-UsXwwuXp42j92lrsiUvlPwKS3WUnLPxdHdkbtv4xxShrGVSroaRjwJ8czXySStACgbr_7gb-l7IE6qTvwOCPz_JltImKMZrcqd0LloOJFZGFo2tXK3IsCEiSZCRvNy0QbSuuOF5BP46Fyorj0MIYVCqFXBVREmbeCEhZJ2D3i5cF6Bj5K1nO5fjkNHwfZXDpbjQOM"/>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-display text-xs text-white uppercase truncate">AuraLab</h3>
+                    <p class="text-[9px] text-primary font-bold uppercase opacity-60">Exp.
+                        Sandbox</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="mt-10 p-4 border-t border-white/10">
+        <div class="flex items-center gap-4 mb-4">
+            <div class="w-1 h-12 bg-gradient-to-b from-primary to-secondary"></div>
+            <div>
+                <div class="text-[10px] text-primary/40 uppercase font-black">Gate Status</div>
+                <div class="text-white font-display text-sm">SYNCHRONIZED_READY</div>
+            </div>
+        </div>
+        <p class="text-[11px] text-slate-500 leading-tight">
+            Modules and features are directly controlled by Aura. Creative chaos integration active.
+            Visual hooks: Lua Lsposed &amp; Xposed architecture components.
+        </p>
+    </section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 h-20 glass border-t border-white/10 px-8 flex items-center justify-between z-50">
+    <button class="text-primary hover:text-white transition-colors">
+        <span class="material-icons text-3xl">dashboard</span>
+    </button>
+    <button class="w-16 h-16 bg-primary rounded-full -translate-y-8 flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.5)] active:scale-95 transition-all">
+        <span class="material-icons text-background-dark text-4xl">fingerprint</span>
+    </button>
+    <button class="text-slate-500 hover:text-white transition-colors">
+        <span class="material-icons text-3xl">settings</span>
+    </button>
+</nav>
+<div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-[60]"></div>
+
+</body>
+</html>

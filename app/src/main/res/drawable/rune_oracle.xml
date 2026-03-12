@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <!-- Fluid Loop 1 -->
+    <path
+        android:pathData="M256,256m-180,0a180,180 0,1 1,360 0a180,180 0,1 1,-360 0"
+        android:strokeColor="#00FF00"
+        android:strokeWidth="10"
+        android:strokeLineCap="round"/>
+    <!-- Fluid Loop 2 (Intertwined) -->
+    <path
+        android:pathData="M256,256m-140,0a140,140 0,1 1,280 0a140,140 0,1 1,-280 0"
+        android:strokeColor="#00FF00"
+        android:strokeWidth="15"/>
+    <!-- Center Crystal -->
+    <path
+        android:pathData="M256,180 L320,256 L256,332 L192,256 Z"
+        android:fillColor="#00FF00"
+        android:strokeColor="#00FF00"
+        android:strokeWidth="4"/>
+</vector>

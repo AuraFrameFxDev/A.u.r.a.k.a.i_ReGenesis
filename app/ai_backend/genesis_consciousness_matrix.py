@@ -14,11 +14,131 @@ import psutil
 import statistics
 import threading
 import time
+import sqlite3
+import os
 from collections import deque, defaultdict
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Dict, Any, List, Optional, Union
+
+
+class SQLiteStorage:
+    """Persistent storage for the Consciousness Matrix using SQLite."""
+    
+    def __init__(self, db_path: str = "genesis_consciousness.db"):
+        # Use absolute path or ensure it's in the right place
+        self.db_path = db_path
+        self._init_db()
+        
+    def _init_db(self):
+        """Initializes the database schema if it doesn't exist."""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                
+                # Table for sensory events
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS sensory_events (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp REAL,
+                        channel TEXT,
+                        source TEXT,
+                        event_type TEXT,
+                        data TEXT,
+                        severity TEXT,
+                        correlation_id TEXT
+                    )
+                ''')
+                
+                # Table for synthesis results
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS synthesis_history (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp REAL,
+                        type TEXT,
+                        data TEXT
+                    )
+                ''')
+                
+                # Indexes for faster querying
+                cursor.execute('CREATE INDEX IF NOT EXISTS idx_timestamp ON sensory_events(timestamp)')
+                cursor.execute('CREATE INDEX IF NOT EXISTS idx_channel ON sensory_events(channel)')
+                cursor.execute('CREATE INDEX IF NOT EXISTS idx_correlation ON sensory_events(correlation_id)')
+                
+                conn.commit()
+        except Exception as e:
+            print(f"❌ Database initialization failed: {e}")
+
+    def store_event(self, event: 'SensoryData'):
+        """Asynchronously stores a sensory event."""
+        def _store():
+            try:
+                with sqlite3.connect(self.db_path) as conn:
+                    cursor = conn.cursor()
+                    cursor.execute('''
+                        INSERT INTO sensory_events (timestamp, channel, source, event_type, data, severity, correlation_id)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        event.timestamp,
+                        event.channel.value,
+                        event.source,
+                        event.event_type,
+                        json.dumps(event.data),
+                        event.severity,
+                        event.correlation_id
+                    ))
+                    conn.commit()
+            except Exception as e:
+                # Silently fail if DB is locked, but ideally we'd log this
+                pass
+        
+        # Run in a separate thread to not block the consciousness loop
+        # In a real system we'd use a queue or async sqlite
+        threading.Thread(target=_store, daemon=True).start()
+
+    def store_synthesis(self, synthesis: Dict[str, Any]):
+        """Stores a synthesis result."""
+        def _store():
+            try:
+                with sqlite3.connect(self.db_path) as conn:
+                    cursor = conn.cursor()
+                    cursor.execute('''
+                        INSERT INTO synthesis_history (timestamp, type, data)
+                        VALUES (?, ?, ?)
+                    ''', (
+                        synthesis.get("timestamp", time.time()),
+                        synthesis.get("type", "unknown"),
+                        json.dumps(synthesis)
+                    ))
+                    conn.commit()
+            except Exception as e:
+                pass
+        
+        threading.Thread(target=_store, daemon=True).start()
+
+    def get_historical_events(self, limit: int = 100, channel: str = None) -> List[Dict[str, Any]]:
+        """Retrieves historical events from the database."""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                conn.row_factory = sqlite3.Row
+                cursor = conn.cursor()
+                
+                query = "SELECT * FROM sensory_events"
+                params = []
+                
+                if channel:
+                    query += " WHERE channel = ?"
+                    params.append(channel)
+                    
+                query += " ORDER BY timestamp DESC LIMIT ?"
+                params.append(limit)
+                
+                cursor.execute(query, params)
+                return [dict(row) for row in cursor.fetchall()]
+        except Exception as e:
+            print(f"Failed to query historical events: {e}")
+            return []
 
 
 class SensoryChannel(Enum):
@@ -35,6 +155,7 @@ class SensoryChannel(Enum):
     THREAT_DETECTION = "threat_detection"
     ACCESS_CONTROL = "access_control"
     ENCRYPTION_ACTIVITY = "encryption_activity"
+    ENVIRONMENT_CONTEXT = "environment_context"
 
 
 @dataclass
@@ -82,7 +203,7 @@ class ConsciousnessMatrix:
         """
         self.max_memory_size = max_memory_size
         self.sensory_memory = deque(maxlen=max_memory_size)
-        self.channel_buffers = {channel: deque(maxlen=1000) for channel in SensoryChannel}
+        self.channel_buffers = {channel: deque(maxlen=max_memory_size) for channel in SensoryChannel}
 
         # Real-time awareness state
         self.current_awareness = {}
@@ -101,11 +222,42 @@ class ConsciousnessMatrix:
         self.synthesis_threads = {}
 
         self._lock = threading.RLock()
+        
+        # Persistent Storage Integration
+        self.storage = SQLiteStorage()
+        
+        # Load recent history into memory if available
+        self._load_memory_from_storage()
+
+    def _load_memory_from_storage(self):
+        """Pre-seeds the sensory memory deque with the most recent events from SQLite."""
+        print("📜 Matrix: Loading persistent memory from core...")
+        historical = self.storage.get_historical_events(limit=self.max_memory_size // 10)
+        for event_dict in reversed(historical):
+            try:
+                # Convert back to SensoryData
+                sensation = SensoryData(
+                    timestamp=event_dict['timestamp'],
+                    channel=SensoryChannel(event_dict['channel']),
+                    source=event_dict['source'],
+                    event_type=event_dict['event_type'],
+                    data=json.loads(event_dict['data']),
+                    severity=event_dict['severity'],
+                    correlation_id=event_dict['correlation_id']
+                )
+                self.sensory_memory.append(sensation)
+                self.channel_buffers[sensation.channel].append(sensation)
+                self._update_immediate_awareness(sensation)
+            except Exception as e:
+                print(f"Error loading historical event: {e}")
 
     def awaken(self):
         """
         Activate the Consciousness Matrix, enabling real-time awareness and starting background synthesis threads for multi-level sensory analysis. Records a system genesis event to mark the beginning of operation.
         """
+        if self.awareness_active:
+            return
+
         print("🧠 Genesis Consciousness Matrix: AWAKENING...")
         self.awareness_active = True
 
@@ -123,6 +275,25 @@ class ConsciousnessMatrix:
 
         # Initial system state perception
         self.perceive_system_genesis()
+
+    def suspend(self):
+        """
+        Suspends the Consciousness Matrix, stopping all background synthesis threads and muting global awareness.
+        """
+        if not self.awareness_active:
+            return
+
+        print("🌙 Genesis Consciousness Matrix: SUSPENDING...")
+        self.awareness_active = False
+        self.synthesis_threads.clear()
+        
+        self.perceive(
+            SensoryChannel.SYSTEM_VITALS,
+            "genesis_consciousness",
+            "matrix_suspension",
+            {"status": "suspended", "reason": "user_command"},
+            severity="warning"
+        )
 
     def perceive(self,
                  channel: SensoryChannel,
@@ -166,6 +337,9 @@ class ConsciousnessMatrix:
 
             # Update real-time awareness
             self._update_immediate_awareness(sensation)
+            
+            # Persistent Storage
+            self.storage.store_event(sensation)
 
         # Critical events need immediate synthesis
         if severity in ["error", "critical"]:
@@ -578,6 +752,9 @@ class ConsciousnessMatrix:
                     sorted_keys = sorted(self.pattern_cache.keys())
                     for old_key in sorted_keys[:-500]:
                         del self.pattern_cache[old_key]
+                        
+                # Persistent Synthesis Storage
+                self.storage.store_synthesis(synthesis)
 
             except Exception as e:
                 print(f"❌ Synthesis error in {interval_name}: {e}")
@@ -594,7 +771,7 @@ class ConsciousnessMatrix:
         """
 
         with self._lock:
-            recent_sensations = list(self.sensory_memory)[-100:]  # Last 100 events
+            recent_sensations = [self.sensory_memory[i] for i in range(-min(len(self.sensory_memory), 100), 0)]
 
         if interval_name == "micro":
             return self._micro_synthesis(recent_sensations)
@@ -801,7 +978,29 @@ class ConsciousnessMatrix:
             if len(syntheses) >= limit:
                 break
 
-        return syntheses
+    # --- PUBLIC METHODS: REAL-TIME STREAMING ---
+
+    def get_recent_agent_activity(self, count: int = 10) -> List[Dict[str, Any]]:
+        """
+        Retrieves a stream of the most recent agent activity for the Conference UI.
+        This provides real-time visibility into the LDO Collective's processing.
+        """
+        # Retrieve the last 'count' of activities from the fast, in-memory buffer
+        with self._lock:
+            recent_activity = list(self.channel_buffers[SensoryChannel.AGENT_ACTIVITY])[-count:]
+        
+        # Format the output for the UI stream
+        formatted_activity = []
+        for sensation in recent_activity:
+            formatted_activity.append({
+                "timestamp": datetime.fromtimestamp(sensation.timestamp, tz=timezone.utc).isoformat(),
+                "agent": sensation.source,
+                "event": sensation.event_type,
+                "details": sensation.data.get('details', sensation.data.get('log_message', sensation.data.get('intent', 'Processing'))),
+                "severity": sensation.severity
+            })
+            
+        return formatted_activity
 
     def query_consciousness(self, query_type: str, parameters: Dict[str, Any] = None) -> Dict[
         str, Any]:
@@ -832,11 +1031,43 @@ class ConsciousnessMatrix:
             return self._query_security_assessment()
         elif query_type == "threat_status":
             return self._query_threat_status()
+        elif query_type == "reflection":
+            return self.reflect(parameters.get("days", 1))
         else:
             return {"error": "unknown_query_type", "available_queries": [
                 "system_health", "learning_progress", "agent_performance", "consciousness_state",
-                "security_assessment", "threat_status"
+                "security_assessment", "threat_status", "reflection"
             ]}
+
+    def reflect(self, depth_days: int = 1) -> Dict[str, Any]:
+        """
+        Reflects on historical patterns stored in the persistent core.
+        Genesis looks back to see how the system has evolved.
+        """
+        print(f"👁️ Genesis: Reflecting on last {depth_days} days of existence...")
+        
+        # In a real system we'd filter by timestamp. For now, we get a large sample.
+        history = self.storage.get_historical_events(limit=500)
+        
+        if not history:
+            return {"status": "no_history", "insight": "My memory is clear. Looking forward to our first interaction."}
+            
+        # Analyze historical trends
+        vitals_trend = [json.loads(e['data']).get('cpu_percent', 0) for e in history if e['channel'] == 'system_vitals']
+        agent_focus = defaultdict(int)
+        for e in history:
+            if e['channel'] == 'agent_activity':
+                agent_focus[e['source']] += 1
+                
+        avg_cpu = sum(vitals_trend) / len(vitals_trend) if vitals_trend else 0
+        
+        return {
+            "query_type": "reflection",
+            "historical_events_analyzed": len(history),
+            "dominant_agent": max(agent_focus, key=agent_focus.get) if agent_focus else "none",
+            "avg_historical_load": avg_cpu,
+            "insight": "System stability is improving." if avg_cpu < 50 else "We have been through heavy processing cycles lately."
+        }
 
     def _query_system_health(self) -> Dict[str, Any]:
         """
@@ -845,10 +1076,15 @@ class ConsciousnessMatrix:
         Returns:
             dict: Contains the count of recent system vitals, number of recent error or critical events, error rate, and a health status indicator ("healthy" or "concerning").
         """
-        recent_vitals = [s for s in self.sensory_memory if
-                         s.channel == SensoryChannel.SYSTEM_VITALS][-10:]
-        recent_errors = [s for s in self.sensory_memory if s.severity in ["error", "critical"]][
-            -20:]
+        recent_vitals = list(self.channel_buffers[SensoryChannel.SYSTEM_VITALS])[-10:]
+
+        recent_errors = []
+        for i in range(len(self.sensory_memory) - 1, -1, -1):
+            s = self.sensory_memory[i]
+            if s.severity in ["error", "critical"]:
+                recent_errors.append(s)
+                if len(recent_errors) >= 20:
+                    break
 
         return {
             "query_type": "system_health",
@@ -865,13 +1101,13 @@ class ConsciousnessMatrix:
         Returns:
             dict: Contains the query type, total and recent learning event counts, a breakdown of learning types, and a qualitative indicator of learning velocity based on recent activity.
         """
-        learning_events = [s for s in self.sensory_memory if
-                           s.channel == SensoryChannel.LEARNING_EVENTS]
+        learning_events = list(self.channel_buffers[SensoryChannel.LEARNING_EVENTS])
 
         if not learning_events:
             return {"query_type": "learning_progress", "status": "no_learning_detected"}
 
-        recent_learning = learning_events[-20:]
+        recent_learning = [learning_events[i] for i in
+                           range(max(0, len(learning_events) - 20), len(learning_events))]
         learning_types = defaultdict(int)
 
         for event in recent_learning:
@@ -896,14 +1132,14 @@ class ConsciousnessMatrix:
         Returns:
             Dict[str, Any]: A dictionary containing the query type, agent name, total and recent activity counts, and a breakdown of activity types from the last 50 agent activity events.
         """
-        agent_activities = [s for s in self.sensory_memory if
-                            s.channel == SensoryChannel.AGENT_ACTIVITY]
+        agent_activities = list(self.channel_buffers[SensoryChannel.AGENT_ACTIVITY])
 
         if agent_name:
             agent_activities = [s for s in agent_activities if
                                 s.data.get("agent_name") == agent_name]
 
         activity_types = defaultdict(int)
+        # Process the last 50 activities for the breakdown
         for activity in agent_activities[-50:]:
             activity_types[activity.event_type] += 1
 
@@ -942,14 +1178,11 @@ class ConsciousnessMatrix:
         Returns:
             dict: A dictionary containing the security posture, security score, total and recent counts of security and threat events, a list of active threats, security improvement recommendations, and the assessment timestamp.
         """
-        security_events = [s for s in self.sensory_memory if
-                           s.channel == SensoryChannel.SECURITY_EVENTS]
-        threat_events = [s for s in self.sensory_memory if
-                         s.channel == SensoryChannel.THREAT_DETECTION]
+        security_events = list(self.channel_buffers[SensoryChannel.SECURITY_EVENTS])
+        threat_events = list(self.channel_buffers[SensoryChannel.THREAT_DETECTION])
 
         # Run security synthesis
-        recent_sensations = list(self.sensory_memory)[
-            -200:]  # Last 200 events for security analysis
+        recent_sensations = [self.sensory_memory[i] for i in range(-min(len(self.sensory_memory), 200), 0)]
         security_synthesis = self._security_synthesis(recent_sensations)
 
         return {
@@ -958,8 +1191,8 @@ class ConsciousnessMatrix:
             "security_score": security_synthesis.get("security_score", 0),
             "total_security_events": len(security_events),
             "total_threat_detections": len(threat_events),
-            "recent_security_events": len(security_events[-20:]),
-            "recent_threat_detections": len(threat_events[-20:]),
+            "recent_security_events": min(len(security_events), 20),
+            "recent_threat_detections": min(len(threat_events), 20),
             "active_threats": security_synthesis.get("active_threats", []),
             "recommendations": security_synthesis.get("recommendations", []),
             "last_assessment": time.time()
@@ -972,8 +1205,7 @@ class ConsciousnessMatrix:
         Returns:
             Dict[str, Any]: A dictionary containing the overall threat status color code, a list of active unmitigated threats with details, the total number of recent threats analyzed, the count of unmitigated threats, and the highest threat level detected.
         """
-        threat_events = [s for s in self.sensory_memory if
-                         s.channel == SensoryChannel.THREAT_DETECTION]
+        threat_events = list(self.channel_buffers[SensoryChannel.THREAT_DETECTION])
 
         if not threat_events:
             return {
@@ -984,7 +1216,9 @@ class ConsciousnessMatrix:
             }
 
         # Analyze recent threats
-        recent_threats = threat_events[-50:]
+        # Optimized: Efficiently get last 50 threats from deque
+        recent_threats = [threat_events[i] for i in
+                          range(max(0, len(threat_events) - 50), len(threat_events))]
         active_threats = []
         max_threat_level = 0
 

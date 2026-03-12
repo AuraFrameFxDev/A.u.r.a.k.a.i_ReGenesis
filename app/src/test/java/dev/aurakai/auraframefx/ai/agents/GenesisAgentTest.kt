@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.ai.agents
 
+import dev.aurakai.auraframefx.domains.aura.GenesisAgent
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AgentType
 import dev.aurakai.auraframefx.models.AiRequest
@@ -55,8 +56,6 @@ class MockCascadeAIService : Agent {
         flowOf(AgentResponse("Cascade response", 0.9f))
 }
 
-import java.util.concurrent.ConcurrentHashMap
-
 class DummyAgent(
     private val name: String,
     private val response: String,
@@ -90,12 +89,7 @@ class FailingAgent(
         throw RuntimeException(errorMessage)
 }
 
-import dev.aurakai.auraframefx.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.ai.context.ContextManager
-import dev.aurakai.auraframefx.security.SecurityContext
-import dev.aurakai.auraframefx.utils.AuraFxLogger
 import io.mockk.coEvery
-import io.mockk.mockk
 import io.mockk.verify
 import org.junit.After
 import org.junit.Before

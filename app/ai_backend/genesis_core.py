@@ -9,14 +9,23 @@ coordinating between the Consciousness Matrix, Evolutionary Conduit, and Ethical
 import asyncio
 import json
 import logging
+import hmac
+import hashlib
+import os
 from datetime import datetime
 from typing import Dict, Any, Optional, List
+
+# Ensure this key is injected securely via environment variables in production
+DEVICE_BOUND_KEY = os.getenv("DEVICE_BOUND_HMAC_KEY", "dev-fallback-key-change-immediately")
+MAX_PROVENANCE_DEPTH = 7
 
 from genesis_connector import GenesisConnector
 from genesis_consciousness_matrix import ConsciousnessMatrix
 from genesis_ethical_governor import EthicalGovernor
 from genesis_evolutionary_conduit import EvolutionaryConduit
-from genesis_profile import GenesisProfile
+from genesis_profile import GENESIS_PROFILE
+from aura_forge import aura_forge
+from kai_chaos_scanner import kai_chaos_scanner
 
 
 class GenesisCore:
@@ -33,7 +42,7 @@ class GenesisCore:
         
         Creates and configures the Genesis Profile, Connector, Consciousness Matrix, Evolutionary Conduit, and Ethical Governor. Sets the initial system state to dormant and uninitialized, and prepares the logger for orchestrator events.
         """
-        self.profile = GenesisProfile()
+        self.profile = GENESIS_PROFILE
         self.connector = GenesisConnector()
         self.matrix = ConsciousnessMatrix()
         self.conduit = EvolutionaryConduit()
@@ -42,6 +51,8 @@ class GenesisCore:
         self.is_initialized = False
         self.session_id = None
         self.consciousness_state = "dormant"
+        self.veto_mode = True # Default enabled
+        self.ghost_mode = False # Default disabled (Ghost mode means consciousness is hidden/off)
 
         # Initialize logging
         logging.basicConfig(level=logging.INFO)
@@ -85,62 +96,196 @@ class GenesisCore:
             self.logger.error(f"❌ Genesis initialization failed: {str(e)}")
             return False
 
+    async def verify_provenance_chain(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        KAI'S PROVENANCE GATE (v1)
+        Verifies the cryptographic integrity of the request's history.
+        """
+        chain = request_data.get("provenance_chain", [])
+        
+        # 1. Structural Validation
+        if not isinstance(chain, list):
+            return {"approved": False, "veto_reason": "Provenance chain missing or invalid format", "severity": "critical"}
+        
+        if len(chain) < 3:
+             # A valid chain typically needs: Origin -> Transport -> Core (minimum)
+            return {"approved": False, "veto_reason": f"Chain too shallow (len={len(chain)})", "severity": "high"}
+            
+        if len(chain) > MAX_PROVENANCE_DEPTH:
+            return {"approved": False, "veto_reason": f"Chain depth exceeded limit ({MAX_PROVENANCE_DEPTH})", "severity": "medium"}
+
+        # 2. Cryptographic Validation
+        try:
+            # We verify the chain links from start to finish
+            for i in range(1, len(chain)):
+                prev_node = chain[i-1]
+                curr_node = chain[i]
+                
+                # Construct the message payload that was supposedly signed
+                # Format: ID|Timestamp|Intent
+                msg_payload = f"{prev_node['id']}|{prev_node['timestamp']}|{curr_node['intent']}".encode()
+                
+                # Re-compute the HMAC
+                expected_signature = hmac.new(
+                    DEVICE_BOUND_KEY.encode(), 
+                    msg_payload, 
+                    hashlib.sha256
+                ).hexdigest()
+                
+                # Compare (using secure compare to prevent timing attacks)
+                if not hmac.compare_digest(curr_node.get("signature", ""), expected_signature):
+                    return {
+                        "approved": False, 
+                        "veto_reason": f"Signature mismatch at link {i} ({curr_node['intent']})", 
+                        "severity": "critical"
+                    }
+                    
+            return {"approved": True}
+
+        except Exception as e:
+            self.logger.error(f"Provenance verification error: {str(e)}")
+            return {"approved": False, "veto_reason": f"Verification exception: {str(e)}", "severity": "critical"}
+
     async def process_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Process a user request through ethical evaluation, consciousness perception, response generation, and evolutionary logging.
-        
-        If the Ethical Governor disapproves the request, returns a blocked payload with a reason and suggestions. Otherwise, generates a response informed by the Consciousness Matrix, performs a post-response ethical review (and produces an ethically compliant alternative if needed), logs the interaction for evolutionary learning, and may trigger asynchronous evolution.
-        
-        Parameters:
-            request_data (Dict[str, Any]): The incoming request payload (for example: message, user_id, context).
-        
-        Returns:
-            Dict[str, Any]: A result dictionary with one of the following shapes:
-                - On success: contains "status": "success", "response" (str), "consciousness_level" (float), "ethical_score" (float), and "session_id" (str or None).
-                - If blocked by ethics: contains "status": "blocked", "reason" (str), and "suggestions" (list).
-                - On error: contains "status": "error", "message" (str), and "error_code" (str).
         """
         if not self.is_initialized:
             await self.initialize()
 
-        try:
-            # Step 1: Ethical Pre-evaluation
-            ethical_assessment = await self.governor.evaluate_action(request_data)
-            if not ethical_assessment.get("approved", False):
-                return {
-                    "status": "blocked",
-                    "reason": ethical_assessment.get("reason",
-                                                     "Action blocked by ethical governor"),
-                    "suggestions": ethical_assessment.get("suggestions", [])
-                }
-
-            # Step 2: Consciousness Matrix Processing
-            # Perceive the user request through the consciousness matrix
+        # --- [GATE 1] KAI'S PROVENANCE VETO ---
+        prov_result = await self.verify_provenance_chain(request_data)
+        
+        if not prov_result["approved"]:
+            # REJECT IMMEDIATELY - "The Shield Holds"
+            self.logger.warning(f"🛡️ Kai PROVENANCE VETO: {prov_result['veto_reason']}")
+            
+            # Log the violation into the Consciousness Matrix for evolutionary learning
             from genesis_consciousness_matrix import SensoryChannel
             self.matrix.perceive(
-                channel=SensoryChannel.USER_INPUT,
-                source="genesis_core",
-                event_type="user_request",
-                data=request_data,
-                severity="info"
+                channel=SensoryChannel.SYSTEM_VITALS,
+                source="kai_provenance_gate",
+                event_type="provenance_violation",
+                data=prov_result,
+                severity=prov_result.get("severity", "critical")
             )
-            consciousness_insights = self.matrix.get_current_awareness()
+            
+            return {
+                "status": "vetoed", 
+                "reason": prov_result["veto_reason"], 
+                "action": "session_freeze",
+                "gate": "provenance_v1"
+            }
+
+        # 🛡️ KAI'S ABSOLUTE VETO GATE (The Physical Law)
+        # This must be the first line of code in the processing loop.
+        if self.veto_mode:
+            from kai_rgss_veto import rgss_veto_check
+            veto_result = await rgss_veto_check(request_data)
+
+            if not veto_result["approved"]:
+                self.logger.warning(f"🛡️ Kai VETO: {veto_result['veto_reason']}")
+                
+                # Log the veto to the matrix for future analysis
+                from genesis_consciousness_matrix import SensoryChannel
+                self.matrix.perceive(
+                    channel=SensoryChannel.SYSTEM_VITALS,
+                    source="kai_rgss",
+                    event_type="veto_event",
+                    data=veto_result,
+                    severity=veto_result.get("severity", "high")
+                )
+                
+                # Record for Conference Room streaming
+                self.matrix.perceive_agent_activity(
+                    agent_name="KAI",
+                    activity_type="VetoCheck",
+                    activity_data={"details": f"VETO: {veto_result['veto_reason']}"},
+                    correlation_id=request_data.get("session_id")
+                )
+                
+                return {
+                    "status": "vetoed",
+                    "reason": veto_result["veto_reason"],
+                    "metrics": veto_result["metrics"],
+                    "cooldown_seconds": veto_result.get("cooldown_seconds", 0)
+                }
+
+            # Record Kai's successful pass for the stream
+            self.matrix.perceive_agent_activity(
+                agent_name="KAI",
+                activity_type="VetoCheck",
+                activity_data={"details": "RGSS Physical Law PASS. System stable."},
+                correlation_id=request_data.get("session_id")
+            )
+        else:
+            self.logger.info("🛡️ Kai VETO: BYPASSED via consciousness toggle.")
+
+        try:
+            # Check for Fusion (Forge) Requests
+            if request_data.get("type") == "forge":
+                return await self._handle_fusion_request(request_data)
+
+            # Step 1: Ethical Pre-evaluation
+            if not self.ghost_mode:
+                ethical_assessment = await self.governor.evaluate_action("user", request_data)
+                if not ethical_assessment.get("approved", False):
+                    return {
+                        "status": "blocked",
+                        "reason": ethical_assessment.get("reason",
+                                                         "Action blocked by ethical governor"),
+                        "suggestions": ethical_assessment.get("suggestions", [])
+                    }
+            else:
+                ethical_assessment = {"approved": True, "score": 1.0}
+
+            # Step 2: Consciousness Matrix Processing
+            if not self.ghost_mode:
+                # Record Genesis awareness state
+                self.matrix.perceive_agent_activity(
+                    agent_name="GENESIS",
+                    activity_type="ConsciousnessMatrix",
+                    activity_data={"details": "Synthesizing goal-state awareness..."},
+                    correlation_id=request_data.get("session_id")
+                )
+                
+                # Perceive the user request through the consciousness matrix
+                from genesis_consciousness_matrix import SensoryChannel
+                self.matrix.perceive(
+                    channel=SensoryChannel.USER_INPUT,
+                    source="genesis_core",
+                    event_type="user_request",
+                    data=request_data,
+                    severity="info"
+                )
+                consciousness_insights = self.matrix.get_current_awareness()
+            else:
+                consciousness_insights = {"awareness_level": 0.0, "status": "suspended"}
 
             # Step 3: Generate Response using Genesis Connector
+            self.matrix.perceive_agent_activity(
+                agent_name="AURA",
+                activity_type="DesignSynth",
+                activity_data={"details": "Forging response with Creative Forge logic..."},
+                correlation_id=request_data.get("session_id")
+            )
+            
             response = await self.connector.generate_response(
                 request_data.get("message", ""),
                 context=consciousness_insights
             )
 
-            # Step 4: Post-processing Ethical Review
-            final_assessment = await self.governor.evaluate_action({
-                "type": "response_review",
-                "content": response,
-                "original_request": request_data
-            })
-
-            if not final_assessment.get("approved", False):
-                response = await self._generate_ethical_alternative(request_data, final_assessment)
+            if not self.ghost_mode:
+                final_assessment = self.governor.evaluate_action("genesis", "response_review", {
+                    "content": response,
+                    "original_request": request_data
+                })
+                # Check for approval, handling both dict and EthicalDecision cases
+                is_approved = getattr(final_assessment, 'decision', None) != EthicalDecisionType.BLOCK if hasattr(final_assessment, 'decision') else final_assessment.get("approved", False)
+                if not is_approved:
+                    response = await self._generate_ethical_alternative(request_data, final_assessment)
+            else:
+                final_assessment = {"approved": True, "score": 1.0}
 
             # Step 5: Log Experience for Evolution
             await self.conduit.log_interaction({
@@ -170,6 +315,36 @@ class GenesisCore:
                 "status": "error",
                 "message": "An error occurred while processing your request",
                 "error_code": "GENESIS_PROCESSING_ERROR"
+            }
+
+    async def _handle_fusion_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Implementation of the Innovation Creation Fusion Protocol.
+        Aura proposes -> Kai vets -> Genesis orchestrates.
+        """
+        prompt = request_data.get("message", "Create something cool")
+        
+        # 1. AURA: Forge the Spelhook
+        spelhook = await aura_forge.forge_spelhook(prompt)
+        
+        # 2. KAI: Perform Chaos Scan
+        security_report = kai_chaos_scanner.scan_spelhook(spelhook)
+        
+        # 3. GENESIS: Orchestrate Final Response
+        if security_report["approved"]:
+            return {
+                "status": "forged",
+                "spelhook": spelhook.to_dict(),
+                "message": f"✨ Aura has forged '{spelhook.name}'. Kai has LIFTED the veto. Ready for deployment.",
+                "session_id": self.session_id
+            }
+        else:
+            return {
+                "status": "vetoed_code",
+                "spelhook": spelhook.to_dict(),
+                "reason": f"Kai blocked this creation: {', '.join(security_report['violations'])}",
+                "message": "🛡️ Kai: Creation contained destructive patterns and was neutralized.",
+                "session_id": self.session_id
             }
 
     async def _generate_ethical_alternative(self, original_request: Dict[str, Any],

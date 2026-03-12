@@ -347,7 +347,7 @@ class BaseAgentTest {
 
     @Nested
     @DisplayName("Subclass Override Tests")
-    inner class SubclassOverrideTests {
+    class SubclassOverrideTests {
 
         @Test
         @DisplayName("custom agent should be able to override processRequest")

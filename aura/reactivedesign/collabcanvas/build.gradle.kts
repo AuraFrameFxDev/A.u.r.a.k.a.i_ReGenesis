@@ -12,6 +12,10 @@ extensions.configure<LibraryExtension> {
         targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -22,4 +26,5 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.gson)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+    testImplementation(libs.junit)
 }

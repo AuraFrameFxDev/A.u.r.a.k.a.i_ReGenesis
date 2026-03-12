@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <!-- Outer Shield Frame -->
+    <path
+        android:pathData="M256,40 L80,120 L80,240 C80,360 256,472 256,472 C256,472 432,360 432,240 L432,120 L256,40 Z"
+        android:strokeColor="#00FFFF"
+        android:strokeWidth="12"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+    <!-- Eye Outer Circle -->
+    <path
+        android:pathData="M256,256m-80,0a80,80 0,1 1,160 0a80,80 0,1 1,-160 0"
+        android:strokeColor="#00FFFF"
+        android:strokeWidth="8"/>
+    <!-- Eye Inner Pupil -->
+    <path
+        android:pathData="M256,256m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0"
+        android:fillColor="#00FFFF"/>
+    <!-- Technical Accents -->
+    <path
+        android:pathData="M160,160 L200,160 M312,160 L352,160 M256,100 L256,140"
+        android:strokeColor="#00FFFF"
+        android:strokeWidth="6"/>
+</vector>

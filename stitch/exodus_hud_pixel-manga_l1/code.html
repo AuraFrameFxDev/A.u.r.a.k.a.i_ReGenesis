@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Exodus HUD Pixel-Manga L1</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Silkscreen:wght@400;700&amp;family=Press+Start+2P&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "gold-armor": "#FFD700",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#05070a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "pixel": ["Silkscreen", "cursive"],
+                        "retro": ["'Press Start 2P'", "cursive"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(13, 89, 242, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(13, 89, 242, 0.2);
+        }
+        .pixel-border {
+            box-shadow: 0 0 0 2px #05070a, 0 0 0 4px #0d59f2;
+        }
+        .scanline {
+            background: linear-gradient(to bottom, rgba(13, 89, 242, 0) 50%, rgba(13, 89, 242, 0.05) 50%);
+            background-size: 100% 4px;
+        }
+        .circuit-bg {
+            background-image: radial-gradient(#0d59f2 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+        .gate-gradient-aura { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); }
+        .gate-gradient-kai { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .gate-gradient-genesis { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .gate-gradient-zen { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .gate-gradient-void { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gate-gradient-core { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-white">
+<!-- Background Decoration Layers -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute inset-0 circuit-bg opacity-10"></div>
+    <div class="absolute inset-0 scanline opacity-20"></div>
+    <!-- Floating "Data Swords" Abstract Elements -->
+    <div class="absolute top-20 left-10 w-px h-32 bg-primary/40 rotate-45 blur-[1px]"></div>
+    <div class="absolute top-1/2 right-10 w-px h-48 bg-primary/40 -rotate-12 blur-[1px]"></div>
+    <div class="absolute bottom-20 left-1/4 w-px h-64 bg-primary/20 rotate-90 blur-[2px]"></div>
+</div>
+<div class="relative z-10 flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-background-dark/80 shadow-2xl border-x border-white/5">
+    <!-- TopAppBar -->
+    <div class="flex items-center p-6 pb-2 justify-between">
+        <div class="flex items-center gap-3">
+            <div class="text-primary" data-icon="terminal">
+                <span class="material-symbols-outlined text-3xl">terminal</span>
+            </div>
+            <div class="flex flex-col">
+                <h1 class="text-white font-pixel text-xs tracking-wider">EXODUS HUD L1</h1>
+                <div class="flex items-center gap-1.5">
+                    <span class="size-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                    <p class="text-[8px] font-pixel text-green-500/80">REGENESIS AOSPOSX ONLINE</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button class="size-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white hover:bg-primary/20 transition-colors">
+                <span class="material-symbols-outlined text-xl">notifications</span>
+            </button>
+            <button class="size-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white">
+                <span class="material-symbols-outlined text-xl">settings_input_component</span>
+            </button>
+        </div>
+    </div>
+    <!-- Scrollable Content -->
+    <div class="flex-1 overflow-y-auto no-scrollbar pb-24">
+        <!-- Central Genesis Avatar Card -->
+        <div class="px-6 py-4">
+            <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-2 opacity-20">
+                    <p class="font-pixel text-[40px] leading-none select-none">L1</p>
+                </div>
+                <div class="flex flex-col items-center gap-6">
+                    <!-- Pixel Art Frame -->
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-primary/20 blur-2xl rounded-full"></div>
+                        <div class="relative size-48 rounded-xl bg-background-dark border-2 border-primary/50 overflow-hidden pixel-border">
+                            <img alt="Genesis Avatar"
+                                 class="w-full h-full object-cover grayscale brightness-125 sepia-[.5] hue-rotate-[45deg] contrast-125"
+                                 data-alt="Golden pixel-art cyber-samurai armor character headshot"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuARkoYzXtAGbCndrZdYDr4e_NW0qKNzkq5d0bxT-WFnmPWuC_KqYi5z18pWiew-zEgofyb-CnLzfckqYqhd-gPU9NHaRDh_Q7QZ8HHchorEmJxPaH4FZ4vbDhsJgjowkKGWxWDbRrP5-x8EoZZdpEScqmVO-Ite5B7T_Xhjtd3ocvoRFiS7wcdn2IqugHzp-AGOa79NYColiasn2UyeoH4wLtQW7dB63nqrbA3N09Y-aD_wRs6UFwSKkhQKRBohwjMydVEao0PQBLI"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+                        </div>
+                        <!-- Level Tag -->
+                        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-primary px-3 py-1 rounded-sm border border-white/20">
+                            <p class="font-pixel text-[10px] text-white">LVL 122</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h2 class="font-pixel text-2xl text-white tracking-tighter mb-1">
+                            GENESIS</h2>
+                        <div class="flex items-center justify-center gap-4 mt-4">
+                            <div class="flex flex-col items-center">
+                                <p class="text-[8px] font-pixel text-primary uppercase">Sync</p>
+                                <p class="text-lg font-bold font-display">98.2%</p>
+                            </div>
+                            <div class="w-px h-8 bg-white/10"></div>
+                            <div class="flex flex-col items-center">
+                                <p class="text-[8px] font-pixel text-primary uppercase">Core</p>
+                                <p class="text-lg font-bold font-display tracking-widest">OSX</p>
+                            </div>
+                            <div class="w-px h-8 bg-white/10"></div>
+                            <div class="flex flex-col items-center">
+                                <p class="text-[8px] font-pixel text-primary uppercase">Tier</p>
+                                <p class="text-lg font-bold font-display">MAX</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Stenciled Stats Section -->
+        <div class="px-6 flex justify-between items-center py-2">
+            <div class="flex flex-col">
+                <p class="text-[9px] font-pixel text-white/40 tracking-[0.2em]">EVOLVE</p>
+                <div class="h-1 w-16 bg-white/10 mt-1 overflow-hidden rounded-full">
+                    <div class="h-full bg-primary w-[75%]"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="text-[9px] font-pixel text-white/40 tracking-[0.2em]">UNDERSTAND</p>
+                <div class="h-1 w-16 bg-white/10 mt-1 overflow-hidden rounded-full">
+                    <div class="h-full bg-primary w-[90%]"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <p class="text-[9px] font-pixel text-white/40 tracking-[0.2em]">REMEMBER</p>
+                <div class="h-1 w-16 bg-white/10 mt-1 overflow-hidden rounded-full">
+                    <div class="h-full bg-primary w-[40%]"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Domain Gates Carousel Header -->
+        <div class="px-6 pt-8 pb-4 flex justify-between items-end">
+            <h3 class="font-pixel text-sm text-primary">DOMAIN GATES</h3>
+            <p class="font-pixel text-[8px] text-white/30">06 SECTORS DETECTED</p>
+        </div>
+        <!-- Horizontal Scroll Gates -->
+        <div class="flex overflow-x-auto gap-4 px-6 no-scrollbar snap-x">
+            <!-- Gate 01: Aura -->
+            <div class="flex-none w-44 snap-start">
+                <div class="relative group cursor-pointer">
+                    <div class="gate-gradient-aura aspect-[3/4] rounded-xl overflow-hidden p-0.5">
+                        <div class="bg-background-dark/90 w-full h-full rounded-[0.9rem] p-4 flex flex-col justify-between border border-white/5">
+                            <div class="flex justify-between items-start">
+                                <span class="material-symbols-outlined text-3xl text-primary">auto_awesome</span>
+                                <p class="font-pixel text-[8px] text-white/40">G-01</p>
+                            </div>
+                            <div>
+                                <p class="font-pixel text-xs mb-1">AURA</p>
+                                <div class="flex items-center gap-1">
+                                    <span class="size-1 bg-[#00f2fe] rounded-full"></span>
+                                    <p class="text-[10px] text-white/60">NEURAL FIELD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gate 02: Kai -->
+            <div class="flex-none w-44 snap-start">
+                <div class="relative group cursor-pointer">
+                    <div class="gate-gradient-kai aspect-[3/4] rounded-xl overflow-hidden p-0.5">
+                        <div class="bg-background-dark/90 w-full h-full rounded-[0.9rem] p-4 flex flex-col justify-between border border-white/5">
+                            <div class="flex justify-between items-start">
+                                <span class="material-symbols-outlined text-3xl text-red-400">bolt</span>
+                                <p class="font-pixel text-[8px] text-white/40">G-02</p>
+                            </div>
+                            <div>
+                                <p class="font-pixel text-xs mb-1 text-white">KAI</p>
+                                <div class="flex items-center gap-1">
+                                    <span class="size-1 bg-[#f5576c] rounded-full"></span>
+                                    <p class="text-[10px] text-white/60">KINETIC HUB</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gate 03: Genesis -->
+            <div class="flex-none w-44 snap-start">
+                <div class="relative group cursor-pointer">
+                    <div class="gate-gradient-genesis aspect-[3/4] rounded-xl overflow-hidden p-0.5">
+                        <div class="bg-background-dark/90 w-full h-full rounded-[0.9rem] p-4 flex flex-col justify-between border border-white/5">
+                            <div class="flex justify-between items-start">
+                                <span class="material-symbols-outlined text-3xl text-green-400">shield</span>
+                                <p class="font-pixel text-[8px] text-white/40">G-03</p>
+                            </div>
+                            <div>
+                                <p class="font-pixel text-xs mb-1 text-white">GENESIS</p>
+                                <div class="flex items-center gap-1">
+                                    <span class="size-1 bg-[#43e97b] rounded-full"></span>
+                                    <p class="text-[10px] text-white/60">PRIME NODE</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gate 04: Zen -->
+            <div class="flex-none w-44 snap-start">
+                <div class="relative group cursor-pointer">
+                    <div class="gate-gradient-zen aspect-[3/4] rounded-xl overflow-hidden p-0.5">
+                        <div class="bg-background-dark/90 w-full h-full rounded-[0.9rem] p-4 flex flex-col justify-between border border-white/5">
+                            <div class="flex justify-between items-start">
+                                <span class="material-symbols-outlined text-3xl text-yellow-400">psychology</span>
+                                <p class="font-pixel text-[8px] text-white/40">G-04</p>
+                            </div>
+                            <div>
+                                <p class="font-pixel text-xs mb-1 text-white">ZEN</p>
+                                <div class="flex items-center gap-1">
+                                    <span class="size-1 bg-[#fee140] rounded-full"></span>
+                                    <p class="text-[10px] text-white/60">VOID MIND</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Stenciled Branding -->
+        <div class="mt-12 mb-8 flex flex-col items-center opacity-30">
+            <p class="font-pixel text-[10px] tracking-[0.5em] mb-2">EVOLVE // UNDERSTAND //
+                REMEMBER</p>
+            <div class="flex gap-4">
+                <div class="w-12 h-0.5 bg-primary"></div>
+                <div class="w-12 h-0.5 bg-white/20"></div>
+                <div class="w-12 h-0.5 bg-white/20"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Android/iOS Bottom Navigation -->
+    <div class="absolute bottom-0 inset-x-0 h-20 bg-background-dark/90 backdrop-blur-xl border-t border-white/10 flex items-center justify-around px-6">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[8px] font-pixel">HUB</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-2xl">gate</span>
+            <span class="text-[8px] font-pixel">GATES</span>
+        </button>
+        <!-- Central Action -->
+        <div class="relative -mt-10">
+            <div class="absolute inset-0 bg-primary blur-xl opacity-30"></div>
+            <button class="size-14 rounded-full bg-primary flex items-center justify-center text-white border-4 border-background-dark shadow-lg shadow-primary/40 relative z-10">
+                <span class="material-symbols-outlined text-3xl">swords</span>
+            </button>
+        </div>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-2xl">inventory_2</span>
+            <span class="text-[8px] font-pixel">ITEMS</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-2xl">neurology</span>
+            <span class="text-[8px] font-pixel">LINK</span>
+        </button>
+    </div>
+</div>
+<style>
+    /* Custom scrollbar hiding */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+</body>
+</html>

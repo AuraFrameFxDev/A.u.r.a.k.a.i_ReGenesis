@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.cascade.pipeline.AIPipelineConfig
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import javax.inject.Singleton
 
 @Module

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Kai Sentinel Dashboard L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#25c0f4",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#101e22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glow-cyan {
+            text-shadow: 0 0 10px rgba(37, 192, 244, 0.5);
+        }
+        .border-glow {
+            box-shadow: 0 0 15px rgba(37, 192, 244, 0.2);
+        }
+        .glass-panel {
+            background: rgba(34, 63, 73, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(37, 192, 244, 0.2);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(37, 192, 244, 0.05) 50%);
+            background-size: 100% 4px;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white overflow-hidden font-display">
+<!-- Background Watermark -->
+<div class="fixed inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+    <span class="material-symbols-outlined text-[400px]">shield_lock</span>
+</div>
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[480px] mx-auto border-x border-white/5 bg-background-light dark:bg-background-dark">
+    <!-- Top App Bar -->
+    <header class="flex items-center justify-between p-4 pt-8 bg-transparent">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary glow-cyan">security</span>
+            <div class="flex flex-col">
+                <h1 class="text-sm font-bold tracking-widest text-white leading-none">KAI SENTINEL
+                    L2</h1>
+                <span class="text-[10px] text-primary/70 tracking-tighter uppercase">Hardware Sovereignty Active</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex flex-col items-end">
+                <span class="text-[10px] text-primary uppercase font-bold">Encrypted</span>
+                <span class="text-[10px] text-white/40 uppercase">AOSPOSX v4.2</span>
+            </div>
+            <button class="bg-primary/10 p-2 rounded-lg border border-primary/20">
+                <span class="material-symbols-outlined text-primary text-xl">memory</span>
+            </button>
+        </div>
+    </header>
+    <!-- System Integrity Pulse -->
+    <section class="px-6 py-2">
+        <div class="glass-panel rounded-xl p-4 border-glow">
+            <div class="flex justify-between items-end mb-2">
+                <span class="text-xs font-bold text-primary tracking-widest uppercase">System Integrity</span>
+                <span class="text-2xl font-bold glow-cyan">99.8%</span>
+            </div>
+            <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-primary shadow-[0_0_10px_#25c0f4]" style="width: 99.8%"></div>
+            </div>
+            <div class="flex justify-between mt-2">
+                <span class="text-[10px] text-white/40 uppercase tracking-tighter">Steady Pulse Sync</span>
+                <span class="text-[10px] text-primary uppercase tracking-tighter font-bold">Optimal</span>
+            </div>
+        </div>
+    </section>
+    <!-- Domain Expansion Lattice -->
+    <section class="flex-1 relative flex items-center justify-center py-4 overflow-hidden">
+        <!-- Background Lattice Grid -->
+        <div class="absolute inset-0 opacity-20 pointer-events-none"
+             style="background-image: radial-gradient(circle at center, #25c0f4 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="relative w-72 h-72 flex items-center justify-center">
+            <!-- Center Core -->
+            <div class="z-10 w-24 h-24 rounded-full border-2 border-primary flex items-center justify-center bg-background-dark shadow-[0_0_30px_rgba(37,192,244,0.3)]">
+                <span class="material-symbols-outlined text-primary text-4xl animate-pulse">hive</span>
+            </div>
+            <!-- Domain Nodes - Circular Layout -->
+            <!-- Node 1: Kernel -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 group">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40 hover:border-primary transition-colors cursor-pointer">
+                    <span class="material-symbols-outlined text-primary text-sm">terminal</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Kernel</span>
+            </div>
+            <!-- Node 2: Network -->
+            <div class="absolute top-[15%] right-[10%] flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">lan</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Network</span>
+            </div>
+            <!-- Node 3: Neural -->
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">psychology</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Neural</span>
+            </div>
+            <!-- Node 4: Identity -->
+            <div class="absolute bottom-[15%] right-[10%] flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">fingerprint</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Identity</span>
+            </div>
+            <!-- Node 5: Storage -->
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">database</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Storage</span>
+            </div>
+            <!-- Node 6: Memory -->
+            <div class="absolute bottom-[15%] left-[10%] flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">memory</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Memory</span>
+            </div>
+            <!-- Node 7: Logic -->
+            <div class="absolute top-1/2 left-0 -translate-y-1/2 flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">account_tree</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Logic</span>
+            </div>
+            <!-- Node 8: Privacy -->
+            <div class="absolute top-[15%] left-[10%] flex flex-col items-center gap-1">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">visibility_off</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Privacy</span>
+            </div>
+            <!-- Node 9: Sync -->
+            <div class="absolute top-[25%] left-[25%] flex flex-col items-center gap-1 scale-75">
+                <div class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center border-primary/40">
+                    <span class="material-symbols-outlined text-primary text-sm">sync</span>
+                </div>
+                <span class="text-[9px] uppercase tracking-widest text-white/60">Sync</span>
+            </div>
+            <!-- Connection Lines (SVG) -->
+            <svg class="absolute inset-0 w-full h-full -z-0 opacity-20 pointer-events-none"
+                 viewbox="0 0 288 288">
+                <circle cx="144" cy="144" fill="none" r="100" stroke="#25c0f4"
+                        stroke-dasharray="4 4" stroke-width="0.5"></circle>
+                <line stroke="#25c0f4" stroke-width="0.5" x1="144" x2="144" y1="144" y2="40"></line>
+                <line stroke="#25c0f4" stroke-width="0.5" x1="144" x2="244" y1="144"
+                      y2="144"></line>
+                <line stroke="#25c0f4" stroke-width="0.5" x1="144" x2="144" y1="144"
+                      y2="248"></line>
+                <line stroke="#25c0f4" stroke-width="0.5" x1="144" x2="44" y1="144" y2="144"></line>
+            </svg>
+        </div>
+    </section>
+    <!-- Metrics Grid -->
+    <section class="grid grid-cols-3 gap-3 px-6 pb-4">
+        <div class="glass-panel p-3 rounded-lg flex flex-col">
+            <span class="text-[9px] text-white/40 uppercase font-bold mb-1">Domains</span>
+            <span class="text-xl font-bold tracking-tight">09</span>
+        </div>
+        <div class="glass-panel p-3 rounded-lg flex flex-col">
+            <span class="text-[9px] text-white/40 uppercase font-bold mb-1">Active Logs</span>
+            <span class="text-xl font-bold tracking-tight text-primary">547</span>
+        </div>
+        <div class="glass-panel p-3 rounded-lg flex flex-col">
+            <span class="text-[9px] text-white/40 uppercase font-bold mb-1">Neural Load</span>
+            <span class="text-xl font-bold tracking-tight">12%</span>
+        </div>
+    </section>
+    <!-- Ethical Governor v9 Logs -->
+    <section class="px-6 mb-24 h-48">
+        <div class="glass-panel h-full rounded-xl overflow-hidden border border-white/5 flex flex-col relative">
+            <div class="bg-white/5 px-4 py-2 border-b border-white/5 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-primary">Ethical Governor v9 Live Stream</span>
+                </div>
+                <span class="text-[9px] font-mono text-white/30">ID: 4x99-KAI</span>
+            </div>
+            <div class="flex-1 p-3 overflow-y-auto font-mono text-[10px] leading-relaxed text-white/60 scanline">
+                <div class="mb-1"><span class="text-primary/70">[14:22:01]</span> SENTINEL:
+                    Initializing Lattice handshaking...
+                </div>
+                <div class="mb-1"><span class="text-primary/70">[14:22:02]</span> ETHIC_GOV: Policy
+                    alignment check initiated.
+                </div>
+                <div class="mb-1 text-primary"><span class="text-primary/70">[14:22:05]</span> OK:
+                    Alignment verified at 99.98% certainty.
+                </div>
+                <div class="mb-1"><span class="text-primary/70">[14:22:12]</span> NET_MGR:
+                    Monitoring inbound TCP packets [547/min].
+                </div>
+                <div class="mb-1"><span class="text-primary/70">[14:22:18]</span> KERNEL:
+                    Sovereignty lock engaged on primary stack.
+                </div>
+                <div class="mb-1"><span class="text-primary/70">[14:22:20]</span> STORAGE: Block
+                    verification complete. 0 errors.
+                </div>
+                <div class="mb-1 opacity-50"><span class="text-primary/70">[14:22:25]</span> SYNC:
+                    Peer-to-peer lattice sync standby.
+                </div>
+                <div class="mb-1"><span class="text-primary/70">[14:22:30]</span> LOG: Ethical
+                    governor cycle 98823 successful.
+                </div>
+            </div>
+            <!-- Gradient overlay for logs fade -->
+            <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-background-dark/80 to-transparent pointer-events-none"></div>
+        </div>
+    </section>
+    <!-- iOS Bottom Navigation Bar -->
+    <nav class="absolute bottom-0 w-full glass-panel border-t border-white/10 px-8 pt-4 pb-8 flex items-center justify-between">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Dash</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">shield</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Shield</span>
+        </button>
+        <div class="relative -mt-10">
+            <button class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-background-dark shadow-[0_0_20px_rgba(37,192,244,0.5)] border-4 border-background-dark">
+                <span class="material-symbols-outlined text-3xl font-bold">bolt</span>
+            </button>
+        </div>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">terminal</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Logs</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">settings</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Config</span>
+        </button>
+    </nav>
+    <!-- Home Indicator -->
+    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full"></div>
+</div>
+</body>
+</html>

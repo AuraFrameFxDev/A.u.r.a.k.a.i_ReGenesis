@@ -1,0 +1,63 @@
+{
+    "mcpServers": {
+        "desktop-commander": {
+            "command": "mcp-desktop-commander",
+            "args": [],
+            "env": {}
+        },
+        "google-drive": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-gdrive"
+            ]
+        },
+        "gmail": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-gmail"
+            ]
+        },
+        "github": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-github"
+            ],
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "REPLACE_WITH_YOUR_GITHUB_TOKEN"
+            }
+        },
+        "figma": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-figma"
+            ],
+            "env": {
+                "FIGMA_PERSONAL_ACCESS_TOKEN": "REPLACE_WITH_YOUR_FIGMA_TOKEN"
+            }
+        },
+        "brave-search": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-brave-search"
+            ],
+            "env": {
+                "BRAVE_API_KEY": "REPLACE_WITH_YOUR_BRAVE_KEY"
+            }
+        },
+        "postgres": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-postgres"
+            ],
+            "env": {
+                "POSTGRES_CONNECTION_STRING": "postgresql://localhost/mydb"
+            }
+        }
+    }
+}

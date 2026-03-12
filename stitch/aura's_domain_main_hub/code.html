@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura's Domain Main Hub</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Press+Start+2P&amp;family=Space+Grotesk:wght@300;500;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#00f0ff", // Neon Cyan
+                secondary: "#ff00ff", // Neon Pink
+                "background-light": "#f0f2f5",
+                "background-dark": "#050505",
+                "card-dark": "#121212",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                pixel: ["'Press Start 2P'", "cursive"],
+                body: ["'Space Grotesk'", "sans-serif"],
+              },
+              borderRadius: {
+                DEFAULT: "0.75rem",
+                'xl': '1.5rem',
+              },
+            },
+          },
+        };
+    </script>
+    <style>
+        .neon-border-cyan {
+            box-shadow: 0 0 10px #00f0ff, inset 0 0 5px #00f0ff;
+            border: 1px solid #00f0ff;
+        }
+        .neon-border-pink {
+            box-shadow: 0 0 10px #ff00ff, inset 0 0 5px #ff00ff;
+            border: 1px solid #ff00ff;
+        }
+        .neon-text-cyan {
+            text-shadow: 0 0 8px #00f0ff;
+        }
+        .neon-text-pink {
+            text-shadow: 0 0 8px #ff00ff;
+        }
+        .paint-splatter {
+            mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20,10 Q30,40 10,50 T40,90 Q70,70 90,80 T80,20 Q60,30 20,10" fill="black"/></svg>');
+            mask-size: cover;
+        }
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .glitch-anim {
+            animation: glitch 2s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body transition-colors duration-300 overflow-x-hidden">
+<div class="max-w-md mx-auto min-h-screen relative flex flex-col cyber-grid pb-20 border-x border-slate-200 dark:border-slate-800">
+    <div class="h-10 w-full"></div>
+    <header class="px-6 py-4 flex items-center justify-between">
+        <div class="flex flex-col">
+            <span class="font-pixel text-[10px] text-secondary tracking-widest uppercase">Lvl 2 Access</span>
+            <h1 class="font-display text-2xl font-black neon-text-cyan italic">AURA'S DOMAIN</h1>
+        </div>
+        <button class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center transition-transform active:scale-95">
+            <span class="material-icons-round text-primary">notifications</span>
+        </button>
+    </header>
+    <main class="flex-1 px-4 py-2 space-y-8">
+        <section
+                class="relative p-1 rounded-xl bg-gradient-to-br from-primary via-transparent to-secondary">
+            <div class="bg-slate-50 dark:bg-card-dark rounded-[10px] p-6 flex flex-col items-center relative overflow-hidden">
+                <div class="absolute top-2 left-2 opacity-20 dark:opacity-40">
+                    <span class="material-icons-round text-primary text-4xl">grid_view</span>
+                </div>
+                <div class="relative w-32 h-32 mb-4 group">
+                    <div class="absolute inset-0 rounded-full border-2 border-primary animate-pulse opacity-50"></div>
+                    <div class="absolute inset-0 rounded-full border-2 border-secondary animate-reverse-spin opacity-30"
+                         style="animation: spin 8s linear infinite"></div>
+                    <div class="w-full h-full rounded-full overflow-hidden border-2 border-white dark:border-slate-700 bg-slate-200 dark:bg-slate-900 z-10 relative">
+                        <img alt="Aura Portrait Pixel Art Style" class="w-full h-full object-cover"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX5MLztXExCuFnx_kwOtUNH9_zmX_WN8udzV0WyaiAQruHXiUmA_AGhmKurQ9csg63_RwBoWoAdSsjrZVnZ6tHGqGomWPYjwtNoL9S0Es7kWyfmjP49gK0QRQ9gyJTFnHoFAni7-H0WJGNCv10HrHodKUuuxthDuWISv2BbEs-fCwvP9FLIPwfBAhK2Y71gQK_rK_aFDhE8nLElS9LRSV31n7m4WVr3TJDbzFVBspm8RNmUDhuQ-lmYKoL78cEQt6TYVz9hKmUvak"/>
+                    </div>
+                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-primary text-background-dark px-3 py-1 rounded-full text-[10px] font-pixel font-bold">
+                        AURA ACTIVE
+                    </div>
+                </div>
+                <h2 class="font-display text-lg font-bold tracking-tight dark:text-white mb-1">
+                    AGENT_HUB.V2</h2>
+                <p class="text-[11px] font-body text-slate-500 dark:text-slate-400 text-center uppercase tracking-widest mb-6">
+                    Chroma Core Integration: Stable</p>
+                <div class="grid grid-cols-2 gap-3 w-full">
+                    <div class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded-lg border border-primary/20">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            <span class="text-[9px] font-pixel text-primary">SYNC_RATE</span>
+                        </div>
+                        <div class="text-lg font-display font-bold">98.4%</div>
+                    </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded-lg border border-secondary/20">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            <span class="text-[9px] font-pixel text-secondary">MOD_COUNT</span>
+                        </div>
+                        <div class="text-lg font-display font-bold">142</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="space-y-4">
+            <h3 class="font-display text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2">
+                Module Gates</h3>
+            <div class="group relative bg-slate-100 dark:bg-card-dark p-1 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all overflow-hidden cursor-pointer active:scale-[0.98]">
+                <div class="flex items-center p-4">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden mr-4 relative flex-shrink-0 bg-slate-900">
+                        <img alt="Collab Canvas Art" class="w-full h-full object-cover opacity-80"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzgVI8QP5bc6xQeEJ_gpCK1JD95qGmmBqGGIOhOwlaguub7CXs4keY93_kTJXM3saqT0tWPOIZhiv6CotXtdc2XOvMk9Mbjr2Z8Hey9psHYBooxXh-lkLYLqzEodKhzctYrek1rVlqSxXJ6DC_ym9j5xJqXV-BeJENtFn35R3QEGJZbkU9mrPIqelT6wUWor0dIBt_aKzXiigaPWOfh4m24_Czi58Pz9KJAA8008OA15rHwfMZ0zNjCvCI4oig10L2VOR0bCQVV-w"/>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-icons-round text-primary text-3xl">brush</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-display font-bold text-lg dark:text-white neon-text-cyan">
+                            CollabCanvas</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Multiuser Creative
+                            Engine</p>
+                    </div>
+                    <div class="material-icons-round text-slate-400 dark:text-slate-600">
+                        chevron_right
+                    </div>
+                </div>
+                <div class="absolute top-0 right-0 w-24 h-24 pointer-events-none opacity-20 dark:opacity-40">
+                    <svg class="fill-primary h-full w-full" viewBox="0 0 100 100">
+                        <path d="M70,20 Q80,5 90,30 T60,60 T20,40 Z"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="group relative bg-slate-100 dark:bg-card-dark p-1 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-secondary transition-all overflow-hidden cursor-pointer active:scale-[0.98]">
+                <div class="flex items-center p-4">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden mr-4 relative flex-shrink-0 bg-slate-900">
+                        <img alt="Chroma Core Art" class="w-full h-full object-cover opacity-80"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmk1sJGcda9gW48NVqkdlwC9r-XY6O_yM75pr2jGMQcUgzzYo34Azuji5vgO0PleHJE-XhS1iXmhg_ynu0jyLCyIEBi624ucT7pi79wa7MDm9Z5s-WOKPRImtLatlNtclJAjdPwB8AYOOpo5vWqpNFP2qgByT-ONk1VFWevXYrR6yxWOlZYiPdOpGYMnURJIV7frzMLFPKUdvKYcLNiQDBqce2y-VlIEw-w4YPhNnEXrgOgLQxLNlqalwW2ypbEG6EcVBi3N1ys44"/>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-icons-round text-secondary text-3xl">palette</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-display font-bold text-lg dark:text-white neon-text-pink">
+                            ChromaCore</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Advanced Color
+                            Blender</p>
+                    </div>
+                    <div class="material-icons-round text-slate-400 dark:text-slate-600">
+                        chevron_right
+                    </div>
+                </div>
+                <div class="absolute bottom-0 right-0 w-24 h-24 pointer-events-none opacity-20 dark:opacity-40 rotate-180">
+                    <svg class="fill-secondary h-full w-full" viewBox="0 0 100 100">
+                        <path d="M50,10 Q80,20 70,50 T40,80 T10,40 Z"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="group relative bg-slate-100 dark:bg-card-dark p-1 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-white transition-all overflow-hidden cursor-pointer active:scale-[0.98]">
+                <div class="flex items-center p-4">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden mr-4 relative flex-shrink-0 bg-slate-900">
+                        <img alt="Aura Lab Sandbox" class="w-full h-full object-cover opacity-80"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGtzferEhx4IxHW8v2yOyhhvCucoUtlQxTa-aPTzHROgq-k-C2jaCxUhT40vDmPJHu-u6tP-9iV7qa_dZJWQQpvViY3XrCrrIphf_NhBgPGLp9GPzHrJ1h_dkZUXBTwCXBCI95zuEkZA3bApnSB2rchG8Yv2JswNMAXSBk4tdnmT5blLB400THkqnxgyLAl1sEaZ7k87FEaNw6qHptcwSMgREw6bHoMLDNOE1hxYpxtnmQ2w4Ynn-_o8ilV43KSQDo9v8AGlzs8ds"/>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="material-icons-round text-white text-3xl">biotech</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-display font-bold text-lg dark:text-white">AuraLab</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Experimental Sandbox
+                            UI</p>
+                    </div>
+                    <div class="material-icons-round text-slate-400 dark:text-slate-600">
+                        chevron_right
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 p-6 bg-slate-200/50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
+            <div class="flex justify-between items-start mb-4">
+                <span class="font-pixel text-[8px] dark:text-slate-500 tracking-tighter uppercase">System Diagnostics:</span>
+                <span class="font-pixel text-[8px] text-primary">All Systems Nominal</span>
+            </div>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] text-slate-600 dark:text-slate-400 uppercase font-bold">Lua LSposed Hook</span>
+                    <div class="h-1.5 w-24 bg-slate-300 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[90%]"></div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] text-slate-600 dark:text-slate-400 uppercase font-bold">Creative Chaos Index</span>
+                    <div class="h-1.5 w-24 bg-slate-300 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-secondary w-[75%]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm h-16 bg-slate-50/80 dark:bg-card-dark/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-full flex items-center justify-around px-6 z-50 shadow-2xl">
+        <button class="flex flex-col items-center justify-center text-primary">
+            <span class="material-icons-round text-2xl">home</span>
+            <span class="text-[8px] font-pixel uppercase mt-1">HUB</span>
+        </button>
+        <button class="flex flex-col items-center justify-center text-slate-400 hover:text-secondary transition-colors">
+            <span class="material-icons-round text-2xl">group</span>
+            <span class="text-[8px] font-pixel uppercase mt-1">AGENTS</span>
+        </button>
+        <button class="flex flex-col items-center justify-center text-slate-400 hover:text-primary transition-colors">
+            <span class="material-icons-round text-2xl">terminal</span>
+            <span class="text-[8px] font-pixel uppercase mt-1">LUA</span>
+        </button>
+        <button class="flex flex-col items-center justify-center text-slate-400 hover:text-white transition-colors">
+            <span class="material-icons-round text-2xl">settings</span>
+            <span class="text-[8px] font-pixel uppercase mt-1">CORE</span>
+        </button>
+    </nav>
+    <div class="fixed top-20 -left-20 w-64 h-64 bg-primary opacity-5 dark:opacity-20 blur-[100px] pointer-events-none"></div>
+    <div class="fixed bottom-40 -right-20 w-64 h-64 bg-secondary opacity-5 dark:opacity-20 blur-[100px] pointer-events-none"></div>
+</div>
+<div class="fixed inset-0 pointer-events-none overflow-hidden opacity-[0.03] dark:opacity-[0.05]">
+    <div class="w-full h-full bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,black_3px)]"></div>
+</div>
+
+</body>
+</html>

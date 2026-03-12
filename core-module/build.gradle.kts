@@ -7,6 +7,7 @@ plugins {
     id("genesis.android.library")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 extensions.configure<LibraryExtension> {
@@ -35,5 +36,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
 

@@ -1,0 +1,22 @@
+# Sprite Processing Tools Dependencies
+
+# Core background removal
+rembg==2.0.57
+
+# Image processing
+Pillow==10.3.0
+numpy==1.26.4
+
+# GPU Acceleration Options:
+#
+# FOR NVIDIA GPUs (CUDA):
+# onnxruntime-gpu==1.17.1
+#
+# FOR AMD GPUs (DirectML) - Radeon RX 580, etc:
+# onnxruntime-directml==1.17.1
+#
+# FOR CPU-ONLY (No GPU acceleration):
+onnxruntime==1.17.1
+
+# Progress bars (optional but nice)
+tqdm==4.66.2

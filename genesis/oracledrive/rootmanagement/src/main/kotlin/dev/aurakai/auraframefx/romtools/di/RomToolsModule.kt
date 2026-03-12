@@ -21,6 +21,7 @@ import dev.aurakai.auraframefx.romtools.SystemModificationManagerImpl
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManagerImpl
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderSafetyManager
+import dev.aurakai.auraframefx.romtools.bootloader.BootloaderSafetyManagerImpl
 import dev.aurakai.auraframefx.romtools.retention.AurakaiRetentionManager
 import dev.aurakai.auraframefx.romtools.retention.AurakaiRetentionManagerImpl
 import javax.inject.Singleton
@@ -37,6 +38,12 @@ abstract class RomToolsModule {
     abstract fun bindBootloaderManager(
         bootloaderManagerImpl: BootloaderManagerImpl
     ): BootloaderManager
+
+    @Binds
+    @Singleton
+    abstract fun bindBootloaderSafetyManager(
+        bootloaderSafetyManagerImpl: BootloaderSafetyManagerImpl
+    ): BootloaderSafetyManager
 
     @Binds
     @Singleton
@@ -85,6 +92,12 @@ abstract class RomToolsModule {
     abstract fun bindAurakaiRetentionManager(
         aurakaiRetentionManagerImpl: AurakaiRetentionManagerImpl
     ): AurakaiRetentionManager
+
+    @Binds
+    @Singleton
+    abstract fun bindRomToolsManager(
+        romToolsManagerImpl: dev.aurakai.auraframefx.romtools.RomToolsManagerImpl
+    ): dev.aurakai.auraframefx.romtools.RomToolsManager
 
     companion object {
 

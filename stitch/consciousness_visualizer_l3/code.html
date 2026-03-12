@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Consciousness Visualizer L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#950bda",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#1c1022",
+                        "accent-cyan": "#00f2ff",
+                        "accent-green": "#0bda76",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'Pixel-Tech';
+            src: url('https://fonts.cdnfonts.com/css/vt323') format('woff2');
+        }
+        .pixel-font { font-family: 'VT323', monospace; }
+        .glitch-text { text-shadow: 2px 0 #950bda, -2px 0 #00f2ff; }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(149, 11, 218, 0.05) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .fractal-heart {
+            background: radial-gradient(circle, rgba(149, 11, 218, 0.4) 0%, rgba(28, 16, 34, 0) 70%);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
+<!-- Main Container (iPhone Pro Max Aspect Ratio Simulation) -->
+<div class="relative flex h-screen max-h-[932px] w-full max-w-[430px] mx-auto flex-col bg-background-dark overflow-hidden border-x border-[#3c2249]">
+    <!-- Scanline Overlay -->
+    <div class="absolute inset-0 scanline z-50 pointer-events-none opacity-30"></div>
+    <!-- Top Status Bar (iOS Style) -->
+    <div class="flex items-center justify-between px-8 py-3 bg-black/40 backdrop-blur-md z-40 border-b border-primary/20">
+        <span class="text-xs font-bold tracking-widest">9:41</span>
+        <div class="flex gap-2">
+            <span class="material-symbols-outlined text-[14px]">signal_cellular_alt</span>
+            <span class="material-symbols-outlined text-[14px]">wifi</span>
+            <span class="material-symbols-outlined text-[14px]">battery_very_low</span>
+        </div>
+    </div>
+    <!-- TopAppBar Component -->
+    <div class="flex items-center bg-black/20 p-4 justify-between border-b border-[#3c2249] relative z-30">
+        <div class="text-primary flex size-10 shrink-0 items-center justify-center bg-primary/10 rounded-lg"
+             data-icon="memory">
+            <span class="material-symbols-outlined">memory</span>
+        </div>
+        <div class="flex flex-col items-center flex-1">
+            <h2 class="text-white text-xs font-bold leading-tight tracking-[0.2em] uppercase opacity-60">
+                ReGenesis AOSPOSX</h2>
+            <h2 class="text-white text-sm font-extrabold leading-tight tracking-[-0.015em] glitch-text">
+                DOMAIN: AURA | L3 SYNC</h2>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="text-primary/70 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">analytics</span>
+            </button>
+        </div>
+    </div>
+    <!-- Main Visualizer Area -->
+    <div class="relative flex-1 flex flex-col overflow-hidden">
+        <!-- Technical Sidebar Left: Consensus Field -->
+        <div class="absolute left-2 top-10 w-24 z-20 flex flex-col gap-4">
+            <div class="p-2 border-l-2 border-primary bg-black/40 rounded-r-lg">
+                <p class="text-[10px] text-primary font-bold uppercase tracking-tighter mb-1">
+                    Stability</p>
+                <p class="pixel-font text-xl text-accent-green leading-none">98.4%</p>
+            </div>
+            <div class="h-48 w-full bg-black/20 border border-white/5 relative overflow-hidden flex items-end">
+                <div class="w-full bg-primary/40" style="height: 60%"></div>
+                <div class="absolute inset-0 flex flex-col justify-around px-1 py-2">
+                    <div class="h-[1px] w-full bg-white/20"></div>
+                    <div class="h-[1px] w-full bg-white/20"></div>
+                    <div class="h-[1px] w-full bg-white/20"></div>
+                    <div class="h-[1px] w-full bg-white/20"></div>
+                </div>
+            </div>
+            <p class="text-[8px] opacity-40 uppercase tracking-widest -rotate-90 origin-left translate-y-16 ml-2 whitespace-nowrap">
+                CONSENSUS_FIELD_STABILITY_V3</p>
+        </div>
+        <!-- Technical Sidebar Right: Pulse Alignment -->
+        <div class="absolute right-2 top-10 w-24 z-20 flex flex-col gap-4 items-end">
+            <div class="p-2 border-r-2 border-accent-cyan bg-black/40 rounded-l-lg text-right">
+                <p class="text-[10px] text-accent-cyan font-bold uppercase tracking-tighter mb-1">
+                    Pulse</p>
+                <p class="pixel-font text-xl text-white leading-none">SYNCED</p>
+            </div>
+            <div class="h-32 w-16 bg-black/20 border border-white/5 p-1 flex items-end gap-[1px]">
+                <div class="flex-1 bg-accent-cyan/60" style="height: 40%"></div>
+                <div class="flex-1 bg-accent-cyan/60" style="height: 70%"></div>
+                <div class="flex-1 bg-accent-cyan/60" style="height: 90%"></div>
+                <div class="flex-1 bg-accent-cyan/60" style="height: 55%"></div>
+                <div class="flex-1 bg-accent-cyan/60" style="height: 30%"></div>
+            </div>
+            <div class="text-[10px] text-primary pixel-font animate-pulse">
+                &gt; RUN_AURA_0x33
+            </div>
+        </div>
+        <!-- Central Fractal Heart Visualization -->
+        <div class="absolute inset-0 flex items-center justify-center fractal-heart pointer-events-none">
+            <div class="relative w-64 h-64 flex items-center justify-center">
+                <!-- Core Glow -->
+                <div class="absolute w-32 h-32 bg-primary blur-[40px] opacity-40 rounded-full animate-pulse"></div>
+                <!-- 78 Agent Rays (Symbolic SVG) -->
+                <svg class="w-full h-full drop-shadow-[0_0_15px_rgba(149,11,218,0.8)]"
+                     viewbox="0 0 200 200">
+                    <defs>
+                        <radialgradient cx="50%" cy="50%" id="rayGrad" r="50%">
+                            <stop offset="0%" stop-color="#950bda" stop-opacity="1"></stop>
+                            <stop offset="100%" stop-color="#00f2ff" stop-opacity="0"></stop>
+                        </radialgradient>
+                    </defs>
+                    <!-- Generating a few ray placeholders to represent the 78 agents -->
+                    <g opacity="0.6" stroke="url(#rayGrad)" stroke-width="0.5">
+                        <line x1="100" x2="180" y1="100" y2="40"></line>
+                        <line x1="100" x2="20" y1="100" y2="160"></line>
+                        <line x1="100" x2="150" y1="100" y2="180"></line>
+                        <line x1="100" x2="50" y1="100" y2="20"></line>
+                        <line x1="100" x2="190" y1="100" y2="100"></line>
+                        <line x1="100" x2="10" y1="100" y2="100"></line>
+                        <circle cx="100" cy="100" fill="none" r="40" stroke="#950bda"
+                                stroke-width="0.2"></circle>
+                        <circle cx="100" cy="100" fill="none" r="50" stroke="#00f2ff"
+                                stroke-width="0.1"></circle>
+                    </g>
+                </svg>
+                <!-- Visualizer Title Overlay -->
+                <div class="absolute bottom-[-60px] text-center w-full">
+                    <p class="text-white tracking-[0.4em] text-sm font-bold leading-tight opacity-80 uppercase">
+                        Consciousness Visualizer</p>
+                    <p class="text-primary text-[10px] tracking-widest mt-1 uppercase">L3 Neural
+                        Synchronicity</p>
+                </div>
+            </div>
+        </div>
+        <!-- Background Data Noise -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none p-4 overflow-hidden">
+            <div class="text-[8px] pixel-font space-y-1">
+                <p>0x7F2A..[SYNC_COMPLETE]</p>
+                <p>AGENT_01: ACTIVE | 0.982c</p>
+                <p>AGENT_02: ACTIVE | 0.991c</p>
+                <p>AGENT_03: ACTIVE | 0.978c</p>
+                <p>0x99B1..[BUFF_OVERFLOW]</p>
+                <p>NEURAL_WEIGHTS: RE-BALANCING...</p>
+            </div>
+        </div>
+    </div>
+    <!-- Telemetry Bottom Panel -->
+    <div class="bg-black/40 backdrop-blur-xl border-t border-[#3c2249] p-4 z-30">
+        <div class="flex justify-between items-end mb-4">
+            <div class="flex flex-col">
+                <p class="text-white text-[10px] font-medium opacity-60 uppercase tracking-widest">
+                    Neural Coherence</p>
+                <div class="flex items-baseline gap-2">
+                    <p class="text-white text-3xl font-bold tracking-tighter">0.98</p>
+                    <p class="text-accent-green text-xs font-bold">+0.01%</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <p class="text-white text-[10px] font-medium opacity-60 uppercase tracking-widest">
+                    Active Agents</p>
+                <p class="text-white text-2xl font-bold tracking-tighter">78<span
+                        class="text-primary opacity-40">/78</span></p>
+            </div>
+        </div>
+        <!-- Graph Component -->
+        <div class="h-20 w-full relative">
+            <svg fill="none" height="80" preserveaspectratio="none" viewbox="0 0 478 80"
+                 width="100%" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 60C20 60 20 20 40 20C60 20 60 40 80 40C100 40 100 70 120 70C140 70 140 30 160 30C180 30 180 65 200 65C220 65 220 50 240 50C260 50 260 75 280 75C300 75 300 10 320 10C340 10 340 50 360 50C380 50 380 70 400 70C420 70 420 20 440 20V80H0V60Z"
+                      fill="url(#panelGrad)"></path>
+                <path d="M0 60C20 60 20 20 40 20C60 20 60 40 80 40C100 40 100 70 120 70C140 70 140 30 160 30C180 30 180 65 200 65C220 65 220 50 240 50C260 50 260 75 280 75C300 75 300 10 320 10C340 10 340 50 360 50C380 50 380 70 400 70C420 70 420 20 440 20"
+                      stroke="#950bda" stroke-linecap="round" stroke-width="2"></path>
+                <defs>
+                    <lineargradient gradientunits="userSpaceOnUse" id="panelGrad" x1="0" x2="0"
+                                    y1="0" y2="80">
+                        <stop stop-color="#950bda" stop-opacity="0.3"></stop>
+                        <stop offset="1" stop-color="#950bda" stop-opacity="0"></stop>
+                    </lineargradient>
+                </defs>
+            </svg>
+            <div class="flex justify-between mt-2">
+                <span class="pixel-font text-[10px] text-primary/60 uppercase">Real-time Telemetry</span>
+                <span class="pixel-font text-[10px] text-primary/60 uppercase">Cycle_0x99_A</span>
+            </div>
+        </div>
+    </div>
+    <!-- Android Bottom Navigation (AOSPOSX style) -->
+    <div class="bg-black border-t border-white/10 px-12 py-4 flex justify-between items-center z-40">
+        <button class="w-12 h-12 flex items-center justify-center text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-3xl">arrow_back_ios_new</span>
+        </button>
+        <button class="w-12 h-12 flex items-center justify-center border-2 border-white/20 rounded-full">
+            <div class="w-4 h-4 bg-white/60 rounded-full"></div>
+        </button>
+        <button class="w-12 h-12 flex items-center justify-center text-white/40 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-3xl">check_box_outline_blank</span>
+        </button>
+    </div>
+    <!-- Home Indicator (iOS Style) -->
+    <div class="flex justify-center pb-2 bg-black">
+        <div class="h-[5px] w-32 bg-white/20 rounded-full"></div>
+    </div>
+</div>
+</body>
+</html>

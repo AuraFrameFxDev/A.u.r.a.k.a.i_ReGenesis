@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>System Architecture - Cyberpunk Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;family=JetBrains+Mono:wght@300;500&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00F5FF", // Neon Cyan
+                        secondary: "#FF00FF", // Neon Magenta
+                        "background-light": "#F0F2F5",
+                        "background-dark": "#020617",
+                        "node-dark": "#0f172a",
+                        "accent-yellow": "#FFD700"
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "4px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .cyber-grid {
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            perspective: 1000px;
+        }
+        .perspective-container {
+            transform: rotateX(20deg) scale(1.1);
+            transform-style: preserve-3d;
+        }
+        .diamond {
+            width: 80px;
+            height: 80px;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-width: 1.5px;
+            transition: all 0.3s ease;
+        }
+        .diamond-content {
+            transform: rotate(-45deg);
+            text-align: center;
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+        }
+        .glow-magenta {
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        .line-glow {
+            filter: drop-shadow(0 0 2px #00F5FF);
+        }
+        @keyframes data-flow {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100px) translateX(20px); opacity: 0; }
+        }
+        .data-packet {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00F5FF;
+            box-shadow: 0 0 8px #00F5FF;
+            border-radius: 50%;
+            animation: data-flow 3s infinite linear;
+        }
+        .blur-overlay {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-mono overflow-hidden h-screen w-screen select-none">
+<header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center border-b border-primary/20 bg-background-light/80 dark:bg-background-dark/80 blur-overlay">
+    <div>
+        <h1 class="font-display text-primary text-sm tracking-widest uppercase">System
+            Architecture</h1>
+        <p class="text-[10px] text-primary/60 dark:text-primary/40 uppercase tracking-tighter">Node
+            Network // Core v2.04</p>
+    </div>
+    <div class="flex items-center gap-3">
+        <div class="h-2 w-16 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full w-2/3 bg-primary animate-pulse"></div>
+        </div>
+        <span class="material-icons text-primary text-xl">settings_input_component</span>
+    </div>
+</header>
+<main class="relative h-full w-full pt-20 pb-24 overflow-auto cyber-grid">
+    <div class="perspective-container min-h-[1200px] w-full flex flex-col items-center pt-20 relative">
+        <div class="data-packet top-[20%] left-[45%]" style="animation-delay: 0s;"></div>
+        <div class="data-packet top-[40%] left-[55%]" style="animation-delay: 1.2s;"></div>
+        <div class="data-packet top-[60%] left-[48%]" style="animation-delay: 2.5s;"></div>
+        <div class="mb-24 flex flex-col items-center group cursor-pointer">
+            <div class="w-32 h-12 bg-primary/20 border border-primary flex items-center justify-center glow-cyan transition-all group-active:scale-95">
+                <span class="font-display text-primary text-xs font-bold tracking-[0.2em]">CORE_SYSTEM</span>
+            </div>
+            <div class="h-24 w-[1px] bg-primary/40 relative">
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary glow-cyan"></div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-16 mb-24 px-8 relative">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none line-glow opacity-30">
+                <path d="M 50% 0 L 25% 100" fill="none" stroke="#00F5FF" stroke-width="1"></path>
+                <path d="M 50% 0 L 75% 100" fill="none" stroke="#00F5FF" stroke-width="1"></path>
+            </svg>
+            <div class="flex flex-col items-center group">
+                <div class="diamond bg-background-light dark:bg-node-dark border-primary glow-cyan cursor-pointer hover:bg-primary/10">
+                    <div class="diamond-content">
+                        <span class="text-[10px] font-bold text-primary">UXUI ENGINE</span>
+                    </div>
+                </div>
+                <div class="h-16 w-[1px] bg-primary/40"></div>
+            </div>
+            <div class="flex flex-col items-center group">
+                <div class="diamond bg-background-light dark:bg-node-dark border-primary glow-cyan cursor-pointer hover:bg-primary/10">
+                    <div class="diamond-content">
+                        <span class="text-[10px] font-bold text-primary">CHROMA CORE</span>
+                    </div>
+                </div>
+                <div class="h-16 w-[1px] bg-primary/40"></div>
+            </div>
+            <div class="flex flex-col items-center group">
+                <div class="diamond bg-background-light dark:bg-node-dark border-secondary glow-magenta cursor-pointer hover:bg-secondary/10">
+                    <div class="diamond-content">
+                        <span class="text-[10px] font-bold text-secondary">MOOD STATE</span>
+                    </div>
+                </div>
+                <div class="h-16 w-[1px] bg-secondary/40"></div>
+            </div>
+            <div class="flex flex-col items-center group">
+                <div class="diamond bg-background-light dark:bg-node-dark border-primary glow-cyan cursor-pointer hover:bg-primary/10">
+                    <div class="diamond-content">
+                        <span class="text-[10px] font-bold text-primary">AURA'S LAB</span>
+                    </div>
+                </div>
+                <div class="h-16 w-[1px] bg-primary/40"></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 px-8 mb-32 w-full max-w-2xl">
+            <div class="p-3 border border-slate-300 dark:border-slate-800 bg-background-light/40 dark:bg-slate-900/40 blur-overlay flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-primary"></div>
+                    <span class="text-[9px] text-primary/80 uppercase">Level 2 Gate</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Auth_Protocol</span>
+            </div>
+            <div class="p-3 border border-slate-300 dark:border-slate-800 bg-background-light/40 dark:bg-slate-900/40 blur-overlay flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-secondary"></div>
+                    <span class="text-[9px] text-secondary/80 uppercase">Active Buffer</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Theme_Runtime</span>
+            </div>
+            <div class="p-3 border border-slate-300 dark:border-slate-800 bg-background-light/40 dark:bg-slate-900/40 blur-overlay flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-primary"></div>
+                    <span class="text-[9px] text-primary/80 uppercase">Visual Hook</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Asset_Loader</span>
+            </div>
+            <div class="p-3 border border-slate-300 dark:border-slate-800 bg-background-light/40 dark:bg-slate-900/40 blur-overlay flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-accent-yellow"></div>
+                    <span class="text-[9px] text-accent-yellow/80 uppercase">Status: OK</span>
+                </div>
+                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Sync_Engine</span>
+            </div>
+        </div>
+        <div class="mt-8 mx-6 p-4 border-l-2 border-primary bg-primary/5 dark:bg-primary/10 max-w-sm rounded-r-lg">
+            <h4 class="text-xs font-display text-primary mb-1">SYSTEM_INFO.LOG</h4>
+            <p class="text-[10px] leading-relaxed text-slate-600 dark:text-slate-400">
+                Active Module: <span class="text-primary font-bold">ChromaCore UI/UX</span><br/>
+                Function: <span
+                    class="text-slate-500">The Soul // Engine of spontaneity.</span><br/>
+                Status: <span class="text-secondary animate-pulse">VOLATILE_STREAMING</span>
+            </p>
+        </div>
+    </div>
+</main>
+<div class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40">
+    <button class="w-10 h-10 rounded-full bg-background-light/90 dark:bg-slate-900/90 border border-primary/30 flex items-center justify-center text-primary shadow-lg backdrop-blur">
+        <span class="material-icons text-sm">layers</span>
+    </button>
+    <button class="w-10 h-10 rounded-full bg-background-light/90 dark:bg-slate-900/90 border border-primary/30 flex items-center justify-center text-primary shadow-lg backdrop-blur">
+        <span class="material-icons text-sm">filter_center_focus</span>
+    </button>
+    <button class="w-10 h-10 rounded-full bg-background-light/90 dark:bg-slate-900/90 border border-secondary/30 flex items-center justify-center text-secondary shadow-lg backdrop-blur">
+        <span class="material-icons text-sm">bolt</span>
+    </button>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 h-20 bg-background-light/90 dark:bg-background-dark/90 border-t border-primary/10 blur-overlay z-50 flex items-center justify-around px-6">
+    <div class="flex flex-col items-center gap-1 group">
+        <div class="w-12 h-1 bg-primary/0 group-hover:bg-primary transition-all rounded-full mb-1"></div>
+        <span class="material-icons text-slate-400 dark:text-slate-600 group-hover:text-primary transition-colors">grid_view</span>
+        <span class="text-[9px] uppercase tracking-tighter text-slate-400 dark:text-slate-600 group-hover:text-primary">Agents</span>
+    </div>
+    <div class="flex flex-col items-center gap-1 group">
+        <div class="w-12 h-1 bg-primary transition-all rounded-full mb-1"></div>
+        <span class="material-icons text-primary">account_tree</span>
+        <span class="text-[9px] uppercase tracking-tighter text-primary">System</span>
+    </div>
+    <div class="relative -top-8">
+        <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_20px_rgba(0,245,255,0.6)]">
+            <span class="material-icons text-slate-900 text-3xl font-bold">add</span>
+        </div>
+    </div>
+    <div class="flex flex-col items-center gap-1 group">
+        <div class="w-12 h-1 bg-primary/0 group-hover:bg-primary transition-all rounded-full mb-1"></div>
+        <span class="material-icons text-slate-400 dark:text-slate-600 group-hover:text-primary transition-colors">palette</span>
+        <span class="text-[9px] uppercase tracking-tighter text-slate-400 dark:text-slate-600 group-hover:text-primary">Themes</span>
+    </div>
+    <div class="flex flex-col items-center gap-1 group">
+        <div class="w-12 h-1 bg-primary/0 group-hover:bg-primary transition-all rounded-full mb-1"></div>
+        <span class="material-icons text-slate-400 dark:text-slate-600 group-hover:text-primary transition-colors">memory</span>
+        <span class="text-[9px] uppercase tracking-tighter text-slate-400 dark:text-slate-600 group-hover:text-primary">Data</span>
+    </div>
+</nav>
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-[100] bg-[length:100%_2px,3px_100%]"></div>
+
+</body>
+</html>

@@ -82,18 +82,30 @@ fun SandboxScreen() {
         }
 
         // Background Testing Section
-        SandboxSection(title = "🌌 Background Components") {
+        SandboxSection(title = "🌌 Dynamic Visuals") {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.Black)
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF0F0C29))
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    // TODO: Add CyberpunkBackgrounds when available
+                    // Premium Background Design
+                    androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
+                        drawRect(
+                            brush = androidx.compose.ui.graphics.Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFF0F0C29),
+                                    Color(0xFF302B63),
+                                    Color(0xFF24243E)
+                                )
+                            )
+                        )
+                    }
                     Text(
-                        text = "🌌 Cyberpunk Background Placeholder",
-                        color = Color.White,
+                        text = "Quantum Canvas Active",
+                        color = Color(0xFF00F5FF),
+                        fontWeight = FontWeight.Light,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
@@ -101,138 +113,43 @@ fun SandboxScreen() {
         }
 
         // Component Testing Section
-        SandboxSection(title = "🔮 Interactive Components") {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+        SandboxSection(title = "🔮 Neural Halo Interface") {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)
             ) {
-                // Aura Orb Test
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    // TODO: Add PlaceholderAuraOrb when available
-                    Box(
-                        modifier = Modifier.size(80.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Card(
-                            modifier = Modifier.size(60.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFE94560))
-                        ) {
-                            Box(modifier = Modifier.fillMaxSize())
-                        }
-                    }
-                    Text(
-                        text = "Aura Orb",
-                        fontSize = 12.sp,
-                        color = Color.White.copy(alpha = 0.7f)
-                    )
-                }
-
-                // Halo View Test
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(
-                        modifier = Modifier.size(80.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        // TODO: Add HaloView when available
-                        Card(
-                            modifier = Modifier.size(60.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF00F5FF))
-                        ) {
-                            Box(modifier = Modifier.fillMaxSize())
-                        }
-                    }
-                    Text(
-                        text = "Halo View",
-                        fontSize = 12.sp,
-                        color = Color.White.copy(alpha = 0.7f)
-                    )
-                }
-            }
-        }
-
-        // Animation Testing Section
-        SandboxSection(title = "⚡ Digital Transitions") {
-            var showTransition by remember { mutableStateOf(false) }
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Button(
-                    onClick = { showTransition = !showTransition },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE94560)
-                    )
-                ) {
-                    Text(
-                        text = if (showTransition) "Hide Transition" else "Test Digital Transition",
-                        color = Color.White
-                    )
-                }
-
-                if (showTransition) {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(150.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.Black)
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            // TODO: Add DigitalTransitions when available
-                            Text(
-                                text = "✨ Digital Materialization Placeholder ✨",
-                                color = Color(0xFF00F5FF),
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // Color Palette Testing
-        SandboxSection(title = "🎨 Color Palette") {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
-                modifier = Modifier.height(120.dp),
-                contentPadding = PaddingValues(4.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                val colors = listOf(
-                    Color(0xFFE94560) to "Neon Red",
-                    Color(0xFF00F5FF) to "Cyan",
-                    Color(0xFFFFD700) to "Gold",
-                    Color(0xFF1A1A2E) to "Dark Blue",
-                    Color(0xFF16213E) to "Navy",
-                    Color(0xFF0F3460) to "Deep Blue",
-                    Color(0xFF533483) to "Purple",
-                    Color(0xFF7209B7) to "Magenta"
+//                dev.aurakai.auraframefx.aura.ui.HaloView(
+//                    modifier = Modifier.fillMaxSize()
+//                )
+                Text(
+                    "HaloView Placeholder (Move to shared lib)",
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.Center)
                 )
+            }
+        }
 
-                items(colors.size) { index ->
-                    val (color, name) = colors[index]
-                    Card(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .fillMaxSize(),
-                        colors = CardDefaults.cardColors(containerColor = color)
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = name,
-                                fontSize = 8.sp,
-                                color = if (color.luminance() > 0.5f) Color.Black else Color.White
-                            )
-                        }
-                    }
+        SandboxSection(title = "🧪 ChromaCore Diagnostics") {
+            val sourceColor = Color(0xFFE94560)
+            val blendedColor =
+                dev.aurakai.colorblendr.ChromaCore.blendColors(sourceColor, Color(0xFF00F5FF), 0.5f)
+
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "Dynamic Palette Generation",
+                    fontSize = 14.sp,
+                    color = Color.White.copy(alpha = 0.7f)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    ColorBox(sourceColor, "Source")
+                    ColorBox(blendedColor, "Blended")
+                    val complementary =
+                        dev.aurakai.colorblendr.ChromaCore.generateHarmonics(sourceColor)[2] // 2 is complementary in generateHarmonics
+                    ColorBox(complementary, "Harmonic")
                 }
             }
         }
@@ -253,6 +170,18 @@ fun SandboxScreen() {
         }
     }
 }
+
+@Composable
+private fun ColorBox(color: Color, name: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Card(
+            modifier = Modifier.size(60.dp),
+            colors = CardDefaults.cardColors(containerColor = color)
+        ) {}
+        Text(name, fontSize = 10.sp, color = Color.White.copy(alpha = 0.6f))
+    }
+}
+
 
 @Composable
 private fun SandboxSection(

@@ -1,4 +1,4 @@
-//@file:Suppress("SpellCheckingInspection", "HttpUrlsUsage", "MaxLineLength")
+package dev.aurakai.auraframefx//@file:Suppress("SpellCheckingInspection", "HttpUrlsUsage", "MaxLineLength")
 //
 //package dev.aurakai.auraframefx
 //

@@ -11,6 +11,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.firebase.messaging.RemoteMessage
+import dev.aurakai.auraframefx.domains.genesis.MyFirebaseMessagingService
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -145,7 +146,7 @@ class MyFirebaseMessagingServiceTest {
     fun onMessageReceived_ignores_whenSecurityValidationFails() = runTest(testDispatcher) {
         // Given a message from an unauthorized sender
         val rm = RemoteMessage.Builder("unauthorized-source")
-            .addData("type", "security")
+            .addData("type", "dev/aurakai/auraframefx/security")
             .build()
 
         // Spy validateMessageSecurity to return false

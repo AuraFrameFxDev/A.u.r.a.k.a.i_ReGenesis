@@ -1,0 +1,3 @@
+# Genesis AI Requirements
+numpy
+requests

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Agent Creation Forge L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=VT323&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#950bda",
+                        "amber-accent": "#ffbf00",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#0a050d",
+                        "panel-dark": "#1c1022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "pixel": ["VT323", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .glow-purple {
+            box-shadow: 0 0 15px rgba(149, 11, 218, 0.4);
+        }
+        .glow-amber {
+            box-shadow: 0 0 15px rgba(255, 191, 0, 0.3);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen flex flex-col overflow-hidden">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between px-4 py-4 bg-background-light dark:bg-background-dark border-b border-primary/20">
+    <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">arrow_back_ios</span>
+        <h1 class="text-sm font-bold tracking-[0.2em] uppercase">Agent Forge // L3</h1>
+    </div>
+    <div class="flex items-center gap-3">
+        <div class="flex flex-col items-end">
+            <span class="text-[10px] font-pixel text-amber-accent leading-none">LDO SYNC</span>
+            <span class="text-[10px] font-pixel text-green-400 leading-none">OPTIMAL</span>
+        </div>
+        <button class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center border border-primary/40">
+            <span class="material-symbols-outlined text-primary">token</span>
+        </button>
+    </div>
+</header>
+<!-- Main Content Area (Scrollable) -->
+<main class="flex-1 overflow-y-auto pb-24">
+    <!-- Central Viewport: Holographic Mannequin -->
+    <div class="relative w-full aspect-square max-h-[400px] mt-4 px-4">
+        <div class="w-full h-full bg-panel-dark/40 rounded-xl border border-primary/30 relative overflow-hidden group">
+            <div class="absolute inset-0 scanline opacity-20"></div>
+            <!-- Mock 3D Viewport Background -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
+            </div>
+            <!-- Central Mannequin Placeholder -->
+            <div class="relative w-full h-full flex items-center justify-center">
+                <img class="h-4/5 object-contain opacity-80 drop-shadow-[0_0_20px_rgba(149,11,218,0.6)]"
+                     data-alt="Holographic 3D humanoid mannequin in a wireframe style"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqpHr_0q9wGhCLljEQDTLP6ZbABfcbtX3MExqnYCwirGSpt6ZYADqmtOVGyu6kMJMzaUKZecEzU5GpEiL7CXX98S0YESIBScLl9MeNWcPlYX2gqhzqGOQsKDKHmUjoKSnFP55PdvxLGDQcSvLfRqAN3zpzxFKd5qq4yZ_pysDPkOA1V557X0W_wadbOGMc1Tqnrmk7-UYMdWvV0_lvUtQUAtXxPNabE_Dw-px8DXmwkponoUo7TrTXoRZclXUcD6wvWUtNHINTBVQ"/>
+                <!-- HUD Overlays -->
+                <div class="absolute top-4 left-4 font-pixel text-primary/80 text-xs">
+                    UI_ID: REGENESIS_V3.1<br/>
+                    COORD_X: 128.44<br/>
+                    COORD_Y: 921.02
+                </div>
+                <div class="absolute bottom-4 right-4 font-pixel text-amber-accent/80 text-xs text-right">
+                    NEURAL_LOAD: 74%<br/>
+                    STABILITY: 0.98rms
+                </div>
+            </div>
+            <!-- Corner Accents -->
+            <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary/60"></div>
+            <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary/60"></div>
+            <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary/60"></div>
+            <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary/60"></div>
+        </div>
+    </div>
+    <!-- Technical Data Blocks -->
+    <div class="grid grid-cols-2 gap-3 px-4 mt-6">
+        <div class="bg-primary/5 border border-primary/20 p-3 rounded-lg">
+            <p class="text-[10px] font-pixel text-primary/60 uppercase">LDO Integration</p>
+            <p class="text-xl font-pixel text-white">LOCKED</p>
+            <div class="w-full h-1 bg-primary/20 mt-1 rounded-full overflow-hidden">
+                <div class="w-[88%] h-full bg-primary glow-purple"></div>
+            </div>
+        </div>
+        <div class="bg-amber-accent/5 border border-amber-accent/20 p-3 rounded-lg">
+            <p class="text-[10px] font-pixel text-amber-accent/60 uppercase">Neural Weight</p>
+            <p class="text-xl font-pixel text-white">ACTIVE</p>
+            <div class="w-full h-1 bg-amber-accent/20 mt-1 rounded-full overflow-hidden">
+                <div class="w-[62%] h-full bg-amber-accent glow-amber"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Forge Controls -->
+    <div class="px-4 mt-8 space-y-6">
+        <div>
+            <h3 class="text-xs font-bold tracking-widest uppercase text-primary/80 mb-4 border-l-2 border-primary pl-2">
+                Personality Matrix</h3>
+            <!-- Sliders Section -->
+            <div class="space-y-5">
+                <!-- Logic Bias -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-medium text-slate-400">LOGIC BIAS</span>
+                        <span class="font-pixel text-primary">82%</span>
+                    </div>
+                    <div class="relative flex items-center h-4">
+                        <div class="h-1.5 w-full bg-panel-dark rounded-full border border-primary/20">
+                            <div class="h-full w-[82%] bg-primary rounded-full relative">
+                                <div class="absolute -right-1.5 -top-1.5 size-4 rounded-full bg-primary shadow-lg border-2 border-background-dark"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Stoicism vs Empathy -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-medium text-slate-400">STOICISM // EMPATHY</span>
+                        <span class="font-pixel text-primary">34%</span>
+                    </div>
+                    <div class="relative flex items-center h-4">
+                        <div class="h-1.5 w-full bg-panel-dark rounded-full border border-primary/20">
+                            <div class="h-full w-[34%] bg-primary rounded-full relative">
+                                <div class="absolute -right-1.5 -top-1.5 size-4 rounded-full bg-primary shadow-lg border-2 border-background-dark"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Risk Tolerance -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-medium text-slate-400">RISK TOLERANCE</span>
+                        <span class="font-pixel text-primary">64%</span>
+                    </div>
+                    <div class="relative flex items-center h-4">
+                        <div class="h-1.5 w-full bg-panel-dark rounded-full border border-primary/20">
+                            <div class="h-full w-[64%] bg-primary rounded-full relative">
+                                <div class="absolute -right-1.5 -top-1.5 size-4 rounded-full bg-primary shadow-lg border-2 border-background-dark"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Role Matrix -->
+        <div>
+            <h3 class="text-xs font-bold tracking-widest uppercase text-primary/80 mb-4 border-l-2 border-primary pl-2">
+                Role Assignment</h3>
+            <div class="grid grid-cols-3 gap-2">
+                <button class="py-3 px-1 border border-primary bg-primary text-white rounded flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined text-lg">radar</span>
+                    <span class="text-[10px] font-bold uppercase">Scout</span>
+                </button>
+                <button class="py-3 px-1 border border-primary/20 bg-panel-dark text-slate-400 rounded flex flex-col items-center gap-1 hover:border-primary/60 transition-colors">
+                    <span class="material-symbols-outlined text-lg">insights</span>
+                    <span class="text-[10px] font-bold uppercase">Analyst</span>
+                </button>
+                <button class="py-3 px-1 border border-primary/20 bg-panel-dark text-slate-400 rounded flex flex-col items-center gap-1 hover:border-primary/60 transition-colors">
+                    <span class="material-symbols-outlined text-lg">shield</span>
+                    <span class="text-[10px] font-bold uppercase">Guardian</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Primary Forge Button -->
+    <div class="px-4 mt-10">
+        <button class="w-full h-14 bg-primary rounded-lg text-white font-bold tracking-[0.3em] uppercase glow-purple flex items-center justify-center gap-2 group">
+            <span>Forge LDO Agent</span>
+            <span class="material-symbols-outlined">bolt</span>
+        </button>
+        <p class="text-center text-[10px] text-slate-500 mt-3 font-pixel tracking-wider uppercase">
+            System ready for initialization</p>
+    </div>
+</main>
+<!-- iOS Styled Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-md border-t border-white/5 pb-8 pt-2 px-6">
+    <div class="flex justify-between items-center max-w-md mx-auto">
+        <div class="flex flex-col items-center text-slate-500">
+            <span class="material-symbols-outlined">hub</span>
+            <span class="text-[10px] font-medium mt-1">Nexus</span>
+        </div>
+        <div class="flex flex-col items-center text-primary">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">architecture</span>
+            <span class="text-[10px] font-medium mt-1">Forge</span>
+        </div>
+        <div class="flex flex-col items-center text-slate-500">
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span class="text-[10px] font-medium mt-1">Stash</span>
+        </div>
+        <div class="flex flex-col items-center text-slate-500">
+            <span class="material-symbols-outlined">settings_suggest</span>
+            <span class="text-[10px] font-medium mt-1">System</span>
+        </div>
+    </div>
+    <!-- iOS Home Indicator -->
+    <div class="w-32 h-1 bg-white/20 rounded-full mx-auto mt-6"></div>
+</nav>
+</body>
+</html>

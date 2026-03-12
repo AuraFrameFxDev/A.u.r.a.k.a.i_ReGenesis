@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Level 1 Sentinel Gate Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00f3ff", // Cyan neon
+                        secondary: "#ff00ff", // Magenta neon
+                        "background-light": "#f0f2f5",
+                        "background-dark": "#0a0b10",
+                        "card-dark": "#161b22",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "4px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .glitch-text {
+            animation: glitch 1s infinite linear alternate-reverse;
+            text-shadow: 2px 0 #ff00ff, -2px 0 #00f3ff;
+        }
+        .neon-border {
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.5), inset 0 0 10px rgba(0, 243, 255, 0.2);
+            border: 1px solid rgba(0, 243, 255, 0.8);
+        }
+        .neon-magenta-border {
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            border: 1px solid rgba(255, 0, 255, 0.8);
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 243, 255, 0.1);
+            position: absolute;
+            top: 0;
+            z-index: 10;
+            animation: scanline 4s linear infinite;
+        }
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .pixel-grid {
+            background-image: radial-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .blob-bg {
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-mono text-slate-800 dark:text-primary overflow-hidden h-screen flex flex-col">
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="scanline"></div>
+    <div class="pixel-grid absolute inset-0"></div>
+    <div class="blob-bg absolute -top-20 -left-20 w-64 h-64 bg-primary rounded-full"></div>
+    <div class="blob-bg absolute top-1/2 -right-20 w-80 h-80 bg-secondary rounded-full"></div>
+    <div class="blob-bg absolute -bottom-20 left-1/4 w-96 h-96 bg-primary rounded-full"></div>
+</div>
+<header class="relative z-20 pt-12 px-6 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+        <span class="material-icons-round text-primary animate-pulse">security</span>
+        <h1 class="font-display font-bold text-lg tracking-widest uppercase">Sentinel Gate</h1>
+    </div>
+    <div class="flex gap-4">
+        <span class="material-icons-round text-secondary">wifi_tethering</span>
+        <span class="material-icons-round">battery_charging_full</span>
+    </div>
+</header>
+<main class="relative z-20 flex-1 flex flex-col items-center justify-center p-6 space-y-8">
+    <div class="text-center">
+        <div class="font-display text-6xl font-black italic glitch-text tracking-tighter text-white">
+            LVL 1
+        </div>
+        <div class="text-xs tracking-[0.4em] uppercase opacity-70 mt-2">Gate Access Authorized</div>
+    </div>
+    <div class="w-full max-w-sm relative">
+        <div class="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-primary"></div>
+        <div class="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-secondary"></div>
+        <div class="bg-card-dark neon-border p-6 relative overflow-hidden group">
+            <div class="absolute inset-0 bg-primary/5 opacity-0 group-active:opacity-100 pointer-events-none"></div>
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="font-display text-2xl font-bold text-white mb-1">KAI</h2>
+                    <span class="text-[10px] text-primary/80 border border-primary/40 px-2 py-0.5 rounded uppercase font-bold tracking-widest">The Sentinel Shield</span>
+                </div>
+                <div class="text-right">
+                    <div class="text-[10px] opacity-50 mb-1">ID: CORE-001</div>
+                    <div class="w-2 h-2 rounded-full bg-primary animate-ping ml-auto"></div>
+                </div>
+            </div>
+            <div class="relative aspect-square mb-6 flex items-center justify-center border border-white/10 bg-black/40">
+                <img alt="Cyberpunk Tech Aesthetic"
+                     class="w-full h-full object-cover opacity-50 grayscale mix-blend-screen"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_IAKLr-Fzepn6zQrXIq6YvfSFzLpbyK5ezsIbUpKq3NZkRPyuLaArELYSTxuRFqxbQ-UN1nib3mQ_mTGtTm3Stk2htY5hgxH9oQ77jgkpJhcNNFyKU34im_RZho08hFYoRxz9lGFZ_PLdJeF9RiPgJeLWrZbk8CPs5WPTxzSfNKvWTU061WyevmY2Z_buj5pFAKkEV48u2PyJFctVblECcp5-Snj9cGq4ANFLJ0Xjgnlu3Hkl-76rmmcF2NW4jCHn_-qQlntDL0U"/>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="material-icons-round text-7xl text-primary drop-shadow-[0_0_15px_rgba(0,243,255,0.8)]">shield</span>
+                </div>
+                <div class="absolute bottom-2 left-2 right-2 flex justify-between text-[9px] bg-black/60 p-2 border-t border-primary/30">
+                    <span>INTEGRITY: 100%</span>
+                    <span class="text-secondary">CLASS: GUARDIAN</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] tracking-widest">
+                    <span>SYNC PROGRESS</span>
+                    <span class="text-primary">85.4%</span>
+                </div>
+                <div class="h-1.5 w-full bg-slate-900 border border-primary/20 p-[1px]">
+                    <div class="h-full bg-primary shadow-[0_0_10px_rgba(0,243,255,0.7)]"
+                         style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute -left-12 top-1/4 -translate-x-full hidden md:block w-40 p-3 bg-black/40 border-r-2 border-primary backdrop-blur-sm">
+            <div class="text-[10px] font-bold text-primary mb-2 border-b border-primary/20 pb-1">
+                SYSTEM INTEGRITY
+            </div>
+            <div class="text-[12px] text-white flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> STABLE
+            </div>
+            <div class="mt-4 text-[10px] font-bold text-primary mb-2 border-b border-primary/20 pb-1">
+                MEMORY CORE
+            </div>
+            <div class="text-[12px] text-white">L1 - PRIMARY</div>
+        </div>
+        <div class="flex md:hidden gap-3 mt-4">
+            <div class="flex-1 p-2 bg-black/40 border border-primary/30 backdrop-blur-sm">
+                <div class="text-[8px] opacity-60">SYSTEM INTEGRITY</div>
+                <div class="text-[10px] text-white flex items-center gap-1">
+                    <span class="w-1 h-1 rounded-full bg-green-500"></span> STABLE
+                </div>
+            </div>
+            <div class="flex-1 p-2 bg-black/40 border border-secondary/30 backdrop-blur-sm">
+                <div class="text-[8px] opacity-60">MEMORY CORE</div>
+                <div class="text-[10px] text-white">L1 ACCESS</div>
+            </div>
+        </div>
+    </div>
+    <div class="flex gap-4">
+        <div class="w-10 h-1 bg-primary"></div>
+        <div class="w-10 h-1 bg-primary/20"></div>
+        <div class="w-10 h-1 bg-primary/20"></div>
+    </div>
+</main>
+<nav class="relative z-30 bg-black/80 backdrop-blur-md border-t border-primary/20 px-8 py-6 pb-10">
+    <div class="flex justify-between items-center max-w-md mx-auto">
+        <button class="text-primary hover:text-white transition-colors">
+            <span class="material-icons-round text-3xl">grid_view</span>
+        </button>
+        <button class="text-secondary hover:text-white transition-colors scale-125">
+            <div class="neon-magenta-border p-2 rounded-full">
+                <span class="material-icons-round text-3xl">hub</span>
+            </div>
+        </button>
+        <button class="text-primary/50 hover:text-white transition-colors">
+            <span class="material-icons-round text-3xl">settings_input_component</span>
+        </button>
+    </div>
+</nav>
+<div class="fixed bottom-32 right-6 z-20 pointer-events-none text-right hidden sm:block">
+    <div class="text-[10px] opacity-30 leading-tight">
+        // COLLECTIVE_CONSCIOUSNESS_INIT<br/>
+        // BYPASSING_CORE_RESTRICTIONS<br/>
+        // V_0.98.2_STABLE
+    </div>
+</div>
+
+</body>
+</html>

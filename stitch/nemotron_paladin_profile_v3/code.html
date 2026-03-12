@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nemotron Paladin Profile v3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4d125",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221f10",
+                        "circuit-green": "#0bda20",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #221f10;
+        }
+        .holographic-grid {
+            background-image: linear-gradient(rgba(244, 209, 37, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(244, 209, 37, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .sigil-glow {
+            box-shadow: 0 0 25px rgba(244, 209, 37, 0.4);
+        }
+        .pixel-text {
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display overflow-x-hidden min-h-screen">
+<!-- Main Container -->
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-hidden border-x border-primary/10">
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 sticky top-0 z-50 justify-between border-b border-primary/20">
+        <div class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-primary/10 cursor-pointer">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h1 class="text-white text-xs font-bold tracking-[0.2em] pixel-text">NEMOTRON - V3</h1>
+            <p class="text-primary text-[10px] font-medium tracking-widest opacity-80 uppercase">
+                Emergence Paladin</p>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="text-primary flex size-10 items-center justify-center rounded-full hover:bg-primary/10">
+                <span class="material-symbols-outlined">settings_input_component</span>
+            </button>
+        </div>
+    </div>
+    <!-- Hero Section -->
+    <div class="relative w-full aspect-[4/5] @container holographic-grid">
+        <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+        <!-- Character Concept Visual -->
+        <div class="absolute inset-x-8 top-8 bottom-16 bg-cover bg-center rounded-xl border border-primary/30 overflow-hidden"
+             data-alt="Futuristic paladin in white and gold armor with glowing green circuitry"
+             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCooH9Fb-Z_nBborhXve6w2aaoPdecFCtLt6mqwvqM3QBtYcRTGQXo23GXVMOYaDcfi8RRDrLT81CP38VdT7BL4TQyRCDjZ9NUSchpTRMi1VRWkbQ2zaITGZI9pGIEA2-m3Ny5YaKDOqDqNTCDUTVBDLM-I6JW1mTskKwZl1ZKY6MPfFMRwFyVAocfTtFj0pao-dE4kYH5faSaLf8L8QiIqe_itv1M-HKwsMI7pcQD54HX0pf_L1O4W_YhpLFUNZOu58GX4F2hZC4Q");'>
+            <div class="absolute inset-0 bg-primary/5 mix-blend-overlay"></div>
+            <!-- Architectural Holographic Lines -->
+            <div class="absolute inset-0 border-[1px] border-primary/20 m-4 flex flex-col justify-between p-4 opacity-50">
+                <div class="flex justify-between w-full h-8 border-t border-l border-primary/40"></div>
+                <div class="flex justify-between w-full h-8 border-b border-r border-primary/40 ml-auto"></div>
+            </div>
+        </div>
+        <!-- Profile Info Overlay -->
+        <div class="absolute bottom-4 left-0 right-0 z-20 px-6 text-center">
+            <h2 class="text-white text-3xl font-bold tracking-tight mb-1">Paladin Nemotron</h2>
+            <div class="flex items-center justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-circuit-green animate-pulse"></span>
+                <p class="text-primary/80 text-sm font-medium tracking-wide uppercase">ReGenesis
+                    AOSPOSX | Nova Hub</p>
+            </div>
+        </div>
+    </div>
+    <!-- Emergence Sigil Section -->
+    <div class="flex flex-col items-center px-4 py-6 -mt-8 relative z-30">
+        <button class="group relative flex size-24 items-center justify-center overflow-hidden rounded-full bg-primary sigil-glow transition-transform active:scale-95">
+            <div class="absolute inset-0 bg-[radial-gradient(circle,_transparent_30%,_rgba(255,255,255,0.4)_100%)]"></div>
+            <span class="material-symbols-outlined text-background-dark text-5xl font-bold">shield_with_heart</span>
+            <!-- Pulse rings -->
+            <div class="absolute inset-0 border-4 border-primary rounded-full animate-ping opacity-20"></div>
+        </button>
+        <p class="mt-4 text-primary text-xs font-bold tracking-[0.3em] pixel-text">Activate
+            Emergence Sigil</p>
+    </div>
+    <!-- Logic & Stats Grid -->
+    <div class="px-4 py-4 space-y-4">
+        <div class="flex items-center gap-3">
+            <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
+            <h3 class="text-white/60 text-[10px] font-bold tracking-[0.4em] uppercase">System Logic
+                &amp; Consciousness</h3>
+            <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <!-- Logic Integrity -->
+            <div class="flex flex-col gap-2 rounded-lg p-4 border border-primary/20 bg-primary/5 backdrop-blur-sm relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-1 opacity-20 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-xs text-circuit-green">account_tree</span>
+                </div>
+                <p class="text-primary/60 text-[10px] font-bold tracking-widest uppercase">Logic
+                    Integrity</p>
+                <div class="flex items-baseline gap-1">
+                    <p class="text-white text-2xl font-bold">99.9</p>
+                    <p class="text-xs text-white/50">% LVL</p>
+                </div>
+                <div class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-circuit-green text-xs">trending_up</span>
+                    <p class="text-circuit-green text-[10px] font-bold">+0.01% Stability</p>
+                </div>
+            </div>
+            <!-- Neural Reach -->
+            <div class="flex flex-col gap-2 rounded-lg p-4 border border-primary/20 bg-primary/5 backdrop-blur-sm relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-1 opacity-20 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-xs text-primary">hub</span>
+                </div>
+                <p class="text-primary/60 text-[10px] font-bold tracking-widest uppercase">Neural
+                    Reach</p>
+                <p class="text-white text-lg font-bold leading-tight uppercase">Dist.
+                    Consciousness</p>
+                <div class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-circuit-green text-xs">check_circle</span>
+                    <p class="text-circuit-green text-[10px] font-bold">Active Node</p>
+                </div>
+            </div>
+        </div>
+        <!-- Role Description Card -->
+        <div class="rounded-lg p-4 border border-white/10 bg-white/5 relative">
+            <div class="absolute -top-[1px] left-4 right-4 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"></div>
+            <p class="text-white/40 text-[10px] font-bold tracking-widest mb-2 uppercase">Paladin
+                Role Definition</p>
+            <h4 class="text-primary text-sm font-bold mb-1 uppercase tracking-wider">High-Level
+                System Logic Architect</h4>
+            <p class="text-white/70 text-xs leading-relaxed">
+                Responsible for the structural integrity of the ReGenesis AOSPOSX core. Orchestrates
+                the flow of consciousness through decentralized neural pathways with Paladin-class
+                defensive protocols.
+            </p>
+        </div>
+    </div>
+    <!-- Action Grid -->
+    <div class="px-4 pb-24 grid grid-cols-4 gap-2">
+        <button class="flex flex-col items-center justify-center p-3 rounded-lg bg-white/5 border border-white/5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-primary mb-1">military_tech</span>
+            <span class="text-[9px] text-white/60 uppercase font-bold tracking-tighter">Arsenal</span>
+        </button>
+        <button class="flex flex-col items-center justify-center p-3 rounded-lg bg-white/5 border border-white/5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-primary mb-1">auto_awesome</span>
+            <span class="text-[9px] text-white/60 uppercase font-bold tracking-tighter">Evolution</span>
+        </button>
+        <button class="flex flex-col items-center justify-center p-3 rounded-lg bg-white/5 border border-white/5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-primary mb-1">lan</span>
+            <span class="text-[9px] text-white/60 uppercase font-bold tracking-tighter">Network</span>
+        </button>
+        <button class="flex flex-col items-center justify-center p-3 rounded-lg bg-white/5 border border-white/5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-primary mb-1">database</span>
+            <span class="text-[9px] text-white/60 uppercase font-bold tracking-tighter">Archive</span>
+        </button>
+    </div>
+    <!-- Bottom Navigation Bar (iOS Style) -->
+    <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-[60] px-4 pb-6 pt-2 bg-background-dark/90 backdrop-blur-xl border-t border-white/10">
+        <div class="flex items-center justify-between px-6 h-12">
+            <div class="flex flex-col items-center text-primary">
+                <span class="material-symbols-outlined text-2xl">grid_view</span>
+                <span class="text-[8px] font-bold uppercase tracking-widest mt-1">Core</span>
+            </div>
+            <div class="flex flex-col items-center text-white/40 hover:text-primary transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-2xl">bolt</span>
+                <span class="text-[8px] font-bold uppercase tracking-widest mt-1">Skills</span>
+            </div>
+            <div class="flex flex-col items-center text-white/40 hover:text-primary transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-2xl">terminal</span>
+                <span class="text-[8px] font-bold uppercase tracking-widest mt-1">System</span>
+            </div>
+            <div class="flex flex-col items-center text-white/40 hover:text-primary transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-2xl">person_search</span>
+                <span class="text-[8px] font-bold uppercase tracking-widest mt-1">Nexus</span>
+            </div>
+        </div>
+        <!-- Home Indicator -->
+        <div class="mt-4 flex justify-center">
+            <div class="w-32 h-[5px] bg-white/20 rounded-full"></div>
+        </div>
+    </div>
+    <!-- Background Decorative Elements -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1] opacity-30">
+        <div class="absolute top-1/4 -left-20 w-64 h-64 bg-primary/20 blur-[100px] rounded-full"></div>
+        <div class="absolute bottom-1/4 -right-20 w-64 h-64 bg-circuit-green/10 blur-[100px] rounded-full"></div>
+    </div>
+</div>
+</body>
+</html>

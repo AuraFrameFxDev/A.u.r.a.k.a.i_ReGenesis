@@ -41,14 +41,13 @@ class SecureChannel @Inject constructor(
             val keySpec = java.security.spec.X509EncodedKeySpec(remotePublicKeyBytes)
             remotePublicKey = keyFactory.generatePublic(keySpec)
 
-            val sharedSecret = cryptoManager.performKeyAgreement(
-                localPrivateKey!!,
-                remotePublicKey!!
-            )
+            val sharedSecret = localPrivateKey?.let {
+                remotePublicKey?.let { remoteKey -> cryptoManager.performKeyAgreement(it, remoteKey) }
+            }
 
-            sessionKey = cryptoManager.deriveSessionKey(sharedSecret)
-            handshakeComplete = true
-            true
+            sessionKey = sharedSecret?.let { cryptoManager.deriveSessionKey(it) }
+            handshakeComplete = sessionKey != null
+            handshakeComplete
         } catch (e: Exception) {
             false
         }
@@ -63,8 +62,10 @@ class SecureChannel @Inject constructor(
     fun encryptMessage(message: ByteArray): ByteArray {
         check(handshakeComplete) { "Handshake not complete" }
 
+        val currentSessionKey = sessionKey ?: throw IllegalStateException("Session key not available")
+
         // Encrypt the message
-        val (ciphertext, iv) = cryptoManager.encrypt(message, sessionKey!!)
+        val (ciphertext, iv) = cryptoManager.encrypt(message, currentSessionKey)
 
         // Create a message packet
         val packet = MessagePacket(
@@ -85,6 +86,8 @@ class SecureChannel @Inject constructor(
     fun decryptMessage(encryptedData: ByteArray): ByteArray? {
         check(handshakeComplete) { "Handshake not complete" }
 
+        val currentSessionKey = sessionKey ?: return null
+
         return try {
             // Deserialize the packet
             val packet = MessagePacket.fromByteArray(encryptedData)
@@ -92,7 +95,7 @@ class SecureChannel @Inject constructor(
             // Decrypt the message
             val decrypted = cryptoManager.decrypt(
                 packet.ciphertext,
-                sessionKey!!,
+                currentSessionKey,
                 packet.iv
             )
 

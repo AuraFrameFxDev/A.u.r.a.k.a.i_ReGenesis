@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.domains.genesis.network.KtorClient
 import io.ktor.client.HttpClient
-import dev.aurakai.auraframefx.network.KtorClient
 import javax.inject.Singleton
 
 /**
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object KtorModule {
-    
+
     /**
      * Provides a singleton instance of [KtorClient].
      * 
@@ -25,7 +25,7 @@ object KtorModule {
     fun provideKtorClient(): KtorClient {
         return KtorClient()
     }
-    
+
     /**
      * Provides the underlying Ktor [HttpClient] from [KtorClient].
      * 
@@ -36,3 +36,4 @@ object KtorModule {
     @Singleton
     fun provideHttpClient(ktorClient: KtorClient) = ktorClient.client
 }
+

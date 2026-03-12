@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Level 3 - System UI &amp; Global Hooks</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&amp;family=Orbitron:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00f2ff", // Neon Cyan from the logo
+                        "background-light": "#f0f4f8",
+                        "background-dark": "#0a0c10",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "4px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0, 242, 255, 0) 0%, rgba(0, 242, 255, 0.05) 50%, rgba(0, 242, 255, 0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            pointer-events: none;
+            animation: scanline 6s linear infinite;
+        }
+        @keyframes scanline {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+        .slider-thumb::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 24px;
+            background: #00f2ff;
+            cursor: pointer;
+            border-radius: 2px;
+            box-shadow: 0 0 8px #00f2ff;
+        }
+        .grid-bg {
+            background-image: radial-gradient(rgba(0, 242, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-cyan-50 font-mono selection:bg-primary selection:text-black min-h-screen overflow-x-hidden">
+<div class="scanline"></div>
+<div class="flex justify-between items-center px-6 py-2 text-xs font-bold tracking-widest opacity-70">
+    <span>LVL.03_CORE</span>
+    <div class="flex items-center gap-3">
+        <span class="material-icons-outlined text-sm">signal_cellular_alt</span>
+        <span class="material-icons-outlined text-sm">wifi</span>
+        <span class="material-icons-outlined text-sm">battery_full</span>
+        <span>11:51</span>
+    </div>
+</div>
+<header class="px-6 pt-4 pb-2 border-b border-primary/20 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-20">
+    <div class="flex items-center gap-3 mb-2">
+        <button class="material-icons-outlined text-primary hover:scale-110 transition-transform">
+            arrow_back
+        </button>
+        <h1 class="font-display text-xs uppercase tracking-tighter text-primary glow-text">AuraKai:
+            Architecting Digital Sentience</h1>
+        <div class="ml-auto flex gap-2">
+            <span class="material-icons-outlined text-xs opacity-50">more_vert</span>
+        </div>
+    </div>
+    <div class="flex items-center justify-between">
+        <span class="text-[10px] text-primary/60 font-bold tracking-widest uppercase">System UI &amp; Global Hooks</span>
+        <span class="text-[10px] bg-primary/10 px-2 py-0.5 border border-primary/30 rounded">ROOTED_STABLE</span>
+    </div>
+</header>
+<main class="p-6 space-y-8 pb-32 grid-bg">
+    <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-2 border-primary pl-3 py-1 bg-primary/5">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-primary">Targeting
+                SystemUI</h2>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input checked="" class="sr-only peer" type="checkbox"/>
+                <div class="w-10 h-5 bg-slate-400 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary glow-border"></div>
+            </label>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-black/20 dark:bg-primary/5 p-4 border border-primary/20 rounded-sm relative group overflow-hidden">
+                <div class="absolute top-0 right-0 p-1 opacity-20 group-hover:opacity-100 transition-opacity">
+                    <span class="material-icons-outlined text-xs">info</span>
+                </div>
+                <p class="text-[10px] uppercase text-primary/60 mb-1">Status Bar Hook</p>
+                <p class="text-lg font-display">ACTIVE</p>
+                <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="bg-primary h-full w-3/4 shadow-[0_0_8px_#00f2ff]"></div>
+                </div>
+            </div>
+            <div class="bg-black/20 dark:bg-primary/5 p-4 border border-primary/20 rounded-sm">
+                <p class="text-[10px] uppercase text-primary/60 mb-1">Nav Interaction</p>
+                <p class="text-lg font-display text-slate-400">BYPASS</p>
+                <div class="mt-2 h-1 bg-slate-800 rounded-full"></div>
+            </div>
+        </div>
+    </section>
+    <section class="space-y-6">
+        <div class="border-l-2 border-primary pl-3 py-1">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-primary">Layout Geometry</h2>
+        </div>
+        <div class="space-y-3">
+            <div class="flex justify-between text-[11px] uppercase tracking-tighter">
+                <span class="text-primary/70">Global Margin Offset</span>
+                <span class="font-bold text-primary">12.5px</span>
+            </div>
+            <input class="w-full h-1 bg-slate-800 appearance-none slider-thumb cursor-pointer"
+                   max="40" min="0" type="range" value="12"/>
+            <div class="flex justify-between text-[9px] opacity-40">
+                <span>0px</span>
+                <span>20px</span>
+                <span>40px</span>
+            </div>
+        </div>
+        <div class="space-y-3">
+            <div class="flex justify-between text-[11px] uppercase tracking-tighter">
+                <span class="text-primary/70">Element Padding</span>
+                <span class="font-bold text-primary">24.0px</span>
+            </div>
+            <input class="w-full h-1 bg-slate-800 appearance-none slider-thumb cursor-pointer"
+                   max="64" min="0" type="range" value="24"/>
+            <div class="flex justify-between text-[9px] opacity-40">
+                <span>MIN</span>
+                <span>OPT</span>
+                <span>MAX</span>
+            </div>
+        </div>
+    </section>
+    <section class="space-y-4">
+        <div class="border-l-2 border-primary pl-3 py-1">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-primary">LSposed Injection
+                Layer</h2>
+        </div>
+        <div class="space-y-2">
+            <div class="flex items-center justify-between p-3 bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-white/5">
+                <div class="flex items-center gap-3">
+                    <span class="material-icons-outlined text-primary text-sm">settings_input_component</span>
+                    <div>
+                        <p class="text-xs font-bold uppercase">Global Device Settings</p>
+                        <p class="text-[9px] opacity-50">API 34 OVERRIDE</p>
+                    </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input checked="" class="sr-only peer" type="checkbox"/>
+                    <div class="w-8 h-4 bg-slate-400 dark:bg-slate-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-white/5">
+                <div class="flex items-center gap-3">
+                    <span class="material-icons-outlined text-primary text-sm">auto_fix_high</span>
+                    <div>
+                        <p class="text-xs font-bold uppercase">Dynamic Theming (Aura)</p>
+                        <p class="text-[9px] opacity-50">LSP-CORE v2.1</p>
+                    </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input class="sr-only peer" type="checkbox"/>
+                    <div class="w-8 h-4 bg-slate-400 dark:bg-slate-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+        </div>
+    </section>
+    <section class="p-4 border border-dashed border-primary/40 rounded-sm bg-primary/5">
+        <p class="text-[9px] uppercase tracking-widest text-center mb-4 opacity-50">Layout Impact
+            Projection</p>
+        <div class="flex justify-center items-center gap-4">
+            <div class="w-16 h-28 border border-primary/20 rounded relative flex items-center justify-center">
+                <div class="w-10 h-20 border border-primary bg-primary/20 animate-pulse"></div>
+                <div class="absolute top-1 left-1 w-2 h-0.5 bg-primary/50"></div>
+                <div class="absolute bottom-1 right-1 w-4 h-0.5 bg-primary/50"></div>
+            </div>
+            <span class="material-icons-outlined text-primary opacity-50">sync_alt</span>
+            <div class="w-16 h-28 border border-primary/20 rounded relative flex items-center justify-center">
+                <div class="w-14 h-24 border-2 border-primary bg-primary/10 transition-all duration-500"></div>
+                <div class="absolute top-1 left-1 w-2 h-0.5 bg-primary/50"></div>
+                <div class="absolute bottom-1 right-1 w-4 h-0.5 bg-primary/50"></div>
+            </div>
+        </div>
+        <p class="text-[8px] text-center mt-4 text-primary/70">REGENESIS ENGINE v1.4.2 READY</p>
+    </section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light/90 dark:bg-background-dark/90 border-t border-primary/20 backdrop-blur-xl px-6 py-4 flex justify-around items-center z-50">
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-icons-outlined text-slate-500 group-hover:text-primary transition-colors">folder</span>
+        <span class="text-[9px] uppercase font-bold tracking-tighter opacity-50 group-hover:opacity-100">Sources</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <div class="relative">
+            <span class="material-icons-outlined text-primary glow-text">chat_bubble</span>
+            <div class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full glow-border"></div>
+        </div>
+        <span class="text-[9px] uppercase font-bold tracking-tighter text-primary">Chat</span>
+        <div class="h-0.5 w-6 bg-primary mt-1 rounded-full"></div>
+    </button>
+    <button class="flex flex-col items-center gap-1 group">
+        <span class="material-icons-outlined text-slate-500 group-hover:text-primary transition-colors">edit_note</span>
+        <span class="text-[9px] uppercase font-bold tracking-tighter opacity-50 group-hover:opacity-100">Studio</span>
+    </button>
+</nav>
+<div class="fixed bottom-20 left-1/2 -translate-x-1/2 w-[90%] max-w-sm">
+    <div class="bg-black dark:bg-slate-900 border border-primary/40 rounded-full px-4 py-2 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-primary rounded-full animate-ping"></div>
+            <span class="text-[10px] text-primary font-bold uppercase tracking-widest">Aura Listening...</span>
+        </div>
+        <div class="flex gap-4">
+            <span class="material-icons-outlined text-sm text-slate-400">mic</span>
+            <span class="material-icons-outlined text-sm text-slate-400">grid_view</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

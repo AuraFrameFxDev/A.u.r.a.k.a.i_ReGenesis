@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.logging
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.junit.jupiter.api.*
@@ -12,7 +11,6 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
-import timber.log.Timber
 import java.io.File
 
 /**
@@ -561,7 +559,7 @@ class UnifiedLoggingSystemTest {
 
     @Nested
     @DisplayName("Session Management Tests")
-    inner class SessionManagementTests {
+    class SessionManagementTests {
 
         @Test
         fun `LogEntry should include session ID`() {
@@ -722,7 +720,7 @@ class UnifiedLoggingSystemTest {
 
     @Nested
     @DisplayName("Log Analytics Tests")
-    inner class LogAnalyticsTests {
+    class LogAnalyticsTests {
 
         @Test
         fun `LogAnalytics data class should have correct properties`() {
@@ -833,7 +831,7 @@ class UnifiedLoggingSystemTest {
 
     @Nested
     @DisplayName("Enum Validation Tests")
-    inner class EnumValidationTests {
+    class EnumValidationTests {
 
         @Test
         fun `SystemHealth enum should have all expected values`() {
@@ -982,7 +980,7 @@ class UnifiedLoggingSystemTest {
 
     @Nested
     @DisplayName("LogEntry Data Class Tests")
-    inner class LogEntryTests {
+    class LogEntryTests {
 
         @Test
         fun `LogEntry should have correct default values`() {

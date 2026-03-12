@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ReGenesis AOSPOSX - ROM Repository</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "glass": "rgba(25, 34, 51, 0.7)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .grid-bg {
+            background-image: linear-gradient(rgba(19, 91, 236, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(19, 91, 236, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .glass-card {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .ios-tab-bar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen font-display">
+<!-- Tech Grid Background -->
+<div class="fixed inset-0 grid-bg pointer-events-none z-0"></div>
+<!-- Main Container -->
+<div class="relative z-10 flex flex-col min-h-screen pb-48">
+    <!-- Header Section -->
+    <header class="sticky top-0 z-30 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-6 pb-2">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-primary/10 text-primary">
+                    <span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">ROM Repository</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">ReGenesis AOSPOSX</p>
+                </div>
+            </div>
+            <button class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+        </div>
+        <!-- Search Bar -->
+        <div class="relative mb-4">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input class="w-full h-12 pl-12 pr-4 bg-slate-200/50 dark:bg-slate-800/50 border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-base placeholder:text-slate-500"
+                   placeholder="Search ROMs, kernels, tools..." type="text"/>
+        </div>
+        <!-- Filter Chips -->
+        <div class="flex gap-3 overflow-x-auto pb-2 custom-scrollbar">
+            <button class="flex-none px-5 py-2 rounded-full bg-primary text-white text-sm font-medium transition-all shadow-lg shadow-primary/25">
+                Android 16
+            </button>
+            <button class="flex-none px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium border border-transparent hover:border-primary/30">
+                Android 15
+            </button>
+            <button class="flex-none px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium border border-transparent hover:border-primary/30">
+                Android 14
+            </button>
+            <button class="flex-none px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium border border-transparent hover:border-primary/30">
+                Android 13
+            </button>
+        </div>
+    </header>
+    <!-- ROM List -->
+    <main class="px-4 space-y-4 pt-4">
+        <!-- ROM Card 1 -->
+        <div class="glass-card bg-white/40 dark:bg-glass rounded-xl p-4 overflow-hidden relative">
+            <div class="absolute top-0 right-0 p-3">
+                <span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-green-500/20 text-green-500 border border-green-500/30">Stable</span>
+            </div>
+            <div class="flex gap-4">
+                <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center flex-none"
+                     data-alt="Abstract geometric logo for ReGenesis ROM">
+                    <span class="material-symbols-outlined text-white text-3xl">developer_mode_tv</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-lg truncate">ReGenesis AOSPOSX v2.1</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">person</span> Maintainer:
+                        DevAlpha
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500">2023-10-25</span>
+                        <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500">2.4 GB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex gap-3">
+                <button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm transition-colors">
+                    <span class="material-symbols-outlined text-lg">download</span>
+                    Download
+                </button>
+                <button class="px-3 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg">
+                    <span class="material-symbols-outlined">info</span>
+                </button>
+            </div>
+        </div>
+        <!-- ROM Card 2 -->
+        <div class="glass-card bg-white/40 dark:bg-glass rounded-xl p-4 overflow-hidden relative">
+            <div class="absolute top-0 right-0 p-3">
+                <span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-orange-500/20 text-orange-500 border border-orange-500/30">Beta</span>
+            </div>
+            <div class="flex gap-4">
+                <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-400 flex items-center justify-center flex-none"
+                     data-alt="Abstract colorful icon for AuraOS">
+                    <span class="material-symbols-outlined text-white text-3xl">flare</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-lg truncate">AuraOS v3.0 Early</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">group</span> TeamNeo
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500">2023-11-01</span>
+                        <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500">1.8 GB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex gap-3">
+                <button class="flex-1 bg-primary/20 text-primary font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm">
+                    <span class="material-symbols-outlined text-lg">download_done</span>
+                    Downloaded
+                </button>
+                <button class="px-3 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg">
+                    <span class="material-symbols-outlined">info</span>
+                </button>
+            </div>
+        </div>
+        <!-- ROM Card 3 -->
+        <div class="glass-card bg-white/40 dark:bg-glass rounded-xl p-4 overflow-hidden relative">
+            <div class="absolute top-0 right-0 p-3">
+                <span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-blue-500/20 text-blue-500 border border-blue-500/30">Nightly</span>
+            </div>
+            <div class="flex gap-4">
+                <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center flex-none"
+                     data-alt="Sleek dark icon for Carbon Core ROM">
+                    <span class="material-symbols-outlined text-white text-3xl">token</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-lg truncate">Carbon Core Experim.</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">person</span> CodeMasterX
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500">2023-11-05</span>
+                        <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500">2.1 GB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex gap-3">
+                <button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm transition-colors">
+                    <span class="material-symbols-outlined text-lg">download</span>
+                    Download
+                </button>
+                <button class="px-3 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg">
+                    <span class="material-symbols-outlined">info</span>
+                </button>
+            </div>
+        </div>
+    </main>
+    <!-- Bottom UI Section (Download Manager + Tab Bar) -->
+    <div class="fixed bottom-0 inset-x-0 z-50">
+        <!-- Download Manager Bar -->
+        <div class="mx-4 mb-4 glass-card bg-white/60 dark:bg-glass/90 rounded-2xl p-4 shadow-2xl border-primary/20">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-primary/20 text-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-sm">folder_zip</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold truncate max-w-[150px]">Aura-OS-v2.zip</p>
+                        <p class="text-[10px] text-slate-500">Downloading • 5.4 MB/s</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="p-1.5 rounded-full bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined text-lg">pause</span>
+                    </button>
+                    <button class="p-1.5 rounded-full bg-red-500/10 text-red-500">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-primary rounded-full transition-all duration-500"
+                     style="width: 65%;"></div>
+            </div>
+            <div class="flex justify-between mt-1">
+                <span class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">65% Completed</span>
+                <span class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">4m remaining</span>
+            </div>
+        </div>
+        <!-- iOS Style Bottom Navigation -->
+        <nav class="ios-tab-bar bg-white/80 dark:bg-background-dark/80 px-8 pt-3 pb-8 flex justify-between items-center">
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-[10px] font-medium">Home</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-primary" href="#">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <span class="text-[10px] font-bold">Repo</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">update</span>
+                <span class="text-[10px] font-medium">Updates</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[10px] font-medium">Profile</span>
+            </a>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

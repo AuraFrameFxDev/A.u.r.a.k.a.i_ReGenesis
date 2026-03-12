@@ -36,23 +36,16 @@ object WorkManagerModule {
 
     /**
      * Provides the WorkManager instance.
-     * @param _context Application context. Parameter reported as unused.
-     * @param _configuration WorkManager Configuration dependency. Parameter reported as unused.
+     * @param context Application context.
      * @return A WorkManager instance.
-     * TODO: Reported as unused. Ensure WorkManager is initialized and used.
      */
     @Provides
     @Singleton
     fun provideWorkManager(
-        @ApplicationContext _context: Context,
-        _configuration: Configuration, // Hilt will provide this from the method above
+        @ApplicationContext context: Context,
     ): WorkManager {
-        // TODO: Parameters _context, _configuration reported as unused (Hilt will provide them).
-        // WorkManager.initialize(_context, _configuration) // This should be done once, usually in Application.onCreate
-        // return WorkManager.getInstance(_context)
-
         // As per Hilt docs, if you provide Configuration, Hilt handles initialization.
-        // So, just getting the instance should be fine.
-        return WorkManager.getInstance(_context) // Placeholder, assumes Hilt handles init via Configuration provider
+        // So, just getting the instance is sufficient.
+        return WorkManager.getInstance(context)
     }
 }

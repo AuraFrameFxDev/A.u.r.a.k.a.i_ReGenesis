@@ -193,13 +193,10 @@ fun AuraLookingForKaiDemo() {
 @Composable
 fun AnimatedSpriteWalkingDemo() {
     val context = LocalContext.current
+    val engine = rememberEmbodimentEngine(context, ScreenBounds(1080.dp, 2400.dp))
 
     // Load actual walk cycle frames
-    val walkFrames = remember {
-        val engine = EmbodimentEngine(
-            context,
-            ScreenBounds(1080.dp, 2400.dp)
-        )
+    val walkFrames = remember(engine) {
 
         // Define walk cycle frame sequence
         val walkCycleStates = listOf(

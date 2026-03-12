@@ -1,4 +1,4 @@
-// ====== APPENDED TESTS (JUnit 5 + Gradle TestKit) ======
+package test// ====== APPENDED TESTS (JUnit 5 + Gradle TestKit) ======
 // Note: Testing library/framework used: JUnit 5 (Jupiter) + Gradle TestKit with Kotlin assertions.
 
 class AndroidComposeConventionPluginMoreTests {

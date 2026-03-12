@@ -63,7 +63,7 @@ oracle-drive-integration/
 │   │   ├── MetadataManager.kt
 │   │   └── VersionManager.kt
 │   ├── security/               # Security layer
-│   │   ├── EncryptionManager.kt
+│   │   ├── NoopEncryptionManager.kt
 │   │   ├── AccessControlManager.kt
 │   │   └── AuditLogger.kt
 │   ├── data/                   # Data models

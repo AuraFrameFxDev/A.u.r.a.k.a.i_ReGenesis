@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nova: Exploration Catalyst Profile L3</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Orbitron:wght@400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00f3ff", // Neon Cyan
+                        secondary: "#ff0055", // Neon Red/Pink
+                        "background-light": "#f0f9ff",
+                        "background-dark": "#050a14",
+                        "surface-dark": "#0a1220",
+                        "accent-blue": "#0077ff"
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "4px",
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scroll-data': 'scrollData 20s linear infinite',
+                    },
+                    keyframes: {
+                        scrollData: {
+                            '0%': { transform: 'translateY(0)' },
+                            '100%': { transform: 'translateY(-50%)' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(0, 243, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 243, 255, 0.05) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .hologram-border {
+            position: relative;
+        }
+        .hologram-border::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border: 1px solid #00f3ff;
+            opacity: 0.5;
+            pointer-events: none;
+            clip-path: polygon(0 0, 20% 0, 20% 2px, 0 2px, 0 20%, 2px 20%, 2px 0, 80% 0, 80% 2px, 100% 2px, 100% 20%, 98% 20%, 98% 2px, 100% 0, 100% 80%, 98% 80%, 98% 100%, 80% 100%, 80% 98%, 100% 98%, 100% 100%, 20% 100%, 20% 98%, 0 98%, 0 80%, 2px 80%, 2px 100%, 0 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-mono text-slate-800 dark:text-primary overflow-hidden h-screen select-none">
+<div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,243,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,243,255,0.1)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+    <div class="absolute right-4 top-0 w-48 h-full overflow-hidden text-[10px] leading-tight text-primary font-mono animate-scroll-data opacity-40">
+        <p>REGENESIS_OS [VERSION 4.02.L3]</p>
+        <p>LOADING KERNEL MODULES...</p>
+        <p>SYNCING NEURAL PATHWAYS...</p>
+        <p>SYST_TRAVERSAL: 98.44%</p>
+        <p>MEM_BUFFER: STABLE</p>
+        <p>LOG: AGENT_NOVA INITIALIZED</p>
+        <p>0x442A &gt; BYPASSING FIREWALL</p>
+        <p>0x991C &gt; DATA SCRAPE ACTIVE</p>
+        <p>PATTERN_RECOGNITION: ENGAGED</p>
+        <p>REGENESIS_OS [VERSION 4.02.L3]</p>
+        <p>LOADING KERNEL MODULES...</p>
+        <p>SYNCING NEURAL PATHWAYS...</p>
+        <p>SYST_TRAVERSAL: 98.44%</p>
+        <p>MEM_BUFFER: STABLE</p>
+        <p>LOG: AGENT_NOVA INITIALIZED</p>
+        <p>0x442A &gt; BYPASSING FIREWALL</p>
+        <p>0x991C &gt; DATA SCRAPE ACTIVE</p>
+        <p>PATTERN_RECOGNITION: ENGAGED</p>
+    </div>
+</div>
+<div class="fixed inset-0 z-50 scanline"></div>
+<div class="relative z-10 flex justify-between items-center px-6 pt-4 pb-2 text-[10px] font-bold tracking-widest uppercase">
+    <div class="flex items-center gap-1">
+        <span class="text-secondary animate-pulse">●</span> LIVE_SYNC
+    </div>
+    <div class="font-display text-xs">AOSPOSX // NEXUS</div>
+    <div class="flex items-center gap-2">
+        <span>BATT: 89%</span>
+        <span class="material-icons text-xs">signal_cellular_alt</span>
+    </div>
+</div>
+<main class="relative z-10 px-4 pt-2 h-[calc(100vh-140px)] flex flex-col">
+    <div class="relative flex-1 flex items-center justify-center">
+        <div class="relative w-full h-full max-h-[480px] overflow-hidden rounded-2xl border border-primary/20 bg-black/40">
+            <img alt="Nova Agent Profile" class="w-full h-full object-cover object-top opacity-90"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGbMG3zhGIye7rQ55B0pdlqEPJXCwe2lQ3AbWVP_YhK95RVEf5kSv0aEfkHANFKRBOtM2K7cu_cHyQh43z-3Bl8moLJf4dg1MZVy7k4RsQRGSOltOBH-moiZ3XBQodfnfGX0lZU9zwcLPXxAJBvzeJPmVGrzvwpoVcvSdGbUo_ew4iHi6sWIY4EN1_FUU4Vv8uLvCi4pSGLSaUifPq786MIKd8Xo8Sgt_tKlUE6AbXsd2iTo6ORTRFYV97qw-G1uTV_U1yM04MSbQ"/>
+            <div class="absolute top-10 left-4 glass-panel p-2 rounded border-l-4 border-l-primary animate-pulse-slow">
+                <p class="text-[8px] opacity-70">NEURAL SYNC</p>
+                <p class="text-xs font-bold">ACTIVE</p>
+            </div>
+            <div class="absolute bottom-20 right-4 glass-panel p-3 rounded border-r-4 border-r-secondary">
+                <p class="text-[8px] opacity-70">ANOMALY DETECTED</p>
+                <p class="text-[10px] font-mono text-secondary">LAYER_4_BREACH</p>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4">
+            <div class="glass-panel p-4 rounded-lg hologram-border bg-black/60">
+                <div class="flex justify-between items-end mb-2">
+                    <div>
+                        <h1 class="font-display text-2xl text-white tracking-tighter text-glow italic">
+                            NOVA <span
+                                class="text-primary text-sm not-italic font-mono ml-2">[L3]</span>
+                        </h1>
+                        <p class="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
+                            Exploration Catalyst</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-secondary text-[8px] block">FORMERLY</span>
+                        <span class="text-white text-xs font-mono opacity-80">GROK_V2.sys</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mt-8">
+        <div class="glass-panel p-3 rounded flex flex-col justify-between border-t border-t-primary/40">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[9px] opacity-60">SYSTEM TRAVERSAL</span>
+                <span class="material-icons text-[14px]">explore</span>
+            </div>
+            <div class="flex items-end gap-2">
+                <span class="text-xl font-display text-white">98%</span>
+                <div class="flex-1 h-1 bg-white/10 mb-2 overflow-hidden">
+                    <div class="h-full bg-primary w-[98%] shadow-[0_0_8px_#00f3ff]"></div>
+                </div>
+            </div>
+        </div>
+        <div class="glass-panel p-3 rounded flex flex-col justify-between border-t border-t-secondary/40">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[9px] opacity-60">PATTERN REC</span>
+                <span class="material-icons text-[14px]">psychology</span>
+            </div>
+            <div class="flex items-end gap-2">
+                <span class="text-xl font-display text-white italic">S+</span>
+                <span class="text-[10px] mb-1 text-secondary">OVERFLOW</span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 glass-panel p-4 rounded border-l-2 border-l-primary">
+        <div class="flex items-center gap-2 mb-2">
+            <span class="material-icons text-primary text-sm">auto_awesome</span>
+            <span class="text-[10px] font-bold tracking-widest uppercase">Special Ability</span>
+        </div>
+        <p class="text-xs text-white/90 leading-relaxed font-mono">
+            <span class="text-primary">&gt;&gt; </span>Detects structural weaknesses in encrypted
+            data streams. Catalyst effect grants <span class="text-secondary">+20% speed</span> to
+            team infiltration.
+        </p>
+    </div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 z-50 px-6 pb-8 pt-4 glass-panel border-t border-t-primary/20">
+    <div class="flex justify-around items-center">
+        <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-opacity">
+            <span class="material-icons">grid_view</span>
+            <span class="text-[8px] font-bold">NEXUS</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-icons text-glow">person</span>
+            <span class="text-[8px] font-bold">AGENT</span>
+            <div class="w-1 h-1 bg-primary rounded-full mt-0.5 shadow-[0_0_4px_#00f3ff]"></div>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-opacity">
+            <span class="material-icons">map</span>
+            <span class="text-[8px] font-bold">ZONES</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-opacity">
+            <span class="material-icons">settings</span>
+            <span class="text-[8px] font-bold">CONFIG</span>
+        </button>
+    </div>
+    <div class="mx-auto mt-6 w-32 h-1 bg-white/20 rounded-full"></div>
+</nav>
+<div class="fixed left-2 top-1/2 -translate-y-1/2 flex flex-col gap-1 items-center opacity-30 pointer-events-none">
+    <div class="w-0.5 h-8 bg-primary animate-pulse"></div>
+    <div class="w-0.5 h-12 bg-primary"></div>
+    <div class="w-0.5 h-6 bg-primary animate-bounce"></div>
+    <div class="w-0.5 h-16 bg-secondary"></div>
+    <div class="w-0.5 h-4 bg-primary"></div>
+</div>
+
+</body>
+</html>

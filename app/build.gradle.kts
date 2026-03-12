@@ -4,18 +4,19 @@
 // Uses com.android.build.api.dsl.ApplicationExtension (modern DSL)
 // Plugins are versioned in the root build.gradle.kts
 
+import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     // Core Android and Kotlin plugins
     id("com.android.application")
-
+    id("com.google.dagger.hilt.android")
     // Compose and serialization
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
 
     // Dependency injection and code generation
-    id("com.google.dagger.hilt.android")
+
     id("com.google.devtools.ksp")
 
     // Firebase and analytics
@@ -67,6 +68,8 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "ENABLE_PAYWALL", "false")
+            // Emulator loopback → host machine Flask backend
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000\"")
         }
         release {
             isMinifyEnabled = true
@@ -76,6 +79,8 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "ENABLE_PAYWALL", "true")
+            // Production endpoint (update when deployed)
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"https://api.auraframefx.com\"")
         }
     }
 
@@ -85,8 +90,12 @@ extensions.configure<ApplicationExtension> {
             excludes += "/META-INF/DEPENDENCIES"
             excludes += "/META-INF/LICENSE.txt"
             excludes += "/META-INF/NOTICE.txt"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/NOTICE.md"
             excludes += "**/kotlin/**"
             excludes += "**/*.txt"
+            // YukiHook: Pick first occurrence of duplicate class
+            pickFirsts += "**/YukiHookAPIProperties.class"
         }
         jniLibs {
             useLegacyPackaging = false
@@ -101,11 +110,12 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
-// Enable experimental context-parameters feature (Kotlin 2.2+)
+// Enable modern Kotlin features (Experimental/New in 2.2+)
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         freeCompilerArgs.addAll(
-            "-Xcontext-parameters"
+            "-Xcontext-parameters",
+            "-Xannotation-default-target=param-property"
         )
     }
 }
@@ -137,20 +147,37 @@ extensions.configure<ApplicationExtension> {
         aidl = true
     }
 
+    ksp {
+        arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════
     // DEDUPLICATION: Exclude duplicate files to fix compile collisions
     // ═══════════════════════════════════════════════════════════════════════════
     sourceSets {
         getByName("main") {
-            java.directories.add("dev/aurakai/auraframefx/ai/agents/BaseAgent.kt")
-        }
-        getByName("release") {
-            java.directories.add("dev/aurakai/auraframefx/logging/TimberInitializer.kt")
-        }
-        getByName("debug") {
-            java.directories.add("dev/aurakai/auraframefx/logging/TimberInitializer.kt")
+            res.mutableset(
+                "src/main/res",
+                "src/main/res/drawable/Gatescenes/Aura",
+                "src/main/res/drawable/Gatescenes/Kai",
+                "src/main/res/drawable/Gatescenes/Genesis",
+                "src/main/res/drawable/Gatescenes/Nexus",
+                "src/main/res/drawable/Gatescenes/Cascade",
+                "src/main/res/drawable/Gatescenes/Vessels"
+            )
         }
     }
+}
+
+private fun AndroidSourceDirectorySet.mutableset(
+    string: String,
+    string2: String,
+    string3: String,
+    string4: String,
+    string5: String,
+    string6: String,
+    string7: String
+) {
 }
 
 dependencies {
@@ -175,6 +202,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.navigation.common.ktx)
     implementation(libs.androidx.animation)
+    implementation(libs.androidx.compose.ui.geometry)
+    implementation(libs.androidx.compose.material3)
+    testImplementation(libs.jupiter.junit.jupiter)
     ksp(libs.hilt.compiler)
 
     // Core Android
@@ -225,12 +255,31 @@ dependencies {
 
     // Root/System Utils
     implementation(libs.libsu.core)
-    implementation(libs.libsu.io)
+    implementation(libs.libsu.nio)
     implementation(libs.libsu.service)
 
-    // YukiHook API
-    compileOnly(libs.yukihookapi.api)
-    ksp(libs.yukihookapi.ksp)
+    // Shizuku & Rikka
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
+    implementation(libs.rikkax.core)
+    implementation(libs.rikkax.core.ktx)
+    implementation(libs.rikkax.material) {
+        exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
+    }
+
+    // YukiHook: ONLY use api for runtime (contains all needed classes)
+    // ksp-xposed is ONLY for annotation processing at compile time
+    implementation("com.highcapable.yukihookapi:api:1.3.1") {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+    ksp("com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+    // Force resolution of conflicting dependencies
+    configurations.all {
+         resolutionStrategy {
+             force("androidx.appcompat:appcompat:1.7.1")
+             force("com.google.android.material:material:1.13.0")
+         }
+    }
 
     // Firebase BOM (Bill of Materials) for version management
     implementation(platform(libs.firebase.bom))
@@ -317,7 +366,12 @@ dependencies {
     implementation(project(":aura:reactivedesign:collabcanvas"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:customization"))
-    implementation(project(":aura:reactivedesign:sandboxui"))
+    implementation(project(":extendsysa"))
+    implementation(project(":extendsysb"))
+    implementation(project(":extendsysc"))
+    implementation(project(":extendsysd"))
+    implementation(project(":extendsyse"))
+    implementation(project(":extendsysf"))
 
     // Kai → SentinelsFortress (Security & Threat Monitoring)
     implementation(project(":kai:sentinelsfortress:security"))
@@ -346,14 +400,33 @@ dependencies {
     implementation(project(":core-module"))
 }
 
-// Force a single annotations artifact to avoid duplicate-class errors
+// Force a single annotations artifact and exclude YukiHook KSP from runtime to avoid duplicate-class errors
 configurations.all {
     // Skip androidTest configurations to avoid issues with local JARs
     if (name.contains("AndroidTest")) {
         return@all
     }
 
+    // Exclude YukiHook KSP processor from runtime classpaths to prevent collisions with the API
+    if (name.contains("RuntimeClasspath", ignoreCase = true)) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+
     resolutionStrategy {
         force("org.jetbrains:annotations:26.0.2-1")
     }
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// YUKIHOOK DUPLICATE CLASS FIX
+// ═══════════════════════════════════════════════════════════════════════════
+// Both api and ksp-xposed contain YukiHookAPIProperties.class
+// ksp-xposed should ONLY be on the KSP processor classpath, NOT runtime/compile
+configurations.configureEach {
+    if (name.contains("runtimeClasspath", ignoreCase = true) ||
+        name.contains("compileClasspath", ignoreCase = true)
+    ) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+}
+

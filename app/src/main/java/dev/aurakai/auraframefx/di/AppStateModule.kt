@@ -9,7 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.state.AppStateManager
+import dev.aurakai.auraframefx.domains.cascade.AppStateManager
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -34,7 +34,7 @@ object AppStateModule {
      */
     @Provides
     @Singleton
-    @Named("AppStateDataStore")
+    @dev.aurakai.auraframefx.di.AppStateDataStoreAnnotation
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.appStateDataStore
     }
@@ -44,7 +44,7 @@ object AppStateModule {
      */
     @Provides
     @Singleton
-    fun provideAppStateManager(@Named("AppStateDataStore") dataStore: DataStore<Preferences>): AppStateManager {
+    fun provideAppStateManager(@dev.aurakai.auraframefx.di.AppStateDataStoreAnnotation dataStore: DataStore<Preferences>): AppStateManager {
         return AppStateManager()
     }
 }

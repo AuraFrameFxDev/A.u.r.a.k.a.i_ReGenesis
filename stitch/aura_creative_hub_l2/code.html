@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Creative Hub L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f20df2",
+                        "background-light": "#f8f5f8",
+                        "background-dark": "#221022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .manga-panel {
+            clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%);
+        }
+        .manga-panel-reverse {
+            clip-path: polygon(0% 5%, 100% 0%, 100% 95%, 0% 100%);
+        }
+        .glitch-border {
+            box-shadow: 4px 4px 0px #f20df2;
+        }
+        .pixel-text {
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
+        .aura-sprite-bg {
+            background: linear-gradient(135deg, rgba(242, 13, 242, 0.1) 0%, rgba(34, 16, 34, 0) 70%);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/40 overflow-hidden">
+<!-- Main Container (Phone Form Factor) -->
+<div class="relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden max-w-[430px] mx-auto border-x border-primary/20">
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between z-50">
+        <div class="text-primary flex size-10 shrink-0 items-center justify-center border-2 border-primary rounded-lg"
+             data-icon="Lightning">
+            <span class="material-symbols-outlined">bolt</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-black dark:text-white text-sm font-bold leading-tight tracking-widest pixel-text">
+                AURA CREATIVE HUB L2</h2>
+            <span class="text-[10px] text-primary animate-pulse uppercase">System Status: Catalyst Online</span>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-transparent text-black dark:text-white hover:bg-primary/10">
+                <span class="material-symbols-outlined">error</span>
+            </button>
+        </div>
+    </div>
+    <!-- Manga Layout Body -->
+    <div class="relative flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-6">
+        <!-- Technical Metrics (HP/SP Bars) -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="flex flex-col gap-1 bg-black/40 p-3 rounded-lg border-l-4 border-primary">
+                <div class="flex justify-between items-center text-[10px] font-bold">
+                    <span class="text-primary">SYSTEM HP</span>
+                    <span>85%</span>
+                </div>
+                <div class="h-3 w-full bg-primary/20 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary" style="width: 85%;"></div>
+                </div>
+                <p class="text-[9px] text-primary/60 italic">Liquid Magenta Active</p>
+            </div>
+            <div class="flex flex-col gap-1 bg-black/40 p-3 rounded-lg border-l-4 border-primary">
+                <div class="flex justify-between items-center text-[10px] font-bold">
+                    <span class="text-primary">CREATIVE SP</span>
+                    <span>420/1000</span>
+                </div>
+                <div class="h-3 w-full bg-primary/20 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary" style="width: 42%;"></div>
+                </div>
+                <p class="text-[9px] text-primary/60 italic">Neon Pink Glitch</p>
+            </div>
+        </div>
+        <!-- Main Interactive Section -->
+        <div class="relative flex h-[500px] w-full mt-4">
+            <!-- Aura Sprite (Left Side) -->
+            <div class="absolute -left-12 top-0 w-3/4 h-full z-10 pointer-events-none">
+                <div class="w-full h-full bg-center bg-no-repeat bg-contain"
+                     data-alt="Anime girl Aura with white hair and heterochromia holding a sword"
+                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBuPdRGMQCUq04FwAnYNFS83C930o5hxNZxEBJnRLamOTSCP8yTzqAxRf7oTYXpkxyUl5y3Q-SFQ7jwgqqtzxoJccKgagdFheM9RSmFZ4HripRiNP3-ofUtUlp9otCmSgwi5GSuaFc0jgwZ9rvwD76vrsfLeKM--7nRLpLVl-uYtZhWkVHPZeHMnE9F_O5dd8nhP-KluP37TOTmk9UXrTJIuwBY8P0rfbw2G4WfkyeGxOAxlr6KwtyPZG4jLD7EOPwkcthXQRnim8A");'>
+                </div>
+                <!-- Paint Splatter Effect -->
+                <div class="absolute bottom-10 left-10 w-32 h-32 opacity-30 pointer-events-none"
+                     data-alt="Pink neon paint splatter effect"
+                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB4beDZe-wAzxHVmYfCOC0u4OIXPw9wDUpFs2bR5cM3svC3jAzZJfAlCDsk6iPt5SXdxqYlATTgtVxRMVMPQuuEnjlxcErOOb-mfcr00F1McvAlkFk7Ieigbzn_L4yHkZ-mH5YFi7FKMuJzN1Tj9R673tfrlmqzWWg4gWKTlULqKpHSf1GGB5DxbYvOsGRu0lhwXzw2hxfbDZUOPC8CFU3RlmSEVqyFfM1-3_QhsdGZXOP6N2-wQeNf6pNfx3MVWJcC0kvB-OMlTSc");'></div>
+            </div>
+            <!-- Slanted Panels (Right Side) -->
+            <div class="absolute right-0 top-0 w-2/3 h-full flex flex-col gap-4 py-4 pr-1">
+                <!-- ChromaCore Module -->
+                <div class="manga-panel bg-primary p-[2px] transform transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                    <div class="bg-background-dark p-4 h-full flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-lg pixel-text italic">Chroma<br/>Core</h3>
+                            <span class="material-symbols-outlined text-primary">palette</span>
+                        </div>
+                        <div class="mt-2 text-[10px] text-primary/70 font-medium">THEME ENGINE
+                            v2.0
+                        </div>
+                    </div>
+                </div>
+                <!-- Aura Lab Module -->
+                <div class="manga-panel-reverse bg-white p-[2px] transform transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                    <div class="bg-background-dark p-4 h-full flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-lg pixel-text italic">Aura<br/>Lab</h3>
+                            <span class="material-symbols-outlined text-white">science</span>
+                        </div>
+                        <div class="mt-2 text-[10px] text-white/50 font-medium">EXP COMPONENT
+                            SANDBOX
+                        </div>
+                    </div>
+                </div>
+                <!-- Iconify Module -->
+                <div class="manga-panel bg-primary p-[2px] transform transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                    <div class="bg-background-dark p-4 h-full flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-lg pixel-text italic">Iconify</h3>
+                            <span class="material-symbols-outlined text-primary">token</span>
+                        </div>
+                        <div class="mt-2 text-[10px] text-primary/70 font-medium">PIXEL GEN TOOLS
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Action Grid -->
+        <div class="grid grid-cols-2 gap-3 pb-24">
+            <button class="bg-primary text-black font-bold py-4 rounded-lg manga-panel-reverse hover:bg-white transition-colors pixel-text">
+                Launch Catalyst
+            </button>
+            <button class="bg-transparent border-2 border-primary text-primary font-bold py-4 rounded-lg manga-panel hover:bg-primary hover:text-black transition-colors pixel-text">
+                Sync AOSPOSX
+            </button>
+        </div>
+    </div>
+    <!-- iOS Bottom Navigation -->
+    <div class="absolute bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-md border-t border-primary/20 pb-8 pt-3 px-6 z-50">
+        <div class="flex items-center justify-between max-w-sm mx-auto">
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-[28px]">home</span>
+                <span class="text-[9px] font-bold pixel-text">HUB</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/50 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[28px]">grid_view</span>
+                <span class="text-[9px] font-bold pixel-text">LABS</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/50 hover:text-primary transition-colors">
+                <div class="bg-primary text-background-dark p-2 rounded-full -mt-6 glitch-border">
+                    <span class="material-symbols-outlined text-[28px]">add</span>
+                </div>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/50 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[28px]">auto_awesome</span>
+                <span class="text-[9px] font-bold pixel-text">CHROMA</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-white/50 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[28px]">person</span>
+                <span class="text-[9px] font-bold pixel-text">PROFILE</span>
+            </button>
+        </div>
+    </div>
+    <!-- Glitch Overlay Elements -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 right-4 w-4 h-4 bg-primary/20"></div>
+        <div class="absolute bottom-1/3 left-10 w-2 h-8 bg-white/10"></div>
+        <div class="absolute top-1/2 left-0 w-full h-[1px] bg-primary/5"></div>
+    </div>
+</div>
+</body>
+</html>

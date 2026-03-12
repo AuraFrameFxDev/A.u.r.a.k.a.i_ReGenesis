@@ -1,0 +1,9 @@
+{
+    "mcpServers": {
+        "desktop-commander": {
+            "command": "mcp-desktop-commander",
+            "args": [],
+            "env": {}
+        }
+    }
+}

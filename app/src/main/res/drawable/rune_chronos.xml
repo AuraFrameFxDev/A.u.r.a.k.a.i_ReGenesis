@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Outer Gear -->
+    <path
+        android:pathData="M100,20 L110,12 L120,22 L135,16 L140,28 L155,25 L155,40 L170,45 L165,60 L180,68 L172,83 L185,93 L175,108 L188,120 L176,133 L185,145 L170,155 L175,170 L160,175 L160,190 L145,188 L138,200 L123,195 L113,205 L100,195 L87,205 L77,195 L62,200 L55,188 L40,190 L40,175 L25,170 L30,155 L15,145 L24,133 L12,120 L25,108 L15,93 L28,83 L20,68 L35,60 L30,45 L45,40 L45,25 L60,28 L65,16 L80,22 L90,12 Z"
+        android:strokeWidth="4"
+        android:strokeColor="#FFFFFF" />
+    <!-- Clock Hands -->
+    <path
+        android:pathData="M100,100 L100,50 M100,100 L140,100"
+        android:strokeWidth="6"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round" />
+    <!-- Inner Hub -->
+    <path
+        android:pathData="M100,100 m-10,0 a10,10 0 1,1 20,0 a10,10 0 1,1 -20,0"
+        android:fillColor="#FFFFFF" />
+</vector>

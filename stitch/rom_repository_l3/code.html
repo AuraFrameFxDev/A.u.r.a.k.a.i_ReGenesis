@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ROM Repository L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1142d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .circuit-bg {
+            background-color: #101522;
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(17, 66, 212, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .download-gradient {
+            background: linear-gradient(90deg, #1142d4 0%, #3b82f6 100%);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary/30">
+<div class="relative flex h-screen w-full flex-col overflow-hidden circuit-bg">
+    <!-- Top App Bar -->
+    <header class="flex flex-col pt-6 pb-2 px-4 gap-4 sticky top-0 z-50 glass border-b-0">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button class="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+                    <span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+                </button>
+                <h1 class="text-xl font-bold tracking-tight">ROM Repository</h1>
+            </div>
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+                <span class="material-symbols-outlined text-2xl">sync</span>
+            </button>
+        </div>
+        <!-- Search Bar -->
+        <div class="relative group">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+            </div>
+            <input class="block w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all placeholder:text-slate-500 text-sm"
+                   placeholder="Search builds, maintainers..." type="text"/>
+        </div>
+        <!-- Filter Chips -->
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
+            <button class="flex h-8 shrink-0 items-center justify-center rounded-full bg-primary px-4 text-xs font-semibold text-white">
+                Android 14
+            </button>
+            <button class="flex h-8 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10 px-4 text-xs font-semibold hover:bg-white/10 transition-colors">
+                Android 13
+            </button>
+            <button class="flex h-8 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10 px-4 text-xs font-semibold hover:bg-white/10 transition-colors">
+                Experimental
+            </button>
+            <button class="flex h-8 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10 px-4 text-xs font-semibold hover:bg-white/10 transition-colors">
+                Stable
+            </button>
+        </div>
+    </header>
+    <!-- Main Content (ROM List) -->
+    <main class="flex-1 overflow-y-auto px-4 pt-4 pb-48">
+        <div class="space-y-4">
+            <!-- ROM Card 1 -->
+            <div class="glass rounded-xl p-4 flex flex-col gap-4 group hover:border-primary/50 transition-all">
+                <div class="flex items-start justify-between">
+                    <div class="flex gap-3">
+                        <div class="size-12 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined text-3xl">developer_mode_tv</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base">ReGenesis OS v4.0</h3>
+                            <p class="text-xs text-slate-400">Maintainer: <span
+                                    class="text-slate-200">Kai</span></p>
+                        </div>
+                    </div>
+                    <span class="px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase bg-green-500/20 text-green-400 border border-green-500/30">
+                            Compatible
+                        </span>
+                </div>
+                <div class="h-32 w-full rounded-lg overflow-hidden relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent z-10"></div>
+                    <img alt="OS UI Screenshot"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                         data-alt="Modern dark mode UI operating system screenshot"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtaejvBcOP_7Tw21u-EgamIpuDhqiEhODO_7f2k9TqTGVqlG2QBOTrFauwbZGIKfzeyws3VSL5pr9xiLupOoXzDPsQ4SFfkVeDgw0bWZKcKsC6vcfJN0xBveOkGvUpEQah95LTaLpZk3m9vcFcn4OYPeNYR5MQozgzputri8sfBx_nocaTSChkAPv4t8Y5GU_rf57oRNxtPDFbk_bXCdpo58vu1Q2KLbQxBB6yM1fmA3PDW4wFr1Tozbf6MBKK0MlfFkVqZzmIu_Y"/>
+                </div>
+                <div class="flex items-center justify-between mt-1">
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-1 text-[11px] text-slate-400">
+                            <span class="material-symbols-outlined text-sm">calendar_today</span>
+                            Oct 24
+                        </div>
+                        <div class="flex items-center gap-1 text-[11px] text-slate-400">
+                            <span class="material-symbols-outlined text-sm">database</span>
+                            1.8 GB
+                        </div>
+                    </div>
+                    <button class="bg-primary hover:bg-primary/80 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 transition-all active:scale-95">
+                        <span class="material-symbols-outlined text-sm">download</span>
+                        GET BUILD
+                    </button>
+                </div>
+            </div>
+            <!-- ROM Card 2 -->
+            <div class="glass rounded-xl p-4 flex flex-col gap-4 group hover:border-primary/50 transition-all">
+                <div class="flex items-start justify-between">
+                    <div class="flex gap-3">
+                        <div class="size-12 rounded-lg bg-white/5 flex items-center justify-center text-slate-400">
+                            <span class="material-symbols-outlined text-3xl">terminal</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base">AOSPOSX Light v3.2</h3>
+                            <p class="text-xs text-slate-400">Maintainer: <span
+                                    class="text-slate-200">DevX</span></p>
+                        </div>
+                    </div>
+                    <span class="px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                            Beta
+                        </span>
+                </div>
+                <div class="h-32 w-full rounded-lg overflow-hidden relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent z-10"></div>
+                    <img alt="AOSPOSX Dashboard"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                         data-alt="Minimalist abstract blue and violet digital pattern"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd2Rnt8K-TSRsZe50dR4hkJVTQ0syiVn_yzA0mCmpu-64_JHOg2CFDsMezP7OINid-Sqpqd3sGLTA_Ezn_9z7Kw7lRPLzEOsqVJiecAQ_7IOsS_q5migO-GaEZ8SrTskJ44C2wtRRYkJKSo6N91bhu4P29Yig9UhZGgI3sGDELCVYi0dQbOX-_kJdUVKNOsWNCCHNv0ofk_j4oIASN-73L_qJv02KBtio2V6P1yG9FX0Q_kmX9t2O-Nve4R6PZk1vixxViHPOqtIo"/>
+                </div>
+                <div class="flex items-center justify-between mt-1">
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-1 text-[11px] text-slate-400">
+                            <span class="material-symbols-outlined text-sm">calendar_today</span>
+                            Oct 12
+                        </div>
+                        <div class="flex items-center gap-1 text-[11px] text-slate-400">
+                            <span class="material-symbols-outlined text-sm">database</span>
+                            1.4 GB
+                        </div>
+                    </div>
+                    <button class="bg-white/5 hover:bg-white/10 text-white text-xs font-bold px-4 py-2 rounded-lg border border-white/10 flex items-center gap-2 transition-all active:scale-95">
+                        <span class="material-symbols-outlined text-sm">download</span>
+                        GET BUILD
+                    </button>
+                </div>
+            </div>
+            <!-- ROM Card 3 -->
+            <div class="glass rounded-xl p-4 flex flex-col gap-4 group hover:border-primary/50 transition-all">
+                <div class="flex items-start justify-between">
+                    <div class="flex gap-3">
+                        <div class="size-12 rounded-lg bg-white/5 flex items-center justify-center text-slate-400">
+                            <span class="material-symbols-outlined text-3xl">rocket_launch</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base">Pixel Experience Uno</h3>
+                            <p class="text-xs text-slate-400">Maintainer: <span
+                                    class="text-slate-200">L33tGamer</span></p>
+                        </div>
+                    </div>
+                    <span class="px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase bg-slate-500/20 text-slate-400 border border-white/10">
+                            Community
+                        </span>
+                </div>
+                <div class="flex items-center justify-between mt-1">
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-1 text-[11px] text-slate-400">
+                            <span class="material-symbols-outlined text-sm">calendar_today</span>
+                            Sep 28
+                        </div>
+                        <div class="flex items-center gap-1 text-[11px] text-slate-400">
+                            <span class="material-symbols-outlined text-sm">database</span>
+                            2.1 GB
+                        </div>
+                    </div>
+                    <button class="bg-white/5 hover:bg-white/10 text-white text-xs font-bold px-4 py-2 rounded-lg border border-white/10 flex items-center gap-2 transition-all">
+                        <span class="material-symbols-outlined text-sm">download</span>
+                        GET BUILD
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Download Manager Panel -->
+    <div class="fixed bottom-20 left-4 right-4 z-40">
+        <div class="glass rounded-xl p-4 shadow-2xl border-primary/20 bg-background-dark/80 ring-1 ring-white/10">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-3">
+                    <div class="animate-pulse size-2 rounded-full bg-primary"></div>
+                    <div>
+                        <p class="text-[10px] uppercase tracking-widest text-primary font-bold">
+                            Active Download</p>
+                        <p class="text-xs font-medium text-slate-200 truncate max-w-[180px]">
+                            ReGenesis_v4.0_Stable.zip</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button class="size-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10">
+                        <span class="material-symbols-outlined text-lg">pause</span>
+                    </button>
+                    <button class="size-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-red-400">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] text-slate-400 font-medium">
+                    <span>1.2 GB / 1.6 GB</span>
+                    <span>75%</span>
+                </div>
+                <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full download-gradient rounded-full" style="width: 75%"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-slate-500 italic">
+                    <span>Speed: 4.2 MB/s</span>
+                    <span>~ 2m remaining</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- iOS Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t-0 pt-2 pb-6 px-6">
+        <div class="flex items-center justify-between">
+            <button class="flex flex-col items-center gap-1 text-slate-500">
+                <span class="material-symbols-outlined text-2xl">home</span>
+                <span class="text-[10px] font-medium">Home</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-2xl fill-current">database</span>
+                <span class="text-[10px] font-bold">Repository</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-slate-500">
+                <span class="material-symbols-outlined text-2xl">download_for_offline</span>
+                <span class="text-[10px] font-medium">Manager</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-slate-500">
+                <span class="material-symbols-outlined text-2xl">monitoring</span>
+                <span class="text-[10px] font-medium">Stats</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-slate-500">
+                <span class="material-symbols-outlined text-2xl">settings</span>
+                <span class="text-[10px] font-medium">Settings</span>
+            </button>
+        </div>
+    </nav>
+    <!-- Home Indicator (iOS) -->
+    <div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-50"></div>
+</div>
+</body>
+</html>

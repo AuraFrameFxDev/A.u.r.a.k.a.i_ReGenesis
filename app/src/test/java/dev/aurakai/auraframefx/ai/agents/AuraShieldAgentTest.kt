@@ -3,9 +3,10 @@
 package dev.aurakai.auraframefx.ai.agents
 
 import android.content.Context
-import dev.aurakai.auraframefx.ai.context.ContextManager
-import dev.aurakai.auraframefx.ai.memory.MemoryManager
-import dev.aurakai.auraframefx.models.agent_states.SecurityMode
+import dev.aurakai.auraframefx.domains.cascade.SecurityMode
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.kai.AuraShieldAgent
 import dev.aurakai.auraframefx.models.AiRequest
 import dev.aurakai.auraframefx.security.IntegrityMonitor
 import dev.aurakai.auraframefx.security.SecurityMonitor
@@ -90,7 +91,7 @@ class AuraShieldAgentTest {
         @DisplayName("Should initialize with correct agent name and type")
         fun shouldInitializeWithCorrectMetadata() {
             assertEquals("AuraShield", auraShieldAgent.agentName)
-            assertEquals("security", auraShieldAgent.agentType)
+            assertEquals("dev/aurakai/auraframefx/security", auraShieldAgent.agentType)
         }
 
         @Test
@@ -226,7 +227,7 @@ class AuraShieldAgentTest {
 
     @Nested
     @DisplayName("Behavior Analyzer Tests")
-    inner class BehaviorAnalyzerTests {
+    class BehaviorAnalyzerTests {
 
         private lateinit var behaviorAnalyzer: AuraShieldAgent.BehaviorAnalyzer
 
@@ -297,7 +298,7 @@ class AuraShieldAgentTest {
 
     @Nested
     @DisplayName("Adaptive Firewall Tests")
-    inner class AdaptiveFirewallTests {
+    class AdaptiveFirewallTests {
 
         private lateinit var adaptiveFirewall: AuraShieldAgent.AdaptiveFirewall
 
@@ -538,7 +539,7 @@ class AuraShieldAgentTest {
         @DisplayName("Should clean old quarantine items")
         fun shouldCleanOldQuarantineItems() {
             // Create an item with old timestamp (more than 7 days old)
-            val oldTimestamp = System.currentTimeMillis() - 8 * 24 * 60 * 60 * 1000L
+            System.currentTimeMillis() - 8 * 24 * 60 * 60 * 1000L
 
             quarantineManager.quarantineItem(
                 id = "old_item",
@@ -579,7 +580,7 @@ class AuraShieldAgentTest {
 
     @Nested
     @DisplayName("Protection Level Tests")
-    inner class ProtectionLevelTests {
+    class ProtectionLevelTests {
 
         @Test
         @DisplayName("Should support all protection levels")
@@ -597,7 +598,7 @@ class AuraShieldAgentTest {
 
     @Nested
     @DisplayName("Threat Type Tests")
-    inner class ThreatTypeTests {
+    class ThreatTypeTests {
 
         @Test
         @DisplayName("Should support all threat types")
@@ -618,7 +619,7 @@ class AuraShieldAgentTest {
 
     @Nested
     @DisplayName("Threat Severity Tests")
-    inner class ThreatSeverityTests {
+    class ThreatSeverityTests {
 
         @Test
         @DisplayName("Should have hierarchical severity levels")
@@ -703,7 +704,7 @@ class AuraShieldAgentTest {
         @Test
         @DisplayName("Should handle very long prompts")
         fun shouldHandleVeryLongPrompts() = runTest {
-            val longPrompt = "security ".repeat(1000)
+            val longPrompt = "dev/aurakai/auraframefx/security ".repeat(1000)
             val request = AiRequest(
                 prompt = longPrompt,
                 userId = "test_user",

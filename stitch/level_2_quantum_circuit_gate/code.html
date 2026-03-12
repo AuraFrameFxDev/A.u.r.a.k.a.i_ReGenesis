@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Quantum Circuit Terminal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2b90d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .circuit-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(242, 185, 13, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .glow-gold {
+            box-shadow: 0 0 15px rgba(242, 185, 13, 0.3);
+        }
+        .hologram-line {
+            background: linear-gradient(90deg, transparent, rgba(242, 185, 13, 0.5), transparent);
+        }
+        .glass-panel {
+            background: rgba(35, 30, 16, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(242, 185, 13, 0.2);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display">
+<!-- Main Container (Mobile Form Factor) -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-background-dark shadow-2xl">
+    <!-- Top App Bar -->
+    <div class="flex items-center bg-transparent p-6 pb-2 justify-between z-10">
+        <div class="text-white flex size-10 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10">
+            <span class="material-symbols-outlined text-primary text-xl">terminal</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <span class="text-[10px] tracking-[0.3em] text-primary/60 font-bold uppercase">System Terminal</span>
+            <h2 class="text-white text-sm font-bold leading-tight tracking-wide">QUANTUM_HUB_02</h2>
+        </div>
+        <div class="flex w-10 items-center justify-end">
+            <button class="flex size-10 items-center justify-center rounded-full bg-white/5 border border-white/10">
+                <span class="material-symbols-outlined text-white text-xl">notifications</span>
+            </button>
+        </div>
+    </div>
+    <!-- Tiered Carousel Section -->
+    <div class="relative mt-4 flex flex-col h-full overflow-hidden circuit-bg">
+        <!-- Genesis Branding Overlay -->
+        <div class="absolute top-2 left-6 opacity-20 pointer-events-none">
+            <p class="text-[48px] font-bold tracking-tighter leading-none">GENESIS</p>
+            <p class="text-[12px] tracking-[1em] font-medium -mt-2">PROTOCOL ACTIVE</p>
+        </div>
+        <!-- Level Selector Carousel -->
+        <div class="flex overflow-x-auto snap-x snap-mandatory px-8 gap-6 scrollbar-hide py-4 items-center">
+            <!-- Level 1 (Partial) -->
+            <div class="flex-shrink-0 w-16 h-64 opacity-30 snap-center flex flex-col items-center justify-center grayscale">
+                <div class="w-full h-full rounded-lg bg-white/5 border border-white/20 flex flex-col items-center justify-center">
+                    <span class="text-[10px] -rotate-90 whitespace-nowrap">PREVIOUS LEVEL</span>
+                </div>
+            </div>
+            <!-- Level 2 (Active) -->
+            <div class="flex-shrink-0 w-72 h-[420px] snap-center relative group">
+                <!-- Architectural Gate Visual -->
+                <div class="absolute inset-0 rounded-2xl border-2 border-primary/40 overflow-hidden bg-gradient-to-b from-primary/10 to-transparent flex flex-col items-center justify-center p-6">
+                    <!-- Holographic Lines -->
+                    <div class="absolute inset-0 opacity-20">
+                        <div class="hologram-line h-[1px] w-full absolute top-1/4"></div>
+                        <div class="hologram-line h-[1px] w-full absolute top-2/4"></div>
+                        <div class="hologram-line h-[1px] w-full absolute top-3/4"></div>
+                    </div>
+                    <!-- Gate Frame -->
+                    <div class="relative z-10 w-full h-full border-[1px] border-primary/20 rounded-xl flex flex-col items-center justify-between py-10">
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary text-[10px] tracking-[0.4em] uppercase font-bold mb-2">Security Node</span>
+                            <div class="w-12 h-1 bg-primary glow-gold rounded-full"></div>
+                        </div>
+                        <!-- Central Gate Icon/Badge -->
+                        <div class="relative flex items-center justify-center">
+                            <div class="absolute size-40 border border-primary/30 rounded-full animate-pulse"></div>
+                            <div class="absolute size-32 border border-primary/50 rounded-full"></div>
+                            <div class="size-24 rounded-full bg-primary flex items-center justify-center glow-gold">
+                                <span class="text-background-dark text-4xl font-bold">L2</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <p class="text-white text-xl font-bold tracking-widest">QUANTUM
+                                CIRCUIT</p>
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-primary text-xs">verified_user</span>
+                                <span class="text-[10px] tracking-widest text-primary font-bold">GENESIS BRANDED</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img alt="Abstract golden quantum energy field"
+                         class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay"
+                         data-alt="Abstract golden quantum energy field with particles"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdLTAfxOTEqhrbkBvsSAfey3_TBThCi0PUXu8-Cy-aid0x0u6dyQ4ZBrpMkT6PCCDyvB3NZNSojAxiyiyIcBupAfKLgrGF0HJn7c8vHp690ec8nh7se1CLPHWhdRxatKAgoSGm1KDe70yDX9QIlSO8Ekxpc6FgA24gQKWRseQGKlimAqo1YgcY91poPUfUZr5lByX100aVgsTB0Ym1IUvrsB6M8ZdnqEYwD4yceTfZjzOhaXn3hlB0XFRm2oGZuM0_ioFfZCXy4Tg"/>
+                </div>
+                <!-- Floating Corner Accents -->
+                <div class="absolute -top-2 -left-2 size-6 border-t-2 border-l-2 border-primary"></div>
+                <div class="absolute -bottom-2 -right-2 size-6 border-b-2 border-r-2 border-primary"></div>
+            </div>
+            <!-- Level 3 (Partial) -->
+            <div class="flex-shrink-0 w-16 h-64 opacity-30 snap-center flex flex-col items-center justify-center grayscale">
+                <div class="w-full h-full rounded-lg bg-white/5 border border-white/20 flex flex-col items-center justify-center">
+                    <span class="text-[10px] rotate-90 whitespace-nowrap">VOID MATRIX</span>
+                </div>
+            </div>
+        </div>
+        <!-- Data Widgets Section -->
+        <div class="px-6 grid grid-cols-2 gap-4 -mt-4 z-20">
+            <!-- Advanced Sync Widget -->
+            <div class="glass-panel p-4 rounded-xl flex flex-col gap-2 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-1 h-full bg-primary/40"></div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-sm">sync_alt</span>
+                    <p class="text-white/60 text-[10px] font-bold uppercase tracking-wider">Advanced
+                        Sync</p>
+                </div>
+                <div class="flex items-end gap-1">
+                    <p class="text-white text-3xl font-bold">72</p>
+                    <p class="text-primary text-sm font-bold mb-1">%</p>
+                </div>
+                <!-- Small Mini Progress Bar -->
+                <div class="w-full h-1 bg-white/10 rounded-full mt-1">
+                    <div class="h-full bg-primary rounded-full" style="width: 72%"></div>
+                </div>
+            </div>
+            <!-- Gate Status Widget -->
+            <div class="glass-panel p-4 rounded-xl flex flex-col gap-2 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-1 h-full bg-red-500/40"></div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-500 text-sm">lock</span>
+                    <p class="text-white/60 text-[10px] font-bold uppercase tracking-wider">Gate
+                        Status</p>
+                </div>
+                <div class="flex items-end gap-1">
+                    <p class="text-white text-2xl font-bold uppercase tracking-tighter">Sealed</p>
+                </div>
+                <div class="flex items-center gap-1 mt-1">
+                    <span class="flex size-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                    <span class="text-[8px] text-white/40 uppercase tracking-widest font-bold">Lock Protocol Active</span>
+                </div>
+            </div>
+        </div>
+        <!-- Detailed Progress Slider -->
+        <div class="p-6 mt-4">
+            <div class="flex justify-between items-end mb-3">
+                <div class="flex flex-col">
+                    <p class="text-[10px] text-primary font-bold uppercase tracking-[0.2em]">Genesis
+                        Protocol</p>
+                    <h3 class="text-lg font-bold">Sync Progress</h3>
+                </div>
+                <div class="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+                    <p class="text-primary text-xs font-bold">0.072s RTT</p>
+                </div>
+            </div>
+            <div class="relative h-12 flex items-center">
+                <div class="absolute inset-0 bg-white/5 border border-white/10 rounded-lg"></div>
+                <!-- Gauge Markers -->
+                <div class="absolute inset-x-4 flex justify-between">
+                    <div class="h-4 w-[1px] bg-white/20"></div>
+                    <div class="h-4 w-[1px] bg-white/20"></div>
+                    <div class="h-4 w-[1px] bg-white/20"></div>
+                    <div class="h-4 w-[1px] bg-white/20"></div>
+                    <div class="h-4 w-[1px] bg-white/20"></div>
+                </div>
+                <!-- Actual Progress -->
+                <div class="absolute left-0 h-full bg-primary/20 border-r-2 border-primary"
+                     style="width: 72%;"></div>
+                <div class="absolute left-[72%] -ml-4 flex items-center justify-center">
+                    <div class="size-8 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/40">
+                        <span class="material-symbols-outlined text-sm font-bold">bolt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- iOS Style Navigation Bar -->
+    <div class="mt-auto bg-background-dark/95 backdrop-blur-md border-t border-white/10 px-6 py-4 flex items-center justify-between pb-8">
+        <button class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-2xl">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Hub</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-2xl"
+                  style="font-variation-settings: 'FILL' 1">grid_view</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Circuits</span>
+        </button>
+        <!-- Center Action Button -->
+        <div class="relative -top-6">
+            <div class="absolute inset-0 bg-primary blur-xl opacity-20"></div>
+            <button class="size-14 rounded-2xl bg-primary text-background-dark flex items-center justify-center shadow-2xl relative z-10">
+                <span class="material-symbols-outlined text-3xl">token</span>
+            </button>
+        </div>
+        <button class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-2xl">monitoring</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Stats</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-2xl">account_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">User</span>
+        </button>
+    </div>
+    <!-- iOS Home Indicator -->
+    <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full"></div>
+</div>
+<!-- Hidden scrollbar style -->
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+</body>
+</html>

@@ -24,19 +24,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/eap") }
-        maven {
-            url = uri("https://jitpack.io")
-            metadataSources { artifact(); mavenPom() }
-        }
-        maven {
-            url = uri("https://dl.google.com/dl/android/maven2/")
-            metadataSources { artifact(); mavenPom() }
-        }
-        maven {
-            url = uri("https://api.xposed.info/")
-            metadataSources { artifact(); mavenPom() }
-        }
+        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://api.xposed.info/") }
+        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 
         // Dynamically add libs directories as repositories
         rootDir.walkTopDown()
@@ -49,11 +39,6 @@ dependencyResolutionManagement {
                     metadataSources { artifact() }
                 }
             }
-
-        val rootLibs = File(rootDir, "libs")
-        if (rootLibs.exists()) {
-            maven { url = uri(rootLibs.toURI()); metadataSources { artifact() } }
-        }
     }
 }
 
@@ -81,7 +66,6 @@ fun includeIfExists(path: String) {
 include(":app")
 
 // --- Core Modules ---
-include(":core")
 include(":core-module")
 include(":list")
 include(":utilities")
@@ -92,7 +76,7 @@ includeIfExists(":aura:reactivedesign:auraslab")
 includeIfExists(":aura:reactivedesign:collabcanvas")
 includeIfExists(":aura:reactivedesign:chromacore")
 includeIfExists(":aura:reactivedesign:customization")
-includeIfExists(":aura:reactivedesign:sandboxui")
+
 
 // --- Kai → SentinelsFortress ---
 include(":kai")

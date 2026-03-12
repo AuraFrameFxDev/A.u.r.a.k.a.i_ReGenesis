@@ -28,7 +28,9 @@ dependencies {
     api(libs.androidx.core.ktx)
 
     // YukiHook API 1.3.0+ stack
-    implementation(libs.yukihookapi.api)
+    implementation(libs.yukihookapi.api) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
     ksp(libs.yukihookapi.ksp)
 
     // Compose UI
@@ -38,7 +40,7 @@ dependencies {
 
     // Root/System Operations
     implementation(libs.libsu.core)
-    implementation(libs.libsu.io)
+    implementation(libs.libsu.nio)
     implementation(libs.libsu.service)
 
     // Xposed API (compile-only, not bundled in APK)

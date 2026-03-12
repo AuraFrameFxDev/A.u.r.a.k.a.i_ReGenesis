@@ -36,7 +36,7 @@ class OracleDriveSandboxTest {
     fun setUp() {
         whenever(mockContext.filesDir).thenReturn(mockFilesDir)
         whenever(mockFilesDir.absolutePath).thenReturn("/mock/files")
-        
+
         sandbox = OracleDriveSandbox(mockContext)
     }
 
@@ -67,7 +67,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Sandbox State Enum Tests")
-    inner class SandboxStateEnumTests {
+    class SandboxStateEnumTests {
 
         @Test
         @DisplayName("should have all expected states")
@@ -86,7 +86,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Sandbox Type Enum Tests")
-    inner class SandboxTypeEnumTests {
+    class SandboxTypeEnumTests {
 
         @Test
         @DisplayName("should have all expected types")
@@ -106,7 +106,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Safety Level Enum Tests")
-    inner class SafetyLevelEnumTests {
+    class SafetyLevelEnumTests {
 
         @Test
         @DisplayName("should have all expected safety levels")
@@ -136,7 +136,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Risk Level Enum Tests")
-    inner class RiskLevelEnumTests {
+    class RiskLevelEnumTests {
 
         @Test
         @DisplayName("should have all expected risk levels")
@@ -164,7 +164,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Data Class Tests")
-    inner class DataClassTests {
+    class DataClassTests {
 
         @Test
         @DisplayName("should create SandboxEnvironment with all properties")
@@ -250,7 +250,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Sandbox Environment Edge Cases")
-    inner class SandboxEnvironmentEdgeCasesTests {
+    class SandboxEnvironmentEdgeCasesTests {
 
         @Test
         @DisplayName("should handle empty modifications list")
@@ -332,7 +332,7 @@ class OracleDriveSandboxTest {
 
     @Nested
     @DisplayName("Type-specific Sandbox Tests")
-    inner class TypeSpecificSandboxTests {
+    class TypeSpecificSandboxTests {
 
         @Test
         @DisplayName("should create system modification sandbox")

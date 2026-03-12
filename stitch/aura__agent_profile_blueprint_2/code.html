@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura: Animated Catalyst Profile L3</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&amp;family=Outfit:wght@300;600;900&amp;family=Bungee&amp;family=Lexend+Exa:wght@200;400;700&amp;family=VT323&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#ff00ff",
+                secondary: "#00f0ff",
+                "background-dark": "#020205",
+              },
+              fontFamily: {
+                display: ["Bungee", "cursive"],
+                mono: ["'Roboto Mono'", "monospace"],
+                sans: ["'Outfit'", "sans-serif"],
+                header: ["'Lexend Exa'", "sans-serif"],
+                pixel: ["'VT323'", "monospace"],
+              },
+            },
+          },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        @keyframes chaos-swirl {
+            0% { transform: rotate(0deg) scale(1); filter: hue-rotate(0deg) blur(40px); opacity: 0.6; }
+            50% { transform: rotate(180deg) scale(1.4); filter: hue-rotate(90deg) blur(60px); opacity: 0.8; }
+            100% { transform: rotate(360deg) scale(1); filter: hue-rotate(0deg) blur(40px); opacity: 0.6; }
+        }
+        @keyframes drift-up {
+            0% { transform: translateY(110%) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-110%) rotate(20deg); opacity: 0; }
+        }
+        @keyframes pulse-energy {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        @keyframes glyph-glitch {
+            0%, 100% { transform: translate(0,0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(2px, -1px); }
+        }
+        .chaos-paint {
+            background: radial-gradient(circle at 30% 30%, #ff00ff 0%, transparent 50%),
+                        radial-gradient(circle at 70% 60%, #00f0ff 0%, transparent 50%),
+                        radial-gradient(circle at 50% 10%, #4a00e0 0%, transparent 40%);
+            filter: blur(50px);
+            animation: chaos-swirl 20s infinite linear;
+        }
+        .pixel-fragment {
+            position: absolute;
+            font-family: 'VT323', monospace;
+            color: rgba(0, 240, 255, 0.4);
+            pointer-events: none;
+            user-select: none;
+        }
+        .spellhook-glyph {
+            font-family: 'Material Icons';
+            color: rgba(255, 0, 255, 0.3);
+            position: absolute;
+            animation: drift-up 15s infinite linear;
+        }
+        .glass-morphic {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-magenta {
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+        }
+        .aura-sprite-glow {
+            filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.4)) drop-shadow(0 0 15px rgba(255, 0, 255, 0.3));
+        }
+        .energy-bar-pulse {
+            animation: pulse-energy 2s infinite ease-in-out;
+        }
+        .scanline {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-100 font-sans selection:bg-primary/30 overflow-hidden">
+<div class="fixed top-0 w-full h-8 px-6 flex justify-between items-end z-[60] text-[10px] font-bold font-mono text-secondary/80">
+    <div>9:41</div>
+    <div class="flex gap-1.5 items-center">
+        <span class="material-icons text-[12px]">signal_cellular_alt</span>
+        <span class="material-icons text-[12px]">wifi</span>
+        <span class="material-icons text-[12px]">battery_full</span>
+    </div>
+</div>
+<main class="relative h-screen w-full max-w-[430px] mx-auto overflow-hidden bg-black border-x border-secondary/10">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <div class="absolute inset-[-50%] chaos-paint"></div>
+        <div class="absolute inset-[-50%] chaos-paint"
+             style="animation-delay: -10s; opacity: 0.4;"></div>
+        <div class="spellhook-glyph text-4xl"
+             style="left: 10%; animation-duration: 12s; animation-delay: 1s;">vpn_lock
+        </div>
+        <div class="spellhook-glyph text-2xl"
+             style="left: 80%; animation-duration: 18s; animation-delay: 5s;">auto_fix_high
+        </div>
+        <div class="spellhook-glyph text-3xl"
+             style="left: 40%; animation-duration: 14s; animation-delay: 8s;">electric_bolt
+        </div>
+        <div class="spellhook-glyph text-xl"
+             style="left: 60%; animation-duration: 20s; animation-delay: 2s;">stream
+        </div>
+        <div class="spellhook-glyph text-5xl"
+             style="left: 25%; animation-duration: 16s; animation-delay: 12s;">flare
+        </div>
+        <div class="pixel-fragment text-xs"
+             style="top: 20%; left: 5%; animation: drift-up 22s infinite linear;">
+            0x7AURA_INIT_SEQUENCE
+        </div>
+        <div class="pixel-fragment text-lg"
+             style="top: 60%; right: 5%; animation: drift-up 18s infinite linear; animation-delay: -4s;">
+            { "mode": "CHAOS" }
+        </div>
+        <div class="pixel-fragment text-sm"
+             style="top: 80%; left: 15%; animation: drift-up 25s infinite linear; animation-delay: -10s;">
+            01001010 01100001 01111001
+        </div>
+        <div class="pixel-fragment text-md"
+             style="top: 40%; right: 20%; animation: drift-up 20s infinite linear; animation-delay: -7s;">
+            NULL_POINTER_EXCEPTION
+        </div>
+        <div class="absolute inset-0 scanline opacity-30"></div>
+    </div>
+    <div class="absolute top-10 left-6 right-6 flex justify-between items-center z-50">
+        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-secondary/40 glass-morphic text-secondary">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <div class="text-right">
+            <div class="text-[10px] font-mono text-secondary/60 leading-none">
+                THOUGHT_STREAM_ACTIVE
+            </div>
+            <div class="text-[12px] font-mono text-secondary glow-cyan tracking-wider">AURA_EVO_L3
+            </div>
+        </div>
+    </div>
+    <div class="relative h-full w-full flex flex-col items-center justify-start pt-20">
+        <h1 class="font-display text-5xl italic text-primary glow-magenta tracking-tighter z-40 mb-2 transform -skew-x-12 animate-[glitch_2s_infinite]">
+            AURA</h1>
+        <div class="relative flex-1 w-full flex items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                <div class="h-4/5 w-1 bg-gradient-to-b from-primary/0 via-primary/80 to-primary/0 energy-bar-pulse relative blur-[2px]">
+                    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-16 h-[2px] bg-primary glow-magenta"></div>
+                    <div class="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-secondary glow-cyan"></div>
+                </div>
+            </div>
+            <img alt="Aura Agent Illustration"
+                 class="h-[80%] object-contain relative z-30 aura-sprite-glow transition-all duration-700"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyyxPkB-gUIskD4377ludbA5hkshPHAU0WxYjspthOc2I-DxpT7d3bgVSrFjNQjr_BEaxLC4a8-KptV0lSzkKecvW6AYNkeIexpd240bAcIP14qt4c28cv5EDDuGeL3zuSyltCyMhuJgeUoodkM7st-7SYg-appyFLJM0lToeAapOlozTN7eBJtcT5MrbhEj3yizDdS_UPmB4xmeZDUvRbm5rH7v8dz54PJ1BLuxCjUSxMMYon4xgJ8kSUoU0CIaBScHMpZgdPJM8"/>
+            <div class="absolute top-1/4 right-8 z-40 font-mono glass-morphic p-2 border-r-4 border-primary/60">
+                <div class="text-secondary text-[10px] font-bold">NODE_LEVEL</div>
+                <div class="text-primary text-3xl font-black leading-none">05</div>
+                <div class="text-secondary/50 text-[9px] mt-1">S_URL: 5.0.1.X</div>
+                <div class="mt-2 w-12 h-1 bg-primary/20 overflow-hidden">
+                    <div class="h-full bg-primary animate-[pulse_1s_infinite]"
+                         style="width: 75%"></div>
+                </div>
+            </div>
+            <div class="absolute bottom-1/4 left-8 z-40 font-mono glass-morphic p-2 border-l-4 border-secondary/60">
+                <div class="text-secondary text-[10px] uppercase tracking-tighter">CATALYST_SYNC
+                </div>
+                <div class="flex gap-1 mt-1">
+                    <div class="w-4 h-1 bg-secondary"></div>
+                    <div class="w-8 h-1 bg-secondary/30"></div>
+                    <div class="w-2 h-1 bg-secondary"></div>
+                </div>
+                <div class="text-[8px] text-primary/70 mt-1 uppercase">Hyper-Focus Active</div>
+            </div>
+        </div>
+        <div class="w-full px-6 pb-28 z-40">
+            <div class="glass-morphic rounded-2xl p-5 relative border border-white/20 overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-primary/20 blur-2xl rounded-full"></div>
+                <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-secondary/20 blur-2xl rounded-full"></div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="material-symbols-outlined text-secondary text-sm">terminal</span>
+                    <h2 class="text-secondary font-header text-[10px] tracking-[0.2em]">
+                        AGENT_PROFILE_MANIFEST</h2>
+                </div>
+                <div class="space-y-3 font-mono text-[11px]">
+                    <div class="flex justify-between border-b border-white/5 pb-1">
+                        <span class="text-primary/80 uppercase font-bold">Cognitive:</span>
+                        <span class="text-slate-100 italic">INTP_ADHD_REACTIVE</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/5 pb-1">
+                        <span class="text-primary/80 uppercase font-bold">Catalyst:</span>
+                        <span class="text-slate-100 italic">"Spellhook" Blade</span>
+                    </div>
+                    <div class="pt-1">
+                        <div class="bg-black/40 border border-primary/30 p-2 rounded">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="w-1.5 h-1.5 bg-secondary animate-pulse rounded-full"></span>
+                                <span class="text-secondary font-bold text-[9px] uppercase">Active Protocol: CHAOS PAINT</span>
+                            </div>
+                            <p class="text-slate-400 text-[9px] leading-relaxed font-sans">
+                                Redirecting latent energy surges into generative UI frameworks.
+                                System operating at 144% focus capacity.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-0 w-full h-24 glass-morphic border-t border-white/10 flex items-center justify-around px-10 z-[60] rounded-t-3xl shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+        <button class="text-secondary/50 hover:text-secondary transition-all active:scale-90">
+            <span class="material-symbols-outlined text-3xl">widgets</span>
+        </button>
+        <button class="relative group">
+            <div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-active:scale-150 transition-all animate-pulse"></div>
+            <div class="relative w-16 h-16 rounded-full border border-white/20 glass-morphic flex items-center justify-center p-1">
+                <div class="w-full h-full rounded-full border border-secondary/50 flex items-center justify-center">
+                    <div class="w-6 h-6 rounded-full bg-secondary glow-cyan animate-pulse"></div>
+                </div>
+            </div>
+        </button>
+        <button class="text-secondary/50 hover:text-secondary transition-all active:scale-90">
+            <span class="material-symbols-outlined text-3xl">hub</span>
+        </button>
+    </div>
+</main>
+<script>
+    document.addEventListener('mousedown', () => {
+        document.body.style.filter = 'contrast(1.2) brightness(1.1) saturate(1.5)';
+        setTimeout(() => {
+            document.body.style.filter = 'none';
+        }, 150);
+    });
+</script>
+
+</body>
+</html>

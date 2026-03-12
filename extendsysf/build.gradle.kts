@@ -25,7 +25,9 @@ dependencies {
     api(libs.androidx.core.ktx)
 
     // YukiHook API 1.3.0+ stack
-    implementation(libs.yukihookapi.api)
+    implementation(libs.yukihookapi.api) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
 
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))

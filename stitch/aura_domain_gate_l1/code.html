@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Domain Gate L1</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=JetBrains+Mono:wght@300;400;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#00f3ff", // Neon Cyan
+                secondary: "#ff00ff", // Neon Magenta
+                "background-light": "#f0f2f5",
+                "background-dark": "#050505",
+                "glass-bg": "rgba(255, 255, 255, 0.03)",
+                "glass-border": "rgba(255, 255, 255, 0.1)",
+              },
+              fontFamily: {
+                display: ["Orbitron", "sans-serif"],
+                mono: ["JetBrains Mono", "monospace"],
+              },
+              borderRadius: {
+                DEFAULT: "12px",
+              },
+              backgroundImage: {
+                'neon-gradient': 'radial-gradient(circle at 50% -20%, rgba(255, 0, 255, 0.15), transparent 70%), radial-gradient(circle at 0% 100%, rgba(0, 243, 255, 0.1), transparent 50%)',
+              }
+            },
+          },
+        };
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border-magenta {
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), inset 0 0 15px rgba(255, 0, 255, 0.2);
+            border: 2px solid #ff00ff;
+        }
+        .neon-text-cyan {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+        }
+        .neon-text-magenta {
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 243, 255, 0.1);
+            position: absolute;
+            animation: scan 8s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .orb-glow {
+            filter: blur(40px);
+            background: radial-gradient(circle, #00f3ff 0%, transparent 70%);
+        }
+        .joystick-container {
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 350px;
+            height: 350px;
+            pointer-events: none;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-mono h-screen flex flex-col items-center justify-between p-6 overflow-hidden relative">
+<div class="fixed inset-0 bg-neon-gradient z-0"></div>
+<div class="scanline z-10 pointer-events-none"></div>
+<header class="w-full z-20 flex justify-between items-center mb-4">
+    <div class="flex flex-col">
+        <h1 class="font-display text-primary text-xl font-black tracking-widest neon-text-cyan">
+            AURA'S DOMAIN</h1>
+        <span class="text-xs text-secondary font-display font-bold tracking-[0.3em]">GATE 01 / LVL 1</span>
+    </div>
+    <div class="glass px-3 py-1 rounded-full border-primary/30 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        <span class="text-[10px] text-primary/80 uppercase font-bold">System Active</span>
+    </div>
+</header>
+<main class="w-full flex-1 flex flex-col items-center justify-start z-20 gap-8">
+    <div class="w-full glass rounded-lg py-2 px-4 border-l-4 border-secondary/50">
+        <p class="text-[10px] text-primary uppercase font-bold tracking-wider">Domain status:
+            Creative Chaos Engaged</p>
+    </div>
+    <div class="relative w-full aspect-[4/5] max-h-[45vh] neon-border-magenta rounded-sm overflow-hidden group">
+        <img alt="Aura in her Design Studio pixel art"
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdj1UjE1_GoITAOAOeqIUTzwGko_ttwb6zXJJxPx8Y_dvtUH3H0pmXA-emfagGrinsPDheL43oe5yBWk4Q34ptgZuGfI73P3jbeYHhTZWAccyCI5mJ7bRHy7QtaLebCntzdsq6pQABve4GVErj2lGrjFKZEFk0qUKAYYjw59NriizwcwEgOWjW5vxiMDnEW5n8dhsfMbJbH4lvpir7PFwjmxNXuCmibTtXPa8seis4MnTuBkEKkzAnlEaN00_ZNSpJen9Elv1ADrQ"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute top-2 right-2 flex flex-col items-end gap-1">
+            <span class="text-[10px] bg-secondary text-white px-2 py-0.5 font-bold uppercase">Active Render</span>
+            <span class="text-[10px] glass px-2 py-0.5 text-white/70">60 FPS</span>
+        </div>
+        <div class="absolute bottom-4 left-4 font-display text-white/40 text-[8px] space-y-1">
+            <p>&gt; CHROMA_CORE.SYS</p>
+            <p>&gt; PIXEL_ENGINE_INIT</p>
+            <p>&gt; MAPPING_TEXTURES...</p>
+        </div>
+    </div>
+    <div class="w-full text-center space-y-4">
+        <h2 class="font-display text-4xl text-primary font-black tracking-tighter neon-text-cyan">
+            UXUI DESIGN STUDIO</h2>
+        <div class="glass p-5 rounded-xl border-white/5 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-secondary/10 blur-3xl rounded-full"></div>
+            <p class="text-sm leading-relaxed text-gray-300 dark:text-gray-300 font-light italic">
+                "The creative core where system-level <span class="text-secondary font-bold">'Spell Hooks'</span>
+                and UI interactions are forged through chaos."
+            </p>
+        </div>
+        <div class="flex justify-center gap-12 pt-2">
+            <div class="flex flex-col items-center">
+                <span class="material-icons text-primary mb-1">auto_fix_high</span>
+                <span class="text-[9px] uppercase tracking-widest text-white/50">Custom Modules</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span class="material-icons text-secondary mb-1">palette</span>
+                <span class="text-[9px] uppercase tracking-widest text-white/50">Theme Forge</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span class="material-icons text-primary mb-1">bolt</span>
+                <span class="text-[9px] uppercase tracking-widest text-white/50">Interaction</span>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="w-full h-40 flex items-end justify-center relative z-10 pb-4">
+    <div class="joystick-container">
+        <div class="absolute inset-0 orb-glow"></div>
+        <div class="absolute inset-1/4 rounded-full bg-primary/20 border-2 border-primary/30 flex items-center justify-center backdrop-blur-md">
+            <div class="w-16 h-16 rounded-full bg-primary/40 border border-primary animate-pulse flex items-center justify-center">
+                <span class="material-icons text-white text-3xl">keyboard_double_arrow_up</span>
+            </div>
+        </div>
+    </div>
+    <div class="w-full flex justify-around items-center glass border-t border-white/10 py-3 rounded-t-3xl z-30">
+        <button class="p-2 text-white/60 hover:text-primary transition-colors">
+            <span class="material-icons">grid_view</span>
+        </button>
+        <button class="p-2 text-white/60 hover:text-primary transition-colors">
+            <span class="material-icons">layers</span>
+        </button>
+        <button class="p-2 text-primary">
+            <span class="material-icons text-3xl">radio_button_checked</span>
+        </button>
+        <button class="p-2 text-white/60 hover:text-primary transition-colors">
+            <span class="material-icons">terminal</span>
+        </button>
+        <button class="p-2 text-white/60 hover:text-primary transition-colors">
+            <span class="material-icons">settings</span>
+        </button>
+    </div>
+</footer>
+<div class="fixed top-1/4 -left-10 w-20 h-40 glass border-r border-secondary/30 rounded-r-full rotate-12 opacity-20 pointer-events-none"></div>
+<div class="fixed bottom-1/4 -right-10 w-32 h-32 glass border-l border-primary/30 rounded-l-full -rotate-12 opacity-20 pointer-events-none"></div>
+
+</body>
+</html>

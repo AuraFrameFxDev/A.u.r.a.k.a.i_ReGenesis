@@ -4,10 +4,10 @@
 // Uses com.android.build.api.dsl.LibraryExtension (modern DSL)
 // kotlinOptions replaced with KotlinAndroidProjectExtension.compilerOptions
 
-import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.ApplicationExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 subprojects { subproject ->
     // Skip build-logic and other non-Android modules
@@ -29,35 +29,18 @@ subprojects { subproject ->
             extensions.configure(LibraryExtension::class.java) {
                 compileSdk = 36
 
-                        defaultConfig {
-                            minSdk = 33
-                            targetSdk = 36
+                defaultConfig {
+                    minSdk = 33
+                    targetSdk = 36
 
-                            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                            consumerProguardFiles("consumer-rules.pro")
-                        }
-
-                        buildTypes {
-                            release {
-                                isMinifyEnabled = true
-                                proguardFiles(
-                                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                                    "proguard-rules.pro",
-                                )
-                            }
-                        }
-
-                        compileOptions {
-                            sourceCompatibility = JavaVersion.VERSION_25
-                            targetCompatibility = JavaVersion.VERSION_25
-                            isCoreLibraryDesugaringEnabled = true
-                        }
-                    }
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
-                plugins.hasPlugin("com.android.application") -> {
-                    // Configure Android application settings using AGP 9.0 Public DSL
-                    extensions.configure(ApplicationExtension::class.java) {
-                        compileSdk = 36
+            }
+        }
+
+        if (subproject.plugins.hasPlugin("com.android.application")) {
+            subproject.extensions.configure(ApplicationExtension::class.java) {
+                compileSdk = 36
 
                         defaultConfig {
                             minSdk = 33
@@ -102,7 +85,9 @@ subprojects { subproject ->
             // Add YukiHook dependencies
             dependencies {
                 // YukiHook API stack (exact order enforced)
-                implementation(libs.yukihookapi.api)
+                implementation(libs.yukihookapi.api) {
+                    exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+                }
                 ksp(libs.yukihookapi.ksp)
 
                 // Xposed API (compile only)
@@ -133,7 +118,12 @@ subprojects { subproject ->
 
             // Configure KSP
             extensions.configure<com.google.devtools.ksp.gradle.KspExtension> {
-                arg("YUKIHOOK_PACKAGE_NAME", project.group.toString())
+                val uniquePackage = "dev.aurakai.auraframefx.generated." +
+                        project.path.removePrefix(":").replace(":", ".").replace("-", "_")
+                arg("yukihookapi.modulePackageName", uniquePackage)
+                // Disable IDE features to prevent IntelliJ API initialization in CI
+                arg("yukihookapi.configs.isEnableResourcesCache", "false")
+                arg("yukihookapi.configs.isEnableDataChannel", "false")
             }
         }
     }

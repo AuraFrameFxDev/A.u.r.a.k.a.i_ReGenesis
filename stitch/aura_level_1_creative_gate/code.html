@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Level 1 Creative Gate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;family=Rajdhani:wght@300;500;700&amp;family=Material+Icons+Outlined&amp;display=swap"
+          rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00F0FF", // Neon Cyan
+                        secondary: "#FF00E5", // Neon Pink
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#050505",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        body: ["Rajdhani", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 10s ease-in-out infinite',
+                        'splatter': 'splatter 20s linear infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(2deg)' },
+                        },
+                        splatter: {
+                            '0%': { transform: 'scale(1) rotate(0deg) opacity: 0.4' },
+                            '100%': { transform: 'scale(1.2) rotate(5deg) opacity: 0.6' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+        }
+        .cyber-border {
+            clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+        }
+        .aura-splatter {
+            background: radial-gradient(circle at 20% 30%, rgba(255, 0, 229, 0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.4) 0%, transparent 50%),
+                        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+        }
+        .glass-panel {
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        .lvl-indicator {
+            text-shadow: 0 0 10px #00F0FF, 0 0 20px #FF00E5;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 h-screen w-full relative">
+<div class="absolute inset-0 aura-splatter animate-splatter pointer-events-none opacity-50"></div>
+<div class="absolute top-20 right-[-20px] w-32 h-20 glass-panel cyber-border opacity-40 animate-float-slow transform rotate-12 flex items-center justify-center">
+    <div class="w-10 h-4 bg-primary/30 rounded-full"></div>
+</div>
+<div class="absolute bottom-40 left-[-30px] w-40 h-24 glass-panel cyber-border opacity-30 animate-float transform -rotate-6 flex flex-col p-2 gap-2">
+    <div class="h-2 w-full bg-secondary/40 rounded"></div>
+    <div class="h-2 w-2/3 bg-secondary/40 rounded"></div>
+</div>
+<div class="flex flex-col h-full max-w-md mx-auto relative z-10 pt-12 pb-24 px-6">
+    <header class="flex justify-between items-center mb-8">
+        <div class="flex flex-col">
+            <span class="text-xs font-display tracking-widest text-primary uppercase">Current Tier</span>
+            <h1 class="text-4xl font-display font-bold lvl-indicator italic">LVL 1</h1>
+        </div>
+        <button class="w-12 h-12 rounded-full glass-panel flex items-center justify-center border-secondary/50">
+            <span class="material-icons-outlined text-secondary">tune</span>
+        </button>
+    </header>
+    <div class="flex-1 flex flex-col justify-center gap-8">
+        <div class="relative group">
+            <div class="absolute inset-0 bg-gradient-to-tr from-secondary/40 to-primary/40 blur-3xl rounded-3xl -z-10 animate-pulse"></div>
+            <div class="glass-panel cyber-border p-6 relative overflow-hidden transition-transform duration-500 hover:scale-105">
+                <div class="absolute top-2 right-4 text-[100px] font-display font-black opacity-5 pointer-events-none text-white select-none">
+                    AURA
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="relative mb-4">
+                        <img alt="Aura Creative Catalyst"
+                             class="w-64 h-80 object-cover rounded-2xl grayscale contrast-125 hover:grayscale-0 transition-all duration-700 border-b-4 border-primary"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgJq1O4-zv6UsV3hMgXFpYuNtcdkj4sEqEKFU3yMcLoNhZ51flni4hsFt106rjOkcblCz7eKyuOyKgYAkZYGklJST60_aKmyP93Vki-Fz6EhlzllMaaET-8Ah0b_f4VKPzwOscI8QiBV3UbBE2K83D3Oq3PA_yIRh09Tr4lJA04Mh7o8bZj8z7s7iFWwcdtC3ZfxD1wjLtzWRMgC4U4RYCvS3ugSwnVy0GG8zZeb8INgbk7enCkMQJaVc3hp2CJFn4SwKKIGljhmI"/>
+                        <div class="absolute -bottom-2 -right-4 bg-background-dark p-2 border border-primary cyber-border">
+                            <span class="material-icons-outlined text-primary text-3xl">auto_fix_high</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h2 class="font-display text-2xl tracking-tighter text-white">THE CREATIVE
+                            CATALYST</h2>
+                        <p class="text-primary text-sm font-medium tracking-widest mt-1">SPELLHOOK
+                            INTEGRATION ACTIVE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center mt-6 gap-2">
+                <div class="w-8 h-1 bg-primary rounded-full"></div>
+                <div class="w-2 h-1 bg-slate-700 rounded-full"></div>
+                <div class="w-2 h-1 bg-slate-700 rounded-full"></div>
+            </div>
+        </div>
+        <div class="space-y-3">
+            <h3 class="text-[10px] font-display uppercase tracking-[0.3em] text-slate-400 mb-2 px-1">
+                Active Domain Paths</h3>
+            <div class="group cursor-pointer flex items-center justify-between p-4 glass-panel border-l-4 border-l-secondary hover:bg-secondary/10 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-icons-outlined text-secondary">palette</span>
+                    <div>
+                        <div class="text-sm font-bold font-display uppercase tracking-wider">UXUI
+                            Design Studio
+                        </div>
+                        <div class="text-[10px] text-slate-400">ChromaCore v2.4</div>
+                    </div>
+                </div>
+                <span class="material-icons-outlined text-xs text-slate-500 group-hover:text-secondary">arrow_forward_ios</span>
+            </div>
+            <div class="group cursor-pointer flex items-center justify-between p-4 glass-panel border-l-4 border-l-primary hover:bg-primary/10 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-icons-outlined text-primary">security</span>
+                    <div>
+                        <div class="text-sm font-bold font-display uppercase tracking-wider">
+                            Sentinels Fortress
+                        </div>
+                        <div class="text-[10px] text-slate-400">Kernel Integrity Sync</div>
+                    </div>
+                </div>
+                <span class="material-icons-outlined text-xs text-slate-500 group-hover:text-primary">arrow_forward_ios</span>
+            </div>
+            <div class="group cursor-pointer flex items-center justify-between p-4 glass-panel border-l-4 border-l-slate-500 hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4">
+                    <span class="material-icons-outlined text-slate-400">storage</span>
+                    <div>
+                        <div class="text-sm font-bold font-display uppercase tracking-wider">
+                            OracleDrive Genesis
+                        </div>
+                        <div class="text-[10px] text-slate-400">LDO Cloud Root</div>
+                    </div>
+                </div>
+                <span class="material-icons-outlined text-xs text-slate-500">lock</span>
+            </div>
+        </div>
+    </div>
+    <nav class="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-t border-white/10 px-6 py-4 flex justify-around items-center">
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-icons-outlined text-slate-500 group-hover:text-primary transition-colors">folder</span>
+            <span class="text-[10px] uppercase font-bold text-slate-500 group-hover:text-primary">Sources</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group relative">
+            <div class="absolute -top-1 w-8 h-[2px] bg-primary"></div>
+            <span class="material-icons-outlined text-primary">chat_bubble_outline</span>
+            <span class="text-[10px] uppercase font-bold text-primary">Chat</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 group">
+            <span class="material-icons-outlined text-slate-500 group-hover:text-secondary transition-colors">auto_fix_normal</span>
+            <span class="text-[10px] uppercase font-bold text-slate-500 group-hover:text-secondary">Studio</span>
+        </button>
+    </nav>
+    <div class="absolute top-1/4 left-1/3 w-1 h-1 bg-primary rounded-full animate-ping"></div>
+    <div class="absolute top-1/2 right-1/4 w-1 h-1 bg-secondary rounded-full animate-ping delay-700"></div>
+</div>
+<div class="absolute top-1/2 -right-2 transform -translate-y-1/2 w-4 h-20 bg-primary/20 rounded-l-full flex items-center justify-center cursor-pointer">
+    <span class="material-icons-outlined text-[10px] text-primary">chevron_left</span>
+</div>
+
+</body>
+</html>

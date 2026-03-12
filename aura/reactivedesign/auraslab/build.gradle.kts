@@ -18,5 +18,6 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(project(":aura:reactivedesign:chromacore"))
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

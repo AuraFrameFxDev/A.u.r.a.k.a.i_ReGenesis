@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.agents.growthmetrics.identity.repository.IdentityRepository
 import dev.aurakai.auraframefx.agents.growthmetrics.identity.repository.IdentityRepositoryImpl
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -20,6 +21,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
+    @dev.aurakai.auraframefx.agents.growthmetrics.identity.di.IdentitySettingsDataStore
     fun provideIdentityDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("identity_prefs") }
@@ -28,7 +30,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
-    fun provideIdentityRepository(dataStore: DataStore<Preferences>): IdentityRepository {
+    fun provideIdentityRepository(@dev.aurakai.auraframefx.agents.growthmetrics.identity.di.IdentitySettingsDataStore dataStore: DataStore<Preferences>): IdentityRepository {
         return IdentityRepositoryImpl(dataStore)
     }
 }

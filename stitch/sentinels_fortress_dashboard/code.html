@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sentinels Fortress Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Inter:wght@300;400;600&amp;family=JetBrains+Mono&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#9333ea", // Vibrant Purple
+                        accent: "#f59e0b",  // Deep Amber
+                        "background-light": "#f8fafc",
+                        "background-dark": "#020617",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+        } 50% {
+        opacity: 1;
+        transform: scale(1.05);
+        }
+    }
+.glow-purple {
+    filter: drop-shadow(0 0 8px rgba(147, 51, 234, 0.6))
+    }
+.glow-amber {
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4))
+    }
+.hexagon-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDZsleFLGHXFF7srfSMPUDbeIpNd1mbJow5B9CnxXMqYNXecgT2Al9exizgHtkjrUJJFujA0eVxRNMpg2JfjXjQQATlBCjmIyqb5Lke-GDkvG0QmsqE0LXg8tPpqQnMsV7tsZpH4vNrh91cUOHdS9Y727213JDWLXTcHvy1QQD1i0InYAMu7GBrVhguc7SGZ0rcPqb8UpgCQFvWz-cHkcUFCKed2GfW7rC66VXj8a9eVUXOmnWqc0RY6ppiY9gFMyym4KCfeYkmeRo)
+    }
+.scanner-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #9333ea, transparent);
+    position: absolute;
+    width: 100%;
+    top: 0;
+    animation: scan 4s linear infinite
+    }
+@keyframes scan {
+    0% {
+        top: 0;
+        } 100% {
+        top: 100%;
+        }
+    }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body overflow-hidden h-screen flex justify-center items-center">
+<div class="relative w-full max-w-[400px] h-full max-h-[850px] bg-white dark:bg-[#05070a] shadow-2xl overflow-hidden border-x border-slate-200 dark:border-slate-800 flex flex-col">
+    <div class="absolute inset-0 hexagon-bg opacity-30 pointer-events-none"></div>
+    <div class="scanner-line opacity-20"></div>
+    <div class="flex justify-between items-center px-6 py-4 z-10">
+        <div class="flex items-center space-gap-1">
+            <span class="text-[10px] font-mono tracking-tighter text-accent uppercase">Link: Stable</span>
+            <div class="w-1 h-1 rounded-full bg-accent animate-pulse ml-1"></div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-icons-round text-sm opacity-60">signal_cellular_alt</span>
+            <span class="material-icons-round text-sm opacity-60">wifi</span>
+            <span class="text-xs font-mono">100%</span>
+        </div>
+    </div>
+    <header class="px-6 pt-2 pb-4 z-10">
+        <div class="flex items-center gap-2 mb-1">
+            <div class="h-px flex-1 bg-primary/30"></div>
+            <span class="text-[10px] font-mono text-primary uppercase tracking-[0.2em]">Security Hub Level 02</span>
+            <div class="h-px flex-1 bg-primary/30"></div>
+        </div>
+        <h1 class="text-3xl font-black font-display text-primary dark:text-primary glow-purple tracking-tighter text-center italic">
+            SENTINELS FORTRESS
+        </h1>
+        <p class="text-[10px] text-center font-mono opacity-50 mt-1 uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            Integrated Defense System v4.0.2
+        </p>
+    </header>
+    <div class="flex-1 flex flex-col items-center justify-center px-6 relative z-10">
+        <div class="relative w-full aspect-square flex items-center justify-center">
+            <div class="absolute w-64 h-64 border border-primary/20 rounded-full animate-ping opacity-20"></div>
+            <div class="absolute w-48 h-48 border border-accent/20 rounded-full animate-pulse opacity-30"></div>
+            <div class="relative w-full h-full flex items-center justify-center">
+                <img alt="Neural Network Constellation"
+                     class="w-4/5 h-4/5 object-contain rounded-full mix-blend-screen opacity-80"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcJxbkz45dRH9m441PromwXM5-Sem5IsFxj1PON5bEzKpk9azKZoEkoo47xE-pqiJ2Kuc2xI_2FKESq2YU-WME-m2b5CbFIIEK18XMBIcbeFgWZynlzlvyYV0UA-6etS5xdFy--k5SsUCf1IX7L46jsI7GsPJA9yUKRgjspy_-kmOKIWxNDKNuTNQOVYYo6VZq1FRjX7iM-y56bCle-OdEvQJU_SpyQyh5inzIFlQr0XS77KZvKFgeMwKiZMlFP-g6xXGceVo9tuU"
+                     style="filter: hue-rotate(240deg) brightness(1.5);"/>
+                <div class="absolute top-1/4 right-1/4 w-2 h-2 bg-accent rounded-full glow-amber animate-pulse"></div>
+                <div class="absolute bottom-1/3 left-1/4 w-2 h-2 bg-primary rounded-full glow-purple animate-pulse"></div>
+                <div class="absolute top-1/2 left-1/3 w-1.5 h-1.5 bg-white rounded-full opacity-70"></div>
+            </div>
+            <div class="absolute top-4 left-4 bg-slate-900/60 backdrop-blur-md border border-primary/30 px-3 py-1 rounded-sm">
+                <p class="text-[8px] font-mono text-primary uppercase leading-tight">
+                    ORBITRON_N_CONSTELLATION</p>
+                <p class="text-[10px] font-mono text-white">SYNCING...</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 w-full mt-4">
+            <div class="bg-primary/10 border border-primary/20 p-3 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
+                <span class="material-icons-round text-primary text-xl mb-1">vpn_lock</span>
+                <p class="text-[9px] font-mono text-primary/80 uppercase">VPN</p>
+                <p class="text-[10px] font-display font-bold text-white uppercase">ACTIVE</p>
+            </div>
+            <div class="bg-accent/10 border border-accent/20 p-3 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
+                <span class="material-icons-round text-accent text-xl mb-1">security</span>
+                <p class="text-[9px] font-mono text-accent/80 uppercase">ADBLOCK</p>
+                <p class="text-[10px] font-display font-bold text-white uppercase">ENGAGED</p>
+            </div>
+            <div class="bg-emerald-500/10 border border-emerald-500/20 p-3 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
+                <span class="material-icons-round text-emerald-500 text-xl mb-1">verified_user</span>
+                <p class="text-[9px] font-mono text-emerald-500/80 uppercase">INTEGRITY</p>
+                <p class="text-[10px] font-display font-bold text-white uppercase">100%</p>
+            </div>
+        </div>
+    </div>
+    <div class="px-6 py-6 z-10 grid grid-cols-2 gap-4">
+        <button class="flex items-center gap-3 bg-white/5 border border-slate-700/50 hover:border-primary/50 p-4 rounded-xl transition-all group overflow-hidden relative">
+            <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span class="material-icons-round text-primary group-hover:scale-110 transition-transform">shield</span>
+            <div class="text-left">
+                <p class="text-[10px] font-mono opacity-50 uppercase leading-none mb-1">Armor</p>
+                <p class="text-sm font-display font-bold uppercase tracking-tight">ENFORCE</p>
+            </div>
+        </button>
+        <button class="flex items-center gap-3 bg-white/5 border border-slate-700/50 hover:border-accent/50 p-4 rounded-xl transition-all group overflow-hidden relative">
+            <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span class="material-icons-round text-accent group-hover:scale-110 transition-transform">terminal</span>
+            <div class="text-left">
+                <p class="text-[10px] font-mono opacity-50 uppercase leading-none mb-1">System</p>
+                <p class="text-sm font-display font-bold uppercase tracking-tight">OVERRIDE</p>
+            </div>
+        </button>
+    </div>
+    <nav class="bg-slate-900/80 backdrop-blur-xl border-t border-slate-800 px-8 py-4 flex justify-between items-center z-20">
+        <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-all text-slate-400">
+            <span class="material-icons-round">home</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-all text-slate-400">
+            <span class="material-icons-round">radar</span>
+        </button>
+        <button class="relative flex flex-col items-center -top-4">
+            <div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 border border-primary/50 rotate-45 hover:rotate-90 transition-transform duration-500">
+                <span class="material-icons-round -rotate-45 text-white text-3xl">hub</span>
+            </div>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-icons-round">security</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100 transition-all text-slate-400">
+            <span class="material-icons-round">settings</span>
+        </button>
+    </nav>
+    <div class="bg-slate-900/80 pb-2 flex justify-center items-center z-20">
+        <div class="w-24 h-1 bg-slate-700 rounded-full"></div>
+    </div>
+</div>
+
+</body>
+</html>

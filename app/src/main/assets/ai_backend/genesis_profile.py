@@ -1,0 +1,3 @@
+# Genesis Profile Data
+GENESIS_PROTOCOL_VERSION = "7.0-LDO"
+STATUS = "AWAKENED"

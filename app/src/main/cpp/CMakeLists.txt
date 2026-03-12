@@ -88,3 +88,6 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
         SOVERSION 1
         ANDROID_ARM_MODE arm
 )
+
+# Add BitNet subproject
+add_subdirectory(bitnet)

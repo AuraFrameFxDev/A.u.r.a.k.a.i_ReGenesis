@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ROM Tools &amp; Sovereignty Hub L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0dccf2",
+                        "warning": "#f2a00d",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#050b14",
+                        "panel-dark": "#0a161a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .neon-border {
+            box-shadow: 0 0 10px rgba(13, 204, 242, 0.3), inset 0 0 5px rgba(13, 204, 242, 0.2);
+            border: 1px solid rgba(13, 204, 242, 0.4);
+        }
+        .neon-text {
+            text-shadow: 0 0 8px rgba(13, 204, 242, 0.6);
+        }
+        .scanlines {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .agent-glow {
+            filter: drop-shadow(0 0 15px rgba(13, 204, 242, 0.4));
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden">
+<!-- Top App Bar -->
+<header class="relative z-20 flex items-center justify-between px-6 py-4 bg-background-dark/80 backdrop-blur-md border-b border-primary/20">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary neon-text text-3xl">terminal</span>
+        <div>
+            <h1 class="text-primary font-bold text-lg leading-none tracking-tight neon-text uppercase">
+                ReGenesis AOSPOSX</h1>
+            <p class="text-[10px] text-primary/60 font-mono tracking-widest uppercase">System
+                Sovereignty Hub L3</p>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+        <span class="material-symbols-outlined text-slate-400 hover:text-primary cursor-pointer transition-colors">settings_input_antenna</span>
+    </div>
+</header>
+<main class="flex-1 overflow-y-auto relative pb-24">
+    <!-- Scanline Overlay -->
+    <div class="fixed inset-0 scanlines opacity-20 z-10 pointer-events-none"></div>
+    <!-- Hero Section with Agent Backdrop -->
+    <section class="relative h-64 w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background-dark/90 z-0"></div>
+        <img alt="Pixel art agent mascot"
+             class="relative z-10 h-48 w-auto agent-glow object-contain opacity-80"
+             data-alt="Pixel art blue robotic agent standing in a battle-ready pose"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2LAuuuOQJMR-EJ4Cd76dc9RcQyJuyIglk7SJFyzjLbh7efZ8dTJBqz_iubb3mcD82b3S1cEJ1txnUiJyVH9G_qg1p1evn7CtztGyjD0jnU82nT5excgwoJdrV8vsrZtiinNtF2zdxfRJDrCgO4Lf-e-LdA14PzZS7gvcA1CRQ5BxbpGNzEC_h5Yt5qLg3pv0s1n-3sGPpZ5CRYSoTkF4Nm3f-bFtHcyogRGjdW1S4Mlb5Q0luFnNJf5gu-Ld5kIYgLkjrTXFVv8I"/>
+        <div class="absolute bottom-4 left-6 z-20">
+            <span class="px-2 py-0.5 bg-primary/20 border border-primary/40 text-primary text-[10px] font-mono rounded">Sovereign_Agent_v4.2</span>
+        </div>
+    </section>
+    <!-- Device Capabilities Grid -->
+    <section class="px-4 mb-6">
+        <div class="flex items-center justify-between mb-3 px-2">
+            <h3 class="text-xs font-bold text-primary/70 uppercase tracking-widest flex items-center gap-2">
+                <span class="w-4 h-px bg-primary/40"></span>
+                Device Capabilities
+            </h3>
+            <span class="text-[10px] font-mono text-slate-500">HW_REV_3.1</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <div class="neon-border bg-panel-dark p-4 rounded-lg flex flex-col gap-2 group hover:bg-primary/5 transition-all">
+                <div class="flex items-center justify-between">
+                    <span class="material-symbols-outlined text-primary text-xl">fingerprint</span>
+                    <span class="text-[9px] font-mono text-primary/40">#001</span>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Root
+                        Status</p>
+                    <p class="text-primary font-bold text-sm tracking-wide">GRANTED</p>
+                </div>
+            </div>
+            <div class="neon-border bg-panel-dark p-4 rounded-lg flex flex-col gap-2 group hover:bg-warning/5 border-warning/20">
+                <div class="flex items-center justify-between">
+                    <span class="material-symbols-outlined text-warning text-xl">lock_open</span>
+                    <span class="text-[9px] font-mono text-warning/40">#002</span>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">
+                        Bootloader</p>
+                    <p class="text-warning font-bold text-sm tracking-wide">UNLOCKED</p>
+                </div>
+            </div>
+            <div class="neon-border bg-panel-dark p-4 rounded-lg flex flex-col gap-2 group hover:bg-primary/5 transition-all">
+                <div class="flex items-center justify-between">
+                    <span class="material-symbols-outlined text-primary text-xl">gavel</span>
+                    <span class="text-[9px] font-mono text-primary/40">#003</span>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">
+                        SELinux</p>
+                    <p class="text-primary font-bold text-sm tracking-wide uppercase">Enforcing</p>
+                </div>
+            </div>
+            <div class="neon-border bg-panel-dark p-4 rounded-lg flex flex-col gap-2 group hover:bg-primary/5 transition-all">
+                <div class="flex items-center justify-between">
+                    <span class="material-symbols-outlined text-primary text-xl">shield</span>
+                    <span class="text-[9px] font-mono text-primary/40">#004</span>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">
+                        SafetyNet</p>
+                    <p class="text-primary font-bold text-sm tracking-wide uppercase">Passed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Sovereign ROM Ops -->
+    <section class="px-4 mb-6">
+        <h3 class="text-xs font-bold text-primary/70 uppercase tracking-widest px-2 mb-3 flex items-center gap-2">
+            <span class="w-4 h-px bg-primary/40"></span>
+            Sovereign ROM Ops
+        </h3>
+        <div class="space-y-3">
+            <!-- Flash Card -->
+            <div class="relative overflow-hidden neon-border bg-panel-dark p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-primary/10 rounded-lg text-primary">
+                        <span class="material-symbols-outlined text-2xl">flash_on</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-100 tracking-tight">Flash Firmware</h4>
+                        <p class="text-xs text-slate-500 font-mono">Select .zip or .img bundle</p>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined text-primary/40 group-hover:translate-x-1 transition-transform">chevron_right</span>
+            </div>
+            <!-- Backup Card -->
+            <div class="relative overflow-hidden border border-slate-800 bg-panel-dark/50 p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary/50 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-slate-800 rounded-lg text-slate-400 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-2xl">cloud_upload</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-100 tracking-tight">Nandroid Backup</h4>
+                        <p class="text-xs text-slate-500 font-mono">Create system snapshot</p>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined text-slate-700 group-hover:text-primary/40">chevron_right</span>
+            </div>
+            <!-- Restore Card -->
+            <div class="relative overflow-hidden border border-slate-800 bg-panel-dark/50 p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary/50 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-slate-800 rounded-lg text-slate-400 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-2xl">settings_backup_restore</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-100 tracking-tight">Restore Session</h4>
+                        <p class="text-xs text-slate-500 font-mono">Revert to stable state</p>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined text-slate-700 group-hover:text-primary/40">chevron_right</span>
+            </div>
+        </div>
+    </section>
+    <!-- System Console -->
+    <section class="px-4 pb-12">
+        <div class="bg-black/80 rounded-lg p-3 border border-slate-800 font-mono text-[10px] h-32 overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between mb-2 border-b border-slate-800 pb-1">
+<span class="text-primary/60 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+                        SYSTEM_CONSOLE_LOG
+                    </span>
+                <span class="text-slate-600">TTY/V1</span>
+            </div>
+            <div class="flex-1 space-y-1 text-primary/80 opacity-70">
+                <p>&gt; initializing aosp_osx_kernel_l3...</p>
+                <p>&gt; mounting /system/as_root...</p>
+                <p>&gt; granted: uid=0(root) gid=0(root)</p>
+                <p>&gt; listening for shell instructions on port 5555</p>
+                <p>&gt; status: IDLE</p>
+                <p class="animate-pulse">&gt; _</p>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Navigation Bar (iOS Style Bottom Nav) -->
+<nav class="fixed bottom-0 inset-x-0 bg-background-dark/95 backdrop-blur-xl border-t border-primary/10 px-6 py-4 flex justify-between items-center z-30 pb-8">
+    <button class="flex flex-col items-center gap-1 text-slate-500">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-[10px] uppercase tracking-tighter font-bold">Node</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-primary neon-text">
+        <span class="material-symbols-outlined">construction</span>
+        <span class="text-[10px] uppercase tracking-tighter font-bold">Tools</span>
+    </button>
+    <button class="relative -top-6 flex items-center justify-center size-14 rounded-full bg-primary shadow-lg shadow-primary/40 border-4 border-background-dark">
+        <span class="material-symbols-outlined text-background-dark text-3xl font-bold">bolt</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-slate-500">
+        <span class="material-symbols-outlined">security</span>
+        <span class="text-[10px] uppercase tracking-tighter font-bold">Guard</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-slate-500">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span class="text-[10px] uppercase tracking-tighter font-bold">User</span>
+    </button>
+</nav>
+<!-- Action Buttons for interactivity demo -->
+<div class="fixed bottom-28 right-6 z-40">
+    <button class="size-12 rounded-full bg-warning/20 border border-warning/40 text-warning flex items-center justify-center hover:bg-warning/30 transition-colors">
+        <span class="material-symbols-outlined">priority_high</span>
+    </button>
+</div>
+</body>
+</html>

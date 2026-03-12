@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Link Agent Handler</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+    <style>.glass-panel {
+    background: rgba(16, 22, 34, 0.85);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid #256af4;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5)
+    }
+.pixel-text {
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em
+    }
+.hex-border {
+    clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+    border: 1px solid #256af4;
+    background: rgba(37, 106, 244, 0.1)
+    }
+.glitch-overlay {
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 2px);
+    pointer-events: none
+    }
+.grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuA9yuSJM1AVvgETCKe8k1xZA63CNzneEY7Wh7BLoMNjVNQ_qvy0AQpfqEpFPiGNmTfqiDz4yF9uRQyJvHy_2Fj9d74e-FGnsa3g8YvcI6Kn7Dn-6xdgNs-eXWOvt-wPJEjRfA2NPQbnF_SzbSMmkn1GzfdWiXfV33s2H04xYv7eaiYdpbx3ciTkaL1x_16Ai2Otz78yAdhDMLJSjYR0aPc68ca1BhVRx1QKka6siUdlMAMMFArm8A_3E6GMVXm4LFPk17XcZPt3k3w)
+    }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display overflow-hidden h-screen w-screen flex justify-end">
+<!-- Mock Android/iOS System Background -->
+<div class="fixed inset-0 z-0 opacity-40">
+    <div class="h-full w-full bg-cover bg-center grayscale contrast-125"
+         data-alt="Cyberpunk city street at night with neon lights"
+         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFME3MOzW9Iy4LlvLfWp3ytDBR11RyuUcgjgwZB7woCjCB34h8LtNHXm1uOuOYFinYpBeRi3fdOHzbroXcWEV1JdFxWEL1DsKDJw4kiaODu32zgk2XxtfFr8TVSesEqvj3vTK-aQIQZ6G4kXoEXIRzPfNlbudeK3XP62_1jw22OIWoB4vFChBbiuJiRDaHpXTViU2aGfikBREd4S_m7BH2wU43DwguY3ooYphlwVyixRAONn1ygctfEeE9oMFZvV4y9ULFo1nVTqo');"></div>
+</div>
+<!-- Main Sidebar Panel (Agent Handler) -->
+<div class="relative z-10 w-[380px] h-full glass-panel flex flex-col border-l-2 border-primary/40">
+    <div class="grain"></div>
+    <div class="glitch-overlay absolute inset-0"></div>
+    <!-- Top Header Navigation -->
+    <div class="flex items-center bg-background-dark/60 p-5 border-b border-primary/20 justify-between">
+        <div class="text-primary flex items-center gap-3">
+            <span class="material-symbols-outlined text-2xl font-light">terminal</span>
+            <h2 class="text-white text-sm font-bold tracking-widest pixel-text">
+                NEURAL_LINK_v2.0</h2>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_#256af4]"></div>
+            <span class="text-primary text-[10px] pixel-text">SYNCING</span>
+        </div>
+    </div>
+    <!-- Holographic Agent Display -->
+    <div class="relative flex flex-col items-center justify-center p-8 @container">
+        <div class="relative w-48 h-48 mb-6">
+            <!-- Outer Rings -->
+            <div class="absolute inset-0 border border-primary/30 rounded-full animate-spin"
+                 style="animation-duration: 10s;"></div>
+            <div class="absolute inset-2 border-t-2 border-primary rounded-full animate-spin"
+                 style="animation-duration: 4s;"></div>
+            <!-- Avatar -->
+            <div class="absolute inset-4 rounded-full overflow-hidden bg-background-dark border border-primary/50 flex items-center justify-center group cursor-pointer">
+                <img class="w-full h-full object-cover opacity-80 mix-blend-screen contrast-150 saturate-50"
+                     data-alt="Digital holographic portrait of a synthetic human"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAugVK0RPjz98NzSjmLdLBkaquuDzrzW6Nrgw6ZoYqupS_jgi6YZBD9Z2_MiBFttxkAP3mIs37ucN_wotqOLo1oNidtlfHjGlS-cYgsyRQpoUOJLxdPcFbDimx-H7CWeWEAhvdfJnm651LcRI_ItEAPYWg7LuVyNFraVTUmC7wLZr9MDACU-dE9xoPnzhjqJ2JS0jKrF2q8n8sAZ0zvoZfLHPprzAb82_oV2RzTlulShieVVcXHIfqcXLPGQnlH96myjm9fRYI2RJs"/>
+                <div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+            </div>
+        </div>
+        <div class="flex flex-col items-center">
+            <p class="text-white text-2xl font-bold tracking-tight mb-1">AGENT_CLAUDE_9</p>
+            <div class="flex items-center gap-2 px-3 py-1 bg-primary/20 border border-primary/40 rounded">
+                <span class="text-primary text-[10px] font-bold pixel-text">SYNAPTIC LOAD: 88%</span>
+            </div>
+        </div>
+    </div>
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-3 gap-1 px-4 mb-6">
+        <div class="flex flex-col gap-1 p-3 border border-primary/20 bg-background-dark/40">
+            <p class="text-primary text-[10px] font-bold pixel-text">LATENCY</p>
+            <p class="text-white text-lg font-bold">14ms</p>
+        </div>
+        <div class="flex flex-col gap-1 p-3 border border-primary/20 bg-background-dark/40">
+            <p class="text-primary text-[10px] font-bold pixel-text">TOKENS</p>
+            <p class="text-white text-lg font-bold">1.2M</p>
+        </div>
+        <div class="flex flex-col gap-1 p-3 border border-primary/20 bg-background-dark/40">
+            <p class="text-primary text-[10px] font-bold pixel-text">UPTIME</p>
+            <p class="text-white text-lg font-bold">99.9%</p>
+        </div>
+    </div>
+    <!-- Hexagonal Command Grid -->
+    <div class="px-6 space-y-3 flex-1 overflow-y-auto custom-scrollbar">
+        <div class="grid grid-cols-2 gap-4">
+            <!-- VOICE Button -->
+            <button class="relative h-20 group">
+                <div class="absolute inset-0 hex-border border-primary transition-all duration-300 group-hover:bg-primary/30 group-hover:shadow-[0_0_15px_#256af4]"></div>
+                <div class="relative flex flex-col items-center justify-center h-full">
+                    <span class="material-symbols-outlined text-white mb-1">mic</span>
+                    <span class="text-white text-[10px] font-bold pixel-text">VOICE</span>
+                </div>
+            </button>
+            <!-- CONNECT Button -->
+            <button class="relative h-20 group">
+                <div class="absolute inset-0 hex-border border-primary transition-all duration-300 group-hover:bg-primary/30 group-hover:shadow-[0_0_15px_#256af4]"></div>
+                <div class="relative flex flex-col items-center justify-center h-full">
+                    <span class="material-symbols-outlined text-white mb-1">hub</span>
+                    <span class="text-white text-[10px] font-bold pixel-text">CONNECT</span>
+                </div>
+            </button>
+            <!-- ASSIGN Button -->
+            <button class="relative h-20 group">
+                <div class="absolute inset-0 hex-border border-primary transition-all duration-300 group-hover:bg-primary/30 group-hover:shadow-[0_0_15px_#256af4]"></div>
+                <div class="relative flex flex-col items-center justify-center h-full">
+                    <span class="material-symbols-outlined text-white mb-1">assignment_ind</span>
+                    <span class="text-white text-[10px] font-bold pixel-text">ASSIGN</span>
+                </div>
+            </button>
+            <!-- DESIGN Button -->
+            <button class="relative h-20 group">
+                <div class="absolute inset-0 hex-border border-primary transition-all duration-300 group-hover:bg-primary/30 group-hover:shadow-[0_0_15px_#256af4]"></div>
+                <div class="relative flex flex-col items-center justify-center h-full">
+                    <span class="material-symbols-outlined text-white mb-1">architecture</span>
+                    <span class="text-white text-[10px] font-bold pixel-text">DESIGN</span>
+                </div>
+            </button>
+        </div>
+        <!-- CREATE Button (Wide) -->
+        <button class="relative w-full h-16 group mt-4">
+            <div class="absolute inset-0 border border-primary bg-primary/10 group-hover:bg-primary transition-colors flex items-center justify-center">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-white">add_box</span>
+                    <span class="text-white text-sm font-bold pixel-text">INITIALIZE_CREATE</span>
+                </div>
+            </div>
+        </button>
+    </div>
+    <!-- Limit Break Gauge / Meta-Instruct Flow -->
+    <div class="p-6 bg-background-dark/80 border-t border-primary/30">
+        <div class="flex justify-between items-end mb-2">
+            <h4 class="text-primary text-[10px] font-bold pixel-text">META-INSTRUCT_FLOW</h4>
+            <span class="text-white text-[10px] pixel-text">LB_STATUS: ACTIVE</span>
+        </div>
+        <div class="h-10 w-full flex gap-1 p-1 bg-background-dark border border-primary/20">
+            <!-- Read Segment -->
+            <div class="h-full flex-1 bg-primary relative overflow-hidden group">
+                <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-[9px] font-bold text-white pixel-text">READ</span>
+                </div>
+            </div>
+            <!-- Reflect Segment -->
+            <div class="h-full flex-1 bg-primary relative overflow-hidden group opacity-60">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-[9px] font-bold text-white pixel-text">REFLECT</span>
+                </div>
+            </div>
+            <!-- Analyze Segment -->
+            <div class="h-full flex-1 bg-primary/20 relative overflow-hidden group">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-[9px] font-bold text-primary pixel-text">ANALYZE</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 flex justify-center gap-1">
+            <div class="w-1.5 h-1.5 bg-primary"></div>
+            <div class="w-1.5 h-1.5 bg-primary"></div>
+            <div class="w-1.5 h-1.5 bg-primary"></div>
+            <div class="w-1.5 h-1.5 bg-primary/20"></div>
+            <div class="w-1.5 h-1.5 bg-primary/20"></div>
+            <div class="w-1.5 h-1.5 bg-primary/20"></div>
+            <div class="w-1.5 h-1.5 bg-primary/20"></div>
+            <div class="w-1.5 h-1.5 bg-primary/20"></div>
+        </div>
+    </div>
+    <!-- Android Bottom Nav Representation (Visible Underneath) -->
+    <div class="h-16 w-full flex items-center justify-around bg-background-dark/40 border-t border-white/5 opacity-50">
+        <span class="material-symbols-outlined text-white">menu</span>
+        <span class="material-symbols-outlined text-white">circle</span>
+        <span class="material-symbols-outlined text-white">chevron_left</span>
+    </div>
+</div>
+</body>
+</html>

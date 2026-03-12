@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Exodus HUD Gate Carousel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0dccf2",
+                        "accent-pink": "#ff007a",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#050a0b",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(13, 204, 242, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(13, 204, 242, 0.2);
+        }
+        .shard-bg {
+            background: radial-gradient(circle at 50% 50%, #102023 0%, #050a0b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .shard {
+            position: absolute;
+            background: linear-gradient(45deg, #0dccf222, transparent);
+            transform: rotate(45deg);
+        }
+        .orb-glow {
+            box-shadow: 0 0 40px 10px rgba(13, 204, 242, 0.4);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
+<div class="relative flex h-screen w-full flex-col overflow-hidden shard-bg">
+    <!-- Background Data Shards (Visual Decor) -->
+    <div class="shard w-32 h-1 top-20 -left-10 opacity-20"></div>
+    <div class="shard w-1 h-40 bottom-40 right-10 opacity-10"></div>
+    <div class="shard w-24 h-24 top-1/2 left-1/4 opacity-5 border border-primary/20"></div>
+    <!-- Top Navigation Bar -->
+    <div class="flex items-center bg-transparent p-6 pb-2 justify-between z-10">
+        <div class="flex size-12 shrink-0 items-center justify-start text-primary">
+            <span class="material-symbols-outlined text-3xl">terminal</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-white text-xs tracking-[0.4em] font-bold uppercase opacity-60">ReGenesis
+                AOSPOSX</h2>
+            <h1 class="text-white text-lg font-bold leading-tight tracking-widest uppercase">Exodus
+                HUD</h1>
+        </div>
+        <div class="flex w-12 items-center justify-end">
+            <button class="text-primary hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">monitoring</span>
+            </button>
+        </div>
+    </div>
+    <!-- Carousel Section -->
+    <div class="flex-1 flex flex-col justify-center relative z-10">
+        <div class="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory px-8 gap-6 items-center py-10">
+            <!-- Gate: Aura (Focused/Active) -->
+            <div class="snap-center shrink-0 w-72 h-[420px] glass-panel rounded-xl flex flex-col relative overflow-hidden group border-primary/40 shadow-2xl shadow-primary/10">
+                <div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-background-dark/80"></div>
+                <div class="h-64 w-full relative overflow-hidden">
+                    <img alt="Creative abstract paint splashes"
+                         class="w-full h-full object-cover opacity-80"
+                         data-alt="Vibrant pink and cyan digital paint splatters on dark background"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpcSCso1hbmcC-XvhxRWgjwBcFk_u0x6cZqrzbOXUXCuJcS6PAwD1VXVUZDaH6LRD027fodCImw6AVj_vOIh1D1K0z5ZTpBATuamb2ISmtQQXHfNgXFQ5uMNgcoZ7LQV5u0Zl6lDTgWl-6D4x1sy9_uynZEgurA5jnObfP32nnKQZ7wZ5vJ6p43ngYTuOpWVkBq4pwGWRuBo8yyv38ayPPVMJ3beg9IsTWw-N9S7NjEDMGtA2nKeAGdZZ-ImMoRCZv7NS0v_0XuU4"/>
+                    <div class="absolute inset-0 bg-accent-pink/20 mix-blend-overlay"></div>
+                    <!-- HUD Overlays -->
+                    <div class="absolute top-4 left-4 border-l-2 border-t-2 border-primary w-4 h-4"></div>
+                    <div class="absolute bottom-4 right-4 border-r-2 border-b-2 border-primary w-4 h-4"></div>
+                </div>
+                <div class="p-6 flex flex-col justify-end flex-1 z-10">
+                    <div class="flex justify-between items-end mb-2">
+                        <div>
+                            <h3 class="text-2xl font-bold tracking-tighter text-white uppercase">
+                                Aura</h3>
+                            <p class="text-primary text-xs font-bold tracking-[0.2em] uppercase">
+                                Creative Studio</p>
+                        </div>
+                        <span class="text-accent-pink text-[10px] font-mono border border-accent-pink px-1">LVL_01</span>
+                    </div>
+                    <div class="h-px w-full bg-gradient-to-r from-primary/50 to-transparent my-3"></div>
+                    <p class="text-white/60 text-[10px] leading-relaxed uppercase tracking-widest font-medium">
+                        UXUI DESIGN STUDIO // SYSTEM_SYNC ACTIVE</p>
+                </div>
+            </div>
+            <!-- Gate: Kai -->
+            <div class="snap-center shrink-0 w-64 h-[380px] glass-panel rounded-xl flex flex-col relative overflow-hidden opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                <div class="h-56 w-full relative">
+                    <img alt="Cyber security matrix" class="w-full h-full object-cover"
+                         data-alt="Digital encryption patterns and hardware security aesthetic"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOUzMFYWqnGtqcCrVGdEFHcIR9_oy1y0PPd-cjyD42mwIPVUqhi6LhoCvfIQy1s7B_n5Y9C--1Z94XsagqWh4mbHb-7tOwXYd86v2TN6DLj7vKFfQJ9lfhiT1TB-SxDJuQvlZOWdEpIic2KVqn1mircSTptGKZhitXvRGS2E3yZxwq8A_8xfq0XUI0gmXN8qnnyOURAZ9V33M5qTwNsOwXaw0zr7gMC_QuyWQE5O3ndIh9DNmouOO8eEkyqfVBSvxONLIxOsoG2Lo"/>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold tracking-tighter text-white uppercase">Kai</h3>
+                    <p class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">
+                        Sentinel Security</p>
+                </div>
+            </div>
+            <!-- Gate: Genesis -->
+            <div class="snap-center shrink-0 w-64 h-[380px] glass-panel rounded-xl flex flex-col relative overflow-hidden opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                <div class="h-56 w-full relative">
+                    <img alt="AI Neural Network" class="w-full h-full object-cover"
+                         data-alt="Global network data visualization glowing in blue"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuogiWwlDIPRdozVAkhkSFVOnegqt67Eco0tzMJ8O-CJ7bG54HwoMCbIOSX9QzQPeg4SvS6UMYGR5LNV93uhnc7nnc5q25CD05oG2Og7nI0J0ZvXNftGdfhPwmMPDXECDF8Q-tHTddtISKDkBz7vq22oHGUuEcPYRRDIxy7XGyj9vk5z1QpI2o1d5yS5SKo2Tu3l9f2ys8Ilteca0XmuAkELUG9R9vl5RLMB7XkkfKvfmwbAXEaoOoviWT1rcwj9_JKKNhOdxr964"/>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold tracking-tighter text-white uppercase">Genesis</h3>
+                    <p class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">Oracle
+                        Insights</p>
+                </div>
+            </div>
+            <!-- Gate: Nexus -->
+            <div class="snap-center shrink-0 w-64 h-[380px] glass-panel rounded-xl flex flex-col relative overflow-hidden opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                <div class="h-56 w-full relative">
+                    <img alt="Agent Hub Interface" class="w-full h-full object-cover"
+                         data-alt="Minimalist architectural geometry with cyber glow"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbYrzzzfhs1blx3aUG2PYN2EFxZi0AsIVyX9gFvX0N5B5PodkHidHQ9wm7_O8yGwQKTzdpCn1iL9aGhd8kt0oXnjB5s7ofTojGXL05mm6fKoE751erp6YofXXipe9nJDW0jZAi_XhXR7wPQidpWg5isG1dIaR5Z40W_J9ylKANRnrBakNPI3DfPgqI_p1lQM9YPHBmbeTwwCm1zZZgOSyRW5dMG3u03qR817nZCFsdd4gZ98t0iJmJTED5iPSv6uXgT_jmFzC_Cyw"/>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold tracking-tighter text-white uppercase">Nexus</h3>
+                    <p class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">Agent
+                        Hub</p>
+                </div>
+            </div>
+            <!-- Gate: Cascade -->
+            <div class="snap-center shrink-0 w-64 h-[380px] glass-panel rounded-xl flex flex-col relative overflow-hidden opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                <div class="h-56 w-full relative">
+                    <img alt="Dataflow system streams" class="w-full h-full object-cover"
+                         data-alt="Abstract falling data code streams in green and cyan"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlXWd5DmA09j1TdDk4KiCIoQQWXo95Iumg0HwER_UC6BsrhVmsqVKIlJDGXDNGDk9pkksuX84zuy9bSz89YAwMhNHNyiES6POgvTy4ddqrnxNpWmjKWM-q_g2XT2q971VYN59BtMbbYK231batrPZhF950TWu2c5dlD1qFraITMuBunGw38ghkfxoh_Z-ldv12-5FhGsPheUq5KMaxyBO1RVI0YSC9uIhgI_RRNQLMIN3xlFgDeQ5SOrX8UdGlNHdVMhmAABFfSgs"/>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold tracking-tighter text-white uppercase">Cascade</h3>
+                    <p class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">
+                        Dataflow System</p>
+                </div>
+            </div>
+        </div>
+        <!-- Orb of Light Joystick -->
+        <div class="flex flex-col items-center justify-center py-6">
+            <div class="text-primary/40 text-[10px] tracking-[0.5em] mb-4 uppercase">System
+                Interface
+            </div>
+            <div class="relative group">
+                <div class="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150 animate-pulse"></div>
+                <button class="relative flex items-center justify-center w-20 h-20 rounded-full bg-background-dark border-2 border-primary/50 orb-glow shadow-primary/20 overflow-hidden active:scale-95 transition-transform">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent"></div>
+                    <span class="material-symbols-outlined text-primary text-4xl leading-none">shutter_speed</span>
+                </button>
+                <!-- Nav Indicators -->
+                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-1 h-3 bg-primary/40 rounded-full"></div>
+                <div class="absolute top-1/2 -right-6 -translate-y-1/2 w-3 h-1 bg-primary/40 rounded-full"></div>
+                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-1 h-3 bg-primary/40 rounded-full"></div>
+                <div class="absolute top-1/2 -left-6 -translate-y-1/2 w-3 h-1 bg-primary/40 rounded-full"></div>
+            </div>
+            <p class="text-primary/60 text-[9px] font-medium tracking-[0.3em] mt-8 uppercase">Orb of
+                Light Joystick Active</p>
+        </div>
+    </div>
+    <!-- Bottom Navigation (iOS Style) -->
+    <div class="glass-panel mx-4 mb-6 rounded-2xl flex justify-around items-center h-16 px-2 z-20">
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-xl">database</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Sources</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-xl">chat_bubble</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Chat</span>
+        </button>
+        <button class="flex flex-col items-center justify-center w-12 h-12 bg-primary/10 rounded-xl text-primary ring-1 ring-primary/30">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[7px] absolute -bottom-1 font-bold uppercase">Hub</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-xl">palette</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Studio</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Config</span>
+        </button>
+    </div>
+    <!-- iOS Indicator -->
+    <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-30"></div>
+</div>
+</body>
+</html>

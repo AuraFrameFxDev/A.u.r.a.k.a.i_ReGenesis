@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Neural Link: Cascade Stream v1</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&amp;family=JetBrains+Mono:wght@300;400&amp;family=Inter:wght@300;400;600&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00f2ff", // Toxic Cyan
+                        secondary: "#0a192f", // Deep Navy
+                        accent: "#ff00ff",
+                        "cyber-dark": "#020617",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary-glow: rgba(0, 242, 255, 0.4);
+            --toxic-cyan: #00f2ff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            overflow: hidden;
+        }
+        .glassmorphic-sidebar {
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.85) 0%, rgba(2, 6, 23, 0.95) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+        }
+        .digital-rain {
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+        .hexagon-btn {
+            position: relative;
+            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .hexagon-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .hexagon-btn:hover::before {
+            transform: translateX(100%);
+        }
+        .hexagon-btn:hover {
+            background: rgba(0, 242, 255, 0.1);
+            border-color: rgba(0, 242, 255, 0.8);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        .terminal-scroll {
+            scrollbar-width: none;
+        }
+        .terminal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 242, 255, 0.1);
+            position: absolute;
+            animation: scanline 8s linear infinite;
+        }
+        .cascade-watermark {
+            opacity: 0.08;
+            filter: grayscale(100%) brightness(1.5) contrast(1.2);
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+        .bus-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--toxic-cyan));
+            opacity: 0.4;
+            height: 1px;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="relative w-[390px] h-[844px] bg-black rounded-[55px] border-[8px] border-zinc-900 shadow-[0_0_100px_rgba(0,0,0,0.8)] overflow-hidden">
+    <div class="absolute top-0 w-full h-11 flex justify-between items-center px-8 z-[100] text-white/90">
+        <span class="text-sm font-semibold">9:41</span>
+        <div class="flex gap-1.5 items-center">
+            <span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+            <span class="material-symbols-outlined text-[16px]">wifi</span>
+            <span class="material-symbols-outlined text-[16px]">battery_full</span>
+        </div>
+    </div>
+    <div class="absolute inset-0 bg-[#020617] blur-[2px]">
+        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-30">
+            <div class="relative w-64 h-64 border border-primary/20 rounded-full flex items-center justify-center">
+                <div class="absolute inset-0 border-4 border-primary/10 rounded-full animate-pulse"></div>
+                <div class="text-center">
+                    <h2 class="font-display text-primary text-3xl tracking-tighter opacity-50 italic">
+                        ORACLE<span class="text-white">DRIVE</span></h2>
+                    <div class="w-20 h-0.5 bg-primary/20 mx-auto mt-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-80 h-16 flex items-center justify-around px-4 opacity-40">
+            <div class="w-10 h-10 rounded-full bg-zinc-800/50 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white/50">home</span></div>
+            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                <span class="material-symbols-outlined text-primary">apps</span></div>
+            <div class="w-10 h-10 rounded-full bg-zinc-800/50 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white/50">search</span></div>
+        </div>
+    </div>
+    <div class="absolute inset-0 z-10 pointer-events-none">
+        <div class="bus-line w-24 top-[180px] right-[310px]"></div>
+        <div class="bus-line w-32 top-[260px] right-[310px]"></div>
+        <div class="bus-line w-16 top-[340px] right-[310px]"></div>
+        <div class="bus-line w-28 top-[420px] right-[310px]"></div>
+        <div class="bus-line w-20 top-[500px] right-[310px]"></div>
+    </div>
+    <div class="absolute top-0 right-0 h-full w-[310px] glassmorphic-sidebar z-50 flex flex-col overflow-hidden">
+        <div class="absolute inset-0 digital-rain pointer-events-none opacity-20 flex justify-around px-2 text-[8px] font-mono text-primary overflow-hidden whitespace-pre leading-none">
+            <div class="animate-[bounce_8s_infinite]">1 0 1 0 1 0<br/>1 1 0 1 1 0<br/>0 1 1 0 0
+                1<br/>1 0 0 1 1 0<br/>...
+            </div>
+            <div class="animate-[bounce_6s_infinite] delay-100">0 1 1 0 0 1<br/>1 0 1 0 1 0<br/>1 1
+                0 1 1 0<br/>0 1 1 0 0 1<br/>...
+            </div>
+            <div class="animate-[bounce_10s_infinite] delay-200">1 1 1 0 1 1<br/>0 0 1 0 0 0<br/>1 1
+                0 1 1 0<br/>1 0 1 0 1 0<br/>...
+            </div>
+            <div class="animate-[bounce_7s_infinite] delay-300">0 0 1 1 0 0<br/>1 1 0 0 1 1<br/>0 1
+                0 1 0 1<br/>1 1 1 1 1 1<br/>...
+            </div>
+        </div>
+        <img alt="Cascade Watermark"
+             class="absolute -bottom-10 -right-20 w-[400px] cascade-watermark"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnB6eVOacSaMDsUMls6lvkm0yzj7WG7jnnwyMIJXKxW3mBBQkkm_kxB0rHsAi7MD_Kf2viCvAak8MsmxDmJ6TmdTTgz_xrxclJmrvhlk-TWa7Af6AFsujyt3ewslc25DVsjrw17H1QtAdNzPY8_gs4pb9GnJcLoKQOQS2p-SrwuEPt4P6vriBJFGFv9n9NFwQQj6R4Hy5-0kgWTBiiad5DNRtN1U_XqmujoNq6zFEK7_1Q2qwd5NKZX7rYtGIbl04eq4Qwsz7W7Zc"/>
+        <div class="scanline"></div>
+        <div class="px-6 pt-20 pb-8 relative z-10">
+            <div class="flex items-center gap-2 mb-1">
+                <div class="w-1.5 h-6 bg-primary"></div>
+                <h1 class="font-display text-white text-xl tracking-widest uppercase">NEURAL
+                    LINK</h1>
+            </div>
+            <div class="flex items-center gap-2 px-3">
+                <p class="font-display text-primary text-[10px] tracking-[0.2em] font-medium opacity-80">
+                    CASCADE STREAM v1.0.4</p>
+                <div class="flex-1 h-[1px] bg-primary/20"></div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 px-6 relative z-10">
+            <button class="hexagon-btn group flex items-center gap-4 p-4">
+                <div class="w-10 h-10 flex items-center justify-center bg-black/40 border border-primary/40 shadow-[0_0_10px_rgba(0,242,255,0.3)]">
+                    <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">mic</span>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-display text-white text-[12px] tracking-widest uppercase">Voice</span>
+                    <span class="text-[8px] text-primary/60 font-mono">LINK_READY</span>
+                </div>
+            </button>
+            <button class="hexagon-btn group flex items-center gap-4 p-4">
+                <div class="w-10 h-10 flex items-center justify-center bg-black/40 border border-primary/40 shadow-[0_0_10px_rgba(0,242,255,0.3)]">
+                    <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">leak_add</span>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-display text-white text-[12px] tracking-widest uppercase">Connect</span>
+                    <span class="text-[8px] text-primary/60 font-mono">NODES: 12_ACT</span>
+                </div>
+            </button>
+            <button class="hexagon-btn group flex items-center gap-4 p-4">
+                <div class="w-10 h-10 flex items-center justify-center bg-black/40 border border-primary/20">
+                    <span class="material-symbols-outlined text-white/60 group-hover:scale-110 transition-transform">person_search</span>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-display text-white/80 text-[12px] tracking-widest uppercase">Assign</span>
+                    <span class="text-[8px] text-white/30 font-mono">QUEUED_PROC</span>
+                </div>
+            </button>
+            <button class="hexagon-btn group flex items-center gap-4 p-4">
+                <div class="w-10 h-10 flex items-center justify-center bg-black/40 border border-primary/20">
+                    <span class="material-symbols-outlined text-white/60 group-hover:scale-110 transition-transform">architecture</span>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-display text-white/80 text-[12px] tracking-widest uppercase">Design</span>
+                    <span class="text-[8px] text-white/30 font-mono">FLOW_MODELER</span>
+                </div>
+            </button>
+            <button class="hexagon-btn group flex items-center gap-4 p-4">
+                <div class="w-10 h-10 flex items-center justify-center bg-black/40 border border-primary/40 shadow-[0_0_10px_rgba(0,242,255,0.3)]">
+                    <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">data_object</span>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-display text-white text-[12px] tracking-widest uppercase">Create</span>
+                    <span class="text-[8px] text-primary/60 font-mono">INTENT_MAP</span>
+                </div>
+            </button>
+        </div>
+        <div class="mt-auto px-6 pb-12 relative z-10">
+            <div class="bg-black/40 border border-primary/20 rounded-sm p-3 font-mono">
+                <div class="flex items-center justify-between mb-2 border-b border-primary/10 pb-1">
+                    <span class="text-[9px] text-primary uppercase font-bold tracking-tighter">System Log</span>
+                    <div class="flex gap-1">
+                        <div class="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-primary/10"></div>
+                    </div>
+                </div>
+                <div class="h-20 overflow-y-auto terminal-scroll text-[9px] text-primary/70 leading-relaxed">
+                    <p>&gt; Initializing Cascade Stream...</p>
+                    <p>&gt; Protocol: Domain Expansion</p>
+                    <p>&gt; Root Access: OracleDrive [OK]</p>
+                    <p>&gt; Scanning active nodes...</p>
+                    <p class="text-white">&gt; [12] Nodes detected in sector 7</p>
+                    <p class="animate-pulse">&gt; Waiting for user intent_</p>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center gap-2 opacity-60">
+                <div class="w-2 h-2 rounded-full bg-primary animate-ping"></div>
+                <span class="font-display text-[9px] text-white tracking-[0.2em] uppercase">Uplink Active</span>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/20 rounded-full z-[100]"></div>
+</div>
+
+</body>
+</html>

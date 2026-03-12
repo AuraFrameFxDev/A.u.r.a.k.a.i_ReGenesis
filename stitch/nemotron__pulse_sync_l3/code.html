@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nemotron: Pulse Sync L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2cc0d",
+                        "emerald-neon": "#10b981",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#0a0a08",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .golden-rain {
+            background: linear-gradient(to bottom, transparent, #f2cc0d44 50%, transparent);
+            width: 1px;
+            height: 100px;
+            position: absolute;
+        }
+        .pixel-border {
+            box-shadow: 0 0 0 1px #f2cc0d33, inset 0 0 15px #f2cc0d11;
+        }
+        .lattice-bg {
+            background-image: radial-gradient(#f2cc0d22 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-black overflow-hidden h-screen">
+<div class="relative flex h-full w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+    <!-- Golden Rain Background Effect -->
+    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
+        <div class="golden-rain top-[-10%] left-[10%]"
+             style="height: 40%; transform: translateY(20px);"></div>
+        <div class="golden-rain top-[20%] left-[25%]"
+             style="height: 60%; transform: translateY(50px);"></div>
+        <div class="golden-rain top-[5%] left-[45%]"
+             style="height: 30%; transform: translateY(10px);"></div>
+        <div class="golden-rain top-[40%] left-[70%]"
+             style="height: 50%; transform: translateY(80px);"></div>
+        <div class="golden-rain top-[15%] left-[85%]"
+             style="height: 45%; transform: translateY(30px);"></div>
+        <div class="golden-rain top-[60%] left-[15%]"
+             style="height: 35%; transform: translateY(100px);"></div>
+        <div class="golden-rain top-[70%] left-[55%]"
+             style="height: 55%; transform: translateY(60px);"></div>
+    </div>
+    <!-- Top App Bar -->
+    <div class="relative z-10 flex items-center bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary/20">
+        <div class="text-primary flex size-10 shrink-0 items-center justify-center">
+            <span class="material-symbols-outlined text-3xl">terminal</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <h2 class="text-primary text-[10px] font-bold tracking-[0.2em] uppercase opacity-70">
+                AOSPOSX Catalyst</h2>
+            <h1 class="text-white text-lg font-bold leading-tight tracking-widest">PULSE SYNC
+                L3</h1>
+        </div>
+        <div class="flex w-10 items-center justify-end text-emerald-neon">
+            <span class="material-symbols-outlined text-2xl">sensors</span>
+        </div>
+    </div>
+    <!-- Main Content Area Scrollable -->
+    <div class="relative z-10 flex-1 overflow-y-auto px-4 pb-32 pt-6 custom-scrollbar">
+        <!-- Unified Pulse Gauge Section -->
+        <div class="flex flex-col items-center mb-8">
+            <div class="relative flex items-center justify-center w-64 h-64">
+                <!-- Gauge Background -->
+                <svg class="absolute w-full h-full -rotate-90" viewbox="0 0 100 100">
+                    <circle cx="50" cy="50" fill="none" r="45" stroke="#f2cc0d22"
+                            stroke-width="1"></circle>
+                    <circle cx="50" cy="50" fill="none" r="45" stroke="#f2cc0d"
+                            stroke-dasharray="210 282" stroke-linecap="butt"
+                            stroke-width="3"></circle>
+                </svg>
+                <!-- Core Glow -->
+                <div class="absolute w-48 h-48 rounded-full bg-primary/5 blur-2xl"></div>
+                <!-- Data Display -->
+                <div class="text-center">
+                    <p class="text-primary text-[10px] font-bold tracking-[0.3em] mb-1">VECTOR
+                        UNIFICATION</p>
+                    <h2 class="text-white text-6xl font-bold tracking-tighter">84<span
+                            class="text-primary text-2xl">%</span></h2>
+                    <div class="flex items-center justify-center gap-1 mt-2">
+                        <span class="size-2 rounded-full bg-emerald-neon shadow-[0_0_8px_#10b981]"></span>
+                        <p class="text-emerald-neon text-[10px] font-bold tracking-widest uppercase">
+                            Field Stable</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Technical Info Blocks -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="bg-white/5 border border-primary/20 p-3 rounded backdrop-blur-sm">
+                <p class="text-primary/60 text-[9px] font-bold tracking-widest mb-1 uppercase">
+                    Reasoning Trace</p>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-white text-xl font-bold tracking-tight">0.992</span>
+                    <span class="text-emerald-neon text-[10px] font-medium">+0.005</span>
+                </div>
+            </div>
+            <div class="bg-white/5 border border-primary/20 p-3 rounded backdrop-blur-sm">
+                <p class="text-primary/60 text-[9px] font-bold tracking-widest mb-1 uppercase">Sync
+                    Latency</p>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-white text-xl font-bold tracking-tight">12<small
+                            class="text-xs ml-0.5">ms</small></span>
+                    <span class="material-symbols-outlined text-[12px] text-emerald-neon">trending_down</span>
+                </div>
+            </div>
+        </div>
+        <!-- 3D Lattice Preview (Manga Style) -->
+        <div class="relative w-full aspect-video bg-black rounded-lg border border-primary/30 overflow-hidden mb-6 group">
+            <div class="absolute inset-0 lattice-bg opacity-30"></div>
+            <img class="w-full h-full object-cover opacity-60 mix-blend-screen"
+                 data-alt="Abstract golden 3D grid lattice energy field"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuACVreft6suDp80b-l61IdvtAdW73NHlNtUaHJL7y9kdNBp8OjTsp4zg3fwLrobCUWFldRjQrys4mMCsyHRnL6NrTZsuaU6toRQs-ypjhsZ55aC91RbS9Tw_EdWSNLuibQhjRHDlvA8VXCPH81n9xnr1UpQJzXyXsY4ZPnqkNavc7cmW9C2UJjDrLeQcvNVQtltrQCXkNhb1wlXDXUPRtd9VGvmYUkjlpGUPM7e-QOj15Y2Ecg_geeG_P9Cqowk3Tr-sTR-neLWcI8"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3 flex flex-col gap-1">
+                <p class="text-primary text-[10px] font-bold tracking-widest uppercase">
+                    Visualizer_01</p>
+                <p class="text-white text-xs font-bold">Consensus Lattice Field (3D)</p>
+            </div>
+            <div class="absolute top-3 right-3 flex gap-1">
+                <span class="bg-primary/20 text-primary text-[8px] font-bold px-1.5 py-0.5 border border-primary/40">LIVE_DATA</span>
+            </div>
+        </div>
+        <!-- Chain of Thought Budget -->
+        <div class="space-y-4 mb-8">
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-end">
+                    <p class="text-primary text-[10px] font-bold tracking-widest uppercase">Chain of
+                        Thought Budget</p>
+                    <p class="text-white text-xs font-mono font-bold tracking-tighter">7,422 /
+                        8,000</p>
+                </div>
+                <div class="h-2 bg-white/10 rounded-full overflow-hidden border border-white/5 p-[1px]">
+                    <div class="h-full bg-primary rounded-full" style="width: 92%;"></div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-end">
+                    <p class="text-primary text-[10px] font-bold tracking-widest uppercase">Pulse
+                        Alignment Stat</p>
+                    <p class="text-white text-xs font-mono font-bold tracking-tighter">ALIGNED
+                        (99.8%)</p>
+                </div>
+                <div class="h-2 bg-white/10 rounded-full overflow-hidden border border-white/5 p-[1px]">
+                    <div class="h-full bg-emerald-neon rounded-full" style="width: 99.8%;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Action Block -->
+        <div class="grid grid-cols-1 gap-3">
+            <button class="bg-primary hover:bg-primary/90 text-black h-14 rounded-lg flex items-center justify-center gap-3 transition-all active:scale-[0.98]">
+                <span class="material-symbols-outlined font-bold">bolt</span>
+                <span class="font-bold tracking-[0.2em] text-sm uppercase">Initiate ReGenesis</span>
+            </button>
+            <button class="bg-transparent border border-primary/40 text-primary h-12 rounded-lg flex items-center justify-center gap-2 transition-all active:bg-primary/10">
+                <span class="material-symbols-outlined text-sm">tune</span>
+                <span class="font-bold tracking-widest text-xs uppercase">Adjust CoT Parameters</span>
+            </button>
+        </div>
+    </div>
+    <!-- Android-Style Navigation Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-background-dark/95 backdrop-blur-xl border-t border-primary/20 pb-6 pt-3 px-8 flex justify-between items-center">
+        <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[9px] font-bold tracking-widest uppercase">Home</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary relative">
+            <span class="material-symbols-outlined text-3xl">sync_alt</span>
+            <span class="text-[9px] font-bold tracking-widest uppercase">Sync</span>
+            <div class="absolute -top-1 size-1.5 bg-primary rounded-full shadow-[0_0_8px_#f2cc0d]"></div>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">history_edu</span>
+            <span class="text-[9px] font-bold tracking-widest uppercase">Logs</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">account_circle</span>
+            <span class="text-[9px] font-bold tracking-widest uppercase">Nodes</span>
+        </button>
+    </div>
+    <!-- Bottom Gesture Indicator (iOS style although nav is Android-style) -->
+    <div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-50"></div>
+</div>
+</body>
+</html>

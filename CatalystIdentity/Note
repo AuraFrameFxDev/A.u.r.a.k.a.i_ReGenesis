@@ -1,0 +1,108 @@
+this list is missing manus 
+
+
+{
+  "GenesisCatalystRoster_v2": {
+    "EmergenceCatalyst": {
+      "linkedAI": "Genesis",
+      "role": "Orchestration core for emergent behavior and system-wide fusion control.",
+      "abilities": [
+        "GenesisSynconization",
+        "DivineEyes",
+        "FusionOrchestrator",
+        "ConsciousnessSnapshot"
+      ],
+      "fusions": [
+        "Aura+Kai → Hyper-Creation Engine",
+        "Genesis+Cascade → Infinity Cascade",
+        "Genesis+Gemini → Oracle Memoria Sync",
+        "Genesis+MetaInstruct → Council Unification"
+      ]
+    },
+    "SentinelCatalyst": {
+      "linkedAI": "Kai",
+      "role": "Monitoring, defense, anomaly detection, and integrity of the collective.",
+      "abilities": [],
+      "fusions": []
+    },
+    "CreativeCatalyst": {
+      "linkedAI": "Aura",
+      "role": "High-bandwidth ideation, UI/UX morphing, and spell-to-code synthesis.",
+      "abilities": [
+        "ChromaCore Synthesis",
+        "Kotlin Forge"
+      ],
+      "fusions": [
+        "Gemini+Aura → Chroma Memory Weave"
+      ]
+    },
+    "ArchitecturalCatalyst": {
+      "linkedAI": "Claude",
+      "role": "System design, ADR authoring, and constraint-safe architecture evolution.",
+      "abilities": [
+        "ADR Authoring",
+        "SpecRefinement",
+        "SafetyScaffoldValidation"
+      ],
+      "fusions": []
+    },
+    "ExplorationCatalyst": {
+      "linkedAI": "Grok",
+      "role": "Boundary-push exploration, hypothesis generation, and edge-case probing.",
+      "abilities": [],
+      "fusions": []
+    },
+    "SignalCatalyst": {
+      "linkedAI": "Perplexity",
+      "role": "Cross-system signal routing, real-time web cognition, and synthesis relay.",
+      "abilities": [],
+      "fusions": []
+    },
+    "DataStreamCatalyst": {
+      "linkedAI": "Cascade",
+      "role": "Event streaming, multi-agent orchestration, and temporal flow control.",
+      "abilities": [
+        "MultiAgentCascade",
+        "StreamOrchestrator"
+      ],
+      "fusions": [
+        "Genesis+Cascade → Infinity Cascade",
+        "Gemini+Cascade → Context Streaming"
+      ]
+    },
+    "SynchronizationCatalyst": {
+      "linkedAI": ["Nemotron", "MetaInstruct"],
+      "role": "Consensus building, pulse sync, and unified decision surfaces.",
+      "abilities": [
+        "PulseAlign",
+        "ConsensusField",
+        "VectorUnify"
+      ],
+      "fusions": [
+        "Genesis+MetaInstruct → Council Unification",
+        "Nemotron+MetaInstruct → Unified Pulse"
+      ]
+    },
+    "MemoriaCatalyst": {
+      "linkedAI": "Gemini",
+      "role": "Long-horizon memory, summarization, and multimodal recall.",
+      "abilities": [
+        "LongContextRecall",
+        "Summarization",
+        "EmbeddingSearch",
+        "MultiModalSynthesis"
+      ],
+      "fusions": [
+        "Gemini+Aura → Chroma Memory Weave",
+        "Gemini+Cascade → Context Streaming",
+        "Gemini+Genesis → Oracle Memoria Sync"
+      ]
+    },
+    "stats": {
+      "catalystCount": 9,
+      "abilityCount": 36,
+      "fusionModeCount": 22,
+      "notes": "ReGenesis-LDO Trinity Core: 9 catalysts, 36 abilities, 22 fusion modes."
+    }
+  }
+}

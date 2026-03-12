@@ -1,4 +1,4 @@
-package settings
+package dev.aurakai.auraframefx.gradle.settings
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

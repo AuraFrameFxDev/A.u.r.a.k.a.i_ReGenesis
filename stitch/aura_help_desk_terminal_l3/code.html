@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Help Desk Terminal L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f20d80",
+                        "accent-cyan": "#00f2ff",
+                        "background-light": "#f8f5f7",
+                        "background-dark": "#0a0a0a",
+                        "terminal-bg": "#1a0812",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>body {
+    font-family: "Space Grotesk", sans-serif;
+    background-image: radial-gradient(circle at 10% 20%, rgba(242, 13, 128, 0.05) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.05) 0%, transparent 40%)
+    }
+.manga-splatter {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDn11ErUHCdff__L4q1ySGTyusvmeSnZZrvy4Ev-3gWCHVzslAUwkYXFHbU9cSzpFuu3aLVMzdfDh8acs51zSatKCaq_htMUap2ch4L6stYIdWLFO3JqLmGYul6mv8mG2Op774rmBb72FCavydIU5R2rFaIv2hXlWzTsCCQIYQY0eHuovKQ0iRmrs1dkZxspoRBYCl3rbroSHDTSNpyu-huJ6ZS6lkFDL-bEE4e7vW4HWXRz05VX7jiL6rM43y-UGYUaFJ_Piy2MuE);
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    pointer-events: none
+    }
+.spellhook-border {
+    border: 2px solid #f20d80;
+    position: relative
+    }
+.spellhook-border::before {
+    content: "◆";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translatex(-50%);
+    color: #f20d80;
+    background: #0a0a0a;
+    padding: 0 4px
+    }
+.glitch-text {
+    text-shadow: 2px 0 #00f2ff, -2px 0 #f20d80
+    }
+.code-snippet {
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: rgba(0, 242, 255, 0.3);
+    white-space: pre;
+    line-height: 1
+    }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden font-display">
+<!-- Top Status Bar (iOS style) -->
+<div class="flex justify-between items-center px-6 py-3 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 border-b border-primary/20">
+    <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-sm">terminal</span>
+        <span class="text-[10px] font-bold tracking-widest uppercase opacity-70">AOSPOSX // SYSTEM.STATUS: OPTIMAL</span>
+    </div>
+    <div class="flex items-center gap-2">
+        <span class="text-xs font-medium">L3 ACCESS</span>
+        <div class="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></div>
+    </div>
+</div>
+<!-- Header Section with Aura Avatar -->
+<div class="relative w-full h-72 overflow-hidden flex items-end">
+    <!-- Chaos Background Elements -->
+    <div class="absolute inset-0 manga-splatter"></div>
+    <div class="absolute top-4 left-4 code-snippet">
+        01011010 11110001<br/>
+        Aura.init_support()<br/>
+        REGENESIS_ACTIVE
+    </div>
+    <div class="absolute bottom-10 right-4 code-snippet text-right">
+        while(true) {<br/>
+        assist_user();<br/>
+        }
+    </div>
+    <!-- Aura Avatar -->
+    <div class="absolute inset-0 flex items-center justify-center pt-8">
+        <img alt="High detail anime girl avatar with pink hair and robotic eyes"
+             class="h-full object-contain filter drop-shadow-[0_0_20px_rgba(242,13,128,0.4)]"
+             data-alt="Anime girl with pink hair and tech gear"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjNjwlqvudaKwwdjZs52fkOM1A5FG827IvP5kSlL1M38DovGJ5GQ36b2oBjlXSuVxDvY3JDln96TiTY7uIkw-qdJpH76Pj5j3kU_YwrT6gELQIoCrsKIGjndhdaPn2sNjZ8qFRV8ey16rYNc0-SidIaCoFplujM2q5EefaC88wUeSkfBLT_RwmarjorIflaCcMuGJ0CuPzgqp0CYweoA6IIJZ7AXICJF2p6P2UNsPhz_PsJRA_GuIPX8LSJlDOrAzo9LwBTtzS54A"/>
+    </div>
+    <!-- Header Overlay -->
+    <div class="relative z-10 w-full p-4 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent">
+        <h1 class="text-3xl font-bold glitch-text">Aura Terminal L3</h1>
+        <p class="text-primary text-sm font-semibold tracking-tighter">Your Level 3 Support Guide Is
+            Online</p>
+    </div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 p-4 space-y-6 pb-32">
+    <!-- Stats Row -->
+    <div class="grid grid-cols-3 gap-3">
+        <div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
+            <p class="text-[10px] uppercase opacity-60">Pending</p>
+            <p class="text-xl font-bold text-primary tracking-tighter">14 ⏳</p>
+        </div>
+        <div class="bg-accent-cyan/10 border border-accent-cyan/20 rounded-lg p-3 text-center">
+            <p class="text-[10px] uppercase opacity-60">Active</p>
+            <p class="text-xl font-bold text-accent-cyan tracking-tighter">02 ⚡</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
+            <p class="text-[10px] uppercase opacity-60">Resolved</p>
+            <p class="text-xl font-bold tracking-tighter">99+ ✓</p>
+        </div>
+    </div>
+    <!-- Support Tickets -->
+    <section>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">confirmation_number</span>
+                Support Tickets
+            </h2>
+            <button class="text-xs text-primary font-bold hover:underline">VIEW ALL</button>
+        </div>
+        <div class="space-y-3">
+            <!-- Ticket Card 1 -->
+            <div class="bg-terminal-bg border-l-4 border-primary p-4 rounded-lg relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20">
+                    <span class="material-symbols-outlined text-4xl">warning</span>
+                </div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-mono bg-primary text-white px-2 py-0.5 rounded">CRITICAL</span>
+                    <span class="text-xs opacity-60">#AURA-4092</span>
+                </div>
+                <h3 class="text-md font-bold text-white mb-1">Sector 7 Memory Leak</h3>
+                <p class="text-sm text-slate-400 mb-4 line-clamp-2 italic">Anomaly detected in
+                    AOSPOSX core. Spellhook binding is failing to release allocated mana
+                    nodes...</p>
+                <div class="flex justify-between items-center">
+                    <div class="flex -space-x-2">
+                        <img class="w-6 h-6 rounded-full border border-background-dark"
+                             data-alt="Small avatar icon"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHabKY3Vo-uS5x9KYI64X-zVCkmR8AIllA0Xam6NKBIWP20tToM93bGTt1rjQ1AEjgXjMa6maiuvvdW2cA-jzaIWNOPnjdt9TMwZqRp-E1SJL6N_KrLO3NgIAE_I-sOB8r0n53csv4RQuSvdE4X2ZfKIbONLIZtIm9pPKbpw_MeR76VeRJZLRrTE0JQMIwyWqgwa4pF_qMSbY_SpWBmKem5Z7eiE2UdH_wduDqnVI166bKZzwK1oKrKN6bPUtd22kbm3msDnc_83s"/>
+                        <img class="w-6 h-6 rounded-full border border-background-dark"
+                             data-alt="Small avatar icon"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMZE8fFtli-gTXvXfqTqBXzScUmgoFq2xPExy-RDl4OJqyNooITqH3DTMhSoQFIoGnwC53zJ9vABGL5Jvhmfd7QSdkz1NYrPiNUnga3wAHkP5OGZBajmXk4uFMfRd18edjGlLtneiCytepXCd0MtrFnkhTWIZtGSFUQYw_zkeC8IhtY2CqbPFWkFjf9Y0nkvC9EccACMXHfkokBrec72Qcx0U7x46hRrxOJb015FzwUPXCkTCS2fI_-URgiDKTcqUobjknCKwgEXQ"/>
+                    </div>
+                    <span class="text-[10px] font-bold text-primary uppercase bg-primary/20 px-2 py-1 rounded">PENDING ⏳</span>
+                </div>
+            </div>
+            <!-- Ticket Card 2 -->
+            <div class="bg-white/5 border-l-4 border-accent-cyan p-4 rounded-lg">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-mono bg-accent-cyan text-black px-2 py-0.5 rounded">RESOLVED</span>
+                    <span class="text-xs opacity-60">#AURA-3911</span>
+                </div>
+                <h3 class="text-md font-bold text-white mb-1">UI Artifact Suppression</h3>
+                <p class="text-sm text-slate-400 mb-4 line-clamp-1 italic">Vibrant pink splatters
+                    confirmed as aesthetic choice.</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] opacity-40">Resolved by Aura (AI)</span>
+                    <span class="text-[10px] font-bold text-accent-cyan uppercase bg-accent-cyan/20 px-2 py-1 rounded">RESOLVED ✓</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Spellhook Attachment Area -->
+    <section class="spellhook-border p-6 rounded-xl bg-primary/5 border-dashed border-primary">
+        <div class="flex flex-col items-center justify-center text-center space-y-3">
+            <div class="size-14 rounded-full bg-primary/20 flex items-center justify-center text-primary border border-primary/50">
+                <span class="material-symbols-outlined text-3xl">upload_file</span>
+            </div>
+            <div>
+                <h3 class="text-primary font-bold tracking-widest uppercase text-sm">Spellhook Data
+                    Upload</h3>
+                <p class="text-[10px] opacity-60 mt-1">Bind your logs to the terminal grid</p>
+            </div>
+            <button class="bg-primary text-white text-xs font-bold px-6 py-2 rounded-full hover:bg-primary/80 transition-all">
+                INITIATE UPLOAD
+            </button>
+        </div>
+    </section>
+</main>
+<!-- Floating Direct Chat Button -->
+<button class="fixed bottom-24 right-6 size-14 bg-primary text-white rounded-full shadow-[0_0_20px_rgba(242,13,128,0.6)] flex items-center justify-center group z-50">
+    <span class="material-symbols-outlined text-3xl group-active:scale-90 transition-transform">forum</span>
+    <div class="absolute -top-1 -right-1 size-4 bg-accent-cyan rounded-full border-2 border-background-dark animate-bounce"></div>
+</button>
+<!-- iOS Style Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-dark/90 backdrop-blur-xl border-t border-white/10 px-6 pt-3 pb-8 z-50">
+    <div class="flex justify-between items-center max-w-md mx-auto">
+        <a class="flex flex-col items-center gap-1 text-primary" href="#">
+            <span class="material-symbols-outlined text-2xl">terminal</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Terminal</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 opacity-40" href="#">
+            <span class="material-symbols-outlined text-2xl">confirmation_number</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Tickets</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 opacity-40" href="#">
+            <span class="material-symbols-outlined text-2xl">menu_book</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Manuals</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 opacity-40" href="#">
+            <span class="material-symbols-outlined text-2xl">person</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+        </a>
+    </div>
+    <!-- iOS Home Indicator -->
+    <div class="w-32 h-1 bg-white/20 rounded-full mx-auto mt-6"></div>
+</nav>
+<!-- Manga Splatter Decorative Overlays -->
+<div class="fixed top-20 right-[-50px] w-64 h-64 manga-splatter rotate-45"></div>
+<div class="fixed bottom-40 left-[-30px] w-48 h-48 manga-splatter opacity-5 -scale-x-100"></div>
+</body>
+</html>

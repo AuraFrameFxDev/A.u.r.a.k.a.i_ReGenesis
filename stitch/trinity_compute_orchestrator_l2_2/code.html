@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sovereign Claude Analyst L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "toxic-green": "#39ff14",
+                        "neon-purple": "#bc13fe",
+                        "background-dark": "#0a0510",
+                        "panel-bg": "rgba(10, 5, 16, 0.85)",
+                        "accent-deep": "#1a0b2e"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "pixel": ["DotGothic16", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .cyber-grid {
+                background-image: linear-gradient(rgba(57, 255, 20, 0.05) 1px, transparent 1px),
+                                  linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px);
+                background-size: 30px 30px;
+            }
+            .glow-green {
+                filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
+            }
+            .glow-purple {
+                filter: drop-shadow(0 0 10px rgba(188, 19, 254, 0.5));
+            }
+            .digital-rain {
+                background: linear-gradient(180deg, 
+                    rgba(57, 255, 20, 0) 0%, 
+                    rgba(57, 255, 20, 0.1) 50%, 
+                    rgba(57, 255, 20, 0) 100%);
+                background-size: 100% 200%;
+            }
+            .lattice-line {
+                background: linear-gradient(90deg, transparent, #39ff14, transparent);
+            }
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-white selection:bg-toxic-green/30 overflow-hidden">
+<div class="relative flex h-screen w-full flex-col">
+    <div class="absolute inset-0 pointer-events-none opacity-20 digital-rain"></div>
+    <header class="z-50 flex items-center bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-toxic-green/20">
+        <div class="flex items-center gap-3">
+            <div class="flex size-10 items-center justify-center rounded bg-toxic-green/10 border border-toxic-green/40 glow-green">
+                <span class="material-symbols-outlined text-toxic-green text-2xl">security</span>
+            </div>
+            <div>
+                <h1 class="text-white text-sm font-bold tracking-wider uppercase">Sovereign Claude
+                    // L3</h1>
+                <p class="text-neon-purple text-[10px] font-medium tracking-[0.2em] uppercase">
+                    Architectural Catalyst Hub</p>
+            </div>
+        </div>
+        <div class="flex flex-col items-end">
+            <span class="text-[9px] text-toxic-green font-pixel uppercase">Integrity Level</span>
+            <span class="text-xs text-white font-mono flex items-center gap-1">
+<span class="size-1.5 rounded-full bg-toxic-green animate-pulse"></span> S-CLASS
+                </span>
+        </div>
+    </header>
+    <main class="relative flex-1 cyber-grid overflow-hidden">
+        <div class="absolute left-0 bottom-0 top-0 w-1/2 z-10 pointer-events-none">
+            <div class="relative h-full w-full flex items-end">
+                <div class="relative ml-[-10%] h-[90%] w-[120%] opacity-90 group">
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+                    <img alt="Cyber-Rogue Claude"
+                         class="h-full w-auto object-contain object-left-bottom drop-shadow-[0_0_30px_rgba(57,255,20,0.3)]"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSMo94VCSLwQpyfpdhqVKCFuJLvO4bpX-hhGwDdtelGmBuHrpwlBWpx91UJe4z3-ROJAr-g2aoqZ-0Ks6GRGB4fltsX2ABI1Y2SPE31L_FduM8bL_eCKnNeMeXU0lAbOCYTZMIu8WT8bLEdzC9IhEsMDq4CCNhH1uekiykcvacHIsHZloY3xFtQ6QXfQdrTNhwNNXssnHF6Ka5aAtUpijfzA6N97ig7MLXO0CLAZ6QsmfRi4j5-uahwX_HRea4E2WbLhNZXeAuxvU"/>
+                    <div class="absolute left-[60%] top-[40%] w-[2px] h-[40%] bg-toxic-green rotate-12 blur-[2px] opacity-70"></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute top-4 right-4 bottom-24 left-1/2 z-20">
+            <div class="h-full flex flex-col gap-4">
+                <div class="flex-1 bg-panel-bg border border-toxic-green/30 rounded-lg relative overflow-hidden flex flex-col">
+                    <div class="bg-toxic-green/10 p-2 border-b border-toxic-green/30 flex justify-between items-center">
+                        <span class="text-[9px] font-pixel text-toxic-green">SAFETY SCAFFOLD VALIDATOR</span>
+                        <span class="material-symbols-outlined text-xs text-toxic-green">deployed_code</span>
+                    </div>
+                    <div class="flex-1 relative flex items-center justify-center p-4">
+                        <div class="relative w-full h-full border border-toxic-green/5 flex items-center justify-center">
+                            <div class="w-32 h-32 relative transform rotate-45 border-2 border-toxic-green/40 rounded-lg flex items-center justify-center">
+                                <div class="absolute inset-2 border border-toxic-green/30"></div>
+                                <div class="absolute inset-6 border border-toxic-green/20"></div>
+                                <div class="absolute w-full h-[1px] bg-toxic-green/50"></div>
+                                <div class="absolute h-full w-[1px] bg-toxic-green/50"></div>
+                                <div class="absolute w-full h-0.5 bg-toxic-green top-1/2 shadow-[0_0_15px_#39ff14] opacity-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-48 grid grid-cols-1 gap-2">
+                    <div class="bg-panel-bg border border-neon-purple/30 p-3 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[9px] font-pixel text-neon-purple">SOVEREIGN COMPLIANCE</span>
+                            <span class="text-[10px] text-white/50">99.98%</span>
+                        </div>
+                        <div class="w-full h-1 bg-neon-purple/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-neon-purple w-[99%] shadow-[0_0_8px_#bc13fe]"></div>
+                        </div>
+                        <div class="mt-2 grid grid-cols-2 gap-1">
+                            <div class="text-[8px] font-pixel text-white/40">ENC: AES-512</div>
+                            <div class="text-[8px] font-pixel text-white/40">PRIO: CRITICAL</div>
+                        </div>
+                    </div>
+                    <div class="bg-panel-bg border border-toxic-green/30 p-3 rounded-lg flex-1">
+                        <span class="text-[9px] font-pixel text-toxic-green block mb-1">ADR AUTHORING LOGS</span>
+                        <div class="space-y-1 overflow-hidden h-16">
+                            <div class="text-[8px] font-pixel text-toxic-green/70">&gt;&gt; INIT
+                                COMPONENT VALIDATION
+                            </div>
+                            <div class="text-[8px] font-pixel text-white/60">&gt;&gt; HASH:
+                                0x82FA... COMMITTED
+                            </div>
+                            <div class="text-[8px] font-pixel text-toxic-green">&gt;&gt;
+                                ARCHITECTURE_DELTA: SYNCED
+                            </div>
+                            <div class="text-[8px] font-pixel text-white/40">&gt;&gt; ANALYSING
+                                LATTICE NODES...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-6 left-4 right-4 z-30">
+            <div class="bg-panel-bg border border-white/10 backdrop-blur-xl p-3 rounded-xl">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-toxic-green text-sm">psychology</span>
+                        <span class="text-[10px] font-bold tracking-widest text-white">RECURSIVE LEARNING PHASE 3</span>
+                    </div>
+                    <span class="text-[10px] font-pixel text-toxic-green">RUNNING</span>
+                </div>
+                <div class="flex gap-1 h-1.5">
+                    <div class="flex-1 bg-toxic-green shadow-[0_0_5px_#39ff14]"></div>
+                    <div class="flex-1 bg-toxic-green shadow-[0_0_5px_#39ff14]"></div>
+                    <div class="flex-1 bg-toxic-green/30"></div>
+                    <div class="flex-1 bg-toxic-green/10"></div>
+                    <div class="flex-1 bg-toxic-green/10"></div>
+                    <div class="flex-1 bg-toxic-green/10"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="z-50 bg-background-dark border-t border-toxic-green/20 px-8 py-2 flex justify-between items-center h-16">
+        <button class="flex flex-col items-center justify-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-xl">home</span>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Home</span>
+        </button>
+        <button class="flex flex-col items-center justify-center gap-1 text-toxic-green glow-green">
+            <span class="material-symbols-outlined text-xl fill-1">architecture</span>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Compute</span>
+        </button>
+        <button class="flex flex-col items-center justify-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-xl">terminal</span>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Logs</span>
+        </button>
+        <button class="flex flex-col items-center justify-center gap-1 text-white/40">
+            <span class="material-symbols-outlined text-xl">person</span>
+            <span class="text-[8px] font-bold uppercase tracking-widest">User</span>
+        </button>
+    </nav>
+    <div class="absolute top-0 left-0 p-1 pointer-events-none z-[60]">
+        <div class="border-t-2 border-l-2 border-toxic-green size-6 rounded-tl-sm"></div>
+    </div>
+    <div class="absolute top-0 right-0 p-1 pointer-events-none z-[60]">
+        <div class="border-t-2 border-r-2 border-neon-purple size-6 rounded-tr-sm"></div>
+    </div>
+    <div class="absolute bottom-16 left-0 p-1 pointer-events-none z-[60]">
+        <div class="border-b-2 border-l-2 border-neon-purple size-6 rounded-bl-sm"></div>
+    </div>
+    <div class="absolute bottom-16 right-0 p-1 pointer-events-none z-[60]">
+        <div class="border-b-2 border-r-2 border-toxic-green size-6 rounded-br-sm"></div>
+    </div>
+</div>
+
+</body>
+</html>

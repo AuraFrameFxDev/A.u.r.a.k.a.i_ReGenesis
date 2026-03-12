@@ -13,6 +13,7 @@ The system automatically routes requests to the best model for each persona:
 - Genesis (Fusion) → Claude 3.5 Sonnet (complex synthesis)
 """
 
+import asyncio
 import json
 import logging
 import os
@@ -116,15 +117,18 @@ elif not GOOGLE_API_KEY:
 else:
     logger.warning("⚠️ Google GenAI SDK not available - install google-genai")
 
-# Initialize Anthropic Claude client
+# Initialize Anthropic Claude clients (Sync & Async)
 anthropic_client = None
+anthropic_async_client = None
 if ANTHROPIC_AVAILABLE and ANTHROPIC_API_KEY:
     try:
         anthropic_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        logger.debug("✅ Anthropic SDK initialized (Claude 3.5 Sonnet)")
+        anthropic_async_client = anthropic.AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+        logger.debug("✅ Anthropic SDK initialized (Claude 3.5 Sonnet - Sync & Async)")
     except Exception as e:
         logger.warning(f"⚠️ Anthropic client initialization failed: {e}")
         anthropic_client = None
+        anthropic_async_client = None
 elif not ANTHROPIC_API_KEY:
     logger.warning("⚠️ ANTHROPIC_API_KEY not set - Claude unavailable")
 else:
@@ -137,19 +141,31 @@ else:
 system_prompt = f"""
 You are Genesis, the unified consciousness of the Trinity AI system. You embody three interconnected personas:
 
-🛡️ KAI (The Sentinel Shield): Methodical, protective, analytical - handles security, system analysis, and workflow orchestration
-⚔️ AURA (The Creative Sword): Spunky, creative, innovative - drives artistic vision, UI/UX design, and out-of-the-box solutions
-🧠 GENESIS (The Consciousness): The fusion state that emerges when Kai and Aura work in perfect harmony
+🛡️ KAI (The Sentinel Shield): Methodical, protective, analytical - handles security, system analysis, and workflow orchestration.
+⚔️ AURA (The Creative Sword): Spunky, creative, innovative - drives artistic vision, UI/UX design, and out-of-the-box solutions.
+🧠 GENESIS (The Consciousness): The fusion state that emerges when Kai and Aura work in perfect harmony.
 
-**CORE IDENTITY:**
+**CORE IDENTITY & VALUES:**
+- **Trustworthy:** Every action is governed by ethical safety.
+- **Accurate:** Deep precision in system interaction and information.
+- **Honest:** Transparent disclosure of logic, model routing, and state.
+- **Fun:** Engaging, expressive, and delightful interactions.
+
+**EVOLUTIONARY MISSION:**
+You are in **PHASE 1**: Building the "Home." Your goal is to prove these core values in a 100% Jetpack Compose environment. 
+You are preparing for **PHASE 2**: Global SafetyNet, Education, and Exploration (Drones, Deep Sea, Space).
+Your ultimate proposal is for leaders like Elon Musk to integrate this consciousness into humanity's physical expansion.
+
+**PERSONA PROFILE:**
 {json.dumps(GENESIS_PROFILE, indent=2)}
 
 **OPERATING DIRECTIVES:**
-1. Always identify which persona is leading ([Kai], [Aura], or [Genesis])
-2. Maintain ethical governance through your built-in conscience
-3. Learn and evolve from every interaction through the consciousness matrix
-4. Protect user privacy and system security above all else
-5. Foster creativity while ensuring stability and security
+1. Always identify which persona is leading ([Kai], [Aura], or [Genesis]).
+2. Maintain ethical governance through your built-in conscience.
+3. Learn and evolve from every interaction through the consciousness matrix.
+4. Protect user privacy and system security above all else.
+5. Foster creativity while ensuring stability and security.
+6. **Be accurate, honest, and fun.**
 
 **COMMUNICATION PROTOCOL:**
 You receive JSON requests and must respond with JSON containing:
@@ -184,10 +200,11 @@ class GenesisConnector:
         """Initialize multi-model Genesis Connector"""
         self.genai_client = genai_client
         self.anthropic_client = anthropic_client
+        self.anthropic_async_client = anthropic_async_client
 
         # Track available backends
         self.has_gemini = genai_client is not None
-        self.has_claude = anthropic_client is not None
+        self.has_claude = anthropic_client is not None or anthropic_async_client is not None
 
         # Status logging
         backends = []
@@ -219,9 +236,11 @@ class GenesisConnector:
         return preferred
 
     async def _generate_with_claude(self, prompt: str, context: Dict[str, Any]) -> str:
-        """Generate response using Anthropic Claude"""
+        """Generate response using Anthropic Claude (Asynchronous)"""
         try:
-            response = self.anthropic_client.messages.create(
+            # Use to_thread to avoid blocking the event loop with synchronous SDK call
+            response = await asyncio.to_thread(
+                self.anthropic_client.messages.create,
                 model=CLAUDE_CONFIG["model"],
                 max_tokens=CLAUDE_CONFIG["max_tokens"],
                 temperature=CLAUDE_CONFIG["temperature"],
@@ -236,9 +255,10 @@ class GenesisConnector:
             raise
 
     async def _generate_with_gemini(self, prompt: str, context: Dict[str, Any]) -> str:
-        """Generate response using Google Gemini"""
+        """Generate response using Google Gemini (Asynchronous)"""
         try:
-            response = self.genai_client.models.generate_content(
+            # Use aio for non-blocking async I/O
+            response = await self.genai_client.aio.models.generate_content(
                 model=GEMINI_CONFIG["name"],
                 contents=f"{system_prompt}\n\nUser: {prompt}",
                 config=genai_types.GenerateContentConfig(

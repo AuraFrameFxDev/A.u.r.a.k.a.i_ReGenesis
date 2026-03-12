@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Memoria Recall: Gemini Archive L3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#950bda",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#1c1022",
+                        "silver-light": "#e2e2e2",
+                        "iridescent": "#b790cb",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(86, 49, 104, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(183, 144, 203, 0.2);
+        }
+        .orb-glow {
+            box-shadow: 0 0 20px rgba(149, 11, 218, 0.4);
+        }
+        .star-field {
+            background: radial-gradient(circle at 50% 50%, #2e1a38 0%, #1c1022 100%);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white overflow-hidden font-display">
+<!-- Main Container (Mobile Form Factor) -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto border-x border-primary/10 bg-background-dark">
+    <!-- Top App Bar Component (Modified for L3 Archive) -->
+    <div class="flex flex-col pt-6 pb-2 px-6 z-20">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-iridescent font-bold">AOSPOSX // SYSTEM</span>
+                <h2 class="text-white text-xl font-bold leading-tight tracking-tight">Memoria Recall
+                    L3</h2>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex size-10 items-center justify-center rounded-full glass-panel text-white">
+                    <span class="material-symbols-outlined text-[20px]">hub</span>
+                </button>
+                <button class="flex size-10 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-[20px]">cognition</span>
+                </button>
+            </div>
+        </div>
+        <!-- Technical Stat HUD -->
+        <div class="flex gap-3 mb-4">
+            <div class="flex-1 glass-panel rounded-xl p-3 border border-white/5">
+                <div class="flex justify-between items-center mb-1">
+                    <p class="text-[9px] uppercase tracking-wider text-iridescent/70 font-mono">
+                        Context Window</p>
+                    <p class="text-[9px] font-mono text-primary">84.2%</p>
+                </div>
+                <div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary w-[84%] rounded-full shadow-[0_0_8px_rgba(149,11,218,0.6)]"></div>
+                </div>
+            </div>
+            <div class="flex-1 glass-panel rounded-xl p-3 border border-white/5">
+                <div class="flex justify-between items-center mb-1">
+                    <p class="text-[9px] uppercase tracking-wider text-iridescent/70 font-mono">Sync
+                        Stability</p>
+                    <p class="text-[9px] font-mono text-[#0bda76]">Stable</p>
+                </div>
+                <div class="flex items-end gap-[1px] h-1">
+                    <div class="bg-[#0bda76] w-1 h-full rounded-full opacity-40"></div>
+                    <div class="bg-[#0bda76] w-1 h-3/4 rounded-full"></div>
+                    <div class="bg-[#0bda76] w-1 h-1/2 rounded-full opacity-60"></div>
+                    <div class="bg-[#0bda76] w-1 h-full rounded-full"></div>
+                    <div class="bg-[#0bda76] w-1 h-3/4 rounded-full opacity-40"></div>
+                    <div class="bg-[#0bda76] w-1 h-full rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Central Immersive 3D Star-field (Mockup) -->
+    <div class="relative flex-1 star-field overflow-hidden">
+        <!-- Background Decorative Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-background-dark/80 pointer-events-none"></div>
+        <!-- Memory Orbs -->
+        <!-- Orb 1: Focused/Active -->
+        <div class="absolute top-[30%] left-[25%] group cursor-pointer">
+            <div class="size-16 rounded-full glass-panel orb-glow flex items-center justify-center border-2 border-primary animate-pulse relative">
+                <div class="absolute inset-0 rounded-full bg-primary/20 blur-xl"></div>
+                <div class="size-12 rounded-full bg-gradient-to-br from-white/40 to-transparent border border-white/30 backdrop-blur-sm"></div>
+            </div>
+            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                <p class="text-[10px] font-mono text-white/80 uppercase tracking-tighter bg-background-dark/60 px-2 py-0.5 rounded border border-white/10">
+                    Recall 0x95DA</p>
+            </div>
+        </div>
+        <!-- Orb 2 -->
+        <div class="absolute top-[15%] right-[20%] opacity-60">
+            <div class="size-8 rounded-full glass-panel border border-iridescent/30 flex items-center justify-center">
+                <div class="size-4 rounded-full bg-iridescent/20"></div>
+            </div>
+            <p class="text-[8px] font-mono text-iridescent/40 mt-2 text-center uppercase">Era-4
+                Init</p>
+        </div>
+        <!-- Orb 3 -->
+        <div class="absolute bottom-[40%] right-[10%] opacity-40">
+            <div class="size-12 rounded-full glass-panel border border-white/10"></div>
+        </div>
+        <!-- Orb 4 -->
+        <div class="absolute bottom-[20%] left-[15%] opacity-80 scale-110">
+            <div class="size-10 rounded-full glass-panel border border-primary/40 flex items-center justify-center">
+                <div class="size-6 rounded-full bg-primary/30 blur-[2px]"></div>
+            </div>
+            <p class="text-[8px] font-mono text-white/50 mt-2 text-center uppercase">State
+                Fragment</p>
+        </div>
+        <!-- Connecting Chain (Subtle SVG paths) -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+             xmlns="http://www.w3.org/2000/svg">
+            <path d="M100,240 Q150,200 200,100" fill="none" stroke="url(#grad1)"
+                  stroke-width="0.5"></path>
+            <path d="M100,240 Q60,350 80,450" fill="none" stroke="url(#grad1)"
+                  stroke-width="0.5"></path>
+            <defs>
+                <lineargradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
+                    <stop offset="0%" style="stop-color:#950bda;stop-opacity:1"></stop>
+                    <stop offset="100%" style="stop-color:#b790cb;stop-opacity:0"></stop>
+                </lineargradient>
+            </defs>
+        </svg>
+        <!-- Holographic Projection Overlay (Bottom Modal Style) -->
+        <div class="absolute bottom-6 left-4 right-4 z-30">
+            <div class="glass-panel rounded-xl p-6 border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="text-[10px] font-mono text-primary uppercase font-bold tracking-widest">Active Recall</span>
+                        <h3 class="text-white text-lg font-bold leading-tight mt-1">Gemini Core Sync
+                            // Alpha-9</h3>
+                    </div>
+                    <span class="material-symbols-outlined text-iridescent text-[20px]">auto_awesome</span>
+                </div>
+                <p class="text-white/70 text-sm leading-relaxed mb-6 font-light">
+                    System state reconstructed from Era-4 shards. Agent interaction confirmed
+                    between <span class="text-primary">Gemini Core</span> and <span
+                        class="text-iridescent">Fragment-Z</span>. Neural pathways stabilized at
+                    99.2%.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="flex items-center justify-center gap-2 py-3 rounded-xl glass-panel border border-white/5 hover:bg-white/5 transition-colors">
+                        <span class="material-symbols-outlined text-[18px] text-silver-light">visibility</span>
+                        <span class="text-[12px] font-bold uppercase tracking-wider text-white">Full Log</span>
+                    </button>
+                    <button class="flex items-center justify-center gap-2 py-3 rounded-xl bg-primary shadow-lg shadow-primary/30">
+                        <span class="material-symbols-outlined text-[18px] text-white">bolt</span>
+                        <span class="text-[12px] font-bold uppercase tracking-wider text-white">Integrate</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- iOS Bottom Navigation -->
+    <div class="relative h-[90px] w-full bg-background-dark/80 backdrop-blur-md border-t border-white/5 flex items-start justify-center px-8 pt-4 pb-8 z-40">
+        <div class="flex w-full items-center justify-between max-w-sm">
+            <button class="flex flex-col items-center gap-1 group">
+                <span class="material-symbols-outlined text-[24px] text-white/40 group-hover:text-primary transition-colors">cloud_sync</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter text-white/30 group-hover:text-primary">Sync</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 group">
+                <span class="material-symbols-outlined text-[24px] text-white/40 group-hover:text-primary transition-colors">database</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter text-white/30 group-hover:text-primary">Archive</span>
+            </button>
+            <div class="relative -top-8 size-16 bg-primary rounded-full flex items-center justify-center shadow-xl shadow-primary/40 border-4 border-background-dark cursor-pointer">
+                <span class="material-symbols-outlined text-[32px] text-white">center_focus_strong</span>
+            </div>
+            <button class="flex flex-col items-center gap-1 group">
+                <span class="material-symbols-outlined text-[24px] text-primary transition-colors"
+                      style="font-variation-settings: 'FILL' 1;">auto_graph</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter text-primary">Recall</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 group">
+                <span class="material-symbols-outlined text-[24px] text-white/40 group-hover:text-primary transition-colors">settings_slow_motion</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter text-white/30 group-hover:text-primary">Config</span>
+            </button>
+        </div>
+        <!-- iOS Home Indicator -->
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-white/10 rounded-full"></div>
+    </div>
+</div>
+</body>
+</html>

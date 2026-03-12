@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Task Control Center</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Press+Start+2P&amp;family=Share+Tech+Mono&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00f3ff", // Cyan
+                        secondary: "#ff00ff", // Magenta
+                        "background-light": "#f0f2f5",
+                        "background-dark": "#050510",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        mono: ["Share Tech Mono", "monospace"],
+                        pixel: ["'Press Start 2P'", "cursive"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .cyber-grid {
+            background-image: linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .glow-cyan { text-shadow: 0 0 10px rgba(0, 243, 255, 0.8); }
+        .glow-magenta { text-shadow: 0 0 10px rgba(255, 0, 255, 0.8); }
+        .border-glow-cyan { box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 5px rgba(0, 243, 255, 0.3); }
+        .border-glow-magenta { box-shadow: 0 0 15px rgba(255, 0, 255, 0.3), inset 0 0 5px rgba(255, 0, 255, 0.3); }
+        .glitch {
+            position: relative;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00ff;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 1s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            20% { clip: rect(62px, 9999px, 42px, 0); }100% { clip: rect(89px, 9999px, 98px, 0); }
+        }
+        .rotating-node {
+            animation: spin 20s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 243, 255, 0.1);
+            position: absolute;
+            top: 0;
+            animation: scan 4s linear infinite;
+            z-index: 50;
+            pointer-events: none;
+        }
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-mono text-slate-800 dark:text-cyan-400 overflow-hidden h-screen flex flex-col">
+<div class="scanline"></div>
+<header class="p-4 border-b border-primary/30 flex items-center justify-between z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="flex items-center gap-2">
+        <span class="material-icons text-primary animate-pulse">memory</span>
+        <h1 class="font-display font-black text-lg uppercase tracking-widest glitch glow-cyan"
+            data-text="TASK CONTROL">TASK CONTROL</h1>
+    </div>
+    <div class="flex items-center gap-3">
+        <div class="text-[10px] text-right hidden sm:block">
+            <p class="text-secondary glow-magenta">SYNC LEVEL: 98.4%</p>
+            <p class="text-primary glow-cyan">CPU: 42%</p>
+        </div>
+        <div class="w-10 h-10 border border-primary/50 p-1 flex items-center justify-center">
+            <img alt="User Avatar" class="w-full h-full object-cover"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxiUKE6v0duUCyDAxrNJKARKX_tXacCovtAce6OQidJyWk4SEAO0DL4xw8RwcmTq2ECxd4JSddud6LSe1mYDivOE77H8DTio4DtB8uqA40IoRd4Cq8AKfoPy4paR_yARRfmuJi6YR0Z5NNiK9YbDp442yxHxdbX_yHODhLKn7zy_jsZajFIy6xPfxpj4uEirFDeLCTuh8icojlIFo7QKO02Vraqwo1n_sY0UVkdvC8WmLDLyjjO-8_MJ3C9vHUvz50OgDRggeNQM4"/>
+        </div>
+    </div>
+</header>
+<main class="flex-1 relative cyber-grid overflow-y-auto pb-24">
+    <div class="absolute top-4 left-0 right-0 flex justify-between px-4 opacity-40 pointer-events-none">
+        <img alt="Neon Hexagon Decor" class="h-12"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN62YmSXlSAWkMo3G7LmJ0FPJu507i5TP8csXFyGfoNRrCg-6yv6BiA19tLPpJdRAKj2WB34NMyJiqvNvqvSY8jVQPJ3B3rDMdsRz6BFszUm4jgODw54dBj6JklT4dwRYAQ5bwud582_qxrCfHNGzDEiBGrpW0iGmA4FQuhAMg7OvTh_dMVSuFiCLQfzZ5udsxk1Cg2ztNgnww0MAzKiSZR3ghl9Qmxs-UkVN_w5JDJGD0MHbvy2b8pAX4fIGoBOG7Kyiaz1_Y44U"/>
+        <img alt="Neon Hexagon Decor" class="h-12 transform scale-x-[-1]"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuASCxgBRU2RESckNNBJQ3i03kGd7PXOABdO-b0nX6wqCfnVl1hgmP_HksV7S5kSvZs2-NG-N6aTDMCaQclir9U44fDo5T7gOUx-X5X4nGks5Qv0uhRH_CDuZKi0JWHrGlz9km-Vci9OaEvU3fZRlQOMitpknQEzrNT3IlI9LwMcLy7QhN-khuseVZX3EuZvjRHwSc3_ZBkLUdBPG--CCmEVo-fgni8V6cLECytrylZf13r_2ovm0zU0Y08Q23O753Ye1OlH2ulw0hw"/>
+    </div>
+    <div class="relative w-full aspect-square flex items-center justify-center py-8">
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-64 h-64 border border-primary/20 rounded-full animate-ping opacity-20"></div>
+            <div class="w-80 h-80 border border-secondary/20 rounded-full animate-ping opacity-10"
+                 style="animation-delay: 1s"></div>
+        </div>
+        <div class="relative z-10 w-64 h-64 flex items-center justify-center">
+            <img alt="Data Visualization Hub" class="w-full h-full object-contain rotating-node"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQeDm-i9WPAVx5cO8TIcIHWSN6GjQm5vc7hj8GgLDTbtuNiTwVhVrSUOh8I1HsIU8JfRq5Fh1AY_O7tuaIsuDn5hBsoUZm6plSt4CauNa0yMh065jfn3BfRaK4XGo4sHiSMBsYGlq1bpmnLrSuYlKT3lO9RqUHnPIVyv_mxyJ13JfWhCFtFW9zzTw2NQhvH0gTP5FWJuoY1JHu4O0CZlWWs5uhaBcUyfCGp_zmnKCi_-Q6EXSEx14eLevkWBH8byhPDAp615Aeg1I"/>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-20 h-20 border-2 border-primary rounded-full bg-background-dark/80 p-1 border-glow-cyan">
+                    <img alt="Genesis Center" class="w-full h-full rounded-full object-cover"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH3vuOSiZqVnYjt2LacOPfw2wWjXShFyYREuV2XQhQcefHj-CZg2WUFvXUIZa3QnIKHqBI1251e5kwYjoZwYiBWsLMOlsZeIW3v_lHbx3mza5PJZpdggKXSOEy_LX6plc8MUNs2HKZ2h52HXDSpMBeitAmdKmhYnmMs7s-WjHU9MWci0utVXfC2C2fL8JpD0KpYMYmUxbEWHm0IaBIvvjBmFJq29I0vgDg0oc5--Zg2cvVgftvittgNbx1QDp0Yr3ZnzWyfXzCJK8"/>
+                </div>
+            </div>
+        </div>
+        <div class="absolute top-10 left-6 bg-background-dark/60 border border-primary/40 p-2 text-[8px] font-pixel backdrop-blur-sm">
+            <p class="text-primary mb-1">LATENCY</p>
+            <p class="text-white">12ms</p>
+        </div>
+        <div class="absolute bottom-10 right-6 bg-background-dark/60 border border-secondary/40 p-2 text-[8px] font-pixel backdrop-blur-sm text-right">
+            <p class="text-secondary mb-1">UPLINK</p>
+            <p class="text-white">STABLE</p>
+        </div>
+    </div>
+    <div class="px-4 space-y-4">
+        <div class="flex items-center justify-between border-b border-primary/30 pb-1 mb-4">
+            <h2 class="font-pixel text-[10px] tracking-tighter text-primary uppercase">Active
+                Missions</h2>
+            <span class="text-[8px] font-pixel text-secondary">03 TOTAL</span>
+        </div>
+        <div class="relative border border-primary/50 bg-background-dark/40 p-4 border-glow-cyan overflow-hidden group">
+            <div class="absolute top-0 right-0 bg-primary text-background-dark text-[8px] font-pixel px-2 py-0.5">
+                IN_PROGRESS
+            </div>
+            <div class="flex gap-4">
+                <div class="w-16 h-16 border border-primary/30 shrink-0 relative">
+                    <img alt="Agent Alpha" class="w-full h-full object-cover"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwSxPwlTHU9T9Ix-8HaGQ9E96YYe5ixkqO0ueM0JPWjy-Iwy30vAo-Yu-GAY4Vtd-Qj8E6avRIOFixRCWPaHD_5JG4HCHVfLi70w3jSAXgZGnL_cbJ6DPfZ6rMc8yQZLOFJ5Tb8Cat_io-6NC_6BcaMlb1nve1yioQkrIoi3oRXUA-db5x2_kVUFvzrH2QpkuyHP0jP31qtpkjlGytwA5ivFDzmfE1wV5fx35WPZ65gwb34XjzqEP8mTTxND1iYAgICTzHI3fcZJM"/>
+                    <div class="absolute inset-0 border border-primary/20 pointer-events-none"></div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-display font-bold text-sm text-primary tracking-wide">
+                        PHOENIX_PROTOCOL</h3>
+                    <p class="text-[10px] text-slate-400 mt-1 uppercase">Neutralizing firewall
+                        vulnerabilities in Sector 7-G</p>
+                    <div class="mt-3 flex items-center gap-2">
+                        <div class="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="bg-primary h-full w-[65%] border-glow-cyan shadow-[0_0_8px_#00f3ff]"></div>
+                        </div>
+                        <span class="text-[10px] font-mono text-primary">65%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative border border-secondary/50 bg-background-dark/40 p-4 border-glow-magenta overflow-hidden group">
+            <div class="absolute top-0 right-0 bg-secondary text-white text-[8px] font-pixel px-2 py-0.5">
+                URGENT
+            </div>
+            <div class="flex gap-4">
+                <div class="w-16 h-16 border border-secondary/30 shrink-0 relative">
+                    <img alt="Agent Beta" class="w-full h-full object-cover"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUfWXW_js2Xj1W-AcxPZx0pTp3BooBKbqlFmlhjiuoZuIa61R1bvOkGKoGJH100VQK07romVPmYL-Ta0T5jfJUlWYftvU5ip9Q8qJ5SdZrCprrb_0BnS9lq5RaqwMdIcaBWZ8DYMVFybPx-5zsQ-IfBFn_fkrfbmj7fm9H1xfwZo24liRA-I5rHuT3wXXASYXJlEo7e6On7EEbv16gjrFA4pRl8p9Xmeyr0sg1ojxZ3SqBG4QmZaxFPOONM_SU_cbysAxB-wc8Ne4"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-display font-bold text-sm text-secondary tracking-wide">
+                        NEURAL_DREDGE</h3>
+                    <p class="text-[10px] text-slate-400 mt-1 uppercase">Extracting encrypted memory
+                        shards from corrupted node</p>
+                    <div class="mt-3 flex items-center gap-2">
+                        <div class="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="bg-secondary h-full w-[22%] border-glow-magenta shadow-[0_0_8px_#ff00ff]"></div>
+                        </div>
+                        <span class="text-[10px] font-mono text-secondary">22%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative border border-primary/50 bg-background-dark/40 p-4 border-glow-cyan overflow-hidden group">
+            <div class="absolute top-0 right-0 bg-primary/20 text-primary text-[8px] font-pixel px-2 py-0.5">
+                STANDBY
+            </div>
+            <div class="flex gap-4">
+                <div class="w-16 h-16 border border-primary/30 shrink-0 relative grayscale">
+                    <img alt="Agent Gamma" class="w-full h-full object-cover"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFRPHzWOjzkfcI7FNgjqGECMo8knhRvg4zyN9e0QxTiKecMPP4L6pqy55eXzZ3rQne23Z744X813LCK0QS7yoVvqd1F6Z8SPvO9mhrVkjo0HzFJ6xUOpxw9AS9m5OTA5OM21ROcScMGWeKeA5dnRk67i6M7UWx8thG0kZhhyPHFM4GPwIJpDoLEM3eOr3WRBhutiavZ-uQwjAHSnHiWcJLz65VfMwFniCdrZMW9hNQ6G8cknynjYMPQ8Yycohq97lZSpK7Mv3RHnc"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-display font-bold text-sm text-slate-500 tracking-wide">
+                        SHADOW_RECON</h3>
+                    <p class="text-[10px] text-slate-600 mt-1 uppercase">Awaiting signal from
+                        deep-web operative #0192</p>
+                    <div class="mt-3 flex items-center gap-2">
+                        <div class="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="bg-slate-600 h-full w-[0%]"></div>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-600">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 p-4 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-primary/30">
+    <div class="max-w-md mx-auto relative">
+        <div class="flex items-center justify-between border-2 border-primary rounded-full px-6 py-2 border-glow-cyan bg-background-dark/40">
+            <div class="flex flex-col gap-1 flex-1">
+                <div class="h-[2px] w-12 bg-primary"></div>
+                <div class="h-[2px] w-8 bg-primary"></div>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="text-primary hover:text-secondary transition-colors">
+                    <span class="material-icons text-xl">mic</span>
+                </button>
+                <button class="text-secondary hover:text-primary transition-colors">
+                    <span class="material-icons text-xl glow-magenta">home</span>
+                </button>
+            </div>
+        </div>
+        <div class="absolute -top-12 left-0 right-0 flex justify-around px-4">
+            <button class="w-10 h-10 bg-background-dark border border-primary/50 flex items-center justify-center border-glow-cyan">
+                <span class="material-icons text-primary text-sm">grid_view</span>
+            </button>
+            <button class="w-10 h-10 bg-background-dark border border-secondary/50 flex items-center justify-center border-glow-magenta">
+                <span class="material-icons text-secondary text-sm">auto_fix_high</span>
+            </button>
+            <button class="w-10 h-10 bg-background-dark border border-primary/50 flex items-center justify-center border-glow-cyan">
+                <span class="material-icons text-primary text-sm">settings</span>
+            </button>
+        </div>
+    </div>
+</nav>
+<audio id="clickSound"
+       src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-click-900.mp3"></audio>
+
+</body>
+</html>

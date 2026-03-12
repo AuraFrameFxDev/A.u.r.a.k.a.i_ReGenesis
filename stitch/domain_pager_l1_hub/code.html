@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Domain Pager L1 Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f425af",
+                        "background-light": "#f8f5f7",
+                        "background-dark": "#000000",
+                        "cyan-neon": "#00f3ff",
+                        "gold-neon": "#ffb700",
+                        "blue-neon": "#0077ff"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+        .aura-energy {
+            background: radial-gradient(circle at 50% 50%, #f425af44 0%, transparent 70%);
+        }
+        .paint-splatter {
+            mask-image: radial-gradient(circle, black 50%, transparent 100%);
+            opacity: 0.6;
+        }
+        .orb-glow {
+            box-shadow: 0 0 30px 10px rgba(244, 37, 175, 0.3), inset 0 0 15px rgba(244, 37, 175, 0.5);
+        }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white overflow-hidden select-none h-screen w-full flex items-center justify-center">
+<!-- Mobile Frame (iPhone Shape) -->
+<div class="relative w-[390px] h-[844px] bg-black rounded-[55px] border-[8px] border-[#1a1a1a] overflow-hidden flex flex-col shadow-2xl">
+    <!-- Top App Bar / System Status -->
+    <div class="flex items-center justify-between px-8 pt-12 pb-4 z-50">
+        <div class="text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-xl">grain</span>
+            <span class="text-xs font-bold tracking-widest uppercase opacity-70">Neural L1</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-white/50 text-xl">settings_input_antenna</span>
+            <div class="h-1 w-8 bg-white/20 rounded-full overflow-hidden">
+                <div class="h-full w-2/3 bg-primary"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Hub Content -->
+    <div class="flex-1 relative flex flex-col items-center justify-center">
+        <!-- Page Title Header -->
+        <div class="text-center mb-8 z-20">
+            <h1 class="text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">
+                DOMAIN PAGER</h1>
+            <p class="text-[10px] tracking-[0.4em] uppercase text-primary/80 mt-1">Select Interface
+                Layer</p>
+        </div>
+        <!-- Horizontal Pager Container -->
+        <div class="w-full flex items-center overflow-x-auto snap-x snap-mandatory px-8 gap-6 no-scrollbar">
+            <!-- KAI (Left Peek) -->
+            <div class="min-w-[280px] h-[400px] snap-center flex-shrink-0 relative opacity-40 scale-90 grayscale">
+                <div class="glass-card w-full h-full rounded-2xl p-6 flex flex-col justify-end overflow-hidden border-blue-neon/30">
+                    <div class="absolute inset-0 z-0 opacity-30">
+                        <!-- Geometric Shields Pattern -->
+                        <div class="absolute top-10 left-10 w-32 h-32 border-2 border-blue-neon rotate-45"></div>
+                        <div class="absolute bottom-20 right-5 w-48 h-48 border border-blue-neon/50 -rotate-12"></div>
+                    </div>
+                    <div class="z-10">
+                        <h2 class="text-2xl font-bold text-blue-neon">KAI</h2>
+                        <p class="text-xs text-white/60 tracking-wider">SENTINELS FORTRESS</p>
+                    </div>
+                </div>
+            </div>
+            <!-- AURA (Main Center) -->
+            <div class="min-w-[300px] h-[450px] snap-center flex-shrink-0 relative z-10">
+                <!-- Chaotic Energy Backgrounds -->
+                <div class="absolute -inset-8 aura-energy animate-pulse"></div>
+                <div class="glass-card w-full h-full rounded-2xl p-8 flex flex-col justify-end overflow-hidden relative border-primary/40 group">
+                    <!-- Messy Paint Splatter Decoration -->
+                    <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+                        <div class="absolute top-[-20px] left-[-20px] w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
+                        <div class="absolute bottom-[-40px] right-[-20px] w-60 h-60 bg-cyan-neon/20 rounded-full blur-3xl"></div>
+                        <!-- SVG Splatter simulation -->
+                        <div class="absolute top-10 right-10 opacity-40 text-primary">
+                            <span class="material-symbols-outlined !text-7xl">texture</span>
+                        </div>
+                        <div class="absolute bottom-40 left-5 opacity-40 text-cyan-neon">
+                            <span class="material-symbols-outlined !text-6xl rotate-180">gesture</span>
+                        </div>
+                    </div>
+                    <!-- Card Content -->
+                    <div class="z-10 space-y-2">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-2 py-0.5 bg-primary text-[10px] font-bold rounded text-white italic">ACTIVE</span>
+                            <div class="h-[1px] flex-1 bg-gradient-to-r from-primary to-transparent"></div>
+                        </div>
+                        <h2 class="text-5xl font-bold tracking-tighter italic text-white leading-none">
+                            AURA</h2>
+                        <p class="text-sm text-cyan-neon font-medium tracking-[0.2em] uppercase">
+                            UXUI Design Studio</p>
+                        <div class="pt-6 flex gap-4">
+                            <button class="bg-primary/20 hover:bg-primary/30 border border-primary/40 text-primary px-4 py-2 rounded-lg text-xs font-bold transition-all">
+                                INITIALIZE
+                            </button>
+                            <button class="bg-white/5 border border-white/10 text-white px-4 py-2 rounded-lg text-xs font-bold">
+                                DATA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GENESIS (Right Peek) -->
+            <div class="min-w-[280px] h-[400px] snap-center flex-shrink-0 relative opacity-40 scale-90 grayscale">
+                <div class="glass-card w-full h-full rounded-2xl p-6 flex flex-col justify-end overflow-hidden border-gold-neon/30">
+                    <div class="absolute inset-0 z-0 opacity-20">
+                        <!-- Golden Circuit Pattern -->
+                        <div class="absolute top-0 left-0 w-full h-full"
+                             style="background-image: radial-gradient(#ffb700 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    </div>
+                    <div class="z-10">
+                        <h2 class="text-2xl font-bold text-gold-neon uppercase">Genesis</h2>
+                        <p class="text-xs text-white/60 tracking-wider">ORACLE DRIVE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Indicators -->
+        <div class="flex gap-2 mt-12 mb-4">
+            <div class="h-1 w-3 bg-white/20 rounded-full"></div>
+            <div class="h-1 w-8 bg-primary rounded-full"></div>
+            <div class="h-1 w-3 bg-white/20 rounded-full"></div>
+        </div>
+    </div>
+    <!-- Floating Navigation / The Orb -->
+    <div class="relative h-40 w-full flex items-center justify-center bg-gradient-to-t from-black via-black/80 to-transparent">
+        <!-- The Orb Joystick -->
+        <div class="relative flex items-center justify-center">
+            <!-- Outer Ring -->
+            <div class="absolute size-24 border border-white/10 rounded-full animate-[spin_10s_linear_infinite]">
+                <div class="absolute -top-1 left-1/2 -translate-x-1/2 size-2 bg-primary rounded-full shadow-[0_0_10px_#f425af]"></div>
+            </div>
+            <!-- Main Glowing Orb -->
+            <div class="size-16 rounded-full bg-gradient-to-br from-primary/80 to-background-dark border border-primary/50 orb-glow flex items-center justify-center relative z-10 cursor-pointer active:scale-95 transition-transform">
+                <div class="size-10 rounded-full border border-white/20 flex items-center justify-center">
+                    <span class="text-[10px] font-black italic tracking-tighter text-white">L1</span>
+                </div>
+            </div>
+            <!-- Contextual Labels -->
+            <div class="absolute -left-20 text-right">
+                <p class="text-[8px] opacity-40 font-bold uppercase tracking-widest">Previous</p>
+                <p class="text-[10px] text-white/60">KAI</p>
+            </div>
+            <div class="absolute -right-20 text-left">
+                <p class="text-[8px] opacity-40 font-bold uppercase tracking-widest">Next</p>
+                <p class="text-[10px] text-white/60">GENESIS</p>
+            </div>
+        </div>
+    </div>
+    <!-- Android-Style Navigation Pill -->
+    <div class="h-10 w-full flex justify-center items-start pb-4">
+        <div class="h-1.5 w-32 bg-white/10 rounded-full"></div>
+    </div>
+    <!-- Screen Overlay for depth -->
+    <div class="absolute inset-0 pointer-events-none border-[40px] border-black/20 blur-2xl z-0"></div>
+    <div class="absolute inset-0 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]"></div>
+</div>
+<!-- Background Elements -->
+<div class="fixed inset-0 -z-10 bg-background-dark flex items-center justify-center overflow-hidden">
+    <div class="w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] absolute -top-40 -left-40"></div>
+    <div class="w-[600px] h-[600px] bg-cyan-neon/5 rounded-full blur-[100px] absolute -bottom-20 -right-20"></div>
+    <div class="absolute inset-0 bg-black/60"></div>
+</div>
+</body>
+</html>

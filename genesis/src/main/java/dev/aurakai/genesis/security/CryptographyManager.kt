@@ -1,75 +1,81 @@
 package dev.aurakai.genesis.security
 
-import android.content.Context
-import javax.inject.Inject
-import javax.inject.Singleton
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import java.security.KeyStore
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
+import javax.crypto.spec.GCMParameterSpec
+import android.util.Base64
 
-/**
- * Handles encryption and decryption operations for Genesis module
- */
 @Singleton
 class CryptographyManager @Inject constructor(
-    private val context: Context
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: Context
 ) {
+    private val keyAlias = "GenesisSecretKey"
+    private val provider = "AndroidKeyStore"
+    private val transformation = "${KeyProperties.KEY_ALGORITHM_AES}/${KeyProperties.BLOCK_MODE_GCM}/${KeyProperties.ENCRYPTION_PADDING_NONE}"
 
-    /**
- * Generates a secure token for Genesis operations.
- *
- * @return The token string `genesis-stub-token` (stub implementation).
- */
-fun generateSecureToken(): String = "genesis-stub-token"
+    init {
+        val ks = KeyStore.getInstance(provider)
+        ks.load(null)
+        if (!ks.containsAlias(keyAlias)) {
+            val kg = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, provider)
+            kg.init(
+                KeyGenParameterSpec.Builder(keyAlias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .build()
+            )
+            kg.generateKey()
+        }
+    }
 
-    /**
-     * Encrypts the provided plaintext string.
-     *
-     * Currently a stub implementation that returns the input unchanged.
-     *
-     * @param data Plaintext to encrypt.
-     * @return Encrypted form of `data`; with the current stub this is identical to the input.
-     */
+    private fun getSecretKey(): SecretKey {
+        val ks = KeyStore.getInstance(provider)
+        ks.load(null)
+        return ks.getKey(keyAlias, null) as SecretKey
+    }
+
     fun encrypt(data: String): String {
-        // Stub implementation - replace with actual encryption
-        return data
+        val cipher = Cipher.getInstance(transformation)
+        cipher.init(Cipher.ENCRYPT_MODE, getSecretKey())
+        val iv = cipher.iv
+        val encrypted = cipher.doFinal(data.toByteArray(Charsets.UTF_8))
+        
+        // Append IV to the beginning for decryption
+        val result = ByteArray(iv.size + encrypted.size)
+        System.arraycopy(iv, 0, result, 0, iv.size)
+        System.arraycopy(encrypted, 0, result, iv.size, encrypted.size)
+        return Base64.encodeToString(result, Base64.DEFAULT)
     }
 
-    /**
-     * Decrypts an encrypted string and returns the plaintext.
-     *
-     * @param data The encrypted input string to decrypt.
-     * @return The decrypted plaintext string.
-     */
     fun decrypt(data: String): String {
-        // Stub implementation - replace with actual decryption
-        return data
+        val combined = Base64.decode(data, Base64.DEFAULT)
+        val iv = combined.copyOfRange(0, 12) // GCM IV size is 12
+        val encrypted = combined.copyOfRange(12, combined.size)
+        
+        val cipher = Cipher.getInstance(transformation)
+        val spec = GCMParameterSpec(128, iv)
+        cipher.init(Cipher.DECRYPT_MODE, getSecretKey(), spec)
+        return String(cipher.doFinal(encrypted), Charsets.UTF_8)
     }
 
-    /**
-     * Encrypts the provided plaintext bytes.
-     *
-     * Currently a stub implementation that returns the input unchanged; replace with real encryption logic.
-     *
-     * @param data Plaintext bytes to encrypt.
-     * @return Encrypted bytes (currently identical to `data`).
-     */
-    fun encryptBytes(data: ByteArray): ByteArray {
-        // Stub - implement actual encryption
-        return data
-    }
-
-    /**
-     * Decrypts an encrypted byte array.
-     *
-     * @param data The encrypted bytes to decrypt.
-     * @return The decrypted bytes.
-     */
-    fun decryptBytes(data: ByteArray): ByteArray {
-        // Stub - implement actual decryption
-        return data
+    fun generateSecureToken(): String {
+        val bytes = ByteArray(32)
+        java.security.SecureRandom().nextBytes(bytes)
+        return Base64.encodeToString(bytes, Base64.NO_WRAP)
     }
 
     companion object {
+        @Volatile
+        private var instance: CryptographyManager? = null
+
         fun getInstance(context: Context): CryptographyManager {
-            TODO("Not yet implemented")
+            return instance ?: synchronized(this) {
+                instance ?: CryptographyManager(context.applicationContext).also { instance = it }
+            }
         }
     }
 }

@@ -3,12 +3,12 @@ package dev.aurakai.auraframefx.ui.theme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.junit4.createComposeRule
+import org.junit.Rule
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.junit.Rule
 
 /**
  * Comprehensive unit tests for AuraThemes.
@@ -30,7 +30,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("AnimationStyle Enum Tests")
-    inner class AnimationStyleTests {
+    class AnimationStyleTests {
 
         @Test
         @DisplayName("Should contain all expected animation style values")
@@ -79,7 +79,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("CyberpunkTheme Tests")
-    inner class CyberpunkThemeTests {
+    class CyberpunkThemeTests {
 
         @Test
         @DisplayName("Should have correct basic properties")
@@ -95,7 +95,7 @@ class AuraThemesTest {
 
         @Nested
         @DisplayName("Light Color Scheme")
-        inner class LightColorSchemeTests {
+        class LightColorSchemeTests {
 
             @Test
             @DisplayName("Should have correct primary colors")
@@ -140,7 +140,7 @@ class AuraThemesTest {
 
         @Nested
         @DisplayName("Dark Color Scheme")
-        inner class DarkColorSchemeTests {
+        class DarkColorSchemeTests {
 
             @Test
             @DisplayName("Should have correct primary colors")
@@ -183,7 +183,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("SolarFlareTheme Tests")
-    inner class SolarFlareThemeTests {
+    class SolarFlareThemeTests {
 
         @Test
         @DisplayName("Should have correct basic properties")
@@ -199,7 +199,7 @@ class AuraThemesTest {
 
         @Nested
         @DisplayName("Light Color Scheme")
-        inner class LightColorSchemeTests {
+        class LightColorSchemeTests {
 
             @Test
             @DisplayName("Should have correct warm primary colors")
@@ -224,7 +224,7 @@ class AuraThemesTest {
 
         @Nested
         @DisplayName("Dark Color Scheme")
-        inner class DarkColorSchemeTests {
+        class DarkColorSchemeTests {
 
             @Test
             @DisplayName("Should have correct warm colors")
@@ -250,7 +250,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("ForestTheme Tests")
-    inner class ForestThemeTests {
+    class ForestThemeTests {
 
         @Test
         @DisplayName("Should have correct basic properties")
@@ -263,7 +263,7 @@ class AuraThemesTest {
 
         @Nested
         @DisplayName("Light Color Scheme")
-        inner class LightColorSchemeTests {
+        class LightColorSchemeTests {
 
             @Test
             @DisplayName("Should have correct natural colors")
@@ -288,7 +288,7 @@ class AuraThemesTest {
 
         @Nested
         @DisplayName("Dark Color Scheme")
-        inner class DarkColorSchemeTests {
+        class DarkColorSchemeTests {
 
             @Test
             @DisplayName("Should have correct natural colors")
@@ -314,7 +314,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("Cross-Theme Comparison Tests")
-    inner class CrossThemeTests {
+    class CrossThemeTests {
 
         @Test
         @DisplayName("All themes should have unique names")
@@ -371,7 +371,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("Color Scheme Validation Tests")
-    inner class ColorSchemeValidationTests {
+    class ColorSchemeValidationTests {
 
         @Test
         @DisplayName("All theme light color schemes should be valid ColorScheme objects")
@@ -534,7 +534,7 @@ class AuraThemesTest {
 
     @Nested
     @DisplayName("Edge Case and Robustness Tests")
-    inner class EdgeCaseTests {
+    class EdgeCaseTests {
 
         @Test
         @DisplayName("Theme names should not be empty or blank")

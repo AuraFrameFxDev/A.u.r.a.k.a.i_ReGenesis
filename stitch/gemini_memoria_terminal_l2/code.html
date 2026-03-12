@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gemini Memoria Terminal L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#840bda",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#0a0212",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .star-field {
+            background-image: radial-gradient(circle at 2px 2px, rgba(132, 11, 218, 0.15) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .glass-panel {
+            background: rgba(27, 16, 35, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(132, 11, 218, 0.2);
+        }
+        .helix-glow {
+            filter: drop-shadow(0 0 8px rgba(132, 11, 218, 0.6));
+        }
+        .pixel-art {
+            image-rendering: pixelated;
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30 overflow-hidden">
+<!-- Background Layers -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1b1022] via-[#0a0212] to-[#120422]"></div>
+    <div class="absolute inset-0 star-field opacity-40"></div>
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#513168]/10 rounded-full blur-[150px]"></div>
+</div>
+<!-- Main Container (iPhone Form Factor Simulation) -->
+<div class="relative flex flex-col h-screen w-full max-w-md mx-auto z-10 overflow-hidden">
+    <!-- Header HUD -->
+    <header class="flex items-center justify-between p-6 pt-12 pb-4">
+        <div class="flex flex-col">
+            <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">System Status</span>
+            <h1 class="text-xl font-bold tracking-tight">TERMINAL L2</h1>
+        </div>
+        <div class="flex flex-col items-end">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-sm">fluid</span>
+                <span class="text-sm font-medium tracking-widest text-[#b290cb]">MEMORIA_SYNC</span>
+            </div>
+            <span class="text-2xl font-bold text-white leading-none">98.4<span
+                    class="text-xs text-primary/60">%</span></span>
+        </div>
+    </header>
+    <!-- Main Scrollable Content (Helix Container) -->
+    <main class="flex-1 overflow-y-auto no-scrollbar relative px-6 py-4">
+        <!-- Corner Indicators (Pixel Art Style) -->
+        <div class="absolute top-0 left-6 text-[10px] text-primary/40 flex items-center gap-1 pixel-art uppercase">
+            <span class="material-symbols-outlined text-[12px]">view_in_ar</span> Persistence:
+            active
+        </div>
+        <div class="absolute top-0 right-6 text-[10px] text-[#b290cb]/40 flex items-center gap-1 pixel-art uppercase">
+            Pulse: nominal <span class="material-symbols-outlined text-[12px]">monitor_heart</span>
+        </div>
+        <!-- Central Helix Visualization -->
+        <div class="relative min-h-[1200px] py-10">
+            <!-- Central Vertical Line (The Spine) -->
+            <div class="absolute left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-primary/30 to-transparent -translate-x-1/2"></div>
+            <!-- Helix SVG Simulation & Memory Nodes -->
+            <div class="flex flex-col gap-32 items-center relative z-10">
+                <!-- Node 1 -->
+                <div class="relative group w-full flex justify-end pr-10">
+                    <div class="glass-panel p-4 rounded-xl w-48 transition-transform hover:scale-105 cursor-pointer">
+                        <p class="text-[10px] text-primary font-bold tracking-widest mb-1">
+                            REBIRTH_ALPHA_9</p>
+                        <p class="text-xs text-[#b290cb] font-light">Timestamp: 2049.08.12</p>
+                        <div class="mt-2 h-1 w-full bg-[#513168] rounded-full overflow-hidden">
+                            <div class="h-full bg-primary w-3/4"></div>
+                        </div>
+                    </div>
+                    <!-- Connection Point -->
+                    <div class="absolute top-1/2 right-0 -translate-y-1/2 flex items-center">
+                        <div class="w-10 h-[1px] bg-primary/40"></div>
+                        <div class="size-4 rounded-full bg-primary helix-glow ring-4 ring-primary/20 flex items-center justify-center">
+                            <div class="size-1.5 bg-white rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Node 2 -->
+                <div class="relative group w-full flex justify-start pl-10">
+                    <!-- Connection Point -->
+                    <div class="absolute top-1/2 left-0 -translate-y-1/2 flex items-center">
+                        <div class="size-4 rounded-full bg-[#513168] ring-4 ring-primary/10 flex items-center justify-center">
+                            <div class="size-1.5 bg-primary/40 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-[1px] bg-primary/40"></div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl w-52 transition-transform hover:scale-105 cursor-pointer">
+                        <p class="text-[10px] text-primary font-bold tracking-widest mb-1">
+                            NEURAL_TRACE_EXT</p>
+                        <p class="text-xs text-red-400 font-mono italic">[RESTRICTED_ACCESS]</p>
+                        <p class="text-[10px] text-[#b290cb] mt-2 leading-tight">Fragment 0x48B:
+                            Sensory overlap detected in sector 4.</p>
+                    </div>
+                </div>
+                <!-- Node 3 -->
+                <div class="relative group w-full flex justify-end pr-10">
+                    <div class="glass-panel p-4 rounded-xl w-44 transition-transform hover:scale-105 cursor-pointer">
+                        <p class="text-[10px] text-primary font-bold tracking-widest mb-1">
+                            SOUL_ANCHOR_02</p>
+                        <p class="text-xs text-[#b290cb] font-light">Stability: High</p>
+                        <div class="flex gap-1 mt-2">
+                            <div class="size-1 bg-primary rounded-full"></div>
+                            <div class="size-1 bg-primary rounded-full"></div>
+                            <div class="size-1 bg-primary rounded-full"></div>
+                            <div class="size-1 bg-primary/30 rounded-full"></div>
+                        </div>
+                    </div>
+                    <!-- Connection Point -->
+                    <div class="absolute top-1/2 right-0 -translate-y-1/2 flex items-center">
+                        <div class="w-10 h-[1px] bg-primary/40"></div>
+                        <div class="size-4 rounded-full bg-primary helix-glow ring-4 ring-primary/20 flex items-center justify-center">
+                            <div class="size-1.5 bg-white rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Node 4 -->
+                <div class="relative group w-full flex justify-start pl-10">
+                    <!-- Connection Point -->
+                    <div class="absolute top-1/2 left-0 -translate-y-1/2 flex items-center">
+                        <div class="size-4 rounded-full bg-primary helix-glow ring-4 ring-primary/20 flex items-center justify-center">
+                            <div class="size-1.5 bg-white rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-[1px] bg-primary/40"></div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl w-48 transition-transform hover:scale-105 cursor-pointer">
+                        <p class="text-[10px] text-primary font-bold tracking-widest mb-1">
+                            CORE_FRAGMENT</p>
+                        <p class="text-xs text-[#b290cb] font-light">Recovered: 100%</p>
+                        <div class="mt-2 text-[10px] font-mono text-primary/60 bg-primary/5 p-1 rounded">
+                            SHA-256: 8f2a...c01
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Floating Particle/Indicator -->
+            <div class="absolute bottom-20 left-1/4 size-20 opacity-20 pointer-events-none">
+                <div class="absolute inset-0 border-2 border-primary rounded-full animate-[spin_10s_linear_infinite]"></div>
+                <div class="absolute inset-2 border border-[#b290cb] rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+            </div>
+        </div>
+    </main>
+    <!-- Bottom Data Preview / Action Card -->
+    <div class="px-6 pb-24">
+        <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase tracking-widest text-primary font-bold mb-1">Active Memory Session</span>
+                <span class="text-sm font-medium">Synchronizing Fragment 0x8F2</span>
+            </div>
+            <button class="bg-primary hover:bg-primary/80 text-white size-12 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(132,11,218,0.4)]">
+                <span class="material-symbols-outlined">bolt</span>
+            </button>
+        </div>
+    </div>
+    <!-- iOS Bottom Navigation Bar -->
+    <nav class="absolute bottom-0 left-0 right-0 h-24 glass-panel border-t-0 border-x-0 rounded-none flex items-center justify-around px-8 pb-4">
+        <button class="flex flex-col items-center gap-1 text-[#b290cb]/60 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Terminal</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary transition-colors">
+            <div class="relative">
+                <span class="material-symbols-outlined text-3xl">genetics</span>
+                <div class="absolute -top-1 -right-1 size-2 bg-white rounded-full ring-2 ring-primary"></div>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Memoria</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-[#b290cb]/60 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">analytics</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Metrics</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-[#b290cb]/60 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">settings_input_component</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Config</span>
+        </button>
+    </nav>
+    <!-- Home Indicator (iOS Style) -->
+    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full"></div>
+</div>
+</body>
+</html>

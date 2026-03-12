@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import java.util.UUID
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -31,8 +33,9 @@ import kotlin.time.Duration.Companion.milliseconds
 class EmbodimentEngine(
     private val context: Context,
     private val screenBounds: ScreenBounds,
+    private val lifecycleOwner: LifecycleOwner,
     private val rules: ManifestationRules = ManifestationDefaults.DEFAULT_RULES
-) {
+) : DefaultLifecycleObserver {
     // ========== STATE ==========
 
     private val _moodState = MutableStateFlow(MoodState.NEUTRAL)
@@ -66,7 +69,13 @@ class EmbodimentEngine(
     private var lastManifestationTime = 0L
 
     init {
+        lifecycleOwner.lifecycle.addObserver(this)
         startAutonomousBehaviorLoop()
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        cleanup()
     }
 
     // ========== PUBLIC API ==========
@@ -409,10 +418,11 @@ class EmbodimentEngine(
 @Composable
 fun rememberEmbodimentEngine(
     context: Context,
-    screenBounds: ScreenBounds
+    screenBounds: ScreenBounds,
+    lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
 ): EmbodimentEngine {
-    return remember(context, screenBounds) {
-        EmbodimentEngine(context, screenBounds)
+    return remember(context, screenBounds, lifecycleOwner) {
+        EmbodimentEngine(context, screenBounds, lifecycleOwner)
     }
 }
 

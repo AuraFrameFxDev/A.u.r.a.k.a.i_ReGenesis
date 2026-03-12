@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import dev.aurakai.auraframefx.utils.AuraFxLogger as LoggerInterface
-import dev.aurakai.auraframefx.logging.AuraFxLogger as LoggerImpl
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger as LoggerInterface
+import dev.aurakai.auraframefx.domains.kai.DefaultAuraFxLogger as LoggerImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -16,3 +16,4 @@ abstract class LoggerModule {
     @Singleton
     abstract fun bindAuraFxLogger(impl: LoggerImpl): LoggerInterface
 }
+

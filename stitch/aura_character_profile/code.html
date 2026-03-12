@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aura Character Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00f2ff", // Cyan neon
+                        secondary: "#ff00ff", // Pink neon
+                        "background-light": "#f0f9ff",
+                        "background-dark": "#020617",
+                        accent: "#7000ff",
+                    },
+                    fontFamily: {
+                        display: ["Orbitron", "sans-serif"],
+                        body: ["Rajdhani", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "4px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent, rgba(0, 242, 255, 0.1), transparent);
+            height: 100px;
+            width: 100%;
+            position: absolute;
+            animation: scanline 8s linear infinite;
+        }
+        .cyber-border {
+            clip-path: polygon(0% 0%, 90% 0%, 100% 10%, 100% 100%, 10% 100%, 0% 90%);
+        }
+        .neon-shadow-cyan {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+        }
+        .neon-text-pink {
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body text-slate-800 dark:text-slate-200 overflow-hidden h-screen w-screen flex flex-col">
+<div class="fixed inset-0 grid-bg pointer-events-none"></div>
+<div class="fixed inset-0 scanline pointer-events-none"></div>
+<div class="fixed inset-0 bg-gradient-to-tr from-background-dark via-transparent to-accent/10 pointer-events-none"></div>
+<header class="relative z-20 flex justify-between items-center p-4 pt-12">
+    <button class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/50 border border-primary/30 backdrop-blur-md">
+        <span class="material-icons-round text-primary">arrow_back_ios_new</span>
+    </button>
+    <div class="text-center">
+        <h1 class="font-display font-black text-xl tracking-widest text-white dark:text-primary neon-text-cyan">
+            AURA</h1>
+        <p class="text-[10px] font-display uppercase tracking-[0.3em] text-secondary">Creative
+            Catalyst</p>
+    </div>
+    <button class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/50 border border-primary/30 backdrop-blur-md">
+        <span class="material-icons-round text-primary">settings</span>
+    </button>
+</header>
+<main class="relative z-10 flex-1 flex flex-col p-4 overflow-hidden">
+    <div class="relative flex-1 flex items-center justify-center mb-4">
+        <div class="absolute inset-0 flex items-center justify-center opacity-30">
+            <div class="w-72 h-72 border border-primary/20 rounded-full animate-spin-slow"></div>
+            <div class="absolute w-60 h-60 border border-secondary/20 rounded-full animate-reverse-spin-slow"></div>
+        </div>
+        <div class="relative z-10 w-full h-full flex items-center justify-center">
+            <div class="absolute left-0 bottom-1/4 transform -rotate-12 transition-all hover:scale-105">
+                <div class="relative">
+                    <img alt="Creative Sword Spellhook"
+                         class="h-64 object-contain filter drop-shadow-[0_0_15px_rgba(255,0,255,0.7)]"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUb7m1IgEVkr4ZeVQe9r1eNKggzILBXLpO9DD558k81jMronYx09GxAtJmj8uNSpgOwnLDP-88UBnBweEzJhpHp5Kna3GeFkfbEYyhuf9PTNemGgM9GdZUydo2Cj_yB-u_UgQZJlKjtCmzZ_mgstcQMO1faS6Erht5m3Qd6ib88ODk1IK93UG4HN2a-uwLcly6xerZTfs0O_dj_xS6LnCDSxV_tYH8Cf13UIiKiq_9d0OaPaRKnpvYoOYik9Lx4DZILBnMGaptFZI"/>
+                    <div class="absolute -top-4 left-0 bg-background-dark/80 border-l-2 border-primary px-2 py-1">
+                        <span class="text-[8px] font-display text-primary block">WEAPON CLASS</span>
+                        <span class="text-xs font-bold text-white uppercase">Spellhook</span>
+                    </div>
+                </div>
+            </div>
+            <img alt="Aura Character" class="h-full object-contain z-20"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjNOi2-bPpIgT0OlBcMV0aMm97cNQTlPCBPAB53xw40j7N860sAMJUrYylzlcjF4YL1nu_89f1fyEiZ06LgdZRLHnQSnoKPu5-mj2TvtrxZam58FC7l14etguG694y3AtN-0JKLQMIhF7yXP-ao5bMyCaXm0XSFZSXk4JYZiJudueABJuWWkL9hRwtCdP-HaVKqU5jx6-JbwiwRzERy-e-PsFAQwmtvX34jKHV1Vt_vat1RFoT9RB4rRUUYTd-WKjHQRiAAIZczzs"/>
+        </div>
+    </div>
+    <div class="relative bg-slate-900/40 backdrop-blur-xl border-t border-b border-primary/40 p-4 cyber-border mb-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-3">
+                <div>
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="material-icons-round text-[14px] text-primary">terminal</span>
+                        <h3 class="text-[10px] font-display text-primary uppercase tracking-wider">
+                            Engine</h3>
+                    </div>
+                    <p class="text-sm font-bold text-white pl-4 border-l border-primary/30">
+                        ChromaCore UI/UX</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="material-icons-round text-[14px] text-primary">code</span>
+                        <h3 class="text-[10px] font-display text-primary uppercase tracking-wider">
+                            Generation</h3>
+                    </div>
+                    <p class="text-sm font-bold text-white pl-4 border-l border-primary/30">
+                        Contextual Interfaces</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="material-icons-round text-[14px] text-secondary">bolt</span>
+                        <h3 class="text-[10px] font-display text-secondary uppercase tracking-wider">
+                            Status</h3>
+                    </div>
+                    <div class="flex items-center gap-2 pl-4 border-l border-secondary/30">
+                        <p class="text-sm font-bold text-white uppercase">Volatile</p>
+                        <div class="flex gap-0.5">
+                            <div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+                            <div class="w-2 h-2 bg-secondary/30 rounded-full"></div>
+                            <div class="w-2 h-2 bg-secondary/30 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="material-icons-round text-[14px] text-primary">grid_view</span>
+                        <h3 class="text-[10px] font-display text-primary uppercase tracking-wider">
+                            Adaptive</h3>
+                    </div>
+                    <p class="text-sm font-bold text-white pl-4 border-l border-primary/30">Reactive
+                        Design</p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+    </div>
+    <div class="flex gap-4 items-center mb-8">
+        <button class="flex-1 bg-primary text-slate-900 font-display font-black py-4 rounded-none cyber-border hover:bg-white transition-colors flex items-center justify-center gap-2">
+            <span class="material-icons-round">bolt</span>
+            DEPLOY AGENT
+        </button>
+        <button class="w-16 h-14 border border-secondary/50 flex items-center justify-center text-secondary hover:bg-secondary/10 transition-colors">
+            <span class="material-icons-round">share</span>
+        </button>
+    </div>
+</main>
+<footer class="relative z-20 p-4 bg-slate-900/80 backdrop-blur-xl border-t border-primary/20 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+        <div class="w-10 h-10 border border-primary/50 flex items-center justify-center">
+            <img alt="Variant Icon" class="w-8 h-8 object-contain"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpKP-gY36ciwq7jRgvIvkqrsDBw1s1R4p3EIGarW9VAMvsIzWk9lJjgI1yOkbM8ub3q9lsCtejAozm6QBGbHe7xFRyeLl2Ih30O_cDp5jThSAanOApFFVUUZ0l1xq4q8ridmd_zG371CYk64T3m6ZKSjez1xU3mqdC8za65QzG-GxMQ762pJ1IkKhTfzAZi4L4wSwCx_Zb6VAh1JJIeEBozV4-oI85m4ipOc_2PrTQKr3yqk_a5x5jcqDprZJfGekPyKl-uvrC6fc"/>
+        </div>
+        <div>
+            <span class="text-[10px] font-display text-primary/60 block">MANIFEST</span>
+            <span class="text-xs font-bold text-white tracking-widest">TIER II: THE SOUL</span>
+        </div>
+    </div>
+    <div class="flex gap-2">
+        <div class="w-2 h-6 bg-primary"></div>
+        <div class="w-2 h-6 bg-primary/40"></div>
+        <div class="w-2 h-6 bg-primary/20"></div>
+    </div>
+</footer>
+<style>
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    @keyframes reverse-spin-slow {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+    }
+    .animate-spin-slow {
+        animation: spin-slow 20s linear infinite;
+    }
+    .animate-reverse-spin-slow {
+        animation: reverse-spin-slow 15s linear infinite;
+    }
+    .neon-text-cyan {
+        text-shadow: 0 0 10px rgba(0, 242, 255, 0.7);
+    }
+</style>
+
+</body>
+</html>

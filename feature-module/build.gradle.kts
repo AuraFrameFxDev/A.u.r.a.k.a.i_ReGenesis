@@ -37,5 +37,7 @@ dependencies {
     compileOnly(files("$projectDir/libs/api-82.jar"))
 
     // YukiHook API 1.3.0+ stack
-    implementation(libs.yukihookapi.api)
+    implementation(libs.yukihookapi.api) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
 }

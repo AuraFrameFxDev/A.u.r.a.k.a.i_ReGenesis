@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sentinel Fortress L2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0dccf2",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#101f22",
+                        "accent-purple": "#2a0e42",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .hex-grid {
+            background-image: radial-gradient(circle at 2px 2px, rgba(13, 204, 242, 0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #0dccf2, transparent);
+            opacity: 0.3;
+        }
+        .hud-border {
+            border: 1px solid rgba(13, 204, 242, 0.3);
+            clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 5% 100%, 0 85%);
+        }
+    </style>
+    <style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
+<!-- Main Container -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-background-dark border-x border-primary/10">
+    <!-- Top App Bar -->
+    <header class="flex items-center justify-between p-4 pt-6 z-20 bg-background-dark/80 backdrop-blur-md">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl">shield_person</span>
+            <div class="flex flex-col">
+                <h1 class="text-xs font-bold tracking-[0.2em] text-primary uppercase">SENTINEL
+                    FORTRESS L2</h1>
+                <p class="text-[10px] text-primary/60 font-mono">REGENESIS // AOSPOSX v2.4</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="flex flex-col items-end">
+                <span class="text-[10px] font-bold text-primary">ENCRYPTION</span>
+                <span class="text-[10px] text-green-400">AES-256 ACTIVE</span>
+            </div>
+            <button class="flex items-center justify-center size-10 rounded bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors">
+                <span class="material-symbols-outlined">settings_input_component</span>
+            </button>
+        </div>
+    </header>
+    <!-- Main Scrollable Area -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden relative pb-24">
+        <!-- Hero Section: Sentinel Shield & Kai Guard -->
+        <div class="relative w-full aspect-[4/5] flex flex-col items-center justify-center p-4">
+            <!-- Background Character (Kai Guard) -->
+            <div class="absolute inset-0 z-0 opacity-40">
+                <img class="w-full h-full object-cover object-top"
+                     data-alt="Hooded cyber-rogue character Kai standing in a tactical guard pose"
+                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhN-kIRz6tqnA2LIn2jfZTqUMU3U-eonjpjsHh22A203Kk_PmhENf83PM099BmCVWlOde4ra-Vbfnk7AOpC55tc7U6qdC7ldEenlbFiom6KiYmTUCRJQ8212GG023ruNDbeD2k-HqBiSl4NgFR11grr01SX18ZjCtZqxMphBORrNPnxcJ3R-eO5Cy90sE5GTE29R6a_qLtSGJgfMR78wmgIvR2V_1-wqHvT7_ptFUnlJdWDKpVd3GqnkrRpDK-1f0q_UIBERa3UlQ"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
+            </div>
+            <!-- Sentinel Shield Network Visual -->
+            <div class="relative z-10 w-full aspect-square flex items-center justify-center">
+                <div class="absolute w-64 h-64 border-2 border-primary/20 rounded-full flex items-center justify-center">
+                    <div class="absolute w-48 h-48 border border-primary/40 rounded-full flex items-center justify-center border-dashed"></div>
+                    <div class="absolute w-full h-[1px] bg-primary/20 rotate-45"></div>
+                    <div class="absolute w-full h-[1px] bg-primary/20 -rotate-45"></div>
+                    <!-- Pulse Node -->
+                    <div class="relative size-16 rounded-full bg-primary/10 border border-primary flex items-center justify-center shadow-[0_0_20px_rgba(13,204,242,0.4)]">
+                        <span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+                    </div>
+                    <!-- Satellite Nodes -->
+                    <div class="absolute -top-2 left-1/2 -translate-x-1/2 size-4 rounded bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 size-4 rounded bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 size-4 rounded bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                    <div class="absolute top-1/2 -right-2 -translate-y-1/2 size-4 rounded bg-primary shadow-[0_0_10px_#0dccf2]"></div>
+                </div>
+                <!-- HUD Metrics Overlay -->
+                <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-primary/70 tracking-widest">INTEGRITY</span>
+                        <span class="text-3xl font-bold text-white tracking-tighter">98.4<span
+                                class="text-primary text-sm">%</span></span>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-[10px] text-primary/70 tracking-widest">THREATS</span>
+                        <span class="text-3xl font-bold text-white tracking-tighter">000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tactical Command Sections -->
+        <section class="px-4 py-2 space-y-4">
+            <h2 class="text-xs font-bold tracking-[0.3em] text-primary/50 uppercase flex items-center gap-2">
+                <span class="h-[1px] w-8 bg-primary/30"></span>
+                Tactical Command
+                <span class="h-[1px] flex-1 bg-primary/30"></span>
+            </h2>
+            <div class="grid grid-cols-1 gap-4">
+                <!-- ROM Tools Block -->
+                <div class="relative bg-accent-purple/40 border border-primary/40 rounded p-4 hex-grid overflow-hidden">
+                    <div class="absolute top-0 right-0 p-2 opacity-20">
+                        <span class="material-symbols-outlined text-4xl">memory</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-primary tracking-tight">ROM
+                                    TOOLS</h3>
+                                <p class="text-[10px] text-white/60">KERNEL-LEVEL MODIFICATIONS</p>
+                            </div>
+                            <span class="bg-primary/20 text-primary text-[10px] px-2 py-0.5 rounded border border-primary/30">READY</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="flex-1 bg-primary/10 border border-primary/40 text-[11px] font-bold py-2 rounded hover:bg-primary/20 transition-all uppercase tracking-wider">
+                                Deploy Core
+                            </button>
+                            <button class="flex-1 bg-transparent border border-white/20 text-[11px] font-bold py-2 rounded hover:bg-white/5 transition-all uppercase tracking-wider">
+                                Patch
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- VPN Signal Masking -->
+                <div class="relative bg-accent-purple/40 border border-primary/40 rounded p-4 hex-grid overflow-hidden">
+                    <div class="absolute bottom-0 right-0 opacity-10">
+                        <img class="w-32" data-alt="Tactical world map visualization"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKKuXlI9k8bqD8SdpcFOgEpAf6ua9Fu4yGya2iUoWJxy_-689moUmeSrkrgMdD4wYN5djuIVVidPk63vF7ldWGiEDOLkB2VKKhGS-JatHD1f1U15fI2OsRIHbpwIXZHLQCSsmW0gS5UIBD8MG8c9p5h4H2fC2zI7AurdK3AdEsMIeVFao6FMkcL3DR1PihuhTbEMLAzk-kq4znFR1VXV9iSUVpKIoLMJy5V5vSP7FD1GcDkT_rgTV33DXtmFWMEc2AB1CJiLJDo78"/>
+                    </div>
+                    <div class="relative z-10 flex flex-col gap-3">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">vibration</span>
+                                <h3 class="text-lg font-bold text-primary tracking-tight">SIGNAL
+                                    MASKING</h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="size-2 rounded-full bg-primary animate-pulse"></span>
+                                <span class="text-[10px] text-primary">STABLE</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between bg-black/40 p-2 border border-primary/20 rounded">
+                            <div class="flex flex-col">
+                                <span class="text-[9px] text-white/40">CURRENT NODE</span>
+                                <span class="text-xs font-mono">TOK-L2-SENTINEL</span>
+                            </div>
+                            <button class="bg-primary text-background-dark text-[10px] font-extrabold px-3 py-1 rounded">
+                                TUNNEL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Security Center Log -->
+                <div class="relative bg-accent-purple/40 border border-primary/40 rounded p-4 hex-grid overflow-hidden">
+                    <div class="flex items-center justify-between mb-3 border-b border-primary/20 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-sm">terminal</span>
+                            <h3 class="text-xs font-bold text-primary uppercase">Security Center
+                                Log</h3>
+                        </div>
+                        <span class="text-[9px] font-mono text-white/40">LIVE_DATA_STREAM</span>
+                    </div>
+                    <div class="space-y-1 font-mono text-[9px]">
+                        <p class="text-green-400"><span class="text-white/30">[09:42:11]</span>
+                            SYSTEM_INTEGRITY_CHECK: PASSED</p>
+                        <p class="text-primary"><span class="text-white/30">[09:42:45]</span>
+                            ENCRYPTION_ROTATION: SUCCESSFUL</p>
+                        <p class="text-primary"><span class="text-white/30">[09:43:02]</span>
+                            SHIELD_NODE_7: RECALIBRATED</p>
+                        <p class="text-white/50"><span class="text-white/30">[09:43:18]</span>
+                            NO_THREATS_DETECTED_IN_PERIMETER</p>
+                    </div>
+                    <div class="scanline mt-4"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- iOS Bottom Navigation Bar -->
+    <nav class="absolute bottom-0 left-0 right-0 h-20 bg-background-dark/80 backdrop-blur-xl border-t border-primary/20 z-30 px-6 flex items-center justify-between">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-2xl">grid_view</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Hub</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">shield_locked</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Armor</span>
+        </button>
+        <!-- Center Action -->
+        <button class="relative -top-8 size-14 rounded bg-primary flex items-center justify-center text-background-dark shadow-[0_0_20px_rgba(13,204,242,0.5)] border-2 border-primary/50">
+            <span class="material-symbols-outlined text-3xl font-bold">radar</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">description</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Logs</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-white/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">person_pin_circle</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Kai</span>
+        </button>
+        <!-- iOS Home Indicator -->
+        <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full"></div>
+    </nav>
+    <!-- Screen Overlay Elements -->
+    <div class="pointer-events-none absolute inset-0 z-40 border-[16px] border-background-dark/10 ring-1 ring-primary/20"></div>
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.4)_100%)]"></div>
+</div>
+</body>
+</html>

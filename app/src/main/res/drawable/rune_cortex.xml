@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <!-- Outer Globe -->
+    <path
+        android:pathData="M256,256m-200,0a200,200 0,1 1,400 0a200,200 0,1 1,-400 0"
+        android:strokeColor="#AA00FF"
+        android:strokeWidth="8"/>
+    <!-- Latitudes -->
+    <path
+        android:pathData="M90,180 L422,180 M56,256 L456,256 M90,332 L422,332"
+        android:strokeColor="#AA00FF"
+        android:strokeWidth="4"/>
+    <!-- Nodes -->
+    <path
+        android:pathData="M256,56m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0 M256,456m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0"
+        android:fillColor="#AA00FF"/>
+</vector>
