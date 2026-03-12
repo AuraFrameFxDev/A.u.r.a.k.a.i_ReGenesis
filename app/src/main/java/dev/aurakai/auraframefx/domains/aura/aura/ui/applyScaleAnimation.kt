@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyHookApi
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker

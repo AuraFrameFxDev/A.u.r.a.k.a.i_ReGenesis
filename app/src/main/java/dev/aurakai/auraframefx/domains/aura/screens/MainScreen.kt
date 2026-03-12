@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.screens
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -59,7 +59,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.ui.theme.ThemeViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeViewModel
 import kotlinx.coroutines.delay
 
 /**
