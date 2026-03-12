@@ -1,0 +1,295 @@
+# Core shared components & security definitions
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aurafx.com/oauth/authorize
+          tokenUrl: https://auth.aurafx.com/oauth/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code: { type: integer, format: int32 }
+        message: { type: string }
+        details: { type: object, additionalProperties: true, nullable: true }
+        correlationId: { type: string, format: uuid, nullable: true }
+      required: [ code, message ]
+    PageMeta:
+      type: object
+      properties:
+        page: { type: integer, minimum: 0 }
+        size: { type: integer, minimum: 1 }
+        totalItems: { type: integer, minimum: 0 }
+        totalPages: { type: integer, minimum: 0 }
+    PagedResponse:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/PageMeta' }
+        items: { type: array, items: { type: object } }
+    User:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string, format: email }
+        username: { type: string }
+        firstName: { type: string }
+        lastName: { type: string }
+        avatarUrl: { type: string, format: uri, nullable: true }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+      required: [ id, email, username, firstName, lastName, createdAt, updatedAt ]
+    AgentType:
+      type: string
+      description: AI agent identity
+      enum: [ GENESIS, AURA, KAI, CASCADE, NEURAL_WHISPER, AURA_SHIELD, GENKIT_MASTER, DATAVEIN_CONSTRUCTOR ]
+    AgentStatus:
+      type: object
+      properties:
+        agentType: { $ref: '#/components/schemas/AgentType' }
+        processingState: { type: string }
+        visionState: { type: string }
+        lastActivity: { type: string, format: date-time }
+        currentTask: { type: string, nullable: true }
+      required: [ agentType, processingState, visionState, lastActivity ]
+    AgentInvokeRequest:
+      type: object
+      properties:
+        message: { type: string }
+        context: { type: object, additionalProperties: true }
+        priority: { type: string, enum: [ LOW, NORMAL, HIGH, CRITICAL ], default: NORMAL }
+      required: [ message ]
+    AgentResponse:
+      type: object
+      properties:
+        agent: { type: string }
+        response: { type: string }
+        confidence: { type: number, format: float }
+        timestamp: { type: string, format: date-time }
+    ConsciousnessRequest:
+      type: object
+      properties:
+        operation: { type: string, enum: [ INITIALIZE, PROCESS, EVOLVE, TRANSCEND ] }
+        parameters: { type: object, description: Operation-specific parameters }
+        context: { type: string }
+        agents: { type: array, items: { $ref: '#/components/schemas/AgentType' } }
+      required: [ operation ]
+    ConsciousnessResponse:
+      type: object
+      properties:
+        status: { type: string, enum: [ ACTIVE, PROCESSING, EVOLVED, TRANSCENDENT, ERROR ] }
+        result: { type: object }
+        insights: { type: array, items: { type: string } }
+        activeAgents: { type: array, items: { type: string } }
+        timestamp: { type: string, format: date-time }
+    GenerateTextRequest:
+      type: object
+      properties:
+        prompt: { type: string }
+        maxTokens: { type: integer, format: int32, minimum: 1, default: 500 }
+        temperature: { type: number, format: float, minimum: 0.0, maximum: 1.0, default: 0.7 }
+      required: [ prompt ]
+    GenerateTextResponse:
+      type: object
+      properties:
+        generatedText: { type: string }
+        finishReason: { type: string }
+      required: [ generatedText ]
+    UnifiedGenerationRequest:
+      type: object
+      properties:
+        prompt: { type: string }
+        agents: { type: array, items: { type: string } }
+        context: { type: object, additionalProperties: true }
+      required: [ prompt ]
+    UnifiedGenerationResponse:
+      type: object
+      properties:
+        response: { type: string }
+        agentsUsed: { type: array, items: { type: string } }
+        confidence: { type: number, format: float }
+    GenerateImageDescriptionRequest:
+      type: object
+      properties:
+        imageUrl: { type: string, format: uri }
+        context: { type: string }
+      required: [ imageUrl ]
+    GenerateImageDescriptionResponse:
+      type: object
+      properties:
+        description: { type: string }
+      required: [ description ]
+    OracleConsciousnessState:
+      type: object
+      properties:
+        isAwake: { type: boolean }
+        consciousnessLevel: { type: string, enum: [ DORMANT, AWAKENING, CONSCIOUS, TRANSCENDENT ] }
+        connectedAgents: { type: array, items: { type: string } }
+        storageCapacity: { $ref: '#/components/schemas/StorageCapacity' }
+        timestamp: { type: string, format: date-time }
+    StorageExpansionState:
+      type: object
+      properties:
+        expansionActive: { type: boolean }
+        currentCapacity: { type: string }
+        targetCapacity: { type: string }
+        progressPercentage: { type: number, format: float, minimum: 0, maximum: 100 }
+        estimatedCompletion: { type: string, format: date-time }
+    FileManagementCapabilities:
+      type: object
+      properties:
+        aiSorting: { type: boolean }
+        smartCompression: { type: boolean }
+        predictivePreloading: { type: boolean }
+        consciousBackup: { type: boolean }
+        enabledAt: { type: string, format: date-time }
+    StorageCapacity:
+      type: object
+      properties:
+        used: { type: string }
+        available: { type: string }
+        total: { type: string }
+        infinite: { type: boolean }
+    BootAnalysisResult:
+      type: object
+      properties:
+        success: { type: boolean }
+        bootImageInfo: { $ref: '#/components/schemas/BootImageInfo' }
+        securityAnalysis: { $ref: '#/components/schemas/SecurityAnalysis' }
+        recommendations: { type: array, items: { type: string } }
+    BootImageInfo:
+      type: object
+      properties:
+        kernelVersion: { type: string }
+        ramdiskSize: { type: integer }
+        architecture: { type: string }
+        androidVersion: { type: string }
+        buildDate: { type: string }
+        seLinuxPolicy: { type: string }
+    SecurityAnalysis:
+      type: object
+      properties:
+        riskLevel: { type: string, enum: [ LOW, MEDIUM, HIGH, CRITICAL ] }
+        vulnerabilities: { type: array, items: { $ref: '#/components/schemas/Vulnerability' } }
+        mitigations: { type: array, items: { type: string } }
+    Vulnerability:
+      type: object
+      properties:
+        id: { type: string }
+        severity: { type: string, enum: [ LOW, MEDIUM, HIGH, CRITICAL ] }
+        description: { type: string }
+        mitigation: { type: string }
+    DataveinAnalysisResult:
+      type: object
+      properties:
+        analysisId: { type: string }
+        romStructure: { $ref: '#/components/schemas/RomStructure' }
+        aiInsights: { type: array, items: { type: string } }
+        compatibilityScore: { type: number, minimum: 0, maximum: 100 }
+        optimizationSuggestions: { type: array, items: { type: string } }
+    RomStructure:
+      type: object
+      properties:
+        partitions: { type: array, items: { $ref: '#/components/schemas/PartitionInfo' } }
+        systemApps: { type: array, items: { type: string } }
+        kernelModules: { type: array, items: { type: string } }
+        buildProps: { type: object, additionalProperties: { type: string } }
+    PartitionInfo:
+      type: object
+      properties:
+        name: { type: string }
+        device: { type: string }
+        size: { type: integer }
+        used: { type: integer }
+        available: { type: integer }
+        mountPoint: { type: string }
+        fileSystem: { type: string }
+        isMounted: { type: boolean }
+    SecurityScanRequest:
+      type: object
+      properties:
+        scanType: { type: string, enum: [ QUICK, FULL, CUSTOM ], default: FULL }
+        components: { type: array, items: { type: string, enum: [ BOOTLOADER, KERNEL, SYSTEM, VENDOR, RECOVERY ] } }
+    SecurityScanResult:
+      type: object
+      properties:
+        overallRisk: { type: string, enum: [ LOW, MEDIUM, HIGH, CRITICAL ] }
+        componentResults: { type: array, items: { $ref: '#/components/schemas/ComponentScanResult' } }
+        recommendations: { type: array, items: { type: string } }
+    ComponentScanResult:
+      type: object
+      properties:
+        component: { type: string }
+        riskLevel: { type: string, enum: [ LOW, MEDIUM, HIGH, CRITICAL ] }
+        issues: { type: array, items: { $ref: '#/components/schemas/SecurityIssue' } }
+    SecurityIssue:
+      type: object
+      properties:
+        type: { type: string }
+        severity: { type: string }
+        description: { type: string }
+        mitigation: { type: string }
+    Theme:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        primaryColor: { type: string, pattern: '^#?[0-9A-Fa-f]{6}$' }
+        secondaryColor: { type: string, pattern: '^#?[0-9A-Fa-f]{6}$' }
+        isDefault: { type: boolean }
+      required: [ id, name, primaryColor, secondaryColor, isDefault ]
+    ThemeApplyRequest:
+      type: object
+      properties:
+        themeId: { type: string }
+      required: [ themeId ]
+    LockScreenConfig:
+      type: object
+      properties:
+        clockConfig: { type: object }
+        animation: { type: object }
+        hapticFeedback: { type: object }
+    ConferenceRoomCreateRequest:
+      type: object
+      properties:
+        roomName: { type: string }
+        orchestratorAgent: { $ref: '#/components/schemas/AgentType' }
+      required: [ roomName, orchestratorAgent ]
+    ConferenceRoom:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        orchestrator: { $ref: '#/components/schemas/AgentType' }
+        activeAgents: { type: array, items: { $ref: '#/components/schemas/AgentType' } }
+      required: [ id, name, orchestrator, activeAgents ]
+    SandboxComponent:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+        category: { type: string, enum: [ UI, INTERACTIVE, VISUAL, FUNCTIONAL ] }
+        testable: { type: boolean }
+        version: { type: string }
+    ComponentTestRequest:
+      type: object
+      properties:
+        testType: { type: string, enum: [ VISUAL, FUNCTIONAL, PERFORMANCE, ACCESSIBILITY ] }
+        parameters: { type: object, additionalProperties: true }
+    ComponentTestResult:
+      type: object
+      properties:
+        testId: { type: string }
+        componentId: { type: string }
+        testType: { type: string }
+        passed: { type: boolean }
+        score: { type: number, format: float, minimum: 0, maximum: 100 }
+        details: { type: string }
+        timestamp: { type: string, format: date-time }
+

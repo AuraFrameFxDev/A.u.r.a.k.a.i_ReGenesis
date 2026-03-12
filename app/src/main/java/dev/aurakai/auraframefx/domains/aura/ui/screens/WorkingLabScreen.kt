@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/screens/WorkingLabScreen.kt
-package dev.aurakai.auraframefx.domains.aura.screens
-========
 package dev.aurakai.auraframefx.domains.aura.ui.screens
->>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/aura/ui/screens/WorkingLabScreen.kt
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.cascade.storage.AuraKaiModules
-import dev.aurakai.aurafAramefx.embodiment.*
+import dev.aurakai.auraframefx.embodiment.*
 import dev.aurakai.auraframefx.domains.aura.ui.components.*
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.coroutineScope

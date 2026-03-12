@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.gates
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.NemotronAIService
 import javax.inject.Inject
 
 /**

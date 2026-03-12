@@ -1,0 +1,33 @@
+# Sandbox / UI component experimentation paths
+/sandbox/components:
+  get:
+    operationId: sandboxListComponents
+    summary: List available UI components for testing
+    tags: [ Sandbox ]
+    security:
+      - OAuth2: [ read ]
+    responses:
+      '200': { description: Component list, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/SandboxComponent' } } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/sandbox/components/{componentId}/test:
+  post:
+    operationId: sandboxTestComponent
+    summary: Execute component test
+    tags: [ Sandbox ]
+    security:
+      - OAuth2: [ write ]
+    parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema: { type: string }
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ComponentTestRequest' }
+    responses:
+      '200': { description: Test result, content: { application/json: { schema: { $ref: '#/components/schemas/ComponentTestResult' } } } }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+

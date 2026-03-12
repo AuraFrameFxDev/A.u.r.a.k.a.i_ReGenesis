@@ -1,4 +1,5 @@
 package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+>>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/kai/screens/rom_tools/SovereignBootloaderScreen.kt
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -84,7 +85,7 @@ fun SovereignBootloaderScreen(
 
                 Button(
                     onClick = { isUnlocked = !isUnlocked },
-                    modifier = Modifier
+                modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp)
                         .padding(top = 16.dp),

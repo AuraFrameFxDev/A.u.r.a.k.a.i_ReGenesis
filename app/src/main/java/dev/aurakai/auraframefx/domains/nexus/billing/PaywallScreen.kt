@@ -16,7 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Rocket
-import androidx.composAe.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.debug.FeatureToggles
-import dev.aurakai.auraframefx.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.ui.theme.NeonCyan
-import dev.aurakai.auraframefx.ui.theme.NeonPurple
+import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
+private val NeonBlue = androidx.compose.ui.graphics.Color(0xFF00E5FF)
+private val NeonCyan = androidx.compose.ui.graphics.Color(0xFF00FFFF)
+private val NeonPurple = androidx.compose.ui.graphics.Color(0xFFD500F9)
 
 /**
  * Paywall Screen - Shown when trial expires

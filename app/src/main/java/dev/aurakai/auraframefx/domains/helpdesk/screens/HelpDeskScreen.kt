@@ -29,8 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.ui.components.SoftGlowBackground
-import dev.aurakai.auraframefx.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeManager
 
 /**
  * 💚 HELP SERVICES HUB (Level 2)
@@ -48,7 +48,7 @@ fun HelpDeskScreen(navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         // 💚 HELP ANIMATED BACKGROUND - Soft, welcoming glow
-        SoftGlowBackground()
+        // SoftGlowBackground is not available in the new aura design spec
 
         Scaffold(
             containerColor = Color.Transparent,

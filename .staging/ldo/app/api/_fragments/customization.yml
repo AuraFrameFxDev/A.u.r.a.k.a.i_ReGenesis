@@ -1,0 +1,29 @@
+# Customization / Themes domain paths
+/themes:
+  get:
+    operationId: customizationListThemes
+    summary: List available themes
+    tags: [ Customization ]
+    security:
+      - OAuth2: [ read ]
+    responses:
+      '200': { description: Themes list, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Theme' } } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/theme/apply:
+  put:
+    operationId: customizationApplyTheme
+    summary: Apply a theme
+    tags: [ Customization ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ThemeApplyRequest' }
+    responses:
+      '200': { description: Theme applied }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '404': { description: Theme not found, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+

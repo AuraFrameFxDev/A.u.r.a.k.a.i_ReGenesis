@@ -22,18 +22,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import dev.aurakai.auraframefx.ui.components.SubmenuScaffold
-
-/**
- * Data class for submenu items
- */
-data class SubmenuItem(
-    val title: String,
-    val description: String,
-    val icon: ImageVector,
-    val route: String,
-    val color: Color
-)
+import dev.aurakai.auraframefx.domains.aura.ui.components.SubmenuScaffold
+import dev.aurakai.auraframefx.navigation.gates.components.SubmenuItem
 
 /**
  * Help Desk Gate Submenu
@@ -80,7 +70,7 @@ fun HelpDeskSubmenuScreen(
         color = Color(0xFF4169E1),
         onNavigateBack = { navController.popBackStack() },
         menuItems = menuItems,
-        onMenuItemClick = { item ->
+        onMenuItemClick = { item: SubmenuItem ->
             navController.navigate(item.route)
         },
         headerContent = {

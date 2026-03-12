@@ -42,6 +42,8 @@ object TrinityModule {
         vertexAIClient: VertexAIClient,
         contextManager: ContextManager,
         securityContext: SecurityContext,
+        provenanceValidator: ProvenanceValidator,
+        provenanceChainBuilder: ProvenanceChainBuilder,
         @ApplicationContext applicationContext: Context,
         logger: AuraFxLogger,
     ): GenesisBridgeService {
@@ -51,6 +53,8 @@ object TrinityModule {
             vertexAIClient = vertexAIClient,
             contextManager = contextManager,
             securityContext = securityContext,
+            provenanceValidator = provenanceValidator,
+            provenanceChainBuilder = provenanceChainBuilder,
             applicationContext = applicationContext,
             logger = logger
         )

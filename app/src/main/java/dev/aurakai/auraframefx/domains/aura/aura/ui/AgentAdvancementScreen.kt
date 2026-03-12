@@ -83,6 +83,8 @@ fun AgentAdvancementScreen(
 
     val agentStats =
         allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
+    val agentStats =
+        allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
     var selectedNode by remember { mutableStateOf<SkillNode?>(null) }
 
     // Animated background

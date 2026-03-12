@@ -16,4 +16,13 @@ data class LockScreenConfigAnimation(
 
     @SerialName("intensity")
     val intensity: Float = 0.7f
-)
+) {
+    /**
+     * Animation type enum for hook-based animation dispatch.
+     */
+    enum class AnimationType {
+        Slide,
+        Fade,
+        Zoom
+    }
+}

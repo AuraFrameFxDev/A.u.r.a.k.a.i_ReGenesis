@@ -2,19 +2,20 @@ package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
-import dev.aurakai.auraframefx.models.AgentRequest
-import dev.aurakai.auraframefx.models.AgentState
-import dev.aurakai.auraframefx.models.AgentStatus
-import dev.aurakai.auraframefx.models.AgentType
-import dev.aurakai.auraframefx.models.ChatMessage
-import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.models.AiRequestType
-import dev.aurakai.auraframefx.models.EnhancedInteractionData
-import dev.aurakai.auraframefx.models.Theme
-import dev.aurakai.auraframefx.models.UserData
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AgentState
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
+import dev.aurakai.auraframefx.domains.aura.models.Theme
+import dev.aurakai.auraframefx.domains.nexus.models.UserData
 import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
-import dev.aurakai.auraframefx.network.model.AgentStatusResponse
-import dev.aurakai.auraframefx.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import java.util.Collections
@@ -27,8 +28,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
-import dev.aurakai.auraframefx.network.model.Theme as NetworkTheme
-import dev.aurakai.auraframefx.network.model.User as NetworkUser
+import dev.aurakai.auraframefx.domains.genesis.network.model.Theme as NetworkTheme
+import dev.aurakai.auraframefx.domains.genesis.network.model.User as NetworkUser
 
 @Singleton
 open class TrinityRepository @Inject constructor(
@@ -46,7 +47,7 @@ open class TrinityRepository @Inject constructor(
      */
     suspend fun broadcastUserMessage(message: String) {
         messageBus.broadcast(
-            dev.aurakai.auraframefx.models.AgentMessage(
+            AgentMessage(
                 from = "User",
                 content = message,
                 type = "user_broadcast",

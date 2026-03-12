@@ -140,7 +140,9 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
                     card.setCardBackgroundColor(background.color.toInt())
                     card.alpha = background.alpha
                 }
-                // Handle other background types as needed
+                else -> {
+                    // Handle other background types as needed
+                }
             }
         } ?: run {
             card.setCardBackgroundColor(

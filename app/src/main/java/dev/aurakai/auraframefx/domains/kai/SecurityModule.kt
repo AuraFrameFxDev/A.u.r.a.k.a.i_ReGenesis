@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
+import dev.aurakai.auraframefx.domains.kai.security.KeystoreEncryptionManager
 import dev.aurakai.auraframefx.domains.kai.security.KeystoreManager
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.NoopEncryptionManager

@@ -14,7 +14,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext

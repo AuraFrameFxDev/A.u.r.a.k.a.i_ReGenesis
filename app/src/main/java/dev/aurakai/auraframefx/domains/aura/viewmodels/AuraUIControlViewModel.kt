@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 // ─── UI State DTOs ────────────────────────────────────────────────────────────
 
@@ -99,7 +100,7 @@ private object AuraUIKeys {
  */
 @HiltViewModel
 class AuraUIControlViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
+    @dev.aurakai.auraframefx.di.AuraSettingsDataStore private val dataStore: DataStore<Preferences>,
     private val chromaCoreManager: ChromaCoreManager,
     @ApplicationContext private val context: Context
 ) : ViewModel() {

@@ -1,16 +1,11 @@
 package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.FlashOn
-import androidx.compose.material.icons.filled.Power
 import androidx.compose.material.icons.filled.Security
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -109,10 +104,10 @@ fun SecurityCenterScreen(
 
             item {
                 val threatColor = when (state.threatLevel) {
-                    ThreatLevel.NONE, ThreatLevel.INFO -> Color(0xFF00FFD4)
+                    ThreatLevel.NONE -> Color(0xFF00FFD4)
                     ThreatLevel.LOW -> Color.Yellow
-                    ThreatLevel.MEDIUM, ThreatLevel.WARNING -> Color(0xFFFF8C00)
-                    ThreatLevel.HIGH, ThreatLevel.CRITICAL, ThreatLevel.AI_ERROR -> Color(0xFFFF4444)
+                    ThreatLevel.MEDIUM -> Color(0xFFFF8C00)
+                    ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color(0xFFFF4444)
                 }
                 SecurityStatusCard(
                     title = "Threat Level",
@@ -235,59 +230,49 @@ private fun formatScanTime(epochMs: Long): String {
 }
 
 @Composable
-private fun SecurityStatusCard(
-    title: String,
-    status: String,
-    statusColor: Color,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    description: String
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
-        border = androidx.compose.foundation.BorderStroke(1.dp, statusColor.copy(alpha = 0.3f))
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.Top
-        ) {
-            Surface(
-                color = statusColor.copy(alpha = 0.1f),
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier.size(40.dp)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(icon, null, tint = statusColor, modifier = Modifier.size(24.dp))
-                }
-            }
-
-            Spacer(Modifier.width(16.dp))
-
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(title, color = Color.White, fontWeight = FontWeight.Bold)
-                    Text(status, color = statusColor, style = MaterialTheme.typography.labelSmall)
-                }
-                Spacer(Modifier.height(4.dp))
-                Text(description, color = Color.Gray, style = MaterialTheme.typography.bodySmall)
-            }
-        }
-    }
-}
-
-@Composable
-private fun SecurityLogEntry(time: String, message: String) {
-    Row(verticalAlignment = Alignment.Top) {
-        Text(
-            time,
-            color = Color.Cyan.copy(0.6f),
-            style = MaterialTheme.typography.labelSmall,
-            modifier = Modifier.width(64.dp)
+fun SecurityCenterScreen(onNavigateBack: () -> Unit = {}) {
+    val menuItems = listOf(
+        GridMenuItem(
+            id = "firewall",
+            title = "Global Firewall",
+            subtitle = "Manage app traffic rules",
+            icon = Icons.Filled.Security,
+            route = "action_firewall",
+            accentColor = Color(0xFF00FF85)
+        ),
+        GridMenuItem(
+            id = "selinux",
+            title = "SELinux Status",
+            subtitle = "Enforcing mode controls",
+            icon = Icons.Filled.AdminPanelSettings,
+            route = "action_selinux",
+            accentColor = Color(0xFF00E5FF)
+        ),
+        GridMenuItem(
+            id = "app_ops",
+            title = "AppOps Manager",
+            subtitle = "Deep permission granulars",
+            icon = Icons.Filled.Gavel,
+            route = "action_app_ops",
+            accentColor = Color(0xFFFF6B00)
+        ),
+        GridMenuItem(
+            id = "malware_scan",
+            title = "Threat Scan",
+            subtitle = "Analyze heuristics",
+            icon = Icons.Filled.Warning,
+            route = "action_scan",
+            accentColor = Color.White
         )
-        Text(message, color = Color.White.copy(0.7f), style = MaterialTheme.typography.bodySmall)
-    }
+    )
+
+    Level3GridMenu(
+        title = "SECURITY CENTER",
+        subtitle = "SENTINEL PROTOCOLS",
+        menuItems = menuItems,
+        onItemClick = { /* TODO */ },
+        onBackClick = onNavigateBack,
+        backgroundDrawable = R.drawable.bg_security_firewall,
+        accentColor = Color(0xFF00FF85)
+    )
 }

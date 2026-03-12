@@ -13,11 +13,12 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipeline
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.Configuration
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext

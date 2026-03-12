@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.kai
 
 import android.util.Log
 import dev.aurakai.auraframefx.agent.BaseAgent
-import dev.aurakai.auraframefx.common.orchestration.OrchestratableAgent
+import dev.aurakai.auraframefx.orchestration.OrchestratableAgent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

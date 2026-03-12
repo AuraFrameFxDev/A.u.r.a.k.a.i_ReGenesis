@@ -69,6 +69,8 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "ENABLE_PAYWALL", "false")
+            // Emulator loopback → host machine Flask backend
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000\"")
         }
         release {
             isMinifyEnabled = true
@@ -78,6 +80,8 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "ENABLE_PAYWALL", "true")
+            // Production endpoint (update when deployed)
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"https://api.auraframefx.com\"")
         }
     }
 

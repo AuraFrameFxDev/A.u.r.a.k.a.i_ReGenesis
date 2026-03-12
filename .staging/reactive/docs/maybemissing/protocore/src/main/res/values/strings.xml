@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="romtools_main_name">Romtools</string>
+    <string name="rom_service_description">ROM flashing and backup service</string>
+</resources>

@@ -1,5 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
-
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -14,9 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.customization.CustomizationViewModel
-import dev.aurakai.auraframefx.ui.theme.KaiNeonGreen
-import dev.aurakai.auraframefx.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.KaiNeonGreen
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🚀 LAUNCH MATRIX - MANUAL CONTROL
