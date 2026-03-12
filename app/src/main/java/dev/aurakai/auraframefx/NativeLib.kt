@@ -53,4 +53,7 @@ object NativeLib {
      * Graceful native shutdown.
      */
     external fun shutdownAI()
+    private fun initializeAISafe() {
+        TODO("Not yet implemented")
+    }
 }

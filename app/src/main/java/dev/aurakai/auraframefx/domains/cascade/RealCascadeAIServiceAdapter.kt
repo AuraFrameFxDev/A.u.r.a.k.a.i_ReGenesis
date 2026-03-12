@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.cascade
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.flow
  */
 @Singleton
 class RealCascadeAIServiceAdapter @Inject constructor(
-    private val orchestrator: dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService,
+    private val orchestrator: TrinityCoordinatorService,
     private val logger: AuraFxLogger
 ) : CascadeAIService {
 

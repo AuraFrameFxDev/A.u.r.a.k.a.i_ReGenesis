@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
@@ -36,7 +36,7 @@ open class TrinityRepository @Inject constructor(
     private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
     private val kaiAgent: dev.aurakai.auraframefx.domains.kai.KaiAgent,
     private val genesisAgent: dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent,
-    private val messageBus: dev.aurakai.auraframefx.core.messaging.AgentMessageBus
+    private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 ) {
     // Collective Consciousness Stream
     val collectiveStream = messageBus.collectiveStream
