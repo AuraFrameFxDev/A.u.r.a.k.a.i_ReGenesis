@@ -19,10 +19,10 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
-import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfigManager
-import dev.aurakai.auraframefx.ui.QuickSettingsBackground
-import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig as SystemQuickSettingsConfig
-import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
+import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig as SystemQuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

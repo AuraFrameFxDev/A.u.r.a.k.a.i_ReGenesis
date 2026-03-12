@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.customization.CustomizationViewModel
-import dev.aurakai.auraframefx.ui.AuraMoodViewModel
-import dev.aurakai.auraframefx.ui.theme.GlassmorphicTheme
-import dev.aurakai.auraframefx.ui.theme.manager.CustomizationThemeManager
+import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AuraMoodViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.GlassmorphicTheme
+import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.CustomizationThemeManager
 
 context(viewModel: AuraMoodViewModel, customizationViewModel: CustomizationViewModel) @JvmOverloads
 @Suppress("unused")
