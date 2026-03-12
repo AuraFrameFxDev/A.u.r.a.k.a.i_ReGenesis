@@ -9,8 +9,7 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 
-namespace genesis:
-:cascade {
+namespace genesis::cascade {
 
     class CascadeAIService::Impl {
     public:
@@ -186,7 +185,7 @@ namespace genesis:
         return pImpl_ ? pImpl_->processRequest(env, request) : nullptr;
     }
 
-} } // namespace genesis::cascade
+} // namespace genesis::cascade
 
 
 // JNI Implementation

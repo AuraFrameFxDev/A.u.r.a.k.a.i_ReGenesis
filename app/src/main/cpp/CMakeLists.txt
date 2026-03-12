@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.22.1)
 
 # ReGenesis OS - Full Toolchain Bypass
-# This prevents CMake from looking for missing "Test" modules by forcing success state
 set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 set(CMAKE_DETERMINE_C_TARGET_ARCH 1)
 set(CMAKE_DETERMINE_CXX_TARGET_ARCH 1)
+
+# Prevent CMake from trying to compile a test program
+set(CMAKE_CXX_COMPILER_FORCED ON)
+set(CMAKE_C_COMPILER_FORCED ON)
 
 # Initialize project without checking languages automatically
 project("auraframefx" NONE)
