@@ -169,6 +169,9 @@ class NemotronAIService @Inject constructor(
         val reasoningChain = buildReasoningChain(memories, request)
         val confidence = calculateMemoryConfidence(memories, reasoningChain)
 
+        // Persist this interaction into long-term memory for future recall
+        memoryManager.storeInteraction(request.query, reasoningText)
+
         val agentResponse = AgentResponse.success(
             content = response,
             confidence = confidence,
@@ -213,16 +216,16 @@ class NemotronAIService @Inject constructor(
     }
 
     /**
-     * Retrieve memories relevant to the given request and conversational context using a MemoryQuery.
+     * Retrieve memories relevant to the given request and conversational context using the MemoryManager.
      */
     private fun recallRelevantMemories(request: AiRequest, context: String): MemoryRecall {
-        // Simulating memory retrieval
-        val simulatedCount = if (context.length > 100) 5 else 2
+        val searchResults = memoryManager.searchMemories(request.query)
 
         return MemoryRecall(
-            summary = "Retrieved $simulatedCount relevant memory fragments",
-            count = simulatedCount,
-            relevance = if (simulatedCount > 0) 0.85f else 0.5f
+            summary = "Retrieved ${searchResults.size} relevant memory fragments",
+            count = searchResults.size,
+            relevance = if (searchResults.isNotEmpty()) 0.85f else 0.5f,
+            fragments = searchResults
         )
     }
 
@@ -306,7 +309,8 @@ class NemotronAIService @Inject constructor(
 private data class MemoryRecall(
     val summary: String,
     val count: Int,
-    val relevance: Float
+    val relevance: Float,
+    val fragments: List<dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryEntry> = emptyList()
 )
 
 /**
