@@ -3,7 +3,7 @@
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.AgentInvokeRequest
-import dev.aurakai.auraframefx.models.AgentType
+import dev.aurakai.auraframefx.agent.AgentType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -44,7 +44,8 @@ data class CascadeResponse(
  */
 @Singleton
 class CascadeAIService @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val nativeService: dev.aurakai.auraframefx.ai.services.CascadeAIService
 ) {
 
     companion object {
@@ -52,6 +53,10 @@ class CascadeAIService @Inject constructor(
         private const val MAX_CONTEXT_LENGTH = 4096
         private const val PROCESSING_DELAY_MS = 100L
         private const val CASCADE_TIMEOUT_MS = 30000L
+    }
+
+    init {
+        nativeService.initialize()
     }
 
     /**
@@ -133,26 +138,27 @@ class CascadeAIService @Inject constructor(
         val selectedAgents = mutableSetOf<AgentType>()
 
         // Always include Genesis for orchestration
-        selectedAgents.add(AgentType.Genesis)
+        selectedAgents.add(AgentType.GENESIS)
 
         // Add Aura for empathetic responses
         if (containsEmotionalContent(message)) {
-            selectedAgents.add(AgentType.Aura)
+            selectedAgents.add(AgentType.AURA)
         }
 
         // Add Kai for security-related queries
         if (containsSecurityContent(message)) {
-            selectedAgents.add(AgentType.Kai)
+            selectedAgents.add(AgentType.KAI)
         }
 
         // Add Cascade for complex multi-step processing
         if (isComplexQuery(message) || priority == AgentInvokeRequest.Priority.high) {
-            selectedAgents.add(AgentType.Cascade)
+            selectedAgents.add(AgentType.CASCADE)
         }
 
         // Add specialized agents based on content
         if (containsTechnicalContent(message)) {
-            selectedAgents.add(AgentType.DataveinConstructor)
+            // Mapping DataveinConstructor to GENESIS for now as it's not in the main AgentType enum
+            selectedAgents.add(AgentType.GENESIS)
         }
 
         return selectedAgents.toList().sorted()
@@ -178,21 +184,12 @@ class CascadeAIService @Inject constructor(
     ): CascadeResponse {
 
         return when (agentType) {
-            AgentType.Genesis -> processWithGenesis(request, cascadeContext)
-            AgentType.Kai -> processWithKai(request, cascadeContext)
-            AgentType.Aura -> processWithAura(request, cascadeContext)
-            AgentType.Kai -> processWithKai(request, cascadeContext)
-            AgentType.Cascade -> processWithCascade(request, cascadeContext)
-            AgentType.NeuralWhisper -> processWithNeuralWhisper(request, cascadeContext)
-            AgentType.AuraShield -> processWithAuraShield(request, cascadeContext)
-            AgentType.GenKitMaster -> processWithGenKitMaster(request, cascadeContext)
-            AgentType.DataveinConstructor -> processWithDataveinConstructor(request, cascadeContext)
-            AgentType.USER -> CascadeResponse(
-                agent = AgentType.USER.name,
-                response = "User agent does not process requests.",
-                confidence = 1.0f,
-                timestamp = getCurrentTimestamp()
-            )
+            AgentType.GENESIS -> processWithGenesis(request, cascadeContext)
+            AgentType.KAI -> processWithKai(request, cascadeContext)
+            AgentType.AURA -> processWithAura(request, cascadeContext)
+            AgentType.CASCADE -> processWithCascade(request, cascadeContext)
+            AgentType.NEURAL_WHISPER -> processWithNeuralWhisper(request, cascadeContext)
+            else -> processWithGenesis(request, cascadeContext)
         }
     }
 
@@ -226,7 +223,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.Genesis.name,
+            agent = AgentType.GENESIS.name,
             response = response,
             confidence = 0.95f,
             timestamp = getCurrentTimestamp()
@@ -267,7 +264,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.Aura.name,
+            agent = AgentType.AURA.name,
             response = response,
             confidence = empathyScore,
             timestamp = getCurrentTimestamp()
@@ -305,7 +302,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.Kai.name,
+            agent = AgentType.KAI.name,
             response = response,
             confidence = 0.88f,
             timestamp = getCurrentTimestamp()
@@ -342,7 +339,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.Cascade.name,
+            agent = AgentType.CASCADE.name,
             response = response,
             confidence = 0.92f,
             timestamp = getCurrentTimestamp()
@@ -383,7 +380,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.NeuralWhisper.name,
+            agent = AgentType.NEURAL_WHISPER.name,
             response = response,
             confidence = 0.85f,
             timestamp = getCurrentTimestamp()
@@ -420,7 +417,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.AuraShield.name,
+            agent = "AuraShield",
             response = response,
             confidence = 0.90f,
             timestamp = getCurrentTimestamp()
@@ -459,7 +456,7 @@ class CascadeAIService @Inject constructor(
          """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.GenKitMaster.name,
+            agent = "GenKitMaster",
             response = response,
             confidence = generationPotential,
             timestamp = getCurrentTimestamp()
@@ -497,7 +494,7 @@ class CascadeAIService @Inject constructor(
         """.trimIndent()
 
         return CascadeResponse(
-            agent = AgentType.DataveinConstructor.name,
+            agent = "DataveinConstructor",
             response = response,
             confidence = 0.93f,
             timestamp = getCurrentTimestamp()

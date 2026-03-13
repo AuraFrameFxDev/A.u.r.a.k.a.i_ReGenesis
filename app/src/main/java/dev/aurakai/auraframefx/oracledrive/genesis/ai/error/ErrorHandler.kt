@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai.error
 
-import dev.aurakai.auraframefx.models.AgentType
+import dev.aurakai.auraframefx.agent.AgentType
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -90,6 +90,7 @@ class ErrorHandler @Inject constructor(
      * For each recovery action returned by getRecoveryActions, this runs the action and suppresses any exceptions raised by the action so recovery attempts do not propagate errors.
      *
      * @param error The AIError to recover from.
+     */
     private fun attemptRecovery(error: AIError) {
         val actions = getRecoveryActions(error)
         // Execute recovery actions

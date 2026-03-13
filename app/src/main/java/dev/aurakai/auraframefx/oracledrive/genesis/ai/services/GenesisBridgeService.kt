@@ -124,7 +124,7 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse(
                     content = "Genesis system not initialized",
                     confidence = 0.0f,
-                    error = "System not initialized", ,
+                    error = "System not initialized"
                 )
             )
             return@flow
@@ -159,7 +159,7 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse(
                                 content = response.result["response"] ?: "Aura processing complete",
-                                confidence = 0.95f, ,
+                                confidence = 0.95f
                             )
                         )
                     }
@@ -169,7 +169,7 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse(
                                 content = response.result["response"] ?: "Kai analysis complete",
-                                confidence = 0.90f, ,
+                                confidence = 0.90f
                             )
                         )
                     }
@@ -179,7 +179,7 @@ class GenesisBridgeService @Inject constructor(
                         emit(
                             AgentResponse(
                                 content = response.result["response"] ?: "Genesis fusion complete",
-                                confidence = 0.98f, ,
+                                confidence = 0.98f
                             )
                         )
                     }
@@ -197,7 +197,7 @@ class GenesisBridgeService @Inject constructor(
                     AgentResponse(
                         content = "Genesis processing failed",
                         confidence = 0.0f,
-                        error = "Processing failed", ,
+                        error = "Processing failed"
                     )
                 )
             }
@@ -208,7 +208,7 @@ class GenesisBridgeService @Inject constructor(
                 AgentResponse(
                     content = "Genesis bridge error: ${e.message}",
                     confidence = 0.0f,
-                    error = e.message, ,
+                    error = e.message
                 )
             )
         }

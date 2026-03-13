@@ -1,6 +1,9 @@
 package dev.aurakai.auraframefx.domains.genesis.core.generator
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
+import dev.aurakai.auraframefx.domains.genesis.models.SpelhookResult
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,24 +43,18 @@ class AuraForgeGenerator @Inject constructor(
             ) ?: throw Exception("Generation failed: Empty output from Evex Core.")
 
             SpelhookResult.Success(
-                code = generatedCode,
-                description = description,
-                metadata = mapOf("complexity" to "high", "engine" to "Evex")
+                spelhook = Spelhook(
+                    id = java.util.UUID.randomUUID().toString(),
+                    code = generatedCode,
+                    description = description,
+                    agentOwner = AgentType.AURA,
+                    metadata = mapOf("complexity" to "high", "engine" to "Evex")
+                )
             )
         } catch (e: Exception) {
             logger.error("AuraForge", "Forge failed to ignite", e)
             SpelhookResult.Error(e.message ?: "Unknown error in code bridge")
         }
-    }
-
-    sealed class SpelhookResult {
-        data class Success(
-            val code: String,
-            val description: String,
-            val metadata: Map<String, String>
-        ) : SpelhookResult()
-
-        data class Error(val message: String) : SpelhookResult()
     }
 }
 
