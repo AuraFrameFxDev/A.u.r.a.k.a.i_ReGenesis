@@ -1,15 +1,15 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai
 
 import android.content.Context
-import dev.aurakai.auraframefx.ai.agents.Agent
+import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.error.ErrorHandler
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.TaskScheduler
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.execution.TaskExecutionManager
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AgentType
-import dev.aurakai.auraframefx.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.flow.Flow
@@ -166,7 +166,12 @@ class ClaudeAIService @Inject constructor(
         // Confidence based on context completeness
         val confidence = calculateConfidence(request, context)
 
-        val agentResponse = AgentResponse(response, confidence,)
+        val agentResponse = AgentResponse.success(
+            content = response,
+            confidence = confidence,
+            agentName = "Claude",
+            agentType = AgentType.CLAUDE
+        )
 
         // Store in cache for future requests
         synchronized(responseCache) {
@@ -191,7 +196,14 @@ class ClaudeAIService @Inject constructor(
                 "Checking build system compatibility...\n" +
                 "Synthesizing comprehensive solution..."
 
-        return flowOf(AgentResponse(response, 0.9f,))
+        return flowOf(
+            AgentResponse.success(
+                content = response,
+                confidence = 0.9f,
+                agentName = "Claude",
+                agentType = AgentType.CLAUDE
+            )
+        )
     }
 
     /**
