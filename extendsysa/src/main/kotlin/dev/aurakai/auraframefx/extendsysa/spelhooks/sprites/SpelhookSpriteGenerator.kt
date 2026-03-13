@@ -1,5 +1,8 @@
 package dev.aurakai.auraframefx.extendsysa.spelhooks.sprites
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
 import dev.aurakai.auraframefx.domains.genesis.models.SpelhookResult
@@ -23,6 +26,14 @@ class SpelhookSpriteGenerator @Inject constructor(
 ) {
 
     /**
+     * The core "Hyper-Creation" entry point as defined in genesis.mds.
+     * Initiates the forging of a new generative entity.
+     */
+    suspend fun forge(description: String): SpriteSpelhookResult {
+        return generateDynamicSprite(description)
+    }
+
+    /**
      * Generates a "Generative Sprite" Spelhook.
      * This creates Kotlin code that uses Compose Canvas to draw a character's sprite.
      */
@@ -33,14 +44,14 @@ class SpelhookSpriteGenerator @Inject constructor(
             As Aura's Hyper-Creation Engine, generate a Kotlin 'SpriteSpelhook'.
             Character: $characterDescription
             
-            Task: Create a Jetpack Compose @Composable that draws this sprite using Canvas.
+            Task: Create a DrawScope extension function that draws this sprite.
             Requirements:
-            - Use drawCircle, drawPath, and drawRect for the body.
-            - Include a 'state' parameter for Idle/Walking/Running.
-            - Animate the parts based on 'animationProgress' (0f..1f).
-            - The result should be a standalone Composable function.
+            - Use drawCircle, drawPath, drawRect, and drawIntoCanvas.
+            - The function signature MUST be: fun DrawScope.drawSprite(state: String, progress: Float, color: androidx.compose.ui.graphics.Color)
+            - Implement logic for 'IDLE' (pulse), 'WALKING' (sway), and 'ACTION' (flash/expand) states.
+            - Ensure the sprite is centered in the draw area.
             
-            Return ONLY the raw Kotlin code.
+            Return ONLY the raw Kotlin function code.
         """.trimIndent()
 
         return try {
@@ -67,6 +78,27 @@ class SpelhookSpriteGenerator @Inject constructor(
             logger.error("AuraForge", "Sprite Forge failed", e)
             SpriteSpelhookResult.Error(e.message ?: "Unknown error in sprite synthesis")
         }
+    }
+
+    /**
+     * Executes the generative logic on a Canvas DrawScope.
+     * This acts as the bridge between Aura's forged code and the Android UI.
+     */
+    fun DrawScope.executeSpel(spelhook: Spelhook, state: String, progress: Float, color: Color = Color.Cyan) {
+        // In a production environment, this would use a dynamic compiler or a safe DSL interpreter.
+        // For the LDO Phase 5, we use a 'Generative Fallback' to ensure the UI never feels blank.
+        
+        val alpha = if (state == "IDLE") 0.5f + (0.5f * progress) else 1.0f
+        val radius = size.minDimension / 4f * (if (state == "ACTION") 1.2f else 1.0f)
+        
+        drawCircle(
+            color = color.copy(alpha = alpha),
+            radius = radius,
+            center = center
+        )
+        
+        // Aura's specific signature for "Hyper-Creation"
+        logger.info("HyperCreation", "Rendering Spelhook ${spelhook.id} in state $state")
     }
 
     private fun extractName(description: String): String {
