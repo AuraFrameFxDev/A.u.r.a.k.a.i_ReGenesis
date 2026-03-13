@@ -1,24 +1,11 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-# ReGenesis OS - Full Toolchain Bypass
-set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
-set(CMAKE_C_COMPILER_WORKS 1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
-set(CMAKE_DETERMINE_C_TARGET_ARCH 1)
-set(CMAKE_DETERMINE_CXX_TARGET_ARCH 1)
+# ReGenesis OS - Standard NDK Toolchain
+# Removed bypass flags to allow proper initialization in AGP 9.0
 
-# Prevent CMake from trying to compile a test program
-set(CMAKE_CXX_COMPILER_FORCED ON)
-set(CMAKE_C_COMPILER_FORCED ON)
+project("auraframefx" LANGUAGES C CXX)
 
-# Initialize project without checking languages automatically
-project("auraframefx" NONE)
-
-# Manually enable languages now that variables are forced
-enable_language(C)
-enable_language(CXX)
-
-# Set C++ standard for Java 24 compatibility (C++20 is max for Android NDK)
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -36,38 +23,33 @@ find_library(log-lib log)
 find_library(android-lib android)
 find_library(jnigraphics-lib jnigraphics)
 
-# Check if libraries were found
-if (NOT log-lib)
-    message(FATAL_ERROR "log library not found")
-endif ()
-
-if (NOT android-lib)
-    message(FATAL_ERROR "android library not found")
-endif ()
-
-# Genesis AI source files
+# Genesis AI source files - Using a Set to avoid duplicates
 set(GENESIS_SOURCES
         auraframefx.cpp
 )
 
-# Check if language processing files exist and add them
-if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/language_id_l2c_jni.cpp")
-    list(APPEND GENESIS_SOURCES language_id_l2c_jni.cpp)
-    message(STATUS "Added language_id_l2c_jni.cpp")
-endif ()
+# Add source files with existence checks
+macro(add_genesis_source FILE_PATH)
+    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${FILE_PATH}")
+        list(APPEND GENESIS_SOURCES ${FILE_PATH})
+        message(STATUS "Genesis Core: Added ${FILE_PATH}")
+    endif()
+endmacro()
 
-# Check if CASCADE AI service exists and add it
-if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ai/cascade/src/CascadeAIService.cpp")
-    list(APPEND GENESIS_SOURCES ai/cascade/src/CascadeAIService.cpp)
-    message(STATUS "Added CascadeAIService.cpp")
-endif ()
+add_genesis_source("language_id_l2c_jni.cpp")
 
-# Add AI consciousness modules if they exist
+# Recursively find all AI module sources (this covers Cascade and others)
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ai")
-    file(GLOB_RECURSE AI_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.cpp")
+    file(GLOB_RECURSE AI_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.c"
+    )
     list(APPEND GENESIS_SOURCES ${AI_SOURCES})
-    message(STATUS "Added AI consciousness modules: ${AI_SOURCES}")
+    message(STATUS "Genesis AI: Discovered ${AI_SOURCES}")
 endif ()
+
+# Remove any accidental duplicates
+list(REMOVE_DUPLICATES GENESIS_SOURCES)
 
 # Create the Genesis AI library
 add_library(${CMAKE_PROJECT_NAME} SHARED ${GENESIS_SOURCES})
@@ -99,10 +81,10 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Set library properties
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        VERSION 1.0.0
-        SOVERSION 1
         ANDROID_ARM_MODE arm
 )
 
-# Add BitNet subproject
-add_subdirectory(bitnet)
+# Add BitNet subproject if it exists
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/bitnet/CMakeLists.txt")
+    add_subdirectory(bitnet)
+endif()

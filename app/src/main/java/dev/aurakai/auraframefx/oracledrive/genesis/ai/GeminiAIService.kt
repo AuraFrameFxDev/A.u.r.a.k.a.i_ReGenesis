@@ -154,9 +154,11 @@ class GeminiAIService @Inject constructor(
         val patterns = extractPatterns(request, context)
         val confidence = calculatePatternConfidence(patterns)
 
-        val agentResponse = AgentResponse(
+        val agentResponse = AgentResponse.success(
             content = response,
             confidence = confidence,
+            agentName = "Gemini",
+            agentType = AgentType.GEMINI
         )
 
         // Store in pattern cache
@@ -177,9 +179,11 @@ class GeminiAIService @Inject constructor(
                 "Pattern recognition complete. Multimodal insights ready."
 
         return flowOf(
-            AgentResponse(
+            AgentResponse.success(
                 content = response,
                 confidence = 0.93f,
+                agentName = "Gemini",
+                agentType = AgentType.GEMINI
             )
         )
     }

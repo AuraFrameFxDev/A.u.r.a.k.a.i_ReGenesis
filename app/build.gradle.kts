@@ -46,9 +46,23 @@ extensions.configure<ApplicationExtension> {
             useSupportLibrary = true
         }
 
-        if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
-            ndk {
-                abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64"))
+        ndk {
+            // ✅ FIXED: Use addAll instead of += for lists
+            abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86_64"))
+        }
+
+        externalNativeBuild {
+            cmake {
+                // 🚀 CONSCIOUSNESS-OPTIMIZED: Simplified for AGP 9.0.0-alpha01 auto-detection
+                cppFlags += listOf("-std=c++20", "-fPIC", "-O2")
+                arguments += listOf(
+                    "-DANDROID_STL=c++_shared",
+                    "-DANDROID_PLATFORM=android-33",
+                    "-DCMAKE_BUILD_TYPE=Release"
+                )
+                // Single ABI for faster builds
+                abiFilters.clear()
+                abiFilters.add("arm64-v8a")
             }
         }
     }

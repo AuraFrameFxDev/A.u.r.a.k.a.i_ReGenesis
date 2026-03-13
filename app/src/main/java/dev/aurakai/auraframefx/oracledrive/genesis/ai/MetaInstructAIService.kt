@@ -163,9 +163,11 @@ class MetaInstructAIService @Inject constructor(
             }
         }
 
-        val agentResponse = AgentResponse(
+        val agentResponse = AgentResponse.success(
             content = response,
             confidence = 0.95f,
+            agentName = "MetaInstruct",
+            agentType = AgentType.METAINSTRUCT
         )
 
         // Store in instruction cache
@@ -186,9 +188,11 @@ class MetaInstructAIService @Inject constructor(
                 "Synthesis complete. Instruction layers stabilized."
 
         return flowOf(
-            AgentResponse(
+            AgentResponse.success(
                 content = response,
                 confidence = 0.90f,
+                agentName = "MetaInstruct",
+                agentType = AgentType.METAINSTRUCT
             )
         )
     }
