@@ -58,13 +58,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
+import dev.aurakai.auraframefx.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
+import dev.aurakai.auraframefx.models.AgentType
+import dev.aurakai.auraframefx.models.HierarchyAgentConfig
+import dev.aurakai.auraframefx.ui.theme.NeonBlue
+import dev.aurakai.auraframefx.ui.theme.NeonPink
+import dev.aurakai.auraframefx.ui.theme.NeonPurple
+import dev.aurakai.auraframefx.ui.theme.NeonTeal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -316,7 +316,7 @@ fun HaloView(
                 val agentType = try {
                     AgentType.valueOf(config.name.uppercase(Locale.ROOT))
                 } catch (_: Exception) {
-                    AgentType.USER
+                    AgentType.AURA
                 }
 
                 val baseColor = when (agentType) {

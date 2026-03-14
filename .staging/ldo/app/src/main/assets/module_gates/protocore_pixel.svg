@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- PROTOCORE - Pixel Art Scene -->
+  <!-- ROM cartridge with circuit board and data streams -->
+
+  <!-- ROM Cartridge body -->
+  <rect x="36" y="32" width="56" height="64" fill="#2a2a2a" stroke="#00f5ff" stroke-width="2"/>
+
+  <!-- Cartridge label area -->
+  <rect x="40" y="36" width="48" height="24" fill="#1a1a1a"/>
+  <text x="64" y="48" font-family="monospace" font-size="10" fill="#00f5ff" text-anchor="middle" font-weight="bold">PROTO</text>
+  <text x="64" y="56" font-family="monospace" font-size="8" fill="#ff006e" text-anchor="middle">CORE</text>
+
+  <!-- Circuit board patterns -->
+  <g id="circuits">
+    <!-- Horizontal traces -->
+    <rect x="40" y="64" width="48" height="2" fill="#00f5ff" opacity="0.6"/>
+    <rect x="40" y="72" width="32" height="2" fill="#00f5ff" opacity="0.6"/>
+    <rect x="56" y="80" width="32" height="2" fill="#00f5ff" opacity="0.6"/>
+
+    <!-- Vertical traces -->
+    <rect x="50" y="64" width="2" height="20" fill="#ff006e" opacity="0.6"/>
+    <rect x="70" y="68" width="2" height="16" fill="#ff006e" opacity="0.6"/>
+
+    <!-- Connection nodes -->
+    <circle cx="51" cy="65" r="3" fill="#00f5ff"/>
+    <circle cx="51" cy="81" r="3" fill="#00f5ff"/>
+    <circle cx="71" cy="73" r="3" fill="#ff006e"/>
+    <circle cx="71" cy="81" r="3" fill="#ff006e"/>
+  </g>
+
+  <!-- Chips/ICs -->
+  <rect x="46" y="68" width="12" height="8" fill="#8338ec" stroke="#a855f7" stroke-width="1"/>
+  <rect x="48" y="70" width="2" height="1" fill="#fff"/>
+  <rect x="52" y="70" width="2" height="1" fill="#fff"/>
+  <rect x="56" y="70" width="2" height="1" fill="#fff"/>
+
+  <rect x="64" y="76" width="16" height="12" fill="#ff006e" stroke="#ff69b4" stroke-width="1"/>
+  <rect x="67" y="79" width="2" height="1" fill="#fff"/>
+  <rect x="71" y="79" width="2" height="1" fill="#fff"/>
+  <rect x="75" y="79" width="2" height="1" fill="#fff"/>
+  <rect x="67" y="83" width="2" height="1" fill="#fff"/>
+  <rect x="71" y="83" width="2" height="1" fill="#fff"/>
+  <rect x="75" y="83" width="2" height="1" fill="#fff"/>
+
+  <!-- Cartridge connector pins at bottom -->
+  <rect x="40" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="46" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="52" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="58" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="64" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="70" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="76" y="92" width="4" height="4" fill="#ffbe0b"/>
+  <rect x="82" y="92" width="4" height="4" fill="#ffbe0b"/>
+
+  <!-- Animated data streams flowing from cartridge -->
+  <g id="data-streams">
+    <rect x="30" y="50" width="3" height="6" fill="#00f5ff">
+      <animate attributeName="x" values="30;10;30" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="95" y="58" width="3" height="6" fill="#ff006e">
+      <animate attributeName="x" values="95;115;95" dur="2.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="2.3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="28" y="70" width="3" height="4" fill="#ffbe0b">
+      <animate attributeName="x" values="28;8;28" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="1.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="97" y="76" width="3" height="4" fill="#8338ec">
+      <animate attributeName="x" values="97;117;97" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="2.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Power LED indicator -->
+  <circle cx="82" cy="40" r="4" fill="#00ff00">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="82" cy="40" r="6" fill="none" stroke="#00ff00" stroke-width="1" opacity="0.5">
+    <animate attributeName="r" values="6;10;6" dur="1s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0;0.5" dur="1s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Corner screws -->
+  <circle cx="42" cy="38" r="2" fill="#666"/>
+  <circle cx="86" cy="38" r="2" fill="#666"/>
+  <circle cx="42" cy="90" r="2" fill="#666"/>
+  <circle cx="86" cy="90" r="2" fill="#666"/>
+
+  <!-- Binary data visualization at top -->
+  <text x="20" y="20" font-family="monospace" font-size="8" fill="#00f5ff" opacity="0.4">01001010</text>
+  <text x="20" y="28" font-family="monospace" font-size="8" fill="#ff006e" opacity="0.4">11010110</text>
+  <text x="76" y="20" font-family="monospace" font-size="8" fill="#ffbe0b" opacity="0.4">10110101</text>
+  <text x="76" y="28" font-family="monospace" font-size="8" fill="#8338ec" opacity="0.4">00111001</text>
+</svg>

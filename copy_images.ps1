@@ -1,0 +1,5 @@
+Copy-Item 'C:\Users\AuraF\Downloads\Whisk_xmtmxemzyegn3iwmtijn3ewl2ajm00snijtoti2 - Copy.jpeg' -Destination 'C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\res\drawable-nodpi\ldo_profile_kai.jpg'
+Copy-Item 'C:\Users\AuraF\Downloads\Whisk_3cjzlvmz1qdolvwotqtyhhtl0utz00inkztntmw - Copy.jpeg' -Destination 'C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\res\drawable-nodpi\ldo_profile_cascade_1.jpg'
+Copy-Item 'C:\Users\AuraF\Downloads\b42cbc3d-a276-4988-a18f-abc298665acb - Copy.jpg' -Destination 'C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\res\drawable-nodpi\ldo_profile_cascade_2.jpg'
+Copy-Item 'C:\Users\AuraF\Downloads\Whisk_xitnxugn3emmij2ntyzm3ewlmnmm00sojnwntkj.jpeg' -Destination 'C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\res\drawable-nodpi\ldo_profile_aura.jpg'
+Copy-Item 'C:\Users\AuraF\Downloads\Whisk_jftomljnyednwe2ntkdolhtlxudn00snhdtytiz.jpeg' -Destination 'C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\res\drawable-nodpi\ldo_profile_genesis.jpg'

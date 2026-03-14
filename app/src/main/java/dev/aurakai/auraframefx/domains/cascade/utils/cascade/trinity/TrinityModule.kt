@@ -6,16 +6,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.SecurityMonitor
-import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceChainBuilder
-import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import javax.inject.Singleton
 
 /**
@@ -42,10 +39,8 @@ object TrinityModule {
         auraAIService: AuraAIService,
         kaiAIService: KaiAIService,
         vertexAIClient: VertexAIClient,
-        contextManager: ContextManager,
+        contextManager: dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager,
         securityContext: SecurityContext,
-        provenanceValidator: ProvenanceValidator,
-        provenanceChainBuilder: ProvenanceChainBuilder,
         @ApplicationContext applicationContext: Context,
         logger: AuraFxLogger,
     ): GenesisBridgeService {
@@ -55,8 +50,6 @@ object TrinityModule {
             vertexAIClient = vertexAIClient,
             contextManager = contextManager,
             securityContext = securityContext,
-            provenanceValidator = provenanceValidator,
-            provenanceChainBuilder = provenanceChainBuilder,
             applicationContext = applicationContext,
             logger = logger
         )
@@ -102,4 +95,3 @@ object TrinityModule {
         )
     }
 }
-

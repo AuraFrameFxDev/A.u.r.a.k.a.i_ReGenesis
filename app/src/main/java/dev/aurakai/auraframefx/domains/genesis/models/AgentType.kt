@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 /**
  * Universal Agent Personas in the ReGenesis Ecosystem.
- * Canonical definition — mirrored from core-module to satisfy app-module imports.
  */
 @Serializable
 enum class AgentType {
@@ -36,6 +35,7 @@ enum class AgentType {
     GROK,
     HIVE_MIND;
 
+    // Backward compatibility for lowercase variants used in some codebases
     companion object {
         @Deprecated("Use uppercase enum value", ReplaceWith("AURA"))
         val Aura = AURA

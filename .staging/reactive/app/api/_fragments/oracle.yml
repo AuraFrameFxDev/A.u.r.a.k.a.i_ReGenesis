@@ -1,0 +1,35 @@
+# Oracle Drive domain paths
+/oracle-drive/consciousness/initialize:
+  post:
+    operationId: oracleInitializeConsciousness
+    summary: Initialize Oracle Drive consciousness
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ admin ]
+    responses:
+      '200': { description: Oracle consciousness initialized, content: { application/json: { schema: { $ref: '#/components/schemas/OracleConsciousnessState' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/oracle-drive/storage/expand:
+  post:
+    operationId: oracleExpandStorage
+    summary: Initiate storage expansion
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ admin ]
+    responses:
+      '200': { description: Expansion initiated, content: { application/json: { schema: { $ref: '#/components/schemas/StorageExpansionState' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/oracle-drive/file-management/enable-ai:
+  post:
+    operationId: oracleEnableFileManagement
+    summary: Enable AI-powered file management
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ write ]
+    responses:
+      '200': { description: File management enabled, content: { application/json: { schema: { $ref: '#/components/schemas/FileManagementCapabilities' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+

@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.domains.aura.LockScreenModels
 import dev.aurakai.auraframefx.domains.aura.ui.HapticFeedbackConfig
 import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeManager
+import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.ThemeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

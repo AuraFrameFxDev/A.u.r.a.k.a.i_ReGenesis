@@ -48,7 +48,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.chromacore.engine.ChromaCoreConfig
 
 /**
@@ -60,7 +62,13 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.engine.ChromaCoreConfig
 fun ChromaCoreHubScreen(
     onNavigateBack: () -> Unit,
     onNavigateToCategory: (String) -> Unit,
-    viewModel: ChromaCoreViewModel = hiltViewModel()
+    viewModel: ChromaCoreViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val settings by viewModel.settings.collectAsState()
 

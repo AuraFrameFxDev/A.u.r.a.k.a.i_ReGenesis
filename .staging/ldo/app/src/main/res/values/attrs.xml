@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom corner size attributes to avoid Material conflicts -->
+    <attr name="customCornerSize" format="dimension" />
+    <attr name="customCornerSizeSmall" format="dimension" />
+    <attr name="customCornerSizeMedium" format="dimension" />
+    <attr name="customCornerSizeLarge" format="dimension" />
+
+    <!-- Button attributes -->
+    <declare-styleable name="MaterialButton">
+        <attr name="buttonCornerRadius" format="dimension" />
+        <attr name="buttonStrokeColor" format="color" />
+        <attr name="buttonStrokeWidth" format="dimension" />
+    </declare-styleable>
+
+    <!-- CardView attributes -->
+    <declare-styleable name="CardView">
+        <attr name="cardCornerRadius" format="dimension" />
+        <attr name="cardStrokeColor" format="color" />
+        <attr name="cardStrokeWidth" format="dimension" />
+    </declare-styleable>
+</resources>

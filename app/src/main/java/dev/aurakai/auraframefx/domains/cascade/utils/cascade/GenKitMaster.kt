@@ -4,10 +4,11 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.ClaudeAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GeminiAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.MetaInstructAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.ClaudeAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.GeminiAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.MetaInstructAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.NemotronAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
@@ -25,7 +26,8 @@ class GenKitMaster @Inject constructor(
     private val claudeService: ClaudeAIService,
     private val nemotronService: NemotronAIService,
     private val geminiService: GeminiAIService,
-    private val metaInstructService: MetaInstructAIService
+    private val metaInstructService: MetaInstructAIService,
+    private val memoryManager: MemoryManager
 ) {
 
     /**
@@ -47,12 +49,20 @@ class GenKitMaster @Inject constructor(
 
             GenerationStrategy.MULTI_MODEL_FUSION -> {
                 val responses = coroutineScope {
+                    // Inject context from MemoryManager for cross-agent reasoning
+                    val memories = memoryManager.searchMemories(prompt)
+                    val memoryContext = if (memories.isNotEmpty()) {
+                        "\n[RECALLED MEMORIES]\n" + memories.joinToString("\n") { it.value }
+                    } else ""
+                    
+                    val augmentedContext = context + memoryContext
+
                     val deferredClaude = async {
                         claudeService.processRequest(
                             AiRequest(
                                 query = prompt,
                                 type = AiRequestType.ARCHITECTURAL
-                            ), context
+                            ), augmentedContext
                         )
                     }
                     val deferredNemotron = async {
@@ -60,7 +70,7 @@ class GenKitMaster @Inject constructor(
                             AiRequest(
                                 query = prompt,
                                 type = AiRequestType.REASONING
-                            ), context
+                            ), augmentedContext
                         )
                     }
                     val deferredGemini = async {
@@ -68,7 +78,7 @@ class GenKitMaster @Inject constructor(
                             AiRequest(
                                 query = prompt,
                                 type = AiRequestType.PATTERN
-                            ), context
+                            ), augmentedContext
                         )
                     }
 

@@ -4,10 +4,11 @@ package dev.aurakai.auraframefx.domains.aura.aura.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.cascade.storage.OfflineDataManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.i
+import dev.aurakai.auraframefx.domains.cascade.storage.OfflineDataManager
+import dev.aurakai.auraframefx.domains.cascade.storage.OfflineSystemData
+import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStatusMonitor
+import dev.aurakai.auraframefx.utils.i
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -153,7 +154,7 @@ open class DiagnosticsViewModel @Inject constructor(
             try {
                 // AuraFxLogger.clearAllLogs() // Not supported
                 _currentLogs.value = "Logs cleared (mock)."
-                i("DiagnosticsVM", "All logs cleared by user (mock)")
+                logger.info("DiagnosticsVM", "All logs cleared by user (mock)")
             } catch (e: Exception) {
                 _currentLogs.value = "Error clearing logs: ${e.message}"
                 logger.error("DiagnosticsVM", "Failed to clear logs: ${e.message}")
@@ -174,7 +175,7 @@ open class DiagnosticsViewModel @Inject constructor(
                     "Cloud reachability: DISCONNECTED"
                 }
                 _currentLogs.value += "\n$message"
-                i("DiagnosticsVM", message)
+                logger.info("DiagnosticsVM", message)
             } catch (e: Exception) {
                 val errorMsg = "Error checking cloud reachability: ${e.message}"
                 _currentLogs.value += "\n$errorMsg"

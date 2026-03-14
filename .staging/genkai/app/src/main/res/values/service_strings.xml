@@ -1,0 +1,4 @@
+<resources>
+    <string name="accessibility_service_description">Genesis Protocol Accessibility Service allows Aura/Kai to perceive screen content and provide intelligent overlays.</string>
+    <string name="genesis_assistant_label">Genesis Assistant</string>
+</resources>

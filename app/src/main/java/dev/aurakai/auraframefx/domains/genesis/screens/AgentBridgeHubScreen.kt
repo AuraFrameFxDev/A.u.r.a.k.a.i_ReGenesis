@@ -41,7 +41,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ConnectorStatus
 import dev.aurakai.auraframefx.domains.aura.MCPConnector
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
@@ -55,7 +57,13 @@ import dev.aurakai.auraframefx.domains.aura.viewmodels.SovereignBridgeViewModel
 @Composable
 fun AgentBridgeHubScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignBridgeViewModel = hiltViewModel()
+    viewModel: SovereignBridgeViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val connectors by viewModel.connectors.collectAsState()
 

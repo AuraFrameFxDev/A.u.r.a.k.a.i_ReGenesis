@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(BUILD_FINALE.bat)",
+      "Bash(cmd /c BUILD_FINALE.bat)",
+      "Bash(gradlew.bat clean:*)",
+      "Bash(cmd /c \"cd /d C:\\Users\\Wehtt\\Downloads\\Finale && gradlew.bat clean --no-daemon\")",
+      "Bash(./gradlew clean:*)",
+      "Bash(find:*)",
+      "Bash(tee:*)",
+      "Bash(./gradlew assembleDebug:*)",
+      "Bash(./gradlew:*)",
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(cmd /c:*)",
+      "Bash(git clean:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)",
+      "Bash(git checkout:*)",
+      "Bash(git reset:*)",
+      "Bash(git tag:*)",
+      "Bash(ls -la \"C:\\Users\\Wehtt\\Downloads\\Finale\\app\\src\\main\\java\\dev\\aurakai\\auraframefx\\model\"\" 2>&1 || echo \"Directory does not exist \")",
+      "Bash(cmd /c \"gradlew.bat clean --no-daemon\")",
+      "Bash(cmd /c \"gradlew.bat assembleDebug --no-daemon 2>&1 | tail -150\")",
+      "Bash(cmd /c \"gradlew.bat assembleDebug --no-daemon 2>&1\")"
+    ]
+  }
+}

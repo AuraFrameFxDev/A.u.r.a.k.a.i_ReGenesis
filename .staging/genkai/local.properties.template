@@ -1,0 +1,49 @@
+# ============================================================================
+# local.properties Template
+# ============================================================================
+# Copy this file to 'local.properties' (without the .template extension)
+# and configure your local Android SDK paths.
+#
+# IMPORTANT: local.properties should NEVER be committed to version control
+# as it contains machine-specific paths.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Android SDK Location (REQUIRED)
+# ----------------------------------------------------------------------------
+# Path to your Android SDK installation
+# Windows example: sdk.dir=C\:\\Users\\YourName\\AppData\\Local\\Android\\Sdk
+# Linux example: sdk.dir=/home/username/Android/Sdk
+# macOS example: sdk.dir=/Users/username/Library/Android/sdk
+
+sdk.dir=
+
+# ----------------------------------------------------------------------------
+# NDK Configuration (Optional)
+# ----------------------------------------------------------------------------
+# Specify the exact NDK version to use (recommended to avoid scanning all NDKs)
+# This project uses NDK 29.0.14206865
+# If you have multiple NDKs installed and encounter "CXX5304: Found corrupted
+# package.xml" errors, run the fix script:
+#   Windows: .\fix-ndk-package-xml.ps1
+#   Linux/Mac: ./fix-ndk-package-xml.sh
+
+# Uncomment and specify exact NDK path to avoid scanning all NDK versions:
+# ndk.dir=C\:\\Users\\YourName\\AppData\\Local\\Android\\Sdk\\ndk\\29.0.14206865
+
+# ----------------------------------------------------------------------------
+# Gemini API Key (REQUIRED for AI features)
+# ----------------------------------------------------------------------------
+# Get your API key from: https://aistudio.google.com/app/apikey
+# This is required for the Genesis Protocol (Gemini 2.0 Flash integration)
+
+GEMINI_API_KEY=
+
+# ----------------------------------------------------------------------------
+# Additional Configuration (Optional)
+# ----------------------------------------------------------------------------
+# CMake version (if using a specific version)
+# cmake.dir=
+
+# Java/JDK home (usually auto-detected, but can be set manually)
+# org.gradle.java.home=

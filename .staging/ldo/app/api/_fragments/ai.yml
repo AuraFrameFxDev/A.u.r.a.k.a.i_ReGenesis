@@ -1,0 +1,76 @@
+# AI / Consciousness / Generation paths
+post:
+  tags: [ AI Consciousness ]
+  security:
+    - OAuth2: [ write ]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/ConsciousnessRequest'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConsciousnessResponse'
+    '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+    '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+    '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/ai/generate/text:
+  post:
+    operationId: aiGenerateText
+    summary: Generate text using AI
+    tags: [ AI Generation ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenerateTextRequest'
+    responses:
+      '200': { description: Text generated, content: { application/json: { schema: { $ref: '#/components/schemas/GenerateTextResponse' } } } }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '429': { description: Rate limited, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/ai/generate/unified:
+  post:
+    operationId: aiGenerateUnified
+    summary: Generate unified multi-agent response
+    tags: [ AI Generation ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnifiedGenerationRequest'
+    responses:
+      '200': { description: Unified response generated, content: { application/json: { schema: { $ref: '#/components/schemas/UnifiedGenerationResponse' } } } }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/ai/generate/image-description:
+  post:
+    operationId: aiGenerateImageDescription
+    summary: Generate image description using AI
+    tags: [ AI Generation ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenerateImageDescriptionRequest'
+    responses:
+      '200': { description: Description generated, content: { application/json: { schema: { $ref: '#/components/schemas/GenerateImageDescriptionResponse' } } } }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+

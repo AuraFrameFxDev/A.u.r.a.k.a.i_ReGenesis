@@ -31,7 +31,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 
 /**
  * 🛰️ CHROMA STATUS BAR MENU (Level 3)
@@ -41,7 +43,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun ChromaStatusBarMenu(
     onNavigateBack: () -> Unit,
-    viewModel: ChromaCoreViewModel = hiltViewModel()
+    viewModel: ChromaCoreViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val settings by viewModel.settings.collectAsState()
 

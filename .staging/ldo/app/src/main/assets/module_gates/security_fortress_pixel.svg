@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- SECURITY FORTRESS - Pixel Art Scene -->
+  <!-- Kai's domain: Fortress with shields, locks, and defense systems -->
+
+  <!-- Main fortress structure -->
+  <rect x="40" y="56" width="48" height="48" fill="#2a2a2a" stroke="#00f5ff" stroke-width="2"/>
+  <rect x="44" y="60" width="40" height="40" fill="#1a1a1a"/>
+
+  <!-- Castle towers -->
+  <rect x="36" y="40" width="12" height="20" fill="#2a2a2a" stroke="#00f5ff" stroke-width="1"/>
+  <rect x="80" y="40" width="12" height="20" fill="#2a2a2a" stroke="#00f5ff" stroke-width="1"/>
+
+  <!-- Tower battlements -->
+  <rect x="36" y="38" width="3" height="4" fill="#00f5ff"/>
+  <rect x="42" y="38" width="3" height="4" fill="#00f5ff"/>
+  <rect x="80" y="38" width="3" height="4" fill="#00f5ff"/>
+  <rect x="86" y="38" width="3" height="4" fill="#00f5ff"/>
+
+  <!-- Central shield emblem -->
+  <path d="M 64 68 L 56 72 L 56 84 Q 56 92 64 96 Q 72 92 72 84 L 72 72 Z" fill="#00f5ff" stroke="#0ff" stroke-width="2">
+    <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- Shield shine effect -->
+  <path d="M 60 74 L 62 76 L 60 82" stroke="#fff" stroke-width="1" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- Lock icon -->
+  <rect x="61" y="80" width="6" height="6" fill="#ffbe0b" stroke="#ffd700" stroke-width="1"/>
+  <path d="M 61 80 Q 64 76 67 80" fill="none" stroke="#ffbe0b" stroke-width="2"/>
+
+  <!-- Defensive perimeter scan lines -->
+  <g id="scan-lines">
+    <line x1="32" y1="56" x2="96" y2="56" stroke="#00f5ff" stroke-width="1" opacity="0.3">
+      <animate attributeName="y1" values="56;104;56" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="56;104;56" dur="3s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Defense turrets (corners) -->
+  <g id="turret-top-left">
+    <rect x="32" y="52" width="8" height="4" fill="#ff006e"/>
+    <rect x="34" y="50" width="4" height="2" fill="#ff69b4"/>
+    <circle cx="36" cy="49" r="1.5" fill="#00f5ff">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g id="turret-top-right">
+    <rect x="88" y="52" width="8" height="4" fill="#ff006e"/>
+    <rect x="90" y="50" width="4" height="2" fill="#ff69b4"/>
+    <circle cx="92" cy="49" r="1.5" fill="#00f5ff">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g id="turret-bottom-left">
+    <rect x="32" y="100" width="8" height="4" fill="#ff006e"/>
+    <circle cx="36" cy="99" r="1.5" fill="#00f5ff">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1s" begin="0.25s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g id="turret-bottom-right">
+    <rect x="88" y="100" width="8" height="4" fill="#ff006e"/>
+    <circle cx="92" cy="99" r="1.5" fill="#00f5ff">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1s" begin="0.75s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Energy shield bubble -->
+  <ellipse cx="64" cy="80" rx="36" ry="32" fill="none" stroke="#00f5ff" stroke-width="1" opacity="0.3" stroke-dasharray="4,4">
+    <animate attributeName="stroke-dashoffset" values="0;8;0" dur="2s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Warning lights on fortress -->
+  <circle cx="48" cy="64" r="2" fill="#ff006e">
+    <animate attributeName="opacity" values="1;0.2;1" dur="0.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="80" cy="64" r="2" fill="#ff006e">
+    <animate attributeName="opacity" values="1;0.2;1" dur="0.8s" begin="0.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Security cameras -->
+  <g id="camera-left">
+    <rect x="42" y="46" width="4" height="3" fill="#666"/>
+    <circle cx="44" cy="49" r="2" fill="#ff006e">
+      <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g id="camera-right">
+    <rect x="82" y="46" width="4" height="3" fill="#666"/>
+    <circle cx="84" cy="49" r="2" fill="#ff006e">
+      <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" begin="0.75s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Data streams flowing up (encrypted packets) -->
+  <g id="encrypted-data">
+    <rect x="50" y="90" width="4" height="6" fill="#00f5ff">
+      <animate attributeName="y" values="104;40;104" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="74" y="95" width="4" height="6" fill="#ffbe0b">
+      <animate attributeName="y" values="104;40;104" dur="4.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" dur="4.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Firewall visualization -->
+  <g id="firewall" opacity="0.4">
+    <line x1="40" y1="56" x2="40" y2="104" stroke="#ff006e" stroke-width="2"/>
+    <line x1="88" y1="56" x2="88" y2="104" stroke="#ff006e" stroke-width="2"/>
+    <line x1="40" y1="104" x2="88" y2="104" stroke="#ff006e" stroke-width="2"/>
+  </g>
+
+  <!-- Title -->
+  <text x="64" y="24" font-family="monospace" font-size="10" fill="#00f5ff" text-anchor="middle" font-weight="bold">SECURITY</text>
+  <text x="64" y="32" font-family="monospace" font-size="8" fill="#ff006e" text-anchor="middle">FORTRESS</text>
+
+  <!-- Status display -->
+  <rect x="44" y="108" width="40" height="12" fill="#1a1a1a" stroke="#00f5ff" stroke-width="1"/>
+  <text x="64" y="116" font-family="monospace" font-size="7" fill="#00ff00" text-anchor="middle">SECURED</text>
+  <circle cx="78" cy="114" r="2" fill="#00ff00">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Corner brackets -->
+  <path d="M 24 48 L 20 48 L 20 52" stroke="#00f5ff" stroke-width="2" fill="none"/>
+  <path d="M 108 48 L 108 48 L 108 52" stroke="#00f5ff" stroke-width="2" fill="none"/>
+  <path d="M 24 108 L 20 108 L 20 104" stroke="#00f5ff" stroke-width="2" fill="none"/>
+  <path d="M 104 48 L 108 48 L 108 52" stroke="#00f5ff" stroke-width="2" fill="none"/>
+  <path d="M 104 108 L 108 108 L 108 104" stroke="#00f5ff" stroke-width="2" fill="none"/>
+</svg>

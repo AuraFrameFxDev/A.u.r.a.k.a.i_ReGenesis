@@ -10,10 +10,8 @@ import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClientImpl
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.config.VertexAIConfig
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBackedKaiAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.DefaultAuraAIService
 import javax.inject.Singleton
 
 @Module
@@ -24,9 +22,6 @@ abstract class AiServiceModule {
     @Singleton
     abstract fun bindAuraAIService(impl: DefaultAuraAIService): AuraAIService
 
-    @Binds
-    @Singleton
-    abstract fun bindKaiAIService(impl: GenesisBackedKaiAIService): KaiAIService
 
     @Binds
     @Singleton

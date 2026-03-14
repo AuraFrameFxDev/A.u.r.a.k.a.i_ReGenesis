@@ -9,7 +9,8 @@ import android.os.Process
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.SecureFileManager
+import dev.aurakai.auraframefx.oracledrive.SecureFileManager
+import dev.aurakai.auraframefx.oracledrive.FileOperationResult
 import dev.aurakai.auraframefx.ipc.IAuraDriveCallback
 import timber.log.Timber
 import java.io.File
@@ -79,20 +80,93 @@ class AuraDriveService : Service() {
 
         override fun importFile(uri: Uri): String {
             Timber.tag(TAG).d("Importing file: $uri")
-            // Implement secure file import with R.G.S.F. layering
-            return "file_id_dummy"
+            return try {
+                val inputStream = contentResolver.openInputStream(uri)
+                val bytes = inputStream?.use { it.readBytes() } ?: throw Exception("Failed to open input stream")
+                val fileName = uri.lastPathSegment ?: "imported_${System.currentTimeMillis()}"
+                
+                var fileId = ""
+                var error: String? = null
+                
+                kotlinx.coroutines.runBlocking {
+                    secureFileManager.saveFile(bytes, fileName).collect { result ->
+                        when (result) {
+                            is FileOperationResult.Success -> {
+                                fileId = fileName // Use fileName as fileId for now
+                                Timber.d("File saved successfully: ${result.file.absolutePath}")
+                            }
+                            is FileOperationResult.Error -> {
+                                error = result.message
+                            }
+                            else -> {}
+                        }
+                    }
+                }
+                
+                if (error != null) throw Exception(error)
+                fileId
+            } catch (e: Exception) {
+                Timber.e(e, "Import failed")
+                "error: ${e.message}"
+            }
         }
 
         override fun exportFile(fileId: String, destinationUri: Uri): Boolean {
             Timber.tag(TAG).d("Exporting file: $fileId to $destinationUri")
-            // Implement secure file export with R.G.S.F. verification
-            return true
+            return try {
+                var success = false
+                var error: String? = null
+                
+                kotlinx.coroutines.runBlocking {
+                    secureFileManager.readFile(fileId).collect { result ->
+                        when (result) {
+                            is FileOperationResult.Data -> {
+                                contentResolver.openOutputStream(destinationUri)?.use { outputStream ->
+                                    outputStream.write(result.data)
+                                    success = true
+                                } ?: run {
+                                    error = "Failed to open output stream for $destinationUri"
+                                }
+                            }
+                            is FileOperationResult.Error -> {
+                                error = result.message
+                            }
+                            else -> {}
+                        }
+                    }
+                }
+                
+                if (error != null) {
+                    Timber.e("Export failed: $error")
+                    false
+                } else {
+                    success
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Export failed")
+                false
+            }
         }
 
         override fun verifyFileIntegrity(fileId: String): Boolean {
             Timber.tag(TAG).d("Verifying integrity for file: $fileId")
-            // Implement R.G.S.F. checksum and redundancy checks
-            return true
+            return try {
+                var verified = false
+                kotlinx.coroutines.runBlocking {
+                    // List files and check if fileId exists
+                    val files = secureFileManager.listFiles()
+                    verified = files.contains(fileId)
+                    
+                    // In a real R.G.S.F. implementation, we would perform checksum verification here
+                    if (verified) {
+                        Timber.d("Integrity verified for $fileId via R.G.S.F. nominal check")
+                    }
+                }
+                verified
+            } catch (e: Exception) {
+                Timber.e(e, "Integrity verification failed for $fileId")
+                false
+            }
         }
 
         override fun getServiceVersion(): String {

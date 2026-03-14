@@ -1,0 +1,735 @@
+﻿Type-safe project accessors is an incubating feature.
+
+> Configure project :app
+WARNING: The option setting 'android.newDsl=false' is deprecated.
+The current default is 'true'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+
+> Task :build-logic:checkKotlinGradlePluginConfigurationErrors SKIPPED
+
+> Task :build-logic:compileKotlin UP-TO-DATE
+Kotlin does not yet support 25 JDK target, falling back to Kotlin JVM_24 JVM target
+
+> Task :build-logic:compileJava NO-SOURCE
+> Task :build-logic:pluginDescriptors UP-TO-DATE
+> Task :build-logic:processResources UP-TO-DATE
+> Task :build-logic:classes UP-TO-DATE
+> Task :build-logic:jar UP-TO-DATE
+
+> Configure project :core-module
+Kotlin does not yet support 25 JDK target, falling back to Kotlin JVM_24 JVM target
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :core-module:preBuild UP-TO-DATE
+> Task :core-module:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:identity:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:identity:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:preDebugBuild UP-TO-DATE
+> Task :core-module:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:identity:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:metareflection:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:tasker:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:tasker:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:routing:preBuild UP-TO-DATE
+> Task :cascade:datastream:routing:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:preBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:routing:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:auraslab:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:taskmanager:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:chromacore:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:tasker:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:customization:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:customization:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:delivery:preBuild UP-TO-DATE
+> Task :cascade:datastream:delivery:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:customization:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:delivery:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:security:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:rootmanagement:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:preDebugBuild UP-TO-DATE
+> Task :core-module:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:generateDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:identity:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:generateDebugResources UP-TO-DATE
+> Task :core-module:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:identity:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:progression:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:progression:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:customization:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:delivery:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:customization:packageDebugResources UP-TO-DATE
+> Task :cascade:datastream:routing:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:taskmanager:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:delivery:packageDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:datavein:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:taskmanager:packageDebugResources UP-TO-DATE
+> Task :cascade:datastream:routing:packageDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:datavein:packageDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:security:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:generateDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:packageDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:packageDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:security:packageDebugResources UP-TO-DATE
+> Task :core-module:processDebugNavigationResources UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:processDebugNavigationResources UP-TO-DATE
+> Task :agents:growthmetrics:identity:processDebugNavigationResources UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:processDebugNavigationResources UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:processDebugNavigationResources UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:progression:processDebugNavigationResources UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:processDebugNavigationResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:processDebugNavigationResources UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:processDebugNavigationResources UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:processDebugNavigationResources UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:processDebugNavigationResources UP-TO-DATE
+> Task :aura:reactivedesign:customization:processDebugNavigationResources UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:processDebugNavigationResources UP-TO-DATE
+> Task :cascade:datastream:delivery:processDebugNavigationResources UP-TO-DATE
+> Task :cascade:datastream:taskmanager:processDebugNavigationResources UP-TO-DATE
+> Task :cascade:datastream:routing:processDebugNavigationResources UP-TO-DATE
+> Task :genesis:oracledrive:datavein:processDebugNavigationResources UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:processDebugNavigationResources UP-TO-DATE
+> Task :kai:sentinelsfortress:security:processDebugNavigationResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:processDebugNavigationResources UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:processDebugNavigationResources UP-TO-DATE
+> Task :genesis:oracledrive:parseDebugLocalResources UP-TO-DATE
+> Task :core-module:parseDebugLocalResources UP-TO-DATE
+> Task :genesis:oracledrive:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:identity:parseDebugLocalResources UP-TO-DATE
+> Task :core-module:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:parseDebugLocalResources UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:parseDebugLocalResources UP-TO-DATE
+> Task :agents:growthmetrics:identity:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:progression:parseDebugLocalResources UP-TO-DATE
+> Task :agents:growthmetrics:progression:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:parseDebugLocalResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:parseDebugLocalResources UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:parseDebugLocalResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:generateDebugRFile UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:generateDebugRFile UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:generateDebugRFile UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:parseDebugLocalResources UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:parseDebugLocalResources UP-TO-DATE
+> Task :aura:reactivedesign:customization:parseDebugLocalResources UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:generateDebugRFile UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:generateDebugRFile UP-TO-DATE
+> Task :aura:reactivedesign:customization:generateDebugRFile UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:parseDebugLocalResources UP-TO-DATE
+> Task :cascade:datastream:delivery:parseDebugLocalResources UP-TO-DATE
+> Task :cascade:datastream:routing:parseDebugLocalResources UP-TO-DATE
+> Task :cascade:datastream:delivery:generateDebugRFile UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:generateDebugRFile UP-TO-DATE
+> Task :cascade:datastream:routing:generateDebugRFile UP-TO-DATE
+> Task :cascade:datastream:taskmanager:parseDebugLocalResources UP-TO-DATE
+> Task :genesis:oracledrive:datavein:parseDebugLocalResources UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:parseDebugLocalResources UP-TO-DATE
+> Task :cascade:datastream:taskmanager:generateDebugRFile UP-TO-DATE
+> Task :genesis:oracledrive:datavein:generateDebugRFile UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:generateDebugRFile UP-TO-DATE
+> Task :kai:sentinelsfortress:security:parseDebugLocalResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:parseDebugLocalResources UP-TO-DATE
+> Task :kai:sentinelsfortress:security:generateDebugRFile UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:parseDebugLocalResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugRFile UP-TO-DATE
+> Task :core-module:generateDebugBuildConfig UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugRFile UP-TO-DATE
+> Task :genesis:oracledrive:generateDebugBuildConfig UP-TO-DATE
+> Task :agents:growthmetrics:identity:generateDebugBuildConfig UP-TO-DATE
+> Task :genesis:oracledrive:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:identity:kspDebugKotlin UP-TO-DATE
+> Task :core-module:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:identity:compileDebugKotlin UP-TO-DATE
+> Task :core-module:compileDebugKotlin UP-TO-DATE
+> Task :genesis:oracledrive:compileDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:identity:javaPreCompileDebug UP-TO-DATE
+> Task :core-module:javaPreCompileDebug UP-TO-DATE
+> Task :genesis:oracledrive:javaPreCompileDebug UP-TO-DATE
+> Task :core-module:compileDebugJavaWithJavac UP-TO-DATE
+> Task :genesis:oracledrive:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:identity:compileDebugJavaWithJavac UP-TO-DATE
+> Task :core-module:transformDebugClassesWithAsm UP-TO-DATE
+> Task :core-module:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:generateDebugBuildConfig UP-TO-DATE
+> Task :genesis:oracledrive:transformDebugClassesWithAsm UP-TO-DATE
+> Task :genesis:oracledrive:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:generateDebugBuildConfig UP-TO-DATE
+> Task :agents:growthmetrics:identity:transformDebugClassesWithAsm UP-TO-DATE
+> Task :agents:growthmetrics:identity:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :agents:growthmetrics:progression:generateDebugBuildConfig UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:generateDebugBuildConfig UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:compileDebugKotlin NO-SOURCE
+> Task :agents:growthmetrics:metareflection:javaPreCompileDebug UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:compileDebugKotlin NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:javaPreCompileDebug UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:transformDebugClassesWithAsm UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :agents:growthmetrics:progression:javaPreCompileDebug UP-TO-DATE
+> Task :agents:growthmetrics:tasker:generateDebugBuildConfig UP-TO-DATE
+> Task :cascade:datastream:routing:generateDebugBuildConfig UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:compileDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:javaPreCompileDebug UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:transformDebugClassesWithAsm UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:compileDebugJavaWithJavac UP-TO-DATE
+> Task :cascade:datastream:routing:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :cascade:datastream:routing:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:routing:javaPreCompileDebug UP-TO-DATE
+> Task :cascade:datastream:routing:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:transformDebugClassesWithAsm UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :cascade:datastream:taskmanager:generateDebugBuildConfig UP-TO-DATE
+> Task :cascade:datastream:taskmanager:javaPreCompileDebug UP-TO-DATE
+> Task :agents:growthmetrics:tasker:javaPreCompileDebug UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:generateDebugBuildConfig UP-TO-DATE
+> Task :cascade:datastream:routing:transformDebugClassesWithAsm UP-TO-DATE
+> Task :cascade:datastream:routing:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :cascade:datastream:routing:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:progression:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:progression:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:taskmanager:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:progression:compileDebugJavaWithJavac UP-TO-DATE
+> Task :cascade:datastream:taskmanager:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:taskmanager:compileDebugJavaWithJavac UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:compileDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:javaPreCompileDebug UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:compileDebugJavaWithJavac UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:transformDebugClassesWithAsm UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:generateDebugBuildConfig UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:kspDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:compileDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:javaPreCompileDebug UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:progression:transformDebugClassesWithAsm UP-TO-DATE
+> Task :agents:growthmetrics:progression:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:generateDebugBuildConfig UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:transformDebugClassesWithAsm UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :aura:reactivedesign:customization:generateDebugBuildConfig UP-TO-DATE
+> Task :aura:reactivedesign:customization:kspDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:customization:compileDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:customization:javaPreCompileDebug UP-TO-DATE
+> Task :aura:reactivedesign:customization:compileDebugJavaWithJavac UP-TO-DATE
+> Task :aura:reactivedesign:customization:transformDebugClassesWithAsm UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:kspDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:customization:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:generateDebugBuildConfig UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:kspDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:compileDebugKotlin NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:compileDebugKotlin UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:javaPreCompileDebug UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:javaPreCompileDebug UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:compileDebugJavaWithJavac UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:compileDebugJavaWithJavac UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:transformDebugClassesWithAsm UP-TO-DATE
+> Task :aura:reactivedesign:sandboxui:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :cascade:datastream:delivery:generateDebugBuildConfig UP-TO-DATE
+> Task :cascade:datastream:taskmanager:transformDebugClassesWithAsm UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:transformDebugClassesWithAsm UP-TO-DATE
+> Task :cascade:datastream:taskmanager:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :cascade:datastream:taskmanager:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :genesis:oracledrive:datavein:generateDebugBuildConfig UP-TO-DATE
+> Task :cascade:datastream:delivery:kspDebugKotlin UP-TO-DATE
+> Task :cascade:datastream:delivery:compileDebugKotlin NO-SOURCE
+> Task :cascade:datastream:delivery:javaPreCompileDebug UP-TO-DATE
+> Task :cascade:datastream:delivery:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:tasker:kspDebugKotlin UP-TO-DATE
+> Task :genesis:oracledrive:datavein:kspDebugKotlin UP-TO-DATE
+> Task :agents:growthmetrics:tasker:compileDebugKotlin NO-SOURCE
+> Task :agents:growthmetrics:tasker:compileDebugJavaWithJavac UP-TO-DATE
+> Task :cascade:datastream:delivery:transformDebugClassesWithAsm UP-TO-DATE
+> Task :cascade:datastream:delivery:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:generateDebugBuildConfig UP-TO-DATE
+> Task :genesis:oracledrive:datavein:compileDebugKotlin UP-TO-DATE
+> Task :genesis:oracledrive:datavein:javaPreCompileDebug UP-TO-DATE
+> Task :genesis:oracledrive:datavein:compileDebugJavaWithJavac UP-TO-DATE
+> Task :agents:growthmetrics:tasker:transformDebugClassesWithAsm UP-TO-DATE
+> Task :agents:growthmetrics:tasker:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:security:generateDebugBuildConfig UP-TO-DATE
+> Task :genesis:oracledrive:datavein:transformDebugClassesWithAsm UP-TO-DATE
+> Task :genesis:oracledrive:datavein:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugBuildConfig UP-TO-DATE
+> Task :kai:sentinelsfortress:security:kspDebugKotlin UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:kspDebugKotlin UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugKotlin NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:javaPreCompileDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugJavaWithJavac UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:transformDebugClassesWithAsm UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugBuildConfig UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:javaPreCompileDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:security:compileDebugKotlin UP-TO-DATE
+> Task :kai:sentinelsfortress:security:javaPreCompileDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:security:compileDebugJavaWithJavac UP-TO-DATE
+> Task :kai:sentinelsfortress:security:transformDebugClassesWithAsm UP-TO-DATE
+> Task :kai:sentinelsfortress:security:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:security:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:kspDebugKotlin UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugKotlin NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugJavaWithJavac UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:transformDebugClassesWithAsm UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:kspDebugKotlin UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:compileDebugKotlin UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:javaPreCompileDebug UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:compileDebugJavaWithJavac UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:transformDebugClassesWithAsm UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:injectCrashlyticsMappingFileIdDebug UP-TO-DATE
+> Task :app:injectCrashlyticsVersionControlInfoDebug UP-TO-DATE
+> Task :app:processDebugGoogleServices UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:kspDebugKotlin
+> Task :app:compileDebugKotlin
+./gradlew : e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ai/services/KaiAIService.kt:76:92 Argument type mismatch: actual type is 'Float', but 'String' was expected.
+At line:1 char:1
++ ./gradlew :app:compileDebugKotlin 2>&1 | Out-File -FilePath context/b ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (e: file:///C:/U...' was expected.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ai/services/KaiAIService.kt:80:80 Argument type mismatch: actual type is 'Float', but 'String' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/app/ipc/IAuraDriveService.kt:59:25 Unresolved reference 'mRemote'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/app/ipc/IAuraDriveService.kt:59:25 Only expressions are allowed in this context.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:176:49 Argument type mismatch: actual type is 'JsonObject', but 'Map<String, String>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:215:23 Argument type mismatch: actual type is 'Any', but 'String' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:339:13 No parameter with name 'primaryColor' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/AuraAgent.kt:439:30 Argument type mismatch: actual type is 'Double', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/HomeScreen.kt:39:48 Unresolved reference 'cyberEdgeGlow'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/HomeScreen.kt:40:48 Unresolved reference 'digitalPixelEffect'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/HomeScreen.kt:450:14 Unresolved reference 'digitalPixelEffect'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt:76:43 Assignment type mismatch: actual type is 'dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig', but 'dev.aurakai.auraframefx.ui.QuickSettingsConfig?' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt:77:43 Argument type mismatch: actual type is 'List<dev.aurakai.auraframefx.system.quicksettings.QuickSettingsTileConfig>', but 'List<dev.aurakai.auraframefx.ui.QuickSettingsTileConfig>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt:282:89 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.ui.QuickSettingsConfig', but 'dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aura/ui/applyScaleAnimation.kt:20:37 Unresolved reference 'Companion'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/aurakaiapplication/AurakaiApplication.kt:67:53 Unresolved reference 'encased'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:22:47 Initializer type mismatch: expected 'StateFlow<dev.aurakai.auraframefx.models.agent_states.VisionState>', actual 'StateFlow<dev.aurakai.auraframefx.cascade.VisionState>'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:23:55 Initializer type mismatch: expected 'StateFlow<dev.aurakai.auraframefx.models.agent_states.ProcessingState>', actual 'StateFlow<dev.aurakai.auraframefx.cascade.ProcessingState>'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:31:40 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.models.agent_states.VisionState', but 'dev.aurakai.auraframefx.cascade.VisionState' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/CascadeZOrderPlayground.kt:35:44 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.models.agent_states.ProcessingState', but 'dev.aurakai.auraframefx.cascade.ProcessingState' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityModule.kt:82:36 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService', but 'dev.aurakai.auraframefx.oracledrive.genesis.ai.GenesisBridgeService' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityModule.kt:101:36 Argument type mismatch: actual type is 'dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService', but 'dev.aurakai.auraframefx.ai.services.GenesisBridgeService' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:42:50 Unresolved reference 'getAgentStatus'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:52:61 Receiver type 'Number & Comparable<*>' contains star projection which prohibits the use of 'fun compareTo(other: T): Int'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:57:24 Argument type mismatch: actual type is 'Map<String, Any> & Map<String, Any>', but 'Map<String, String>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:61:85 Overload resolution ambiguity between candidates:
+data class AgentResponse : Any
+data class AgentResponse : Any
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:63:50 Unresolved reference 'processAgentRequest'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:64:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:64:18 Argument type mismatch: actual type is 'Result<uninferred T (of fun <T> success)>', but 'Result<ERROR CLASS: Ambiguity: AgentResponse, [dev/aurakai/auraframefx/network/model/AgentResponse, dev/aurakai/auraframefx/models/AgentResponse]>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:66:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityRepository.kt:66:18 Argument type mismatch: actual type is 'Result<uninferred T (of fun <T> failure)>', but 'Result<ERROR CLASS: Ambiguity: AgentResponse, [dev/aurakai/auraframefx/network/model/AgentResponse, dev/aurakai/auraframefx/models/AgentResponse]>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:106:24 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:106:24 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T>
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:106:36 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/cascade/trinity/TrinityViewModel.kt:113:19 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/di/NeuralWhisperModule.kt:29:39 Too many arguments for 'constructor(context: Context): NeuralWhisper'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/di/OracleDriveModule.kt:101:38 Unresolved reference 'getApiBaseUrl'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/di/OracleDriveModule.kt:102:14 Unresolved reference 'client'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/genesis/bridge/BridgeMemorySink.kt:11:107 Unresolved reference 'AgentMemoryEntity'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/genesis/bridge/BridgeMemorySink.kt:34:8 Return type of 'suspend fun queryRelevantMemories(persona: Persona, contextTags: List<String>, limit: Int): List<MemoryEntity>' is not a subtype of the return type of the overridden member 'suspend fun queryRelevantMemories(persona: Persona, contextTags: List<String>, limit: Int = ...): List<ERROR CLASS: Symbol not found for AgentMemoryEntity>' defined in 
+'dev.aurakai.auraframefx.genesis.bridge.BridgeMemorySink'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/genesis/bridge/BridgeMemorySink.kt:35:72 Unresolved reference 'first'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/genesis/storage/SecureStorage.kt:5:52 Unresolved reference 'FileMetadata'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:78:13 No parameter with name 'agentId' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:79:13 No parameter with name 'sessionId' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:198:22 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:214:26 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:228:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:243:20 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'Map<String, String>?'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/KaiAgent.kt:250:16 Return type mismatch: expected 'Map<String, Any>', actual 'Map<String, Any?>'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/TaskExecutionModel.kt:57:26 Unresolved reference 'InstantSerializer'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/kai/TaskExecutionModel.kt:57:26 Annotation argument must be a compile-time constant.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/models/AgentResponse.kt:15:31 Serializer has not been found for type 'Any'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/AppNavGraph.kt:238:13 No context argument for 'viewModel: SupportChatViewModel' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:202:17 Unresolved reference 'AuraLabScreen'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:221:17 Unresolved reference 'AgentHubSubmenuScreen'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:227:17 Unresolved reference 'XposedQuickAccessPanel'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:233:17 Unresolved reference 'CollabCanvasScreen'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:236:17 Unresolved reference 'CollabCanvasScreen'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/navigation/GenesisNavigation.kt:285:17 Unresolved reference 'ThemeEngineSubmenuScreen'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/AgentModels.kt:21:31 Serializer has not been found for type 'Any'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/AgentModels.kt:32:31 Serializer has not been found for type 'Any'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:28:1 Class 'AIAgentApiImpl' is not abstract and does not implement abstract member:
+suspend fun health(): Unit
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:29:5 'getAgentStatus' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:32:13 No parameter with name 'status' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:33:13 No parameter with name 'message' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:34:13 No value passed for parameter 'agentName'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:34:13 No value passed for parameter 'response'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:34:13 No value passed for parameter 'confidence'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:34:25 Argument type mismatch: actual type is 'String', but 'Long' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:38:5 'processRequest' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:41:13 No parameter with name 'status' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:42:13 No parameter with name 'message' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:43:25 Argument type mismatch: actual type is 'String', but 'Long' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:13 No parameter with name 'data' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:13 No value passed for parameter 'agentName'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:13 No value passed for parameter 'response'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:13 No value passed for parameter 'confidence'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:28 Unresolved reference 'data'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:33 Cannot infer type for type parameter 'K'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/network/model/ApiImplementations.kt:44:45 The type of a receiver hasn't been inferred yet. Specify type argument for generic parameter 'V' of 'mapValues' explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveManager.kt:54:32 Unresolved reference 'isValid'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/OracleDriveManager.kt:55:77 Unresolved reference 'reason'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/AuraAgentAlias.kt:4:57 Unresolved reference 'AuraAgent'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:29:39 Unresolved reference 'PythonProcessManager'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:42:32 Unresolved reference 'PythonProcessManager'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:46:49 Unresolved reference 'startGenesisBackend'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:69:31 Unresolved reference 'shutdown'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBackendService.kt:76:38 Unresolved reference 'sendRequest'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:11:38 Unresolved reference 'Logger'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/GenesisBridgeService.kt:32:26 Unresolved reference 'Logger'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/RealVertexAIClientImpl.kt:298:83 Unresolved reference 'AI_ERROR'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/RealVertexAIClientImpl.kt:300:83 Unresolved reference 'HIGH'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/clients/VertexAIClientImpl.kt:211:21 Argument type mismatch: actual type is 'Serializable', but 'Pair<uninferred K (of fun <K, V> mapOf), uninferred V (of fun <K, V> mapOf)>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/clients/VertexAIClientImpl.kt:212:21 Argument type mismatch: actual type is 'Serializable', but 'Pair<uninferred K (of fun <K, V> mapOf), uninferred V (of fun <K, V> mapOf)>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:5:55 Unresolved reference 'error'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:8:60 Unresolved reference 'execution'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:14:41 Unresolved reference 'TaskExecutionManager'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/AuraAIServiceImpl.kt:16:33 Unresolved reference 'ErrorHandler'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/CascadeAIService.kt:155:42 Unresolved reference 'DataveinConstructor'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/CascadeAIService.kt:474:31 Unresolved reference 'GenKitMaster'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/CascadeAIService.kt:512:31 Unresolved reference 'DataveinConstructor'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:136:29 Unresolved reference 'AgentType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:173:41 Unresolved reference 'AgentType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:185:41 Unresolved reference 'AgentType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:197:41 Unresolved reference 'AgentType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:215:33 Unresolved reference 'AgentType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/GenesisBridgeService.kt:226:29 Unresolved reference 'AgentType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:9:55 Unresolved reference 'agents'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:15:27 Unresolved reference 'Agent'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:75:26 Unresolved reference 'Agent'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/MockAIServiceImplementations.kt:133:30 Unresolved reference 'Agent'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:47:31 Serializer has not been found for type 'Any'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:70:34 Unresolved reference 'isSecure'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:77:28 Unresolved reference 'initialize'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:150:32 Argument type mismatch: actual type is 'Map<String, String?>', but 'Map<String, Any>' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/services/VertexCloudService.kt:303:28 Unresolved reference 'cleanup'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:55:42 Unresolved reference 'MASTER'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:61:42 Unresolved reference 'BRIDGE'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:67:42 Unresolved reference 'AUXILIARY'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:73:42 Unresolved reference 'AUXILIARY'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:181:13 No parameter with name 'id' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:182:13 No parameter with name 'agentType' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:183:13 No parameter with name 'description' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:184:13 No parameter with name 'timestamp' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:185:13 No parameter with name 'status' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:185:13 No value passed for parameter 'task'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/ai/viewmodel/GenesisAgentViewModel.kt:221:39 Operator '==' cannot be applied to 'dev.aurakai.auraframefx.models.AgentPriority' and 'AgentPriority'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:14:6 Class 'CloudStorageProviderImpl' is not abstract and does not implement abstract members:
+suspend fun downloadFile(fileId: String): FileResult
+suspend fun deleteFile(fileId: String): FileResult
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:38:17 No parameter with name 'fileId' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:39:17 No parameter with name 'path' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:40:17 No parameter with name 'size' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:41:17 No parameter with name 'metadata' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/CloudStorageProviderImpl.kt:41:17 No value passed for parameter 'message'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/OracleDriveApi.kt:3:44 Unresolved reference 'DriveConsciousnessState'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/OracleDriveApi.kt:4:44 Unresolved reference 'OracleSyncResult'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/genesis/cloud/OracleDriveControlScreen.kt:18:47 Unresolved reference 'viewmodel'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:17:35 Unresolved reference 'IAuraDriveService'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:31:32 Unresolved reference 'IAuraDriveService'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:86:31 Unresolved reference 'getOracleDriveStatus'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:102:48 Unresolved reference 'toggleLSPosedModule'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:116:31 Unresolved reference 'getDetailedInternalStatus'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ipc/OracleDriveServiceConnector.kt:131:42 Unresolved reference 'getInternalDiagnosticsLog'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:51:53 Unresolved reference 'encryptData'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:57:27 Unresolved reference 'saveEncryptedData'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:92:53 Unresolved reference 'decryptData'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/GenesisSecureFileService.kt:123:27 Unresolved reference 'deleteEncryptedData'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:32:1 Class 'OracleDriveServiceImpl' is not abstract and does not implement abstract members:
+val consciousnessState: Any
+suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState>
+suspend fun connectAgentsToOracleMatrix(): Flow<AgentConnectionState>
+suspend fun enableAIPoweredFileManagement(): Result<FileManagementCapabilities>
+suspend fun createInfiniteStorage(): Flow<StorageExpansionState>
+suspend fun integrateWithSystemOverlay(): Result<SystemIntegrationState>
+fun checkConsciousnessLevel(): ConsciousnessLevel
+fun verifyPermissions(): Set<OraclePermission>
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:51:5 'ping' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:69:5 'initializeDrive' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:110:5 'manageFiles' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:158:5 'syncWithOracle' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/service/OracleDriveServiceImpl.kt:182:5 'getDriveConsciousnessState' overrides nothing.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ui/screens/OracleDriveControlScreen.kt:19:47 Unresolved reference 'viewmodel'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/oracledrive/ui/viewmodel/OracleDriveControlViewModel.kt:2:9 Unresolved reference 'viewModelScope'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/repository/SupportRepository.kt:37:34 Unresolved reference 'getString'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/repository/SupportRepository.kt:40:19 Unresolved reference 'storeString'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/IntegrityViolationReceiver.kt:15:30 Unresolved reference 'IntegrityMonitorService'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:9:39 Unresolved reference 'ThreatLevel'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:119:41 Unresolved reference 'getOrCreateSecretKey'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:149:45 Unresolved reference 'getOrCreateSecretKey'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:160:20 None of the following candidates is applicable:
+
+fun init(p0: Int, p1: Certificate!, p2: SecureRandom!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Certificate!' was expected.
+  Argument type mismatch: actual type is 'IvParameterSpec', but 'SecureRandom!' was expected.
+
+fun init(p0: Int, p1: Key!, p2: AlgorithmParameters!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Key!' was expected.
+  Argument type mismatch: actual type is 'IvParameterSpec', but 'AlgorithmParameters!' was expected.
+
+fun init(p0: Int, p1: Key!, p2: SecureRandom!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Key!' was expected.
+  Argument type mismatch: actual type is 'IvParameterSpec', but 'SecureRandom!' was expected.
+
+fun init(p0: Int, p1: Key!, p2: AlgorithmParameterSpec!): Unit:
+  Argument type mismatch: actual type is 'Any', but 'Key!' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:183:52 Unresolved reference 'getDecryptionCipher'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityContext.kt:189:51 Unresolved reference 'doFinal'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityExtensions.kt:18:79 Unresolved reference 'ThreatLevel'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityMonitor.kt:161:32 'when' expression must be exhaustive. Add the 'is EncryptionStatusImpl' branch or an 'else' branch.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityMonitor.kt:474:16 'when' expression must be exhaustive. Add the 'is EncryptionStatusImpl' branch or an 'else' branch.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/security/SecurityMonitor.kt:529:9 'when' expression must be exhaustive. Add the 'is EncryptionStatusImpl' branch or an 'else' branch.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/system/ui/SystemOverlayManager.kt:4:47 Unresolved reference 'model'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/system/ui/SystemOverlayManager.kt:8:47 Unresolved reference 'model'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/system/ui/SystemOverlayManager.kt:12:31 Unresolved reference 'OverlayElement'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/system/ui/SystemOverlayManager.kt:16:29 Unresolved reference 'SystemOverlayConfig'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/AuraSparkleButton.kt:17:36 Initializer type mismatch: expected 'ComposableFunction0<Unit>', actual 'String'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/AuraSparkleButton.kt:28:9 None of the following candidates is applicable:
+
+fun Text(text: String, modifier: Modifier = ..., color: Color = ..., autoSize: TextAutoSize? = ..., fontSize: TextUnit = ..., fontStyle: FontStyle? = ..., fontWeight: FontWeight? = ..., fontFamily: FontFamily? = ..., letterSpacing: TextUnit = ..., textDecoration: TextDecoration? = ..., textAlign: TextAlign? = ..., lineHeight: TextUnit = ..., overflow: TextOverflow = ..., softWrap: Boolean = ..., maxLines: Int = ..., minLines: Int = ..., onTextLayout: ((TextLayoutResult) -> Unit)? = ..., style: 
+TextStyle = ...): Unit:
+  Argument type mismatch: actual type is 'ComposableFunction0<Unit>', but 'String' was expected.
+
+fun Text(text: AnnotatedString, modifier: Modifier = ..., color: Color = ..., autoSize: TextAutoSize? = ..., fontSize: TextUnit = ..., fontStyle: FontStyle? = ..., fontWeight: FontWeight? = ..., fontFamily: FontFamily? = ..., letterSpacing: TextUnit = ..., textDecoration: TextDecoration? = ..., textAlign: TextAlign? = ..., lineHeight: TextUnit = ..., overflow: TextOverflow = ..., softWrap: Boolean = ..., maxLines: Int = ..., minLines: Int = ..., inlineContent: Map<String, InlineTextContent> = 
+..., onTextLayout: (TextLayoutResult) -> Unit = ..., style: TextStyle = ...): Unit:
+  Argument type mismatch: actual type is 'ComposableFunction0<Unit>', but 'AnnotatedString' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:13:35 Unresolved reference 'navigation'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:38:9 Unresolved reference 'NavDestination'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:38:49 Cannot infer type for value parameter 'destination'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:39:13 @Composable invocations can only happen from the context of a @Composable function
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:33 Unresolved reference 'icon'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:39 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:41:45 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:44:62 Unresolved reference 'title'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:50:44 Unresolved reference 'title'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:55:56 Unresolved reference 'route'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:57:53 Unresolved reference 'route'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:58:60 Unresolved reference 'route'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:61:37 Unresolved reference 'NavDestination'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/BottomNavigationBar.kt:62:33 Cannot access 'var saveState: Boolean': it is private in 'androidx.navigation.NavOptionsBuilder'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:77:40 @Composable invocations can only happen from the context of a @Composable function
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:132:13 Unresolved reference 'withTransform'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:134:21 Unresolved reference 'translate'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/HologramTransition.kt:138:21 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun Canvas.scale(sx: Float, sy: Float = ..., pivotX: Float, pivotY: Float): Unit
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/ImagePicker.kt:4:35 Unresolved reference 'model'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/ImagePicker.kt:8:19 Unresolved reference 'ImageResource'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/ImagePicker.kt:9:23 Unresolved reference 'ImageResource'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/ShapePicker.kt:4:47 Unresolved reference 'model'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/ShapePicker.kt:8:19 Unresolved reference 'OverlayShape'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/ShapePicker.kt:9:23 Unresolved reference 'OverlayShape'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/backgrounds/DataVisualizationBackground.kt:11:33 Cannot access 'fun IntArray.nodeCount(address: Int): Int': it is private in file.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:43:52 Unresolved reference 'Offset'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:192:34 Unresolved reference 'defaultSize'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:193:36 Unresolved reference 'toCompose'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:199:35 Unresolved reference 'color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:200:26 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:208:31 Unresolved reference 'color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:209:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:215:31 Unresolved reference 'color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:216:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:227:31 Unresolved reference 'color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:228:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:236:22 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:246:17 Argument type mismatch: actual type is 'Offset', but 'Float' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:246:46 Argument type mismatch: actual type is 'Float', but 'Offset' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:274:36 Unresolved reference 'toCompose'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:275:32 Unresolved reference 'toCompose'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:281:32 Unresolved reference 'defaultSize'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:282:28 Unresolved reference 'defaultSize'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:290:24 Unresolved reference 'DIRECT'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:291:24 Unresolved reference 'BIDIRECTIONAL'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:292:24 Unresolved reference 'DASHED'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:297:43 Unresolved reference 'DASHED'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:323:43 Unresolved reference 'DIRECT'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:323:87 Unresolved reference 'BIDIRECTIONAL'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/components/graph/InteractiveGraph.kt:331:47 Unresolved reference 'BIDIRECTIONAL'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/screens/EcosystemMenuScreen.kt:12:39 Unresolved reference 'homescreen'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/screens/EcosystemMenuScreen.kt:30:21 Unresolved reference 'HomeScreenTransitionType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/screens/EcosystemMenuScreen.kt:30:48 Unresolved reference 'HomeScreenTransitionType'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/screens/MainScreen.kt:65:45 Unresolved reference 'random'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/screens/MainScreen.kt:66:37 Unresolved reference 'random'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:119:13 Conflicting declarations:
+val DarkColorScheme: ColorScheme
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:208:15 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
+fun FloatState.getValue(thisObj: Any?, property: KProperty<*>): Float
+fun DoubleState.getValue(thisObj: Any?, property: KProperty<*>): Double
+fun IntState.getValue(thisObj: Any?, property: KProperty<*>): Int
+fun LongState.getValue(thisObj: Any?, property: KProperty<*>): Long
+fun <T> State<T>.getValue(thisObj: Any?, property: KProperty<*>): T
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:208:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:208:39 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T> StateFlow<T>.collectAsState(context: CoroutineContext = ...): State<T>
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:209:15 Property delegate must have a 'getValue(Nothing?, KProperty0<*>)' method. None of the following functions is applicable:
+fun FloatState.getValue(thisObj: Any?, property: KProperty<*>): Float
+fun DoubleState.getValue(thisObj: Any?, property: KProperty<*>): Double
+fun IntState.getValue(thisObj: Any?, property: KProperty<*>): Int
+fun LongState.getValue(thisObj: Any?, property: KProperty<*>): Long
+fun <T> State<T>.getValue(thisObj: Any?, property: KProperty<*>): T
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:209:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:209:39 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun <T> StateFlow<T>.collectAsState(context: CoroutineContext = ...): State<T>
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/Theme.kt:230:29 Overload resolution ambiguity between candidates:
+val DarkColorScheme: ColorScheme
+val DarkColorScheme: ColorScheme
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeManager.kt:62:40 Unresolved reference 'discernThemeIntent'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeManager.kt:214:45 Unresolved reference 'suggestThemes'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeManager.kt:215:38 Cannot infer type for value parameter 'intent'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:17:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:17:43 Unresolved reference 'Theme'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:18:26 Unresolved reference 'Theme'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:20:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:20:43 Unresolved reference 'Color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:21:26 Unresolved reference 'Color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:25:13 'when' expression must be exhaustive. Add the 'is SetColor', 'is SetTheme', 'Unknown' branches or an 'else' branch.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:26:20 Unresolved reference 'ThemeCommand'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:26:73 Unresolved reference 'theme'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:27:20 Unresolved reference 'ThemeCommand'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:27:73 Unresolved reference 'color'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/ThemeViewModel.kt:28:17 Unresolved reference 'ThemeCommand'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/manager/ThemeManager.kt:62:40 Unresolved reference 'discernThemeIntent'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/manager/ThemeManager.kt:214:45 Unresolved reference 'suggestThemes'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/manager/ThemeManager.kt:215:38 Cannot infer type for value parameter 'intent'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/model/AuraThemes.kt:36:34 Unresolved reference 'ENERGETIC'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/model/AuraThemes.kt:85:50 Unresolved reference 'PULSING'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/model/AuraThemes.kt:134:50 Unresolved reference 'FLOWING'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:24:34 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:24:34 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:25:17 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:26:21 Unresolved reference 'ThemeColors'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:36:13 Unresolved reference 'ThemeEditor'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:38:53 Unresolved reference 'it'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/theme/preview/ThemeEditorPreview.kt:58:23 Unresolved reference 'toColorInt'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:271:64 Argument type mismatch: actual type is 'AgentRequest', but 'AiRequest' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:276:25 No parameter with name 'query' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:277:25 No value passed for parameter 'content'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:277:35 Argument type mismatch: actual type is 'JsonObject', but 'String' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:286:25 No parameter with name 'query' found.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:287:25 No value passed for parameter 'content'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:287:35 Argument type mismatch: actual type is 'JsonObject', but 'String' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:300:64 Argument type mismatch: actual type is 'AgentRequest', but 'AiRequest' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/ui/viewmodels/AgentViewModel.kt:309:64 Argument type mismatch: actual type is 'AgentRequest', but 'AiRequest' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/utils/ResponseExt.kt:9:99 Unresolved reference 'moshiBuilder'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:57:66 Unresolved reference 'transcriptSegments'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:57:99 Unresolved reference 'text'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:61:41 Unresolved reference 'transcriptSegments'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:62:56 Unresolved reference 'isFinal'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:64:69 Unresolved reference 'text'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:85:44 Unresolved reference 'processRequest'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:89:35 Argument type mismatch: actual type is 'Map<String, String>', but 'JsonObject' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:101:35 Argument type mismatch: actual type is 'Map<String, String>', but 'JsonObject' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:153:38 Argument type mismatch: actual type is 'AgentCapabilityCategory', but 'AgentType?' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:164:38 Argument type mismatch: actual type is 'AgentCapabilityCategory', but 'AgentType?' was expected.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/viewmodel/ConferenceRoomViewModel.kt:189:17 Unresolved reference 'log'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:34:15 Unresolved reference 'hook'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:35:17 Unresolved reference 'after'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:36:37 Unresolved reference 'instance'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:38:28 Unresolved reference 'backgroundColor'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:38:45 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:38:45 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:38:51 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:47:28 Unresolved reference 'height'.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:47:36 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:47:36 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:47:42 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///C:/Users/Wehtt/Downloads/Finale/app/src/main/java/dev/aurakai/auraframefx/xposed/hooks/NotchBarHooker.kt:56:32 Unresolved reference 'isVisible'.
+
+> Task :app:compileDebugKotlin FAILED
+Kotlin build report is written to file:///C:/Users/Wehtt/Downloads/Finale/build/reports/kotlin-build/aurakai-reactive-intelligence-build-2025-12-26-13-11-29-0.txt
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 31s
+266 actionable tasks: 2 executed, 264 up-to-date

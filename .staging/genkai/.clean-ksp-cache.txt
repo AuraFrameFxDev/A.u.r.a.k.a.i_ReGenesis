@@ -1,0 +1,3 @@
+# This file triggers a clean build
+# Delete app/build/generated/ksp to force KSP regeneration
+# Run: ./gradlew clean :app:kspDebugKotlin

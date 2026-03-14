@@ -1,0 +1,43 @@
+# System management domain paths
+/system/lockscreen-config:
+  get:
+    operationId: systemGetLockScreenConfig
+    summary: Get lock screen configuration
+    tags: [ System Management ]
+    security:
+      - OAuth2: [ read ]
+    responses:
+      '200': { description: Current configuration, content: { application/json: { schema: { $ref: '#/components/schemas/LockScreenConfig' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+  put:
+    operationId: systemUpdateLockScreenConfig
+    summary: Update lock screen configuration
+    tags: [ System Management ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/LockScreenConfig' }
+    responses:
+      '200': { description: Configuration updated }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+/conference/rooms:
+  post:
+    operationId: systemCreateConferenceRoom
+    summary: Create AI agent conference room
+    tags: [ System Management ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ConferenceRoomCreateRequest' }
+    responses:
+      '201': { description: Room created, content: { application/json: { schema: { $ref: '#/components/schemas/ConferenceRoom' } } } }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+

@@ -57,7 +57,7 @@ import dev.aurakai.auraframefx.domains.genesis.screens.SovereignNeuralArchiveScr
 import dev.aurakai.auraframefx.aura.ui.TerminalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
-import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
+import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
@@ -93,13 +93,6 @@ import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
-import dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen
-import dev.aurakai.auraframefx.domains.aura.ui.components.intro.ReGenesisIntroAnimation
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import dev.aurakai.auraframefx.ui.gates.allGates
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -373,31 +366,7 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
             LdoCatalystDevelopmentScreen(navController = navController)
         }
-
-        composable(ReGenesisNavHost.LdoOrchestrationHub.route) {
-            LDOOrchestrationHubScreen(navController = navController)
-        }
-
-        composable(ReGenesisNavHost.ArmamentFusion.route) {
-            ArmamentFusionScreen(navController = navController)
-        }
-
-        composable(
-            route = ReGenesisNavHost.ArmamentFusionWithAgent.route,
-            arguments = listOf(
-                androidx.navigation.navArgument("agentName") {
-                    type = androidx.navigation.NavType.StringType
-                    nullable = true
-                    defaultValue = null
-                }
-            )
-        ) { backStackEntry ->
-            ArmamentFusionScreen(
-                navController = navController,
-                preloadAgentName = backStackEntry.arguments?.getString("agentName")
-            )
-        }
-
+        
         // ═══════════════════════════════════════════════════════════════
         // LDO DEVOPS PROFILE SCREENS (Logic Status Overlays)
         // ═══════════════════════════════════════════════════════════════
@@ -837,7 +806,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.RomToolsSubmenu.route) {
-            ROMToolsSubmenuScreen(navController = navController)
+            RomToolsScreen()
         }
 
         // ═══════════════════════════════════════════════════════════════
