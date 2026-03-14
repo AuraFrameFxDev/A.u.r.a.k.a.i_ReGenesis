@@ -725,8 +725,7 @@ fun ReGenesisNavHost(
                 title = "Aura Profile",
                 subtitle = "Aura Agent Identity",
                 accentColor = Color(0xFF00E5FF),
-                onNavigateBack = { navController.popBackStack() },
-                name = TODO()
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
