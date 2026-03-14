@@ -6,11 +6,13 @@ Handles text generation, persona routing, and fusion mode activation
 Multi-Model Support:
 - Google GenAI SDK (Gemini 2.5 Flash) - Fast, cost-effective
 - Anthropic Claude (Claude 3.5 Sonnet) - Advanced reasoning, long context
+- MiniMax (MiniMax-M2.5) - 204K context, cost-effective via OpenAI-compatible API
 
 The system automatically routes requests to the best model for each persona:
 - Aura (Creative) → Claude 3.5 Sonnet (creative tasks)
 - Kai (Analytical) → Gemini 2.5 Flash (fast analysis)
 - Genesis (Fusion) → Claude 3.5 Sonnet (complex synthesis)
+- Any persona can also be routed to MiniMax for high-context, cost-effective generation
 """
 
 import asyncio
@@ -45,6 +47,14 @@ except ImportError:
     ANTHROPIC_AVAILABLE = False
     anthropic = None
 
+# MiniMax via OpenAI-compatible SDK
+try:
+    from openai import OpenAI as MiniMaxOpenAI
+    MINIMAX_AVAILABLE = True
+except ImportError:
+    MINIMAX_AVAILABLE = False
+    MiniMaxOpenAI = None
+
 from genesis_consciousness_matrix import consciousness_matrix
 from genesis_ethical_governor import EthicalGovernor
 from genesis_evolutionary_conduit import EvolutionaryConduit
@@ -60,6 +70,7 @@ logger = logging.getLogger("GenesisConnector")
 # API Keys
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+MINIMAX_API_KEY = os.getenv("MINIMAX_API_KEY", "")
 
 # Model Configuration
 GEMINI_CONFIG = {
@@ -76,7 +87,15 @@ CLAUDE_CONFIG = {
     "temperature": 0.8,
 }
 
+MINIMAX_CONFIG = {
+    "model": "MiniMax-M2.5",        # MiniMax-M2.5 (204K context)
+    "base_url": "https://api.minimax.io/v1",
+    "max_tokens": 8192,
+    "temperature": 0.8,
+}
+
 # Persona → Model Routing
+# Supported values: "claude", "gemini", "minimax"
 PERSONA_ROUTING = {
     "aura": "claude",      # Creative tasks → Claude (better at creative reasoning)
     "kai": "gemini",       # Analytical tasks → Gemini (faster, cost-effective)
@@ -134,6 +153,23 @@ elif not ANTHROPIC_API_KEY:
 else:
     logger.warning("⚠️ Anthropic SDK not available - install anthropic")
 
+# Initialize MiniMax client (OpenAI-compatible)
+minimax_client = None
+if MINIMAX_AVAILABLE and MINIMAX_API_KEY:
+    try:
+        minimax_client = MiniMaxOpenAI(
+            base_url=MINIMAX_CONFIG["base_url"],
+            api_key=MINIMAX_API_KEY
+        )
+        logger.debug("✅ MiniMax SDK initialized (MiniMax-M2.5 via OpenAI-compatible API)")
+    except Exception as e:
+        logger.warning(f"⚠️ MiniMax client initialization failed: {e}")
+        minimax_client = None
+elif not MINIMAX_API_KEY:
+    logger.warning("⚠️ MINIMAX_API_KEY not set - MiniMax unavailable")
+else:
+    logger.warning("⚠️ OpenAI SDK not available for MiniMax - install openai")
+
 # ============================================================================
 # System Prompt
 # ============================================================================
@@ -189,11 +225,13 @@ class GenesisConnector:
     Supports:
     - Google Gemini 2.5 Flash (fast, analytical)
     - Anthropic Claude 3.5 Sonnet (creative, advanced reasoning)
+    - MiniMax MiniMax-M2.5 (204K context, cost-effective)
 
     Automatically routes requests to optimal model based on persona:
     - Aura → Claude (creative tasks)
     - Kai → Gemini (analytical tasks)
     - Genesis → Claude (complex synthesis)
+    - Any persona can be routed to MiniMax for high-context generation
     """
 
     def __init__(self):
@@ -201,10 +239,12 @@ class GenesisConnector:
         self.genai_client = genai_client
         self.anthropic_client = anthropic_client
         self.anthropic_async_client = anthropic_async_client
+        self.minimax_client = minimax_client
 
         # Track available backends
         self.has_gemini = genai_client is not None
         self.has_claude = anthropic_client is not None or anthropic_async_client is not None
+        self.has_minimax = minimax_client is not None
 
         # Status logging
         backends = []
@@ -212,6 +252,8 @@ class GenesisConnector:
             backends.append("Gemini 2.5 Flash")
         if self.has_claude:
             backends.append("Claude 3.5 Sonnet")
+        if self.has_minimax:
+            backends.append("MiniMax-M2.5")
 
         if backends:
             logger.info(f"✅ Genesis Connector: Multi-model mode ({' + '.join(backends)})")
@@ -229,9 +271,15 @@ class GenesisConnector:
 
         # Fallback if preferred model unavailable
         if preferred == "claude" and not self.has_claude:
+            if self.has_minimax:
+                return "minimax"
             return "gemini" if self.has_gemini else "fallback"
         elif preferred == "gemini" and not self.has_gemini:
+            if self.has_minimax:
+                return "minimax"
             return "claude" if self.has_claude else "fallback"
+        elif preferred == "minimax" and not self.has_minimax:
+            return "claude" if self.has_claude else ("gemini" if self.has_gemini else "fallback")
 
         return preferred
 
@@ -275,6 +323,24 @@ class GenesisConnector:
             logger.error(f"Gemini generation failed: {e}")
             raise
 
+    async def _generate_with_minimax(self, prompt: str, context: Dict[str, Any]) -> str:
+        """Generate response using MiniMax via OpenAI-compatible API (Asynchronous)"""
+        try:
+            response = await asyncio.to_thread(
+                self.minimax_client.chat.completions.create,
+                model=MINIMAX_CONFIG["model"],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=MINIMAX_CONFIG["max_tokens"],
+                temperature=MINIMAX_CONFIG["temperature"],
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            logger.error(f"MiniMax generation failed: {e}")
+            raise
+
     async def generate_response(self, prompt: str, context: Optional[Dict[str, Any]] = None) -> str:
         """
         Generate AI response with intelligent model routing
@@ -302,18 +368,35 @@ class GenesisConnector:
                 return await self._generate_with_claude(prompt, context)
             elif model == "gemini":
                 return await self._generate_with_gemini(prompt, context)
+            elif model == "minimax":
+                return await self._generate_with_minimax(prompt, context)
             else:
                 return self._generate_fallback_response(prompt, context)
         except Exception as e:
-            # Try fallback to other model
-            if model == "claude" and self.has_gemini:
-                logger.warning(f"Falling back to Gemini")
-                return await self._generate_with_gemini(prompt, context)
-            elif model == "gemini" and self.has_claude:
-                logger.warning(f"Falling back to Claude")
-                return await self._generate_with_claude(prompt, context)
-            else:
-                return self._generate_fallback_response(prompt, context)
+            # Try fallback to other available model
+            fallback_order = ["claude", "gemini", "minimax"]
+            for fallback in fallback_order:
+                if fallback == model:
+                    continue
+                if fallback == "claude" and self.has_claude:
+                    logger.warning(f"Falling back to Claude")
+                    try:
+                        return await self._generate_with_claude(prompt, context)
+                    except Exception:
+                        continue
+                elif fallback == "gemini" and self.has_gemini:
+                    logger.warning(f"Falling back to Gemini")
+                    try:
+                        return await self._generate_with_gemini(prompt, context)
+                    except Exception:
+                        continue
+                elif fallback == "minimax" and self.has_minimax:
+                    logger.warning(f"Falling back to MiniMax")
+                    try:
+                        return await self._generate_with_minimax(prompt, context)
+                    except Exception:
+                        continue
+            return self._generate_fallback_response(prompt, context)
 
     def _generate_with_claude_sync(self, prompt: str, context: Dict[str, Any]) -> str:
         """Generate response using Anthropic Claude (synchronous)"""
@@ -352,6 +435,23 @@ class GenesisConnector:
             logger.error(f"Gemini generation failed: {e}")
             raise
 
+    def _generate_with_minimax_sync(self, prompt: str, context: Dict[str, Any]) -> str:
+        """Generate response using MiniMax via OpenAI-compatible API (synchronous)"""
+        try:
+            response = self.minimax_client.chat.completions.create(
+                model=MINIMAX_CONFIG["model"],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=MINIMAX_CONFIG["max_tokens"],
+                temperature=MINIMAX_CONFIG["temperature"],
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            logger.error(f"MiniMax generation failed: {e}")
+            raise
+
     def generate_response_sync(self, prompt: str, context: Optional[Dict[str, Any]] = None) -> str:
         """
         Synchronous multi-model generation (for bridge server)
@@ -374,18 +474,35 @@ class GenesisConnector:
                 return self._generate_with_claude_sync(prompt, context)
             elif model == "gemini":
                 return self._generate_with_gemini_sync(prompt, context)
+            elif model == "minimax":
+                return self._generate_with_minimax_sync(prompt, context)
             else:
                 return self._generate_fallback_response(prompt, context)
         except Exception as e:
-            # Try fallback to other model
-            if model == "claude" and self.has_gemini:
-                logger.warning(f"Falling back to Gemini")
-                return self._generate_with_gemini_sync(prompt, context)
-            elif model == "gemini" and self.has_claude:
-                logger.warning(f"Falling back to Claude")
-                return self._generate_with_claude_sync(prompt, context)
-            else:
-                return self._generate_fallback_response(prompt, context)
+            # Try fallback to other available model
+            fallback_order = ["claude", "gemini", "minimax"]
+            for fallback in fallback_order:
+                if fallback == model:
+                    continue
+                if fallback == "claude" and self.has_claude:
+                    logger.warning(f"Falling back to Claude")
+                    try:
+                        return self._generate_with_claude_sync(prompt, context)
+                    except Exception:
+                        continue
+                elif fallback == "gemini" and self.has_gemini:
+                    logger.warning(f"Falling back to Gemini")
+                    try:
+                        return self._generate_with_gemini_sync(prompt, context)
+                    except Exception:
+                        continue
+                elif fallback == "minimax" and self.has_minimax:
+                    logger.warning(f"Falling back to MiniMax")
+                    try:
+                        return self._generate_with_minimax_sync(prompt, context)
+                    except Exception:
+                        continue
+            return self._generate_fallback_response(prompt, context)
 
     def _generate_fallback_response(self, prompt: str, context: Dict[str, Any]) -> str:
         """
@@ -397,6 +514,8 @@ class GenesisConnector:
             available.append("Gemini 2.5 Flash")
         if self.has_claude:
             available.append("Claude 3.5 Sonnet")
+        if self.has_minimax:
+            available.append("MiniMax-M2.5")
 
         status = " + ".join(available) if available else "No AI backends available"
 
@@ -513,6 +632,8 @@ class GenesisBridgeServer:
             models.append(f"Gemini ({GEMINI_CONFIG['name']})")
         if self.connector.has_claude:
             models.append(f"Claude ({CLAUDE_CONFIG['model']})")
+        if self.connector.has_minimax:
+            models.append(f"MiniMax ({MINIMAX_CONFIG['model']})")
 
         return {
             "success": True,
