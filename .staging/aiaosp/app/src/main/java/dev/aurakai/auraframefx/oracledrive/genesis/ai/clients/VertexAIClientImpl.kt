@@ -268,6 +268,27 @@ class VertexAIClientImpl @Inject constructor(
     }
 
     /**
+     * Performs startup initialization for the Vertex AI client.
+     *
+     * Implementations can prepare resources or perform health checks; this implementation logs client initialization.
+     */
+    override suspend fun initialize() {
+        // Initialize Vertex AI client connection
+        Timber.i("VertexAI: Initializing client")
+    }
+
+    /**
+     * Clears the in-memory response cache and logs completion.
+     *
+     * Removes all cached generation responses held by the client.
+     */
+    override suspend fun cleanup() {
+        // Cleanup Vertex AI client resources
+        cache.clear()
+        Timber.i("VertexAI: Cleanup completed")
+    }
+
+    /**
      * Execute HTTP request to Vertex AI endpoint.
      */
     private suspend fun executeRequest(vertexRequest: VertexAIRequest): VertexAIResponse {
@@ -423,3 +444,4 @@ class VertexAIException(
     message: String,
     val httpCode: Int
 ) : Exception(message)
+

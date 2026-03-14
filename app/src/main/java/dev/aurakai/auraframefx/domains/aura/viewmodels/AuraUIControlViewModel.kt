@@ -105,14 +105,9 @@ class AuraUIControlViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    // Xposed bridge shared-prefs (world-readable, read by ChromaCoreHooker)
+    // Xposed bridge shared-prefs (read by ChromaCoreHooker)
     private val xprefs: SharedPreferences by lazy {
-        @Suppress("WorldReadableFiles")
-        try {
-            context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_PRIVATE)
-        } catch (_: Exception) {
-            context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_PRIVATE)
-        }
+        context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_PRIVATE)
     }
 
     // ─── Status Bar ───────────────────────────────────────────────────────────

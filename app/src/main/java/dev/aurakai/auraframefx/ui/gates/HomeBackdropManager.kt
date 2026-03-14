@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import dev.aurakai.auraframefx.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -22,6 +23,7 @@ data class BackdropOption(
 object HomeBackdropManager {
 
     val backdropOptions = listOf(
+        BackdropOption("exodus", "ExodusHUD", "Phoenix ascendant with catalyst card grid", dev.aurakai.auraframefx.R.drawable.exodus_hud_lvl1_bg, 0xFF00FFFF),
         BackdropOption("rpg", "RPG", "Fantasy landscape", null, 0xFF00FFFF),
         BackdropOption("hex", "Hex Grid", "Cyber net", null, 0xFFFF00FF),
         BackdropOption("void", "Void", "Pitch black", null, 0xFFFFFFFF)
@@ -31,7 +33,7 @@ object HomeBackdropManager {
 
     fun activeBackdropFlow(context: Context): Flow<BackdropOption> {
         return context.hotswapDataStore.data.map { preferences ->
-            val id = preferences[ACTIVE_BACKDROP_KEY] ?: "rpg"
+            val id = preferences[ACTIVE_BACKDROP_KEY] ?: "exodus"
             backdropOptions.find { it.id == id } ?: backdropOptions.first()
         }
     }

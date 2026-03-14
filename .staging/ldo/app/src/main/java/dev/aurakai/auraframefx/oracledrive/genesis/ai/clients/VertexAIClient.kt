@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.oracledrive.genesis.ai.clients
+package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,6 +15,8 @@ interface VertexAIClient {
     suspend fun analyzeImage(imageData: ByteArray, prompt: String): String
     suspend fun validateConnection(): Boolean
     suspend fun generateContent(prompt: String): String?
+    suspend fun initialize()
+    suspend fun cleanup()
 }
 
 /**
@@ -71,6 +73,16 @@ class DefaultVertexAIClient @Inject constructor() : VertexAIClient {
 
     override suspend fun generateContent(prompt: String): String {
         return generateText(prompt)
+    }
+
+    override suspend fun initialize() {
+        // Stub: No-op for mock client
+        println("MockVertexAI: Initialized (stub)")
+    }
+
+    override suspend fun cleanup() {
+        // Stub: No-op for mock client
+        println("MockVertexAI: Cleaned up (stub)")
     }
 }
 

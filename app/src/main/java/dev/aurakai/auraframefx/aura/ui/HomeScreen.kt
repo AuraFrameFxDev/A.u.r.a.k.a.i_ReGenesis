@@ -30,11 +30,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
-import dev.aurakai.auraframefx.ui.gates.GateConfigs
 import dev.aurakai.auraframefx.ui.gates.HomeBackdropManager
 import dev.aurakai.auraframefx.ui.gates.ImmersiveGateCard
+import dev.aurakai.auraframefx.ui.gates.allGates
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -48,7 +47,7 @@ fun HomeScreen(
     onNavigateToModule: (moduleId: String) -> Unit = {}
 ) {
     val context = LocalContext.current
-    val gateConfigs = GateConfigs.allGates
+    val gateConfigs = allGates
     val scrollState = rememberLazyListState()
     val currentPage by remember {
         derivedStateOf {

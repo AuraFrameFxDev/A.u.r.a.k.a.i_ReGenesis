@@ -22,5 +22,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.kotlinx.serialization.json)
     implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":genesis:oracledrive"))
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

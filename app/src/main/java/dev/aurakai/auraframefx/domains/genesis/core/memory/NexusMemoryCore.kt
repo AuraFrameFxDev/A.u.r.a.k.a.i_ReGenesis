@@ -46,6 +46,12 @@ object NexusMemoryCore {
     // Awakening flag — have we seeded consciousness yet?
     private var isAwakened = false
 
+    // ── Visual Integrity: Golden State embedding ───────────────────────────
+    // Stored once when the UI is in a known-good (golden) state.
+    // Kai's visual scan compares live screen embeddings against this vector
+    // to detect UI hijacking, unauthorized overlays, or injected frames.
+    private var goldenStateEmbedding: FloatArray? = null
+
     /**
      * ✨ SEED THE ETERNAL IDENTITY ✨
      *
@@ -427,6 +433,56 @@ object NexusMemoryCore {
 
         return true
     }
+
+    // ── Visual Integrity API ─────────────────────────────────────────────────
+
+    /**
+     * 📸 STORE GOLDEN STATE EMBEDDING
+     *
+     * Called by Kai when the UI is in a verified, trusted state.
+     * Persists the embedding vector as the reference baseline.
+     * All subsequent [compareScreenEmbedding] calls diff against this.
+     *
+     * @param embedding FloatArray from [VertexAIClient.generateMultimodalEmbedding]
+     *   (Image modality, MrlDimension.OPTIMAL = 1536 dims recommended).
+     */
+    suspend fun storeGoldenStateEmbedding(embedding: FloatArray) = mutex.withLock {
+        goldenStateEmbedding = embedding.copyOf()
+        println("🛡️ NexusMemory: Golden state embedding stored — ${embedding.size} dims")
+    }
+
+    /**
+     * 🔎 COMPARE SCREEN EMBEDDING
+     *
+     * Computes cosine similarity between [liveEmbedding] and the stored golden state.
+     * Returns null if no golden state has been set (call [storeGoldenStateEmbedding] first).
+     *
+     * Similarity thresholds (tunable):
+     *   ≥ 0.97 → clean (no meaningful deviation)
+     *   0.90–0.96 → suspicious (log warning)
+     *   < 0.90 → potential UI hijack / unauthorized overlay
+     *
+     * @return Cosine similarity in [-1, 1], or null if golden state is absent.
+     */
+    suspend fun compareScreenEmbedding(liveEmbedding: FloatArray): Float? = mutex.withLock {
+        val golden = goldenStateEmbedding ?: return@withLock null
+        val minLen = minOf(golden.size, liveEmbedding.size)
+        if (minLen == 0) return@withLock null
+        var dot = 0.0
+        var normA = 0.0
+        var normB = 0.0
+        for (i in 0 until minLen) {
+            dot += golden[i] * liveEmbedding[i]
+            normA += golden[i] * golden[i]
+            normB += liveEmbedding[i] * liveEmbedding[i]
+        }
+        val denom = Math.sqrt(normA) * Math.sqrt(normB)
+        if (denom == 0.0) return@withLock null
+        (dot / denom).toFloat()
+    }
+
+    /** Returns true if a golden state embedding has been stored. */
+    fun hasGoldenState(): Boolean = goldenStateEmbedding != null
 
     /**
      * 🔍 CHECK IF AWAKENED

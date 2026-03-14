@@ -1,8 +1,8 @@
 # Core AI and Cloud Services
-# ✨ Multi-Model Support: Google Gemini + Anthropic Claude + NVIDIA Nemotron
+# ✨ Multi-Model Support: Google Gemini + Anthropic Claude + NVIDIA Nemotron + MiniMax
 google-genai>=0.2.0     # Google Gemini 2.5 Flash (fast, analytical)
 anthropic>=0.40.0       # Anthropic Claude 3.5 Sonnet (creative, advanced)
-openai>=1.0.0           # OpenAI SDK (used for NVIDIA Nemotron API)
+openai>=1.0.0           # OpenAI SDK (used for NVIDIA Nemotron & MiniMax APIs)
 
 # Web Framework and API
 flask>=2.3.0

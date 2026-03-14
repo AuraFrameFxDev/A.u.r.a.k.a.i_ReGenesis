@@ -77,7 +77,7 @@ class ColorTypeAdapter : JsonSerializer<Color>, JsonDeserializer<Color> {
         typeOfSrc: Type,
         context: JsonSerializationContext,
     ): JsonElement {
-        return JsonPrimitive(src.value.toInt())
+        return JsonPrimitive(src.value.toLong())
     }
 
     override fun deserialize(
@@ -86,6 +86,30 @@ class ColorTypeAdapter : JsonSerializer<Color>, JsonDeserializer<Color> {
         context: JsonDeserializationContext,
     ): Color {
         return Color(json.asLong.toULong())
+    }
+}
+
+class OffsetTypeAdapter : JsonSerializer<Offset>, JsonDeserializer<Offset> {
+    override fun serialize(
+        src: Offset,
+        typeOfSrc: Type,
+        context: JsonSerializationContext
+    ): JsonElement {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("x", src.x)
+        jsonObject.addProperty("y", src.y)
+        return jsonObject
+    }
+
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ): Offset {
+        val jsonObject = json.asJsonObject
+        val x = jsonObject.get("x").asFloat
+        val y = jsonObject.get("y").asFloat
+        return Offset(x, y)
     }
 }
 
