@@ -231,7 +231,7 @@ class BackupManagerImpl @Inject constructor(
                 }
 
                 val progress = 0.3f + (0.6f * (index + 1) / availablePartitions.size)
-                progressCallback(progress.toFloat())
+                progressCallback(progress)
             }
 
             // Also backup userdata via tar (safer than dd on mounted partition)
