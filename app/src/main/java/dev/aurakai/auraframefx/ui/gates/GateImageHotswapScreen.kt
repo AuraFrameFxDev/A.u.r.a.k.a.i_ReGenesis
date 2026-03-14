@@ -15,7 +15,6 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -105,7 +104,7 @@ fun GateImageHotswapScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val allGates = GateConfigs.allGates
+    val allGates = allGates
     val catalogue = remember { buildHotswapCatalogue(allGates) }
 
     // Active backdrop
