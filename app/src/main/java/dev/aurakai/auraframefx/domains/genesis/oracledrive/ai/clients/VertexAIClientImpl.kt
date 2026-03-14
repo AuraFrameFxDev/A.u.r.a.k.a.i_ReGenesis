@@ -287,6 +287,82 @@ class VertexAIClientImpl @Inject constructor(
         Timber.i("VertexAI: Cleanup completed")
     }
 
+    // ── Gemini Embedding 2 (Multimodal, MRL-aware) ────────────────────────────
+
+    /**
+     * Calls the Vertex AI multimodal embedding endpoint (multimodalembedding@001)
+     * and returns a Matryoshka-truncated FloatArray of the requested [dimensions].
+     *
+     * Supported modalities:
+     *   - [MultimodalContent.Text]  → "text" field in instance
+     *   - [MultimodalContent.Image] → "image.bytesBase64Encoded" in instance
+     *   - [MultimodalContent.Audio] → "video.bytesBase64Encoded" in instance (audio track)
+     *
+     * MRL dimension ladder: 768 (fast), 1536 (optimal, default), 3072 (deep).
+     */
+    override suspend fun generateMultimodalEmbedding(
+        content: List<MultimodalContent>,
+        dimensions: Int
+    ): FloatArray = withContext(Dispatchers.IO) {
+        if (content.isEmpty()) return@withContext FloatArray(0)
+
+        val instance = buildEmbeddingInstance(content)
+        val requestBody = json.encodeToString(
+            EmbeddingRequest(
+                instances = listOf(instance),
+                parameters = EmbeddingParameters(dimension = dimensions)
+            )
+        )
+
+        val httpRequest = Request.Builder()
+            .url(config.getEmbeddingEndpoint())
+            .post(requestBody.toRequestBody("application/json".toMediaType()))
+            .apply {
+                config.apiKey?.let { header("Authorization", "Bearer $it") }
+                header("Content-Type", "application/json")
+            }
+            .build()
+
+        return@withContext try {
+            val httpResponse = client.newCall(httpRequest).execute()
+            if (!httpResponse.isSuccessful) {
+                val err = httpResponse.body?.string() ?: "no body"
+                Timber.e("Embedding HTTP ${httpResponse.code}: $err")
+                return@withContext FloatArray(0)
+            }
+            val responseBody = httpResponse.body?.string() ?: return@withContext FloatArray(0)
+            if (config.enableLogging && config.logLevel == "DEBUG") {
+                Timber.d("Embedding response: $responseBody")
+            }
+            val parsed = json.decodeFromString<EmbeddingResponse>(responseBody)
+            // Prefer imageEmbedding when image was supplied, else textEmbedding
+            val vector = parsed.predictions?.firstOrNull()?.let { pred ->
+                pred.imageEmbedding?.takeIf { it.isNotEmpty() }
+                    ?: pred.textEmbedding
+            } ?: emptyList()
+            Timber.i("Embedding: ${vector.size} dims returned (requested $dimensions)")
+            vector.take(dimensions).map { it.toFloat() }.toFloatArray()
+        } catch (e: Exception) {
+            Timber.e(e, "Embedding request failed")
+            FloatArray(0)
+        }
+    }
+
+    /** Builds a single EmbeddingInstance from a list of MultimodalContent inputs. */
+    private fun buildEmbeddingInstance(inputs: List<MultimodalContent>): EmbeddingInstance {
+        var text: String? = null
+        var image: EmbeddingImage? = null
+        var audio: EmbeddingVideo? = null
+        for (input in inputs) {
+            when (input) {
+                is MultimodalContent.Text -> text = input.content
+                is MultimodalContent.Image -> image = EmbeddingImage(input.bytesBase64)
+                is MultimodalContent.Audio -> audio = EmbeddingVideo(input.bytesBase64)
+            }
+        }
+        return EmbeddingInstance(text = text, image = image, video = audio)
+    }
+
     /**
      * Execute HTTP request to Vertex AI endpoint.
      */
@@ -443,4 +519,52 @@ class VertexAIException(
     message: String,
     val httpCode: Int
 ) : Exception(message)
+
+// ============================================================================
+// Data Classes for Gemini Embedding 2 REST API (multimodalembedding@001)
+// ============================================================================
+
+/** Top-level predict request wrapping one or more embedding instances. */
+@Serializable
+private data class EmbeddingRequest(
+    val instances: List<EmbeddingInstance>,
+    val parameters: EmbeddingParameters? = null
+)
+
+/**
+ * A single embedding instance.  Any combination of text / image / video is valid;
+ * the model fuses them into a unified vector space.
+ */
+@Serializable
+private data class EmbeddingInstance(
+    val text: String? = null,
+    val image: EmbeddingImage? = null,
+    val video: EmbeddingVideo? = null
+)
+
+/** Base64-encoded image bytes for multimodal embedding. */
+@Serializable
+private data class EmbeddingImage(val bytesBase64Encoded: String)
+
+/**
+ * Base64-encoded video/audio bytes.
+ * For audio-only content (NeuralWhisper), supply the audio track here.
+ */
+@Serializable
+private data class EmbeddingVideo(val bytesBase64Encoded: String)
+
+/** MRL dimension control — Vertex AI truncates to this size server-side. */
+@Serializable
+private data class EmbeddingParameters(val dimension: Int)
+
+/** Top-level predict response from the multimodal embedding endpoint. */
+@Serializable
+private data class EmbeddingResponse(val predictions: List<EmbeddingPrediction>? = null)
+
+/** Per-instance prediction: the model may return separate text and image vectors. */
+@Serializable
+private data class EmbeddingPrediction(
+    val textEmbedding: List<Double>? = null,
+    val imageEmbedding: List<Double>? = null
+)
 
