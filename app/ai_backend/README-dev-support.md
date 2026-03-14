@@ -24,12 +24,12 @@ python genesis_api.py
 ```
 
 **Supported AI Providers:**
+
 | Provider | Model | Env Variable | Use Case |
 |----------|-------|-------------|----------|
 | Google Gemini | Gemini 2.5 Flash | `GOOGLE_API_KEY` | Fast, analytical tasks |
 | Anthropic Claude | Claude 3.5 Sonnet | `ANTHROPIC_API_KEY` | Creative, advanced reasoning |
 | MiniMax | MiniMax-M2.5 | `MINIMAX_API_KEY` | 204K context, cost-effective |
-
 MiniMax uses an OpenAI-compatible API endpoint (`https://api.minimax.io/v1`), so no additional SDK installation is needed beyond the `openai` package.
 
 Health & quick chat check (PowerShell)
