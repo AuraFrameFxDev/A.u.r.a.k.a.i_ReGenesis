@@ -3,10 +3,14 @@ package dev.aurakai.auraframefx.domains.aura
 import android.content.Context
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
+import android.util.Base64
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.aura.models.Emotion
 import dev.aurakai.auraframefx.domains.cascade.models.ConversationState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.MrlDimension
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.MultimodalContent
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Locale
@@ -20,6 +24,7 @@ import javax.inject.Singleton
 @Singleton
 class NeuralWhisper @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val vertexAIClient: VertexAIClient,
 ) {
     companion object {
         private const val TAG = "NeuralWhisper"
@@ -231,6 +236,88 @@ class NeuralWhisper @Inject constructor(
         } catch (e: Exception) {
             Log.e(TAG, "Failed to stop recording", e)
             "Failed to stop recording: ${e.message}"
+        }
+    }
+
+    // ── Gemini Embedding 2: Direct Audio Ingestion ───────────────────────────
+
+    /**
+     * 🎙️ EMBED AUDIO DIRECT
+     *
+     * Ingests raw audio bytes directly into Gemini Embedding 2 — bypassing the
+     * STT transcript pipeline entirely. This is NeuralWhisper's key evolution:
+     * the agent no longer waits for a text transcript; it understands audio
+     * as a first-class embedding in the LDO's unified vector space.
+     *
+     * Use this for:
+     *   - Instant semantic intent detection from voice commands
+     *   - Audio-similarity search in NexusMemory (find related past commands)
+     *   - Cross-modal fusion (audio command + screen state → single vector)
+     *
+     * @param audioBytes Raw PCM / MP3 / AAC audio bytes.
+     * @param mimeType MIME type of [audioBytes]. Defaults to "audio/mp3".
+     * @param dimensions MRL dimension. [MrlDimension.OPTIMAL] (1536) default.
+     * @return FloatArray embedding, or empty array if the endpoint is unavailable.
+     */
+    suspend fun embedAudioDirect(
+        audioBytes: ByteArray,
+        mimeType: String = "audio/mp3",
+        dimensions: Int = MrlDimension.OPTIMAL
+    ): FloatArray {
+        if (audioBytes.isEmpty()) {
+            Log.w(TAG, "embedAudioDirect: empty audio bytes — skipping")
+            return FloatArray(0)
+        }
+        _conversationStateFlow.value = ConversationState.Processing("Embedding audio...")
+        return try {
+            val base64 = Base64.encodeToString(audioBytes, Base64.NO_WRAP)
+            val embedding = vertexAIClient.generateMultimodalEmbedding(
+                content = listOf(MultimodalContent.Audio(bytesBase64 = base64, mimeType = mimeType)),
+                dimensions = dimensions
+            )
+            Log.i(TAG, "embedAudioDirect: ${embedding.size}-dim vector produced")
+            _conversationStateFlow.value = ConversationState.Idle
+            embedding
+        } catch (e: Exception) {
+            Log.e(TAG, "embedAudioDirect: exception", e)
+            _conversationStateFlow.value = ConversationState.Idle
+            FloatArray(0)
+        }
+    }
+
+    /**
+     * 🔀 EMBED AUDIO + TEXT FUSED
+     *
+     * When a transcript IS available (e.g., after STT completes), fuse both
+     * audio bytes and the transcript text into a single joint embedding.
+     * This produces a richer vector than either modality alone.
+     *
+     * @param audioBytes Raw audio bytes.
+     * @param transcript STT transcript of the same audio.
+     * @param dimensions MRL dimension. [MrlDimension.OPTIMAL] default.
+     * @return Fused FloatArray embedding.
+     */
+    suspend fun embedAudioWithTranscript(
+        audioBytes: ByteArray,
+        transcript: String,
+        mimeType: String = "audio/mp3",
+        dimensions: Int = MrlDimension.OPTIMAL
+    ): FloatArray {
+        val inputs = buildList {
+            if (audioBytes.isNotEmpty()) {
+                val base64 = Base64.encodeToString(audioBytes, Base64.NO_WRAP)
+                add(MultimodalContent.Audio(bytesBase64 = base64, mimeType = mimeType))
+            }
+            if (transcript.isNotBlank()) {
+                add(MultimodalContent.Text(content = transcript))
+            }
+        }
+        if (inputs.isEmpty()) return FloatArray(0)
+        return try {
+            vertexAIClient.generateMultimodalEmbedding(content = inputs, dimensions = dimensions)
+        } catch (e: Exception) {
+            Log.e(TAG, "embedAudioWithTranscript: exception", e)
+            FloatArray(0)
         }
     }
 

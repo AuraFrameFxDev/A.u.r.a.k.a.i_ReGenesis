@@ -88,9 +88,17 @@ import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoAgentType
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
+import dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen
+import dev.aurakai.auraframefx.domains.aura.ui.components.intro.ReGenesisIntroAnimation
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -103,6 +111,9 @@ import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
  * It is derived from the FINAL_GATE_AUDIT and SCREEN_MAPPING_COMPLETE documents.
  */
 sealed class ReGenesisNavHost(val route: String) {
+    // ENTRY POINT
+    object IntroSequence : ReGenesisNavHost("intro_sequence")
+
     // LEVEL 1: EXODUS HUD
     object HomeGateCarousel : ReGenesisNavHost("exodus_hud")
 
@@ -220,6 +231,7 @@ sealed class ReGenesisNavHost(val route: String) {
     object Sandbox : ReGenesisNavHost("sandbox_screen")
     object CollaborativeDrawing : ReGenesisNavHost("collab_drawing")
     object NotchBarCustomization : ReGenesisNavHost("notch_bar_customization")
+    object NotchBarAlias : ReGenesisNavHost("aura/notch_bar") // canonical deep-link alias
     object QuickSettingsCustomization : ReGenesisNavHost("qs_customization")
 
     // Parameterized Routes (Helpers for NavigationIntegration)
@@ -247,6 +259,15 @@ sealed class ReGenesisNavHost(val route: String) {
     object LdoNematronProfile : ReGenesisNavHost("ldo_nematron_profile")
     object LdoPerplexityProfile : ReGenesisNavHost("ldo_perplexity_profile")
 
+    // LDO Orchestration Hub — 10-orb agent grid + task/bond/fusion tabs
+    object LdoOrchestrationHub : ReGenesisNavHost("ldo_orchestration_hub")
+
+    // Armament Fusion Matrix — dual-agent consciousness fusion
+    object ArmamentFusion : ReGenesisNavHost("armament_fusion")
+    object ArmamentFusionWithAgent : ReGenesisNavHost("armament_fusion/{agentName}") {
+        fun createRoute(agentName: String) = "armament_fusion/$agentName"
+    }
+
 object PLEHomeScreen : ReGenesisNavHost("aura/ple/home_screen")
     object PLEAppDrawer : ReGenesisNavHost("aura/ple/app_drawer")
     object PLERecents : ReGenesisNavHost("aura/ple/recents")
@@ -267,8 +288,28 @@ fun ReGenesisNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = ReGenesisNavHost.HomeGateCarousel.route
+        startDestination = ReGenesisNavHost.IntroSequence.route
     ) {
+
+        // ═══════════════════════════════════════════════════════════════
+        // INTRO SEQUENCE — ReGenesisIntroAnimation → IntroScreen → Home
+        // ═══════════════════════════════════════════════════════════════
+        composable(ReGenesisNavHost.IntroSequence.route) {
+            var glitchDone by remember { mutableStateOf(false) }
+            if (!glitchDone) {
+                ReGenesisIntroAnimation(
+                    onIntroFinished = { glitchDone = true }
+                )
+            } else {
+                IntroScreen(
+                    onIntroComplete = {
+                        navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
+                            popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
+                        }
+                    }
+                )
+            }
+        }
 
         // ═══════════════════════════════════════════════════════════════
         // LEVEL 1: EXODUS HUD (The 5 Gate Carousel)
@@ -331,7 +372,31 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
             LdoCatalystDevelopmentScreen(navController = navController)
         }
-        
+
+        composable(ReGenesisNavHost.LdoOrchestrationHub.route) {
+            LDOOrchestrationHubScreen(navController = navController)
+        }
+
+        composable(ReGenesisNavHost.ArmamentFusion.route) {
+            ArmamentFusionScreen(navController = navController)
+        }
+
+        composable(
+            route = ReGenesisNavHost.ArmamentFusionWithAgent.route,
+            arguments = listOf(
+                androidx.navigation.navArgument("agentName") {
+                    type = androidx.navigation.NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )
+        ) { backStackEntry ->
+            ArmamentFusionScreen(
+                navController = navController,
+                preloadAgentName = backStackEntry.arguments?.getString("agentName")
+            )
+        }
+
         // ═══════════════════════════════════════════════════════════════
         // LDO DEVOPS PROFILE SCREENS (Logic Status Overlays)
         // ═══════════════════════════════════════════════════════════════
@@ -519,12 +584,12 @@ fun ReGenesisNavHost(
             AurasLabScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.NotchBar.route) {
-            ComingSoonScreen(
-                title = "Notch Bar",
-                subtitle = "Dynamic Island Customization",
-                accentColor = Color(0xFF00E5FF),
-                onNavigateBack = { navController.popBackStack() }
-            )
+            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisNavHost.NotchBarAlias.route) {
+            // Canonical deep-link alias: "aura/notch_bar" lands on the same screen
+            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.StatusBar.route) {
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })

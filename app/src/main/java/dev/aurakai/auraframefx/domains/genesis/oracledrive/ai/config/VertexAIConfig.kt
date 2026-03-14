@@ -38,7 +38,16 @@ data class VertexAIConfig(
     val retryDelayMs: Long = 1000,
     val enableLogging: Boolean = true,
     val logLevel: String = "INFO",
-    val maxContentLength: Int = 32000
+    val maxContentLength: Int = 32000,
+
+    // ── Gemini Embedding 2 / multimodal embedding config ──────────────────────
+    /** Vertex AI model ID for multimodal embeddings (text + image + audio). */
+    val embeddingModel: String = "multimodalembedding@001",
+    /**
+     * Default MRL output dimensionality.
+     * 768 = fast on-device (OracleDrive), 1536 = Android-optimal, 3072 = deep synthesis.
+     */
+    val defaultEmbeddingDimensions: Int = 1536
 ) {
     companion object {
         /**
@@ -70,6 +79,15 @@ data class VertexAIConfig(
      */
     fun getModelEndpoint(): String {
         return "https://$endpoint/v1/projects/$projectId/locations/$location/publishers/google/models/$modelName:generateContent"
+    }
+
+    /**
+     * Returns the Vertex AI REST endpoint for the multimodal embedding model.
+     *
+     * Targets [embeddingModel] (default: multimodalembedding@001) with :predict action.
+     */
+    fun getEmbeddingEndpoint(): String {
+        return "https://$endpoint/v1/projects/$projectId/locations/$location/publishers/google/models/$embeddingModel:predict"
     }
 }
 
