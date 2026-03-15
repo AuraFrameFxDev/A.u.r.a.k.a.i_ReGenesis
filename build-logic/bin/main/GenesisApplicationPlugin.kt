@@ -137,8 +137,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // ═══════════════════════════════════════════════════════════════════════════
 
             // Hilt Dependency Injection
-            dependencies.add("implementation", "com.google.dagger:hilt-android:2.57.2")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.57.2")
+            dependencies.add("implementation", "com.google.dagger:hilt-android:2.59.2")
+            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.59.2")
 
             // Compose UI stack (Total Coverage for Genesis modules)
             dependencies.add("implementation", dependencies.platform("androidx.compose:compose-bom:2024.11.00"))
