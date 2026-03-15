@@ -297,8 +297,8 @@ dependencies {
              force("androidx.appcompat:appcompat:1.7.1")
              force("com.google.android.material:material:1.13.0")
              // Ensure KSP uses the same Hilt version as the implementation
-             force("com.google.dagger:hilt-android:2.59.1")
-             force("com.google.dagger:hilt-compiler:2.59.1")
+             force("com.google.dagger:hilt-android:2.59.2")
+             force("com.google.dagger:hilt-compiler:2.59.2")
          }
     }
 
