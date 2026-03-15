@@ -15,24 +15,19 @@ class UserPreferencesManager @Inject constructor(
     private val userPreferences: UserPreferences
 ) {
 
-    suspend fun setGenderIdentity(identity: String) {
-        withContext(Dispatchers.IO) {
-            userPreferences.setGenderIdentity(identity)
-        }
+    suspend fun setGenderIdentity(identity: String) = withContext(Dispatchers.IO) {
+        userPreferences.setPreference("gender_identity", identity)
     }
 
     suspend fun getGenderIdentity(): String? = withContext(Dispatchers.IO) {
-        userPreferences.getGenderIdentity()
+        userPreferences.getPreference("gender_identity", "").ifEmpty { null }
     }
 
-    suspend fun setOnboardingComplete(value: Boolean) {
-        withContext(Dispatchers.IO) {
-            userPreferences.setOnboardingComplete(value)
-        }
+    suspend fun setOnboardingComplete(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.setPreference("onboarding_complete", value.toString())
     }
 
     suspend fun isOnboardingComplete(): Boolean = withContext(Dispatchers.IO) {
-        userPreferences.isOnboardingComplete()
+        userPreferences.getPreference("onboarding_complete", "false").toBoolean()
     }
 }
-

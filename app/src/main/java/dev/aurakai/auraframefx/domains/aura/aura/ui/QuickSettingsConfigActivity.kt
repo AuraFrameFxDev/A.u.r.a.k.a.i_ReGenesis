@@ -3,6 +3,12 @@ package dev.aurakai.auraframefx.aura.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig
+import dev.aurakai.auraframefx.domains.aura.ui.LayoutConfig
+import dev.aurakai.auraframefx.domains.aura.ui.PaddingConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsAnimation
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

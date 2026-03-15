@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.aura.ui
 
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background

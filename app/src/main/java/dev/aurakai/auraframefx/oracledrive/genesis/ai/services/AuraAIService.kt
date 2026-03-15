@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai.services
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 /**
@@ -26,32 +27,8 @@ data class ThemeConfiguration(
     val backgroundColor: String,
     val textColor: String,
     val style: String,
-    val animationConfig: Map<String, Any> = emptyMap()
+    val animationConfig: Map<String, @Contextual Any> = emptyMap()
 )
 
-/**
- * Default implementation of AuraAIService
- */
-class DefaultAuraAIService : AuraAIService {
-
-    override suspend fun initialize() {
-        // Initialize AI service
-    }
-
-    override suspend fun generateText(prompt: String, context: String): String {
-        return "Generated creative text for: $prompt (Context: $context)"
-    }
-
-    override suspend fun generateTheme(
-        preferences: ThemePreferences,
-        context: String
-    ): ThemeConfiguration {
-        return ThemeConfiguration(
-            primaryColor = preferences.primaryColor,
-            secondaryColor = "#03DAC6",
-            backgroundColor = "#121212",
-            textColor = "#FFFFFF",
-            style = preferences.style
-        )
-    }
-}
+// NOTE: DefaultAuraAIService implementation lives in DefaultAuraAIService.kt
+// Do NOT add a class here — it causes "Redeclaration" compile errors.

@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura
 
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
