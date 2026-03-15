@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.aura.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig as SystemQuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 import dev.aurakai.auraframefx.domains.aura.ui.LayoutConfig
 import dev.aurakai.auraframefx.domains.aura.ui.PaddingConfig
 import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsAnimation
@@ -26,9 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
-import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfig as SystemQuickSettingsConfig
-import dev.aurakai.auraframefx.domains.aura.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
