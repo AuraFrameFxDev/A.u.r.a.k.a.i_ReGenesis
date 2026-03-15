@@ -55,13 +55,13 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("com.google.gms.google-services")
 
             extensions.configure<ApplicationExtension> {
-                compileSdk = 35
+                compileSdk = 36
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
                     minSdk = 34
-                    targetSdk = 35
+                    targetSdk = 36
                     versionCode = 1
                     versionName = "1.0"
 
@@ -137,8 +137,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // ═══════════════════════════════════════════════════════════════════════════
 
             // Hilt Dependency Injection
-            dependencies.add("implementation", "com.google.dagger:hilt-android:2.57.2")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.57.2")
+            dependencies.add("implementation", "com.google.dagger:hilt-android:2.59.2")
+            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.59.2")
 
             // Compose UI stack (Total Coverage for Genesis modules)
             dependencies.add("implementation", dependencies.platform("androidx.compose:compose-bom:2024.11.00"))

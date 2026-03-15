@@ -96,8 +96,8 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             // 5. Dependencies
             dependencies.apply {
                 // Hilt
-                add("implementation", "com.google.dagger:hilt-android:2.57.2")
-                add("ksp", "com.google.dagger:hilt-android-compiler:2.57.2")
+                add("implementation", "com.google.dagger:hilt-android:2.59.2")
+                add("ksp", "com.google.dagger:hilt-android-compiler:2.59.2")
 
                 // Compose (Using Version Catalog references is better, but hardcoded here for logic)
                 add("api", platform("androidx.compose:compose-bom:2025.12.01"))
