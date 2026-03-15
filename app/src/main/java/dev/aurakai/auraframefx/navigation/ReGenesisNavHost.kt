@@ -96,12 +96,13 @@ import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ColorBlendrScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.PixelLauncherEnhancedScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCategoryDetailScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCustomizationHubScreen
-import androidx.navigation.navArgument
-import androidx.navigation.NavType
+import dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen
+import dev.aurakai.auraframefx.domains.aura.ui.components.intro.ReGenesisIntroAnimation
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import dev.aurakai.auraframefx.ui.gates.allGates
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -468,7 +469,7 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.LdoCatalystDevelopment.route) {
             LdoCatalystDevelopmentScreen(navController = navController)
         }
-        
+
         // ═══════════════════════════════════════════════════════════════
         // LDO DEVOPS PROFILE SCREENS (Logic Status Overlays)
         // ═══════════════════════════════════════════════════════════════
