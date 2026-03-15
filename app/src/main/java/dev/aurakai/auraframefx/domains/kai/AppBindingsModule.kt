@@ -1,9 +1,12 @@
 package dev.aurakai.auraframefx.domains.kai
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveServiceImpl
 import javax.inject.Singleton
 
 /**
@@ -13,6 +16,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppBindingsModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindOracleDriveService(
+        oracleDriveServiceImpl: OracleDriveServiceImpl
+    ): OracleDriveService
 
     companion object {
         // Provide Legacy TaskScheduler if some modules still expect it; keep as lightweight shim

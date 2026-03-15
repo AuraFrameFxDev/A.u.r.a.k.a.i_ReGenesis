@@ -57,7 +57,13 @@ interface CloudStorageProvider {
         compressionRatio: Float,
         success: Boolean,
         message: String
-    ): StorageOptimizationResult
+    ): StorageOptimizationResult {
+        return StorageOptimizationResult(
+            bytesFreed = bytesFreed,
+            optimizationScore = compressionRatio,
+            message = message
+        )
+    }
 
     suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileResult
 }

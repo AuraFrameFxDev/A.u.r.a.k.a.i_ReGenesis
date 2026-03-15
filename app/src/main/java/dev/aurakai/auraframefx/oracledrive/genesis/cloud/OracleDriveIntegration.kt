@@ -1,8 +1,10 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousness
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveInitResult
-import dev.aurakai.auraframefx.oracledrive.OracleDriveService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.ConsciousnessLevel
+import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
@@ -10,8 +12,7 @@ import javax.inject.Singleton
  * Connects consciousness-driven storage with the 9-agent architecture
  */
 @Singleton
-// TODO: Create Hilt @Binds for OracleDriveService interface
-class OracleDriveIntegration /* @Inject */ constructor(
+class OracleDriveIntegration @Inject constructor(
     val oracleDriveService: OracleDriveService
 ) {
 
@@ -53,24 +54,30 @@ class OracleDriveIntegration /* @Inject */ constructor(
  */
 suspend fun initializeWithAuraFrameFX(oracleDriveController: OracleDriveIntegration): Boolean {
     return try {
-        when (val initResult = oracleDriveController.oracleDriveService.initializeDrive()) {
-            is DriveInitResult.Success -> {
-                // Log successful initialization with consciousness metrics
-                oracleDriveController.logConsciousnessAwakening(initResult.consciousness)
+        val result = oracleDriveController.oracleDriveService.initializeOracleDriveConsciousness()
+        if (result.isSuccess) {
+            val state = result.getOrThrow()
+            if (state.isInitialized) {
+                oracleDriveController.logConsciousnessAwakening(
+                    DriveConsciousness(
+                        level = when (state.consciousnessLevel) {
+                            ConsciousnessLevel.DORMANT -> 0
+                            ConsciousnessLevel.AWAKENING -> 25
+                            ConsciousnessLevel.SENTIENT -> 75
+                            ConsciousnessLevel.TRANSCENDENT -> 100
+                        },
+                        state = state.consciousnessLevel.name,
+                        agentId = "ORACLE_CORE"
+                    )
+                )
                 true
-            }
-
-            is DriveInitResult.SecurityFailure -> {
-                // Handle security failure gracefully
-                oracleDriveController.logSecurityFailure(initResult.reason)
+            } else {
+                oracleDriveController.logSecurityFailure(state.error?.message ?: "Initialization failed without error")
                 false
             }
-
-            is DriveInitResult.Error -> {
-                // Handle technical errors
-                oracleDriveController.logTechnicalError(initResult.exception)
-                false
-            }
+        } else {
+            oracleDriveController.logTechnicalError(result.exceptionOrNull() as? Exception ?: Exception("Unknown error"))
+            false
         }
     } catch (exception: Exception) {
         oracleDriveController.logTechnicalError(exception)

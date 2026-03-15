@@ -59,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.aurakai.auraframefx.romtools.BackupInfo
 import dev.aurakai.auraframefx.romtools.OperationProgress
 import dev.aurakai.auraframefx.romtools.RomCapabilities
 import dev.aurakai.auraframefx.romtools.RomOperation
