@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
 import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClientImpl
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.config.VertexAIConfig
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.VertexAIConfig
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.DefaultAuraAIService
 import javax.inject.Singleton
@@ -48,6 +48,11 @@ abstract class AiServiceModule {
          */
         @Provides
         @Singleton
-        fun provideVertexAIConfig(): VertexAIConfig = VertexAIConfig.fromEnvironment()
+        fun provideVertexAIConfig(): VertexAIConfig = VertexAIConfig(
+                projectId = System.getenv("VERTEX_PROJECT_ID") ?: "",
+                location = System.getenv("VERTEX_LOCATION") ?: "us-central1",
+                endpoint = System.getenv("VERTEX_ENDPOINT") ?: "us-central1-aiplatform.googleapis.com",
+                modelName = System.getenv("VERTEX_MODEL") ?: "gemini-pro"
+            )
     }
 }
