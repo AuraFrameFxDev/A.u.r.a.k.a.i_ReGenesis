@@ -36,7 +36,7 @@ open class MemoryManager @Inject constructor(
 
     private val _memoryStats = MutableStateFlow(
         MemoryStats(
-            totalItems = 0,
+            totalEntries = 0,
             totalSize = 0L,
             oldestEntry = null,
             newestEntry = null
