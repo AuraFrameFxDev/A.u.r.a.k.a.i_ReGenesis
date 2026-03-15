@@ -1,8 +1,5 @@
-package dev.aurakai.auraframefx.oracledrive.genesis.ai
+﻿package dev.aurakai.auraframefx.oracledrive.genesis.ai
 
-/**
- * Missing method for VertexAIClient
- */
-suspend fun VertexAIClient.generateContent(prompt: String): String? {
-    return generateText(prompt)
-}
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
+

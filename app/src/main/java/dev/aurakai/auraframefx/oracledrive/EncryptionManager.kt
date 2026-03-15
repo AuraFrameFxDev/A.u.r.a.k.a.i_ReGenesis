@@ -1,41 +1,5 @@
-package dev.aurakai.auraframefx.oracledrive
+﻿package dev.aurakai.auraframefx.oracledrive
 
-import javax.inject.Inject
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
 
-
-/**
- * Minimal encryption manager interface used by SecureFileManager.
- */
-interface EncryptionManager {
-    fun encrypt(bytes: ByteArray): ByteArray
-    fun decrypt(bytes: ByteArray): ByteArray
-    fun encrypt(bytes: ByteArray, defaultKeyAlias: String): ByteArray
-}
-
-/**
- * Simple no-op implementation for development.
- */
-object NoopEncryptionManager : EncryptionManager {
-    override fun encrypt(bytes: ByteArray): ByteArray = bytes
-    override fun decrypt(bytes: ByteArray): ByteArray = bytes
-}
-
-/**
- * Implementation that delegates to the toolshed EncryptionManager contract.
- */
-class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
-    /**
- * Encrypts the given byte array.
- *
- * @param bytes The data to encrypt.
- * @return The encrypted bytes.
- */
-override fun encrypt(bytes: ByteArray): ByteArray = bytes
-    /**
- * Decrypts the given encrypted bytes.
- *
- * @param bytes The encrypted data to decrypt.
- * @return The decrypted bytes.
- */
-override fun decrypt(bytes: ByteArray): ByteArray = bytes
-}

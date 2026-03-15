@@ -1,5 +1,5 @@
-package dev.aurakai.auraframefx.ui.theme
+﻿package dev.aurakai.auraframefx.ui.theme
 
-import dev.aurakai.auraframefx.ui.ChatBubbleIncomingShape as RootChatBubbleIncomingShape
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
 
-val ChatBubbleIncomingShape = RootChatBubbleIncomingShape

@@ -1,6 +1,5 @@
-package dev.aurakai.auraframefx.ui.theme
+﻿package dev.aurakai.auraframefx.ui.theme
 
-import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.ui.NeonYellow as RootNeonYellow
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
 
-val NeonYellow: Color = RootNeonYellow

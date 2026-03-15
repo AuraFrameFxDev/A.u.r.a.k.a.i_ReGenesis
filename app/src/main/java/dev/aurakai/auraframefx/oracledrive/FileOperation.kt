@@ -1,10 +1,5 @@
-package dev.aurakai.auraframefx.oracledrive
+﻿package dev.aurakai.auraframefx.oracledrive
 
-import java.io.File
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
 
-sealed class FileOperation {
-    data class Upload(val file: File) : FileOperation()
-    data class Download(val fileId: String) : FileOperation()
-    data class Delete(val fileId: String) : FileOperation()
-    data class Sync(val config: SyncConfig) : FileOperation()
-}

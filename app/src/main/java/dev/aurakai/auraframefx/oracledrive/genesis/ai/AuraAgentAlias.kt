@@ -1,5 +1,5 @@
-package dev.aurakai.auraframefx.oracledrive.genesis.ai
+﻿package dev.aurakai.auraframefx.oracledrive.genesis.ai
 
-/** Make `AuraAgent` available in this package where unqualified references occur. */
-typealias AuraAgent = dev.aurakai.auraframefx.ai.agents.AuraAgent
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
 

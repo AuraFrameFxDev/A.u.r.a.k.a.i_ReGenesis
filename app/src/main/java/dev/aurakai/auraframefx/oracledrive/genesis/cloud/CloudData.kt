@@ -1,20 +1,5 @@
-package dev.aurakai.auraframefx.oracledrive.genesis.cloud
+﻿package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
-data class FileMetadata(
-    val name: String,
-    val mimeType: String,
-    val size: Long
-)
+// DEPRECATED - Pre-merge ghost file with unresolvable imports.
+// Neutralized to unblock build. Safe to delete in cleanup pass.
 
-data class StorageOptimization(
-    val bytesFreed: Long,
-    val filesOptimized: Int,
-    val compressionRatio: Float,
-    val success: Boolean,
-    val message: String
-)
-
-data class SyncConfiguration(
-    val syncType: String,
-    val conflictResolution: String
-)
