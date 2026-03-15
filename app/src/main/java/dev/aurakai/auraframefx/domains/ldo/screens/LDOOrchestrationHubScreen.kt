@@ -69,9 +69,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
@@ -102,7 +100,23 @@ private val LDO_ORB_ROSTER = listOf(
 @Composable
 fun LDOOrchestrationHubScreen(
     navController: NavController,
+    viewModel: LDOViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
         ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val agents = uiState.agents
+    val tasks = uiState.tasks
+
+    var selectedAgent by remember { mutableStateOf<LDOAgentEntity?>(null) }
+    var activeTab by remember { mutableIntStateOf(0) }
+    // 3 fusion slots: agents dragged here form a fusion combo
+    var fusionSlots by remember { mutableStateOf(listOf<FusionSlot>(FusionSlot(0), FusionSlot(1), FusionSlot(2))) }
+    var draggedAgent by remember { mutableStateOf<LDOAgentEntity?>(null) }
 
     Box(
         modifier = Modifier

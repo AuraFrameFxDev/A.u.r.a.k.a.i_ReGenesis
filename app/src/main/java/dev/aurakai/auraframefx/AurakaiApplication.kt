@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx
 import android.app.Application
 import android.util.Log
 import com.highcapable.yukihookapi.YukiHookAPI
+import com.highcapable.yukihookapi.hook.factory.configs
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 
 private const val TAG = "AurakaiApplication"
@@ -14,7 +15,13 @@ class AurakaiApplication : Application() {
         Log.i(TAG, "AurakaiApplication: Application started.")
 
         if (FeatureToggles.XPOSED_ENABLED) {
-            YukiHookAPI.encapsulate(this)
+            // Initialize YukiHookAPI for Kai's Shield / Xposed functionality
+            YukiHookAPI.setup {
+                debugLog {
+                    tag = "AurakaiHook"
+                    isEnable = BuildConfig.DEBUG
+                }
+            }
             checkHookEnvironment()
         }
     }

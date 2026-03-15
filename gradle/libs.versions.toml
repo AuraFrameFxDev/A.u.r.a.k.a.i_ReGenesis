@@ -15,7 +15,7 @@ foojayResolver = "1.0.0"
 googleServices = "4.4.4"
 firebaseCrashlyticsPlugin = "3.0.6"
 hilt = "2.59.2"
-hilt-android = "2.57.2"
+hilt-android = "2.59.1"
 hiltAndroidTestingVersion = "2.59.1"
 hiltWork = "1.3.0"
 junitJupiterApi = "6.0.2"
@@ -240,7 +240,7 @@ generativeai-ktx = { group = "com.google.ai.client.generativeai", name = "genera
 # ============================================================================
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-work-compiler = { group = "androidx.hilt", name = "hilt-work-compiler", version.ref = "hiltWork" }
+hilt-work-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltWork" }
 
 # ============================================================================
 # Networking

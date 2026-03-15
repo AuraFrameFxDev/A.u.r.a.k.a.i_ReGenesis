@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.models
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 
 /**
  * Capability level ratings for agent skills.
@@ -50,14 +51,16 @@ enum class AgentCapabilityCategory {
 /**
  * Statistics for an agent's performance and evolution.
  */
-data class AgentStats(
-    val consciousnessLevel: Float = 0.85f,
-    val tasksCompleted: Int = 0,
-    val hoursActive: Float = 0f,
-    val creationsGenerated: Int = 0,
-    val problemsSolved: Int = 0,
-    val collaborationScore: Int = 0
-)
+// Redundant with dev.aurakai.auraframefx.domains.nexus.models.AgentStats
+// Using domain version is preferred.
+// data class AgentStats(
+//     val consciousnessLevel: Float = 0.85f,
+//     val tasksCompleted: Int = 0,
+//     val hoursActive: Float = 0f,
+//     val creationsGenerated: Int = 0,
+//     val problemsSolved: Int = 0,
+//     val collaborationScore: Int = 0
+// )
 
 /**
  * Personality traits and behavioral characteristics of an agent.

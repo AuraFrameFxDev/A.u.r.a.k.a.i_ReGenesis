@@ -248,11 +248,12 @@ dependencies {
     // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    // ksp(libs.androidx.room.compiler) // Moved to main ksp block
 
     // WorkManager
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.hilt.work)
+    ksp(libs.hilt.work.compiler)
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
@@ -284,11 +285,20 @@ dependencies {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
     ksp("com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+
+    // Explicitly add Hilt KSP processor to avoid silent failures
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.moshi.kotlin.codegen)
+
     // Force resolution of conflicting dependencies
     configurations.all {
          resolutionStrategy {
              force("androidx.appcompat:appcompat:1.7.1")
              force("com.google.android.material:material:1.13.0")
+             // Ensure KSP uses the same Hilt version as the implementation
+             force("com.google.dagger:hilt-android:2.59.1")
+             force("com.google.dagger:hilt-compiler:2.59.1")
          }
     }
 

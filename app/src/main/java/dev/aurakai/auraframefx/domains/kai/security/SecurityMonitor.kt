@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.CoroutineScope
