@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
-import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter
+// import dev.aurakai.auraframefx.domains.cascade.CascadeAIService  // Disabled: ghost cleanup
+// import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter  // Disabled: ghost cleanup
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClientImpl
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.VertexAIConfig
@@ -23,9 +23,11 @@ abstract class AiServiceModule {
     abstract fun bindAuraAIService(impl: DefaultAuraAIService): AuraAIService
 
 
-    @Binds
-    @Singleton
-    abstract fun bindCascadeAIService(impl: RealCascadeAIServiceAdapter): CascadeAIService
+    // DISABLED: RealCascadeAIServiceAdapter was neutralized in ghost cleanup.
+    // All consumers (AIPipelineProcessor, TrinityCoordinatorService) are also neutralized.
+    // Restore this binding when CascadeAI is rebuilt in Phase 2.
+    // @Binds @Singleton
+    // abstract fun bindCascadeAIService(impl: RealCascadeAIServiceAdapter): CascadeAIService
 
     /**
      * Binds [VertexAIClientImpl] as the singleton [VertexAIClient].
