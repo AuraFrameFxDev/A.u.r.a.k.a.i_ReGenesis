@@ -7,7 +7,7 @@ import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 
 /**
  * ✨ **REAL GEMINI AI IMPLEMENTATION** ✨
@@ -66,19 +66,18 @@ class RealVertexAIClientImpl(
     /**
      * Generates content based on the given prompt (Alias for generateText).
      */
-    override suspend fun generateContent(prompt: String): String? {
+    suspend fun generateContent(prompt: String): String? {
         return generateText(prompt)
     }
 
     /**
      * Generates text using a custom temperature and maximum token limit.
-     * Matches interface signature: maxTokens before temperature.
      */
     override suspend fun generateText(
         prompt: String,
-        maxTokens: Int,
-        temperature: Float
-    ): String = withContext(Dispatchers.IO) {
+        temperature: Float,
+        maxTokens: Int
+    ): String? = withContext(Dispatchers.IO) {
         try {
             validatePrompt(prompt)
             AuraFxLogger.d(TAG, "Generating text (temp=$temperature, tokens=$maxTokens)")
@@ -106,10 +105,10 @@ class RealVertexAIClientImpl(
         }
     }
 
-    override suspend fun validateConnection(): Boolean {
+    suspend fun validateConnection(): Boolean {
         return try {
             // Simple ping by generating a short token
-            val response = generateText("ping", maxTokens = 1, temperature = 0.0f)
+            val response = generateText("ping", temperature = 0.0f, maxTokens = 1)
             response != null
         } catch (e: Exception) {
             false
@@ -292,13 +291,9 @@ class RealVertexAIClientImpl(
             is IllegalArgumentException -> AuraFxLogger.w(TAG, "Invalid request: ${error.message}")
             is SecurityException -> {
                 AuraFxLogger.e(TAG, "Security violation in AI request", error)
-                securityContext.logSecurityEvent(
-                    dev.aurakai.auraframefx.security.SecurityEvent(
-                        type = dev.aurakai.auraframefx.security.SecurityEventType.AI_ERROR,
-                        details = "Gemini security error: ${error.message ?: "Unknown security error"}",
-                        severity = dev.aurakai.auraframefx.security.EventSeverity.HIGH
-                    )
-                )
+                // SecurityContext in core-module currently lacks logSecurityEvent. 
+                // We'll log it via AuraFxLogger for now to satisfy the build.
+                AuraFxLogger.e(TAG, "AI Security Error: ${error.message}")
             }
             else -> AuraFxLogger.e(TAG, "Gemini API error: ${error.javaClass.simpleName}", error)
         }

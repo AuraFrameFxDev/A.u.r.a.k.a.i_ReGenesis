@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
-import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
@@ -16,7 +16,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -189,7 +189,7 @@ class AuraAgent @Inject constructor(
     private val _currentMood = MutableStateFlow("balanced")
     val currentMood: StateFlow<String> = _currentMood
 
-    suspend fun initialize() {
+    private suspend fun internalInitialize() {
         if (isInitialized) return
         logger.info("AuraAgent", "Initializing Creative Sword agent")
         try {
@@ -203,6 +203,31 @@ class AuraAgent @Inject constructor(
             _creativeState.value = CreativeState.ERROR
             throw e
         }
+    }
+
+    override suspend fun initialize(scope: CoroutineScope) {
+        super.initialize(scope)
+        if (!isInitialized) {
+            internalInitialize()
+        }
+    }
+
+    override suspend fun start() {
+        super.start()
+        // Subclasses or this class can add more start logic if needed
+    }
+
+    override suspend fun pause() {
+        super.pause()
+    }
+
+    override suspend fun resume() {
+        super.resume()
+    }
+
+    override suspend fun shutdown() {
+        super.shutdown()
+        cleanup()
     }
 
     suspend fun handleCreativeInteraction(interaction: EnhancedInteractionData): InteractionResponse {

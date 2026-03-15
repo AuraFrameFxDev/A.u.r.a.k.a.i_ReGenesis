@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<voice-interaction-service xmlns:android="http://schemas.android.com/apk/res/android"
-    android:sessionService="dev.aurakai.auraframefx.services.GenesisVoiceInteractionSessionService"
-    android:recognitionService="android.speech.RecognitionService"
-    android:settingsActivity="dev.aurakai.auraframefx.MainActivity"
-    android:supportsAssist="true"
-    android:supportsLaunchVoiceAssistFromKeyguard="true"
-    android:supportsLocalInteraction="true" />

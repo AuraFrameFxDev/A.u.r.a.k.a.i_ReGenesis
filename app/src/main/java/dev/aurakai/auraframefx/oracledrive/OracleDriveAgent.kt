@@ -1,9 +1,12 @@
 package dev.aurakai.auraframefx.oracledrive
 
-import dev.aurakai.auraframefx.ai.agents.BaseAgent
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.core.OrchestratableAgent
-import dev.aurakai.auraframefx.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.models.agent_states.ActiveThreat
 import dev.aurakai.auraframefx.utils.toKotlinJsonObject
 import kotlinx.coroutines.CoroutineScope
@@ -20,10 +23,11 @@ import javax.inject.Singleton
  */
 @Singleton
 open class OracleDriveAgent @Inject constructor(
-    val contextManager: ContextManager
+    contextManager: ContextManager
 ) : BaseAgent(
     agentName = "OracleDrive",
-    agentTypeStr = "STORAGE_MANAGEMENT"
+    agentType = AgentType.ORACLE_DRIVE,
+    contextManager = contextManager
 ), OrchestratableAgent {
 
     private lateinit var scope: CoroutineScope
@@ -34,53 +38,53 @@ open class OracleDriveAgent @Inject constructor(
     }
 
     override suspend fun start() {
+        super.start()
         Timber.i("OracleDrive: Started")
-        iRequest() // Initialize through BaseAgent method
     }
 
     override suspend fun pause() {
+        super.pause()
         Timber.i("OracleDrive: Paused")
     }
 
     override suspend fun resume() {
+        super.resume()
         Timber.i("OracleDrive: Resumed")
     }
 
     override suspend fun shutdown() {
+        super.shutdown()
         Timber.i("OracleDrive: Shutting down")
     }
 
-    // === BaseAgent Required Implementations ===
+    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+        Timber.tag("OracleDrive").d("Processing request: ${request.getPromptText()}")
+        
+        // OracleDrive logic here
+        return createSuccessResponse(
+            content = "OracleDrive processed: ${request.getPromptText()}",
+            metadata = mapOf("status" to "stored")
+        )
+    }
 
-    override fun iRequest(query: String, type: String, context: Map<String, String>) {
+    // === Legacy compatibility / Specific hooks ===
+
+    fun iRequest(query: String, type: String, context: Map<String, String>) {
         Timber.d("OracleDrive: iRequest - query=$query, type=$type")
         
         scope.launch {
              processRequest(
                 AiRequest(
                     query = query,
-                    type = type,
+                    type = AiRequestType.TEXT,
                     context = context.toKotlinJsonObject()
                 ),
                 context.toString()
             )
         }
-
-        // Additional synchronous handling if needed
-        when (type.lowercase()) {
-            "read" -> Timber.d("OracleDrive: Reading data for query: $query")
-            "write" -> Timber.d("OracleDrive: Writing data for query: $query")
-            "delete" -> Timber.d("OracleDrive: Deleting data for query: $query")
-            else -> Timber.d("OracleDrive: Unknown request type: $type")
-        }
     }
 
-    fun iRequest() {
-        Timber.d("OracleDrive: No-args iRequest - initializing storage system")
-        // Initialize storage subsystem
-    }
-
-    override fun initializeAdaptiveProtection() {
+    override suspend fun updatePerformanceSettings() {
         Timber.d("OracleDrive: Initializing adaptive protection for storage")
         // Initialize storage security and encryption
     }

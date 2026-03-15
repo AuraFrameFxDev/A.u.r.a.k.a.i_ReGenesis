@@ -19,11 +19,17 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import dev.aurakai.auraframefx.models.Emotion
-import dev.aurakai.auraframefx.viewmodel.AuraMoodViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import dev.aurakai.auraframefx.domains.aura.models.Emotion
+import dev.aurakai.auraframefx.domains.aura.models.MoodState
+import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AuraMoodViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Theme
+import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Color as ThemeColor
+import dev.aurakai.auraframefx.ui.theme.model.CyberpunkColorScheme
+import dev.aurakai.auraframefx.ui.theme.model.SolarizedColorScheme
+import androidx.compose.runtime.State
 
 private val DarkColorScheme = darkColorScheme(
     primary = NeonTeal,
@@ -109,28 +115,26 @@ val LocalMoodState = compositionLocalOf { Emotion.NEUTRAL }
 fun AuraFrameFXTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
-    moodViewModel: AuraMoodViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
-    themeViewModel: ThemeViewModel = hiltViewModel(viewModelStoreOwner, key),
+    moodViewModel: AuraMoodViewModel = hiltViewModel(),
+    themeViewModel: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
-    val mood by moodViewModel.moodState.collectAsState()
-    val theme by themeViewModel.theme.collectAsState()
-    val color by themeViewModel.color.collectAsState()
+    val emotionState: State<Emotion> = moodViewModel.moodState.collectAsState()
+    val themeFlowState: State<Theme> = themeViewModel.theme.collectAsState(initial = Theme.DARK)
+    val colorFlowState: State<ThemeColor> = themeViewModel.color.collectAsState(initial = ThemeColor.BLUE)
 
-    val useDarkTheme = when (theme) {
+    val currentEmotion by emotionState
+    val themeState by themeFlowState
+    val colorState by colorFlowState
+
+    val useDarkTheme = when (themeState) {
         Theme.LIGHT -> false
         Theme.DARK -> true
         Theme.CYBERPUNK -> true
         Theme.SOLARIZED -> false
     }
 
-    val baseColorScheme = when (theme) {
+    val baseColorScheme = when (themeState) {
         Theme.CYBERPUNK -> CyberpunkColorScheme
         Theme.SOLARIZED -> SolarizedColorScheme
         else -> when {
@@ -147,15 +151,16 @@ fun AuraFrameFXTheme(
     }
 
     val finalColorScheme = baseColorScheme.copy(
-        primary = when (color) {
-            Color.RED -> NeonRed
-            Color.GREEN -> NeonGreen
-            Color.BLUE -> NeonBlue
+        primary = when (colorState) {
+            ThemeColor.RED -> NeonRed
+            ThemeColor.GREEN -> NeonGreen
+            ThemeColor.BLUE -> NeonBlue
+            else -> baseColorScheme.primary
         }
     )
 
     // The dynamic glow color is derived from Aura's current mood
-    val glowColor = getMoodGlowColor(mood.emotion, mood.intensity, baseColorScheme)
+    val glowColor = getMoodGlowColor(currentEmotion, 0.5f, baseColorScheme)
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -168,11 +173,11 @@ fun AuraFrameFXTheme(
 
     CompositionLocalProvider(
         LocalMoodGlow provides glowColor,
-        LocalMoodState provides mood.emotion
+        LocalMoodState provides currentEmotion
     ) {
         MaterialTheme(
             colorScheme = finalColorScheme,
-            typography = AppTypography,
+            typography = Typography,
             content = content
         )
     }

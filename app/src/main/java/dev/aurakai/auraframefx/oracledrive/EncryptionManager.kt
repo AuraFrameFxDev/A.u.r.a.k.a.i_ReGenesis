@@ -9,6 +9,7 @@ import javax.inject.Inject
 interface EncryptionManager {
     fun encrypt(bytes: ByteArray): ByteArray
     fun decrypt(bytes: ByteArray): ByteArray
+    fun encrypt(bytes: ByteArray, defaultKeyAlias: String): ByteArray
 }
 
 /**

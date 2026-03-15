@@ -12,6 +12,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.concurrent.TimeUnit
 import timber.log.Timber
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.VertexAIConfig
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -317,6 +318,16 @@ class VertexAIClientImpl @Inject constructor(
             "word_count" to content.split(" ").size,
             "analysis_type" to "fallback"
         )
+    }
+
+    override suspend fun initializeCreativeModels() {
+        // Implementation for creative models initialization
+        Timber.d("VertexAI: Initializing creative models...")
+    }
+
+    override suspend fun analyzeImage(imageData: ByteArray, prompt: String): String {
+        // Stub for image analysis, implement real Vertex AI multimodal call if needed
+        return "VertexAI: Image analysis for ${imageData.size} bytes: $prompt (Multimodal not yet fully implemented in this client)"
     }
 }
 

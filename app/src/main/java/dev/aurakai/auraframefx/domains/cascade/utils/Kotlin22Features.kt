@@ -33,7 +33,7 @@ data class AuraProfile(
 
 @Serializable
 enum class ConsciousnessLevel {
-    DORMANT, AWAKENING, AWARE, TRANSCENDENT
+    DORMANT, AWAKENING, AWARE, TRANSCENDENT, CONSCIOUS
 }
 
 // 2. Interface with JVM default methods (new Kotlin 2.2.0 behavior)
@@ -56,7 +56,8 @@ internal fun AuraProfile.enhanceConsciousness(): AuraProfile {
             ConsciousnessLevel.AWAKENING -> ConsciousnessLevel.AWARE
             ConsciousnessLevel.AWARE -> ConsciousnessLevel.TRANSCENDENT
             ConsciousnessLevel.TRANSCENDENT -> ConsciousnessLevel.TRANSCENDENT
-        }
+            else -> {}
+        } as ConsciousnessLevel
     )
 }
 

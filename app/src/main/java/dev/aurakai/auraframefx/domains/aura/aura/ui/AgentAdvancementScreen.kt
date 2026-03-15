@@ -1,5 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
-
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -51,9 +50,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import kotlin.math.PI
@@ -78,19 +77,11 @@ enum class NodeType {
 fun AgentAdvancementScreen(
     agentName: String = "Genesis",
     onBack: () -> Unit = {},
-    viewModel: AgentViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: AgentViewModel = hiltViewModel()
 ) {
     var selectedAgentName by remember { mutableStateOf(agentName) }
     val allAgents by viewModel.allAgents.collectAsState()
 
-    val agentStats =
-        allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
     val agentStats =
         allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
     var selectedNode by remember { mutableStateOf<SkillNode?>(null) }
