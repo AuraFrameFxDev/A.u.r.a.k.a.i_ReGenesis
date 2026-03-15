@@ -1,70 +1,58 @@
 package dev.aurakai.auraframefx.xposed.hooks
 
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.ui.graphics.toArgb
+import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.type.java.IntType
-import dev.aurakai.auraframefx.system.overlay.model.NotchBarConfig
+import com.highcapable.yukihookapi.hook.log.YLog
+import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
 
 /**
  * Xposed hooker for customizing the Android notch bar (status bar cutout area).
- * Applies visual customizations like color, height, and visibility.
+ * Applies visual customizations like color, height, and visibility using YukiHookAPI.
  */
-class NotchBarHooker(
-    private val classLoader: ClassLoader,
-    private val config: NotchBarConfig,
-) {
-    /**
-     * Applies Xposed hooks to customize the notch bar appearance and behavior.
-     * 
-     * Hooks into system UI classes to modify:
-     * - Notch bar background color
-     * - Notch bar height/size
-     * - Notch bar visibility
-     */
-    fun applyNotchBarHooks() {
-        try {
-            // Hook the PhoneStatusBarView or similar system UI class
-            // Note: Actual class names vary by Android version and OEM
-            val statusBarClass = classLoader.loadClass(
-                "com.android.systemui.statusbar.phone.PhoneStatusBarView"
-            )
+class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
 
-            // Hook the onFinishInflate method to apply customizations
-            statusBarClass.method {
-                name = "onFinishInflate"
-                emptyParam()
-            }.hook {
-                after {
-                    // Apply notch bar color if configured
-                    config.backgroundColor?.let { color ->
-                        instance.javaClass.getDeclaredField("mBackground")?.apply {
-                            isAccessible = true
-                            set(instance, color)
-                        }
-                    }
+    override fun onHook() {
+        // Hook the PhoneStatusBarView to apply customizations
+        // Note: Actual class names vary by Android version and OEM
+        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.method {
+            name = "onFinishInflate"
+            emptyParam()
+        }?.hook {
+            after {
+                val view = instance as View
 
-                    // Apply notch bar height if configured
-                    config.height?.let { height ->
-                        instance.javaClass.getDeclaredMethod(
-                            "setLayoutParams",
-                            android.view.ViewGroup.LayoutParams::class.java
-                        ).invoke(instance, android.view.ViewGroup.LayoutParams(
-                            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                            height
-                        ))
-                    }
-
-                    // Apply visibility if configured
-                    if (config.isVisible == false) {
-                        instance.javaClass.getDeclaredMethod(
-                            "setVisibility",
-                            IntType
-                        ).invoke(instance, android.view.View.GONE)
-                    }
+                // Apply notch bar color if configured
+                try {
+                    val androidColor = config.backgroundColor.toArgb()
+                    view.setBackgroundColor(androidColor)
+                } catch (e: Exception) {
+                    YLog.error("NotchBarHooker: Failed to set background color: ${e.message}")
                 }
+
+                // Apply notch bar height if configured
+                try {
+                    val layoutParams = view.layoutParams ?: ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        config.height
+                    )
+                    layoutParams.height = config.height
+                    view.layoutParams = layoutParams
+                } catch (e: Exception) {
+                    YLog.error("NotchBarHooker: Failed to set height: ${e.message}")
+                }
+
+                // Apply visibility if configured
+                try {
+                    view.visibility = if (config.isVisible) View.VISIBLE else View.GONE
+                } catch (e: Exception) {
+                    YLog.error("NotchBarHooker: Failed to set visibility: ${e.message}")
+                }
+
+                YLog.info("NotchBarHooker: Successfully applied customizations to PhoneStatusBarView")
             }
-        } catch (e: Exception) {
-            // Log error but don't crash - notch bar customization is optional
-            android.util.Log.e("NotchBarHooker", "Failed to apply notch bar hooks", e)
         }
     }
 }

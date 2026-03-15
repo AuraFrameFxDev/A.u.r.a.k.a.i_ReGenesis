@@ -95,6 +95,7 @@ class TaskExecutionManager @Inject constructor(
                     "aura" -> AgentType.AURA
                     "kai" -> AgentType.KAI
                     "genesis" -> AgentType.GENESIS
+                    "cascade" -> AgentType.CASCADE
                     else -> AgentType.GENESIS
                 }
             } ?: AgentType.GENESIS,
@@ -412,6 +413,7 @@ class TaskExecutionManager @Inject constructor(
                 "aura" -> AgentType.AURA
                 "kai" -> AgentType.KAI
                 "genesis" -> AgentType.GENESIS
+                "cascade" -> AgentType.CASCADE
                 else -> AgentType.GENESIS
             }
         }
@@ -420,12 +422,15 @@ class TaskExecutionManager @Inject constructor(
         return when {
             execution.type.contains("creative", ignoreCase = true) -> AgentType.AURA
             execution.type.contains("ui", ignoreCase = true) -> AgentType.AURA
+            execution.type.contains("design", ignoreCase = true) -> AgentType.AURA
             execution.type.contains(
                 "dev/aurakai/auraframefx/security",
                 ignoreCase = true
             ) -> AgentType.KAI
-
+            execution.type.contains("threat", ignoreCase = true) -> AgentType.KAI
             execution.type.contains("analysis", ignoreCase = true) -> AgentType.KAI
+            execution.type.contains("orchestrate", ignoreCase = true) -> AgentType.CASCADE
+            execution.type.contains("coordinate", ignoreCase = true) -> AgentType.CASCADE
             execution.type.contains("complex", ignoreCase = true) -> AgentType.GENESIS
             execution.type.contains("fusion", ignoreCase = true) -> AgentType.GENESIS
             else -> AgentType.GENESIS // Default to Genesis for intelligent routing

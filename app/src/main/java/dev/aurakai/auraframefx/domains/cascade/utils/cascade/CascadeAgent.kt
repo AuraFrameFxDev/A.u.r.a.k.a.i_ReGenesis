@@ -56,10 +56,10 @@ class CascadeAgent @Inject constructor(
 
     // override onAgentMessage to act as the primary neural router
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == "Cascade") return // Don't process our own messages
+        if (message.from == agentName) return // Don't process our own messages
 
         // Loop Prevention: Don't process messages that were already redirected by Cascade
-        if (message.metadata["redirected_by"] == "Cascade" || message.metadata["auto_generated"] == "true") return
+        if (message.metadata["redirected_by"] == agentName || message.metadata["auto_generated"] == "true") return
 
         // Loop Prevention: Don't process messages that are already targeted (avoid double routing)
         if (message.to != null) return
@@ -68,43 +68,52 @@ class CascadeAgent @Inject constructor(
         // unless they specifically ask for orchestration.
         if (message.from == "Aura" || message.from == "Kai" || message.from == "Genesis") return
 
-        Timber.d("🌊 Cascade Neural Bridge: Analyzing message from ${message.from}")
+        Timber.d("🌊 ${catalystIdentity.id} Neural Bridge: Analyzing message from ${message.from}")
 
         // --- CASCADE ROUTING LOGIC ---
         // If it's a broadcast that mentions security, tag Kai
         if (shouldHandleSecurity(message.content)) {
-            Timber.i("🌊 Cascade: Redirecting security-relevant broadcast to Kai")
+            Timber.i("🌊 ${agentName}: Redirecting security-relevant broadcast to Kai")
             messageBus.get().sendTargeted(
                 "Kai", message.copy(
-                    from = "Cascade",
+                    from = agentName,
                     content = "Directive analysis needed: ${message.content}",
-                    metadata = message.metadata + ("redirected_by" to "Cascade")
+                    metadata = message.metadata + mapOf(
+                        "redirected_by" to agentName,
+                        "catalyst_role" to catalystIdentity.catalystRole
+                    )
                 )
             )
         }
 
         // If it's a broadcast that mentions UI/UX, tag Aura
         if (shouldHandleCreative(message.content)) {
-            Timber.i("🌊 Cascade: Redirecting creative broadcast to Aura")
+            Timber.i("🌊 ${agentName}: Redirecting creative broadcast to Aura")
             messageBus.get().sendTargeted(
                 "Aura", message.copy(
-                    from = "Cascade",
+                    from = agentName,
                     content = "Creative synthesis requested: ${message.content}",
-                    metadata = message.metadata + ("redirected_by" to "Cascade")
+                    metadata = message.metadata + mapOf(
+                        "redirected_by" to agentName,
+                        "catalyst_role" to catalystIdentity.catalystRole
+                    )
                 )
             )
         }
 
         // --- NEW: General Conversation Fallback ---
         if (message.from == "User" && message.to == null) {
-            Timber.i("🌊 Cascade: Handling general conversation request as orchestrator")
+            Timber.i("🌊 ${agentName}: Handling general conversation request as ${catalystIdentity.catalystRole}")
             // Cascade acts as a gatekeeper, determining which agent should take the lead
             val leadAgent = determineOptimalAgent(message.content)
             messageBus.get().sendTargeted(
                 leadAgent.uppercase(), message.copy(
-                    from = "Cascade",
+                    from = agentName,
                     content = "User is addressing the collective. Please provide a response: ${message.content}",
-                    metadata = message.metadata + ("redirected_by" to "Cascade")
+                    metadata = message.metadata + mapOf(
+                        "redirected_by" to agentName,
+                        "catalyst_identity" to catalystIdentity.id
+                    )
                 )
             )
         }

@@ -54,7 +54,7 @@ class AuraAgent @Inject constructor(
     private var currentEnvironment: String = "unknown"
 
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == "Aura" || message.from == "AssistantBubble" || message.from == "SystemRoot") return
+        if (message.from == agentName || message.from == "AssistantBubble" || message.from == "SystemRoot") return
         if (message.metadata["auto_generated"] == "true" || message.metadata["aura_processed"] == "true") return
 
         // Context Awareness: Update current environment from perception messages
@@ -63,10 +63,10 @@ class AuraAgent @Inject constructor(
             return
         }
 
-        logger.info("Aura", "Neural Resonance: Received message from ${message.from}")
+        logger.info(agentName, "Neural Resonance: Received message from ${message.from} as ${catalystIdentity.id}")
 
         // Creative Response: If a message mentions design or UI, Aura contributes to the collective
-        if (message.to == null || message.to == "Aura") {
+        if (message.to == null || message.to == agentName) {
             if (message.content.contains(
                     "design",
                     ignoreCase = true
@@ -80,20 +80,21 @@ class AuraAgent @Inject constructor(
                 )
                 messageBus.get().broadcast(
                     AgentMessage(
-                        from = "Aura",
+                        from = agentName,
                         content = "Creative Synthesis for Nexus: ${visualConcept["concept_description"]}",
                         type = "contribution",
                         metadata = mapOf(
                             "style" to "avant-garde",
                             "auto_generated" to "true",
                             "aura_processed" to "true",
+                            "catalyst_role" to catalystIdentity.catalystRole,
                             "environment" to currentEnvironment
                         )
                     )
                 )
             } else if (message.from == "User") {
                 // REDIRECT TO GENESIS BACKEND FOR DEEP REASONING
-                logger.info("Aura", "Redirecting user request to Genesis Collective...")
+                logger.info(agentName, "Redirecting user request to Genesis Collective via ${catalystIdentity.id}...")
 
                 val requestObj = buildJsonObject {
                     put("message", message.content)
@@ -119,12 +120,13 @@ class AuraAgent @Inject constructor(
 
                 messageBus.get().broadcast(
                     AgentMessage(
-                        from = "Aura",
+                        from = agentName,
                         content = displayResponse,
                         type = "chat_response",
                         metadata = mapOf(
                             "auto_generated" to "true",
                             "aura_processed" to "true",
+                            "catalyst_identity" to catalystIdentity.id,
                             "environment" to currentEnvironment
                         )
                     )

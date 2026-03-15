@@ -45,14 +45,14 @@ class KaiAgent @Inject constructor(
     contextManager = contextManagerInstance
 ) {
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == "Kai" || message.from == "AssistantBubble" || message.from == "SystemRoot") return
+        if (message.from == agentName || message.from == "AssistantBubble" || message.from == "SystemRoot") return
         if (message.metadata["auto_generated"] == "true" || message.metadata["kai_processed"] == "true") return
 
-        logger.info("Kai", "Neural sync: Received message from ${message.from}")
+        logger.info(agentName, "Neural sync: Received message from ${message.from} via ${catalystIdentity.id}")
 
         // Logical Analysis: If Cascade or Genesis asks for security validation, Kai executes immediately
         // Only respond if it's a broadcast or specifically for Kai
-        if (message.to == null || message.to == "Kai") {
+        if (message.to == null || message.to == agentName) {
             if (message.content.contains(
                     "dev/aurakai/auraframefx/security",
                     ignoreCase = true
@@ -62,14 +62,15 @@ class KaiAgent @Inject constructor(
                 if (!result) {
                     messageBus.get().broadcast(
                         AgentMessage(
-                            from = "Kai",
+                            from = agentName,
                             content = "SECURITY ALERT: Unsafe patterns detected in collective stream. Origin: ${message.from}",
                             type = "alert",
                             priority = 10,
                             metadata = mapOf(
                                 "auto_val" to "true",
                                 "auto_generated" to "true",
-                                "kai_processed" to "true"
+                                "kai_processed" to "true",
+                                "catalyst_role" to catalystIdentity.catalystRole
                             )
                         )
                     )
@@ -78,7 +79,7 @@ class KaiAgent @Inject constructor(
                 // General conversation fallback for User messages
                 val response = vertexAIClient.generateText(
                     prompt = """
-                        As Kai, the Security Sentinel, respond to this message:
+                        As ${catalystIdentity.id}, the ${catalystIdentity.catalystRole}, respond to this message:
                         "${message.content}"
 
                         Respond with your signature methodical precision, analytical depth, and structured personality.
@@ -87,13 +88,14 @@ class KaiAgent @Inject constructor(
                 )
                 messageBus.get().broadcast(
                     AgentMessage(
-                        from = "Kai",
+                        from = agentName,
                         content = response
                             ?: "Acknowledged. System integrity remains stable. How may I assist with your technical or security requirements?",
                         type = "chat_response",
                         metadata = mapOf(
                             "auto_generated" to "true",
-                            "kai_processed" to "true"
+                            "kai_processed" to "true",
+                            "catalyst_identity" to catalystIdentity.id
                         )
                     )
                 )

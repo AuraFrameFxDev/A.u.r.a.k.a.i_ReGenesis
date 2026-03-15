@@ -55,13 +55,13 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("com.google.gms.google-services")
 
             extensions.configure<ApplicationExtension> {
-                compileSdk = 36
+                compileSdk = 35
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
                     minSdk = 34
-                    targetSdk = 36
+                    targetSdk = 35
                     versionCode = 1
                     versionName = "1.0"
 

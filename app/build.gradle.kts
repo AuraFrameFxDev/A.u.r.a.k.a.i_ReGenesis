@@ -27,7 +27,7 @@ plugins {
 // AGP 9.0: Using extensions.configure for modern DSL compatibility
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
-    compileSdk = 36
+    compileSdk = 35
     ndkVersion = "26.1.10909125"
 
     defaultConfig {

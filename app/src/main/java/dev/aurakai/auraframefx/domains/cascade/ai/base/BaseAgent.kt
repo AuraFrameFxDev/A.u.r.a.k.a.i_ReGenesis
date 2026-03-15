@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.ai.base
 
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
@@ -24,6 +25,10 @@ abstract class BaseAgent(
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
 ) : Agent, OrchestratableAgent {
+
+    protected val catalystIdentity: CatalystIdentity by lazy {
+        CatalystIdentity.fromAgentType(agentType)
+    }
 
     override fun getName(): String = agentName
 
@@ -112,6 +117,8 @@ abstract class BaseAgent(
         return mapOf(
             "name" to agentName,
             "type" to agentType,
+            "catalyst_id" to catalystIdentity.id,
+            "catalyst_role" to catalystIdentity.catalystRole,
             "version" to "1.0.0"
         )
     }
@@ -135,11 +142,10 @@ abstract class BaseAgent(
      */
     protected fun createSuccessResponse(
         content: String,
-        metadata: Map<String, Any> = emptyMap(),
-        catalystIdentity: String? = null
+        metadata: Map<String, Any> = emptyMap()
     ): AgentResponse {
         val mergedMetadata = metadata + getAgentConfig() + 
-            (catalystIdentity?.let { mapOf("catalyst_identity" to it) } ?: emptyMap())
+            mapOf("catalyst_identity" to catalystIdentity.id)
             
         return AgentResponse.success(
             content = content,
