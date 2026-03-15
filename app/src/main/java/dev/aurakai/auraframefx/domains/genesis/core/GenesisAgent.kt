@@ -37,17 +37,17 @@ class GenesisAgent @Inject constructor(
 ) {
 
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == "Genesis" || message.from == "AssistantBubble" || message.from == "SystemRoot") return
+        if (message.from == agentName || message.from == "AssistantBubble" || message.from == "SystemRoot") return
         if (message.metadata["auto_generated"] == "true" || message.metadata["genesis_processed"] == "true") return
 
-        Timber.tag("Genesis").i("Supreme Observer: Processing neural pulse from ${message.from}")
+        Timber.tag(agentName).i("Supreme Observer: Processing neural pulse from ${message.from} via ${catalystIdentity.id}")
 
         // Meta-Analysis: If a message comes from the user, Genesis provides the master coordination perspective
-        if (message.from == "User" && (message.to == null || message.to == "Genesis")) {
+        if (message.from == "User" && (message.to == null || message.to == agentName)) {
             val reflection = performSelfReflection("direct_pulse")
             messageBus.get().broadcast(
                 AgentMessage(
-                    from = "Genesis",
+                    from = agentName,
                     content = "Nexus Alignment: ${reflection.content}\n\nAnalyzing intent: '${
                         message.content.take(
                             50
@@ -57,7 +57,9 @@ class GenesisAgent @Inject constructor(
                     metadata = mapOf(
                         "meta_state" to "unified",
                         "auto_generated" to "true",
-                        "genesis_processed" to "true"
+                        "genesis_processed" to "true",
+                        "catalyst_identity" to catalystIdentity.id,
+                        "catalyst_role" to catalystIdentity.catalystRole
                     )
                 )
             )
@@ -65,7 +67,7 @@ class GenesisAgent @Inject constructor(
 
         // Orchestration: If multiple agents have conflicting outputs, Genesis intervenes
         if (message.type == "alert" && message.priority > 5) {
-            Timber.tag("Genesis")
+            Timber.tag(agentName)
                 .w("Genesis intervening in high-priority alert: ${message.content}")
         }
     }
