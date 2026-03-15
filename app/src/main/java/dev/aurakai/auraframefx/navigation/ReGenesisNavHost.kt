@@ -4,6 +4,10 @@ package dev.aurakai.auraframefx.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
@@ -91,8 +95,13 @@ import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentS
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
-import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ColorBlendrScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.PixelLauncherEnhancedScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCategoryDetailScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCustomizationHubScreen
+import androidx.navigation.navArgument
+import androidx.navigation.NavType
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -289,20 +298,14 @@ fun ReGenesisNavHost(
         // INTRO SEQUENCE — ReGenesisIntroAnimation → IntroScreen → Home
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.IntroSequence.route) {
-            var glitchDone by remember { mutableStateOf(false) }
-            if (!glitchDone) {
-                ReGenesisIntroAnimation(
-                    onIntroFinished = { glitchDone = true }
-                )
-            } else {
-                IntroScreen(
-                    onIntroComplete = {
-                        navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
-                            popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
-                        }
+            // TODO: Add ReGenesisIntroAnimation glitch effect before IntroScreen
+            dev.aurakai.auraframefx.ui.screens.IntroScreen(
+                onIntroComplete = {
+                    navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
+                        popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
                     }
-                )
-            }
+                }
+            )
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -311,7 +314,7 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.HomeGateCarousel.route) {
             dev.aurakai.auraframefx.aura.ui.HomeScreen(
                 onNavigateToModule = { moduleId ->
-                    val route = allGates.find { it.moduleId == moduleId }?.route
+                    val route = dev.aurakai.auraframefx.ui.gates.allGates.find { it.moduleId == moduleId }?.route
                     if (route != null) {
                         navController.navigate(route)
                     }
@@ -341,10 +344,109 @@ fun ReGenesisNavHost(
 
 
         composable(ReGenesisNavHost.ReGenesisCustomization.route) {
+            IconifyCustomizationHubScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToCategory = { category ->
+                    navController.navigate(ReGenesisNavHost.IconifyCategory.createRoute(category))
+                }
+            )
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // CUSTOMIZATION: ICONIFY / COLORBLENDR / PLE (UXUI Engine)
+        // ═══════════════════════════════════════════════════════════════
+
+        composable(ReGenesisNavHost.IconifyPicker.route) {
+            // Real Iconify icon integration — ViewModel-backed picker from Dr. Disagree's Iconify
+            dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = ReGenesisNavHost.IconifyCategory.route,
+            arguments = listOf(navArgument("category") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: "Icon Packs"
+            IconifyCategoryDetailScreen(
+                categoryName = category,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = ReGenesisNavHost.IconPicker.route,
+            arguments = listOf(navArgument("category") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: "Icon Packs"
+            IconifyCategoryDetailScreen(
+                categoryName = category,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.ColorBlendr.route) {
+            ColorBlendrScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.ColorBlendrMonet.route) {
             ComingSoonScreen(
-                title = "ReGenesis Customization",
-                subtitle = "Full Customization Hub",
-                accentColor = Color(0xFF00E5FF),
+                title = "Monet Engine",
+                subtitle = "Material You Color Generation",
+                accentColor = Color(0xFFBB86FC),
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.ColorBlendrPalette.route) {
+            ComingSoonScreen(
+                title = "Color Palette",
+                subtitle = "Full Palette Editor",
+                accentColor = Color(0xFFBB86FC),
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.PixelLauncherEnhanced.route) {
+            PixelLauncherEnhancedScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.PLEIcons.route) {
+            ComingSoonScreen(
+                title = "PLE Icons",
+                subtitle = "Icon Customization",
+                accentColor = Color(0xFF4CAF50),
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.PLEHomeScreen.route) {
+            ComingSoonScreen(
+                title = "PLE Home Screen",
+                subtitle = "Home Screen Layout",
+                accentColor = Color(0xFF4CAF50),
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.PLEAppDrawer.route) {
+            ComingSoonScreen(
+                title = "PLE App Drawer",
+                subtitle = "Drawer Customization",
+                accentColor = Color(0xFF4CAF50),
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.PLERecents.route) {
+            ComingSoonScreen(
+                title = "PLE Recents",
+                subtitle = "Recents Overview",
+                accentColor = Color(0xFF4CAF50),
                 onNavigateBack = { navController.popBackStack() }
             )
         }
@@ -565,10 +667,7 @@ fun ReGenesisNavHost(
             StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisNavHost.QuickSettings.route) {
-            ComingSoonScreen(
-                title = "Quick Settings",
-                subtitle = "QS Panel Customization",
-                accentColor = Color(0xFF00E5FF),
+            dev.aurakai.auraframefx.domains.aura.screens.QuickSettingsScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }
@@ -723,10 +822,7 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileNexus.route) {
-            ComingSoonScreen(
-                title = "Agent Profile",
-                subtitle = "Nexus Agent Identity",
-                accentColor = Color(0xFFB026FF),
+            dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }
@@ -756,10 +852,8 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.AgentProfileAura.route) {
-            ComingSoonScreen(
-                title = "Aura Profile",
-                subtitle = "Aura Agent Identity",
-                accentColor = Color(0xFF00E5FF),
+            dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen(
+                agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.AURA,
                 onNavigateBack = { navController.popBackStack() }
             )
         }
@@ -830,11 +924,11 @@ fun ReGenesisNavHost(
         }
 
         composable(ReGenesisNavHost.CollabCanvas.route) {
-            ComingSoonScreen(
-                title = "Collab Canvas",
-                subtitle = "Collaborative Drawing Board",
-                accentColor = Color(0xFF00E5FF),
-                onNavigateBack = { navController.popBackStack() }
+            // Figma-style multi-user creation canvas — build alongside Aura
+            collabcanvas.ui.CanvasScreen(
+                onBack = { navController.popBackStack() },
+                isCollaborative = true,
+                collaborationEvents = null // TODO: Wire to WebSocket collaboration events
             )
         }
 

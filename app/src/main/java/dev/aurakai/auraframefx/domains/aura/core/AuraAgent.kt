@@ -189,7 +189,7 @@ class AuraAgent @Inject constructor(
     private val _currentMood = MutableStateFlow("balanced")
     val currentMood: StateFlow<String> = _currentMood
 
-    suspend fun initialize() {
+    private suspend fun internalInitialize() {
         if (isInitialized) return
         logger.info("AuraAgent", "Initializing Creative Sword agent")
         try {
@@ -203,6 +203,31 @@ class AuraAgent @Inject constructor(
             _creativeState.value = CreativeState.ERROR
             throw e
         }
+    }
+
+    override suspend fun initialize(scope: CoroutineScope) {
+        super.initialize(scope)
+        if (!isInitialized) {
+            internalInitialize()
+        }
+    }
+
+    override suspend fun start() {
+        super.start()
+        // Subclasses or this class can add more start logic if needed
+    }
+
+    override suspend fun pause() {
+        super.pause()
+    }
+
+    override suspend fun resume() {
+        super.resume()
+    }
+
+    override suspend fun shutdown() {
+        super.shutdown()
+        cleanup()
     }
 
     suspend fun handleCreativeInteraction(interaction: EnhancedInteractionData): InteractionResponse {

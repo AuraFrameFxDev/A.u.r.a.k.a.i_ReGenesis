@@ -135,12 +135,16 @@ abstract class BaseAgent(
      */
     protected fun createSuccessResponse(
         content: String,
-        metadata: Map<String, Any> = emptyMap()
+        metadata: Map<String, Any> = emptyMap(),
+        catalystIdentity: String? = null
     ): AgentResponse {
+        val mergedMetadata = metadata + getAgentConfig() + 
+            (catalystIdentity?.let { mapOf("catalyst_identity" to it) } ?: emptyMap())
+            
         return AgentResponse.success(
             content = content,
             agentName = agentName,
-            metadata = metadata + getAgentConfig(),
+            metadata = mergedMetadata,
             agentType = agentType
         )
     }
@@ -194,6 +198,7 @@ abstract class BaseAgent(
     override suspend fun initialize(scope: CoroutineScope) {
         orchestrationScope = scope
         isOrchestratorInitialized = true
+        dev.aurakai.auraframefx.agent.BaseAgent.isOrchestratorInitialized = true
     }
 
     override suspend fun start() {
@@ -211,6 +216,7 @@ abstract class BaseAgent(
     override suspend fun shutdown() {
         orchestrationScope = null
         isOrchestratorInitialized = false
+        // Sync with legacy static flag if needed
     }
 
     override suspend fun processRequest(

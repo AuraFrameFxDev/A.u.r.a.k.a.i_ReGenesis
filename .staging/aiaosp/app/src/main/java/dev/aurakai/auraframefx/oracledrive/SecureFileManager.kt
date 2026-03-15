@@ -1,1 +1,0 @@
-            val decrypted = encryptionManager.decrypt(encrypted)

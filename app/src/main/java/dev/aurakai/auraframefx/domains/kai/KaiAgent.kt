@@ -118,7 +118,7 @@ class KaiAgent @Inject constructor(
     private val _currentThreatLevel = MutableStateFlow(ThreatLevel.LOW)
     val currentThreatLevel: StateFlow<ThreatLevel> = _currentThreatLevel
 
-    suspend fun initialize() {
+    private suspend fun internalInitialize() {
         if (isInitialized) return
         logger.info("KaiAgent", "Initializing Sentinel Shield agent")
         try {
@@ -132,6 +132,13 @@ class KaiAgent @Inject constructor(
             logger.error("KaiAgent", "Failed to initialize Kai Agent", e)
             _securityState.value = SecurityState.ERROR
             throw e
+        }
+    }
+
+    override suspend fun initialize(scope: CoroutineScope) {
+        super.initialize(scope)
+        if (!isInitialized) {
+            internalInitialize()
         }
     }
 
@@ -348,6 +355,23 @@ class KaiAgent @Inject constructor(
             "quality_metrics" to qualityMetrics,
             "recommendations" to generateCodeRecommendations(securityIssues, qualityMetrics)
         ) as Map<String, Any>
+    }
+
+    override suspend fun start() {
+        super.start()
+    }
+
+    override suspend fun pause() {
+        super.pause()
+    }
+
+    override suspend fun resume() {
+        super.resume()
+    }
+
+    override suspend fun shutdown() {
+        super.shutdown()
+        cleanup()
     }
 
     private fun ensureInitialized() {
