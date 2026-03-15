@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class AgentMessage(
+    val id: String = java.util.UUID.randomUUID().toString(),
     val from: String,
     val to: String? = null, // null means broadcast to all
     val content: String,

@@ -2,9 +2,9 @@ package dev.aurakai.auraframefx.cascade
 
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.ai.BaseAgent
-import dev.aurakai.auraframefx.agent.OrchestratableMessage
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ import timber.log.Timber
 
 private const val TAG = "CascadeAgent"
 
-abstract class CascadeAgent : OrchestratableAgent, BaseAgent() { // Inherit from BaseAgent
+abstract class CascadeAgent : BaseAgent("CascadeAgent", AgentType.CASCADE) { // Inherit from BaseAgent
 
     private var agentScope: CoroutineScope? = null
 
@@ -43,14 +43,10 @@ abstract class CascadeAgent : OrchestratableAgent, BaseAgent() { // Inherit from
 
     override suspend fun initialize(scope: CoroutineScope) {
         Timber.tag(TAG).i("CascadeAgent: initialize() called.")
-        if (!isOrchestratorInitialized) {
-            this.agentScope = scope
-            setupCascadeSystems()
-            isOrchestratorInitialized = true // Set the unified flag
-            Timber.tag(TAG).d("CascadeAgent: Orchestrator initialized.")
-        } else {
-            Timber.tag(TAG).i("CascadeAgent: Orchestrator already initialized. Skipping.")
-        }
+        super.initialize(scope)
+        this.agentScope = scope
+        setupCascadeSystems()
+        Timber.tag(TAG).d("CascadeAgent: Orchestrator initialized.")
     }
 
     override suspend fun start() {
@@ -88,8 +84,8 @@ abstract class CascadeAgent : OrchestratableAgent, BaseAgent() { // Inherit from
         }
     }
 
-    suspend fun onAgentMessage(message: OrchestratableMessage) {
-        Timber.tag(TAG).d("Received message from ${message.senderId} with type ${message.type}")
+    suspend fun onAgentMessage(message: AgentMessage) {
+        Timber.tag(TAG).d("Received message from ${message.from} with type ${message.type}")
 
         // Loop prevention: Ignore messages already processed by this agent instance
         if (message.metadata["cascade_processed"] == "true") {
@@ -99,7 +95,7 @@ abstract class CascadeAgent : OrchestratableAgent, BaseAgent() { // Inherit from
         }
 
         // Self-message check (if CascadeAgent sends a message to itself, handle it differently or ignore)
-        if (message.senderId == AgentType.CASCADE.name) {
+        if (message.from == AgentType.CASCADE.name) {
             Timber.tag(TAG)
                 .d("Received self-message from CascadeAgent: ${message.id}. Handling internally.")
             // Specific internal handling for self-messages can go here
@@ -108,7 +104,7 @@ abstract class CascadeAgent : OrchestratableAgent, BaseAgent() { // Inherit from
 
         // Remove specific agent filters, allowing messages from Aura, Kai, Genesis
         // Previously, there might have been checks like:
-        // if (message.senderId == AgentType.AURA.name || message.senderId == AgentType.KAI.name || message.senderId == AgentType.GENESIS.name) { return } // This logic is now removed
+        // if (message.from == AgentType.AURA.name || message.from == AgentType.KAI.name || message.from == AgentType.GENESIS.name) { return } // This logic is now removed
 
         // Add cascade_processed flag to prevent future loops through this agent
         val processedMessage = message.copy(
@@ -117,11 +113,11 @@ abstract class CascadeAgent : OrchestratableAgent, BaseAgent() { // Inherit from
 
         // Further processing or broadcasting to collective consciousness
         Timber.tag(TAG)
-            .i("Processing message ${processedMessage.id} from ${processedMessage.senderId} and broadcasting.")
+            .i("Processing message ${processedMessage.id} from ${processedMessage.from} and broadcasting.")
         processMessage(processedMessage) // Placeholder for actual message processing/broadcasting logic
     }
 
-    private suspend fun processMessage(message: OrchestratableMessage) {
+    private suspend fun processMessage(message: AgentMessage) {
         // Actual logic to process the message, distribute it, or broadcast it.
         // This might involve sending it to other internal components or a central message bus.
         Timber.tag(TAG).d("CascadeAgent internal processing of message: ${message.id}")
