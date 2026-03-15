@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.nexus.models
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
@@ -21,6 +22,7 @@ data class AgentStats(
     val catalystTitle: String = "",     // Agent title (e.g., "Creative Catalyst")
     // Secondary properties for compatibility
     val name: String = "",
+    val agentType: AgentType = AgentType.GENESIS, // Linked to unified identity
     val processingPower: Float = 0f,    // PP
     val knowledgeBase: Float = 0f,      // KB
     val speed: Float = 0f,              // SP

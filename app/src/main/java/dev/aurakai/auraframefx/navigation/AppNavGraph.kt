@@ -61,230 +61,169 @@ import dev.aurakai.auraframefx.ui.identity.GenderSelectionNavigator
 fun AppNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = NavDestination.Gates.route // Start with gate navigation
+        startDestination = ReGenesisNavHost.HomeGateCarousel.route
     ) {
         // ==================== MAIN SCREENS ====================
 
-        composable(route = NavDestination.Home.route) {
-            dev.aurakai.auraframefx.screens.HomeScreen(navController = navController)
-        }
-
-        composable(route = NavDestination.Gates.route) {
-            GateNavigationScreen(navController = navController)
-        }
-
-        composable(route = NavDestination.JournalPDA.route) {
-            JournalPDAScreen(navController = navController)
-        }
-
-        composable(route = NavDestination.IntroScreen.route) {
-            IntroScreen(onIntroComplete = { navController.navigate(NavDestination.Gates.route) })
-        }
-
-        composable(route = NavDestination.MainScreen.route) {
-            MainScreen(
-                onNavigateToAgentNexus = { navController.navigate(NavDestination.AgentHub.route) },
-                onNavigateToOracleDrive = { navController.navigate(NavDestination.OracleDrive.route) },
-                onNavigateToSettings = { navController.navigate(NavDestination.UISettings.route) }
+        composable(route = ReGenesisNavHost.HomeGateCarousel.route) {
+            dev.aurakai.auraframefx.aura.ui.HomeScreen(
+                onNavigateToModule = { moduleId ->
+                    val route = dev.aurakai.auraframefx.ui.gates.allGates.find { it.moduleId == moduleId }?.route
+                    if (route != null) {
+                        navController.navigate(route)
+                    }
+                }
             )
         }
 
-        composable(route = NavDestination.WorkingLab.route) {
-            WorkingLabScreen(onNavigate = { route -> navController.navigate(route) })
+        composable(route = ReGenesisNavHost.IntroSequence.route) {
+            IntroScreen(onIntroComplete = { 
+                navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
+                    popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
+                }
+            })
         }
 
-        composable(route = NavDestination.AgentProfile.route) {
-            AgentProfileScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(route = NavDestination.EcosystemMenu.route) {
-            EcosystemMenuScreen()
-        }
-
-        composable(route = NavDestination.HolographicMenu.route) {
-            HolographicMenuScreen(onNavigate = { route -> navController.navigate(route) })
-        }
-
-        composable(route = NavDestination.UISettings.route) {
-            UISettingsScreen(navController = navController)
-        }
-
-        // ==================== AGENT HUB ====================
-
-        composable(route = NavDestination.AgentHub.route) {
+        composable(route = ReGenesisNavHost.AgentNexusHub.route) {
             AgentHubSubmenuScreen(navController = navController)
         }
 
-        composable(route = NavDestination.TaskAssignment.route) {
+        composable(route = ReGenesisNavHost.TaskAssignment.route) {
             TaskAssignmentScreen()
         }
 
-        composable(route = NavDestination.AgentMonitoring.route) {
+        composable(route = ReGenesisNavHost.AgentMonitoring.route) {
             AgentMonitoringScreen()
         }
 
-        composable(route = NavDestination.FusionMode.route) {
+        composable(route = ReGenesisNavHost.FusionMode.route) {
             FusionModeScreen()
         }
 
-        composable(route = NavDestination.CodeAssist.route) {
+        composable(route = ReGenesisNavHost.CodeAssist.route) {
             CodeAssistScreen(navController = navController)
         }
 
         // ==================== ORACLE DRIVE ====================
 
-        composable(route = NavDestination.OracleDrive.route) {
+        composable(route = ReGenesisNavHost.OracleDriveHub.route) {
             // Oracle Drive contains GenesisNavigation (nested NavHost)
             // This provides access to all Genesis root/system screens
             GenesisNavigation()
         }
 
-        composable(route = NavDestination.SphereGrid.route) {
+        composable(route = ReGenesisNavHost.SphereGrid.route) {
             SphereGridScreen(navController = navController)
         }
 
         // ==================== ROM TOOLS ====================
 
-        composable(route = NavDestination.ROMTools.route) {
+        composable(route = ReGenesisNavHost.RomToolsHub.route) {
             ROMToolsSubmenuScreen(navController = navController)
         }
 
-        composable(route = NavDestination.LiveROMEditor.route) {
+        composable(route = ReGenesisNavHost.LiveROMEditor.route) {
             LiveROMEditorScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.ROMFlasher.route) {
+        composable(route = ReGenesisNavHost.ROMFlasher.route) {
             ROMFlasherScreen()
         }
 
-        composable(route = NavDestination.RecoveryTools.route) {
+        composable(route = ReGenesisNavHost.RecoveryTools.route) {
             RecoveryToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.BootloaderManager.route) {
+        composable(route = ReGenesisNavHost.Bootloader.route) {
             BootloaderManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ==================== LSPOSED INTEGRATION ====================
 
-        composable(route = NavDestination.LSPosedGate.route) {
+        composable(route = ReGenesisNavHost.LSPosedHub.route) {
             LSPosedSubmenuScreen(navController = navController)
         }
 
-        composable(route = NavDestination.ModuleManager.route) {
+        composable(route = ReGenesisNavHost.ModuleManager.route) {
             ModuleManagerScreen()
         }
 
-        composable(route = NavDestination.LSPosedModuleManager.route) {
+        composable(route = ReGenesisNavHost.SovereignModuleManager.route) {
             LSPosedModuleManagerScreen()
         }
 
-        composable(route = NavDestination.ModuleCreation.route) {
+        composable(route = ReGenesisNavHost.ModuleCreation.route) {
             ModuleCreationScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.HookManager.route) {
+        composable(route = ReGenesisNavHost.HookManager.route) {
             HookManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.LogsViewer.route) {
+        composable(route = ReGenesisNavHost.LogsViewer.route) {
             LogsViewerScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ==================== UI/UX DESIGN STUDIO ====================
 
-        composable(route = NavDestination.UIUXDesignStudio.route) {
+        composable(route = ReGenesisNavHost.AuraThemingHub.route) {
             UIUXGateSubmenuScreen(navController = navController)
         }
 
-        composable(route = NavDestination.ThemeEngine.route) {
+        composable(route = ReGenesisNavHost.ThemeEngine.route) {
             ThemeEngineScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.StatusBar.route) {
+        composable(route = ReGenesisNavHost.StatusBar.route) {
             StatusBarScreen()
         }
 
-        composable(route = NavDestination.NotchBar.route) {
+        composable(route = ReGenesisNavHost.NotchBar.route) {
             NotchBarScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.QuickSettings.route) {
+        composable(route = ReGenesisNavHost.QuickSettings.route) {
             QuickSettingsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.OverlayMenus.route) {
-            OverlayMenusScreen()
-        }
-
-        composable(route = NavDestination.QuickActions.route) {
-            QuickActionsScreen()
-        }
-
-        composable(route = NavDestination.SystemOverrides.route) {
+        composable(route = ReGenesisNavHost.SystemOverrides.route) {
             SystemOverridesScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ==================== HELP DESK ====================
 
-        composable(route = NavDestination.HelpDesk.route) {
+        composable(route = ReGenesisNavHost.HelpDesk.route) {
             HelpDeskSubmenuScreen(navController = navController)
         }
 
-        composable(route = NavDestination.LiveSupport.route) {
+        composable(route = ReGenesisNavHost.LiveSupportChat.route) {
             val viewModel = hiltViewModel<SupportChatViewModel>()
             with(viewModel) {
                 LiveSupportChatScreen(onNavigateBack = { navController.popBackStack() })
             }
         }
 
-        composable(route = NavDestination.Documentation.route) {
+        composable(route = ReGenesisNavHost.Documentation.route) {
             DocumentationScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.FAQBrowser.route) {
+        composable(route = ReGenesisNavHost.FAQBrowser.route) {
             FAQBrowserScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(route = NavDestination.TutorialVideos.route) {
+        composable(route = ReGenesisNavHost.TutorialVideos.route) {
             TutorialVideosScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ==================== AURA'S LAB ====================
 
-        composable(route = NavDestination.AurasLab.route) {
+        composable(route = ReGenesisNavHost.AuraLab.route) {
             AurasLabScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        // ==================== CUSTOMIZATION TOOLS ====================
-
-        composable(route = NavDestination.ComponentEditor.route) {
-            ComponentEditor(
-                component = dev.aurakai.auraframefx.ui.customization.UIComponent(
-                    id = "sample",
-                    name = "Sample Component",
-                    type = dev.aurakai.auraframefx.ui.customization.ComponentType.STATUS_BAR,
-                    height = 50f,
-                    backgroundColor = androidx.compose.ui.graphics.Color.White,
-                    animationType = dev.aurakai.auraframefx.ui.customization.AnimationType.NONE,
-                ),
-                onUpdate = { /* Handle component update */ },
-                onClose = { navController.popBackStack() }
-            )
-        }
-
-        composable(route = NavDestination.ZOrderEditor.route) {
-            ZOrderEditor(
-                elements = emptyList(), // TODO: Load from customization state
-                onReorder = { /* Handle reorder */ },
-                onElementSelected = { /* Handle selection */ },
-                onClose = { navController.popBackStack() }
-            )
         }
 
         // ==================== IDENTITY & ONBOARDING ====================
 
-        composable(route = NavDestination.GenderSelection.route) {
+        composable(route = ReGenesisNavHost.GenderSelection.route) {
             GenderSelectionNavigator(
                 onGenderSelected = { gender ->
                     // TODO: Save gender preference and navigate to next onboarding step
