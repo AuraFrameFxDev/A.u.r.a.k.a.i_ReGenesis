@@ -1,20 +1,23 @@
 package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.Gavel
-import androidx.compose.material.icons.filled.AdminPanelSettings
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
+import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.components.GridMenuItem
+import dev.aurakai.auraframefx.domains.aura.ui.components.Level3GridMenu
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,13 +30,7 @@ import java.util.Locale
 @Composable
 fun SecurityCenterScreen(
     onNavigateBack: () -> Unit,
-    viewModel: KaiSystemViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
     val state by viewModel.systemStatus.collectAsState()
 
@@ -113,9 +110,12 @@ fun SecurityCenterScreen(
             item {
                 val threatColor = when (state.threatLevel) {
                     ThreatLevel.NONE -> Color(0xFF00FFD4)
+                    ThreatLevel.INFO -> Color.Cyan
                     ThreatLevel.LOW -> Color.Yellow
                     ThreatLevel.MEDIUM -> Color(0xFFFF8C00)
+                    ThreatLevel.WARNING -> Color(0xFFFF8C00)
                     ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color(0xFFFF4444)
+                    ThreatLevel.AI_ERROR -> Color.Magenta
                 }
                 SecurityStatusCard(
                     title = "Threat Level",

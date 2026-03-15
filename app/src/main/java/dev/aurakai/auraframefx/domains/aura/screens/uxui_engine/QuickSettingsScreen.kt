@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens
+package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
 // Static tile catalogue — what's available; enabled state comes from the ViewModel
@@ -48,13 +47,7 @@ private val TILE_CATALOGUE = listOf(
 @Composable
 fun QuickSettingsScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: AuraUIControlViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: AuraUIControlViewModel = hiltViewModel()
 ) {
     val state by viewModel.quickSettingsState.collectAsState()
 

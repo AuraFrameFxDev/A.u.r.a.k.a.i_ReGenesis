@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens
+package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,9 +38,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
 private val clockFormats = listOf("12h", "24h")
@@ -55,13 +54,7 @@ private val networkStyles = listOf("Simple", "Detailed", "Minimal")
 @Composable
 fun StatusBarScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: AuraUIControlViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: AuraUIControlViewModel = hiltViewModel()
 ) {
     val state by viewModel.statusBarState.collectAsState()
 

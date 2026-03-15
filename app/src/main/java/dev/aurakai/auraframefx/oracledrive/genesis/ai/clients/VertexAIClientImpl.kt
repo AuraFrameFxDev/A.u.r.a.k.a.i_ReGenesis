@@ -208,10 +208,12 @@ class VertexAIClientImpl @Inject constructor(
         return if (response != null) {
             try {
                 val parts = response.split("|")
-                mapOf(
-                    "sentiment" to parts.getOrNull(0)?.trim() ?: "neutral",
-                    "complexity" to parts.getOrNull(1)?.trim() ?: "medium",
-                    "topics" to (parts.getOrNull(2)?.split(",")?.map { it.trim() } ?: listOf("general")),
+                val topics = (parts.getOrNull(2)?.split(",")?.map { it.trim() } ?: listOf("general"))
+                
+                mapOf<String, Any>(
+                    "sentiment" to (parts.getOrNull(0)?.trim() ?: "neutral"),
+                    "complexity" to (parts.getOrNull(1)?.trim() ?: "medium"),
+                    "topics" to topics,
                     "confidence" to (parts.getOrNull(3)?.trim()?.toDoubleOrNull() ?: 0.75),
                     "word_count" to content.split(" ").size,
                     "analysis_type" to "ai_powered"

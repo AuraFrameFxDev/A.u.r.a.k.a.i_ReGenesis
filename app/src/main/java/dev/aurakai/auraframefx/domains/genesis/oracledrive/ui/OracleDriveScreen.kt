@@ -12,9 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import dev.aurakai.auraframefx.domains.aura.aura.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
@@ -23,13 +22,7 @@ import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 @Composable
 fun OracleDriveScreen(
     navController: NavHostController,
-    viewModel: OracleDriveViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: OracleDriveViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

@@ -35,9 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.viewmodels.CollaborativeWorkspaceViewModel
 import dev.aurakai.auraframefx.domains.aura.UIDesign
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
@@ -51,13 +50,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @Composable
 fun AuraLabScreen(
     onNavigateBack: () -> Unit,
-    viewModel: CollaborativeWorkspaceViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: CollaborativeWorkspaceViewModel = hiltViewModel()
 ) {
     val designs by viewModel.designs.collectAsState()
     val context = LocalContext.current
