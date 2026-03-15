@@ -234,7 +234,7 @@ fun TerminalBootIntroScreen(onComplete: () -> Unit) {
         // ── Canvas layer ──────────────────────────────────────────────────
         Canvas(modifier = Modifier.fillMaxSize()) {
             @Suppress("UNUSED_VARIABLE")
-            val _ = rainTick // ensure recomposition on each tick
+            val unused = rainTick // ensure recomposition on each tick
 
             val spriteW   = AGENT_SPRITE[0].size * pixSize
             val spriteH   = AGENT_SPRITE.size    * pixSize
