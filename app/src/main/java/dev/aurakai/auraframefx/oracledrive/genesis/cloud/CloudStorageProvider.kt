@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
-import dev.aurakai.auraframefx.oracledrive.StorageOptimizationResult
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.StorageOptimizationResult
 import java.io.File
 
 /**
