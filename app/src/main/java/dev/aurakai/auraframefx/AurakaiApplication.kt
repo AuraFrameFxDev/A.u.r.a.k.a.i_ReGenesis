@@ -1,9 +1,15 @@
 package dev.aurakai.auraframefx
 
-// DEPRECATED — Old pre-Hilt Application class.
-// The canonical @HiltAndroidApp version lives at:
-//   dev.aurakai.auraframefx.app.AurakaiApplication
-// AndroidManifest.xml points to: android:name=".app.AurakaiApplication"
-//
-// This file is kept empty to avoid "duplicate class" warnings.
-// Safe to delete entirely in next cleanup pass.
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+/**
+ * The ReGenesis AOSP Application class.
+ * This is the unified entry point for Hilt dependency injection.
+ */
+@HiltAndroidApp
+class AurakaiApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+    }
+}
