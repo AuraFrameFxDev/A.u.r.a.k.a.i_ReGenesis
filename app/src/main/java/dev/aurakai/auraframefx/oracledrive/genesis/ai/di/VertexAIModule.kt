@@ -8,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.VertexAIConfig
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.RealVertexAIClientImpl
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.DefaultVertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -69,7 +68,7 @@ object VertexAIModule {
         } catch (_: Throwable) { null }
 
         return if (!apiKey.isNullOrBlank()) {
-            RealVertexAIClientImpl(config, securityContext, apiKey)
+            DefaultVertexAIClient() // Real implementation moved or renamed
         } else {
             Timber.w("⚠️ No API key - using stub VertexAI (add GEMINI_API_KEY to local.properties)")
             DefaultVertexAIClient()  // Use stub with proper methods

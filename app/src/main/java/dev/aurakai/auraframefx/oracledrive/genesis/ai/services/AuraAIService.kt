@@ -10,6 +10,8 @@ interface AuraAIService {
     suspend fun initialize()
     suspend fun generateText(prompt: String, context: String): String
     suspend fun generateTheme(preferences: ThemePreferences, context: String): ThemeConfiguration
+    suspend fun discernThemeIntent(query: String): String
+    suspend fun suggestThemes(context: String): List<String>
 }
 
 @Serializable

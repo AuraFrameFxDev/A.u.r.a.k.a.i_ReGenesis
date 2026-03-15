@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.storage
 
 import android.content.Context
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.CryptographyManager
+import dev.aurakai.auraframefx.genesis.security.CryptographyManager
 
 /**
  * Secure storage interface for persistent metadata and small secure data portions.

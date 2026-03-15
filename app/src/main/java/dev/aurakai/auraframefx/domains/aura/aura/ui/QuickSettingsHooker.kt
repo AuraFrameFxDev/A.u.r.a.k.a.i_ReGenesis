@@ -38,7 +38,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
         }?.hook {
             after {
                 val qsPanel = instance as ViewGroup
-                info("QuickSettingsHooker: QSPanel inflated, applying Genesis enhancements")
+                YLog.info("QuickSettingsHooker: QSPanel inflated, applying Genesis enhancements")
 
                 // Add Genesis branding to the footer area
                 addGenesisFooterElements(qsPanel)
@@ -75,7 +75,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
             }
 
             qsPanel.addView(composeView)
-            info("QuickSettingsHooker: Genesis footer elements added")
+            YLog.info("QuickSettingsHooker: Genesis footer elements added")
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to add footer elements: ${e.message}")
         }
@@ -89,7 +89,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
             // Apply padding and spacing from config
             val layout = config.layout
 
-            info("QuickSettingsHooker: Applied Genesis layout config (columns: $layout)")
+            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: $layout)")
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to apply layout config: ${e.message}")
         }
@@ -102,7 +102,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
         try {
             // In a real implementation, we would modify the tile's background, labels, etc.
             // For now, we log the styling application
-            info("QuickSettingsHooker: Applied Genesis styling to tile")
+            YLog.info("QuickSettingsHooker: Applied Genesis styling to tile")
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to apply tile style: ${e.message}")
         }

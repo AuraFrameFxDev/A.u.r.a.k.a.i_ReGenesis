@@ -75,7 +75,7 @@ open class MemoryManager @Inject constructor(
             memoryStore.values.maxByOrNull { it.timestamp.toEpochMilliseconds() }?.timestamp?.toEpochMilliseconds()
 
         _memoryStats.value = MemoryStats(
-            totalItems = memoryStore.size,
+            totalEntries = memoryStore.size,
             totalSize = memoryStore.values.sumOf { it.content.length.toLong() },
             oldestEntry = oldest,
             newestEntry = newest

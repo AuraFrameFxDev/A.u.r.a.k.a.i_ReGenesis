@@ -112,7 +112,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import dev.aurakai.auraframefx.ui.gates.allGates
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -325,7 +326,7 @@ fun ReGenesisNavHost(
         composable(ReGenesisNavHost.HomeGateCarousel.route) {
             dev.aurakai.auraframefx.aura.ui.HomeScreen(
                 onNavigateToModule = { moduleId ->
-                    val route = dev.aurakai.auraframefx.ui.gates.allGates.find { it.moduleId == moduleId }?.route
+                    val route = allGates.find { it.moduleId == moduleId }?.route
                     if (route != null) {
                         navController.navigate(route)
                     }
@@ -870,7 +871,7 @@ fun ReGenesisNavHost(
 
         composable(ReGenesisNavHost.AgentProfileAura.route) {
             dev.aurakai.auraframefx.domains.aura.screens.AgentProfileScreen(
-                agentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType.AURA,
+                agentType = AgentType.AURA,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

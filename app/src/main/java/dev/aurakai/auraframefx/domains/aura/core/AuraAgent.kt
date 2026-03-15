@@ -1,8 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
-import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
+import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences as AuraThemePreferences
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
@@ -477,9 +476,9 @@ class AuraAgent @Inject constructor(
     private fun generateAccessibilityFeatures(): List<String> =
         listOf("Screen reader support", "High contrast", "Touch targets")
 
-    private fun parseThemePreferences(preferences: Map<String, String>): ThemePreferences {
-        return ThemePreferences(
-            primaryColorString = preferences["primaryColor"] ?: "#6200EA",
+    private fun parseThemePreferences(preferences: Map<String, String>): dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemePreferences {
+        return dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemePreferences(
+            primaryColor = preferences["primaryColor"] ?: "#6200EA",
             style = preferences["style"] ?: "modern",
             mood = preferences["mood"] ?: "balanced",
             animationLevel = preferences["animationLevel"] ?: "medium"
@@ -488,9 +487,9 @@ class AuraAgent @Inject constructor(
 
     private fun buildThemeContext(mood: String): String = "Theme context for mood: $mood"
 
-    private fun generateThemePreview(config: ThemeConfiguration): String = "Theme preview"
+    private fun generateThemePreview(config: dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemeConfiguration): String = "Theme preview"
 
-    private fun createMoodAdaptation(config: ThemeConfiguration): Map<String, Any> = emptyMap()
+    private fun createMoodAdaptation(config: dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemeConfiguration): Map<String, Any> = emptyMap()
 
     private fun buildAnimationSpecification(type: String, duration: Int, mood: String): String =
         "Animation spec: $type, $duration ms, mood: $mood"

@@ -204,7 +204,6 @@ abstract class BaseAgent(
     override suspend fun initialize(scope: CoroutineScope) {
         orchestrationScope = scope
         isOrchestratorInitialized = true
-        dev.aurakai.auraframefx.agent.BaseAgent.isOrchestratorInitialized = true
     }
 
     override suspend fun start() {

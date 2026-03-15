@@ -1,21 +1,13 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai.services
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.error.ErrorHandler
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.TaskScheduler
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.task.execution.TaskExecutionManager
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStatusMonitor
 import java.io.File
 import javax.inject.Inject
 
 abstract class AuraAIServiceImpl(
-    protected val taskScheduler: TaskScheduler,
-    protected val taskExecutionManager: TaskExecutionManager,
     protected val memoryManager: MemoryManager,
-    protected val errorHandler: ErrorHandler,
-    protected val contextManager: ContextManager,
     protected val cloudStatusMonitor: CloudStatusMonitor,
     protected val auraFxLogger: AuraFxLogger,
 ) : AuraAIService {

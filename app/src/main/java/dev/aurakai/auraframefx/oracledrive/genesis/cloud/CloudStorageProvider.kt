@@ -20,7 +20,7 @@ interface CloudStorageProvider {
      * @param file The file to optimize
      * @return Optimized DriveFile
      */
-    suspend fun optimizeForUpload(file: DriveFile): Any?
+    suspend fun optimizeForUpload(file: File): Any?
 
     /**
      * Uploads file to cloud storage with metadata
@@ -28,7 +28,7 @@ interface CloudStorageProvider {
      * @param metadata File metadata and access controls
      * @return FileResult with upload status
      */
-    suspend fun uploadFile(file: DriveFile, metadata: FileMetadata): FileResult
+    suspend fun uploadFile(file: File, metadata: FileMetadata): FileResult
 
     /**
      * Downloads file from cloud storage
@@ -60,6 +60,4 @@ interface CloudStorageProvider {
     ): StorageOptimizationResult
 
     suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileResult
-    suspend fun optimizeForUpload(file: dev.aurakai.auraframefx.oracledrive.DriveFile): Any?
-    suspend fun uploadFile(file: dev.aurakai.auraframefx.oracledrive.DriveFile, metadata: FileMetadata): FileResult
 }

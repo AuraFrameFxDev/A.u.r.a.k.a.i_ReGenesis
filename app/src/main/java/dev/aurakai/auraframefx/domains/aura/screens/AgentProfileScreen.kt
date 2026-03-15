@@ -21,12 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.nexus.models.AgentProfile
-import dev.aurakai.auraframefx.domains.nexus.models.AgentProfiles
+import dev.aurakai.auraframefx.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.models.AgentProfile
+import dev.aurakai.auraframefx.models.AgentProfiles
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.nexus.models.CapabilityLevel
+import dev.aurakai.auraframefx.models.CapabilityLevel
 import androidx.compose.foundation.lazy.items
 
 /**
@@ -514,14 +514,13 @@ private fun getCapabilityLevelColor(level: CapabilityLevel): Color {
 }
 
 @Composable
-private fun getAgentIcon(agentType: AgentType): ImageVector {
-    return when (agentType) {
-        AgentType.AURA -> Icons.Default.Brush
-        AgentType.KAI -> Icons.Default.Shield
-        AgentType.GENESIS -> Icons.Default.AutoAwesome
-        AgentType.CLAUDE -> Icons.Default.Architecture
-        AgentType.CASCADE -> Icons.Default.Storage
-        AgentType.NEURAL_WHISPER -> Icons.Default.Psychology
-        else -> Icons.Default.Person
+private fun getAgentIcon(category: AgentCapabilityCategory): ImageVector {
+    return when (category) {
+        AgentCapabilityCategory.CREATIVE -> Icons.Default.Brush
+        AgentCapabilityCategory.SECURITY -> Icons.Default.Shield
+        AgentCapabilityCategory.ORCHESTRATION -> Icons.Default.AutoAwesome
+        AgentCapabilityCategory.INTELLIGENCE -> Icons.Default.Architecture
+        AgentCapabilityCategory.MEMORY -> Icons.Default.Storage
+        AgentCapabilityCategory.ANALYSIS -> Icons.Default.Psychology
     }
 }

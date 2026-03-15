@@ -144,7 +144,10 @@ class PersistentMemoryManager @Inject constructor(
         val timestamps = entries.map { it.timestamp }
 
         return MemoryStats(
-            oldestEntry = timestamps.minOrNull()
+            totalEntries = memoryCache.size,
+            totalSize = entries.sumOf { it.value.length.toLong() },
+            oldestEntry = timestamps.minOrNull(),
+            newestEntry = timestamps.maxOrNull()
         )
     }
 

@@ -408,6 +408,7 @@ private fun MemoryCard(
         MemoryType.REFLECTION -> Color(0xFFFFFF00) // Yellow
         MemoryType.FACT -> Color(0xFF00BFFF) // Blue
         MemoryType.EMOTION -> Color(0xFFFF00FF) // Magenta
+        MemoryType.VALENCE -> Color(0xFF00FF85) // Genesis Green
     }
 
     Card(

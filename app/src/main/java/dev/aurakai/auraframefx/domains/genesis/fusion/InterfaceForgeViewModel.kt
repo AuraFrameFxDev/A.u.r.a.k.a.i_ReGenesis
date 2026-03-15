@@ -42,8 +42,8 @@ class InterfaceForgeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 Timber.i("InterfaceForgeViewModel: Initializing Trinity agents")
-                auraAgent.initialize()
-                kaiAgent.initialize()
+                auraAgent.initialize(viewModelScope)
+                kaiAgent.initialize(viewModelScope)
                 isInitialized = true
                 Timber.i("InterfaceForgeViewModel: Trinity agents initialized")
             } catch (e: Exception) {

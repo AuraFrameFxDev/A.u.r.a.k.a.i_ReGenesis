@@ -41,4 +41,12 @@ class DefaultAuraAIService @Inject constructor() : AuraAIService {
             style = preferences.style
         )
     }
+
+    override suspend fun discernThemeIntent(query: String): String {
+        return "nature"
+    }
+
+    override suspend fun suggestThemes(context: String): List<String> {
+        return listOf("nature", "solar", "cyberpunk")
+    }
 }

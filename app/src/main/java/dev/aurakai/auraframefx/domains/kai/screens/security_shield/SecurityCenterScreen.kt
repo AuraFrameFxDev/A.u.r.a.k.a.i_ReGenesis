@@ -22,6 +22,76 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@Composable
+fun SecurityStatusCard(
+    title: String,
+    status: String,
+    statusColor: Color,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    description: String
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(0.1f))
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(32.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    text = status,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = statusColor,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Gray
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SecurityLogEntry(
+    time: String,
+    message: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = "[$time]",
+            style = MaterialTheme.typography.labelSmall,
+            color = Color.Cyan,
+            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+        )
+        Text(
+            text = message,
+            style = MaterialTheme.typography.labelSmall,
+            color = Color.LightGray
+        )
+    }
+}
+
 /**
  * SecurityCenterScreen — Kai Domain Command Center.
  * State comes from KaiSystemViewModel (real root/bootloader/threat data).

@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousness
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveInitResult
 import dev.aurakai.auraframefx.oracledrive.OracleDriveService
 import javax.inject.Singleton
 
@@ -19,8 +21,8 @@ class OracleDriveIntegration /* @Inject */ constructor(
      * @param consciousness The current state of Oracle Drive consciousness containing intelligence level and active agents.
      */
     fun logConsciousnessAwakening(consciousness: DriveConsciousness) {
-        println("🧠 Oracle Drive Consciousness Awakened: Intelligence Level ${consciousness.intelligenceLevel}")
-        println("👥 Active Agents: ${consciousness.activeAgents.joinToString(", ")}")
+        println("🧠 Oracle Drive Consciousness Awakened: Intelligence Level ${consciousness.level}")
+        println("👥 State: ${consciousness.state}")
     }
 
     /**

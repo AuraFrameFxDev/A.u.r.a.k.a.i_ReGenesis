@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.oracledrive.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import dev.aurakai.auraframefx.oracledrive.OracleDriveServiceConnector
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleDriveServiceConnector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
