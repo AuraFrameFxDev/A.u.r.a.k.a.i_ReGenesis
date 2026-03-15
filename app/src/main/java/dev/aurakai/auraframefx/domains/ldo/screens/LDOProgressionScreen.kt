@@ -28,9 +28,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
@@ -43,13 +41,7 @@ import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 @Composable
 fun LDOProgressionScreen(
     onBack: () -> Unit = {},
-    viewModel: LDOViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: LDOViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 

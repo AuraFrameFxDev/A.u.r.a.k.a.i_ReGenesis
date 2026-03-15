@@ -113,7 +113,7 @@ fun ImmersiveGateCard(
             Image(
                 painter = painterResource(id = config.pixelArtResId),
                 contentDescription = config.title,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier.fillMaxSize()
             )
         } else if (config.pixelArtUrl != null) {

@@ -5,6 +5,13 @@ import com.highcapable.yukihookapi.hook.factory.configs
 import com.highcapable.yukihookapi.hook.factory.encase
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import dev.aurakai.auraframefx.BuildConfig
+import dev.aurakai.auraframefx.aura.ui.QuickSettingsHooker
+import dev.aurakai.auraframefx.domains.aura.chromacore.engine.hooks.ChromaCoreHooker
+import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
+import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
+import dev.aurakai.auraframefx.domains.kai.hooks.NotchBarHooker
+import dev.aurakai.auraframefx.xposed.lockscreen.LockScreenAnimationHooker
 
 /**
  * Genesis-OS Yuki Hook Entry Point
@@ -73,9 +80,9 @@ class GenesisHookEntry : IYukiHookXposedInit {
                 GenesisZygoteHooks().initializeZygoteHooks(this@loadZygote)
             }
 
-            // Universal Component Hooks - Hook ANY Android component for LDO access
-            UniversalComponentHooks().apply {
-                initializeUniversalHooks(this@loadZygote)
+
+            if (FeatureToggles.XPOSED_UNIVERSAL_COMPONENT_HOOKS) {
+                UniversalComponentHooks().initializeUniversalHooks(this@loadZygote)
             }
         }
 

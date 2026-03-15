@@ -42,7 +42,7 @@ class MockAuraAIService : Agent {
     ): AgentResponse { // Added context
         return AgentResponse(
             content = "AuraAI mock response for: ${request.query} with context: $context",
-            confidence = 1.0f, ,
+            confidence = 1.0f
         )
     }
 
@@ -54,7 +54,7 @@ class MockAuraAIService : Agent {
      * @return A flow emitting one mock `AgentResponse`.
      */
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> { // Added from Agent interface
-        return flowOf(AgentResponse("AuraAI mock flow response for: ${request.query}", 1.0f,))
+        return flowOf(AgentResponse("AuraAI mock flow response for: ${request.query}", 1.0f))
     }
 
     fun getCapabilities(): Map<String, Any> = emptyMap() // Removed override
@@ -91,7 +91,7 @@ class MockKaiAIService : Agent {
     ): AgentResponse { // Added context
         return AgentResponse(
             content = "KaiAI mock response for: ${request.query} with context: $context",
-            confidence = 1.0f, ,
+            confidence = 1.0f
         )
     }
 
@@ -103,7 +103,7 @@ class MockKaiAIService : Agent {
      * @return A flow emitting one mock AgentResponse.
      */
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> { // Added from Agent interface
-        return flowOf(AgentResponse("KaiAI mock flow response for: ${request.query}", 1.0f,))
+        return flowOf(AgentResponse("KaiAI mock flow response for: ${request.query}", 1.0f))
     }
 
     fun getCapabilities(): Map<String, Any> = emptyMap() // Removed override
@@ -140,7 +140,7 @@ class MockCascadeAIService : Agent {
     ): AgentResponse { // Added context
         return AgentResponse(
             content = "CascadeAI mock response for: ${request.query} with context: $context",
-            confidence = 1.0f, ,
+            confidence = 1.0f
         )
     }
 
@@ -152,7 +152,7 @@ class MockCascadeAIService : Agent {
      * @return A flow containing one mock `AgentResponse`.
      */
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> { // Added from Agent interface
-        return flowOf(AgentResponse("CascadeAI mock flow response for: ${request.query}", 1.0f,))
+        return flowOf(AgentResponse("CascadeAI mock flow response for: ${request.query}", 1.0f))
     }
 
     fun getCapabilities(): Map<String, Any> = emptyMap() // Removed override

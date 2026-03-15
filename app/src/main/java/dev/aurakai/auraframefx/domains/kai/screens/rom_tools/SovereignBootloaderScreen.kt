@@ -1,5 +1,4 @@
 package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
->>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/kai/screens/rom_tools/SovereignBootloaderScreen.kt
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🔒 SOVEREIGN BOOTLOADER
@@ -67,7 +65,6 @@ fun SovereignBootloaderScreen(
 
                 Text(
                     "PARTITION LOCK STATUS",
-                    fontFamily = LEDFontFamily,
                     color = Color.White.copy(alpha = 0.4f),
                     fontSize = 12.sp,
                     modifier = Modifier.padding(bottom = 12.dp)
@@ -139,8 +136,7 @@ private fun StatusCard(isUnlocked: Boolean) {
                     if (isUnlocked) "UNLOCKED" else "LOCKED (SECURE)",
                     style = MaterialTheme.typography.headlineSmall,
                     color = if (isUnlocked) Color(0xFF00FF85) else Color(0xFFFF1111),
-                    fontWeight = FontWeight.Black,
-                    fontFamily = LEDFontFamily
+                    fontWeight = FontWeight.Black
                 )
             }
         }
@@ -195,5 +191,3 @@ private fun PartitionLockItem(name: String, isLocked: Boolean) {
         }
     }
 }
-
-

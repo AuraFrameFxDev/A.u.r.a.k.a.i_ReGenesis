@@ -1,3 +1,0 @@
-# Android Resource Stable IDs
-# This file helps maintain consistent resource IDs across builds
-# and resolves Windows path issues in resource compilation

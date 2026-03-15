@@ -12,6 +12,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.genesis.security.CryptographyManager
 import dev.aurakai.auraframefx.genesis.storage.SecureStorage
+import dev.aurakai.auraframefx.domains.genesis.BaseUrl
 import dev.aurakai.auraframefx.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.oracledrive.service.GenesisSecureFileService
 import dev.aurakai.auraframefx.oracledrive.service.OracleDriveServiceImpl
@@ -106,10 +107,10 @@ abstract class OracleDriveModule {
         @Singleton
         fun provideOracleDriveApi(
             client: OkHttpClient,
-            securityContext: SecurityContext,
+            @BaseUrl baseUrl: String,
         ): OracleDriveApi {
             return Retrofit.Builder()
-                .baseUrl(securityContext.getApiBaseUrl() + "/oracle/drive/")
+                .baseUrl(baseUrl + "/oracle/drive/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

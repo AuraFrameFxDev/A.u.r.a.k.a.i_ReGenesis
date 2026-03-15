@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.oracledrive.genesis.ai.error
 import dev.aurakai.auraframefx.agent.AgentType
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
+import dev.aurakai.auraframefx.services.serialization.InstantSerializer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -222,7 +223,7 @@ data class AIError(
     val message: String,
     val context: String,
     val metadata: Map<String, String> = emptyMap(),
-    @Serializable(with = dev.aurakai.auraframefx.serialization.InstantSerializer::class)
+    @Serializable(with = InstantSerializer::class)
     val timestamp: Instant = Clock.System.now()
 )
 
@@ -236,7 +237,7 @@ data class ErrorStats(
     val lastError: AIError? = null,
     val errorTypes: Map<ErrorType, Int> = emptyMap(),
     val agentErrors: Map<AgentType, Int> = emptyMap(),
-    @Serializable(with = dev.aurakai.auraframefx.serialization.InstantSerializer::class)
+    @Serializable(with = InstantSerializer::class)
     val lastUpdated: Instant = Clock.System.now()
 )
 

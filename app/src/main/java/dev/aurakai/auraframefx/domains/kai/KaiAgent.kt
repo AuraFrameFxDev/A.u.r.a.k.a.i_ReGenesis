@@ -2,22 +2,23 @@ package dev.aurakai.auraframefx.domains.kai
 
 import dagger.Lazy
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.core.logging.AuraFxLogger
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.core.logging.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +35,7 @@ import javax.inject.Singleton
 @Singleton
 class KaiAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
-    private val contextManagerInstance: ContextManager,
+    contextManagerInstance: ContextManager,
     private val securityContext: SecurityContext,
     private val systemMonitor: SystemMonitor,
     private val bootloaderManager: BootloaderManager,
@@ -106,6 +107,7 @@ class KaiAgent @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    private val contextManagerInstance = contextManagerInstance
     private var isInitialized = false
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -118,7 +120,7 @@ class KaiAgent @Inject constructor(
     private val _currentThreatLevel = MutableStateFlow(ThreatLevel.LOW)
     val currentThreatLevel: StateFlow<ThreatLevel> = _currentThreatLevel
 
-    suspend fun initialize() {
+    private suspend fun internalInitialize() {
         if (isInitialized) return
         logger.info("KaiAgent", "Initializing Sentinel Shield agent")
         try {
@@ -132,6 +134,13 @@ class KaiAgent @Inject constructor(
             logger.error("KaiAgent", "Failed to initialize Kai Agent", e)
             _securityState.value = SecurityState.ERROR
             throw e
+        }
+    }
+
+    override suspend fun initialize(scope: CoroutineScope) {
+        super.initialize(scope)
+        if (!isInitialized) {
+            internalInitialize()
         }
     }
 
@@ -348,6 +357,23 @@ class KaiAgent @Inject constructor(
             "quality_metrics" to qualityMetrics,
             "recommendations" to generateCodeRecommendations(securityIssues, qualityMetrics)
         ) as Map<String, Any>
+    }
+
+    override suspend fun start() {
+        super.start()
+    }
+
+    override suspend fun pause() {
+        super.pause()
+    }
+
+    override suspend fun resume() {
+        super.resume()
+    }
+
+    override suspend fun shutdown() {
+        super.shutdown()
+        cleanup()
     }
 
     private fun ensureInitialized() {
@@ -675,6 +701,10 @@ class KaiAgent @Inject constructor(
         scope.cancel()
         _securityState.value = SecurityState.IDLE
         isInitialized = false
+    }
+
+    fun validateSecurityState() {
+        TODO("Not yet implemented")
     }
 }
 

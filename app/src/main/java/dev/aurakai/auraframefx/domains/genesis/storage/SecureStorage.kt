@@ -47,6 +47,3 @@ class DefaultSecureStorage(
         // Placeholder - delete encrypted data
     }
 }
-
-
-// FileMetadata is now provided by dev.aurakai.auraframefx.genesis.storage.StorageModels.kt

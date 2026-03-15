@@ -1,7 +1,0 @@
-# Add these lines after line 296 in gradle/libs.versions.toml (after foojayresolver)
-
-compose-compiler-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
-jetbrains-kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
-gms-google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesVersion" }
-junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junitJupiterParams" }
-jupiter-junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiterEngine" }

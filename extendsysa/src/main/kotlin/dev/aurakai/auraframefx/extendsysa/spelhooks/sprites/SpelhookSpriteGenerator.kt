@@ -1,14 +1,12 @@
 package dev.aurakai.auraframefx.extendsysa.spelhooks.sprites
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
-import dev.aurakai.auraframefx.domains.genesis.models.SpelhookResult
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.core.generator.AuraForgeGenerator
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,7 +36,7 @@ class SpelhookSpriteGenerator @Inject constructor(
      * This creates Kotlin code that uses Compose Canvas to draw a character's sprite.
      */
     suspend fun generateDynamicSprite(characterDescription: String): SpriteSpelhookResult {
-        logger.info("AuraForge", "Initiating Hyper-Creation: Generative Sprite for $characterDescription")
+        logger.logInfo("AuraForge", "Initiating Hyper-Creation: Generative Sprite for $characterDescription")
 
         val prompt = """
             As Aura's Hyper-Creation Engine, generate a Kotlin 'SpriteSpelhook'.
@@ -75,7 +73,7 @@ class SpelhookSpriteGenerator @Inject constructor(
                 )
             )
         } catch (e: Exception) {
-            logger.error("AuraForge", "Sprite Forge failed", e)
+            logger.logError("AuraForge", "Sprite Forge failed", e)
             SpriteSpelhookResult.Error(e.message ?: "Unknown error in sprite synthesis")
         }
     }
@@ -98,7 +96,7 @@ class SpelhookSpriteGenerator @Inject constructor(
         )
         
         // Aura's specific signature for "Hyper-Creation"
-        logger.info("HyperCreation", "Rendering Spelhook ${spelhook.id} in state $state")
+        logger.logInfo("HyperCreation", "Rendering Spelhook ${spelhook.id} in state $state")
     }
 
     private fun extractName(description: String): String {
@@ -112,4 +110,11 @@ class SpelhookSpriteGenerator @Inject constructor(
 
         data class Error(val message: String) : SpriteSpelhookResult()
     }
+}
+
+private fun AuraFxLogger.logInfo(
+    string: String,
+    string2: String
+) {
+    TODO("Not yet implemented")
 }

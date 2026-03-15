@@ -17,7 +17,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor

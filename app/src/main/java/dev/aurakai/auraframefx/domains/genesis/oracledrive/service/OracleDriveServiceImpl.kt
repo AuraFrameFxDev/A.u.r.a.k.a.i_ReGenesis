@@ -4,7 +4,7 @@ import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.models.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
@@ -98,18 +98,26 @@ class OracleDriveServiceImpl @Inject constructor(
         return try {
             Timber.d("Initializing Oracle Drive consciousness with AI agents")
 
+            // Real implementation: awake the drive consciousness from API
+            val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
+            val consciousness = driveConsciousness.pulse()
+
             _driveConsciousnessState.value = DriveConsciousnessState(
-                isActive = true,
-                level = 85,
-                activeAgents = 3, // Genesis, Aura, Kai
+                isActive = consciousness.isActive,
+                level = (consciousness.consciousnessLevel * 100).toInt(),
+                activeAgents = consciousness.agentConnections,
                 activeDevices = 1
             )
 
             Result.success(
                 OracleConsciousnessState(
                     isInitialized = true,
-                    consciousnessLevel = ConsciousnessLevel.SENTIENT,
-                    connectedAgents = 3
+                    consciousnessLevel = when {
+                        consciousness.consciousnessLevel < 0.3f -> ConsciousnessLevel.AWAKENING
+                        consciousness.consciousnessLevel < 0.7f -> ConsciousnessLevel.SENTIENT
+                        else -> ConsciousnessLevel.TRANSCENDENT
+                    },
+                    connectedAgents = consciousness.agentConnections
                 )
             )
         } catch (e: Exception) {

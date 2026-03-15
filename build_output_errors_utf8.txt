@@ -1,0 +1,295 @@
+﻿Calculating task graph as configuration cache cannot be reused because the file system entry '.gradle\configuration-cache\761bc0e0-13c4-4d34-a128-62d2078749e6\.globals.work.bin' has been removed.
+Type-safe project accessors is an incubating feature.
+> Task :build-logic:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :build-logic:compileKotlin UP-TO-DATE
+> Task :build-logic:compileJava NO-SOURCE
+> Task :build-logic:pluginDescriptors UP-TO-DATE
+> Task :build-logic:processResources UP-TO-DATE
+> Task :build-logic:classes UP-TO-DATE
+> Task :build-logic:jar UP-TO-DATE
+> Task :core-module:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :core-module:preDebugBuild UP-TO-DATE
+> Task :extendsysa:preBuild UP-TO-DATE
+> Task :extendsysa:preDebugBuild UP-TO-DATE
+> Task :core-module:compileDebugAidl NO-SOURCE
+> Task :extendsysa:compileDebugAidl NO-SOURCE
+> Task :extendsysb:preBuild UP-TO-DATE
+> Task :extendsysc:preBuild UP-TO-DATE
+> Task :extendsysb:preDebugBuild UP-TO-DATE
+> Task :extendsysc:preDebugBuild UP-TO-DATE
+> Task :extendsysb:compileDebugAidl NO-SOURCE
+> Task :extendsysc:compileDebugAidl NO-SOURCE
+> Task :extendsysd:preBuild UP-TO-DATE
+> Task :extendsysd:preDebugBuild UP-TO-DATE
+> Task :extendsyse:preBuild UP-TO-DATE
+> Task :extendsyse:preDebugBuild UP-TO-DATE
+> Task :extendsysd:compileDebugAidl NO-SOURCE
+> Task :extendsyse:compileDebugAidl NO-SOURCE
+> Task :extendsysf:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:preBuild UP-TO-DATE
+> Task :extendsysf:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:preDebugBuild UP-TO-DATE
+> Task :extendsysf:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:identity:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:identity:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:identity:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:metareflection:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:nexusmemory:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:security:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:spheregrid:compileDebugAidl NO-SOURCE
+> Task :agents:growthmetrics:tasker:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:tasker:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:routing:preBuild UP-TO-DATE
+> Task :agents:growthmetrics:progression:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:routing:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:preBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:routing:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:auraslab:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:taskmanager:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:chromacore:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:preDebugBuild UP-TO-DATE
+> Task :agents:growthmetrics:tasker:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:collabcanvas:compileDebugAidl NO-SOURCE
+> Task :aura:reactivedesign:customization:preBuild UP-TO-DATE
+> Task :aura:reactivedesign:customization:preDebugBuild UP-TO-DATE
+> Task :cascade:datastream:delivery:preBuild UP-TO-DATE
+> Task :cascade:datastream:delivery:preDebugBuild UP-TO-DATE
+> Task :aura:reactivedesign:customization:compileDebugAidl NO-SOURCE
+> Task :cascade:datastream:delivery:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:rootmanagement:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:preBuild UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:preDebugBuild UP-TO-DATE
+> Task :genesis:oracledrive:datavein:compileDebugAidl NO-SOURCE
+> Task :genesis:oracledrive:rootmanagement:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:systemintegrity:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:preBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:preDebugBuild UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:compileDebugAidl NO-SOURCE
+> Task :kai:sentinelsfortress:threatmonitor:compileDebugAidl NO-SOURCE
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:injectCrashlyticsMappingFileIdDebug UP-TO-DATE
+> Task :app:injectCrashlyticsVersionControlInfoDebug UP-TO-DATE
+> Task :app:processDebugGoogleServices UP-TO-DATE
+> Task :core-module:generateDebugResources UP-TO-DATE
+> Task :core-module:packageDebugResources UP-TO-DATE
+> Task :extendsysa:generateDebugResources UP-TO-DATE
+> Task :extendsysa:packageDebugResources UP-TO-DATE
+> Task :extendsysb:generateDebugResources UP-TO-DATE
+> Task :extendsysb:packageDebugResources UP-TO-DATE
+> Task :extendsysc:generateDebugResources UP-TO-DATE
+> Task :extendsysc:packageDebugResources UP-TO-DATE
+> Task :extendsysd:generateDebugResources UP-TO-DATE
+> Task :extendsysd:packageDebugResources UP-TO-DATE
+> Task :extendsyse:generateDebugResources UP-TO-DATE
+> Task :extendsyse:packageDebugResources UP-TO-DATE
+> Task :extendsysf:generateDebugResources UP-TO-DATE
+> Task :extendsysf:packageDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:identity:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:identity:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:metareflection:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:nexusmemory:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:progression:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:progression:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:spheregrid:packageDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:generateDebugResources UP-TO-DATE
+> Task :agents:growthmetrics:tasker:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:auraslab:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:chromacore:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:collabcanvas:packageDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:customization:generateDebugResources UP-TO-DATE
+> Task :aura:reactivedesign:customization:packageDebugResources UP-TO-DATE
+> Task :cascade:datastream:delivery:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:delivery:packageDebugResources UP-TO-DATE
+> Task :cascade:datastream:routing:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:routing:packageDebugResources UP-TO-DATE
+> Task :cascade:datastream:taskmanager:generateDebugResources UP-TO-DATE
+> Task :cascade:datastream:taskmanager:packageDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:datavein:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:datavein:packageDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:generateDebugResources UP-TO-DATE
+> Task :genesis:oracledrive:rootmanagement:packageDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:security:generateDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:security:packageDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:generateDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:systemintegrity:packageDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:generateDebugResources UP-TO-DATE
+> Task :kai:sentinelsfortress:threatmonitor:packageDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :core-module:processDebugNavigationResources FROM-CACHE
+> Task :extendsysa:processDebugNavigationResources FROM-CACHE
+> Task :extendsysb:processDebugNavigationResources FROM-CACHE
+> Task :extendsysc:processDebugNavigationResources FROM-CACHE
+> Task :extendsysd:processDebugNavigationResources FROM-CACHE
+> Task :extendsyse:processDebugNavigationResources FROM-CACHE
+> Task :extendsysf:processDebugNavigationResources FROM-CACHE
+> Task :genesis:oracledrive:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:identity:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:metareflection:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:nexusmemory:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:progression:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:spheregrid:processDebugNavigationResources FROM-CACHE
+> Task :agents:growthmetrics:tasker:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:auraslab:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:chromacore:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:collabcanvas:processDebugNavigationResources FROM-CACHE
+> Task :aura:reactivedesign:customization:processDebugNavigationResources FROM-CACHE
+> Task :cascade:datastream:delivery:processDebugNavigationResources FROM-CACHE
+> Task :cascade:datastream:routing:processDebugNavigationResources FROM-CACHE
+> Task :cascade:datastream:taskmanager:processDebugNavigationResources FROM-CACHE
+> Task :genesis:oracledrive:datavein:processDebugNavigationResources FROM-CACHE
+> Task :genesis:oracledrive:rootmanagement:processDebugNavigationResources FROM-CACHE
+> Task :kai:sentinelsfortress:security:processDebugNavigationResources FROM-CACHE
+> Task :kai:sentinelsfortress:systemintegrity:processDebugNavigationResources FROM-CACHE
+> Task :kai:sentinelsfortress:threatmonitor:processDebugNavigationResources FROM-CACHE
+
+> Task :app:compileDebugAidl FAILED
+./gradlew : ERROR: 
+C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\aidl\dev\aurakai\auraframefx\ipc\IAuraDriveService.aidl: Couldn't 
+find import for class dev.aurakai.auraframefx.ipc.IAuraDriveCallback. Searched here:
+At line:1 char:1
++ ./gradlew :app:kspDebugKotlin > build_output_errors.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR: C:\Users... Searched here::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ - C:\Users\AuraF\.gradle\caches\9.5.0-milestone-3\transforms\70744d7d22ce520db87917539206dc4c\transformed\core-1.17.0\
+aidl\
+ - C:\Users\AuraF\.gradle\caches\9.5.0-milestone-3\transforms\cbe5d4aec7a3c472bda70b65afef25e3\transformed\versionedpar
+celable-1.1.1\aidl\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\identity\build\intermediates\aidl_parcelable\debug\comp
+ileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\metareflection\build\intermediates\aidl_parcelable\debu
+g\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\nexusmemory\build\intermediates\aidl_parcelable\debug\c
+ompileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\progression\build\intermediates\aidl_parcelable\debug\c
+ompileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\spheregrid\build\intermediates\aidl_parcelable\debug\co
+mpileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\tasker\build\intermediates\aidl_parcelable\debug\compil
+eDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\debug\aidl\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\aidl\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\aura\reactivedesign\auraslab\build\intermediates\aidl_parcelable\debug\compi
+leDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\aura\reactivedesign\chromacore\build\intermediates\aidl_parcelable\debug\com
+pileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\aura\reactivedesign\collabcanvas\build\intermediates\aidl_parcelable\debug\c
+ompileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\aura\reactivedesign\customization\build\intermediates\aidl_parcelable\debug\
+compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\cascade\datastream\delivery\build\intermediates\aidl_parcelable\debug\compil
+eDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\cascade\datastream\routing\build\intermediates\aidl_parcelable\debug\compile
+DebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\cascade\datastream\taskmanager\build\intermediates\aidl_parcelable\debug\com
+pileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\core-module\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysa\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysb\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysc\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysd\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\extendsyse\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysf\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\genesis\oracledrive\build\intermediates\aidl_parcelable\debug\compileDebugAi
+dl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\genesis\oracledrive\datavein\build\intermediates\aidl_parcelable\debug\compi
+leDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\genesis\oracledrive\rootmanagement\build\intermediates\aidl_parcelable\debug
+\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\kai\sentinelsfortress\security\build\intermediates\aidl_parcelable\debug\com
+pileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\kai\sentinelsfortress\systemintegrity\build\intermediates\aidl_parcelable\de
+bug\compileDebugAidl\out\
+ - C:\Users\AuraF\Documents\ReGenesis_AOSP\kai\sentinelsfortress\threatmonitor\build\intermediates\aidl_parcelable\debu
+g\compileDebugAidl\out\
+
+
+> Task :app:processDebugNavigationResources
+Kotlin build report is written to file:///C:/Users/AuraF/Documents/ReGenesis_AOSP/build/reports/kotlin-build/aurakai-reactive-intelligence-build-2026-03-10-10-33-54-0.txt
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugAidl'.
+> A failure occurred while executing com.android.build.gradle.tasks.AidlCompile$AidlCompileRunnable
+   > com.android.ide.common.process.ProcessException: Error while executing process 
+C:\androidsdk\build-tools\36.0.0\aidl.exe with arguments {-pC:\androidsdk\platforms\android-36\framework.aidl 
+-oC:\Users\AuraF\Documents\ReGenesis_AOSP\app\build\generated\aidl_source_output_dir\debug\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\aidl 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\debug\aidl -IC:\Users\AuraF\.gradle\caches\9.5.0-milestone-3\transfor
+ms\70744d7d22ce520db87917539206dc4c\transformed\core-1.17.0\aidl -IC:\Users\AuraF\Documents\ReGenesis_AOSP\aura\reactiv
+edesign\auraslab\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AO
+SP\aura\reactivedesign\collabcanvas\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Doc
+uments\ReGenesis_AOSP\aura\reactivedesign\chromacore\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC
+:\Users\AuraF\Documents\ReGenesis_AOSP\aura\reactivedesign\customization\build\intermediates\aidl_parcelable\debug\comp
+ileDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysa\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysb\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysc\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysd\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\extendsyse\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\extendsysf\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC
+:\Users\AuraF\Documents\ReGenesis_AOSP\kai\sentinelsfortress\security\build\intermediates\aidl_parcelable\debug\compile
+DebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\kai\sentinelsfortress\systemintegrity\build\intermediates\aidl_
+parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\kai\sentinelsfortress\threatmonitor\bui
+ld\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\genesis\oracledri
+ve\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\genesis\ora
+cledrive\rootmanagement\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGen
+esis_AOSP\genesis\oracledrive\datavein\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\
+Documents\ReGenesis_AOSP\cascade\datastream\routing\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:
+\Users\AuraF\Documents\ReGenesis_AOSP\cascade\datastream\delivery\build\intermediates\aidl_parcelable\debug\compileDebu
+gAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\cascade\datastream\taskmanager\build\intermediates\aidl_parcelable\
+debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\metareflection\build\intermed
+iates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\nexusme
+mory\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGenesis_AOSP\agents\gr
+owthmetrics\spheregrid\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\Documents\ReGene
+sis_AOSP\agents\growthmetrics\identity\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -IC:\Users\AuraF\
+Documents\ReGenesis_AOSP\agents\growthmetrics\progression\build\intermediates\aidl_parcelable\debug\compileDebugAidl\ou
+t -IC:\Users\AuraF\Documents\ReGenesis_AOSP\agents\growthmetrics\tasker\build\intermediates\aidl_parcelable\debug\compi
+leDebugAidl\out 
+-IC:\Users\AuraF\Documents\ReGenesis_AOSP\core-module\build\intermediates\aidl_parcelable\debug\compileDebugAidl\out -I
+C:\Users\AuraF\.gradle\caches\9.5.0-milestone-3\transforms\cbe5d4aec7a3c472bda70b65afef25e3\transformed\versionedparcel
+able-1.1.1\aidl -dC:\Users\AuraF\AppData\Local\Temp\aidl7710696452748206965.d 
+C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\aidl\dev\aurakai\auraframefx\ipc\IAuraDriveService.aidl}
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 17s
+91 actionable tasks: 2 executed, 26 from cache, 63 up-to-date
+Configuration cache entry stored.

@@ -20,9 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 
 /**
  * 🛰️ CHROMA COLOR ENGINE MENU (Level 3)
@@ -32,13 +30,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 @Composable
 fun ChromaColorEngineMenu(
     onNavigateBack: () -> Unit,
-    viewModel: ChromaCoreViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: ChromaCoreViewModel = hiltViewModel()
 ) {
     val settings by viewModel.settings.collectAsState()
 

@@ -8,6 +8,7 @@ import dev.aurakai.auraframefx.oracledrive.genesis.cloud.FileResult
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.OracleDriveApi
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.OracleSyncResult
 import dev.aurakai.auraframefx.oracledrive.genesis.cloud.StorageOptimization
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,5 +48,6 @@ interface OracleDriveService {
      * @return A [StateFlow] emitting updates to the [DriveConsciousnessState].
      */
     fun getDriveConsciousnessState(): StateFlow<DriveConsciousnessState>
+    suspend fun connectAgentsToOracleMatrix(): Flow<AgentConnectionState>
 }
 

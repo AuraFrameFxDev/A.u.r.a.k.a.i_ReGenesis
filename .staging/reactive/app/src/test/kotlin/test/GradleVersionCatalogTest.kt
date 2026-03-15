@@ -1,3 +1,0 @@
-package dev.aurakai.auraframefx
-
-// ...existing code...
