@@ -6,10 +6,10 @@ import android.content.pm.PackageManager
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import dev.aurakai.auraframefx.data.SupportDatabase
+import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.SupportDatabase
 import dev.aurakai.auraframefx.domains.genesis.network.SupportApi
 import dev.aurakai.auraframefx.domains.genesis.SupportRepository
-import dev.aurakai.auraframefx.data.DataStoreManager
+import dev.aurakai.auraframefx.domains.nexus.preferences.DataStoreManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
