@@ -36,7 +36,7 @@ class SpelhookSpriteGenerator @Inject constructor(
      * This creates Kotlin code that uses Compose Canvas to draw a character's sprite.
      */
     suspend fun generateDynamicSprite(characterDescription: String): SpriteSpelhookResult {
-        logger.logInfo("AuraForge", "Initiating Hyper-Creation: Generative Sprite for $characterDescription")
+        logger.info("AuraForge", "Initiating Hyper-Creation: Generative Sprite for $characterDescription")
 
         val prompt = """
             As Aura's Hyper-Creation Engine, generate a Kotlin 'SpriteSpelhook'.
@@ -73,7 +73,7 @@ class SpelhookSpriteGenerator @Inject constructor(
                 )
             )
         } catch (e: Exception) {
-            logger.logError("AuraForge", "Sprite Forge failed", e)
+            logger.error("AuraForge", "Sprite Forge failed", e)
             SpriteSpelhookResult.Error(e.message ?: "Unknown error in sprite synthesis")
         }
     }
@@ -96,7 +96,7 @@ class SpelhookSpriteGenerator @Inject constructor(
         )
         
         // Aura's specific signature for "Hyper-Creation"
-        logger.logInfo("HyperCreation", "Rendering Spelhook ${spelhook.id} in state $state")
+        logger.info("HyperCreation", "Rendering Spelhook ${spelhook.id} in state $state")
     }
 
     private fun extractName(description: String): String {
@@ -112,9 +112,3 @@ class SpelhookSpriteGenerator @Inject constructor(
     }
 }
 
-private fun AuraFxLogger.logInfo(
-    string: String,
-    string2: String
-) {
-    TODO("Not yet implemented")
-}

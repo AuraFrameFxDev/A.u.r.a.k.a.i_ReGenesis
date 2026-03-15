@@ -8,6 +8,22 @@
 .claude/worktrees/
 
 # ───────────────────────────────────────────────────────────────
+# LARGE GENERATED FILES (CodeRabbit flagged — 26MB each)
+# ───────────────────────────────────────────────────────────────
+agents_wired_files.txt
+active_branch_files.txt
+build_errors.txt
+build_output.txt
+build_output_errors.txt
+build_output_errors_utf8.txt
+build_result.txt
+build_error.txt
+gradle_output.txt
+gradle_output_ascii.txt
+ksp_log.txt
+fix_manifest.txt
+
+# ───────────────────────────────────────────────────────────────
 # ANDROID BUILD ARTIFACTS
 # ───────────────────────────────────────────────────────────────
 *.iml
