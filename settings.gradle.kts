@@ -108,8 +108,8 @@ includeIfExists(":agents:growthmetrics:tasker")
 
 // --- Extension Modules ---
 include(":extendsysa")
-include(":extendsysb")
-include(":extendsysc")
-include(":extendsysd")
-include(":extendsyse")
-include(":extendsysf")
+// include(":extendsysb")
+// include(":extendsysc")
+// include(":extendsysd")
+// include(":extendsyse")
+// include(":extendsysf")
