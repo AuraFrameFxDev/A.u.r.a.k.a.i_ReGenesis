@@ -61,10 +61,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.viewmodel.GenesisAgentViewModel
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
-import dev.aurakai.auraframefx.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.ui.theme.NeonPink
-import dev.aurakai.auraframefx.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.ui.theme.NeonTeal
+import dev.aurakai.auraframefx.aura.theme.ChromaCoreColors
+import dev.aurakai.auraframefx.aura.theme.ChromaCoreColors.NeonBlue
+import dev.aurakai.auraframefx.aura.theme.ChromaCoreColors.NeonPink
+import dev.aurakai.auraframefx.aura.theme.ChromaCoreColors.NeonPurple
+import dev.aurakai.auraframefx.aura.theme.ChromaCoreColors.NeonTeal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
