@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
+import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
 import kotlinx.coroutines.launch
 
 // ── Gate variant data ─────────────────────────────────────────────────────────
@@ -406,10 +407,6 @@ private fun GateVariantThumb(
     onTap: () -> Unit,
     onLongPress: () -> Unit
 ) {
-    val scale by animateFloatAsState(
-        targetValue = if (isActive) 1f else 0.95f,
-        label = "thumb_scale"
-    )
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

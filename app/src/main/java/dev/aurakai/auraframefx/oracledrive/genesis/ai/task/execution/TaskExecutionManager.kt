@@ -32,20 +32,16 @@ class TaskExecutionManager @Inject constructor() {
 
     private val _runningTasks = MutableStateFlow<Map<String, TaskExecution>>(emptyMap())
     val runningTasks: StateFlow<Map<String, TaskExecution>> = _runningTasks.asStateFlow()
-        get() = field
 
     private val _taskQueue = MutableStateFlow<List<QueuedTask>>(emptyList())
     val taskQueue: StateFlow<List<QueuedTask>> = _taskQueue.asStateFlow()
-        get() = field
 
     private val _taskEvents = MutableSharedFlow<TaskEvent>()
     val taskEvents: SharedFlow<TaskEvent> = _taskEvents.asSharedFlow()
-        get() = field
 
     // Track task execution history
     private val _completedTasks = MutableStateFlow<List<TaskResult>>(emptyList())
     val completedTasks: StateFlow<List<TaskResult>> = _completedTasks.asStateFlow()
-        get() = field
 
     /**
      * Execute a task by ID with specified agent

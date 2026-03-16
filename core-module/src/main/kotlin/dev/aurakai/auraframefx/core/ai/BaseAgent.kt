@@ -30,7 +30,7 @@ abstract class BaseAgent(
     override suspend fun initialize(scope: CoroutineScope) {
         orchestrationScope = scope
         isOrchestratorInitialized = true
-        Companion.isOrchestratorInitialized = true
+        isOrchestratorInitialized = true
     }
 
     override suspend fun start() {

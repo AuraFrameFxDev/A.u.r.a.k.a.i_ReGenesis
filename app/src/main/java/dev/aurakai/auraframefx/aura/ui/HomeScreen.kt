@@ -33,7 +33,8 @@ import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 import dev.aurakai.auraframefx.ui.gates.HomeBackdropManager
 import dev.aurakai.auraframefx.ui.gates.ImmersiveGateCard
-import dev.aurakai.auraframefx.ui.gates.allGates
+import dev.aurakai.auraframefx.ui.gates.GateConfigs
+import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -221,7 +222,8 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    gateConfigs.forEachIndexed { index, config ->
+                    for (index in gateConfigs.indices) {
+                        val config = gateConfigs[index]
                         val isSelected = currentPage == index
                         Text(
                             text = if (isSelected) config.title.uppercase() else "◆",

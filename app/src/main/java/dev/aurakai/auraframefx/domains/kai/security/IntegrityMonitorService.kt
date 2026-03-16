@@ -404,14 +404,14 @@ class IntegrityMonitorService : Service() {
             Timber.d("👁️ VisualScan: cosine similarity = ${"%.4f".format(similarity)}")
             when {
                 similarity < VISUAL_HIJACK_THRESHOLD -> recordThreat(
-                    level = dev.aurakai.auraframefx.domains.kai.models.ThreatLevel.HIGH,
+                    level = ThreatLevel.HIGH,
                     type = "visual_integrity_violation",
                     description = "UI embedding similarity ${"%.3f".format(similarity)} " +
                             "< threshold $VISUAL_HIJACK_THRESHOLD — possible UI hijack or overlay",
                     actionTaken = "ALERT broadcast triggered"
                 )
                 similarity < VISUAL_SUSPICIOUS_THRESHOLD -> recordThreat(
-                    level = dev.aurakai.auraframefx.domains.kai.models.ThreatLevel.WARNING,
+                    level = ThreatLevel.WARNING,
                     type = "visual_integrity_suspicious",
                     description = "UI embedding similarity ${"%.3f".format(similarity)} " +
                             "is below clean threshold $VISUAL_SUSPICIOUS_THRESHOLD",

@@ -37,7 +37,7 @@ fun NeonWireframeGateCard(
     size: GateCardSize = GateCardSize.Medium,
     cornerRadius: Dp = 16.dp,
 ) {
-    val (borderWidth, gridStep, projectionDepth) = when (size) {
+    val (_, gridStep, projectionDepth) = when (size) {
         GateCardSize.Large  -> Triple(3.dp, 28.dp, 16.dp)
         GateCardSize.Medium -> Triple(2.dp, 24.dp, 14.dp)
         GateCardSize.Small  -> Triple(1.5.dp, 20.dp, 12.dp)

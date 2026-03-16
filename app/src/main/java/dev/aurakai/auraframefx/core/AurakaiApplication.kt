@@ -10,7 +10,4 @@ import dagger.hilt.android.HiltAndroidApp
  */
 @HiltAndroidApp
 class AurakaiApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

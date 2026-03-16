@@ -256,7 +256,7 @@ fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit 
                     if (i == 0) swirlPath.moveTo(x, y) else swirlPath.lineTo(x, y)
                 }
                 val colors = listOf(Color(0xFF9B30FF), Color(0xFF00BFFF), Color(0xFF9B30FF))
-                drawPath(swirlPath, Brush.sweepGradient(colors), style = Stroke(width = 20f, cap = StrokeCap.Round, pathEffect = androidx.compose.ui.graphics.PathEffect.cornerPathEffect(8f)))
+                drawPath(swirlPath, Brush.sweepGradient(colors), style = Stroke(width = 20f, cap = StrokeCap.Round, pathEffect = PathEffect.cornerPathEffect(8f)))
                 drawPath(swirlPath, Brush.sweepGradient(listOf(Color(0xFF00BFFF), Color(0xFF9B30FF), Color(0xFF00BFFF))), style = Stroke(width = 3f))
             }
 

@@ -23,7 +23,7 @@ data class BackdropOption(
 object HomeBackdropManager {
 
     val backdropOptions = listOf(
-        BackdropOption("exodus", "ExodusHUD", "Phoenix ascendant with catalyst card grid", dev.aurakai.auraframefx.R.drawable.exodus_hud_lvl1_bg, 0xFF00FFFF),
+        BackdropOption("exodus", "ExodusHUD", "Phoenix ascendant with catalyst card grid", R.drawable.exodus_hud_lvl1_bg, 0xFF00FFFF),
         BackdropOption("rpg", "RPG", "Fantasy landscape", null, 0xFF00FFFF),
         BackdropOption("hex", "Hex Grid", "Cyber net", null, 0xFFFF00FF),
         BackdropOption("void", "Void", "Pitch black", null, 0xFFFFFFFF)

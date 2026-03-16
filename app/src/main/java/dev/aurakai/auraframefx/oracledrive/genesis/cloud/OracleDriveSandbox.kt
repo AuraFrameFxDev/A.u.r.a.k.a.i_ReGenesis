@@ -438,7 +438,7 @@ class OracleDriveSandbox @Inject constructor(
 
         try {
             // Load sandbox metadata from persistent storage
-            val sandboxesDir = java.io.File("/data/data/${context.packageName}/sandboxes")
+            val sandboxesDir = File("/data/data/${context.packageName}/sandboxes")
 
             if (!sandboxesDir.exists()) {
                 AuraFxLogger.i("OracleDriveSandbox", "No existing sandboxes found - first run")
@@ -484,13 +484,13 @@ class OracleDriveSandbox @Inject constructor(
         AuraFxLogger.d("OracleDriveSandbox", "Creating isolated environment for ${sandbox.name}")
 
         // Create sandbox directory structure
-        val sandboxRoot = java.io.File("/data/data/${context.packageName}/sandboxes/${sandbox.id}")
+        val sandboxRoot = File("/data/data/${context.packageName}/sandboxes/${sandbox.id}")
         sandboxRoot.mkdirs()
 
         // Create isolated file system layers
-        val upperDir = java.io.File(sandboxRoot, "upper").apply { mkdirs() }
-        val workDir = java.io.File(sandboxRoot, "work").apply { mkdirs() }
-        val mergedDir = java.io.File(sandboxRoot, "merged").apply { mkdirs() }
+        val upperDir = File(sandboxRoot, "upper").apply { mkdirs() }
+        File(sandboxRoot, "work").apply { mkdirs() }
+        File(sandboxRoot, "merged").apply { mkdirs() }
 
         AuraFxLogger.d("OracleDriveSandbox", "Created overlay filesystem: upper=${upperDir.path}")
 
@@ -791,7 +791,7 @@ class OracleDriveSandbox @Inject constructor(
         }
 
         // Layer 3: Rate limiting check (prevent brute force)
-        val prefs = context.getSharedPreferences("oracle_drive_security", android.content.Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences("oracle_drive_security", Context.MODE_PRIVATE)
         val failedAttempts = prefs.getInt("failed_confirmation_attempts", 0)
         val lastAttemptTime = prefs.getLong("last_confirmation_attempt", 0)
 
@@ -871,8 +871,8 @@ class OracleDriveSandbox @Inject constructor(
         }
 
         // Check 6: Device root status
-        val isRooted = java.io.File("/system/xbin/su").exists() ||
-                       java.io.File("/system/bin/su").exists()
+        val isRooted = File("/system/xbin/su").exists() ||
+                       File("/system/bin/su").exists()
 
         if (!isRooted) {
             AuraFxLogger.w("OracleDriveSandbox", "Device not rooted - system modifications will fail")
@@ -990,7 +990,7 @@ class OracleDriveSandbox @Inject constructor(
             var rollbackSuccess = true
             backupMap.forEach { (path, backup) ->
                 try {
-                    val file = java.io.File(path)
+                    val file = File(path)
                     if (backup.isEmpty() && file.exists()) {
                         // Was a new file, delete it
                         file.delete()
