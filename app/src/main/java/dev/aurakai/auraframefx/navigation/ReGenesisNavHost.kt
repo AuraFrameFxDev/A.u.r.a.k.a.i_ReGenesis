@@ -311,7 +311,7 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.IntroSequence.route) {
             // TODO: Add ReGenesisIntroAnimation glitch effect before IntroScreen
-            dev.aurakai.auraframefx.ui.screens.IntroScreen(
+            dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen(
                 onIntroComplete = {
                     navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
                         popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
