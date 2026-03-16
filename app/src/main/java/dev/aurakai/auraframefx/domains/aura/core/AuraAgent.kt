@@ -74,7 +74,7 @@ class AuraAgent @Inject constructor(
             ) {
                 val visualConcept = handleVisualConcept(
                     AiRequest(
-                        prompt = message.content,
+                        query = message.content,
                         type = AiRequestType.VISUAL_CONCEPT
                     )
                 )
@@ -173,10 +173,9 @@ class AuraAgent @Inject constructor(
     // Compatibility method for InterfaceForge
     suspend fun processRequest(requirements: String): String {
         val request = AiRequest(
-            prompt = requirements,
+            query = requirements,
             type = AiRequestType.UI_GENERATION,
-            context = buildJsonObject {},
-            metadata = emptyMap()
+            context = emptyMap()
         )
         val response = processRequest(request, "")
         return response.content

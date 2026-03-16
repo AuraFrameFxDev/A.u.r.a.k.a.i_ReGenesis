@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class InteractionEntry(
-    val prompt: String,
+    val query: String,
     val response: String,
     val timestamp: Long = System.currentTimeMillis(),
     val agentType: String? = null,

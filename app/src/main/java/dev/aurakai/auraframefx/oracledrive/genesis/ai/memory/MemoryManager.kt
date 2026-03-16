@@ -19,7 +19,7 @@ interface MemoryManager {
     /**
      * Stores an interaction for learning
      */
-    fun storeInteraction(prompt: String, response: String)
+    fun storeInteraction(query: String, response: String)
 
     /**
      * Searches memories by relevance
