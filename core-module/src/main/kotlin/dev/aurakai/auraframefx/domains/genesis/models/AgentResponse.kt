@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.serialization.Serializable
 
 /**
