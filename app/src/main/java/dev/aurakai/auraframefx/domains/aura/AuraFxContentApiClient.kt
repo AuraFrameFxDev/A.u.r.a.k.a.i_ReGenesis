@@ -16,22 +16,22 @@ class AuraFxContentApiClient @Inject constructor(
     private val aiContentApi: AIContentApi,
 ) {
     /**
-     * Generates AI-powered text asynchronously based on the given prompt.
+     * Generates AI-powered text asynchronously based on the given query.
      *
-     * @param prompt The text prompt to guide the AI-generated output.
+     * @param query The text query to guide the AI-generated output.
      * @param maxTokens The maximum number of tokens for the generated text. If null, defaults to 500.
      * @param temperature Controls the randomness of the output. If null, defaults to 0.7.
      * @return The raw API response containing the generated text.
      */
     suspend fun generateText(
-        prompt: String,
+        query: String,
         maxTokens: Int? = null,
         temperature: Float? = null,
     ): Any = withContext(Dispatchers.IO) { // Temporary: Use Any instead of missing ResponseType
 
         aiContentApi.aiGenerateTextPost(
             GenerateTextRequest(
-                prompt = prompt,
+                query = query,
                 maxTokens = maxTokens ?: 500,
                 temperature = temperature ?: 0.7f
             )

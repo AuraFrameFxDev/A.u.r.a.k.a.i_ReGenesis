@@ -89,11 +89,11 @@ class PersistentMemoryManager @Inject constructor(
     }
 
     /**
-     * Store a prompt/response interaction.
+     * Store a query/response interaction.
      */
-    fun storeInteraction(prompt: String, response: String) {
+    fun storeInteraction(query: String, response: String) {
         val interaction = InteractionEntry(
-            prompt = prompt,
+            query = query,
             response = response,
             timestamp = System.currentTimeMillis()
         )
