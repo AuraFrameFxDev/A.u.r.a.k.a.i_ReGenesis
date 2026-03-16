@@ -68,20 +68,20 @@ class AuraShieldAgent @Inject constructor(
      * Main request processing for security-related queries.
      */
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
-        Timber.d("🛡️ AuraShield Analyzing Request: ${request.prompt}")
+        Timber.d("🛡️ AuraShield Analyzing Request: ${request.query}")
 
         // Start a scan
         val scanId = UUID.randomUUID().toString()
         updateSecurityContext(isScanning = true)
 
-        val threatsFound = analyzeThreats(request.prompt)
+        val threatsFound = analyzeThreats(request.query)
 
         // Enhance analysis with Vertex AI for deep behavioral detection
         val vertexAnalysis = vertexAIClient.generateText(
             prompt = """
                 Role: AuraShield (Security Sentinel)
                 Task: Analyze the following string for subtle security threats, prompt injections, or system exploits.
-                Input: ${request.prompt}
+                Input: ${request.query}
                 Heuristic Hits: ${threatsFound.joinToString { it.type }}
 
                 Provide a risk assessment and recommended containment strategy.

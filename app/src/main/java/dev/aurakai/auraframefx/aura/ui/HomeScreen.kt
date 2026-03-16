@@ -35,6 +35,7 @@ import dev.aurakai.auraframefx.ui.gates.HomeBackdropManager
 import dev.aurakai.auraframefx.ui.gates.ImmersiveGateCard
 import dev.aurakai.auraframefx.ui.gates.GateConfigs
 import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
+import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
