@@ -28,7 +28,10 @@ plugins {
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
-    ndkVersion = "26.1.10909125"
+    // Use the repo-wide NDK version (gradle.properties: android.ndkVersion)
+    // to ensure 16KB page-size compatible libc++_shared and link defaults.
+    ndkVersion = project.findProperty("android.ndkVersion")?.toString()
+        ?: "29.0.14206865"
 
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
