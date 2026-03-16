@@ -280,7 +280,6 @@ private fun NeonChessTaskBoard(
                 }
         ) {
             val cellSize = size.width / boardSize.toFloat()
-            val isoDrop = 0.3f  // Perspective tilt
 
             for (row in 0 until boardSize) {
                 for (col in 0 until boardSize) {
