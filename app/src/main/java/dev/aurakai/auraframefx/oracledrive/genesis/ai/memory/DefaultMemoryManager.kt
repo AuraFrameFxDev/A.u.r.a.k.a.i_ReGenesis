@@ -26,9 +26,9 @@ class DefaultMemoryManager : MemoryManager {
         return memories[key]?.value
     }
 
-    override fun storeInteraction(prompt: String, response: String) {
+    override fun storeInteraction(query: String, response: String) {
         val interaction = InteractionEntry(
-            prompt = prompt,
+            query = query,
             response = response,
             timestamp = System.currentTimeMillis()
         )
@@ -84,9 +84,9 @@ class DefaultMemoryManager : MemoryManager {
         synchronized(interactions) {
             return interactions
                 .map { interaction ->
-                    val promptRelevance = calculateRelevance(interaction.prompt, queryWords)
+                    val queryRelevance = calculateRelevance(interaction.query, queryWords)
                     val responseRelevance = calculateRelevance(interaction.response, queryWords)
-                    val maxRelevance = maxOf(promptRelevance, responseRelevance)
+                    val maxRelevance = maxOf(queryRelevance, responseRelevance)
 
                     interaction.copy(relevanceScore = maxRelevance)
                 }
