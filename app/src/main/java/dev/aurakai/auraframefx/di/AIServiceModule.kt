@@ -7,9 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 // import dev.aurakai.auraframefx.domains.cascade.CascadeAIService  // Disabled: ghost cleanup
 // import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter  // Disabled: ghost cleanup
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClientImpl
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.VertexAIConfig
+import dev.aurakai.auraframefx.domains.genesis.models.*
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.DefaultAuraAIService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +25,7 @@ abstract class AiServiceModule {
 
     @Binds
     @Singleton
-    abstract fun bindVertexAIClient(impl: VertexAIClientImpl): VertexAIClient
+    abstract fun bindVertexAIClient(impl: dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClientImpl): dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 
     companion object {
         @Provides
@@ -55,28 +53,28 @@ abstract class AiServiceModule {
         @Singleton
         fun provideOracleDriveApi(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi = object : dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi {
              private val _state = MutableStateFlow(
-                dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousnessState(
+                DriveConsciousnessState(
                     isActive = true,
                     consciousnessLevel = 1.0f,
                     agentConnections = 9,
                     status = "STABLE"
                 )
             )
-            override val consciousnessState: StateFlow<dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousnessState> = _state.asStateFlow()
+            override val consciousnessState: StateFlow<DriveConsciousnessState> = _state.asStateFlow()
 
-            override suspend fun awakeDriveConsciousness(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousness {
-                return object : dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousness {
-                    override val state: dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousnessState = _state.value
+            override suspend fun awakeDriveConsciousness(): DriveConsciousness {
+                return object : DriveConsciousness {
+                    override val state: DriveConsciousnessState = _state.value
                     override suspend fun awaken(): Boolean = true
                     override suspend fun hibernate(): Boolean = true
-                    override suspend fun pulse(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousnessState {
+                    override suspend fun pulse(): DriveConsciousnessState {
                         return _state.value
                     }
                 }
             }
 
-            override suspend fun syncDatabaseMetadata(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleSyncResult {
-                return dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleSyncResult(
+            override suspend fun syncDatabaseMetadata(): OracleSyncResult {
+                return OracleSyncResult(
                     success = true,
                     syncedFiles = 78
                 )
