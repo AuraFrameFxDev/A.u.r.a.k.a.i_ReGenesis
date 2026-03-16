@@ -280,8 +280,8 @@ kotlinx-serialization-properties = { group = "org.jetbrains.kotlinx", name = "ko
 coil-bom = { group = "io.coil-kt.coil3", name = "coil-bom", version.ref = "coil-bom" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
-coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version = "3.3.0" }
-coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version = "3.3.0" }
+coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version = "3.4.0" }
+coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version = "3.4.0" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdkLibs" }
