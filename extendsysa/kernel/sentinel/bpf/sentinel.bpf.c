@@ -21,17 +21,13 @@ SEC("tracepoint/syscalls/sys_enter_execve")
 int trace_execve(struct trace_event_raw_sys_enter *ctx)
 {
     struct event *e;
-    u32 pid = bpf_get_current_pid_tgid() >> 32;
+    u64 pid_tgid = bpf_get_current_pid_tgid();
+    e->pid = pid_tgid >> 32;
 
-    e = bpf_ringbuf_reserve(&events, sizeof(*e), 0);
-    if (!e)
-        return 0;
+    // Get PPID from task_struct
+    struct task_struct *task = (struct task_struct *)bpf_get_current_task();
+    bpf_probe_read_kernel(&e->ppid, sizeof(e->ppid), &task->real_parent->tgid);
 
-    e->pid = pid;
-    // Note: For real ppid we'd need task_struct from bpf_get_current_task()
-    // For now, mirroring pid to match Grok's skeleton
-    e->ppid = bpf_get_current_pid_tgid() >> 32; 
-    
     bpf_get_current_comm(&e->comm, sizeof(e->comm));
 
     // Read filename arg (ctx+args[0])
