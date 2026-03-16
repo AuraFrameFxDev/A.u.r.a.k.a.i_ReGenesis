@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.models.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
 import javax.inject.Singleton
 
