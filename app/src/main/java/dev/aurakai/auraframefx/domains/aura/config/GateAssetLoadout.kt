@@ -49,7 +49,7 @@ object GateAssetLoadout {
             styleBDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.fallback,
             route = ReGenesisNavHost.CollabCanvas.route,
-            accentColor = Color(0xFF00E5FF)
+            accentColor = Color(0xFF00FFFF)
         ),
         "themes" to SubGateCard(
             id = "themes",
@@ -85,7 +85,7 @@ object GateAssetLoadout {
             styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
             route = ReGenesisNavHost.SecurityCenter.route, // Monitors genesis_ethical_governor.py
-            accentColor = Color(0xFFFFD700) // Gold for guardian
+            accentColor = Color(0xFF008B8B) // Kai Deep Cyan
         ),
         "security_shield" to SubGateCard(
             id = "security_shield",
@@ -133,7 +133,7 @@ object GateAssetLoadout {
             styleBDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
             route = ReGenesisNavHost.OracleDrive.route, // Screen tool, not the hub itself
-            accentColor = Color(0xFF00B0FF) // Cyan - Genesis
+            accentColor = Color(0xFF00FF85) // Genesis Green
         )
     )
 
@@ -150,7 +150,7 @@ object GateAssetLoadout {
             styleBDrawable = GateAssetConfig.NexusSubGates.MONITORING.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.MONITORING.fallback,
             route = ReGenesisNavHost.AgentMonitoring.route,
-            accentColor = Color(0xFF7B2FFF)
+            accentColor = Color(0xFF800080) // Nexus Purple
         ),
         "sphere_grid" to SubGateCard(
             id = "sphere_grid",
@@ -194,10 +194,23 @@ object GateAssetLoadout {
         )
     )
 
+    val helpGates = mapOf(
+        "help_center" to SubGateCard(
+            id = "help_center",
+            title = "Help Center",
+            subtitle = "Ethereal Library • Documentation",
+            styleADrawable = "help_style_a", // Placeholder
+            styleBDrawable = "help_style_b", // Placeholder
+            fallbackDrawable = null,
+            route = "help_route",
+            accentColor = Color(0xFFFFFFFF) // White
+        )
+    )
+
     /**
      * Combined map of all gates for quick lookup
      */
-    val allGates = auraGates + kaiGates + genesisGates + nexusGates
+    val allGates = auraGates + kaiGates + genesisGates + nexusGates + helpGates
 
     /**
      * Quick Load lists for Hubs
