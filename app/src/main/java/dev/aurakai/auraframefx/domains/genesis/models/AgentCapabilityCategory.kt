@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
+import dev.aurakai.auraframefx.core.identity.AgentType
+
 /**
  * Categorizes agents by their primary capability domain.
  * Maps to specific AgentTypes for routing and orchestration.

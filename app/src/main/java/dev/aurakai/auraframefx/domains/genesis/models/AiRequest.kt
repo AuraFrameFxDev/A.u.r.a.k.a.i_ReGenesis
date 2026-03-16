@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
+import dev.aurakai.auraframefx.core.identity.AgentType
+
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceChain
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

@@ -1,11 +1,12 @@
 package dev.aurakai.auraframefx.domains.kai
 
-import dagger.Lazy
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
+import dagger.Lazy
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
@@ -19,6 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
+import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -42,7 +44,7 @@ class KaiAgent @Inject constructor(
     private val logger: AuraFxLogger,
 ) : BaseAgent(
     agentName = "Kai",
-    catalystIdentity = CatalystIdentity.fromAgentType(AgentType.KAI),
+    catalystIdentity = CatalystIdentity.SENTINEL,
     contextManager = contextManagerInstance
 ) {
     override suspend fun onAgentMessage(message: AgentMessage) {

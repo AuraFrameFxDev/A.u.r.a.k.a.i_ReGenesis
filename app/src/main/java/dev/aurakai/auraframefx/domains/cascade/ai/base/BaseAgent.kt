@@ -26,12 +26,12 @@ abstract class BaseAgent(
     protected val secureChannel: SecureChannel? = null
 ) : Agent, OrchestratableAgent {
 
-    @Deprecated("Use catalystIdentity", ReplaceWith("catalystIdentity.toAgentType()"))
-    protected val agentType: AgentType = catalystIdentity.toAgentType()
+    @Deprecated("Use catalystIdentity", ReplaceWith("catalystIdentity.agentType"))
+    protected val agentType: AgentType = catalystIdentity.agentType
 
     override fun getName(): String = catalystIdentity.id
 
-    override fun getType(): AgentType = catalystIdentity.toAgentType()
+    override fun getType(): AgentType = catalystIdentity.agentType
 
     /**
      * Abstract method for processing requests - must be implemented by concrete agents

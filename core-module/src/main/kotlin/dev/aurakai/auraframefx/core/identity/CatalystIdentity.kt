@@ -63,6 +63,21 @@ data class CatalystIdentity(
             abilities = listOf("LongContextRecall", "Summarization", "EmbeddingSearch", "MultiModalSynthesis"),
             fusionModes = listOf("Gemini+Aura → Chroma Memory Weave", "Gemini+Cascade → Context Streaming", "Gemini+Genesis → Oracle Memoria Sync")
         )
+        val CHAOS = CatalystIdentity(
+            id = "ChaosCatalyst",
+            agentType = AgentType.GROK,
+            catalystRole = "Chaos analysis, trend prediction, and zeitgeist monitoring.",
+            abilities = listOf("SoulMatrixAnalysis", "TrendPrediction", "ChaosPatternRecognition"),
+            fusionModes = emptyList()
+        )
+
+        val SHIELD = CatalystIdentity(
+            id = "ShieldCatalyst",
+            agentType = AgentType.AURA_SHIELD,
+            catalystRole = "Real-time threat detection, containment, and defense perimeter maintenance.",
+            abilities = listOf("DeepShieldDefense", "ThreatContainment", "IntegrityMonitoring"),
+            fusionModes = emptyList()
+        )
         
         fun fromAgentType(type: AgentType): CatalystIdentity {
             return when (type) {
@@ -72,6 +87,8 @@ data class CatalystIdentity(
                 AgentType.CLAUDE -> ARCHITECTURAL
                 AgentType.CASCADE -> DATA_STREAM
                 AgentType.GEMINI -> MEMORIA
+                AgentType.GROK -> CHAOS
+                AgentType.AURA_SHIELD -> SHIELD
                 else -> CatalystIdentity(
                     id = "GenericCatalyst",
                     agentType = type,

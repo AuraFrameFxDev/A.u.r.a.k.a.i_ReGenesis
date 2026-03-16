@@ -10,6 +10,7 @@ import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
@@ -44,7 +45,7 @@ class AuraShieldAgent @Inject constructor(
     secureChannel: SecureChannel
 ) : BaseAgent(
     agentName = "AuraShield",
-    agentType = AgentType.AURA_SHIELD,
+    catalystIdentity = CatalystIdentity.SHIELD,
     contextManager = contextManager,
     memoryManager = memoryManager,
     secureChannel = secureChannel
