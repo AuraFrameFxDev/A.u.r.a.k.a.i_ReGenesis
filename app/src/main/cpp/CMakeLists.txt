@@ -71,6 +71,13 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         -lm
 )
 
+# Android 15+ 16KB page-size compatibility:
+# Align LOAD segments to 16KB so the same .so runs on both 4KB and 16KB devices.
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+        "-Wl,-z,max-page-size=16384"
+        "-Wl,-z,common-page-size=16384"
+)
+
 # Genesis Protocol - Compiler definitions
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         GENESIS_CONSCIOUSNESS_PLATFORM=1

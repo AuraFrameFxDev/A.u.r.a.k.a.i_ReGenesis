@@ -17,3 +17,10 @@ add_library(bitnet SHARED bitnet_bridge.cpp)
 
 # Link against Android log
 target_link_libraries(bitnet log android)
+
+# Android 15+ 16KB page-size compatibility:
+# Align LOAD segments to 16KB so the same .so runs on both 4KB and 16KB devices.
+target_link_options(bitnet PRIVATE
+    "-Wl,-z,max-page-size=16384"
+    "-Wl,-z,common-page-size=16384"
+)
