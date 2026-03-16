@@ -12,6 +12,8 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -433,7 +435,7 @@ class CascadeAgent @Inject constructor(
         val request = AiRequest(
             query = prompt,
             type = AiRequestType.ANALYSIS,
-            priority = TaskStatus.Priority.NORMAL
+            priority = AgentPriority.NORMAL
         )
         val auraResponse = auraAgent.processRequest(request, "").content
         val kaiResponse = kaiAgent.processRequest(request, "").content
@@ -457,7 +459,7 @@ class CascadeAgent @Inject constructor(
         val request = AiRequest(
             query = prompt,
             type = AiRequestType.SECURITY,
-            priority = TaskStatus.Priority.NORMAL
+            priority = AgentPriority.NORMAL
         )
         val response = kaiAgent.processRequest(request, "")
 
@@ -487,7 +489,7 @@ class CascadeAgent @Inject constructor(
         val request = AiRequest(
             query = prompt,
             type = AiRequestType.CREATIVE,
-            priority = TaskStatus.Priority.NORMAL
+            priority = AgentPriority.NORMAL
         )
         val response = auraAgent.processRequest(request, "")
 
@@ -867,7 +869,7 @@ class CascadeAgent @Inject constructor(
         context: String
     ): AgentResponse {
         // Delegate to the string-based processRequest method
-        val response = processRequest(request.prompt)
+        val response = processRequest(request.query)
         return AgentResponse.success(
             content = response,
             agentName = agentName,

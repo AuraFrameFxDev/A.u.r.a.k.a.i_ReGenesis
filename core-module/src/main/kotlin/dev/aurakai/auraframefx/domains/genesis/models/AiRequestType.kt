@@ -20,5 +20,14 @@ enum class AiRequestType {
     SYSTEM,
     CREATIVE,
     MEMORY,
-    ETHICAL_REVIEW
+    ETHICAL_REVIEW,
+
+    // Chat + UX/creative specializations used by :app
+    CHAT,
+    UI_GENERATION,
+    THEME_CREATION,
+    ANIMATION_DESIGN,
+    CREATIVE_TEXT,
+    VISUAL_CONCEPT,
+    USER_EXPERIENCE
 }

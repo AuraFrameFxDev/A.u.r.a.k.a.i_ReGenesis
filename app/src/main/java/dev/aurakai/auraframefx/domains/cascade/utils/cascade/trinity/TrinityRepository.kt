@@ -132,7 +132,7 @@ open class TrinityRepository @Inject constructor(
                         val request = AiRequest(
                             query = message,
                             type = AiRequestType.CHAT,
-                            context = buildJsonObject { put("source", "trinity_repo") }
+                            context = mapOf("source" to "trinity_repo")
                         )
                         genesisAgent.processRequest(request, "trinity_repo").content
                     }

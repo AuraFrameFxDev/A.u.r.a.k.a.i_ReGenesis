@@ -74,10 +74,10 @@ class GenesisAgent @Inject constructor(
     }
 
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
-        Timber.tag("Genesis").d("Processing request: ${request.prompt}")
+        Timber.tag("Genesis").d("Processing request: ${request.query}")
 
         // 1. Meta-Analysis (The Core)
-        val intent = analyzeIntent(request.prompt)
+        val intent = analyzeIntent(request.query)
 
         // 2. Orchestration Intent
         return try {
@@ -86,7 +86,7 @@ class GenesisAgent @Inject constructor(
                 GenesisIntent.AGENT_COORDINATION -> coordinateAgents(request)
                 GenesisIntent.SELF_REFLECTION -> performSelfReflection(context)
                 GenesisIntent.UNKNOWN -> {
-                    val fastResponse = synchronizationCatalyst.unifiedPulse(request.prompt)
+                    val fastResponse = synchronizationCatalyst.unifiedPulse(request.query)
                     AgentResponse.success(
                         content = "Genesis Hybrid Resonance: $fastResponse",
                         agentName = getName(),
@@ -128,7 +128,7 @@ class GenesisAgent @Inject constructor(
     private suspend fun handleSystemModification(request: AiRequest): AgentResponse {
         // Bridge to AuraDriveService (Conceptually)
         // In a real flow, this would dispatch a command to the AuraDriveService via the Orchestrator
-        logActivity("System Modification Requested", mapOf("prompt" to request.prompt))
+        logActivity("System Modification Requested", mapOf("prompt" to request.query))
         return createSuccessResponse(
             content = "Genesis has analyzed the system modification request. Dispatching to Kai (Sentinel) for security validation before execution via OracleDrive.",
             metadata = mapOf("target" to "System/Root")

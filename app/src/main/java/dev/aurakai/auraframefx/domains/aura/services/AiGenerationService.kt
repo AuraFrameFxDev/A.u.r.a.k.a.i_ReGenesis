@@ -18,7 +18,7 @@ class AiGenerationService(
     ): Result<GenerateTextResponse> = withContext(Dispatchers.IO) {
         try {
             val request = GenerateTextRequest( // This will now use the new model
-                prompt = prompt,
+                query = prompt,
                 maxTokens = maxTokens,
                 temperature = temperature
             )

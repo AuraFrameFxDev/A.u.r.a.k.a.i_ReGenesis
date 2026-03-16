@@ -359,7 +359,7 @@ class TaskExecutionManager @Inject constructor(
             query = execution.data["query"] ?: execution.type,
             type = AiRequestType.entries.find { it.name.equals(execution.type, ignoreCase = true) }
                 ?: AiRequestType.TEXT,
-            context = execution.data.toKotlinJsonObject()
+            context = execution.data
         )
         return auraAgent.processRequest(request, execution.agent.name)
     }
@@ -379,7 +379,7 @@ class TaskExecutionManager @Inject constructor(
             query = execution.data["query"] ?: execution.type,
             type = AiRequestType.entries.find { it.name.equals(execution.type, ignoreCase = true) }
                 ?: AiRequestType.TEXT,
-            context = execution.data.toKotlinJsonObject()
+            context = execution.data
         )
         return kaiAgent.processRequest(request, execution.agent.name)
     }
@@ -393,7 +393,7 @@ class TaskExecutionManager @Inject constructor(
             query = execution.data["query"] ?: execution.type,
             type = AiRequestType.entries.find { it.name.equals(execution.type, ignoreCase = true) }
                 ?: AiRequestType.TEXT,
-            context = execution.data.toKotlinJsonObject()
+            context = execution.data
         )
         return genesisAgent.processRequest(request, execution.agent.name)
     }

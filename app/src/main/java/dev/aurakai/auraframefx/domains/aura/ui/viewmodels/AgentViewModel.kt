@@ -338,9 +338,7 @@ open class AgentViewModel @Inject constructor(
                     val request = AiRequest(
                         query = userMessage,
                         type = AiRequestType.CHAT,
-                        context = buildJsonObject {
-                            put("source", "direct_chat")
-                        }
+                        context = mapOf("source" to "direct_chat")
                     )
                     val response = genesisAgent.processRequest(request, "direct_chat")
                     response.content
@@ -372,9 +370,7 @@ open class AgentViewModel @Inject constructor(
                     val request = AiRequest(
                         query = "As Cascade, the analytics specialist: $userMessage",
                         type = AiRequestType.CHAT,
-                        context = buildJsonObject {
-                            put("agent_persona", "cascade")
-                        }
+                        context = mapOf("agent_persona" to "cascade")
                     )
                     val response = genesisAgent.processRequest(request, "cascade")
                     response.content
@@ -384,9 +380,7 @@ open class AgentViewModel @Inject constructor(
                     val request = AiRequest(
                         query = "As Claude, the build system architect: $userMessage",
                         type = AiRequestType.CHAT,
-                        context = buildJsonObject {
-                            put("agent_persona", "claude")
-                        }
+                        context = mapOf("agent_persona" to "claude")
                     )
                     val response = genesisAgent.processRequest(request, "claude")
                     response.content
