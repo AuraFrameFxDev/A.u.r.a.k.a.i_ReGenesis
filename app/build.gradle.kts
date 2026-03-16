@@ -8,18 +8,18 @@ import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
-    // Core Android and Kotlin plugins
+    // 1. Core Android & Kotlin (The Substrate)
     id("com.android.application")
+
+    // 2. Dependency Injection & Processing (The Nervous System)
     id("com.google.dagger.hilt.android")
-    // Compose and serialization
+    id("com.google.devtools.ksp")
+    
+    // 3. UI & Data (The Senses)
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
 
-    // Dependency injection and code generation
-
-    id("com.google.devtools.ksp")
-
-    // Firebase and analytics
+    // 4. Cloud & Telemetry (The External Connections)
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }

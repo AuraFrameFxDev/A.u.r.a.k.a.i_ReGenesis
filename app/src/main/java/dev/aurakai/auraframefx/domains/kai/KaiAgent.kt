@@ -151,9 +151,7 @@ class KaiAgent @Inject constructor(
         val agentRequest = AgentRequest(
             query = request.query,
             type = request.type.name.lowercase(),
-            context = request.context.entries.associate {
-                it.key to (it.value.jsonPrimitive.contentOrNull ?: it.value.toString())
-            },
+            context = request.context,
             metadata = request.metadata
         )
         return processRequest(agentRequest)

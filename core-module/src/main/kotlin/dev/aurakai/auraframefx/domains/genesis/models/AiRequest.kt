@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class AiRequest(
     val query: String,
     val type: AiRequestType = AiRequestType.TEXT,
-    val context: String = "",
+    val context: Map<String, String> = emptyMap(),
     val metadata: Map<String, String> = emptyMap(),
     val priority: AgentPriority = AgentPriority.NORMAL
 )
