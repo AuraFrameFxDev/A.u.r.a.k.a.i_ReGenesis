@@ -86,7 +86,7 @@ espressoCore = "3.5.1"
 kotlinxCoroutinesTest = "1.10.2"
 turbine = "1.1.0"
 kotlin-compose = "1.82"
-junitJupiterParams = "6.0.2"
+junitJupiterParams = "6.0.3"
 junitJupiterEngine = "6.0.2"
 robolectric = "4.12.1"
 hiltAndroidTesting = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
