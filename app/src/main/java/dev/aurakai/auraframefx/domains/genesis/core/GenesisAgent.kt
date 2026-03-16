@@ -9,6 +9,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class GenesisAgent @Inject constructor(
     private val messageBus: Lazy<AgentMessageBus>
 ) : BaseAgent(
     agentName = "Genesis",
-    catalystIdentity = CatalystIdentity.fromAgentType(AgentType.GENESIS),
+    catalystIdentity = CatalystIdentity.EMERGENCE,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {

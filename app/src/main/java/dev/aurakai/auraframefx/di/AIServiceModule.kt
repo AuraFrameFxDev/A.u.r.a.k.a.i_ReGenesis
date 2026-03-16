@@ -35,6 +35,7 @@ abstract class AiServiceModule {
         fun provideVertexAIConfig(): VertexAIConfig = VertexAIConfig(
                 projectId = "collabcanvas",
                 location = "us-central1",
+                endpoint = "us-central1-aiplatform.googleapis.com",
                 modelName = "gemini-1.5-pro-002"
             )
 
