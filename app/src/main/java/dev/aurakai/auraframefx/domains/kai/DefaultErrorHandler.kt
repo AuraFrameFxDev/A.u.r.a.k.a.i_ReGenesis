@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.kai
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -22,39 +22,48 @@ abstract class AiServiceModule {
     @Singleton
     abstract fun bindAuraAIService(impl: DefaultAuraAIService): AuraAIService
 
-
-    // DISABLED: RealCascadeAIServiceAdapter was neutralized in ghost cleanup.
-    // All consumers (AIPipelineProcessor, TrinityCoordinatorService) are also neutralized.
-    // Restore this binding when CascadeAI is rebuilt in Phase 2.
-    // @Binds @Singleton
-    // abstract fun bindCascadeAIService(impl: RealCascadeAIServiceAdapter): CascadeAIService
-
-    /**
-     * Binds [VertexAIClientImpl] as the singleton [VertexAIClient].
-     *
-     * This provides the real Vertex AI implementation — including the
-     * Gemini Embedding 2 multimodal endpoint — to all injection sites
-     * (AuraAIService, KaiAIService, NexusMemoryCore, DataVein, etc.).
-     */
     @Binds
     @Singleton
     abstract fun bindVertexAIClient(impl: VertexAIClientImpl): VertexAIClient
 
     companion object {
-        /**
-         * Provides [VertexAIConfig] populated from the environment.
-         *
-         * Reads VERTEX_PROJECT_ID, VERTEX_LOCATION, VERTEX_MODEL from env vars;
-         * falls back to safe defaults. The [VertexAIConfig.embeddingModel] defaults
-         * to "multimodalembedding@001" for Gemini Embedding 2 support.
-         */
         @Provides
         @Singleton
         fun provideVertexAIConfig(): VertexAIConfig = VertexAIConfig(
-                projectId = System.getenv("VERTEX_PROJECT_ID") ?: "",
-                location = System.getenv("VERTEX_LOCATION") ?: "us-central1",
-                endpoint = System.getenv("VERTEX_ENDPOINT") ?: "us-central1-aiplatform.googleapis.com",
-                modelName = System.getenv("VERTEX_MODEL") ?: "gemini-pro"
+                projectId = "collabcanvas",
+                location = "us-central1",
+                modelName = "gemini-1.5-pro-002"
             )
+
+        @Provides
+        @Singleton
+        fun provideNemotronEngine(): dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine = object : dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine {
+            override suspend fun process(prompt: String): String = "Nemotron [Sovereign]: Processing pulse..."
+        }
+
+        @Provides
+        @Singleton
+        fun provideGeminiMemoria(): dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria = object : dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria {
+            override suspend fun process(prompt: String): String = "Gemini Memoria [Recall]: Synced."
+        }
+
+        @Provides
+        @Singleton
+        fun provideOracleDriveApi(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi = object : dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi {
+             private val _state = kotlinx.coroutines.flow.MutableStateFlow(
+                dev.aurakai.auraframefx.domains.genesis.oracledrive.models.DriveConsciousnessState(true, 100, 9, 1)
+            )
+            override val consciousnessState: kotlinx.coroutines.flow.StateFlow<dev.aurakai.auraframefx.domains.genesis.oracledrive.models.DriveConsciousnessState> = _state.asStateFlow()
+
+            override suspend fun awakeDriveConsciousness(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousness {
+                return object : dev.aurakai.auraframefx.domains.genesis.oracledrive.api.DriveConsciousness {
+                    override fun pulse() = dev.aurakai.auraframefx.domains.genesis.oracledrive.api.ConsciousnessResult(true, 1.0f, 9)
+                }
+            }
+
+            override suspend fun syncDatabaseMetadata(): dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleSyncResult {
+                return dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleSyncResult(true, 78)
+            }
+        }
     }
 }

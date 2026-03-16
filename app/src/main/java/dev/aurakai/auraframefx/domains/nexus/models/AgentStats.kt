@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.nexus.models
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 

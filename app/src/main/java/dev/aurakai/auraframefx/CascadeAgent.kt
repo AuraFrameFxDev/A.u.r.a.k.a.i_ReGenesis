@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.cascade
 
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.ai.BaseAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ import timber.log.Timber
 
 private const val TAG = "CascadeAgent"
 
-abstract class CascadeAgent : BaseAgent("CascadeAgent", AgentType.CASCADE) { // Inherit from BaseAgent
+abstract class CascadeAgent : BaseAgent("CascadeAgent", CatalystIdentity.fromAgentType(AgentType.CASCADE)) { // Inherit from BaseAgent
 
     private var agentScope: CoroutineScope? = null
 

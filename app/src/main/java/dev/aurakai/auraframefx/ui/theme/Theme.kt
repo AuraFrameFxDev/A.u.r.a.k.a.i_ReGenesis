@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.ui.theme
+package dev.aurakai.auraframefx.ui.theme
 
 import android.app.Activity
 import android.os.Build

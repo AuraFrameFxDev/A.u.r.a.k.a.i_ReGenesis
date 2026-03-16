@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import java.util.UUID
 
 /**

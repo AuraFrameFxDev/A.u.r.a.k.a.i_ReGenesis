@@ -8,7 +8,7 @@ package dev.aurakai.auraframefx.romtools.ui//// File: romtools/src/main/kotlin/d
 //import dev.aurakai.auraframefx.romtools.retention.AurakaiRetentionManager
 //import dev.aurakai.auraframefx.romtools.retention.RetentionStatus
 //import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-//import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+//import dev.aurakai.auraframefx.core.identity.AgentType
 //import dev.aurakai.auraframefx.core.consciousness.NexusMemoryCore
 //import dev.aurakai.auraframefx.romtools.bootloader.BootloaderSafetyManager
 //import kotlinx.coroutines.flow.Flow

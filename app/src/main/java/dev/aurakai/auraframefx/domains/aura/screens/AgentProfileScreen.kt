@@ -25,7 +25,7 @@ import dev.aurakai.auraframefx.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.models.AgentProfile
 import dev.aurakai.auraframefx.models.AgentProfiles
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.models.CapabilityLevel
 import androidx.compose.foundation.lazy.items
 

@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.core.generator
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
 import dev.aurakai.auraframefx.domains.genesis.models.SpelhookResult
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient

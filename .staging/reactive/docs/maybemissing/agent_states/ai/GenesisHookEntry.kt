@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.xposed
+package dev.aurakai.auraframefx.xposed
 
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
 import com.highcapable.yukihookapi.hook.factory.configs
@@ -41,17 +41,17 @@ class GenesisHookEntry : IYukiHookXposedInit {
     }
 
     override fun onHook() = encase {
-        // ── Master gate ──────────────────────────────────────────────────────
+        // -- Master gate ------------------------------------------------------
         if (!FeatureToggles.XPOSED_HOOKS_ENABLED) return@encase
 
-        // ── android process: system-level AI hooks ───────────────────────────
+        // -- android process: system-level AI hooks ---------------------------
         if (FeatureToggles.XPOSED_GENESIS_SYSTEM_HOOKS) {
             loadApp(name = "android") {
                 GenesisSystemHooks().initializeSystemHooks(this@loadApp)
             }
         }
 
-        // ── com.android.systemui: StatusBar / Notch / QS / Chroma hooks ──────
+        // -- com.android.systemui: StatusBar / Notch / QS / Chroma hooks ------
         loadApp(name = "com.android.systemui") {
             if (FeatureToggles.XPOSED_GENESIS_UI_HOOKS) {
                 GenesisUIHooks().initializeUIHooks(this@loadApp)
@@ -74,7 +74,7 @@ class GenesisHookEntry : IYukiHookXposedInit {
             }
         }
 
-        // ── Zygote: early-stage global hooks ─────────────────────────────────
+        // -- Zygote: early-stage global hooks ---------------------------------
         loadZygote {
             if (FeatureToggles.XPOSED_GENESIS_ZYGOTE_HOOKS) {
                 GenesisZygoteHooks().initializeZygoteHooks(this@loadZygote)
@@ -86,7 +86,7 @@ class GenesisHookEntry : IYukiHookXposedInit {
             }
         }
 
-        // ── Genesis-OS self hooks ─────────────────────────────────────────────
+        // -- Genesis-OS self hooks ---------------------------------------------
         if (FeatureToggles.XPOSED_GENESIS_SELF_HOOKS) {
             loadApp(name = "dev.aurakai.auraframefx") {
                 GenesisSelfHooks().initializeSelfHooks(this@loadApp)

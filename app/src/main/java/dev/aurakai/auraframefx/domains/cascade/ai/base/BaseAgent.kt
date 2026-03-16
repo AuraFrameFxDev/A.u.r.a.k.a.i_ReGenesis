@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
 import kotlinx.coroutines.CoroutineScope
@@ -20,19 +20,18 @@ import kotlinx.coroutines.flow.flow
  */
 abstract class BaseAgent(
     override val agentName: String,
-    protected val agentType: AgentType,
+    val catalystIdentity: CatalystIdentity,
     protected val contextManager: ContextManager? = null,
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
 ) : Agent, OrchestratableAgent {
 
-    protected val catalystIdentity: CatalystIdentity by lazy {
-        CatalystIdentity.fromAgentType(agentType)
-    }
+    @Deprecated("Use catalystIdentity", ReplaceWith("catalystIdentity.toAgentType()"))
+    protected val agentType: AgentType = catalystIdentity.toAgentType()
 
-    override fun getName(): String = agentName
+    override fun getName(): String = catalystIdentity.id
 
-    override fun getType(): AgentType = agentType
+    override fun getType(): AgentType = catalystIdentity.toAgentType()
 
     /**
      * Abstract method for processing requests - must be implemented by concrete agents
