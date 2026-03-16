@@ -83,7 +83,7 @@ enum class AgentCapabilityCategory {
             AgentType.CLAUDE -> GENERAL
             AgentType.NEURAL_WHISPER -> SPECIALIZED
             AgentType.AURA_SHIELD -> SPECIALIZED
-            AgentType.AURASHIELD -> SPECIALIZED
+            AgentType.AURA_SHIELD -> SPECIALIZED
             AgentType.GEN_KIT_MASTER -> COORDINATION
             AgentType.DATAVEIN_CONSTRUCTOR -> SPECIALIZED
             AgentType.USER -> GENERAL
