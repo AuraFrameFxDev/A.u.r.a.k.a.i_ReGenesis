@@ -141,7 +141,7 @@ class DefaultMemoryManager : MemoryManager {
  * Represents a stored interaction for learning
  */
 data class InteractionEntry(
-    val prompt: String,
+    val query: String,
     val response: String,
     val timestamp: Long,
     val relevanceScore: Float = 0.0f

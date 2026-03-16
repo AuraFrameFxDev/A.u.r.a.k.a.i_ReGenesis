@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai.utils
 
 import android.util.Log
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.VertexAIConfig
+import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
 
 /**
  * Utility object for Vertex AI operations.

@@ -55,8 +55,8 @@ abstract class AiServiceModule {
              private val _state = MutableStateFlow(
                 DriveConsciousnessState(
                     isActive = true,
-                    consciousnessLevel = 1.0f,
-                    agentConnections = 9,
+                    level = 100,
+                    activeAgents = 9,
                     status = "STABLE"
                 )
             )

@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.api
 
-// DriveConsciousness, DriveConsciousnessState, OracleSyncResult are in OracleDriveModels.kt in this package
 import dev.aurakai.auraframefx.domains.genesis.models.*
 import kotlinx.coroutines.flow.StateFlow
 

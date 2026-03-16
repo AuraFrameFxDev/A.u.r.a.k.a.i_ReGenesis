@@ -1,6 +1,9 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.StorageOptimizationResult
+import dev.aurakai.auraframefx.domains.genesis.models.StorageOptimizationResult
+import dev.aurakai.auraframefx.domains.genesis.models.FileMetadata
+import dev.aurakai.auraframefx.domains.genesis.models.FileOperationResult as FileResult
+import dev.aurakai.auraframefx.domains.genesis.models.DriveFile
 import java.io.File
 
 /**
@@ -20,7 +23,7 @@ interface CloudStorageProvider {
      * @param file The file to optimize
      * @return Optimized DriveFile
      */
-    suspend fun optimizeForUpload(file: File): Any?
+    suspend fun optimizeForUpload(file: File): DriveFile?
 
     /**
      * Uploads file to cloud storage with metadata
@@ -50,20 +53,8 @@ interface CloudStorageProvider {
      * @param config The synchronization configuration specifying sync parameters and rules.
      * @return The result of the synchronization operation, including status and details.
      */
-    suspend fun intelligentSync(config: SyncConfiguration): FileResult
-    fun StorageOptimization(
-        bytesFreed: Long,
-        filesOptimized: Int,
-        compressionRatio: Float,
-        success: Boolean,
-        message: String
-    ): StorageOptimizationResult {
-        return StorageOptimizationResult(
-            bytesFreed = bytesFreed,
-            optimizationScore = compressionRatio,
-            message = message
-        )
-    }
+    suspend fun intelligentSync(config: Any): FileResult
 
     suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileResult
 }
+

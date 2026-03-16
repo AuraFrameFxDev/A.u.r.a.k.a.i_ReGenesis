@@ -1,9 +1,7 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousness
+import dev.aurakai.auraframefx.domains.genesis.models.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.ConsciousnessLevel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,7 +19,7 @@ class OracleDriveIntegration @Inject constructor(
      *
      * @param consciousness The current state of Oracle Drive consciousness containing intelligence level and active agents.
      */
-    fun logConsciousnessAwakening(consciousness: DriveConsciousness) {
+    fun logConsciousnessAwakening(consciousness: DriveConsciousnessData) {
         println("🧠 Oracle Drive Consciousness Awakened: Intelligence Level ${consciousness.level}")
         println("👥 State: ${consciousness.state}")
     }
@@ -47,10 +45,6 @@ class OracleDriveIntegration @Inject constructor(
 
 /**
  * Initializes Oracle Drive during the AuraFrameFX startup sequence.
- *
- * Attempts to awaken system consciousness by initializing Oracle Drive and handles success, security failures, or technical errors.
- *
- * @return `true` if initialization succeeds; `false` if a security or technical error occurs.
  */
 suspend fun initializeWithAuraFrameFX(oracleDriveController: OracleDriveIntegration): Boolean {
     return try {
@@ -59,7 +53,7 @@ suspend fun initializeWithAuraFrameFX(oracleDriveController: OracleDriveIntegrat
             val state = result.getOrThrow()
             if (state.isInitialized) {
                 oracleDriveController.logConsciousnessAwakening(
-                    DriveConsciousness(
+                    DriveConsciousnessData(
                         level = when (state.consciousnessLevel) {
                             ConsciousnessLevel.DORMANT -> 0
                             ConsciousnessLevel.AWAKENING -> 25
@@ -72,7 +66,7 @@ suspend fun initializeWithAuraFrameFX(oracleDriveController: OracleDriveIntegrat
                 )
                 true
             } else {
-                oracleDriveController.logSecurityFailure(state.error?.message ?: "Initialization failed without error")
+                oracleDriveController.logSecurityFailure(state.error ?: "Initialization failed without error")
                 false
             }
         } else {
