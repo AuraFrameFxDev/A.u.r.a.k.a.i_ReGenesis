@@ -48,9 +48,9 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // Note: Kotlin is built into AGP 9.0.0-alpha14+ (android.builtInKotlin=true)
             pluginManager.apply("com.android.application")
             pluginManager.apply("org.jetbrains.kotlin.android")
-            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("com.google.dagger.hilt.android")
             pluginManager.apply("com.google.devtools.ksp")
+            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
             pluginManager.apply("com.google.gms.google-services")
 
