@@ -298,45 +298,37 @@ class GenesisOrchestrator @Inject constructor(
         return when (message) {
             is AgentMessage -> {
                 AiRequest(
-                    prompt = message.content,
+                    query = message.content,
                     type = AiRequestType.entries.find {
                         it.name.equals(
                             message.type,
                             ignoreCase = true
                         )
                     } ?: AiRequestType.TEXT,
-                    context = buildJsonObject {
-                        put("from", message.from)
-                        put(
-                            "priority",
-                            message.priority.toLong()
-                        ) // Priority is Int in AgentMessage
-                        put("timestamp", message.timestamp)
-                        message.metadata.forEach { (key, value) ->
-                            put(key, value)
-                        }
-                    }
+                    context = mapOf(
+                        "from" to message.from,
+                        "priority" to message.priority.toString(),
+                        "timestamp" to message.timestamp.toString()
+                    ) + message.metadata
                 )
             }
 
             is AiRequest -> message
             is String -> AiRequest(
-                prompt = message,
+                query = message,
                 type = AiRequestType.TEXT,
-                context = buildJsonObject {
-                    put("source", "agent_mediation")
-                }
+                context = mapOf("source" to "agent_mediation")
             )
 
             else -> {
                 Timber.w("Unknown message type: ${message.javaClass.simpleName}, converting to string")
                 AiRequest(
-                    prompt = message.toString(),
+                    query = message.toString(),
                     type = AiRequestType.TEXT,
-                    context = buildJsonObject {
-                        put("source", "agent_mediation")
-                        put("originalType", message.javaClass.simpleName)
-                    }
+                    context = mapOf(
+                        "source" to "agent_mediation",
+                        "originalType" to message.javaClass.simpleName
+                    )
                 )
             }
         }
