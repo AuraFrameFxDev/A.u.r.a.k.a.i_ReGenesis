@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
-import dev.aurakai.auraframefx.domains.genesis.storage.FileMetadata
+import dev.aurakai.auraframefx.domains.genesis.models.*
+import dev.aurakai.auraframefx.domains.genesis.models.FileOperationResult as FileResult
 import java.io.File
 
 /**

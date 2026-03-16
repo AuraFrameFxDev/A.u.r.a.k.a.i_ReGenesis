@@ -217,14 +217,47 @@ enum class ConnectionStatus {
 }
 
 /**
+ * Represents Oracle Drive synchronisation configuration
+ */
+@Serializable
+data class SyncConfiguration(
+    val bucketName: String,
+    val localDirectory: String,
+    val syncIntervalMs: Long = 300000,
+    val autoSync: Boolean = true,
+    val forceSync: Boolean = false,
+    val filterPrefix: String? = null
+)
+
+/**
+ * Legacy compatibility model for Oracle Drive files
+ */
+@Serializable
+data class OracleDriveFile(
+    val name: String,
+    val size: Long,
+    val timeCreated: String
+)
+
+/**
  * File operation results
  */
 @Serializable
 sealed class FileOperationResult {
     @Serializable
-    data class Success(val message: String = "", val path: String = "", val bytesProcessed: Long = 0) : FileOperationResult()
+    data class Success(
+        val message: String = "",
+        val path: String = "",
+        val bytesProcessed: Long = 0,
+        val fileId: String? = null
+    ) : FileOperationResult()
+    
     @Serializable
-    data class Error(val message: String, val path: String? = null) : FileOperationResult()
+    data class Error(
+        val message: String,
+        val path: String? = null,
+        val errorCode: Int = 0
+    ) : FileOperationResult()
 }
 /**
  * Represents Oracle Drive permissions

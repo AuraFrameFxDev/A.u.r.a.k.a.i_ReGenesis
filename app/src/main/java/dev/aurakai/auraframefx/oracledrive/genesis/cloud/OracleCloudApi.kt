@@ -64,4 +64,35 @@ class OracleCloudApi @Inject constructor() {
             featuresEnabled = setOf("overlay", "system_access")
         )
     }
+
+    // --- File Operations for Repository ---
+
+    suspend fun listFiles(bucketName: String, prefix: String? = null): Response<OracleListFilesResponse> {
+        return Response.success(OracleListFilesResponse(objects = emptyList()))
+    }
+
+    suspend fun uploadFile(bucketName: String, objectName: String, body: RequestBody): Response<Void> {
+        return Response.success(null)
+    }
+
+    suspend fun downloadFile(bucketName: String, objectName: String): Response<ResponseBody> {
+        return Response.error(404, ResponseBody.create(null, "Not found in stub"))
+    }
+
+    suspend fun deleteFile(bucketName: String, objectName: String): Response<Void> {
+        return Response.success(null)
+    }
+}
+
+/**
+ * Data model for Oracle Cloud list files response
+ */
+data class OracleListFilesResponse(
+    val objects: List<ObjectInfo>
+) {
+    data class ObjectInfo(
+        val name: String,
+        val size: Long,
+        val timeCreated: String
+    )
 }
