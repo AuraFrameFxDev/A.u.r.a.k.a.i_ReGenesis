@@ -112,3 +112,9 @@ class SpelhookSpriteGenerator @Inject constructor(
     }
 }
 
+private fun AuraFxLogger.logInfo(
+    string: String,
+    string2: String
+) {
+    TODO("Not yet implemented")
+}
