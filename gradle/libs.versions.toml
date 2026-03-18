@@ -87,7 +87,7 @@ kotlinxCoroutinesTest = "1.10.2"
 turbine = "1.1.0"
 kotlin-compose = "1.82"
 junitJupiterParams = "6.0.2"
-junitJupiterEngine = "6.0.2"
+junitJupiterEngine = "6.0.3"
 robolectric = "4.12.1"
 hiltAndroidTesting = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
 hiltAndroidCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
