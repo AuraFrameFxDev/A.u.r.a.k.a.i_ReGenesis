@@ -112,6 +112,13 @@ class SpelhookSpriteGenerator @Inject constructor(
     }
 }
 
+private fun AuraFxLogger.logError(
+    string: String,
+    string2: String,
+    e: Exception
+) {
+}
+
 private fun AuraFxLogger.logInfo(
     string: String,
     string2: String
