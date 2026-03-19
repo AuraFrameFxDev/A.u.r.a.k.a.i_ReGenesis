@@ -209,7 +209,7 @@ fun KaiShieldNodeMap(neonGreen: Color) {
         )
 
         // 2. INNER RING (6 Nodes) - Active/Unlocked
-        val innerDistance = 90.dp
+        90.dp
         for (i in 0 until 6) {
             val angleDeg = i * 60f
             val rad = Math.toRadians(angleDeg.toDouble())
@@ -228,7 +228,7 @@ fun KaiShieldNodeMap(neonGreen: Color) {
         }
 
         // 3. OUTER RING (6 'Lock' Nodes) - Perimeter
-        val outerDistance = 160.dp
+        160.dp
         for (i in 0 until 6) {
             val angleDeg = i * 60f
             val rad = Math.toRadians(angleDeg.toDouble())

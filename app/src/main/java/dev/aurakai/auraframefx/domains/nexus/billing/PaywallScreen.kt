@@ -40,9 +40,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
-private val NeonBlue = androidx.compose.ui.graphics.Color(0xFF00E5FF)
-private val NeonCyan = androidx.compose.ui.graphics.Color(0xFF00FFFF)
-private val NeonPurple = androidx.compose.ui.graphics.Color(0xFFD500F9)
+private val NeonBlue = Color(0xFF00E5FF)
+private val NeonCyan = Color(0xFF00FFFF)
+private val NeonPurple = Color(0xFFD500F9)
 
 /**
  * Paywall Screen - Shown when trial expires

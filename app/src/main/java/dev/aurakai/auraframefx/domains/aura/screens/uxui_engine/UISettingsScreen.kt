@@ -56,7 +56,7 @@ fun UISettingsScreen(
     val isBottomNavVisible = state.isBottomNavVisible
     val isGlowEffectsEnabled = state.isGlowEffectsEnabled
     val isPixelArtEnabled = state.isPixelArtEnabled
-    val isDarkMode = state.isDarkMode
+    state.isDarkMode
 
     Scaffold(
         topBar = {

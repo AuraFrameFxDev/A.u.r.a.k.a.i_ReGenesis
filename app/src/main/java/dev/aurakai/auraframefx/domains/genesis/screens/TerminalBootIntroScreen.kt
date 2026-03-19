@@ -208,7 +208,7 @@ fun TerminalBootIntroScreen(onComplete: () -> Unit) {
         val screenH   = with(density) { maxHeight.toPx() }
         val colW      = with(density) { 16.dp.toPx() }
         val pixSize   = with(density) { 7.dp.toPx() }
-        val charSize  = with(density) { 13.sp.toPx() }
+        with(density) { 13.sp.toPx() }
 
         // Matrix columns — stable per screen width
         val columns = remember(screenW) {

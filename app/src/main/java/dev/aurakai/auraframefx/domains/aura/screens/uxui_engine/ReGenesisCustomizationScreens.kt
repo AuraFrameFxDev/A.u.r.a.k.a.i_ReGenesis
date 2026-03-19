@@ -867,7 +867,6 @@ fun PixelLauncherEnhancedScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var config by remember { mutableStateOf(PixelLauncherEnhancedConfig()) }
 
     Box(
         modifier = modifier

@@ -311,7 +311,7 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.IntroSequence.route) {
             // TODO: Add ReGenesisIntroAnimation glitch effect before IntroScreen
-            dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen(
+            IntroScreen(
                 onIntroComplete = {
                     navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
                         popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
@@ -943,7 +943,7 @@ fun ReGenesisNavHost(
 
         composable(ReGenesisNavHost.CollabCanvas.route) {
             // Figma-style multi-user creation canvas — build alongside Aura
-            collabcanvas.ui.CanvasScreen(
+            CanvasScreen(
                 onBack = { navController.popBackStack() },
                 isCollaborative = true,
                 collaborationEvents = null // TODO: Wire to WebSocket collaboration events

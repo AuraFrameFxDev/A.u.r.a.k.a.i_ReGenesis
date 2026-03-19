@@ -421,7 +421,7 @@ private fun FuseButton(colorA: Color, colorB: Color, onClick: () -> Unit) {
 @Composable
 private fun FusionResultCard(agentA: FusionAgent, agentB: FusionAgent) {
     val fusionName = "${agentA.name.take(3)}${agentB.name.takeLast(3)}"
-    val fusionColor = Brush.horizontalGradient(listOf(agentA.color, agentB.color))
+    Brush.horizontalGradient(listOf(agentA.color, agentB.color))
 
     Card(
         modifier = Modifier
