@@ -90,6 +90,54 @@ object GateConfigs {
             pixelArtResId = R.drawable.gatescenes_nexus_agent_main,
         ),
 
+        // ── 🌀 CASCADE HUB: "Dataflow Analysis" ────────────────────────
+        // Cyan (#00FFFF) and Teal (#008080)
+        GateConfig(
+            id = "gate_cascade",
+            moduleId = "gate_cascade",
+            title = "CASCADE HUB",
+            subtitle = "Dataflow Analysis",
+            description = "Trinity • DataVein • Sphere Grid",
+            route = ReGenesisNavHost.DataflowAnalysis.route,
+            glowColor = Color(0xFF00FFFF),
+            gradientColors = listOf(Color(0xFF00FFFF), Color(0xFF008080)),
+            pixelArtUrl = null,
+            borderColor = Color(0xFF00FFFF),
+            pixelArtResId = null, // TODO: Add Cascade asset
+        ),
+
+        // ── 🛠️ LSPOSED: "Quick Toggles" ───────────────────────────────
+        // Orange (#FFA500) and Red (#FF4500)
+        GateConfig(
+            id = "gate_lsposed",
+            moduleId = "gate_lsposed",
+            title = "LSPOSED",
+            subtitle = "Quick Toggles",
+            description = "Hook Manager • Sandbox • Modules",
+            route = ReGenesisNavHost.LsposedQuickToggles.route,
+            glowColor = Color(0xFFFFA500),
+            gradientColors = listOf(Color(0xFFFFA500), Color(0xFFFF4500)),
+            pixelArtUrl = null,
+            borderColor = Color(0xFFFFA500),
+            pixelArtResId = null, // TODO: Add LSPosed asset
+        ),
+
+        // ── 🚀 LDO CATALYST: "Development" ────────────────────────────
+        // Gold (#FFD700) and White (#FFFFFF)
+        GateConfig(
+            id = "gate_ldo",
+            moduleId = "gate_ldo",
+            title = "LDO CATALYST",
+            subtitle = "Development Hub",
+            description = "Orchestration • Armament Fusion • Profiles",
+            route = ReGenesisNavHost.LdoCatalystDevelopment.route,
+            glowColor = Color(0xFFFFD700),
+            gradientColors = listOf(Color(0xFFFFD700), Color(0xFFFFFFFF)),
+            pixelArtUrl = null,
+            borderColor = Color(0xFFFFD700),
+            pixelArtResId = null, // TODO: Add LDO asset
+        ),
+
         // ── 📚 HELP SERVICES: "The Ethereal Library" ───────────────────
         // White (#FFFFFF) and Deep Cyan (#008080)
         GateConfig(

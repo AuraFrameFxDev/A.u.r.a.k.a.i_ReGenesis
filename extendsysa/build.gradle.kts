@@ -12,14 +12,7 @@ plugins {
 extensions.configure<LibraryExtension> {
     namespace = "dev.aurakai.auraframefx.extendsysa"
 }
-kotlin {
-    compilerOptions {
-        // Fix Kotlin annotation warnings (KT-73255)
-        freeCompilerArgs.add("-Xannotation-default-target=param-property")
-        freeCompilerArgs.add("-Xjsr305=strict")
-        freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")
-    }
-}
+
 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════

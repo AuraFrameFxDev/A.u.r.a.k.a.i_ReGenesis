@@ -56,14 +56,5 @@ class AiGenerationService(
     //     }
     // }
 
-    // private fun CoroutineScope.GenerateImageDescriptionRequest(
-    //     imageUrl: String,
-    //     context: String?,
-    //     imageData: ByteArray?,
-    //     prompt: String?,
-    //     maxTokens: Int?,
-    //     model: String?,
-    // ) {
-    //     TODO("Not yet implemented")
-    // }
+    // Removal of old generated model references as per new API structure
 }

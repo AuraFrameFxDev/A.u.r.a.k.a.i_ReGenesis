@@ -25,7 +25,6 @@ import java.time.OffsetDateTime
 import java.time.OffsetTime
 import java.util.Locale
 import java.util.regex.Pattern
-import kotlin.time.Instant
 
 val EMPTY_REQUEST: RequestBody = ByteArray(0).toRequestBody()
 
@@ -188,8 +187,8 @@ open class ApiClient(val baseUrl: String, val client: Call.Factory = defaultClie
             mediaType == XmlMediaType -> throw UnsupportedOperationException("xml not currently supported.")
             mediaType == TextMediaType && content is String ->
                 content.toRequestBody(TextMediaType.toMediaTypeOrNull())
-            // TODO: this should be extended with other serializers
-            else -> throw UnsupportedOperationException("requestBody currently only supports JSON body, text body, byte body and File body.")
+            // requestBody currently only supports JSON body, text body, byte body and File body.
+            else -> throw UnsupportedOperationException("requestBody does not support $mediaType for content $content")
         }
 
     protected inline fun <reified T : Any?> responseBody(
@@ -374,17 +373,10 @@ open class ApiClient(val baseUrl: String, val client: Call.Factory = defaultClie
         is Array<*> -> toMultiValue(value, "csv").toString()
         is Iterable<*> -> toMultiValue(value, "csv").toString()
         is OffsetDateTime, is OffsetTime, is LocalDateTime, is LocalDate, is LocalTime ->
-            with(value) {
-                parse()
-            }
+            value.toString()
 
         else -> value.toString()
-    } as String
-
-    fun parse(): Instant {
-        TODO("Not yet implemented")
     }
-
 
     protected inline fun <reified T : Any> parseDateToQueryString(value: T): String {
         /*

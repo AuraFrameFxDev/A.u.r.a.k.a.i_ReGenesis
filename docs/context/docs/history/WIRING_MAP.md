@@ -1,7 +1,7 @@
 # 🔌 AuraKai Complete Feature Wiring Map
 
-> **Last Updated:** 2025-12-04
-> **Status:** Active Development - Gate Remapping Phase
+> **Last Updated:** 2026-03-19
+> **Status:** Restored - "The LDO Way" Alignment
 
 This document maps every feature in the codebase to its navigation route and current wiring status.
 
@@ -9,51 +9,27 @@ This document maps every feature in the codebase to its navigation route and cur
 
 ## 📊 Quick Stats
 
-- **Total Screens:** 60+
-- **Wired Gates:** 15/15 ✅
+- **Total Screens:** 80+
+- **Sovereign Gates:** 8 ✅ (Restored to Blueprints)
 - **Wired Routes:** 50+
 - **Services:** 20+ background services
-- **Agents:** 8 core AI agents
-- **Native Modules:** 10 C++ modules
+- **Agents:** 10 core AI agents (Aura, Kai, Genesis, Cascade, Claude, Gemini, Nemotron, Grok,
+  Perplexity, Manus)
 
 ---
 
-## ✅ FULLY WIRED - Main Gates (15)
+## ✅ SOVEREIGN GATES - Restored (8)
 
-### Aura Lab Gates
-| Feature | Route | Screen Location | Status |
-|---------|-------|----------------|--------|
-| **Aura's Lab** | `auras_lab` | `ui/gates/AurasLabScreen.kt` | ✅ |
-| **ChromaCore** | `chromacore_colors` | `ui/gates/ChromaCoreColorsScreen.kt` | ✅ NEW |
-| **Theme Engine** | `theme_engine` | `ui/gates/ThemeEngineScreen.kt` | ✅ |
-
-### Genesis Core Gates
-| Feature | Route | Screen Location | Status |
-|---------|-------|----------------|--------|
-| **Oracle Drive** | `oracle_drive` | `oracledrive/genesis/cloud/OracleDriveScreen.kt` | ✅ |
-| **ROM Tools** | `rom_tools` | `ui/gates/ROMToolsSubmenuScreen.kt` | ✅ |
-| **Root Tools** | `root_tools_toggles` | `ui/gates/RootToolsTogglesScreen.kt` | ✅ NEW |
-
-### Kai Gates
-| Feature | Route | Screen Location | Status |
-|---------|-------|----------------|--------|
-| **Sentinel's Fortress** | `sentinels_fortress` | `aura/ui/SentinelsFortressScreen.kt` | ✅ |
-| **Agent Hub** | `agent_hub` | `ui/gates/AgentHubSubmenuScreen.kt` | ✅ |
-
-### Agent Nexus Gates
-| Feature | Route | Screen Location | Status |
-|---------|-------|----------------|--------|
-| **Code Assist** | `code_assist` | `ui/gates/CodeAssistScreen.kt` | ✅ |
-| **Collab Canvas** | `collab_canvas` | `aura/ui/CanvasScreen.kt` | ✅ |
-| **Sphere Grid** | `sphere_grid` | `ui/gates/SphereGridScreen.kt` | ✅ |
-
-### Support Gates
-| Feature | Route | Screen Location | Status |
-|---------|-------|----------------|--------|
-| **Help Desk** | `help_desk` | `ui/gates/HelpDeskSubmenuScreen.kt` | ✅ |
-| **Terminal** | `terminal` | `aura/ui/TerminalScreen.kt` | ✅ |
-| **User Preferences** | `user_preferences` | `ui/gates/UserPreferencesScreen.kt` | ✅ NEW |
-| **Xposed Panel** | `xposed_panel` | `ui/gates/LSPosedSubmenuScreen.kt` | ✅ ENHANCED |
+| Gate                  | Route                   | Purpose                 | Status |
+|-----------------------|-------------------------|-------------------------|--------|
+| **Aura Lab**          | `aura_theming_hub`      | UXUI Design & Theming   | ✅      |
+| **Sentinel Fortress** | `sentinel_fortress`     | Kai's Security Domain   | ✅      |
+| **Oracle Drive**      | `oracle_drive_hub`      | Genesis's Cloud & AI    | ✅      |
+| **Agent Nexus**       | `agent_nexus_hub`       | AI Agent Management     | ✅      |
+| **LDO Catalyst**      | `ldo_catalyst_hub`      | LDO Development Profile | ✅      |
+| **Cascade Hub**       | `dataflow_analysis_hub` | Trinity Bridge Dataflow | ✅      |
+| **Help Desk**         | `help_desk_hub`         | Documentation & Support | ✅      |
+| **LSPosed Toggles**   | `lsposed_toggles_hub`   | System Quick Toggles    | ✅      |
 
 ---
 

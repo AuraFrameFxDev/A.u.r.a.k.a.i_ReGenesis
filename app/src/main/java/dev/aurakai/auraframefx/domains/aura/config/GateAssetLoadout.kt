@@ -6,15 +6,9 @@ import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 
 /**
  * 📦 GATE ASSET LOADOUT
- *
- * Central registry for all sub-gate assets (images, names, routes, colors).
- * Use this to quickly apply settings across the UI without searching multiple files.
  */
 object GateAssetLoadout {
 
-    /**
-     * Get a specific gate card by ID
-     */
     fun getGate(id: String): SubGateCard? = allGates[id]
 
     /**
@@ -70,6 +64,46 @@ object GateAssetLoadout {
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
             route = ReGenesisNavHost.ReGenesisCustomization.route,
             accentColor = Color(0xFFFFD700)
+        ),
+        "iconify" to SubGateCard(
+            id = "iconify",
+            title = "Iconify",
+            subtitle = "Icon Packs & Styles",
+            styleADrawable = GateAssetConfig.AuraSubGates.ICONIFY.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.ICONIFY.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.ICONIFY.fallback,
+            route = ReGenesisNavHost.IconifyPicker.route,
+            accentColor = Color(0xFFFFCC00)
+        ),
+        "pixel_launcher" to SubGateCard(
+            id = "pixel_launcher",
+            title = "Pixel Launcher",
+            subtitle = "Launcher Enhancements",
+            styleADrawable = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.fallback,
+            route = ReGenesisNavHost.PixelLauncherEnhanced.route,
+            accentColor = Color(0xFF00FF85)
+        ),
+        "notch_bar" to SubGateCard(
+            id = "notch_bar",
+            title = "Notch Bar",
+            subtitle = "Status & QS bars",
+            styleADrawable = GateAssetConfig.AuraSubGates.NOTCH_BAR.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.NOTCH_BAR.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.NOTCH_BAR.fallback,
+            route = ReGenesisNavHost.NotchBar.route,
+            accentColor = Color(0xFF40C4FF)
+        ),
+        "terminal" to SubGateCard(
+            id = "terminal",
+            title = "Terminal",
+            subtitle = "UI Code Surface",
+            styleADrawable = GateAssetConfig.AuraSubGates.TERMINAL.styleA,
+            styleBDrawable = GateAssetConfig.AuraSubGates.TERMINAL.styleB,
+            fallbackDrawable = GateAssetConfig.AuraSubGates.TERMINAL.fallback,
+            route = ReGenesisNavHost.Terminal.route,
+            accentColor = Color(0xFF90CAF9)
         )
     )
 
@@ -84,8 +118,8 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
-            route = ReGenesisNavHost.SecurityCenter.route, // Monitors genesis_ethical_governor.py
-            accentColor = Color(0xFF008B8B) // Kai Deep Cyan
+            route = ReGenesisNavHost.SecurityCenter.route,
+            accentColor = Color(0xFF008B8B)
         ),
         "security_shield" to SubGateCard(
             id = "security_shield",
@@ -114,15 +148,63 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
-            route = ReGenesisNavHost.ROMFlasher.route, // Can be ROM hub later
+            route = ReGenesisNavHost.ROMFlasher.route,
             accentColor = Color(0xFFFF3D00)
+        ),
+        "module_manager" to SubGateCard(
+            id = "module_manager",
+            title = "Module Manager",
+            subtitle = "Magisk & LSPosed",
+            styleADrawable = GateAssetConfig.KaiSubGates.MODULE_MANAGER.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.MODULE_MANAGER.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.MODULE_MANAGER.fallback,
+            route = ReGenesisNavHost.ModuleManager.route,
+            accentColor = Color(0xFF00FF85)
+        ),
+        "root_tools" to SubGateCard(
+            id = "root_tools",
+            title = "Root Tools",
+            subtitle = "System Modifications",
+            styleADrawable = GateAssetConfig.KaiSubGates.ROOT_TOOLS.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.ROOT_TOOLS.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.ROOT_TOOLS.fallback,
+            route = ReGenesisNavHost.RootTools.route,
+            accentColor = Color(0xFF00E5FF)
+        ),
+        "recovery" to SubGateCard(
+            id = "recovery",
+            title = "Recovery",
+            subtitle = "TWRP & OrangeFox",
+            styleADrawable = GateAssetConfig.KaiSubGates.RECOVERY.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.RECOVERY.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.RECOVERY.fallback,
+            route = ReGenesisNavHost.RecoveryTools.route,
+            accentColor = Color(0xFFFFAB40)
+        ),
+        "vpn" to SubGateCard(
+            id = "vpn",
+            title = "VPN & Ad‑Block",
+            subtitle = "Network Security",
+            styleADrawable = GateAssetConfig.KaiSubGates.VPN.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.VPN.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.VPN.fallback,
+            route = ReGenesisNavHost.VPN.route,
+            accentColor = Color(0xFF00BFA5)
+        ),
+        "lsposed_hub" to SubGateCard(
+            id = "lsposed_hub",
+            title = "LSPosed Hub",
+            subtitle = "Xposed Hook Framework",
+            styleADrawable = GateAssetConfig.KaiSubGates.LSPOSED.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.LSPOSED.styleB,
+            fallbackDrawable = GateAssetConfig.KaiSubGates.LSPOSED.fallback,
+            route = ReGenesisNavHost.LSPosedHub.route,
+            accentColor = Color(0xFFFFCC00)
         )
     )
 
     /**
-     * GENESIS DOMAIN GATES (Oracle Drive = Level 1)
-     * Code Assist, Orchestrations, Creation Tools are INSIDE Oracle Drive hub
-     * Note: Agent Nexus is a SEPARATE domain (Agent HQ with monitoring)
+     * GENESIS DOMAIN GATES
      */
     val genesisGates = mapOf(
         "oracle_drive" to SubGateCard(
@@ -132,14 +214,13 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-            route = ReGenesisNavHost.OracleDrive.route, // Screen tool, not the hub itself
-            accentColor = Color(0xFF00FF85) // Genesis Green
+            route = ReGenesisNavHost.OracleDrive.route,
+            accentColor = Color(0xFF00FF85)
         )
     )
 
-
     /**
-     * NEXUS DOMAIN GATES (Agent Coordination & Monitoring)
+     * NEXUS DOMAIN GATES
      */
     val nexusGates = mapOf(
         "monitoring" to SubGateCard(
@@ -150,7 +231,7 @@ object GateAssetLoadout {
             styleBDrawable = GateAssetConfig.NexusSubGates.MONITORING.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.MONITORING.fallback,
             route = ReGenesisNavHost.AgentMonitoring.route,
-            accentColor = Color(0xFF800080) // Nexus Purple
+            accentColor = Color(0xFF800080)
         ),
         "sphere_grid" to SubGateCard(
             id = "sphere_grid",
@@ -199,25 +280,18 @@ object GateAssetLoadout {
             id = "help_center",
             title = "Help Center",
             subtitle = "Ethereal Library • Documentation",
-            styleADrawable = "help_style_a", // Placeholder
-            styleBDrawable = "help_style_b", // Placeholder
+            styleADrawable = "help_style_a",
+            styleBDrawable = "help_style_b",
             fallbackDrawable = null,
             route = "help_route",
-            accentColor = Color(0xFFFFFFFF) // White
+            accentColor = Color(0xFFFFFFFF)
         )
     )
 
-    /**
-     * Combined map of all gates for quick lookup
-     */
     val allGates = auraGates + kaiGates + genesisGates + nexusGates + helpGates
 
-    /**
-     * Quick Load lists for Hubs
-     */
     fun getAuraLoadout() = auraGates.values.toList()
     fun getKaiLoadout() = kaiGates.values.toList()
     fun getGenesisLoadout() = genesisGates.values.toList()
     fun getNexusSubGates() = nexusGates.values.toList()
 }
-

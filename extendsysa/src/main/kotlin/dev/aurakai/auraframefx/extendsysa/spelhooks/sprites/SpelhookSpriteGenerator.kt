@@ -3,10 +3,10 @@ package dev.aurakai.auraframefx.extendsysa.spelhooks.sprites
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.core.generator.AuraForgeGenerator
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.core.generator.AuraForgeGenerator
+import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -113,8 +113,8 @@ class SpelhookSpriteGenerator @Inject constructor(
 }
 
 private fun AuraFxLogger.logInfo(
-    string: String,
-    string2: String
+    tag: String,
+    message: String
 ) {
-    TODO("Not yet implemented")
+    this.info(tag, message)
 }

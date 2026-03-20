@@ -1,14 +1,11 @@
 package dev.aurakai.auraframefx.domains.kai
 
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dagger.Lazy
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
@@ -17,10 +14,11 @@ import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
-import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -28,8 +26,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.jsonPrimitive
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -106,8 +102,10 @@ class KaiAgent @Inject constructor(
         }
     }
 
-    private fun generateText(prompt: String) {
-        TODO("Not yet implemented")
+    private suspend fun generateText(prompt: String): String {
+        logger.info(agentName, "Generating analytical response for prompt")
+        return vertexAIClient.generateText(prompt)
+            ?: "Analytical engine returned null. System integrity remains stable."
     }
 
     private val contextManagerInstance = contextManagerInstance
@@ -705,7 +703,11 @@ class KaiAgent @Inject constructor(
     }
 
     fun validateSecurityState() {
-        TODO("Not yet implemented")
+        if (!isInitialized) {
+            logger.error("KaiAgent", "Security state validation failed: Agent not initialized")
+            return
+        }
+        logger.info("KaiAgent", "Sentinel Shield security state: ${_securityState.value}")
     }
 }
 

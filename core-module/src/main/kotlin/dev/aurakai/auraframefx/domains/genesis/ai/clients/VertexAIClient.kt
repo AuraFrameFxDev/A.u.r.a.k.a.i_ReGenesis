@@ -10,6 +10,8 @@ interface VertexAIClient {
     suspend fun analyzeContent(content: String): Map<String, Any>
     suspend fun initializeCreativeModels()
     suspend fun analyzeImage(imageData: ByteArray, prompt: String): String
+    suspend fun initialize()
+    suspend fun cleanup()
 }
 
 /**
@@ -57,5 +59,13 @@ class DefaultVertexAIClient : VertexAIClient {
 
     override suspend fun analyzeImage(imageData: ByteArray, prompt: String): String {
         return "Mock image analysis: Image appears to contain ${imageData.size} bytes of data. $prompt"
+    }
+
+    override suspend fun initialize() {
+        // Stub: No-op for mock client
+    }
+
+    override suspend fun cleanup() {
+        // Stub: No-op for mock client
     }
 }

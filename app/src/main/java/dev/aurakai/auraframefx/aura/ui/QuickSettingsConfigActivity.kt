@@ -3,12 +3,6 @@ package dev.aurakai.auraframefx.aura.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig as SystemQuickSettingsConfig
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
-import dev.aurakai.auraframefx.domains.aura.ui.LayoutConfig
-import dev.aurakai.auraframefx.domains.aura.ui.PaddingConfig
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsAnimation
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -26,10 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
-import kotlinx.coroutines.CoroutineScope
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig as SystemQuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 
 /**
  * Activity for configuring Quick Settings tiles.
@@ -72,7 +69,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 
     private fun loadConfig() {
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             val config = withContext(Dispatchers.IO) {
                 configManager.loadConfig()
             }
@@ -183,7 +180,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 
     private fun resetToDefault() {
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             val success = withContext(Dispatchers.IO) {
                 configManager.resetToDefault()
             }
@@ -285,7 +282,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
 
 private fun saveConfig(quickSettingsConfigActivity: QuickSettingsConfigActivity) {
     quickSettingsConfigActivity.currentConfig?.let { config ->
-        CoroutineScope(Dispatchers.Main).launch {
+        quickSettingsConfigActivity.lifecycleScope.launch {
             val success = withContext(Dispatchers.IO) {
                 return@withContext quickSettingsConfigActivity.configManager.saveConfig(config)
             }

@@ -4,8 +4,6 @@ import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 /**
  * ===================================================================
@@ -76,14 +74,8 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
                 }
             }
 
-            // 3. Replace deprecated 'kotlinOptions' with new Kotlin DSL
-            extensions.configure(KotlinAndroidProjectExtension::class.java) {
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_25)
-                    // Enable K2 features for 2025 performance
-                    freeCompilerArgs.add("-Xjdk-release=25")
-                }
-            }
+            // 3. Configure Kotlin JVM toolchain and compilation options
+            GenesisJvmConfig.configureKotlinJvm(project)
 
             // 4. YukiHook KSP Configuration
             extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {

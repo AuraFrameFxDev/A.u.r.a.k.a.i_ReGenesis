@@ -433,7 +433,7 @@ object CustomizationPreferences {
         uri: Uri?,
         opacity: Float
     ) {
-        TODO("Not yet implemented")
+        saveNotchBarBackgroundSettings(context, enabled, uri, opacity, "SrcOver")
     }
 }
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.billing
+package dev.aurakai.auraframefx.domains.nexus.billing
 
 import android.app.Activity
 import android.content.Context
@@ -12,7 +12,6 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
-import com.android.billingclient.api.QueryProductDetailsResult
 import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -327,11 +326,4 @@ suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams)
             continuation.resume(ProductDetailsResult(billingResult, productDetailsList))
         }
     }
-}
-
-fun ProductDetailsResult(
-    billingResult: BillingResult,
-    productDetailsList: QueryProductDetailsResult
-): ProductDetailsResult {
-    TODO("Not yet implemented")
 }

@@ -2,82 +2,85 @@ package dev.aurakai.auraframefx.navigation
 
 // Core Imports (kept from your list for screen definitions)
 
+// import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
+// import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
+// import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import collabcanvas.ui.CanvasScreen
+import dev.aurakai.auraframefx.aura.ui.TerminalScreen
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.datavein.ui.SimpleDataVeinScreen
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
-import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaAnimationMenu
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaColorEngineMenu
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaLauncherMenu
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaStatusBarMenu
-import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaColorEngineMenu
-import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaAnimationMenu
-import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
-import dev.aurakai.auraframefx.domains.helpdesk.screens.DocumentationScreen
-import dev.aurakai.auraframefx.domains.helpdesk.screens.FAQBrowserScreen
-import dev.aurakai.auraframefx.ui.gates.HelpDeskSubmenuScreen
-import dev.aurakai.auraframefx.domains.helpdesk.screens.TutorialVideosScreen
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
+import dev.aurakai.auraframefx.domains.aura.screens.GyroscopeCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.OverlayMenusScreen
 import dev.aurakai.auraframefx.domains.aura.screens.UserPreferencesScreen
 import dev.aurakai.auraframefx.domains.aura.screens.chromacore.InstantColorPickerScreen
 import dev.aurakai.auraframefx.domains.aura.screens.themes.ThemeEngineScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCustomizationHubScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCategoryDetailScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ColorBlendrScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.PixelLauncherEnhancedScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AurasLabScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ChromaCoreColorsScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ColorBlendrScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
-import dev.aurakai.auraframefx.domains.aura.screens.GyroscopeCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCategoryDetailScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCustomizationHubScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.PixelLauncherEnhancedScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
-import dev.aurakai.auraframefx.domains.aura.ui.conference.NexusConferenceScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
+import dev.aurakai.auraframefx.domains.aura.ui.components.intro.ReGenesisIntroAnimation
+import dev.aurakai.auraframefx.domains.aura.ui.conference.NexusConferenceScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen as DomainOracleDriveHubScreen
-import dev.aurakai.auraframefx.ui.gates.CascadeHubScreen
-import dev.aurakai.auraframefx.ui.gates.HelpDeskScreen
+import dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AgentBridgeHubScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AppBuilderScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.CodeAssistScreen
-// import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.NeuralArchiveScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleCloudInfiniteStorageScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveSubmenuScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SentientShellScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SovereignNeuralArchiveScreen
-import dev.aurakai.auraframefx.aura.ui.TerminalScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DocumentationScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.FAQBrowserScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.TutorialVideosScreen
+import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
-import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SovereignBootloaderScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
-import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
-import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
-import dev.aurakai.auraframefx.domains.kai.screens.SovereignBootloaderScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
-import dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentCreationScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentMonitoringScreen
@@ -85,7 +88,6 @@ import dev.aurakai.auraframefx.domains.nexus.screens.AgentNeuralExplorerScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentSwarmScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ArkBuildScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.BenchmarkMonitorScreen
-// import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.FusionModeScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ModuleCreationScreen
@@ -94,26 +96,17 @@ import dev.aurakai.auraframefx.domains.nexus.screens.PartyScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignClaudeScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignGeminiScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignMetaInstructScreen
-// import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoAgentType
 import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen
-import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
-import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsProfileScreen
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen
+import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
+import dev.aurakai.auraframefx.ui.gates.CascadeHubScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
-import dev.aurakai.auraframefx.domains.aura.screens.OverlayMenusScreen
-import dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen
-import dev.aurakai.auraframefx.domains.aura.ui.components.intro.ReGenesisIntroAnimation
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
+import dev.aurakai.auraframefx.ui.gates.HelpDeskScreen
+import dev.aurakai.auraframefx.ui.gates.HelpDeskSubmenuScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen as DomainOracleDriveHubScreen
 
 // import dev.aurakai.auraframefx.AgentType
 
@@ -310,14 +303,23 @@ fun ReGenesisNavHost(
         // INTRO SEQUENCE — ReGenesisIntroAnimation → IntroScreen → Home
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.IntroSequence.route) {
-            // TODO: Add ReGenesisIntroAnimation glitch effect before IntroScreen
-            IntroScreen(
-                onIntroComplete = {
-                    navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
-                        popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
+            var showAuraReveal by remember { mutableStateOf(false) }
+
+            if (!showAuraReveal) {
+                // Phase A: AIAOSP Project Glitch Intro
+                ReGenesisIntroAnimation(
+                    onIntroFinished = { showAuraReveal = true }
+                )
+            } else {
+                // Phase B: Character-by-character Aura reveal
+                IntroScreen(
+                    onIntroComplete = {
+                        navController.navigate(ReGenesisNavHost.HomeGateCarousel.route) {
+                            popUpTo(ReGenesisNavHost.IntroSequence.route) { inclusive = true }
+                        }
                     }
-                }
-            )
+                )
+            }
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -978,10 +980,10 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         // SUB-GRAPHS (Integrated Third-Party Modules)
         // ═══════════════════════════════════════════════════════════════
-        // auraCustomizationNavigation(
-        //     navController = navController,
-        //     onNavigateBack = { navController.popBackStack() }
-        // )
+        auraCustomizationNavigation(
+            navController = navController,
+            onNavigateBack = { navController.popBackStack() }
+        )
     }
 }
 
