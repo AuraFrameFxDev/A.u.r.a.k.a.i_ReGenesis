@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import android.app.Activity
 import android.content.Context
@@ -20,8 +20,16 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
+<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/aura/ui/QuickSettingsConfigActivity.kt
+import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfigManager
+import dev.aurakai.auraframefx.ui.QuickSettingsBackground
+import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig as SystemQuickSettingsConfig
+import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
+import androidx.lifecycle.lifecycleScope
+=======
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
 import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
+>>>>>>> regenesis_dev/Launch:app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -280,11 +288,17 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 }
 
+<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/aura/ui/QuickSettingsConfigActivity.kt
+private fun saveConfig(activity: QuickSettingsConfigActivity) {
+    activity.currentConfig?.let { config ->
+        activity.lifecycleScope.launch {
+=======
 private fun saveConfig(quickSettingsConfigActivity: QuickSettingsConfigActivity) {
     quickSettingsConfigActivity.currentConfig?.let { config ->
         quickSettingsConfigActivity.lifecycleScope.launch {
+>>>>>>> regenesis_dev/Launch:app/src/main/java/dev/aurakai/auraframefx/aura/ui/QuickSettingsConfigActivity.kt
             val success = withContext(Dispatchers.IO) {
-                return@withContext quickSettingsConfigActivity.configManager.saveConfig(config)
+                return@withContext activity.configManager.saveConfig(config)
             }
 
             if (success) {

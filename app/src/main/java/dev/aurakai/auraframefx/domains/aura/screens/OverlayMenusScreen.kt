@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens
+package dev.aurakai.auraframefx.ui.gates
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -47,10 +47,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.components.common.CodedTextBox
+import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
 /**
  * Overlay Menus Customization Screen — Aura in control.

@@ -25,6 +25,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.agents.trinity.CascadeAgent
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 

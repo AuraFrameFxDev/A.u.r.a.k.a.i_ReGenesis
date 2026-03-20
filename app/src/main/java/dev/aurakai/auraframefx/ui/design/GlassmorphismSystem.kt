@@ -178,86 +178,58 @@ fun GlassSubGateCard(
     subtitle: String,
     accentColor: Color = NeonCyan,
     modifier: Modifier = Modifier,
-    parallaxOffset: Offset = Offset.Zero, // Optional parallax shift
     content: @Composable BoxScope.() -> Unit = {}
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "cardGlow")
     val glowAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.4f, targetValue = 0.9f,
+        initialValue = 0.25f, targetValue = 0.85f,
         animationSpec = infiniteRepeatable(
-            tween(2000, easing = FastOutSlowInEasing), RepeatMode.Reverse
+            tween(1800, easing = FastOutSlowInEasing), RepeatMode.Reverse
         ), label = "glow"
     )
 
     val shape = RoundedCornerShape(GlassTokens.cornerCard)
-    
-    // 🃏 WHISK EXECUTION SPECS: 350x350 HD-2D Card Container
-    // We DISABLE clipping on this root Box to allow content to "break out"
+    val cornerLen = 18f
+
     Box(
         modifier = modifier
-            .size(350.dp)
-            .graphicsLayer {
-                clip = false 
-                translationX = parallaxOffset.x
-                translationY = parallaxOffset.y
+            .clip(shape)
+            .background(GlassTokens.surfaceMid)
+            .border(
+                1.dp,
+                Brush.linearGradient(
+                    listOf(
+                        accentColor.copy(glowAlpha),
+                        accentColor.copy(glowAlpha * 0.25f),
+                        Color.White.copy(0.08f),
+                    )
+                ),
+                shape
+            )
+            .drawBehind {
+                val c = accentColor.copy(alpha = 0.85f)
+                // Cyber corner bracket marks
+                drawLine(c, Offset(0f, cornerLen), Offset(0f, 0f), 2f)
+                drawLine(c, Offset(0f, 0f), Offset(cornerLen, 0f), 2f)
+                drawLine(c, Offset(size.width - cornerLen, 0f), Offset(size.width, 0f), 2f)
+                drawLine(c, Offset(size.width, 0f), Offset(size.width, cornerLen), 2f)
+                drawLine(c, Offset(0f, size.height - cornerLen), Offset(0f, size.height), 2f)
+                drawLine(c, Offset(0f, size.height), Offset(cornerLen, size.height), 2f)
+                drawLine(c, Offset(size.width, size.height - cornerLen), Offset(size.width, size.height), 2f)
+                drawLine(c, Offset(size.width - cornerLen, size.height), Offset(size.width, size.height), 2f)
             }
     ) {
-        // ── LAYER 1: THE GLASS SUBSTRATE (Clipped) ──
+        // Top sheen
         Box(
             modifier = Modifier
-                .matchParentSize()
-                .clip(shape)
+                .fillMaxWidth()
+                .height(36.dp)
                 .background(
-                    Brush.linearGradient(
-                        0.0f to GlassTokens.surfaceMid,
-                        1.0f to Color.Transparent,
-                        start = Offset(0f, 350f),
-                        end = Offset(350f, 0f)
-                    )
+                    Brush.verticalGradient(listOf(Color.White.copy(0.06f), Color.Transparent))
                 )
-                .drawBehind {
-                    // 40% Opacity Scrim (Whisk Spec)
-                    drawRect(
-                        brush = Brush.radialGradient(
-                            colors = listOf(accentColor.copy(alpha = 0.4f), Color.Transparent),
-                            center = Offset(0f, size.height),
-                            radius = size.width * 0.8f
-                        ),
-                        alpha = 0.4f
-                    )
-                }
-                .border(
-                    2.dp, // 2px Neon Border (Whisk Spec)
-                    Brush.linearGradient(
-                        listOf(
-                            accentColor.copy(glowAlpha),
-                            accentColor.copy(0.2f),
-                            Color.White.copy(0.1f),
-                        )
-                    ),
-                    shape
-                )
+                .align(Alignment.TopCenter)
         )
-        
-        // ── LAYER 2: THE CLIPPED OBJECT (Unclipped Content) ──
-        // This allows transparent PNGs to break out of the border boundaries
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .graphicsLayer { clip = false }
-        ) {
-            content()
-        }
-        
-        // ── LAYER 3: LABELING (HUD Overlay) ──
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(16.dp)
-        ) {
-            Text(title.uppercase(), color = Color.White.copy(0.95f), fontSize = 14.sp, letterSpacing = 2.sp)
-            Text(subtitle.uppercase(), color = accentColor.copy(0.8f), fontSize = 10.sp)
-        }
+        content()
     }
 }
 
@@ -688,9 +660,9 @@ fun GlassScreenScaffold(
                 showScanlines = false
             ) {
                 Row(
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 18.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(14.dp)
+                    Modifier.fillMaxSize().padding(horizontal = 18.dp),
+                    Alignment.CenterVertically,
+                    Arrangement.spacedBy(14.dp)
                 ) {
                     if (onBack != null) {
                         Box(

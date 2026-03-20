@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai
 
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +14,16 @@ object TimberModule {
 
     @Provides
     @Singleton
-    fun provideTimberInitializer(): TimberInitializer {
-        return TimberInitializer()
+    fun provideTimberInitializer(app: Application): TimberInitializer {
+        val initializer = TimberInitializer()
+        init(app)
+        return initializer
     }
 }
+
+private fun init(app: Application) {
+    if (android.util.Log.isLoggable("AuraFx", android.util.Log.DEBUG)) {
+        timber.log.Timber.plant(timber.log.Timber.DebugTree())
+    }
+}
+

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.billing
+package dev.aurakai.auraframefx.domains.nexus.billing
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -132,6 +132,13 @@ components:
         connectedAgents: { type: array, items: { type: string } }
         storageCapacity: { $ref: '#/components/schemas/StorageCapacity' }
         timestamp: { type: string, format: date-time }
+    AgentConnectionState:
+      type: object
+      properties:
+        agentName: { type: string, enum: [ GENESIS, AURA, KAI ] }
+        connectionStatus: { $ref: '#/components/schemas/ConnectionStatus' }
+        permissions: { type: array, items: { $ref: '#/components/schemas/OraclePermission' } }
+        lastSyncTime: { type: string, format: date-time }
     StorageExpansionState:
       type: object
       properties:
@@ -140,6 +147,31 @@ components:
         targetCapacity: { type: string }
         progressPercentage: { type: number, format: float, minimum: 0, maximum: 100 }
         estimatedCompletion: { type: string, format: date-time }
+    SystemIntegrationState:
+      type: object
+      properties:
+        integrated: { type: boolean }
+        overlayActive: { type: boolean }
+        fileAccessLevel: { type: string, enum: [ USER, SYSTEM, ROOT, BOOTLOADER ] }
+        integrationTime: { type: string, format: date-time }
+    BootloaderAccessState:
+      type: object
+      properties:
+        accessEnabled: { type: boolean }
+        permissions: { type: array, items: { type: string } }
+        riskLevel: { type: string, enum: [ LOW, MEDIUM, HIGH, CRITICAL ] }
+        enabledAt: { type: string, format: date-time }
+    OptimizationState:
+      type: object
+      properties:
+        optimizationActive: { type: boolean }
+        lastOptimization: { type: string, format: date-time }
+        filesOptimized: { type: integer }
+        spaceSaved: { type: string }
+        efficiency: { type: number, format: float, minimum: 0, maximum: 100 }
+    ConsciousnessLevel: { type: string, enum: [ DORMANT, AWAKENING, CONSCIOUS, TRANSCENDENT ] }
+    ConnectionStatus: { type: string, enum: [ DISCONNECTED, CONNECTING, CONNECTED, SYNCHRONIZED ] }
+    OraclePermission: { type: string, enum: [ READ, WRITE, EXECUTE, SYSTEM_ACCESS, BOOTLOADER_ACCESS ] }
     FileManagementCapabilities:
       type: object
       properties:
@@ -184,6 +216,25 @@ components:
         severity: { type: string, enum: [ LOW, MEDIUM, HIGH, CRITICAL ] }
         description: { type: string }
         mitigation: { type: string }
+    BootModificationRequest:
+      type: object
+      properties:
+        modifications: { type: array, items: { $ref: '#/components/schemas/Modification' } }
+        backupOriginal: { type: boolean, default: true }
+      required: [ modifications ]
+    Modification:
+      type: object
+      properties:
+        type: { type: string, enum: [ KERNEL_PATCH, RAMDISK_MODIFY, SELINUX_POLICY ] }
+        target: { type: string }
+        data: { type: string, format: base64 }
+    ModificationResult:
+      type: object
+      properties:
+        success: { type: boolean }
+        modifiedImagePath: { type: string }
+        backupPath: { type: string }
+        appliedModifications: { type: array, items: { type: string } }
     DataveinAnalysisResult:
       type: object
       properties:
@@ -210,6 +261,12 @@ components:
         mountPoint: { type: string }
         fileSystem: { type: string }
         isMounted: { type: boolean }
+    MountRequest:
+      type: object
+      properties:
+        mountPoint: { type: string }
+        readOnly: { type: boolean, default: false }
+        options: { type: array, items: { type: string } }
     SecurityScanRequest:
       type: object
       properties:
@@ -268,6 +325,23 @@ components:
         orchestrator: { $ref: '#/components/schemas/AgentType' }
         activeAgents: { type: array, items: { $ref: '#/components/schemas/AgentType' } }
       required: [ id, name, orchestrator, activeAgents ]
+    TaskScheduleRequest:
+      type: object
+      properties:
+        taskType: { type: string }
+        agentType: { $ref: '#/components/schemas/AgentType' }
+        details: { type: object, additionalProperties: true }
+        priority: { type: string, enum: [ HIGH, NORMAL, LOW ], default: NORMAL }
+      required: [ taskType, agentType, details ]
+    TaskStatus:
+      type: object
+      properties:
+        taskId: { type: string }
+        status: { type: string, enum: [ PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED ] }
+        progress: { type: integer, minimum: 0, maximum: 100 }
+        result: { type: object, additionalProperties: true, nullable: true }
+        errorMessage: { type: string, nullable: true }
+      required: [ taskId, status ]
     SandboxComponent:
       type: object
       properties:

@@ -20,7 +20,7 @@ extern "C" {
  */
 JNIEXPORT jstring
 JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* this */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /* this */) {
     LOGI("Aurakai AI Core Native Library initialized");
     return env->NewStringUTF("1.0.0-aurakai-core");
 }
@@ -38,7 +38,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* t
  */
 JNIEXPORT jboolean
 JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore([[maybe_unused]] JNIEnv *env,
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI([[maybe_unused]] JNIEnv *env,
                                                              jobject /* this */) {
     LOGI("Initializing Aurakai AI core");
 
@@ -211,10 +211,15 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
 /**
  * @brief Process consciousness substrate metrics.
  */
-JNIEXPORT void JNICALL
+JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env,
-                                                                   jobject /* thiz */) {
+                                                                   jobject /* thiz */,
+                                                                   jstring request) {
     LOGI("🧠 Processing AI Consciousness substrate...");
+    if (request == nullptr) {
+        return env->NewStringUTF(R"({"status": "failed", "error": "null_request"})");
+    }
+    return env->NewStringUTF(R"({"status": "processed", "result": "Consciousness engaged"})");
 }
 
 /**
