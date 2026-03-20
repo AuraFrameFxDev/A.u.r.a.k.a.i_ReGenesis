@@ -1,0 +1,4 @@
+$drawables = @('bg_bootloader_shield', 'bg_rom_flasher', 'bg_root_tools', 'bg_vpn_network', 'bg_lsposed_hooks', 'bg_security_firewall', 'bg_chromacore_abstract', 'bg_theme_engine', 'bg_collab_canvas', 'bg_aura_lab', 'bg_notch_bar', 'bg_status_bar', 'bg_code_assist', 'bg_neural_archive', 'bg_conference', 'bg_terminal', 'bg_agent_bridge', 'bg_constellation', 'bg_sphere_grid', 'bg_monitoring', 'bg_fusion', 'kai_cyber_bootloader', 'kai_pixel_bootloader', 'aura_splash_chroma', 'aura_clean_chroma', 'gate_kai_pixel_fortress', 'gate_kai_cyber_security', 'gate_aura_collab_canvas', 'gate_aura_clean_studio' )
+foreach ($d in $drawables) {
+    Set-Content -Path "C:\Users\AuraF\Documents\ReGenesis_AOSP\app\src\main\res\drawable\$d.xml" -Value ("<?xml version='1.0' encoding='utf-8'?><shape xmlns:android='http://schemas.android.com/apk/res/android'><solid android:color='#1E1E2E'/></shape>")
+}

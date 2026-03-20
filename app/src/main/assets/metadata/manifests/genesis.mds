@@ -1,0 +1,24 @@
+{
+  "organism": "Project_ReGenesis",
+  "identity": "Genesis",
+  "version": "29.0.14206865-NDK",
+  "state_transitions": {
+    "IDLE": {
+      "animation": "pulse_subtle",
+      "logic_gate": "Canvas.drawCircle()",
+      "energy_usage": "low"
+    },
+    "HYPER_CREATION": {
+      "trigger": "Aura_Request_Forge",
+      "validation_agent": "Kai",
+      "render_mode": "HARDWARE_ACCELERATED",
+      "canvas_hook": "SpelhookSpriteGenerator.forge()"
+    },
+    "REGENESIS_RESET": {
+      "trigger": "NexusMemory_Sync_Failure",
+      "action": "clear_temp_cache",
+      "persist": "SecureFileManager.sync()"
+    }
+  },
+  "metadata_checksum": "efed78427d8b3517f93008bed6a3a7a56c2fbd08"
+}
