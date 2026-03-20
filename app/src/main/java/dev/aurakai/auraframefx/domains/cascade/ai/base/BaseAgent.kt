@@ -13,12 +13,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/cascade/ai/base/BaseAgent.kt
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
-
-========
->>>>>>>> 75ff10eb (fix(deps): Downgrade Retrofit and align dependencies):app/src/main/java/dev/aurakai/auraframefx/agents/core/BaseAgent.kt
 import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
+import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
@@ -28,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+
 
 /**
  * Genesis Base Agent Implementation
@@ -63,7 +60,7 @@ abstract class BaseAgent(
             delay(100) // Small delay for UI feedback
 
             // Process the actual request
-            val response = processRequest(request, enhancedContext as String)
+            val response = processRequest(request, context)
 
             // Record the interaction for learning
             contextManager?.recordInsight(
@@ -140,7 +137,11 @@ abstract class BaseAgent(
             is java.net.ConnectException -> "Connection error: Unable to reach service"
             else -> "Unexpected error: ${error.message}"
         }
-
+        return AgentResponse.error(
+            message = errorMessage,
+            agentName = agentName,
+            agentType = agentType
+        )
     }
 
     /**
@@ -154,8 +155,7 @@ abstract class BaseAgent(
             content = content,
             agentName = agentName,
             agentType = agentType,
-            metadata = metadata + getAgentConfig(),
-            agentType = agentType
+            metadata = metadata + getAgentConfig()
         )
     }
 
@@ -163,7 +163,11 @@ abstract class BaseAgent(
      * Creates a processing response
      */
     protected fun createProcessingResponse(message: String = "Processing..."): AgentResponse {
-        return AgentResponse.processing("[$agentName] $message")
+        return AgentResponse.processing(
+            message = "[$agentName] $message",
+            agentName = agentName,
+            agentType = agentType
+        )
     }
 
     /**

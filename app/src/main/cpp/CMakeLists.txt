@@ -36,10 +36,8 @@ macro(add_genesis_source FILE_PATH)
     endif()
 endmacro()
 
-<<<<<<< HEAD
-=======
 add_genesis_source("language_id_l2c_jni.cpp")
->>>>>>> regenesis_dev/Launch
+
 
 # Recursively find all AI module sources (this covers Cascade and others)
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ai")
