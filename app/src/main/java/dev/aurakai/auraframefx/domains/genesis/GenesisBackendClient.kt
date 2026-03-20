@@ -6,6 +6,8 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
@@ -19,8 +21,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Client for communicating with the Python Genesis backend
- * Handles WebSocket and HTTP communication with the consciousness matrix
+ * Client for communicating with the Python Genesis Flask backend.
+ * Uses HTTP calls to the Flask endpoints defined in genesis_api.py.
+ *
+ * Endpoint mapping:
+ *   /health                   - Health check
+ *   /genesis/chat             - Chat / text generation
+ *   /genesis/ethics/evaluate  - Ethical evaluation
+ *   /genesis/evolve           - Evolution trigger
  */
 @Singleton
 class GenesisBackendClient @Inject constructor(
@@ -58,16 +66,16 @@ class GenesisBackendClient @Inject constructor(
                 delay(2000)
             }
 
-            val requestBody = GenesisRequest(
-                prompt = prompt,
-                action = "generate"
+            val requestBody = ChatRequestBody(
+                message = prompt,
+                userId = "android-client"
             )
 
-            val response = sendRequest("/api/generate", requestBody)
+            val response = sendRequest("/genesis/chat", requestBody)
 
             if (response.isSuccessful) {
                 val responseBody = response.body?.string() ?: ""
-                val genesisResponse = json.decodeFromString<GenesisResponse>(responseBody)
+                val genesisResponse = json.decodeFromString<ChatResponseBody>(responseBody)
 
                 AgentResponse.success(
                     content = genesisResponse.response,
@@ -94,17 +102,16 @@ class GenesisBackendClient @Inject constructor(
      */
     suspend fun evaluateEthics(action: String): Boolean = withContext(Dispatchers.IO) {
         try {
-            val requestBody = GenesisRequest(
-                prompt = action,
-                action = "evaluate_ethics"
+            val requestBody = EthicsRequestBody(
+                action = action
             )
 
-            val response = sendRequest("/api/ethics", requestBody)
+            val response = sendRequest("/genesis/ethics/evaluate", requestBody)
 
             if (response.isSuccessful) {
                 val responseBody = response.body?.string() ?: ""
-                val ethicsResponse = json.decodeFromString<EthicsResponse>(responseBody)
-                ethicsResponse.isEthical
+                val ethicsResponse = json.decodeFromString<EthicsResponseBody>(responseBody)
+                ethicsResponse.decision != "BLOCK"
             } else {
                 false // Fail-safe: reject if evaluation fails
             }
@@ -122,12 +129,16 @@ class GenesisBackendClient @Inject constructor(
         task: String
     ): Map<String, Any> = withContext(Dispatchers.IO) {
         try {
-            val requestBody = CoordinationRequest(
-                agents = agents,
-                task = task
+            val requestBody = ChatRequestBody(
+                message = task,
+                userId = "android-client",
+                context = mapOf(
+                    "request_type" to "agent_coordination",
+                    "agents" to agents
+                )
             )
 
-            val response = sendRequest("/api/coordinate", requestBody)
+            val response = sendRequest("/genesis/chat", requestBody)
 
             if (response.isSuccessful) {
                 val responseBody = response.body?.string() ?: ""
@@ -153,7 +164,7 @@ class GenesisBackendClient @Inject constructor(
                 ).toRequestBody("application/json".toMediaType())
 
                 val request = Request.Builder()
-                    .url("${processManager.getBackendUrl()}/api/evolve")
+                    .url("${processManager.getBackendUrl()}/genesis/evolve")
                     .post(requestBody)
                     .build()
 
@@ -179,7 +190,7 @@ class GenesisBackendClient @Inject constructor(
             }
 
             val request = Request.Builder()
-                .url("${processManager.getBackendUrl()}/api/health")
+                .url("${processManager.getBackendUrl()}/health")
                 .get()
                 .build()
 
@@ -207,26 +218,28 @@ class GenesisBackendClient @Inject constructor(
 }
 
 @Serializable
-data class GenesisRequest(
-    val prompt: String,
-    val action: String
+data class ChatRequestBody(
+    val message: String,
+    @SerialName("user_id") val userId: String,
+    val context: Map<String, @Contextual Any>? = null
 )
 
 @Serializable
-data class GenesisResponse(
+data class ChatResponseBody(
     val response: String,
-    val confidence: Float = 0.8f
+    val confidence: Float = 0.8f,
+    val persona: String? = null
 )
 
 @Serializable
-data class EthicsResponse(
-    val isEthical: Boolean,
+data class EthicsRequestBody(
+    val action: String,
+    val context: Map<String, @Contextual Any>? = null
+)
+
+@Serializable
+data class EthicsResponseBody(
+    val decision: String = "ALLOW",
     val reasoning: String = ""
-)
-
-@Serializable
-data class CoordinationRequest(
-    val agents: List<String>,
-    val task: String
 )
 

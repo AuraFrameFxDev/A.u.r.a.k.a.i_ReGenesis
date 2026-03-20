@@ -1,13 +1,10 @@
-<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/aura/screens/CanvasScreen.kt
 package dev.aurakai.auraframefx.domains.aura.screens
-========
-package dev.aurakai.auraframefx.domains.aura.aura.ui
->>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/aura/aura/ui/CanvasScreen.kt
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import collabcanvas.ui.CanvasViewModel
 
 /**

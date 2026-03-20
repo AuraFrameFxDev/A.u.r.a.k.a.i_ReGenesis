@@ -109,8 +109,8 @@ class BuildScriptsValidationTest {
             "Should set applicationId",
             content.contains("applicationId = \"dev.aurakai.auraframefx\"")
         )
-        assertTrue("Should set minSdk", content.contains("minSdk = 26"))
-        assertTrue("Should set targetSdk", content.contains("targetSdk = 34"))
+        assertTrue("Should set minSdk", content.contains("minSdk = 34"))
+        assertTrue("Should set targetSdk", content.contains("targetSdk = 36"))
         assertTrue("Should set versionCode", content.contains("versionCode = 1"))
         assertTrue("Should set versionName", content.contains("versionName = \"1.0\""))
         assertTrue(
@@ -687,11 +687,11 @@ class BuildScriptsValidationTest {
         // Extract SDK versions and validate compatibility
         assertTrue(
             "compileSdk should be >= targetSdk",
-            content.contains("compileSdk = 36") && content.contains("targetSdk = 34")
+            content.contains("compileSdk = 36") && content.contains("targetSdk = 36")
         )
         assertTrue(
             "targetSdk should be >= minSdk",
-            content.contains("targetSdk = 34") && content.contains("minSdk = 26")
+            content.contains("targetSdk = 36") && content.contains("minSdk = 34")
         )
     }
 

@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
 
 /**
@@ -13,6 +14,10 @@ import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
  * Applies visual customizations like color, height, and visibility.
  */
 class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
+
+    private val PREFS_NOTCH_COLOR = PrefsData("notch_bar_color", config.backgroundColor.toArgb())
+    private val PREFS_NOTCH_HEIGHT = PrefsData("notch_bar_height", config.height)
+    private val PREFS_NOTCH_VISIBLE = PrefsData("notch_bar_visible", config.isVisible)
 
     override fun onHook() {
         // Hook the PhoneStatusBarView to apply customizations
@@ -22,10 +27,14 @@ class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
             after {
                 val view = instance as View
 
+                // Retrieve persisted values if they differ from current config
+                val notchColor = prefs.get(PREFS_NOTCH_COLOR)
+                val notchHeight = prefs.get(PREFS_NOTCH_HEIGHT)
+                val isVisible = prefs.get(PREFS_NOTCH_VISIBLE)
+
                 // Apply notch bar color if configured
                 try {
-                    val androidColor = config.backgroundColor.toArgb()
-                    view.setBackgroundColor(androidColor)
+                    view.setBackgroundColor(notchColor)
                 } catch (e: Exception) {
                     YLog.error("NotchBarHooker: Failed to set background color: ${e.message}")
                 }
@@ -34,9 +43,9 @@ class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
                 try {
                     val layoutParams = view.layoutParams ?: ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        config.height
+                        notchHeight
                     )
-                    layoutParams.height = config.height
+                    layoutParams.height = notchHeight
                     view.layoutParams = layoutParams
                 } catch (e: Exception) {
                     YLog.error("NotchBarHooker: Failed to set height: ${e.message}")
@@ -44,12 +53,12 @@ class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
 
                 // Apply visibility if configured
                 try {
-                    view.visibility = if (config.isVisible) View.VISIBLE else View.GONE
+                    view.visibility = if (isVisible) View.VISIBLE else View.GONE
                 } catch (e: Exception) {
                     YLog.error("NotchBarHooker: Failed to set visibility: ${e.message}")
                 }
 
-                YLog.info("NotchBarHooker: Successfully applied customizations to PhoneStatusBarView")
+                YLog.info("NotchBarHooker: Successfully applied customizations to PhoneStatusBarView (Color: $notchColor, Height: $notchHeight, Visible: $isVisible)")
             }
         }
     }

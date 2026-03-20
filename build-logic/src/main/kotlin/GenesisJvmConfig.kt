@@ -5,7 +5,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
  * ===================================================================
@@ -47,7 +47,7 @@ object GenesisJvmConfig {
         with(project) {
             // Configure Kotlin compilation to match Java toolchain
             // MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
-            tasks.withType<KotlinJvmCompile>().configureEach {
+            tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(JvmTarget.JVM_25)
                     freeCompilerArgs.addAll(

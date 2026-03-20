@@ -47,10 +47,9 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // Apply plugins in correct order
             // Note: Kotlin is built into AGP 9.0.0-alpha14+ (android.builtInKotlin=true)
             pluginManager.apply("com.android.application")
-            pluginManager.apply("org.jetbrains.kotlin.android")
-            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("com.google.dagger.hilt.android")
             pluginManager.apply("com.google.devtools.ksp")
+            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
             pluginManager.apply("com.google.gms.google-services")
 
@@ -137,8 +136,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // ═══════════════════════════════════════════════════════════════════════════
 
             // Hilt Dependency Injection
-            dependencies.add("implementation", "com.google.dagger:hilt-android:2.57.2")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.57.2")
+            dependencies.add("implementation", "com.google.dagger:hilt-android:2.59.2")
+            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.59.2")
 
             // Compose UI stack (Total Coverage for Genesis modules)
             dependencies.add("implementation", dependencies.platform("androidx.compose:compose-bom:2024.11.00"))

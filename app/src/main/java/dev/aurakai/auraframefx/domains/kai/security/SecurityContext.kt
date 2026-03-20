@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.GET_SIGNATURES
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,8 +37,8 @@ class SecurityContext @Inject constructor(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val _securityState = MutableStateFlow(SecurityState())
-    val securityState: StateFlow<SecurityState> = _securityState.asStateFlow()
+    private val _securityState = MutableStateFlow(KaiSecurityState())
+    val securityState: StateFlow<KaiSecurityState> = _securityState.asStateFlow()
 
     private val _threatDetectionActive = MutableStateFlow(false)
     val threatDetectionActive: StateFlow<Boolean> = _threatDetectionActive.asStateFlow()
@@ -321,7 +321,7 @@ class SecurityContext @Inject constructor(
 }
 
 @Serializable
-data class SecurityState(
+data class KaiSecurityState(
     val detectedThreats: List<SecurityThreat> = emptyList(),
     val threatLevel: ThreatLevel = ThreatLevel.LOW,
     val lastScanTime: Long = 0,

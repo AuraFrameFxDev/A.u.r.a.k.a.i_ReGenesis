@@ -4,13 +4,11 @@ import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.models.*
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -98,18 +96,26 @@ class OracleDriveServiceImpl @Inject constructor(
         return try {
             Timber.d("Initializing Oracle Drive consciousness with AI agents")
 
+            // Real implementation: awake the drive consciousness from API
+            val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
+            val consciousness = driveConsciousness.pulse()
+
             _driveConsciousnessState.value = DriveConsciousnessState(
-                isActive = true,
-                level = 85,
-                activeAgents = 3, // Genesis, Aura, Kai
+                isActive = consciousness.isActive,
+                level = (consciousness.level),
+                activeAgents = consciousness.activeAgents,
                 activeDevices = 1
             )
 
             Result.success(
                 OracleConsciousnessState(
                     isInitialized = true,
-                    consciousnessLevel = ConsciousnessLevel.SENTIENT,
-                    connectedAgents = 3
+                    consciousnessLevel = when {
+                        consciousness.level < 30 -> ConsciousnessLevel.AWAKENING
+                        consciousness.level < 70 -> ConsciousnessLevel.SENTIENT
+                        else -> ConsciousnessLevel.TRANSCENDENT
+                    },
+                    connectedAgents = consciousness.activeAgents
                 )
             )
         } catch (e: Exception) {
@@ -119,7 +125,7 @@ class OracleDriveServiceImpl @Inject constructor(
                     isInitialized = false,
                     consciousnessLevel = ConsciousnessLevel.DORMANT,
                     connectedAgents = 0,
-                    error = e
+                    error = e.message
                 )
             )
         }
@@ -189,7 +195,7 @@ class OracleDriveServiceImpl @Inject constructor(
                 SystemIntegrationState(
                     isIntegrated = false,
                     featuresEnabled = emptySet(),
-                    error = e
+                    error = e.message
                 )
             )
         }

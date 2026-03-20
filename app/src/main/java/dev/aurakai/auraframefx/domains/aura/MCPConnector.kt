@@ -16,4 +16,7 @@ data class MCPConnector(
     val category: String, // "Filesystem", "Design", "Cloud", "Dev"
     val status: ConnectorStatus = ConnectorStatus.OFFLINE,
     val stats: String = "No data synchronized"
-)
+) {
+    fun connecting() = copy(status = ConnectorStatus.CONNECTING)
+    fun active() = copy(status = ConnectorStatus.ACTIVE)
+}

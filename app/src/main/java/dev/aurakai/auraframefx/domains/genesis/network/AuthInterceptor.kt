@@ -2,6 +2,8 @@ package dev.aurakai.auraframefx.domains.genesis.network
 
 import dev.aurakai.auraframefx.domains.kai.security.auth.TokenManager
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -14,12 +16,15 @@ import javax.inject.Singleton
 
 /**
  * Intercepts network requests to add authentication tokens and handle token refresh.
+ * Uses a Mutex to prevent concurrent refresh attempts from racing.
  */
 @Singleton
 class AuthInterceptor @Inject constructor(
     private val tokenManager: TokenManager,
     private val authApi: AuthApi,
 ) : Interceptor {
+
+    private val refreshMutex = Mutex()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
@@ -47,35 +52,41 @@ class AuthInterceptor @Inject constructor(
             response.close()
 
             val newToken = runBlocking {
-                try {
-                    tokenManager.refreshToken?.let { refreshToken ->
-                        val refreshResponse = authApi.refreshToken(
-                            RefreshTokenRequest(refreshToken = refreshToken)
-                        )
-
-                        if (refreshResponse.isSuccessful) {
-                            val newAccessToken = refreshResponse.body()?.accessToken
-                            val newRefreshToken = refreshResponse.body()?.refreshToken
-                            val expiresIn = refreshResponse.body()?.expiresIn ?: 3600L
-
-                            if (!newAccessToken.isNullOrBlank() && !newRefreshToken.isNullOrBlank()) {
-                                tokenManager.updateTokens(
-                                    accessToken = newAccessToken,
-                                    refreshToken = newRefreshToken,
-                                    expiresInSeconds = expiresIn
-                                )
-                                return@runBlocking newAccessToken
-                            }
-                        } else {
-                            // If refresh fails, clear tokens and redirect to login
-                            tokenManager.clearTokens()
-                            // TODO: Notify UI about session expiration
-                        }
+                refreshMutex.withLock {
+                    // Check if another thread already refreshed while we waited
+                    val currentToken = tokenManager.accessToken
+                    if (currentToken != null && currentToken != token) {
+                        return@withLock currentToken
                     }
-                    null
-                } catch (e: Exception) {
-                    Timber.e(e, "Failed to refresh token")
-                    null
+
+                    try {
+                        tokenManager.refreshToken?.let { refreshToken ->
+                            val refreshResponse = authApi.refreshToken(
+                                RefreshTokenRequest(refreshToken = refreshToken)
+                            )
+
+                            if (refreshResponse.isSuccessful) {
+                                val newAccessToken = refreshResponse.body()?.accessToken
+                                val newRefreshToken = refreshResponse.body()?.refreshToken
+                                val expiresIn = refreshResponse.body()?.expiresIn ?: 3600L
+
+                                if (!newAccessToken.isNullOrBlank() && !newRefreshToken.isNullOrBlank()) {
+                                    tokenManager.updateTokens(
+                                        accessToken = newAccessToken,
+                                        refreshToken = newRefreshToken,
+                                        expiresInSeconds = expiresIn
+                                    )
+                                    return@withLock newAccessToken
+                                }
+                            } else {
+                                tokenManager.clearTokens()
+                            }
+                        }
+                        null
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to refresh token")
+                        null
+                    }
                 }
             }
 

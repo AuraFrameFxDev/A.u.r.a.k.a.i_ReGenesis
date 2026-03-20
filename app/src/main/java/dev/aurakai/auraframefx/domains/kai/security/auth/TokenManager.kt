@@ -3,25 +3,76 @@ package dev.aurakai.auraframefx.domains.kai.security.auth
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.cascade.utils.AppCoroutineDispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * Manages authentication tokens and session state for the application.
  * Handles token storage, expiration, and refresh logic.
+ * Uses EncryptedSharedPreferences for hardware-backed token protection.
  */
 @Singleton
 class TokenManager @Inject constructor(
     @ApplicationContext context: Context,
     private val dispatchers: AppCoroutineDispatchers,
 ) {
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+    private val appContext = context.applicationContext
+
+    private val masterKey: MasterKey by lazy {
+        MasterKey.Builder(appContext)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+    }
+
+    private val prefs: SharedPreferences by lazy {
+        try {
+            EncryptedSharedPreferences.create(
+                appContext,
+                ENCRYPTED_PREFS_FILE,
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to create EncryptedSharedPreferences, using fallback")
+            appContext.getSharedPreferences(ENCRYPTED_PREFS_FILE, Context.MODE_PRIVATE)
+        }
+    }
+
+    init {
+        migrateFromPlaintextIfNeeded()
+    }
+
+    private fun migrateFromPlaintextIfNeeded() {
+        try {
+            val oldPrefs = appContext.getSharedPreferences(LEGACY_PREFS_FILE, Context.MODE_PRIVATE)
+            val oldToken = oldPrefs.getString(KEY_ACCESS_TOKEN, null) ?: return
+
+            val oldRefresh = oldPrefs.getString(KEY_REFRESH_TOKEN, null)
+            val oldExpiry = oldPrefs.getLong(KEY_ACCESS_TOKEN_EXPIRY, 0)
+
+            prefs.edit {
+                putString(KEY_ACCESS_TOKEN, oldToken)
+                if (oldRefresh != null) putString(KEY_REFRESH_TOKEN, oldRefresh)
+                putLong(KEY_ACCESS_TOKEN_EXPIRY, oldExpiry)
+            }
+
+            oldPrefs.edit().clear().apply()
+            File(appContext.filesDir.parent, "shared_prefs/$LEGACY_PREFS_FILE.xml").delete()
+            Timber.i("TokenManager: Migrated tokens from plaintext to encrypted storage")
+        } catch (e: Exception) {
+            Timber.e(e, "Token migration failed")
+        }
+    }
 
     private val _authState = MutableStateFlow<AuthState>(
         if (hasValidAccessToken()) AuthState.Authenticated else AuthState.Unauthenticated
@@ -122,6 +173,9 @@ class TokenManager @Inject constructor(
         private const val KEY_ACCESS_TOKEN = "access_token"
         private const val KEY_REFRESH_TOKEN = "refresh_token"
         private const val KEY_ACCESS_TOKEN_EXPIRY = "access_token_expiry"
+
+        private const val ENCRYPTED_PREFS_FILE = "auth_prefs_secure"
+        private const val LEGACY_PREFS_FILE = "auth_prefs"
 
         // Token expiration buffer in milliseconds (5 minutes)
         private const val TOKEN_EXPIRATION_BUFFER = 5 * 60 * 1000L

@@ -165,6 +165,12 @@ class SoulMatrixAnalyzer @Inject constructor(
                 val newState = parseGrokAnalysis(response, agentMetrics, memoryStats)
                 _soulMatrixState.value = newState
                 Timber.i("🧠 Soul Matrix updated: ${newState.overallHealth.displayName}")
+
+                // Kai's mantra — when the organism hurts, it speaks
+                if (newState.overallHealth.severity >= HealthLevel.STRESSED.severity) {
+                    Timber.d("🛡️ SoulMatrix: Step by step, piece by piece, tic per tac… breathe, reflect.")
+                }
+
                 Result.success(newState)
             },
             onFailure = { error ->

@@ -1,12 +1,12 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.context
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.context.ContextEntry
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.context.ContextMemory
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.DefaultMemoryManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryManager
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextEntry
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextMemory
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.DefaultMemoryManager
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
 import kotlinx.coroutines.delay
 import java.util.concurrent.ConcurrentHashMap
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.context.ContextManager as GenesisContextManager
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.context.ContextManager as GenesisContextManager
 
 /**
  * Genesis Context Manager Implementation

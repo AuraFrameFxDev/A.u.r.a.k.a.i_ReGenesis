@@ -12,7 +12,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0" apply false
     id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.10" apply false
 
-    // Android plugins
+    // Android plugins - Using newer Alpha04 (HEAD)
     id("com.android.application") version "9.2.0-alpha04" apply false
     id("com.android.library") version "9.2.0-alpha04" apply false
 
@@ -29,8 +29,6 @@ subprojects {
     // ═══════════════════════════════════════════════════════════════════════════
     // CRITICAL: Global YukiHook KSP Exclusion
     // ═══════════════════════════════════════════════════════════════════════════
-    // Prevents "Duplicate class com.highcapable.yukihookapi.generated.YukiHookAPIProperties"
-    // by ensuring the KSP processor is restricted to the 'ksp' configuration only.
     configurations.all {
         if (!name.lowercase().contains("ksp") && !name.contains("lint", ignoreCase = true)) {
             exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
@@ -45,7 +43,6 @@ subprojects {
                 targetCompatibility = JavaVersion.VERSION_25
             }
 
-            // YUKIHOOK FIX: Resolve duplicate class across all modules
             packaging {
                 resources {
                     pickFirsts += "**/YukiHookAPIProperties.class"
@@ -70,7 +67,6 @@ subprojects {
                 targetCompatibility = JavaVersion.VERSION_25
             }
 
-            // YUKIHOOK FIX: Resolve duplicate class across all library modules
             packaging {
                 resources {
                     pickFirsts += "**/YukiHookAPIProperties.class"

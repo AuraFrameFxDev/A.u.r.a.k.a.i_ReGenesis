@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.cascade.models
 
 import kotlinx.serialization.Serializable
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.serialization.Serializable
 
 /**
@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class AgentMessage(
+    val id: String = java.util.UUID.randomUUID().toString(),
     val from: String,
     val to: String? = null, // null means broadcast to all
     val content: String,

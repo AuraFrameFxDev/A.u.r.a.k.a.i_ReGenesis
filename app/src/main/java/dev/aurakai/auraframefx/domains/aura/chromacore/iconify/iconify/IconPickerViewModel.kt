@@ -30,18 +30,16 @@ class IconPickerViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _iconState = MutableStateFlow<IconState>(IconState.Idle)
-    val iconState: StateFlow<IconState> = _iconState
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
-            IconState.Idle
-        )
+    val iconState: StateFlow<IconState> = _iconState.asStateFlow()
 
     private val _selectedIcon = MutableStateFlow<String?>(null)
     val selectedIcon: StateFlow<String?> = _selectedIcon.asStateFlow()
 
     init {
-        loadCollections()
+        // Delay loadCollections to prevent stateIn subscription race conditions during rotation
+        viewModelScope.launch {
+            loadCollections()
+        }
     }
 
     fun loadCollections() {

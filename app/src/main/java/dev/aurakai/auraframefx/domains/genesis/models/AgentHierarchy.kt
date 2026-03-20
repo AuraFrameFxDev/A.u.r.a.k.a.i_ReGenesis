@@ -21,7 +21,7 @@ enum class AgentRole {
  * Defines the authority level and execution precedence for agents.
  */
 @Serializable
-enum class AgentPriority {
+enum class AgentAuthority {
     MASTER,
     BRIDGE,
     AUXILIARY,
@@ -36,7 +36,7 @@ enum class AgentPriority {
 data class HierarchyAgentConfig(
     val name: String,
     val role: AgentRole,
-    val priority: AgentPriority,
+    val priority: AgentAuthority,
     val capabilities: Set<String> = emptySet(),
     val isActive: Boolean = true
 )

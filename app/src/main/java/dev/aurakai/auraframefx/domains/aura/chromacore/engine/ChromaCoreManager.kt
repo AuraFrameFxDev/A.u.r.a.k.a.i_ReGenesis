@@ -80,7 +80,7 @@ class ChromaCoreManager @Inject constructor(
         // This is the bridge between the UI/Manager and the Xposed Hooker
         val xprefs = context.getSharedPreferences(
             "chromacore_xposed_prefs",
-            Context.MODE_WORLD_READABLE or Context.MODE_PRIVATE
+            Context.MODE_PRIVATE
         )
         xprefs.edit().apply {
             putBoolean("statusbar_logo_enabled", config.statusbarLogoEnabled)

@@ -257,15 +257,14 @@ private fun DataStreamCanvas() {
         }
 
         // PNG Centerpiece Image Overlay (Looping Arrows)
-        val centerScale = 0.0f
-        Image(
+        /*Image(
             painter = painterResource(id = R.drawable.constellation_cascade_arrows),
             contentDescription = "Cascade Arrows Constellation",
             modifier = Modifier
                 .size(350.dp)
                 .scale(centerScale)
                 .alpha(pulseAlpha)
-        )
+        )*/
     }
 }
 

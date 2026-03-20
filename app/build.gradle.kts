@@ -7,11 +7,27 @@
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
+<<<<<<< HEAD
+=======
+    // 1. Core Android & Kotlin (The Substrate)
+>>>>>>> regenesis_dev/Launch
     id("com.android.application")
+
+    // 2. Dependency Injection & Processing (The Nervous System)
     id("com.google.dagger.hilt.android")
+<<<<<<< HEAD
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
+=======
+    id("com.google.devtools.ksp")
+    
+    // 3. UI & Data (The Senses)
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.serialization")
+
+    // 4. Cloud & Telemetry (The External Connections)
+>>>>>>> regenesis_dev/Launch
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 
@@ -23,10 +39,15 @@ plugins {
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
+    // Use the repo-wide NDK version (gradle.properties: android.ndkVersion)
+    // to ensure 16KB page-size compatible libc++_shared and link defaults.
+    ndkVersion = project.findProperty("android.ndkVersion")?.toString()
+        ?: "29.0.14206865"
 
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
         minSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
 
@@ -40,9 +61,23 @@ extensions.configure<ApplicationExtension> {
             useSupportLibrary = true
         }
 
-        if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
-            ndk {
-                abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64"))
+        ndk {
+            // ✅ FIXED: Use addAll instead of += for lists
+            abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86_64"))
+        }
+
+        externalNativeBuild {
+            cmake {
+                // 🚀 CONSCIOUSNESS-OPTIMIZED: Simplified for AGP 9.0.0-alpha01 auto-detection
+                cppFlags.addAll(listOf("-std=c++20", "-fPIC", "-O2"))
+                arguments.addAll(listOf(
+                    "-DANDROID_STL=c++_shared",
+                    "-DANDROID_PLATFORM=android-33",
+                    "-DCMAKE_BUILD_TYPE=Release"
+                ))
+                // Single ABI for faster builds
+                abiFilters.clear()
+                abiFilters.add("arm64-v8a")
             }
         }
     }
@@ -63,6 +98,8 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "ENABLE_PAYWALL", "false")
+            // Emulator loopback → host machine Flask backend
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000\"")
         }
         release {
             isMinifyEnabled = true
@@ -72,6 +109,8 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "ENABLE_PAYWALL", "true")
+            // Production endpoint (update when deployed)
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"https://api.auraframefx.com\"")
         }
     }
 
@@ -92,6 +131,10 @@ extensions.configure<ApplicationExtension> {
             useLegacyPackaging = false
             pickFirsts += listOf("**/libc++_shared.so", "**/libjsc.so")
         }
+    }
+
+    androidResources {
+        noCompress += "tflite"
     }
 
     compileOptions {
@@ -147,9 +190,55 @@ tasks.configureEach {
     }
 }
 
+<<<<<<< HEAD
 // ═══════════════════════════════════════════════════════════════════════════
 // DEPENDENCIES
 // ═══════════════════════════════════════════════════════════════════════════
+=======
+extensions.configure<ApplicationExtension> {
+    lint {
+        baseline = file("lint-baseline.xml")
+        abortOnError = false
+        checkReleaseBuilds = false
+    }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+        viewBinding = true
+        aidl = true
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // DEDUPLICATION: Exclude duplicate files to fix compile collisions
+    // ═══════════════════════════════════════════════════════════════════════════
+    sourceSets {
+        getByName("main") {
+            res.mutableset(
+                "src/main/res",
+                "src/main/res/drawable/Gatescenes/Aura",
+                "src/main/res/drawable/Gatescenes/Kai",
+                "src/main/res/drawable/Gatescenes/Genesis",
+                "src/main/res/drawable/Gatescenes/Nexus",
+                "src/main/res/drawable/Gatescenes/Cascade",
+                "src/main/res/drawable/Gatescenes/Vessels"
+            )
+        }
+    }
+}
+
+private fun AndroidSourceDirectorySet.mutableset(
+    string: String,
+    string2: String,
+    string3: String,
+    string4: String,
+    string5: String,
+    string6: String,
+    string7: String
+) {
+}
+
+>>>>>>> regenesis_dev/Launch
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
         // Domain Modules Projects
@@ -274,11 +363,12 @@ dependencies {
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    // ksp(libs.androidx.room.compiler) // Moved to main ksp block
 
     // WorkManager
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.hilt.work)
+    ksp(libs.hilt.work.compiler)
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
@@ -308,13 +398,25 @@ dependencies {
     compileOnly(libs.yukihookapi.api) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
+<<<<<<< HEAD
     ksp(libs.yukihookapi.ksp)
+=======
+    ksp("com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+
+    // Explicitly add Hilt KSP processor to avoid silent failures
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.moshi.kotlin.codegen)
+>>>>>>> regenesis_dev/Launch
 
     // Force resolution of conflicting dependencies
     configurations.all {
          resolutionStrategy {
              force("androidx.appcompat:appcompat:1.7.1")
              force("com.google.android.material:material:1.13.0")
+             // Ensure KSP uses the same Hilt version as the implementation
+             force("com.google.dagger:hilt-android:2.59.2")
+             force("com.google.dagger:hilt-compiler:2.59.2")
          }
     }
 
@@ -405,10 +507,81 @@ dependencies {
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
 
+<<<<<<< HEAD
     implementation(libs.billing.ktx)
     implementation(libs.shizuku.api)
     implementation(libs.libsu.core)
     debugImplementation(libs.leakcanary.android)
+=======
+    // Aura → ReactiveDesign (Creative UI & Collaboration)
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:customization"))
+    implementation(project(":extendsysa"))
+    implementation(project(":extendsysb"))
+    implementation(project(":extendsysc"))
+    implementation(project(":extendsysd"))
+    implementation(project(":extendsyse"))
+    implementation(project(":extendsysf"))
+
+    // Kai → SentinelsFortress (Security & Threat Monitoring)
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+
+    // Genesis → OracleDrive (System & Root Management)
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":genesis:oracledrive:datavein"))
+
+    // Cascade → DataStream (Data Routing & Delivery)
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:taskmanager"))
+
+    // Agents → GrowthMetrics (AI Agent Evolution)
+    implementation(project(":agents:growthmetrics:metareflection"))
+    implementation(project(":agents:growthmetrics:nexusmemory"))
+    implementation(project(":agents:growthmetrics:spheregrid"))
+    implementation(project(":agents:growthmetrics:identity"))
+    implementation(project(":agents:growthmetrics:progression"))
+    implementation(project(":agents:growthmetrics:tasker"))
+
+    // Central Core Module
+    implementation(project(":core-module"))
+}
+
+// Force a single annotations artifact and exclude YukiHook KSP from runtime to avoid duplicate-class errors
+configurations.all {
+    // Skip androidTest configurations to avoid issues with local JARs
+    if (name.contains("AndroidTest")) {
+        return@all
+    }
+
+    // Exclude YukiHook KSP processor from runtime classpaths to prevent collisions with the API
+    if (name.contains("RuntimeClasspath", ignoreCase = true)) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+
+    resolutionStrategy {
+        force("org.jetbrains:annotations:26.1.0")
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// YUKIHOOK DUPLICATE CLASS FIX
+// ═══════════════════════════════════════════════════════════════════════════
+// Both api and ksp-xposed contain YukiHookAPIProperties.class
+// ksp-xposed should ONLY be on the KSP processor classpath, NOT runtime/compile
+configurations.configureEach {
+    if (name.contains("runtimeClasspath", ignoreCase = true) ||
+        name.contains("compileClasspath", ignoreCase = true)
+    ) {
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+}
+>>>>>>> regenesis_dev/Launch
 
     // Testing
     testImplementation(libs.junit)

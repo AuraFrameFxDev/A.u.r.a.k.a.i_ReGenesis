@@ -1,11 +1,11 @@
 package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import android.content.SharedPreferences
-import dev.aurakai.auraframefx.ui.OverlayShape
-import dev.aurakai.auraframefx.ui.QuickSettingsAnimation
-import dev.aurakai.auraframefx.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.ui.QuickSettingsTileConfig
-import dev.aurakai.auraframefx.ui.ImageResource
+import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsAnimation
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig
+import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

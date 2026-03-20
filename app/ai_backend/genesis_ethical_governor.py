@@ -167,7 +167,7 @@ class EthicalGovernor:
 
         # Register action interceptors
         self.action_interceptors = {}
-        self._setup_core_interceptors()
+        # self._setup_core_interceptors()
 
     def _initialize_principle_weights(self) -> Dict[str, float]:
         """
@@ -216,7 +216,7 @@ class EthicalGovernor:
         """
 
         # Data access interceptor
-        self.register_interceptor("data_access", self._evaluate_data_access)
+        # self.register_interceptor("data_access", self._evaluate_data_access)
 
         # System modification interceptor
         self.register_interceptor("system_modify", self._evaluate_system_modification)

@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 
 /**
  * AgentSystemPrompts - System Prompts That Teach Agents How to Use Tools

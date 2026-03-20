@@ -2,8 +2,8 @@ package dev.aurakai.auraframefx.domains.cascade.utils.memory
 
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.models.InteractionEntry
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryEntry
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.memory.MemoryStats
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryEntry
+import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryStats
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -89,11 +89,11 @@ class PersistentMemoryManager @Inject constructor(
     }
 
     /**
-     * Store a prompt/response interaction.
+     * Store a query/response interaction.
      */
-    fun storeInteraction(prompt: String, response: String) {
+    fun storeInteraction(query: String, response: String) {
         val interaction = InteractionEntry(
-            prompt = prompt,
+            query = query,
             response = response,
             timestamp = System.currentTimeMillis()
         )
@@ -144,7 +144,10 @@ class PersistentMemoryManager @Inject constructor(
         val timestamps = entries.map { it.timestamp }
 
         return MemoryStats(
-            oldestEntry = timestamps.minOrNull()
+            totalEntries = memoryCache.size,
+            totalSize = entries.sumOf { it.value.length.toLong() },
+            oldestEntry = timestamps.minOrNull(),
+            newestEntry = timestamps.maxOrNull()
         )
     }
 

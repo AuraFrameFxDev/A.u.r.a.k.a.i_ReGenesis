@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger as LoggerInterface
-import dev.aurakai.auraframefx.domains.kai.DefaultAuraFxLogger as LoggerImpl
+import dev.aurakai.auraframefx.core.logging.AndroidAuraFxLogger as LoggerImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

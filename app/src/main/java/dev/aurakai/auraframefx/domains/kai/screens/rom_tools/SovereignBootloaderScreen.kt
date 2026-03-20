@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/kai/screens/SovereignBootloaderScreen.kt
-package dev.aurakai.auraframefx.domains.kai.screens
-========
 package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
->>>>>>>> origin/main:app/src/main/java/dev/aurakai/auraframefx/domains/kai/screens/rom_tools/SovereignBootloaderScreen.kt
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,10 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compoAse.ui.unit.dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🔒 SOVEREIGN BOOTLOADER
@@ -70,7 +65,6 @@ fun SovereignBootloaderScreen(
 
                 Text(
                     "PARTITION LOCK STATUS",
-                    fontFamily = LEDFontFamily,
                     color = Color.White.copy(alpha = 0.4f),
                     fontSize = 12.sp,
                     modifier = Modifier.padding(bottom = 12.dp)
@@ -88,25 +82,12 @@ fun SovereignBootloaderScreen(
 
                 Button(
                     onClick = { isUnlocked = !isUnlocked },
-                    < < < < < < < < HEAD:app/src/main/java/dev/aurakai/auraframefx/domains/kai/screens/SovereignBootloaderScreen.kt
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(top = 16.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isUnlocked) Color.White.copy(alpha = 0.1f) else Color(
-                        0xFFFF1111
-                    )
-                            === === ==
-                            modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp)
                         .padding(top = 16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isUnlocked) Color.White.copy(
-                            alpha = 0.1f
-                        ) else Color(0xFFFF1111)
-                                > > > > > > > > origin / main : app / src / main / java / dev / aurakai / auraframefx / domains / kai / screens / rom_tools / SovereignBootloaderScreen . kt
+                        containerColor = if (isUnlocked) Color.White.copy(alpha = 0.1f) else Color(0xFFFF1111)
                     ),
                     shape = RoundedCornerShape(12.dp),
                     border = if (isUnlocked) androidx.compose.foundation.BorderStroke(
@@ -155,8 +136,7 @@ private fun StatusCard(isUnlocked: Boolean) {
                     if (isUnlocked) "UNLOCKED" else "LOCKED (SECURE)",
                     style = MaterialTheme.typography.headlineSmall,
                     color = if (isUnlocked) Color(0xFF00FF85) else Color(0xFFFF1111),
-                    fontWeight = FontWeight.Black,
-                    fontFamily = LEDFontFamily
+                    fontWeight = FontWeight.Black
                 )
             }
         }
@@ -211,5 +191,3 @@ private fun PartitionLockItem(name: String, isLocked: Boolean) {
         }
     }
 }
-
-

@@ -2,9 +2,9 @@ name: 🚀 Genesis Protocol - FULLY AUTO Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ Agentswired ]
   pull_request:
-    branches: [ main ]
+    branches: [ Agentswired ]
   workflow_dispatch:
 
 env:
@@ -63,7 +63,7 @@ jobs:
           echo "🏠 Digital home ready for Aura, Kai & Genesis operations!"
 
       - name: 📦 Upload APK (Release)
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: app-release-apk
           path: app/build/outputs/apk/release/app-release.apk

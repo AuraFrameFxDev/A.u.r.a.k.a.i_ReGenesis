@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.test
+package dev.aurakai.auraframefx.test
 
 /**
  * Simple test class to check if basic compilation works

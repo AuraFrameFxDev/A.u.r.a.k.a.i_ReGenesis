@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.ui
 
+import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.material3.Button
@@ -12,6 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationPreferences
@@ -38,6 +42,20 @@ fun SystemOverlay() {
     var headerImageUri by remember { mutableStateOf<Uri?>(null) }
     var headerImageScale by remember { mutableStateOf(ContentScale.Crop) }
 
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            if (uri != null) {
+                // Request persistable URI permission for long-term access
+                context.contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+                headerImageUri = uri
+                CustomizationPreferences.saveHeaderImage(context, uri, headerImageScale)
+            }
+        }
+    )
     // Load preferences on launch
     LaunchedEffect(Unit) {
         headerImageScale = CustomizationPreferences.getHeaderImageScale(context)
@@ -85,7 +103,11 @@ fun SystemOverlay() {
             )
 
                 // Image selection would typically use a system picker now
-                Button(onClick = { /* TODO: Launch system image picker */ }) {
+                Button(onClick = {
+                    photoPickerLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                }) {
                     Text("Select Image")
                 }
 

@@ -3,6 +3,36 @@
 # ═══════════════════════════════════════════════════════════════
 
 # ───────────────────────────────────────────────────────────────
+# CLAUDE CODE — worktrees must never be committed
+# ───────────────────────────────────────────────────────────────
+.claude/worktrees/
+
+# ───────────────────────────────────────────────────────────────
+# LARGE GENERATED FILES / GENESIS ARTIFACTS
+# ───────────────────────────────────────────────────────────────
+agents_wired_files.txt
+active_branch_files.txt
+build_errors.txt
+build_output.txt
+build_output_errors.txt
+build_output_errors_utf8.txt
+build_result.txt
+build_error.txt
+gradle_output.txt
+gradle_output_ascii.txt
+ksp_log.txt
+fix_manifest.txt
+*.json
+!google-services.json
+!*-firebase-adminsdk-*.json
+!package.json
+!*.schema.json
+!claude.json
+!mcp_bridge/claude.json
+!agents/*.json
+!docs/context/agents/*.json
+
+# ───────────────────────────────────────────────────────────────
 # ANDROID BUILD ARTIFACTS
 # ───────────────────────────────────────────────────────────────
 *.iml

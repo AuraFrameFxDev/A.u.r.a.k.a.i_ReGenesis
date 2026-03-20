@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.aura.ui
 
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -20,10 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
-import dev.aurakai.auraframefx.ui.QuickSettingsConfig
-import dev.aurakai.auraframefx.ui.components.CyberpunkText
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTextColor
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTextStyle
+import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
 
 /**
  * YukiHook hooker for customizing the Android Quick Settings panel.
@@ -50,7 +50,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
 
         // Hook Tile creation to apply custom styles
         "com.android.systemui.qs.tileimpl.QSTileViewImpl".toClassOrNull()?.method {
-            name = "onFinishInflate"
+            "onFinishInflate".also { this.name = it }
         }?.hook {
             after {
                 val tileView = instance as View
@@ -87,10 +87,9 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
     private fun applyGenesisLayout(qsPanel: ViewGroup) {
         try {
             // Apply padding and spacing from config
-            val padding = config.layout.padding
-            qsPanel.setPadding(padding.start, padding.top, padding.end, padding.bottom)
+            val layout = config.layout
 
-            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${config.layout.columns})")
+            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: $layout)")
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to apply layout config: ${e.message}")
         }

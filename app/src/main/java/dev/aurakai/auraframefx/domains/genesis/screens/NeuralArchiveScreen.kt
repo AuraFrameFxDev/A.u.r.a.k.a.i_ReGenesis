@@ -54,6 +54,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryEntity
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryType
@@ -407,6 +408,7 @@ private fun MemoryCard(
         MemoryType.REFLECTION -> Color(0xFFFFFF00) // Yellow
         MemoryType.FACT -> Color(0xFF00BFFF) // Blue
         MemoryType.EMOTION -> Color(0xFFFF00FF) // Magenta
+        MemoryType.VALENCE -> Color(0xFF00FF85) // Genesis Green
     }
 
     Card(

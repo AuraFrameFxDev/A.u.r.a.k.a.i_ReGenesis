@@ -85,8 +85,7 @@ fun SettingsScreen(
         viewModel.syncOverlayState()
     }
 
-    val hapticEnabled = null
-    hapticEnabled(viewModel.hapticEnabled.collectAsState1())
+    val hapticEnabled by viewModel.hapticEnabled.collectAsState1()
     val ethicsSensitivity by viewModel.ethicsSensitivity.collectAsState1()
     val syncInterval by viewModel.nexusSyncInterval.collectAsState1()
     val transparency by viewModel.overlayTransparency.collectAsState1()

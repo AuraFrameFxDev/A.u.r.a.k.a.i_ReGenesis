@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 
 data class SubGateCard(
@@ -10,5 +11,6 @@ data class SubGateCard(
     val styleBDrawable: String,      // Style B image name
     val fallbackDrawable: String?,   // Legacy fallback
     val route: String,
-    val accentColor: Color
+    val accentColor: Color,
+    val parallaxOffset: Offset = Offset.Zero // Optional 3D shift for Whisk
 )

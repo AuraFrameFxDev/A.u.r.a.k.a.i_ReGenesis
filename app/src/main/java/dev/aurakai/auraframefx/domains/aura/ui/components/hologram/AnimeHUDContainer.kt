@@ -139,7 +139,7 @@ fun AnimeHUDContainer(
                     modifier = Modifier.padding(bottom = 4.dp)
                 ) {
                     Icon(
-                        imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
                         tint = interfaceColor.copy(alpha = pulseAlpha)
                     )

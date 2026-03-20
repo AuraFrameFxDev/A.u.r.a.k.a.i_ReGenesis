@@ -53,4 +53,12 @@ object NativeLib {
      * Graceful native shutdown.
      */
     external fun shutdownAI()
+
+    private fun initializeAISafe() {
+        try {
+            initializeAICore()
+        } catch (e: UnsatisfiedLinkError) {
+            System.err.println("❌ Failed to initialize native AI core: ${e.message}")
+        }
+    }
 }

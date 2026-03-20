@@ -2,7 +2,7 @@ import com.android.build.api.dsl.LibraryExtension
 
 plugins {
     id("genesis.android.library.hilt")
-    alias(libs.plugins.kotlin.serialization)
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 extensions.configure<LibraryExtension> {

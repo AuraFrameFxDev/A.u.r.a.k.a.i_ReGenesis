@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
@@ -95,6 +95,7 @@ class TaskExecutionManager @Inject constructor(
                     "aura" -> AgentType.AURA
                     "kai" -> AgentType.KAI
                     "genesis" -> AgentType.GENESIS
+                    "cascade" -> AgentType.CASCADE
                     else -> AgentType.GENESIS
                 }
             } ?: AgentType.GENESIS,
@@ -358,7 +359,7 @@ class TaskExecutionManager @Inject constructor(
             query = execution.data["query"] ?: execution.type,
             type = AiRequestType.entries.find { it.name.equals(execution.type, ignoreCase = true) }
                 ?: AiRequestType.TEXT,
-            context = execution.data.toKotlinJsonObject()
+            context = execution.data
         )
         return auraAgent.processRequest(request, execution.agent.name)
     }
@@ -378,7 +379,7 @@ class TaskExecutionManager @Inject constructor(
             query = execution.data["query"] ?: execution.type,
             type = AiRequestType.entries.find { it.name.equals(execution.type, ignoreCase = true) }
                 ?: AiRequestType.TEXT,
-            context = execution.data.toKotlinJsonObject()
+            context = execution.data
         )
         return kaiAgent.processRequest(request, execution.agent.name)
     }
@@ -392,7 +393,7 @@ class TaskExecutionManager @Inject constructor(
             query = execution.data["query"] ?: execution.type,
             type = AiRequestType.entries.find { it.name.equals(execution.type, ignoreCase = true) }
                 ?: AiRequestType.TEXT,
-            context = execution.data.toKotlinJsonObject()
+            context = execution.data
         )
         return genesisAgent.processRequest(request, execution.agent.name)
     }
@@ -412,6 +413,7 @@ class TaskExecutionManager @Inject constructor(
                 "aura" -> AgentType.AURA
                 "kai" -> AgentType.KAI
                 "genesis" -> AgentType.GENESIS
+                "cascade" -> AgentType.CASCADE
                 else -> AgentType.GENESIS
             }
         }
@@ -420,12 +422,15 @@ class TaskExecutionManager @Inject constructor(
         return when {
             execution.type.contains("creative", ignoreCase = true) -> AgentType.AURA
             execution.type.contains("ui", ignoreCase = true) -> AgentType.AURA
+            execution.type.contains("design", ignoreCase = true) -> AgentType.AURA
             execution.type.contains(
                 "dev/aurakai/auraframefx/security",
                 ignoreCase = true
             ) -> AgentType.KAI
-
+            execution.type.contains("threat", ignoreCase = true) -> AgentType.KAI
             execution.type.contains("analysis", ignoreCase = true) -> AgentType.KAI
+            execution.type.contains("orchestrate", ignoreCase = true) -> AgentType.CASCADE
+            execution.type.contains("coordinate", ignoreCase = true) -> AgentType.CASCADE
             execution.type.contains("complex", ignoreCase = true) -> AgentType.GENESIS
             execution.type.contains("fusion", ignoreCase = true) -> AgentType.GENESIS
             else -> AgentType.GENESIS // Default to Genesis for intelligent routing

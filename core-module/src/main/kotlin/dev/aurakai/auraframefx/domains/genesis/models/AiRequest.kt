@@ -1,4 +1,21 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
-// AiRequest is defined in the app module
-// This file is intentionally empty to avoid duplicate class definitions
+import kotlinx.serialization.Serializable
+
+/**
+ * 📡 AI REQUEST
+ * Universal request format for any agent in the ReGenesis collective.
+ */
+@Serializable
+data class AiRequest(
+    val query: String,
+    val type: AiRequestType = AiRequestType.TEXT,
+    val context: Map<String, String> = emptyMap(),
+    val metadata: Map<String, String> = emptyMap(),
+    val priority: AgentPriority = AgentPriority.NORMAL
+)
+
+enum class AgentPriority {
+    LOW, NORMAL, HIGH, URGENT, CRITICAL
+}
+

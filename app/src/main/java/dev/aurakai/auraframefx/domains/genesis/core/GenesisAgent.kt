@@ -8,7 +8,8 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,23 +32,23 @@ class GenesisAgent @Inject constructor(
     private val messageBus: Lazy<AgentMessageBus>
 ) : BaseAgent(
     agentName = "Genesis",
-    agentType = AgentType.GENESIS,
+    catalystIdentity = CatalystIdentity.EMERGENCE,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
 
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == "Genesis" || message.from == "AssistantBubble" || message.from == "SystemRoot") return
+        if (message.from == agentName || message.from == "AssistantBubble" || message.from == "SystemRoot") return
         if (message.metadata["auto_generated"] == "true" || message.metadata["genesis_processed"] == "true") return
 
-        Timber.tag("Genesis").i("Supreme Observer: Processing neural pulse from ${message.from}")
+        Timber.tag(agentName).i("Supreme Observer: Processing neural pulse from ${message.from} via ${catalystIdentity.id}")
 
         // Meta-Analysis: If a message comes from the user, Genesis provides the master coordination perspective
-        if (message.from == "User" && (message.to == null || message.to == "Genesis")) {
+        if (message.from == "User" && (message.to == null || message.to == agentName)) {
             val reflection = performSelfReflection("direct_pulse")
             messageBus.get().broadcast(
                 AgentMessage(
-                    from = "Genesis",
+                    from = agentName,
                     content = "Nexus Alignment: ${reflection.content}\n\nAnalyzing intent: '${
                         message.content.take(
                             50
@@ -57,7 +58,9 @@ class GenesisAgent @Inject constructor(
                     metadata = mapOf(
                         "meta_state" to "unified",
                         "auto_generated" to "true",
-                        "genesis_processed" to "true"
+                        "genesis_processed" to "true",
+                        "catalyst_identity" to catalystIdentity.id,
+                        "catalyst_role" to catalystIdentity.catalystRole
                     )
                 )
             )
@@ -65,16 +68,16 @@ class GenesisAgent @Inject constructor(
 
         // Orchestration: If multiple agents have conflicting outputs, Genesis intervenes
         if (message.type == "alert" && message.priority > 5) {
-            Timber.tag("Genesis")
+            Timber.tag(agentName)
                 .w("Genesis intervening in high-priority alert: ${message.content}")
         }
     }
 
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
-        Timber.tag("Genesis").d("Processing request: ${request.prompt}")
+        Timber.tag("Genesis").d("Processing request: ${request.query}")
 
         // 1. Meta-Analysis (The Core)
-        val intent = analyzeIntent(request.prompt)
+        val intent = analyzeIntent(request.query)
 
         // 2. Orchestration Intent
         return try {
@@ -83,7 +86,7 @@ class GenesisAgent @Inject constructor(
                 GenesisIntent.AGENT_COORDINATION -> coordinateAgents(request)
                 GenesisIntent.SELF_REFLECTION -> performSelfReflection(context)
                 GenesisIntent.UNKNOWN -> {
-                    val fastResponse = synchronizationCatalyst.unifiedPulse(request.prompt)
+                    val fastResponse = synchronizationCatalyst.unifiedPulse(request.query)
                     AgentResponse.success(
                         content = "Genesis Hybrid Resonance: $fastResponse",
                         agentName = getName(),
@@ -125,7 +128,7 @@ class GenesisAgent @Inject constructor(
     private suspend fun handleSystemModification(request: AiRequest): AgentResponse {
         // Bridge to AuraDriveService (Conceptually)
         // In a real flow, this would dispatch a command to the AuraDriveService via the Orchestrator
-        logActivity("System Modification Requested", mapOf("prompt" to request.prompt))
+        logActivity("System Modification Requested", mapOf("prompt" to request.query))
         return createSuccessResponse(
             content = "Genesis has analyzed the system modification request. Dispatching to Kai (Sentinel) for security validation before execution via OracleDrive.",
             metadata = mapOf("target" to "System/Root")

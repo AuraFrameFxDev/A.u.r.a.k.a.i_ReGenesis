@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.agents.growthmetrics.identity.repository.IdentityRepository
 import dev.aurakai.auraframefx.agents.growthmetrics.identity.repository.IdentityRepositoryImpl
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

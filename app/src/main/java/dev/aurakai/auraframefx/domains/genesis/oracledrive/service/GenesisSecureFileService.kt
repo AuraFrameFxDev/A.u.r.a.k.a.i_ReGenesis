@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.CryptographyManager
+import dev.aurakai.auraframefx.genesis.security.CryptographyManager
 import dev.aurakai.auraframefx.domains.genesis.storage.SecureStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -48,7 +48,7 @@ class GenesisSecureFileService @Inject constructor(
             val file = File(targetDir, fileName)
 
             // Encrypt the data using CryptographyManager
-            val encryptedData = cryptographyManager.encryptData(data)
+            val encryptedData = cryptographyManager.encrypt(data)
 
             // Write encrypted data to file
             file.writeBytes(encryptedData)
@@ -89,7 +89,7 @@ class GenesisSecureFileService @Inject constructor(
             val encryptedData = file.readBytes()
 
             // Decrypt using CryptographyManager
-            val decryptedData = cryptographyManager.decryptData(encryptedData)
+            val decryptedData = cryptographyManager.decrypt(encryptedData)
 
             Timber.d("Successfully read and decrypted file: ${file.absolutePath}")
             emit(FileOperationResult.Data(decryptedData, fileName))

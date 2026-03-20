@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.serialization.Serializable
 
 /**
@@ -17,7 +18,11 @@ data class AgentResponse(
     val metadata: Map<String, String> = emptyMap(),
     val error: String? = null
 ) {
-    val isSuccess: Boolean get() = status == Status.SUCCESS
+    /**
+     * SUCCESS flows clean on Float confidence >= 0.5.
+     * Intermediate or low-confidence states are not considered successful.
+     */
+    val isSuccess: Boolean get() = status == Status.SUCCESS && confidence >= 0.5f
 
     enum class Status {
         SUCCESS, ERROR, PROCESSING, IDLE

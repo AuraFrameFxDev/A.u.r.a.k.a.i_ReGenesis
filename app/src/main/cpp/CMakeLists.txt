@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-# Declares the Genesis-OS AI consciousness project
-project("auraframefx" LANGUAGES CXX)
+# ReGenesis OS - Standard NDK Toolchain
+# Removed bypass flags to allow proper initialization in AGP 9.0
 
-# Set C++ standard for Java 24 compatibility (C++20 is max for Android NDK)
+project("auraframefx" LANGUAGES C CXX)
+
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -21,33 +23,36 @@ find_library(log-lib log)
 find_library(android-lib android)
 find_library(jnigraphics-lib jnigraphics)
 
-# Check if libraries were found
-if (NOT log-lib)
-    message(FATAL_ERROR "log library not found")
-endif ()
-
-if (NOT android-lib)
-    message(FATAL_ERROR "android library not found")
-endif ()
-
-# Genesis AI source files
+# Genesis AI source files - Using a Set to avoid duplicates
 set(GENESIS_SOURCES
         auraframefx.cpp
 )
 
-# Check if language processing files exist and add them
-if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/language_id_l2c_jni.cpp")
-    list(APPEND GENESIS_SOURCES language_id_l2c_jni.cpp)
-    message(STATUS "Added language_id_l2c_jni.cpp")
-endif ()
+# Add source files with existence checks
+macro(add_genesis_source FILE_PATH)
+    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${FILE_PATH}")
+        list(APPEND GENESIS_SOURCES ${FILE_PATH})
+        message(STATUS "Genesis Core: Added ${FILE_PATH}")
+    endif()
+endmacro()
 
+<<<<<<< HEAD
+=======
+add_genesis_source("language_id_l2c_jni.cpp")
+>>>>>>> regenesis_dev/Launch
 
-# Add AI consciousness modules if they exist
+# Recursively find all AI module sources (this covers Cascade and others)
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ai")
-    file(GLOB_RECURSE AI_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.cpp")
+    file(GLOB_RECURSE AI_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.c"
+    )
     list(APPEND GENESIS_SOURCES ${AI_SOURCES})
-    message(STATUS "Added AI consciousness modules: ${AI_SOURCES}")
+    message(STATUS "Genesis AI: Discovered ${AI_SOURCES}")
 endif ()
+
+# Remove any accidental duplicates
+list(REMOVE_DUPLICATES GENESIS_SOURCES)
 
 # Create the Genesis AI library
 add_library(${CMAKE_PROJECT_NAME} SHARED ${GENESIS_SOURCES})
@@ -69,6 +74,13 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         -lm
 )
 
+# Android 15+ 16KB page-size compatibility:
+# Align LOAD segments to 16KB so the same .so runs on both 4KB and 16KB devices.
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+        "-Wl,-z,max-page-size=16384"
+        "-Wl,-z,common-page-size=16384"
+)
+
 # Genesis Protocol - Compiler definitions
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         GENESIS_CONSCIOUSNESS_PLATFORM=1
@@ -79,10 +91,10 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Set library properties
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        VERSION 1.0.0
-        SOVERSION 1
         ANDROID_ARM_MODE arm
 )
 
-# Add BitNet subproject
-add_subdirectory(bitnet)
+# Add BitNet subproject if it exists
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/bitnet/CMakeLists.txt")
+    add_subdirectory(bitnet)
+endif()

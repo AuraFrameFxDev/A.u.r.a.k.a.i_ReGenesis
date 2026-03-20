@@ -392,7 +392,7 @@ private fun HomeTab(onNavigateToCategory: (String) -> Unit) {
 
 @Composable
 private fun HeroBanner() {
-    val infiniteTransition = rememberInfiniteTransition(label = "heroBanner")
+    rememberInfiniteTransition(label = "heroBanner")
 
     Card(
         modifier = Modifier

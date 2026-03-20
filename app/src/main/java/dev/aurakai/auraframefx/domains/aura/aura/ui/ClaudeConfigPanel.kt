@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.config.ClaudeEnvConfig
+import dev.aurakai.auraframefx.domains.genesis.config.ClaudeEnvConfig
 
 /**
  * Claude.env Configuration Panel for Agent Nexus Hub

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.recovery
+package dev.aurakai.auraframefx.domains.aura.ui.recovery
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable

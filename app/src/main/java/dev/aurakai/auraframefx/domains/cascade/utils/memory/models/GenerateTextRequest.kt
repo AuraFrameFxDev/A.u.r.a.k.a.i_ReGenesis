@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class GenerateTextRequest(
-    val prompt: String,
+    val query: String,
     val maxTokens: Int = 1000,
     val temperature: Float = 0.7f,
     val topP: Float = 0.9f,

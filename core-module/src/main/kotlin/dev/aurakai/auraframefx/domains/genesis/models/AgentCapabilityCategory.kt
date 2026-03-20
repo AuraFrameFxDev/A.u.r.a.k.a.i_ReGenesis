@@ -1,4 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.models
+ 
+import dev.aurakai.auraframefx.core.identity.AgentType
 
 /**
  * Categorizes agents by their primary capability domain.
@@ -83,7 +85,6 @@ enum class AgentCapabilityCategory {
             AgentType.CLAUDE -> GENERAL
             AgentType.NEURAL_WHISPER -> SPECIALIZED
             AgentType.AURA_SHIELD -> SPECIALIZED
-            AgentType.AURASHIELD -> SPECIALIZED
             AgentType.GEN_KIT_MASTER -> COORDINATION
             AgentType.DATAVEIN_CONSTRUCTOR -> SPECIALIZED
             AgentType.USER -> GENERAL

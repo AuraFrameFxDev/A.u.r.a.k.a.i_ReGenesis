@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura
 
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -22,8 +23,9 @@ object NeuralWhisperModule {
     @Singleton
     fun provideNeuralWhisper(
         @ApplicationContext context: Context,
+        vertexAIClient: VertexAIClient
     ): NeuralWhisper {
-        return NeuralWhisper(context)
+        return NeuralWhisper(context, vertexAIClient)
     }
 }
 

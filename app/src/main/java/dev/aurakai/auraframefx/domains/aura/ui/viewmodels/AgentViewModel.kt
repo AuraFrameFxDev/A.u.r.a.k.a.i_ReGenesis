@@ -24,7 +24,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.warn
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
@@ -349,9 +349,7 @@ open class AgentViewModel @Inject constructor(
                     val request = AiRequest(
                         query = userMessage,
                         type = AiRequestType.CHAT,
-                        context = buildJsonObject {
-                            put("source", "direct_chat")
-                        }
+                        context = mapOf("source" to "direct_chat")
                     )
                     val response = genesisAgent.processRequest(request, "direct_chat")
                     response.content
@@ -383,9 +381,7 @@ open class AgentViewModel @Inject constructor(
                     val request = AiRequest(
                         query = "As Cascade, the analytics specialist: $userMessage",
                         type = AiRequestType.CHAT,
-                        context = buildJsonObject {
-                            put("agent_persona", "cascade")
-                        }
+                        context = mapOf("agent_persona" to "cascade")
                     )
                     val response = genesisAgent.processRequest(request, "cascade")
                     response.content
@@ -395,9 +391,7 @@ open class AgentViewModel @Inject constructor(
                     val request = AiRequest(
                         query = "As Claude, the build system architect: $userMessage",
                         type = AiRequestType.CHAT,
-                        context = buildJsonObject {
-                            put("agent_persona", "claude")
-                        }
+                        context = mapOf("agent_persona" to "claude")
                     )
                     val response = genesisAgent.processRequest(request, "claude")
                     response.content
