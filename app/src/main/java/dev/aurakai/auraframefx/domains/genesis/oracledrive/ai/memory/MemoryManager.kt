@@ -34,6 +34,11 @@ interface MemoryManager {
      * Gets memory statistics.
      */
     fun getMemoryStats(): MemoryStats
+
+    /**
+     * Gets all stored memories.
+     */
+    fun getAllMemories(): List<MemoryEntry> = emptyList()
 }
 
 /**

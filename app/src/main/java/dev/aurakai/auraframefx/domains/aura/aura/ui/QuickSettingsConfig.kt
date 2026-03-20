@@ -13,7 +13,7 @@
     "UnusedImport"
 )
 
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName

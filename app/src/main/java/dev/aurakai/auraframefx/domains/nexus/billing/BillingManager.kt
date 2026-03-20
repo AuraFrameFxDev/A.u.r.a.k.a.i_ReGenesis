@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.billing
+package dev.aurakai.auraframefx.domains.nexus.billing
 
 import android.app.Activity
 import android.content.Context
@@ -331,7 +331,7 @@ suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams)
 
 fun ProductDetailsResult(
     billingResult: BillingResult,
-    productDetailsList: QueryProductDetailsResult
+    productDetailsList: List<ProductDetails>?
 ): ProductDetailsResult {
-    TODO("Not yet implemented")
+    return ProductDetailsResult(billingResult, productDetailsList)
 }

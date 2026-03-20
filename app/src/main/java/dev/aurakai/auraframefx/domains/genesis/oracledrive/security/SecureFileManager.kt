@@ -13,4 +13,6 @@ class SecureFileManager @Inject constructor(
     fun saveFile(data: ByteArray, fileName: String): Boolean = true
     fun readFile(fileName: String): ByteArray? = null
     fun deleteFile(fileName: String): Boolean = true
+    fun encrypt(data: ByteArray): ByteArray = encryptionManager.encrypt(data)
+    fun decrypt(data: ByteArray): ByteArray = encryptionManager.decrypt(data)
 }

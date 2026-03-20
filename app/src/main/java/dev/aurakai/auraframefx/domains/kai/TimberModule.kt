@@ -22,6 +22,8 @@ object TimberModule {
 }
 
 private fun init(app: Application) {
-    TODO("Not yet implemented")
+    if (android.util.Log.isLoggable("AuraFx", android.util.Log.DEBUG)) {
+        timber.log.Timber.plant(timber.log.Timber.DebugTree())
+    }
 }
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import android.os.Bundle
 import android.util.Log

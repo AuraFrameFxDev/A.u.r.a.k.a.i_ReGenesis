@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import android.app.Activity
 import android.content.Context
@@ -23,7 +23,7 @@ import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfigManager
 import dev.aurakai.auraframefx.ui.QuickSettingsBackground
 import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsConfig as SystemQuickSettingsConfig
 import dev.aurakai.auraframefx.system.quicksettings.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -69,7 +69,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 
     private fun loadConfig() {
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             val config = withContext(Dispatchers.IO) {
                 configManager.loadConfig()
             }
@@ -178,7 +178,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 
     private fun resetToDefault() {
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             val success = withContext(Dispatchers.IO) {
                 configManager.resetToDefault()
             }
@@ -278,11 +278,11 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 }
 
-private fun saveConfig(quickSettingsConfigActivity: QuickSettingsConfigActivity) {
-    quickSettingsConfigActivity.currentConfig?.let { config ->
-        CoroutineScope(Dispatchers.Main).launch {
+private fun saveConfig(activity: QuickSettingsConfigActivity) {
+    activity.currentConfig?.let { config ->
+        activity.lifecycleScope.launch {
             val success = withContext(Dispatchers.IO) {
-                return@withContext quickSettingsConfigActivity.configManager.saveConfig(config)
+                return@withContext activity.configManager.saveConfig(config)
             }
 
             if (success) {

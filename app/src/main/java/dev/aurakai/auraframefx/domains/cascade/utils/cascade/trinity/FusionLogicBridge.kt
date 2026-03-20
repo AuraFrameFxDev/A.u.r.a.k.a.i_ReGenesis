@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity//package dev.aurakai.auraframefx.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 //
 //import androidx.lifecycle.ViewModel
 //import androidx.lifecycle.viewModelScope

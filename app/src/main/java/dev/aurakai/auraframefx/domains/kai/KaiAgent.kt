@@ -103,7 +103,8 @@ class KaiAgent @Inject constructor(
     }
 
     private fun generateText(prompt: String) {
-        TODO("Not yet implemented")
+        logger.info("KaiAgent", "Kai is processing analytical prompt: $prompt")
+        // Logic will be expanded when Vertex AI bridge is fully active for Kai
     }
 
     private var isInitialized = false

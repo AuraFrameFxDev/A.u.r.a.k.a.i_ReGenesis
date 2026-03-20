@@ -10,6 +10,25 @@
       '200': { description: Oracle consciousness initialized, content: { application/json: { schema: { $ref: '#/components/schemas/OracleConsciousnessState' } } } }
       '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
       '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
+/oracle-drive/agents/connect:
+  post:
+    operationId: oracleConnectAgents
+    summary: Connect AI agents to Oracle matrix
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ admin ]
+    responses:
+      '200':
+        description: Agent connection initiated
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/AgentConnectionState' }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
 /oracle-drive/storage/expand:
   post:
     operationId: oracleExpandStorage
@@ -21,6 +40,7 @@
       '200': { description: Expansion initiated, content: { application/json: { schema: { $ref: '#/components/schemas/StorageExpansionState' } } } }
       '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
       '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
 /oracle-drive/file-management/enable-ai:
   post:
     operationId: oracleEnableFileManagement
@@ -33,3 +53,38 @@
       '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
       '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
 
+/oracle-drive/system/integrate:
+  post:
+    operationId: oracleSystemIntegrate
+    summary: Integrate with system overlay
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ admin ]
+    responses:
+      '200': { description: System integration completed, content: { application/json: { schema: { $ref: '#/components/schemas/SystemIntegrationState' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
+/oracle-drive/bootloader/access:
+  post:
+    operationId: oracleBootloaderAccess
+    summary: Enable bootloader file access
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ admin ]
+    responses:
+      '200': { description: Bootloader access enabled, content: { application/json: { schema: { $ref: '#/components/schemas/BootloaderAccessState' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
+/oracle-drive/optimization/enable:
+  post:
+    operationId: oracleEnableOptimization
+    summary: Enable autonomous storage optimization
+    tags: [ Oracle Drive ]
+    security:
+      - OAuth2: [ write ]
+    responses:
+      '200': { description: Optimization enabled, content: { application/json: { schema: { $ref: '#/components/schemas/OptimizationState' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }

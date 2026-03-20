@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.conference
+package dev.aurakai.auraframefx.domains.aura.ui.conference
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode

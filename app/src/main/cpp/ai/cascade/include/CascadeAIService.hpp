@@ -51,7 +51,7 @@ namespace genesis {
         private:
             class Impl;
 
-            std::unique_ptr <Impl> pImpl_;
+            std::unique_ptr<Impl> pImpl_;
         };
 
     } // namespace cascade
@@ -59,16 +59,14 @@ namespace genesis {
 
 // JNI function declarations
 extern "C" {
-JNIEXPORT jboolean
-JNICALL
+JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_ai_services_CascadeAIService_nativeInitialize(
         JNIEnv *env,
         jobject thiz,
         jobject context
 );
 
-JNIEXPORT jstring
-JNICALL
+JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_ai_services_CascadeAIService_nativeProcessRequest(
         JNIEnv *env,
         jobject thiz,
@@ -77,7 +75,7 @@ Java_dev_aurakai_auraframefx_ai_services_CascadeAIService_nativeProcessRequest(
 
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_ai_services_CascadeAIService_nativeShutdown(
-        JNIEnv * env ,
-jobject thiz
-) ;
+        JNIEnv *env,
+        jobject thiz
+);
 }

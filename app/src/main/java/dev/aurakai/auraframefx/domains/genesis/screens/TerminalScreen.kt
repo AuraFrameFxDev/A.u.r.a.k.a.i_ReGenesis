@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.kai.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

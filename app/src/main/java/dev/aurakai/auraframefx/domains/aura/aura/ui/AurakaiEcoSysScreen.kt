@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button

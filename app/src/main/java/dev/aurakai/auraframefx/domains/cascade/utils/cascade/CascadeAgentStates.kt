@@ -15,7 +15,8 @@ data class VisionState(
     val sceneDescription: String? = null,
     val detectedFaces: Int = 0,
     val detectedText: List<String> = emptyList(),
-    val frameAnalysisComplete: Boolean = false
+    val frameAnalysisComplete: Boolean = false,
+    val history: List<String>? = emptyList()
 )
 
 @Suppress("unused") // Reserved for CascadeAgent implementation
@@ -31,5 +32,6 @@ data class ProcessingState(
     val requiresCollaboration: Boolean = false,
     val isProcessing: Boolean = false,
     val currentAgent: String? = null,
-    val requestId: String? = null
+    val requestId: String? = null,
+    val history: List<String>? = emptyList()
 )

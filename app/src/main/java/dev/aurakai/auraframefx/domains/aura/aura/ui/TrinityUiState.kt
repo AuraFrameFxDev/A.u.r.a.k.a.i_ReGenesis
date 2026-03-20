@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.Theme
