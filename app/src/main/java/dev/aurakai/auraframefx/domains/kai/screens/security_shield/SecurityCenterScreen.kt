@@ -15,17 +15,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
- * SecurityCenterScreen - Kai Domain Command Center
- * 
- * Central hub for system integrity, root status, and security protocols.
+ * SecurityCenterScreen — Kai Domain Command Center.
+ * State comes from KaiSystemViewModel (real root/bootloader/threat data).
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SecurityCenterScreen(
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
+    val state by viewModel.systemStatus.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,30 +84,45 @@ fun SecurityCenterScreen(
             item {
                 SecurityStatusCard(
                     title = "Root Authority",
-                    status = "AUTHORIZED",
-                    statusColor = Color(0xFF00FFD4),
+                    status = if (state.hasRoot) "AUTHORIZED" else "DENIED",
+                    statusColor = if (state.hasRoot) Color(0xFF00FFD4) else Color(0xFFFF4444),
                     icon = Icons.Default.FlashOn,
-                    description = "Superuser binaries detected and active."
+                    description = if (state.hasRoot)
+                        "Superuser binaries detected and active."
+                    else
+                        "Root access not granted. Some features unavailable."
                 )
             }
 
             item {
                 SecurityStatusCard(
-                    title = "SELinux Mode",
-                    status = "ENFORCING",
-                    statusColor = Color.Cyan,
+                    title = "Shizuku Bridge",
+                    status = if (state.isShizukuAvailable) "ACTIVE" else "OFFLINE",
+                    statusColor = if (state.isShizukuAvailable) Color.Cyan else Color(0xFFFF8C00),
                     icon = Icons.Default.Security,
-                    description = "Kernel security module is actively blocking threats."
+                    description = if (state.isShizukuAvailable)
+                        "Shizuku service is running and responsive."
+                    else
+                        "Shizuku not available. Start Shizuku app or use ADB."
                 )
             }
 
             item {
+                val threatColor = when (state.threatLevel) {
+                    ThreatLevel.NONE -> Color(0xFF00FFD4)
+                    ThreatLevel.LOW -> Color.Yellow
+                    ThreatLevel.MEDIUM -> Color(0xFFFF8C00)
+                    ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color(0xFFFF4444)
+                }
                 SecurityStatusCard(
-                    title = "System Governor",
-                    status = "SCHEDUTIL",
-                    statusColor = Color.Yellow,
+                    title = "Threat Level",
+                    status = "${state.threatLevel.name}  (${state.detectedThreats} detected)",
+                    statusColor = threatColor,
                     icon = Icons.Default.Power,
-                    description = "OS frequency scaling regulated by kernel."
+                    description = if (state.detectedThreats == 0)
+                        "No active threats. System clean."
+                    else
+                        "Last scan: ${formatScanTime(state.lastScanTime)}"
                 )
             }
 
@@ -120,7 +143,7 @@ fun SecurityCenterScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
-                        onClick = {},
+                        onClick = { viewModel.softReboot() },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF333333),
@@ -131,7 +154,7 @@ fun SecurityCenterScreen(
                         Text("Soft Reboot", fontSize = 12.sp)
                     }
                     Button(
-                        onClick = {},
+                        onClick = { viewModel.killGhosts() },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF333333),
@@ -141,6 +164,20 @@ fun SecurityCenterScreen(
                     ) {
                         Text("Kill Ghosts", fontSize = 12.sp)
                     }
+                }
+            }
+
+            item {
+                Button(
+                    onClick = { viewModel.triggerSecurityScan() },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF001F3F),
+                        contentColor = Color.Cyan
+                    ),
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Text("Run Security Scan", fontSize = 12.sp)
                 }
             }
 
@@ -165,15 +202,36 @@ fun SecurityCenterScreen(
                         Modifier.padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        SecurityLogEntry("02:04:15", "System partition integrity verified.")
-                        SecurityLogEntry("01:42:33", "Aura requested 'Chroma' overlay permission.")
-                        SecurityLogEntry("01:10:02", "New WiFi network analyzed: SECURED.")
-                        SecurityLogEntry("00:15:44", "Sentinel Fortress initialized successfully.")
+                        if (state.isLoading) {
+                            SecurityLogEntry("—", "Scanning system…")
+                        } else {
+                            SecurityLogEntry(
+                                formatScanTime(state.lastScanTime),
+                                "Security scan completed — ${state.detectedThreats} threat(s) found."
+                            )
+                            SecurityLogEntry(
+                                "—",
+                                "Root: ${if (state.hasRoot) "GRANTED" else "DENIED"} | Shizuku: ${if (state.isShizukuAvailable) "UP" else "DOWN"}"
+                            )
+                            SecurityLogEntry(
+                                "—",
+                                "Bootloader: ${if (state.bootloaderUnlocked) "UNLOCKED" else "LOCKED"} | Verified: ${state.verifiedBootState}"
+                            )
+                            SecurityLogEntry(
+                                "—",
+                                "Developer Options: ${if (state.developerOptionsEnabled) "ENABLED" else "DISABLED"}"
+                            )
+                        }
                     }
                 }
             }
         }
     }
+}
+
+private fun formatScanTime(epochMs: Long): String {
+    if (epochMs == 0L) return "never"
+    return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(epochMs))
 }
 
 @Composable
@@ -233,4 +291,3 @@ private fun SecurityLogEntry(time: String, message: String) {
         Text(message, color = Color.White.copy(0.7f), style = MaterialTheme.typography.bodySmall)
     }
 }
-

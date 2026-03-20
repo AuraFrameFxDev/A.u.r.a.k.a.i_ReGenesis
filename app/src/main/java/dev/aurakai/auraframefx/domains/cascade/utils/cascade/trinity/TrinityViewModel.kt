@@ -3,9 +3,9 @@ package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.aura.ui.TrinityUiState
-import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.aura.ui.TrinityUiState
+import dev.aurakai.auraframefx.models.AgentRequest
+import dev.aurakai.auraframefx.models.AgentStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

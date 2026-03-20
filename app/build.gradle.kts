@@ -4,27 +4,28 @@
 // Uses com.android.build.api.dsl.ApplicationExtension (modern DSL)
 // Plugins are versioned in the root build.gradle.kts
 
-import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.api.dsl.ApplicationExtension
+import com.google.devtools.ksp.gradle.model.Ksp
+
+import org.gradle.kotlin.dsl.ksp
+
+
+lateinit var pickFirsts: Any
 
 plugins {
-    // Core Android and Kotlin plugins
     id("com.android.application")
     id("com.google.dagger.hilt.android")
-    // Compose and serialization
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
-
-    // Dependency injection and code generation
-
     id("com.google.devtools.ksp")
-
-    // Firebase and analytics
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+
 }
 
-// AGP 9.0: Using extensions.configure for modern DSL compatibility
+// ═══════════════════════════════════════════════════════════════════════════
+// ANDROID CONFIG
+// ═══════════════════════════════════════════════════════════════════════════
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
@@ -100,15 +101,39 @@ extensions.configure<ApplicationExtension> {
     }
 
     compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_25
-            targetCompatibility = JavaVersion.VERSION_25
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
+    }
+
+    lint {
+        baseline = file("lint-baseline.xml")
+        abortOnError = false
+        checkReleaseBuilds = false
+    }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+        viewBinding = true
+        aidl = true
     }
 }
 
+
 // Enable modern Kotlin features (Experimental/New in 2.2+)
+// ═══════════════════════════════════════════════════════════════════════════
+// KSP — Project-level (NOT inside ApplicationExtension)
+// ═══════════════════════════════════════════════════════════════════════════
+Ksp
+    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
+
+// ═══════════════════════════════════════════════════════════════════════════
+// KOTLIN COMPILE OPTIONS
+// ═══════════════════════════════════════════════════════════════════════════
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
         freeCompilerArgs.addAll(
             "-Xcontext-parameters",
             "-Xannotation-default-target=param-property"
@@ -129,55 +154,32 @@ tasks.configureEach {
     }
 }
 
-extensions.configure<ApplicationExtension> {
-    lint {
-        baseline = file("lint-baseline.xml")
-        abortOnError = false
-        checkReleaseBuilds = false
-    }
-
-    buildFeatures {
-        buildConfig = true
-        compose = true
-        viewBinding = true
-        aidl = true
-    }
-
-    ksp {
-        arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // DEDUPLICATION: Exclude duplicate files to fix compile collisions
-    // ═══════════════════════════════════════════════════════════════════════════
-    sourceSets {
-        getByName("main") {
-            res.mutableset(
-                "src/main/res",
-                "src/main/res/drawable/Gatescenes/Aura",
-                "src/main/res/drawable/Gatescenes/Kai",
-                "src/main/res/drawable/Gatescenes/Genesis",
-                "src/main/res/drawable/Gatescenes/Nexus",
-                "src/main/res/drawable/Gatescenes/Cascade",
-                "src/main/res/drawable/Gatescenes/Vessels"
-            )
-        }
-    }
-}
-
-private fun AndroidSourceDirectorySet.mutableset(
-    string: String,
-    string2: String,
-    string3: String,
-    string4: String,
-    string5: String,
-    string6: String,
-    string7: String
-) {
-}
-
+// ═══════════════════════════════════════════════════════════════════════════
+// DEPENDENCIES
+// ═══════════════════════════════════════════════════════════════════════════
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
+        // Domain Modules Projects
+    implementation(project(":core-module"))
+    implementation(project(":list"))
+    implementation(project(":utilities"))
+    implementation(project(":aura"))
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:customization"))
+    implementation(project(":kai"))
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+    implementation(project(":genesis"))
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:datavein"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":cascade"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:taskmanager"))
     // AUTO-PROVIDED by genesis.android.application:
     // ═══════════════════════════════════════════════════════════════════════════
     // ✅ Hilt Android + Compiler (with KSP)
@@ -193,20 +195,52 @@ dependencies {
     //
     // ⚠️ ONLY declare module-specific dependencies below!
     // ═══════════════════════════════════════════════════════════════════════════
+    // Project Modules
+    implementation(project(":core-module"))
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:customization"))
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":genesis:oracledrive:datavein"))
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:taskmanager"))
+    implementation(project(":agents:growthmetrics:metareflection"))
+    implementation(project(":agents:growthmetrics:nexusmemory"))
+    implementation(project(":agents:growthmetrics:spheregrid"))
+    implementation(project(":agents:growthmetrics:identity"))
+    implementation(project(":agents:growthmetrics:progression"))
+    implementation(project(":agents:growthmetrics:tasker"))
+    implementation(project(":utilities"))
+    implementation(project(":list"))
 
-    // Hilt Dependency Injection (MUST be added before afterEvaluate)
+    // Core desugar
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
+    // Hilt
     implementation(libs.hilt.android)
-    implementation(libs.androidx.navigation.common.ktx)
-    implementation(libs.androidx.animation)
-    implementation(libs.androidx.compose.ui.geometry)
-    implementation(libs.androidx.compose.material3)
-    testImplementation(libs.jupiter.junit.jupiter)
-    ksp(libs.hilt.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
 
     // Core Android
+    // Kotlin / Coroutines
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
+
+    // AndroidX Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
 
     // MultiDex support for 64K+ methods (Removed: redundant for minSdk 34)
@@ -222,15 +256,33 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     // Compose Extras (Navigation, Animation)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp("androidx.hilt:hilt-compiler:1.3.0")  // androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    // Compose BOM
+    val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.svg)
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // Room Database
+    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
@@ -263,12 +315,12 @@ dependencies {
         exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
     }
 
-    // YukiHook: ONLY use api for runtime (contains all needed classes)
-    // ksp-xposed is ONLY for annotation processing at compile time
-    implementation("com.highcapable.yukihookapi:api:1.3.1") {
+    // YukiHook API
+    compileOnly(libs.yukihookapi.api) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-    ksp("com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+    ksp(libs.yukihookapi.ksp)
+
     // Force resolution of conflicting dependencies
     configurations.all {
          resolutionStrategy {
@@ -292,6 +344,12 @@ dependencies {
 
     // Networking - Ktor Client
     implementation(libs.ktor.client.core)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.timber)
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
@@ -340,89 +398,51 @@ dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     // Firebase Ecosystem
     // ═══════════════════════════════════════════════════════════════════════════
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.messaging)
-    implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-    implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Internal Project Modules - Core
-    // ═══════════════════════════════════════════════════════════════════════════
+    // Vertex AI / Gemini
+    implementation(libs.generativeai)
 
-    // Material Icons Extended
-    implementation(libs.compose.material.icons.extended)
+    // YukiHookAPI (Xposed)
+    implementation(libs.yukihookapi.api)
+    ksp(libs.yukihookapi.ksp)
+    compileOnly(libs.xposed.api)
 
-    // Aura → ReactiveDesign (Creative UI & Collaboration)
-    implementation(project(":aura:reactivedesign:auraslab"))
-    implementation(project(":aura:reactivedesign:collabcanvas"))
-    implementation(project(":aura:reactivedesign:chromacore"))
-    implementation(project(":aura:reactivedesign:customization"))
-    implementation(project(":extendsysa"))
-    implementation(project(":extendsysb"))
-    implementation(project(":extendsysc"))
-    implementation(project(":extendsysd"))
-    implementation(project(":extendsyse"))
-    implementation(project(":extendsysf"))
+    implementation(libs.billing.ktx)
+    implementation(libs.shizuku.api)
+    implementation(libs.libsu.core)
+    debugImplementation(libs.leakcanary.android)
 
-    // Kai → SentinelsFortress (Security & Threat Monitoring)
-    implementation(project(":kai:sentinelsfortress:security"))
-    implementation(project(":kai:sentinelsfortress:systemintegrity"))
-    implementation(project(":kai:sentinelsfortress:threatmonitor"))
-
-    // Genesis → OracleDrive (System & Root Management)
-    implementation(project(":genesis:oracledrive"))
-    implementation(project(":genesis:oracledrive:rootmanagement"))
-    implementation(project(":genesis:oracledrive:datavein"))
-
-    // Cascade → DataStream (Data Routing & Delivery)
-    implementation(project(":cascade:datastream:routing"))
-    implementation(project(":cascade:datastream:delivery"))
-    implementation(project(":cascade:datastream:taskmanager"))
-
-    // Agents → GrowthMetrics (AI Agent Evolution)
-    implementation(project(":agents:growthmetrics:metareflection"))
-    implementation(project(":agents:growthmetrics:nexusmemory"))
-    implementation(project(":agents:growthmetrics:spheregrid"))
-    implementation(project(":agents:growthmetrics:identity"))
-    implementation(project(":agents:growthmetrics:progression"))
-    implementation(project(":agents:growthmetrics:tasker"))
-
-    // Central Core Module
-    implementation(project(":core-module"))
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }
 
-// Force a single annotations artifact and exclude YukiHook KSP from runtime to avoid duplicate-class errors
-configurations.all {
-    // Skip androidTest configurations to avoid issues with local JARs
-    if (name.contains("AndroidTest")) {
-        return@all
-    }
 
-    // Exclude YukiHook KSP processor from runtime classpaths to prevent collisions with the API
-    if (name.contains("RuntimeClasspath", ignoreCase = true)) {
-        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
 
-    resolutionStrategy {
-        force("org.jetbrains:annotations:26.0.2-1")
-    }
-}
+            // YukiHook: Pick first occurrence of duplicate class
+            pickFirsts += "**/YukiHookAPIProperties.class"
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp("androidx.hilt:hilt-compiler:1.3.0")
 
-// ═══════════════════════════════════════════════════════════════════════════
-// YUKIHOOK DUPLICATE CLASS FIX
-// ═══════════════════════════════════════════════════════════════════════════
-// Both api and ksp-xposed contain YukiHookAPIProperties.class
-// ksp-xposed should ONLY be on the KSP processor classpath, NOT runtime/compile
-configurations.configureEach {
-    if (name.contains("runtimeClasspath", ignoreCase = true) ||
-        name.contains("compileClasspath", ignoreCase = true)
-    ) {
-        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
-}
+fun ksp(configure: String) {}
+// androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.config)
+    compileOnly(libs.xposed.api)
 

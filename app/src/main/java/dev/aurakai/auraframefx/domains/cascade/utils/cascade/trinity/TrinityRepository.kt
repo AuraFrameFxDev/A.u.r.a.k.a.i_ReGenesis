@@ -2,21 +2,17 @@ package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
-import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AgentState
-import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.models.EnhancedInteractionData
-import dev.aurakai.auraframefx.domains.genesis.models.Theme
-import dev.aurakai.auraframefx.domains.genesis.models.UserData
-import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.models.AgentRequest
+import dev.aurakai.auraframefx.models.AgentState
+import dev.aurakai.auraframefx.models.AgentStatus
+import dev.aurakai.auraframefx.models.AgentType
+import dev.aurakai.auraframefx.models.ChatMessage
+import dev.aurakai.auraframefx.models.AiRequest
+import dev.aurakai.auraframefx.models.AiRequestType
+import dev.aurakai.auraframefx.models.EnhancedInteractionData
+import dev.aurakai.auraframefx.models.Theme
+import dev.aurakai.auraframefx.models.UserData
+import dev.aurakai.auraframefx.network.AuraApiServiceWrapper
 import dev.aurakai.auraframefx.network.model.AgentStatusResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import kotlinx.coroutines.Dispatchers
@@ -37,10 +33,10 @@ import dev.aurakai.auraframefx.network.model.User as NetworkUser
 @Singleton
 open class TrinityRepository @Inject constructor(
     private val apiService: AuraApiServiceWrapper,
-    private val auraAgent: AuraAgent,
-    private val kaiAgent: KaiAgent,
-    private val genesisAgent: GenesisAgent,
-    private val messageBus: AgentMessageBus
+    private val auraAgent: dev.aurakai.auraframefx.aura.AuraAgent,
+    private val kaiAgent: dev.aurakai.auraframefx.kai.KaiAgent,
+    private val genesisAgent: dev.aurakai.auraframefx.ai.agents.GenesisAgent,
+    private val messageBus: dev.aurakai.auraframefx.core.messaging.AgentMessageBus
 ) {
     // Collective Consciousness Stream
     val collectiveStream = messageBus.collectiveStream
@@ -123,7 +119,7 @@ open class TrinityRepository @Inject constructor(
                         auraAgent.handleCreativeInteraction(interaction).content
                     }
 
-                    AgentType.KAI -> {
+                        AgentType.KAI -> {
                         val interaction = EnhancedInteractionData(
                             content = message,
                             context = buildJsonObject { put("mode", "security") }.toString()

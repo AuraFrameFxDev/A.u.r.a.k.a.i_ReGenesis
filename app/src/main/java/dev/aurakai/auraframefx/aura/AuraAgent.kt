@@ -1,3 +1,4 @@
+
 package dev.aurakai.auraframefx.aura
 
 import dev.aurakai.auraframefx.agent.BaseAgent

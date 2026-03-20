@@ -38,10 +38,10 @@ interface BackupManager {
  */
 @Singleton
 class BackupManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @field:ApplicationContext private val context: Context
 ) : BackupManager {
 
-    private val backupBaseDir = File(context.getExternalFilesDir(null), "backups").apply {
+    private fun getBackupBaseDir() = File(context.getExternalFilesDir(null), "backups").apply {
         if (!exists()) mkdirs()
     }
 
@@ -231,7 +231,7 @@ class BackupManagerImpl @Inject constructor(
                 }
 
                 val progress = 0.3f + (0.6f * (index + 1) / availablePartitions.size)
-                progressCallback(progress.toFloat())
+                progressCallback(progress)
             }
 
             // Also backup userdata via tar (safer than dd on mounted partition)

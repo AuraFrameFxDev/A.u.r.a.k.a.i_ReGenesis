@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.config
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 
@@ -70,46 +71,6 @@ object GateAssetLoadout {
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
             route = ReGenesisNavHost.ReGenesisCustomization.route,
             accentColor = Color(0xFFFFD700)
-        ),
-        "notch_bar" to SubGateCard(
-            id = "notch_bar",
-            title = "Notch Bar",
-            subtitle = "Status Bar & Notch Customization",
-            styleADrawable = GateAssetConfig.AuraSubGates.NOTCH_BAR.styleA,
-            styleBDrawable = GateAssetConfig.AuraSubGates.NOTCH_BAR.styleB,
-            fallbackDrawable = GateAssetConfig.AuraSubGates.NOTCH_BAR.fallback,
-            route = ReGenesisNavHost.NotchBar.route,
-            accentColor = Color(0xFF6200EE)
-        ),
-        "terminal" to SubGateCard(
-            id = "terminal",
-            title = "Aura Terminal",
-            subtitle = "UI Directives & Command Shell",
-            styleADrawable = GateAssetConfig.AuraSubGates.TERMINAL.styleA,
-            styleBDrawable = GateAssetConfig.AuraSubGates.TERMINAL.styleB,
-            fallbackDrawable = GateAssetConfig.AuraSubGates.TERMINAL.fallback,
-            route = ReGenesisNavHost.Terminal.route, 
-            accentColor = Color(0xFF00E5FF)
-        ),
-        "iconify" to SubGateCard(
-            id = "iconify",
-            title = "Iconify",
-            subtitle = "500+ System UI Settings",
-            styleADrawable = GateAssetConfig.AuraSubGates.ICONIFY.styleA,
-            styleBDrawable = GateAssetConfig.AuraSubGates.ICONIFY.styleB,
-            fallbackDrawable = GateAssetConfig.AuraSubGates.ICONIFY.fallback,
-            route = ReGenesisNavHost.IconifyPicker.route,
-            accentColor = Color(0xFFBB86FC)
-        ),
-        "pixel_launcher" to SubGateCard(
-            id = "pixel_launcher",
-            title = "Pixel Launcher",
-            subtitle = "Enhanced Launcher Master",
-            styleADrawable = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.styleA,
-            styleBDrawable = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.styleB,
-            fallbackDrawable = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.fallback,
-            route = ReGenesisNavHost.PixelLauncherEnhanced.route,
-            accentColor = Color(0xFFFFD700)
         )
     )
 
@@ -156,56 +117,6 @@ object GateAssetLoadout {
             fallbackDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
             route = ReGenesisNavHost.ROMFlasher.route, // Can be ROM hub later
             accentColor = Color(0xFFFF3D00)
-        ),
-        "module_manager" to SubGateCard(
-            id = "module_manager",
-            title = "Module Manager",
-            subtitle = "Sovereign & Magisk Modules",
-            styleADrawable = GateAssetConfig.KaiSubGates.MODULE_MANAGER.styleA,
-            styleBDrawable = GateAssetConfig.KaiSubGates.MODULE_MANAGER.styleB,
-            fallbackDrawable = GateAssetConfig.KaiSubGates.MODULE_MANAGER.fallback,
-            route = ReGenesisNavHost.ModuleManager.route,
-            accentColor = Color(0xFF2979FF)
-        ),
-        "root_tools" to SubGateCard(
-            id = "root_tools",
-            title = "Root Tools",
-            subtitle = "SU Access & System Control",
-            styleADrawable = GateAssetConfig.KaiSubGates.ROOT_TOOLS.styleA,
-            styleBDrawable = GateAssetConfig.KaiSubGates.ROOT_TOOLS.styleB,
-            fallbackDrawable = GateAssetConfig.KaiSubGates.ROOT_TOOLS.fallback,
-            route = ReGenesisNavHost.RootTools.route,
-            accentColor = Color(0xFFFF3D00)
-        ),
-        "recovery" to SubGateCard(
-            id = "recovery",
-            title = "Recovery",
-            subtitle = "System Repair & Sideload",
-            styleADrawable = GateAssetConfig.KaiSubGates.RECOVERY.styleA,
-            styleBDrawable = GateAssetConfig.KaiSubGates.RECOVERY.styleB,
-            fallbackDrawable = GateAssetConfig.KaiSubGates.RECOVERY.fallback,
-            route = ReGenesisNavHost.RecoveryTools.route,
-            accentColor = Color(0xFF00E676)
-        ),
-        "vpn_adblock" to SubGateCard(
-            id = "vpn_adblock",
-            title = "VPN & AdBlock",
-            subtitle = "Private & Clean Browsing",
-            styleADrawable = GateAssetConfig.KaiSubGates.VPN.styleA,
-            styleBDrawable = GateAssetConfig.KaiSubGates.VPN.styleB,
-            fallbackDrawable = GateAssetConfig.KaiSubGates.VPN.fallback,
-            route = ReGenesisNavHost.VPN.route,
-            accentColor = Color(0xFF2979FF)
-        ),
-        "lsposed_hub" to SubGateCard(
-            id = "lsposed_hub",
-            title = "LSPosed Hub",
-            subtitle = "Hook Management System",
-            styleADrawable = GateAssetConfig.KaiSubGates.LSPOSED.styleA,
-            styleBDrawable = GateAssetConfig.KaiSubGates.LSPOSED.styleB,
-            fallbackDrawable = GateAssetConfig.KaiSubGates.LSPOSED.fallback,
-            route = ReGenesisNavHost.LSPosedHub.route,
-            accentColor = Color(0xFFFFD700)
         )
     )
 
@@ -222,7 +133,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-            route = ReGenesisNavHost.OracleDrive.route, 
+            route = ReGenesisNavHost.OracleDrive.route,
             accentColor = Color(0xFF00B0FF) // Cyan - Genesis
         ),
         "code_assist" to SubGateCard(
