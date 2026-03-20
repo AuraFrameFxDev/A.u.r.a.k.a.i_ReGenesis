@@ -12,9 +12,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0" apply false
     id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.10" apply false
 
-    // Android plugins - Using newer Alpha04 (HEAD)
-    id("com.android.application") version "9.2.0-alpha04" apply false
-    id("com.android.library") version "9.2.0-alpha04" apply false
+    // Android plugins
+    id("com.android.application") version "9.2.0-alpha05" apply false
+    id("com.android.library") version "9.2.0-alpha05" apply false
 
     // Other plugins - Updated to latest stable versions
     id("com.google.dagger.hilt.android") version "2.59.1" apply false
