@@ -81,6 +81,14 @@ import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentProfileIntroScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOBondingScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDODevOpsHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOProgressionScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDORosterScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentCreationScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentMonitoringScreen
@@ -274,6 +282,17 @@ sealed class ReGenesisNavHost(val route: String) {
     object ArmamentFusion : ReGenesisNavHost("armament_fusion")
     object ArmamentFusionWithAgent : ReGenesisNavHost("armament_fusion/{agentName}") {
         fun createRoute(agentName: String) = "armament_fusion/$agentName"
+    }
+
+    // LDO Sub-screens (Real Room-backed screens from domains/ldo/screens/)
+    object LdoDevOpsHub : ReGenesisNavHost("ldo_devops_hub")
+    object LdoBonding : ReGenesisNavHost("ldo_bonding")
+    object LdoRoster : ReGenesisNavHost("ldo_roster")
+    object LdoProgression : ReGenesisNavHost("ldo_progression")
+    object LdoTasker : ReGenesisNavHost("ldo_tasker")
+    object LdoAgentProfile : ReGenesisNavHost("ldo_agent_profile/{agentId}") {
+        fun createRoute(agentId: String) = "ldo_agent_profile/$agentId"
+        const val ARG = "agentId"
     }
 
 object PLEHomeScreen : ReGenesisNavHost("aura/ple/home_screen")
@@ -928,6 +947,65 @@ fun ReGenesisNavHost(
         // ═══════════════════════════════════════════════════════════════
         composable(ReGenesisNavHost.SovereignNeuralArchive.route) {
             SovereignNeuralArchiveScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // LDO DOMAIN — Real Room-backed screens (domains/ldo/screens/)
+        // ═══════════════════════════════════════════════════════════════
+        composable(ReGenesisNavHost.LdoOrchestrationHub.route) {
+            LDOOrchestrationHubScreen(navController = navController)
+        }
+
+        composable(ReGenesisNavHost.ArmamentFusion.route) {
+            ArmamentFusionScreen(navController = navController)
+        }
+
+        composable(
+            route = ReGenesisNavHost.ArmamentFusionWithAgent.route,
+            arguments = listOf(navArgument("agentName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val agentName = backStackEntry.arguments?.getString("agentName")
+            ArmamentFusionScreen(navController = navController, preloadAgentName = agentName)
+        }
+
+        composable(ReGenesisNavHost.LdoDevOpsHub.route) {
+            LDODevOpsHubScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisNavHost.LdoBonding.route) {
+            LDOBondingScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisNavHost.LdoRoster.route) {
+            LDORosterScreen(
+                onAgentSelected = { agentId ->
+                    navController.navigate(ReGenesisNavHost.LdoAgentProfile.createRoute(agentId))
+                },
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisNavHost.LdoProgression.route) {
+            LDOProgressionScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisNavHost.LdoTasker.route) {
+            LDOTaskerScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(
+            route = ReGenesisNavHost.LdoAgentProfile.route,
+            arguments = listOf(navArgument(ReGenesisNavHost.LdoAgentProfile.ARG) {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            })
+        ) { backStackEntry ->
+            val agentId = backStackEntry.arguments?.getString(ReGenesisNavHost.LdoAgentProfile.ARG)
+            LDOAgentProfileIntroScreen(
+                agentId = agentId,
+                onBack = { navController.popBackStack() }
+            )
         }
 
         composable(ReGenesisNavHost.SentientShell.route) {
