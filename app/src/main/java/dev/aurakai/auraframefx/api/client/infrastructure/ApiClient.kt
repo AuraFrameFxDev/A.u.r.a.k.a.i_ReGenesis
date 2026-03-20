@@ -13,6 +13,8 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import dev.aurakai.auraframefx.ai.agents.CommunicationDispatcher
+import dev.aurakai.auraframefx.ai.agents.CommunicationEvent
 import java.io.File
 import java.io.IOException
 import java.net.URLConnection
@@ -266,6 +268,18 @@ open class ApiClient(val baseUrl: String, val client: Call.Factory = defaultClie
         }.build()
 
         val response = client.newCall(request).execute()
+        
+        // Dispatch communication event to Cascade for monitoring
+        CommunicationDispatcher.dispatchEvent(
+            CommunicationEvent(
+                type = "API",
+                sender = "ApiClient",
+                receiver = requestConfig.path,
+                payload = requestConfig.body?.toString() ?: "NO_BODY",
+                priority = dev.aurakai.auraframefx.ai.agents.CommunicationPriority.NORMAL
+            )
+        )
+
         val accept = response.header(ContentType)?.substringBefore(";")?.lowercase(Locale.US)
 
         @Suppress("UNNECESSARY_SAFE_CALL")

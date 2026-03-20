@@ -5,12 +5,6 @@
 // Plugins are versioned in the root build.gradle.kts
 
 import com.android.build.api.dsl.ApplicationExtension
-import com.google.devtools.ksp.gradle.model.Ksp
-
-import org.gradle.kotlin.dsl.ksp
-
-
-lateinit var pickFirsts: Any
 
 plugins {
     id("com.android.application")
@@ -125,8 +119,7 @@ extensions.configure<ApplicationExtension> {
 // ═══════════════════════════════════════════════════════════════════════════
 // KSP — Project-level (NOT inside ApplicationExtension)
 // ═══════════════════════════════════════════════════════════════════════════
-Ksp
-    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.generated.app")
+
 
 // ═══════════════════════════════════════════════════════════════════════════
 // KOTLIN COMPILE OPTIONS
@@ -163,20 +156,16 @@ dependencies {
     implementation(project(":core-module"))
     implementation(project(":list"))
     implementation(project(":utilities"))
-    implementation(project(":aura"))
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:collabcanvas"))
     implementation(project(":aura:reactivedesign:customization"))
-    implementation(project(":kai"))
     implementation(project(":kai:sentinelsfortress:security"))
     implementation(project(":kai:sentinelsfortress:systemintegrity"))
     implementation(project(":kai:sentinelsfortress:threatmonitor"))
-    implementation(project(":genesis"))
     implementation(project(":genesis:oracledrive"))
     implementation(project(":genesis:oracledrive:datavein"))
     implementation(project(":genesis:oracledrive:rootmanagement"))
-    implementation(project(":cascade"))
     implementation(project(":cascade:datastream:delivery"))
     implementation(project(":cascade:datastream:routing"))
     implementation(project(":cascade:datastream:taskmanager"))
@@ -428,21 +417,3 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }
-
-
-
-            // YukiHook: Pick first occurrence of duplicate class
-            pickFirsts += "**/YukiHookAPIProperties.class"
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.material)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.hilt.work)
-    ksp("androidx.hilt:hilt-compiler:1.3.0")
-
-fun ksp(configure: String) {}
-// androidx.hilt:hilt-compiler (WorkManager/Navigation integration)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.config)
-    compileOnly(libs.xposed.api)
-

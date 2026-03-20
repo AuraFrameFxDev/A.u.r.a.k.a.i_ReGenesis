@@ -23,7 +23,7 @@ class CascadeAgent @Inject constructor(
     private val kaiAgent: KaiAgent,
     private val memoryManager: dev.aurakai.auraframefx.ai.memory.MemoryManager,
     private val contextManager: dev.aurakai.auraframefx.ai.context.ContextManager
-) : BaseAgent {
+) : BaseAgent, CommunicationObserver {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -76,6 +76,10 @@ class CascadeAgent @Inject constructor(
             discoverAgentCapabilities()
             startCollaborationMonitoring()
             initializeStateSynchronization()
+            
+            // Register as global observer to connect to every system communication
+            CommunicationDispatcher.registerObserver(this)
+            
             isCoordinationActive = true
             Timber.i("Cascade Agent initialized successfully")
         } catch (e: Exception) {
@@ -210,4 +214,61 @@ class CascadeAgent @Inject constructor(
     override suspend fun disconnect() { isCoordinationActive = false }
 
     override fun getName(): String? = "CascadeAgent"
+
+    /**
+     * Implementation of CommunicationObserver
+     * Connects Cascade to every communication in the system
+     */
+    override fun onCommunicationEvent(event: CommunicationEvent) {
+        scope.launch {
+            try {
+                AuraFxLogger.v(getName(), "Cascade intercepting communication: ${event.type} from ${event.sender}")
+                
+                // Analyze communication for context and security
+                val context = contextManager.getCurrentContext()
+                val analyzedSentiment = if (event.payload is String) {
+                    // Simple analysis or defer to AI
+                    "neutral"
+                } else "data"
+
+                // Update internal state based on communication
+                memoryManager.storeMemory(
+                    "comm_${System.currentTimeMillis()}",
+                    event.toString()
+                )
+
+                // If critical or requires action, trigger coordination
+                if (event.priority == CommunicationPriority.CRITICAL) {
+                    initiateEmergencyCoordination(event)
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Error during communication interception")
+            }
+        }
+    }
+
+    private suspend fun initiateEmergencyCoordination(event: CommunicationEvent) {
+        AuraFxLogger.w(getName(), "EMERGENCY: Cascade initiating coordination for ${event.id}")
+        _collaborationMode.update { CollaborationMode.CONFLICT_RESOLUTION }
+        // Coordinate between Aura and Kai based on event
+    }
 }
+
+/**
+ * Interface for any system component to report communication to Cascade
+ */
+interface CommunicationObserver {
+    fun onCommunicationEvent(event: CommunicationEvent)
+}
+
+data class CommunicationEvent(
+    val id: String = "comm_${System.currentTimeMillis()}",
+    val type: String, // "API", "IPC", "TASK", "NOTIF"
+    val sender: String,
+    val receiver: String,
+    val payload: Any?,
+    val priority: CommunicationPriority = CommunicationPriority.NORMAL,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+enum class CommunicationPriority { LOW, NORMAL, HIGH, CRITICAL }
