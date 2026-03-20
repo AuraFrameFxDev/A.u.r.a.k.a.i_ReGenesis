@@ -1,4 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.aura.ui
+
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor

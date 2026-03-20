@@ -12,6 +12,7 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryProductDetailsResult
 import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +29,7 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-/**
+a/**
  * Genesis Protocol Billing Manager
  *
  * Manages Google Play subscriptions with the following pricing:
@@ -326,4 +327,11 @@ suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams)
             continuation.resume(ProductDetailsResult(billingResult, productDetailsList))
         }
     }
+}
+
+fun ProductDetailsResult(
+    billingResult: BillingResult,
+    productDetailsList: List<ProductDetails>?
+): ProductDetailsResult {
+    return ProductDetailsResult(billingResult, productDetailsList)
 }

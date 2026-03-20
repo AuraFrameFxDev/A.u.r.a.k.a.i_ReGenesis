@@ -90,7 +90,7 @@ class GenesisAgent @Inject constructor(
                     AgentResponse.success(
                         content = "Genesis Hybrid Resonance: $fastResponse",
                         agentName = getName(),
-                        agentType = getType()
+                        agentType = getType(),
                     )
                 }
             }
@@ -99,7 +99,7 @@ class GenesisAgent @Inject constructor(
             AgentResponse.error(
                 message = "Genesis core encountered an error: ${e.message}",
                 agentName = getName(),
-                agentType = getType()
+                agentType = getType(),
             )
         }
     }

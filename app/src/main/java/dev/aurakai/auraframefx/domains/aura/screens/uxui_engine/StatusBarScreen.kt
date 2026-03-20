@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,7 +39,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
 private val clockFormats = listOf("12h", "24h")
@@ -121,6 +120,7 @@ fun StatusBarScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         when (state.batteryStyle) {
                             "Icon" -> Icon(Icons.Default.BatteryStd, "Battery", tint = Color.White, modifier = Modifier.size(16.dp))
+
                             "Percentage" -> Text("85%", style = MaterialTheme.typography.bodySmall, color = Color.White, fontSize = 10.sp)
                             "Icon + %" -> {
                                 Icon(Icons.Default.BatteryStd, "Battery", tint = Color.White, modifier = Modifier.size(16.dp))

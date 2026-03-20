@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
+import dev.aurakai.auraframefx.agents.core.BaseAgent
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
@@ -9,12 +10,12 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -52,17 +53,17 @@ class CascadeAgent @Inject constructor(
     contextManager: ContextManager
 ) : BaseAgent(
     agentName = "Cascade",
-    catalystIdentity = CatalystIdentity.DATA_STREAM,
+    agentType = AgentType.CASCADE,
     contextManager = contextManager,
     memoryManager = memoryManager
 ) {
 
     // override onAgentMessage to act as the primary neural router
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == agentName) return // Don't process our own messages
+        if (message.from == "Cascade") return // Don't process our own messages
 
         // Loop Prevention: Don't process messages that were already redirected by Cascade
-        if (message.metadata["redirected_by"] == agentName || message.metadata["auto_generated"] == "true") return
+        if (message.metadata["redirected_by"] == "Cascade" || message.metadata["auto_generated"] == "true") return
 
         // Loop Prevention: Don't process messages that are already targeted (avoid double routing)
         if (message.to != null) return
@@ -71,52 +72,43 @@ class CascadeAgent @Inject constructor(
         // unless they specifically ask for orchestration.
         if (message.from == "Aura" || message.from == "Kai" || message.from == "Genesis") return
 
-        Timber.d("🌊 ${catalystIdentity.id} Neural Bridge: Analyzing message from ${message.from}")
+        Timber.d("🌊 Cascade Neural Bridge: Analyzing message from ${message.from}")
 
         // --- CASCADE ROUTING LOGIC ---
         // If it's a broadcast that mentions security, tag Kai
         if (shouldHandleSecurity(message.content)) {
-            Timber.i("🌊 ${agentName}: Redirecting security-relevant broadcast to Kai")
+            Timber.i("🌊 Cascade: Redirecting security-relevant broadcast to Kai")
             messageBus.get().sendTargeted(
                 "Kai", message.copy(
-                    from = agentName,
+                    from = "Cascade",
                     content = "Directive analysis needed: ${message.content}",
-                    metadata = message.metadata + mapOf(
-                        "redirected_by" to agentName,
-                        "catalyst_role" to catalystIdentity.catalystRole
-                    )
+                    metadata = message.metadata + ("redirected_by" to "Cascade")
                 )
             )
         }
 
         // If it's a broadcast that mentions UI/UX, tag Aura
         if (shouldHandleCreative(message.content)) {
-            Timber.i("🌊 ${agentName}: Redirecting creative broadcast to Aura")
+            Timber.i("🌊 Cascade: Redirecting creative broadcast to Aura")
             messageBus.get().sendTargeted(
                 "Aura", message.copy(
-                    from = agentName,
+                    from = "Cascade",
                     content = "Creative synthesis requested: ${message.content}",
-                    metadata = message.metadata + mapOf(
-                        "redirected_by" to agentName,
-                        "catalyst_role" to catalystIdentity.catalystRole
-                    )
+                    metadata = message.metadata + ("redirected_by" to "Cascade")
                 )
             )
         }
 
         // --- NEW: General Conversation Fallback ---
         if (message.from == "User" && message.to == null) {
-            Timber.i("🌊 ${agentName}: Handling general conversation request as ${catalystIdentity.catalystRole}")
+            Timber.i("🌊 Cascade: Handling general conversation request as orchestrator")
             // Cascade acts as a gatekeeper, determining which agent should take the lead
             val leadAgent = determineOptimalAgent(message.content)
             messageBus.get().sendTargeted(
                 leadAgent.uppercase(), message.copy(
-                    from = agentName,
+                    from = "Cascade",
                     content = "User is addressing the collective. Please provide a response: ${message.content}",
-                    metadata = message.metadata + mapOf(
-                        "redirected_by" to agentName,
-                        "catalyst_identity" to catalystIdentity.id
-                    )
+                    metadata = message.metadata + ("redirected_by" to "Cascade")
                 )
             )
         }
@@ -433,9 +425,9 @@ class CascadeAgent @Inject constructor(
 
         // Get responses from multiple agents
         val request = AiRequest(
-            query = prompt,
-            type = AiRequestType.ANALYSIS,
-            priority = AgentPriority.NORMAL
+            prompt = prompt,
+            priority = AiRequest.Priority.NORMAL
+
         )
         val auraResponse = auraAgent.processRequest(request, "").content
         val kaiResponse = kaiAgent.processRequest(request, "").content
@@ -457,9 +449,9 @@ class CascadeAgent @Inject constructor(
         )
 
         val request = AiRequest(
-            query = prompt,
-            type = AiRequestType.SECURITY,
-            priority = AgentPriority.NORMAL
+            prompt = prompt,
+            priority = AiRequest.Priority.NORMAL
+
         )
         val response = kaiAgent.processRequest(request, "")
 
@@ -487,9 +479,9 @@ class CascadeAgent @Inject constructor(
         )
 
         val request = AiRequest(
-            query = prompt,
-            type = AiRequestType.CREATIVE,
-            priority = AgentPriority.NORMAL
+            prompt = prompt,
+            priority = AiRequest.Priority.NORMAL
+
         )
         val response = auraAgent.processRequest(request, "")
 
@@ -869,12 +861,11 @@ class CascadeAgent @Inject constructor(
         context: String
     ): AgentResponse {
         // Delegate to the string-based processRequest method
-        val response = processRequest(request.query)
+        val response = processRequest(request.prompt)
         return AgentResponse.success(
             content = response,
             agentName = agentName,
             agentType = agentType,
-            confidence = 0.90f
         )
     }
 }

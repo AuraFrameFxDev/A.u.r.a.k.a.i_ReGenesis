@@ -38,10 +38,10 @@ interface BackupManager {
  */
 @Singleton
 class BackupManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @field:ApplicationContext private val context: Context
 ) : BackupManager {
 
-    private val backupBaseDir = File(context.getExternalFilesDir(null), "backups").apply {
+    private fun getBackupBaseDir() = File(context.getExternalFilesDir(null), "backups").apply {
         if (!exists()) mkdirs()
     }
 

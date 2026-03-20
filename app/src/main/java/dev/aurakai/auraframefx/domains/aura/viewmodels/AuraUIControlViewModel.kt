@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 // ─── UI State DTOs ────────────────────────────────────────────────────────────
 
@@ -100,14 +99,19 @@ private object AuraUIKeys {
  */
 @HiltViewModel
 class AuraUIControlViewModel @Inject constructor(
-    @dev.aurakai.auraframefx.di.AuraSettingsDataStore private val dataStore: DataStore<Preferences>,
+    private val dataStore: DataStore<Preferences>,
     private val chromaCoreManager: ChromaCoreManager,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    // Xposed bridge shared-prefs (read by ChromaCoreHooker)
+    // Xposed bridge shared-prefs (world-readable, read by ChromaCoreHooker)
     private val xprefs: SharedPreferences by lazy {
-        context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_PRIVATE)
+        @Suppress("WorldReadableFiles")
+        try {
+            context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_PRIVATE)
+        } catch (_: Exception) {
+            context.getSharedPreferences("chromacore_xposed_prefs", Context.MODE_PRIVATE)
+        }
     }
 
     // ─── Status Bar ───────────────────────────────────────────────────────────
@@ -207,7 +211,7 @@ class AuraUIControlViewModel @Inject constructor(
         OverlayMenuState(
             auraOverlayEnabled = prefs[AuraUIKeys.AURA_OVERLAY] ?: true,
             kaiOverlayEnabled = prefs[AuraUIKeys.KAI_OVERLAY] ?: false,
-            chatBubbleEnabled = prefs[AuraUIKeys.CHAT_BUBBLE] ?: true,
+            chatBubbleEnabled = prefs[AuraUIKeys.CHAT_BUBBLE] ?: false,
             sidebarPosition = prefs[AuraUIKeys.SIDEBAR_POSITION] ?: "Right"
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), OverlayMenuState())

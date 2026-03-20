@@ -1,0 +1,50 @@
+# REGENESIS DRAWABLE RENAME MAP
+# format: source_path -> target_drawable_name (without extension)
+
+# 🎨 AURA ASSETS
+aura/reactivedesign/auraslab/SandboxUI gate card .png -> gatescenes_aura_auralab
+aura/reactivedesign/chromacore/colorblendr gate.png -> gatescenes_aura_chromacoregate
+aura/reactivedesign/collabcanvas/CollabCanvas gate ca.png -> gatescenes_aura_collabcanvas_v2
+stitch/aura's_domain_main_hub/screen.png -> gatescenes_aura_designstudio_v2
+stitch/aura_creative_hub_l2/screen.png -> aura_clean_studio
+stitch/aura_theming_hub_l2/screen.png -> aura_splash_theme
+stitch/aura_help_desk_terminal_l3/screen.png -> gatescenes_aura_terminal
+stitch/chromacore_ui_engine_l3/screen.png -> aura_clean_chroma
+
+# 🛡️ KAI ASSETS
+kai/sentinelsfortress/security/SecureComms gate car.png -> gatescenes_kai_scancleansystem
+stitch/sentinel_fortress_l2_1/screen.png -> gatescenes_kai_sentinelsfortress_v2
+stitch/sentinel_fortress_l2_2/screen.png -> gate_kai_cyber_security
+stitch/rom_tools_&_sovereignty_hub_l3/screen.png -> gatescenes_kai_romtools
+stitch/rom_repository_l3/screen.png -> kai_cyber_rom_flasher
+stitch/hook_manager__system_surgery_l3/screen.png -> gatescenes_kai_roottools
+stitch/lsposed_hook_manager_l3/screen.png -> kai_pixel_lsposed
+stitch/sentinel_veto__critical_alert_hub/screen.png -> kai_cyber_security
+stitch/rom_operation_safety_&_results_l3/screen.png -> kai_pixel_recovery
+
+# 🧬 GENESIS ASSETS
+genesis/oracledrive/datavein/Datavein Oracle gate.png -> gatescenes_genesis_neural_butterfly
+genesis/oracledrive/rootmanagement/ROMTools gate card d.png -> gatescenes_kai_roottools_alt
+stitch/oracle_drive_hub_l2/screen.png -> gate_genesis_phoenix
+stitch/codeassist__genesis_ai_forge_l3/screen.png -> gatescenes_genesis_code_panels
+stitch/oracledrive_memory_sovereign_l3/screen.png -> gate_genesis_neural
+stitch/ldo_agent_orchestration_hub_l2/screen.png -> gatescenes_genesis_cloud_cosmic
+stitch/oracledrive_infinite_storage_l3_1/screen.png -> gatescenes_genesis_database_server
+
+# 🌐 NEXUS ASSETS
+stitch/agent_nexus_hub_l2_1/screen.png -> gatescenes_nexus_agent_main
+stitch/system_architecture_map/screen.png -> gatescenes_nexus_lineage_tree
+stitch/system_health_&_integrity_monitor/screen.png -> gatescenes_nexus_circuit_tree
+stitch/agent_selection_hub/screen.png -> gatescenes_nexus_hive_structure
+stitch/task_control_center/screen.png -> gatescenes_nexus_fusion_symbol
+stitch/gatescenes_nexus_ldo_roster.png_1/screen.png -> gatescenes_nexus_ldo_roster
+stitch/agent_evolution_tree_l3/screen.png -> gatescenes_nexus_constellation_variant
+stitch/agent_creation_forge_l3/screen.png -> gatescenes_nexus_circuit_tree_alt
+
+# 🧪 MISC / LOOSE FILES
+app/src/main/res/drawable/scansystem.png -> gatescenes_kai_scancleansystem_old
+app/src/main/res/drawable/sentinelsfortress.png -> gatescenes_kai_sentinelsfortress_old
+app/src/main/res/drawable/sentinelsfortress_lvl1.png -> gate_kai_pixel_fortress
+app/src/main/res/drawable/vpnadblockother.png -> gatescenes_kai_vpnadblock
+app/src/main/res/drawable/aura_terminal.png -> aura_terminal_old
+app/src/main/res/drawable/genesisp.png -> gate_genesis_phoenix_old

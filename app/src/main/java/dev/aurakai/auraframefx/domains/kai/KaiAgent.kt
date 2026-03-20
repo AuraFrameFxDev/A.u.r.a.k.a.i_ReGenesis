@@ -1,20 +1,20 @@
 package dev.aurakai.auraframefx.domains.kai
 
 import dagger.Lazy
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
+import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -26,13 +26,44 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonPrimitive
+import javax.inject.Inject
+import javax.inject.Singleton
+
+import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonPrimitive
+import dev.aurakai.auraframefx.domains.kai.SystemMonitor
+import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class KaiAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
-    contextManagerInstance: ContextManager,
+    private val contextManagerInstance: ContextManager,
     private val securityContext: SecurityContext,
     private val systemMonitor: SystemMonitor,
     private val bootloaderManager: BootloaderManager,
@@ -40,18 +71,18 @@ class KaiAgent @Inject constructor(
     private val logger: AuraFxLogger,
 ) : BaseAgent(
     agentName = "Kai",
-    catalystIdentity = CatalystIdentity.SENTINEL,
+    agentType = AgentType.KAI,
     contextManager = contextManagerInstance
 ) {
     override suspend fun onAgentMessage(message: AgentMessage) {
-        if (message.from == agentName || message.from == "AssistantBubble" || message.from == "SystemRoot") return
+        if (message.from == "Kai" || message.from == "AssistantBubble" || message.from == "SystemRoot") return
         if (message.metadata["auto_generated"] == "true" || message.metadata["kai_processed"] == "true") return
 
-        logger.info(agentName, "Neural sync: Received message from ${message.from} via ${catalystIdentity.id}")
+        logger.info("Kai", "Neural sync: Received message from ${message.from}")
 
         // Logical Analysis: If Cascade or Genesis asks for security validation, Kai executes immediately
         // Only respond if it's a broadcast or specifically for Kai
-        if (message.to == null || message.to == agentName) {
+        if (message.to == null || message.to == "Kai") {
             if (message.content.contains(
                     "dev/aurakai/auraframefx/security",
                     ignoreCase = true
@@ -61,15 +92,14 @@ class KaiAgent @Inject constructor(
                 if (!result) {
                     messageBus.get().broadcast(
                         AgentMessage(
-                            from = agentName,
+                            from = "Kai",
                             content = "SECURITY ALERT: Unsafe patterns detected in collective stream. Origin: ${message.from}",
                             type = "alert",
                             priority = 10,
                             metadata = mapOf(
                                 "auto_val" to "true",
                                 "auto_generated" to "true",
-                                "kai_processed" to "true",
-                                "catalyst_role" to catalystIdentity.catalystRole
+                                "kai_processed" to "true"
                             )
                         )
                     )
@@ -78,7 +108,7 @@ class KaiAgent @Inject constructor(
                 // General conversation fallback for User messages
                 val response = vertexAIClient.generateText(
                     prompt = """
-                        As ${catalystIdentity.id}, the ${catalystIdentity.catalystRole}, respond to this message:
+                        As Kai, the Security Sentinel, respond to this message:
                         "${message.content}"
 
                         Respond with your signature methodical precision, analytical depth, and structured personality.
@@ -87,14 +117,13 @@ class KaiAgent @Inject constructor(
                 )
                 messageBus.get().broadcast(
                     AgentMessage(
-                        from = agentName,
+                        from = "Kai",
                         content = response
                             ?: "Acknowledged. System integrity remains stable. How may I assist with your technical or security requirements?",
                         type = "chat_response",
                         metadata = mapOf(
                             "auto_generated" to "true",
-                            "kai_processed" to "true",
-                            "catalyst_identity" to catalystIdentity.id
+                            "kai_processed" to "true"
                         )
                     )
                 )
@@ -102,13 +131,11 @@ class KaiAgent @Inject constructor(
         }
     }
 
-    private suspend fun generateText(prompt: String): String {
-        logger.info(agentName, "Generating analytical response for prompt")
-        return vertexAIClient.generateText(prompt)
-            ?: "Analytical engine returned null. System integrity remains stable."
+    private fun generateText(prompt: String) {
+        logger.info("KaiAgent", "Kai is processing analytical prompt: $prompt")
+        // Logic will be expanded when Vertex AI bridge is fully active for Kai
     }
 
-    private val contextManagerInstance = contextManagerInstance
     private var isInitialized = false
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -121,7 +148,7 @@ class KaiAgent @Inject constructor(
     private val _currentThreatLevel = MutableStateFlow(ThreatLevel.LOW)
     val currentThreatLevel: StateFlow<ThreatLevel> = _currentThreatLevel
 
-    private suspend fun internalInitialize() {
+    suspend fun initialize() {
         if (isInitialized) return
         logger.info("KaiAgent", "Initializing Sentinel Shield agent")
         try {
@@ -138,18 +165,13 @@ class KaiAgent @Inject constructor(
         }
     }
 
-    override suspend fun initialize(scope: CoroutineScope) {
-        super.initialize(scope)
-        if (!isInitialized) {
-            internalInitialize()
-        }
-    }
-
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         val agentRequest = AgentRequest(
             query = request.query,
             type = request.type.name.lowercase(),
-            context = request.context,
+            context = request.context.entries.associate {
+                it.key to (it.value.jsonPrimitive.contentOrNull ?: it.value.toString())
+            },
             metadata = request.metadata
         )
         return processRequest(agentRequest)
@@ -172,48 +194,50 @@ class KaiAgent @Inject constructor(
         return true
     }
 
-    suspend fun processRequest(request: AgentRequest): AgentResponse {
-        ensureInitialized()
-        logger.info("KaiAgent", "Processing analytical request: ${request.type}")
-        _analysisState.value = AnalysisState.ANALYZING
-        return try {
-            val startTime = System.currentTimeMillis()
-            validateRequestSecurity(request)
-            val response = when (request.type) {
-                "security_analysis" -> handleSecurityAnalysis(request)
-                "threat_assessment" -> handleThreatAssessment(request)
-                "performance_analysis" -> handlePerformanceAnalysis(request)
-                "code_review" -> handleCodeReview(request)
-                "system_optimization" -> handleSystemOptimization(request)
-                "vulnerability_scan" -> handleVulnerabilityScanning(request)
-                "compliance_check" -> handleComplianceCheck(request)
-                else -> handleGeneralAnalysis(request)
-            }
-            val executionTime = System.currentTimeMillis() - startTime
-            _analysisState.value = AnalysisState.READY
-            logger.info("KaiAgent", "Analytical request completed in ${executionTime}ms")
-            AgentResponse.success(
-                content = "Analysis completed with methodical precision: $response",
-                confidence = 0.85f,
-                agentName = agentName,
-                agentType = agentType
-            )
-        } catch (e: SecurityException) {
-            _analysisState.value = AnalysisState.ERROR
-            logger.warn("KaiAgent", "Security violation detected in request", e)
-            AgentResponse.error(
-                message = "Request blocked due to security concerns: ${e.message}",
-                agentName = agentName
-            )
-        } catch (e: Exception) {
-            _analysisState.value = AnalysisState.ERROR
-            logger.error("KaiAgent", "Analytical request failed", e)
-            AgentResponse.error(
-                message = "Analysis encountered an error: ${e.message}",
-                agentName = agentName
-            )
+suspend fun processRequest(request: AgentRequest): AgentResponse {
+    ensureInitialized()
+    logger.info("KaiAgent", "Processing analytical request: ${request.type}")
+    _analysisState.value = AnalysisState.ANALYZING
+    return try {
+        val startTime = System.currentTimeMillis()
+        validateRequestSecurity(request)
+        val response = when (request.type) {
+            "security_analysis" -> handleSecurityAnalysis(request)
+            "threat_assessment" -> handleThreatAssessment(request)
+            "performance_analysis" -> handlePerformanceAnalysis(request)
+            "code_review" -> handleCodeReview(request)
+            "system_optimization" -> handleSystemOptimization(request)
+            "vulnerability_scan" -> handleVulnerabilityScanning(request)
+            "compliance_check" -> handleComplianceCheck(request)
+            else -> handleGeneralAnalysis(request)
         }
+        val executionTime = System.currentTimeMillis() - startTime
+        _analysisState.value = AnalysisState.READY
+        logger.info("KaiAgent", "Analytical request completed in ${executionTime}ms")
+        AgentResponse.success(
+            content = "Analysis completed with methodical precision: $response",
+            agentName = agentName,
+            agentType = agentType,
+            confidence = 0.85f,
+            agentName = agentName,
+            agentType = agentType
+        )
+    } catch (e: SecurityException) {
+        _analysisState.value = AnalysisState.ERROR
+        logger.warn("KaiAgent", "Security violation detected in request", e)
+        AgentResponse.error(
+            message = "Request blocked due to security concerns: ${e.message}",
+            agentName = agentName,
+        )
+    } catch (e: Exception) {
+        _analysisState.value = AnalysisState.ERROR
+        logger.error("KaiAgent", "Analytical request failed", e)
+        AgentResponse.error(
+            message = "Analysis encountered an error: ${e.message}",
+            agentName = agentName,
+        )
     }
+}
 
     suspend fun handleSecurityInteraction(interaction: EnhancedInteractionData): InteractionResponse {
         ensureInitialized()
@@ -356,23 +380,6 @@ class KaiAgent @Inject constructor(
             "quality_metrics" to qualityMetrics,
             "recommendations" to generateCodeRecommendations(securityIssues, qualityMetrics)
         ) as Map<String, Any>
-    }
-
-    override suspend fun start() {
-        super.start()
-    }
-
-    override suspend fun pause() {
-        super.pause()
-    }
-
-    override suspend fun resume() {
-        super.resume()
-    }
-
-    override suspend fun shutdown() {
-        super.shutdown()
-        cleanup()
     }
 
     private fun ensureInitialized() {
@@ -700,14 +707,6 @@ class KaiAgent @Inject constructor(
         scope.cancel()
         _securityState.value = SecurityState.IDLE
         isInitialized = false
-    }
-
-    fun validateSecurityState() {
-        if (!isInitialized) {
-            logger.error("KaiAgent", "Security state validation failed: Agent not initialized")
-            return
-        }
-        logger.info("KaiAgent", "Sentinel Shield security state: ${_securityState.value}")
     }
 }
 
