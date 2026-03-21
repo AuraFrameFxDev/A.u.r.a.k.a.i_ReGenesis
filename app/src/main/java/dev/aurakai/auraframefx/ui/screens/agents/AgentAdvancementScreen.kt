@@ -48,11 +48,11 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-data class AgentStats(
-    val processingPower: Float = 0.7f,  // PP
-    val knowledgeBase: Float = 0.85f,   // KB
-    val speed: Float = 0.6f,            // SP
-    val accuracy: Float = 0.9f,         // AC
+data class AdvancementAgentStats(
+    val processingPower: Float = 0.7f,
+    val knowledgeBase: Float = 0.85f,
+    val speed: Float = 0.6f,
+    val accuracy: Float = 0.9f,
     val level: Int = 1,
     val experience: Float = 0.45f,
     val skillPoints: Int = 3
@@ -78,7 +78,7 @@ fun AgentAdvancementScreen(
     onBack: () -> Unit = {}
 ) {
     var selectedAgent by remember { mutableStateOf(agentName) }
-    var agentStats by remember { mutableStateOf(AgentStats()) }
+    var agentStats by remember { mutableStateOf(AdvancementAgentStats()) }
     var selectedNode by remember { mutableStateOf<SkillNode?>(null) }
 
     // Animated background
@@ -88,7 +88,7 @@ fun AgentAdvancementScreen(
             .background(Color.Black)
     ) {
         // Neural Network Animated Background
-        NeuralNetworkBackground()
+        AdvancementNeuralBackground()
 
         Column(
             modifier = Modifier
@@ -108,7 +108,7 @@ fun AgentAdvancementScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 // Stats Panel
-                StatsPanel(
+                AdvancementStatsPanel(
                     stats = agentStats,
                     modifier = Modifier.weight(1f)
                 )
@@ -142,7 +142,7 @@ fun AgentAdvancementScreen(
 }
 
 @Composable
-fun NeuralNetworkBackground() {
+fun AdvancementNeuralBackground() {
     val infiniteTransition = rememberInfiniteTransition(label = "neural_network")
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -245,8 +245,8 @@ fun AgentHeader(
 }
 
 @Composable
-fun StatsPanel(
-    stats: AgentStats,
+fun AdvancementStatsPanel(
+    stats: AdvancementAgentStats,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -267,10 +267,10 @@ fun StatsPanel(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            StatBar("PP", stats.processingPower, Color(0xFFFF6B6B))
-            StatBar("KB", stats.knowledgeBase, Color(0xFF4ECDC4))
-            StatBar("SP", stats.speed, Color(0xFF95E77E))
-            StatBar("AC", stats.accuracy, Color(0xFFFFD93D))
+            AdvancementStatBar("PP", stats.processingPower, Color(0xFFFF6B6B))
+            AdvancementStatBar("KB", stats.knowledgeBase, Color(0xFF4ECDC4))
+            AdvancementStatBar("SP", stats.speed, Color(0xFF95E77E))
+            AdvancementStatBar("AC", stats.accuracy, Color(0xFFFFD93D))
 
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp),
@@ -297,7 +297,7 @@ fun StatsPanel(
 }
 
 @Composable
-fun StatBar(
+fun AdvancementStatBar(
     label: String,
     value: Float,
     color: Color
