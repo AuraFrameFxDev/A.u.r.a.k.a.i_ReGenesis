@@ -8,7 +8,6 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskDao
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
 import dev.aurakai.auraframefx.domains.ldo.db.bondTitleForLevel
-import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -92,8 +91,8 @@ class LDORepository @Inject constructor(
      * Safe to call on every app launch — IGNORE strategy skips if rows exist.
      */
     suspend fun seedIfEmpty() {
-        agentDao.insertAllIfAbsent(LDORoster.defaultAgents)
-        bondLevelDao.insertAllIfAbsent(LDORoster.defaultBondLevels)
-        taskDao.insertAllIfAbsent(LDORoster.defaultTasks)
+        agentDao.insertAllIfAbsent(LDORosterData.defaultAgents)
+        bondLevelDao.insertAllIfAbsent(LDORosterData.defaultBondLevels)
+        taskDao.insertAllIfAbsent(LDORosterData.defaultTasks)
     }
 }

@@ -1,11 +1,12 @@
 package dev.aurakai.auraframefx.ui.theme.manager
 
 import android.graphics.Color
-import androidx.compose.ui.graphics.Color as ComposeColor
 import androidx.core.graphics.toColorInt
+import androidx.compose.ui.graphics.Color as ComposeColor
 
 /**
- * Manages theme colors for system-wide theming via LSPosed
+ * System-level (LSPosed) theme hook manager — shell package version.
+ * Canonical DI ThemeManager lives in domains.aura.ui.theme.manager.
  */
 object SystemThemeManager {
     // Default Material colors
@@ -19,7 +20,7 @@ object SystemThemeManager {
     var foregroundColor: Int = Color.BLACK
 
     // Custom colors for specific apps can be added here
-    private val appSpecificColors = mutableMapOf<String, AppColors>()
+    private val appSpecificColors = mutableMapOf<String, ShellAppColors>()
 
     /**
      * Update theme colors for the entire system
@@ -40,7 +41,7 @@ object SystemThemeManager {
     /**
      * Update colors for a specific app package
      */
-    fun updateAppTheme(packageName: String, colors: AppColors) {
+    fun updateAppTheme(packageName: String, colors: ShellAppColors) {
         appSpecificColors[packageName] = colors
         // Notify system to reload resources for this package
         notifyThemeChanged(packageName)
@@ -49,8 +50,8 @@ object SystemThemeManager {
     /**
      * Get colors for a specific app package
      */
-    fun getAppColors(packageName: String): AppColors {
-        return appSpecificColors[packageName] ?: AppColors.fromTheme(ThemeColors())
+    fun getAppColors(packageName: String): ShellAppColors {
+        return appSpecificColors[packageName] ?: ShellAppColors.fromTheme(ShellThemeColors())
     }
 
     /**
@@ -114,7 +115,7 @@ object SystemThemeManager {
 /**
  * Represents colors for a specific app
  */
-data class AppColors(
+data class ShellAppColors(
     val primary: Int,
     val primaryVariant: Int,
     val secondary: Int,
@@ -124,8 +125,8 @@ data class AppColors(
     val onBackground: Int
 ) {
     companion object {
-        fun fromTheme(theme: ThemeColors): AppColors {
-            return AppColors(
+        fun fromTheme(theme: ShellThemeColors): ShellAppColors {
+            return ShellAppColors(
                 primary = theme.primary.toArgb(),
                 primaryVariant = theme.primaryVariant.toArgb(),
                 secondary = theme.secondary.toArgb(),
@@ -150,7 +151,7 @@ data class AppColors(
 /**
  * Theme colors using Compose Color for system theming
  */
-data class ThemeColors(
+data class ShellThemeColors(
     val primary: ComposeColor = ComposeColor(0xFF6200EE),
     val primaryVariant: ComposeColor = ComposeColor(0xFF3700B3),
     val secondary: ComposeColor = ComposeColor(0xFF03DAC6),
