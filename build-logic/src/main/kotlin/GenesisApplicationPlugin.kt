@@ -135,12 +135,25 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
 
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
+
             // Hilt Dependency Injection
-            dependencies.add("implementation", "com.google.dagger:hilt-android:2.59.2")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:2.59.2")
+            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
             // Compose UI stack (Total Coverage for Genesis modules)
-            dependencies.add("implementation", dependencies.platform("androidx.compose:compose-bom:2024.11.00"))
+            dependencies.add(
+                "implementation",
+                dependencies.platform("androidx.compose:compose-bom:$composeBomVersion")
+            )
             dependencies.add("implementation", "androidx.compose.runtime:runtime")
             dependencies.add("implementation", "androidx.compose.ui:ui")
             dependencies.add("implementation", "androidx.compose.ui:ui-graphics")
@@ -172,8 +185,11 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
-            // Firebase BOM (Bill of Materials)
-            dependencies.add("implementation", dependencies.platform("com.google.firebase:firebase-bom:34.5.0"))
+            // Firebase BOM — version from libs.versions.toml
+            dependencies.add(
+                "implementation",
+                dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
+            )
 
             // Universal Xposed/LSPosed API access
             dependencies.add("compileOnly", "de.robv.android.xposed:api:82")

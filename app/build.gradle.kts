@@ -4,15 +4,16 @@
 // Uses com.android.build.api.dsl.ApplicationExtension (modern DSL)
 // Plugins are versioned in the root build.gradle.kts
 
+import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     // 1. Core Android & Kotlin (The Substrate)
     id("com.android.application")
-
     // 2. Dependency Injection & Processing (The Nervous System)
-    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+
 
     // 3. UI & Data (The Senses)
     id("org.jetbrains.kotlin.plugin.compose")
@@ -293,7 +294,7 @@ dependencies {
 
     // Core Android
     // Kotlin / Coroutines
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
+    // kotlin-stdlib version managed by the Kotlin plugin — no explicit declaration needed
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
@@ -333,18 +334,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    // Compose BOM
-    val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
-    implementation(composeBom)
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
+    // Coil image loading
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.svg)
-    debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Room
@@ -400,7 +393,11 @@ dependencies {
              force("com.google.android.material:material:1.13.0")
              // Ensure KSP uses the same Hilt version as the implementation
              force("com.google.dagger:hilt-android:2.59.2")
-             force("com.google.dagger:hilt-compiler:2.59.2")
+             force("com.google.dagger:hilt-android-compiler:2.59.2")
+             // Lock espresso to version Compose ui-test:1.10.5 requires
+             force("androidx.test.espresso:espresso-core:3.5.0")
+             force("androidx.test.espresso:espresso-contrib:3.5.0")
+             force("androidx.test.espresso:espresso-intents:3.5.0")
          }
     }
 
@@ -486,9 +483,7 @@ dependencies {
     // Vertex AI / Gemini
     implementation(libs.generativeai)
 
-    // YukiHookAPI (Xposed)
-    implementation(libs.yukihookapi.api)
-    ksp(libs.yukihookapi.ksp)
+    // YukiHookAPI (Xposed) — ksp declared once above, no duplicate
     compileOnly(libs.xposed.api)
 
     // Aura → ReactiveDesign (Creative UI & Collaboration)
@@ -525,7 +520,12 @@ dependencies {
     implementation(project(":agents:growthmetrics:identity"))
     implementation(project(":agents:growthmetrics:progression"))
     implementation(project(":agents:growthmetrics:tasker"))
-
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     // Central Core Module
     implementation(project(":core-module"))
 }
@@ -555,16 +555,6 @@ configurations.all {
 configurations.configureEach {
     if (name.contains("runtimeClasspath", ignoreCase = true) ||
         name.contains("compileClasspath", ignoreCase = true)
-    ) {
+    )
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
-}
-
-
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }
