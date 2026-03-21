@@ -1,30 +1,17 @@
 package dev.aurakai.auraframefx.domains.cascade.ai.base
 
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
-import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-
 
 /**
  * Genesis Base Agent Implementation
@@ -73,6 +60,7 @@ abstract class BaseAgent(
             emit(response)
 
         } catch (e: Exception) {
+            emit(handleError(e))
         }
     }
 
@@ -244,4 +232,3 @@ abstract class BaseAgent(
         // Default no-op: agents should override this to participate in the collective
     }
 }
-

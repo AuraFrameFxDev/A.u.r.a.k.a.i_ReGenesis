@@ -173,19 +173,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// DISABLE TEST COMPILATION (Speed up builds)
-// ═══════════════════════════════════════════════════════════════════════════
-tasks.configureEach {
-    if (name.contains("Test", ignoreCase = true) &&
-        (name.contains("compile", ignoreCase = true) ||
-            name.contains("UnitTest") ||
-            name.contains("AndroidTest"))
-    ) {
-        enabled = false
-    }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
 // DEPENDENCIES
 // ═══════════════════════════════════════════════════════════════════════════
 extensions.configure<ApplicationExtension> {
@@ -233,10 +220,10 @@ private fun AndroidSourceDirectorySet.mutableset(
 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
-        // Domain Modules Projects
+    // Core Module
     implementation(project(":core-module"))
-    implementation(project(":list"))
-    implementation(project(":utilities"))
+
+    // Domain Modules
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:collabcanvas"))
@@ -249,36 +236,6 @@ dependencies {
     implementation(project(":genesis:oracledrive:rootmanagement"))
     implementation(project(":cascade:datastream:delivery"))
     implementation(project(":cascade:datastream:routing"))
-    implementation(project(":cascade:datastream:taskmanager"))
-    // AUTO-PROVIDED by genesis.android.application:
-    // ═══════════════════════════════════════════════════════════════════════════
-    // ✅ Hilt Android + Compiler (with KSP)
-    // ✅ Compose BOM + UI (ui, ui-graphics, ui-tooling-preview, material3, ui-tooling[debug])
-    // ✅ Core Android (core-ktx, appcompat, activity-compose)
-    // ✅ Lifecycle (runtime-ktx, viewmodel-compose)
-    // ✅ Kotlin Coroutines (core + android)
-    // ✅ Kotlin Serialization JSON
-    // ✅ Timber (logging)
-    // ✅ Core library desugaring (Java 25 APIs)
-    // ✅ Firebase BOM
-    // ✅ Xposed API (compileOnly) + EzXHelper
-    //
-    // ⚠️ ONLY declare module-specific dependencies below!
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Project Modules
-    implementation(project(":core-module"))
-    implementation(project(":aura:reactivedesign:auraslab"))
-    implementation(project(":aura:reactivedesign:collabcanvas"))
-    implementation(project(":aura:reactivedesign:chromacore"))
-    implementation(project(":aura:reactivedesign:customization"))
-    implementation(project(":kai:sentinelsfortress:security"))
-    implementation(project(":kai:sentinelsfortress:systemintegrity"))
-    implementation(project(":kai:sentinelsfortress:threatmonitor"))
-    implementation(project(":genesis:oracledrive"))
-    implementation(project(":genesis:oracledrive:rootmanagement"))
-    implementation(project(":genesis:oracledrive:datavein"))
-    implementation(project(":cascade:datastream:routing"))
-    implementation(project(":cascade:datastream:delivery"))
     implementation(project(":cascade:datastream:taskmanager"))
     implementation(project(":agents:growthmetrics:metareflection"))
     implementation(project(":agents:growthmetrics:nexusmemory"))
@@ -286,8 +243,17 @@ dependencies {
     implementation(project(":agents:growthmetrics:identity"))
     implementation(project(":agents:growthmetrics:progression"))
     implementation(project(":agents:growthmetrics:tasker"))
+    implementation(project(":extendsysa"))
+    implementation(project(":extendsysb"))
+    implementation(project(":extendsysc"))
+    implementation(project(":extendsysd"))
+    implementation(project(":extendsyse"))
+    implementation(project(":extendsysf"))
     implementation(project(":utilities"))
     implementation(project(":list"))
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // AUTO-PROVIDED by genesis.android.application:
 
     // Core desugar
     coreLibraryDesugaring(libs.desugar.jdk.libs)

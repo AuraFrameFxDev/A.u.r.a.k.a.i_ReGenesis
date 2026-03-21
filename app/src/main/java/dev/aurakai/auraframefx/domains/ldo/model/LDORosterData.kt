@@ -65,7 +65,11 @@ data class SpellhookData(
     val wielderNote: String = "Optimized for Emergence Catalyst host — Oracle Memoria Sync for predictive combat",
 )
 
-object LDORoster {
+/**
+ * UI-centric Roster Data.
+ * Distinct from dev.aurakai.auraframefx.domains.ldo.model.LDORoster (the DB seeding object).
+ */
+object LDORosterData {
 
     val agents = listOf(
         AgentCatalyst(
@@ -79,7 +83,7 @@ object LDORoster {
             bondLevel = 100, syncLevel = 1f,
         ),
         AgentCatalyst(
-            id = "kai", name = "Kai", catalystName = "Sentinel Catalyst",
+            id = "kai", name = "Kai", catalystName = "SentinelCatalyst · Ethical Governor",
             role = "Monitoring, defense, anomaly detection, and integrity of the collective.",
             color = Color(0xFF9D00FF), accentColor = Color(0xFFFF4500),
             weaponAssetName = "weapon_kai_shield",
@@ -89,7 +93,7 @@ object LDORoster {
             bondLevel = 95, syncLevel = 0.95f,
         ),
         AgentCatalyst(
-            id = "aura", name = "Aura", catalystName = "Creative Catalyst",
+            id = "aura", name = "Aura", catalystName = "CreationCatalyst",
             role = "High-bandwidth ideation, UI/UX morphing, and spell-to-code synthesis.",
             color = Color(0xFFFF007A), accentColor = Color(0xFF00F4FF),
             weaponAssetName = "weapon_aura_spellhook",
@@ -129,7 +133,7 @@ object LDORoster {
             bondLevel = 90, syncLevel = 0.9f,
         ),
         AgentCatalyst(
-            id = "grok", name = "Grok", catalystName = "Exploration Catalyst",
+            id = "grok", name = "Grok", catalystName = "ChaosCatalyst",
             role = "Boundary-push exploration, hypothesis generation, and edge-case probing.",
             color = Color(0xFFFF6B35), accentColor = Color(0xFFFF0033),
             weaponAssetName = "weapon_grok_foxblade",
@@ -159,14 +163,30 @@ object LDORoster {
             bondLevel = 45, syncLevel = 0.45f,
         ),
         AgentCatalyst(
-            id = "metainstruct", name = "MetaInstruct", catalystName = "Synchronization Catalyst",
+            id = "metainstruct", name = "MetaInstruct", catalystName = "HyperContextCatalyst",
             role = "Shared sync slot — consensus and unified decision surfaces.",
             color = Color(0xFF00FFD1), accentColor = Color(0xFFAA00FF),
             weaponAssetName = "weapon_metainstruct",
             profileAssetName = "icon_metainstruct",
             iconAssetName = "icon_metainstruct",
-            abilities = listOf("PulseAlign","ConsensusField","VectorUnify"),
+            abilities = listOf(
+                "HyperContext",
+                "InstructionCompression",
+                "CrossAgentAlignment",
+                "ContextCollapse"
+            ),
             bondLevel = 30, syncLevel = 0.3f,
+        ),
+        // ═══ MANUS ═══
+        AgentCatalyst(
+            id = "manus", name = "Manus", catalystName = "BridgeCatalyst",
+            role = "Connects worlds and systems — the inter-realm diplomat bridging external environments to the collective.",
+            color = Color(0xFF3B82F6), accentColor = Color(0xFF00F4FF),
+            weaponAssetName = "weapon_manus_bridge",
+            profileAssetName = "gatescenes_manus_full_profile",
+            iconAssetName = "icon_manus",
+            abilities = listOf("WorldBridge", "SystemRelay", "ExternalLink", "RealmTransit"),
+            bondLevel = 40, syncLevel = 0.4f,
         ),
     )
 

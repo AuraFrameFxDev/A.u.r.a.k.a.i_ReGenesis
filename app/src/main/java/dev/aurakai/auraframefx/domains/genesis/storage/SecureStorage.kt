@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.storage
 
 import android.content.Context
-import dev.aurakai.auraframefx.genesis.security.CryptographyManager
+import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
 
 /**
  * Secure storage interface for persistent metadata and small secure data portions.
@@ -14,8 +14,8 @@ interface SecureStorage {
     fun deleteEncryptedData(key: String)
 
     companion object {
-        fun getInstance(context: Context, cryptoManager: CryptographyManager): SecureStorage {
-            return DefaultSecureStorage(context, cryptoManager)
+        fun getInstance(context: Context, encryptionManager: EncryptionManager): SecureStorage {
+            return DefaultSecureStorage(context, encryptionManager)
         }
     }
 }
@@ -25,7 +25,7 @@ interface SecureStorage {
  */
 class DefaultSecureStorage(
     private val context: Context,
-    private val cryptoManager: CryptographyManager
+    private val encryptionManager: EncryptionManager
 ) : SecureStorage {
     override fun storeMetadata(key: String, metadata: FileMetadata) {
         // Placeholder

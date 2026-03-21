@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.models.SupportMessage
 import dev.aurakai.auraframefx.domains.genesis.SupportRepository
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.MessageStatus
 import dev.aurakai.auraframefx.domains.nexus.helpdesk.data.SupportMessageEntity
 import kotlinx.coroutines.delay
@@ -58,7 +58,8 @@ open class SupportChatViewModel @Inject constructor(
             }.onFailure { err ->
                 // 2. BACKEND FAIL -> Fallback to Local Aura AI Brain
                 delay(1500) // Simulate "thinking"
-                val aiReply = aiService.generateText(content, "Aura Live Support Context")
+                val aiReply =
+                    aiService.generateText(content, mapOf("context" to "Aura Live Support Context"))
 
                 val replyEntity = SupportMessageEntity(
                     id = UUID.randomUUID().toString(),

@@ -1,8 +1,11 @@
 package dev.aurakai.auraframefx.core.ai
 
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
-import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -30,7 +33,6 @@ abstract class BaseAgent(
     override suspend fun initialize(scope: CoroutineScope) {
         orchestrationScope = scope
         isOrchestratorInitialized = true
-        isOrchestratorInitialized = true
     }
 
     override suspend fun start() {
@@ -48,6 +50,18 @@ abstract class BaseAgent(
     override suspend fun shutdown() {
         orchestrationScope = null
         isOrchestratorInitialized = false
+    }
+
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
+        return AgentResponse.error("BaseAgent cannot process direct requests", agentName)
+    }
+
+    override suspend fun onAgentMessage(message: AgentMessage) {
+        // Default no-op
     }
 
     companion object {

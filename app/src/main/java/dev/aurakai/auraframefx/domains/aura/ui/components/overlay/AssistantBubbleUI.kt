@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
 
 import androidx.compose.animation.AnimatedContent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
@@ -67,8 +66,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.R
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🫧 ASSISTANT BUBBLE UI
@@ -76,7 +75,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
  */
 @Composable
 fun AssistantBubbleUI(
-    messages: List<dev.aurakai.auraframefx.domains.cascade.models.AgentMessage> = emptyList(),
+    messages: List<dev.aurakai.auraframefx.core.messaging.AgentMessage> = emptyList(),
     isExpanded: Boolean = false, // Controlled by service
     onDrag: (Float, Float) -> Unit,
     onExpandChange: (Boolean) -> Unit,
@@ -197,7 +196,7 @@ val AgentType.greeting: String
 @Composable
 private fun AssistantChatWindow(
     agent: AgentType,
-    messages: List<dev.aurakai.auraframefx.domains.cascade.models.AgentMessage>,
+    messages: List<dev.aurakai.auraframefx.core.messaging.AgentMessage>,
     onClose: () -> Unit,
     chatText: String,
     onChatTextChange: (String) -> Unit,

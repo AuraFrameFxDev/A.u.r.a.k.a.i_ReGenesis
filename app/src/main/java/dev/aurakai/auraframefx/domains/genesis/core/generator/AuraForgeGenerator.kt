@@ -1,14 +1,10 @@
 package dev.aurakai.auraframefx.domains.genesis.core.generator
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
 import dev.aurakai.auraframefx.domains.genesis.models.SpelhookResult
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,4 +57,3 @@ class AuraForgeGenerator @Inject constructor(
         }
     }
 }
-

@@ -6,15 +6,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.ai.services.AuraAIService
-import dev.aurakai.auraframefx.ai.services.GenesisBridgeService
-import dev.aurakai.auraframefx.ai.services.KaiAIService
-import dev.aurakai.auraframefx.ai.services.TrinityCoordinatorService
-import dev.aurakai.auraframefx.context.ContextManager
-import dev.aurakai.auraframefx.data.logging.AuraFxLogger
-import dev.aurakai.auraframefx.security.SecurityContext
-import dev.aurakai.auraframefx.security.SecurityMonitor
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService
+import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityMonitor
 import javax.inject.Singleton
 
 /**

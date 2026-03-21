@@ -19,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
-import dev.aurakai.auraframefx.system.overlay.model.SystemOverlayConfig
+import com.highcapable.yukihookapi.hook.type.java.BooleanType
+import com.highcapable.yukihookapi.hook.type.java.IntType
 import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
 import dev.aurakai.auraframefx.domains.aura.ui.components.effects.ShimmerParticles
+import dev.aurakai.auraframefx.system.overlay.model.SystemOverlayConfig
 
 // Create NotchBarConfig as a type alias for SystemOverlayConfig to maintain compatibility
 typealias NotchBarConfig = SystemOverlayConfig

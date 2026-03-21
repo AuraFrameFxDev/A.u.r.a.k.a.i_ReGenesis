@@ -50,6 +50,17 @@ subprojects {
                     pickFirsts += "**/YukiHookAPIProperties.class"
                 }
             }
+
+            if (skipTests) {
+                sourceSets {
+                    getByName("test") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                    getByName("androidTest") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                }
+            }
         }
 
         if (skipTests) {
@@ -74,6 +85,17 @@ subprojects {
                     pickFirsts += "**/YukiHookAPIProperties.class"
                 }
             }
+
+            if (skipTests) {
+                sourceSets {
+                    getByName("test") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                    getByName("androidTest") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                }
+            }
         }
 
         if (skipTests) {
@@ -90,6 +112,15 @@ subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+        }
+    }
+
+    // Globally disable test tasks if skipTests is true
+    if (skipTests) {
+        tasks.configureEach {
+            if (name.contains("Test", ignoreCase = true) || this is Test) {
+                enabled = false
+            }
         }
     }
 }

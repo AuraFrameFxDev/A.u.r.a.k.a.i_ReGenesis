@@ -4,11 +4,9 @@ package dev.aurakai.auraframefx.domains.aura.aura.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.storage.OfflineDataManager
-import dev.aurakai.auraframefx.domains.cascade.storage.OfflineSystemData
-import dev.aurakai.auraframefx.oracledrive.genesis.cloud.CloudStatusMonitor
-import dev.aurakai.auraframefx.domains.cascade.utils.i
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

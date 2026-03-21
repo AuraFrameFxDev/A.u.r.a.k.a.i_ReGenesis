@@ -1,7 +1,5 @@
-package dev.aurakai.auraframefx.domains.cascade.models
+package dev.aurakai.auraframefx.core.messaging
 
-import kotlinx.serialization.Serializable
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.serialization.Serializable
 
@@ -20,6 +18,5 @@ data class AgentMessage(
     val metadata: Map<String, String> = emptyMap(),
     // Compatibility fields
     val sender: AgentType? = null,
-    val category: AgentCapabilityCategory? = null,
     val confidence: Float = 0.8f
 )

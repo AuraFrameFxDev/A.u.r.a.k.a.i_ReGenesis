@@ -1,10 +1,13 @@
 package dev.aurakai.auraframefx.core.orchestration
 
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.CoroutineScope
 
 /**
- * OrchestratableAgent: Interface contract for all managed agents.
- * Moved to core for structural synchronization.
+ * OrchestratableAgent: Interface contract for all managed agents
  */
 interface OrchestratableAgent {
 
@@ -15,32 +18,37 @@ interface OrchestratableAgent {
 
     /**
      * Initialize the agent with a dedicated coroutine scope.
-     * Called once during platform startup, before start() is called.
-     *
-     * @param scope The CoroutineScope for this agent's lifecycle
      */
     suspend fun initialize(scope: CoroutineScope)
 
     /**
      * Start agent operations and background tasks.
-     * Called after all agents have been initialized.
      */
     suspend fun start()
 
     /**
-     * Pause agent operations, releasing non-critical resources.
-     * The agent should be able to resume from this state.
+     * Pause agent operations.
      */
     suspend fun pause()
 
     /**
-     * Resume agent operations from a paused state.
+     * Resume agent operations.
      */
     suspend fun resume()
 
     /**
-     * Gracefully shutdown the agent, releasing all resources.
-     * Called during platform termination.
+     * Gracefully shutdown the agent.
      */
     suspend fun shutdown()
+
+    suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse
+
+    /**
+     * Handle an incoming message from the inter-agent communication bus.
+     */
+    suspend fun onAgentMessage(message: AgentMessage)
 }

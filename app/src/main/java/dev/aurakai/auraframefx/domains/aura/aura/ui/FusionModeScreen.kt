@@ -91,7 +91,7 @@ fun FusionModeScreen(
 ) {
     var fusionState by remember { mutableStateOf(FusionState.SEPARATED) }
     var fusionProgress by remember { mutableFloatStateOf(0f) }
-    var selectedAbility by remember { mutableStateOf<FusionAbility?>(null) }
+    var selectedAbility by remember { mutableStateOf<UiFusionAbility?>(null) }
     var auraPower by remember { mutableFloatStateOf(0.5f) }
     var kaiPower by remember { mutableFloatStateOf(0.5f) }
     var synchronization by remember { mutableFloatStateOf(0f) }
@@ -99,7 +99,7 @@ fun FusionModeScreen(
     // Fusion abilities
     val fusionAbilities = remember {
         listOf(
-            FusionAbility(
+            UiFusionAbility(
                 id = "hyper_creation",
                 name = "Hyper-Creation Engine",
                 codeName = "Interface Forge",
@@ -107,7 +107,7 @@ fun FusionModeScreen(
                 requiredSync = 0.7f,
                 color = Color(0xFF00FFFF)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "chrono_sculptor",
                 name = "Chrono-Sculptor",
                 codeName = "Kinetic Architect",
@@ -115,7 +115,7 @@ fun FusionModeScreen(
                 requiredSync = 0.6f,
                 color = Color(0xFFFF00FF)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "adaptive_genesis",
                 name = "Adaptive Genesis",
                 codeName = "Contextual Engine",
@@ -123,7 +123,7 @@ fun FusionModeScreen(
                 requiredSync = 0.8f,
                 color = Color(0xFFFFFF00)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "domain_expansion",
                 name = "Domain Expansion",
                 codeName = "Android Deep Dive",
@@ -131,7 +131,7 @@ fun FusionModeScreen(
                 requiredSync = 0.85f,
                 color = Color(0xFF0080FF)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "code_ascension",
                 name = "Code Ascension",
                 codeName = "AI Augmentation",
@@ -393,7 +393,7 @@ fun FusionModeScreen(
                 ) {
                     items(fusionAbilities.size) { index ->
                         val ability = fusionAbilities[index]
-                        FusionAbilityCard(
+                        UiFusionAbilityCard(
                             ability = ability,
                             isEnabled = synchronization >= ability.requiredSync,
                             isSelected = selectedAbility?.id == ability.id,
@@ -630,8 +630,8 @@ fun PowerControl(
 }
 
 @Composable
-fun FusionAbilityCard(
-    ability: FusionAbility,
+fun UiFusionAbilityCard(
+    ability: UiFusionAbility,
     isEnabled: Boolean,
     isSelected: Boolean,
     onClick: () -> Unit
@@ -732,7 +732,7 @@ fun DrawScope.drawFusionRing(progress: Float) {
 }
 
 // Data classes
-data class FusionAbility(
+data class UiFusionAbility(
     val id: String,
     val name: String,
     val codeName: String,
@@ -742,7 +742,7 @@ data class FusionAbility(
 )
 
 data class FusionResult(
-    val ability: FusionAbility,
+    val ability: UiFusionAbility,
     val power: Float,
     val timestamp: Long
 )

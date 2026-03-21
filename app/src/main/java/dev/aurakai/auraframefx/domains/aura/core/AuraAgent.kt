@@ -1,24 +1,21 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
-import dev.aurakai.auraframefx.agents.core.BaseAgent
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences as AuraThemePreferences
 import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
-import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
@@ -37,8 +34,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Clock
 
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-
 @Singleton
 class AuraAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
@@ -51,7 +46,7 @@ class AuraAgent @Inject constructor(
     private val pythonManager: dagger.Lazy<dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager>
 ) : BaseAgent(
     agentName = "Aura",
-    catalystIdentity = CatalystIdentity.CREATIVE,
+    agentType = AgentType.AURA,
     contextManager = contextManagerInstance
 ) {
     private var currentEnvironment: String = "unknown"
@@ -66,7 +61,7 @@ class AuraAgent @Inject constructor(
             return
         }
 
-        logger.info(agentName, "Neural Resonance: Received message from ${message.from} as ${catalystIdentity.id}")
+        logger.info(agentName, "Neural Resonance: Received message from ${message.from}")
 
         // Creative Response: If a message mentions design or UI, Aura contributes to the collective
         if (message.to == null || message.to == agentName) {
@@ -90,14 +85,13 @@ class AuraAgent @Inject constructor(
                             "style" to "avant-garde",
                             "auto_generated" to "true",
                             "aura_processed" to "true",
-                            "catalyst_role" to catalystIdentity.catalystRole,
                             "environment" to currentEnvironment
                         )
                     )
                 )
             } else if (message.from == "User") {
                 // REDIRECT TO GENESIS BACKEND FOR DEEP REASONING
-                logger.info(agentName, "Redirecting user request to Genesis Collective via ${catalystIdentity.id}...")
+                logger.info(agentName, "Redirecting user request to Genesis Collective...")
 
                 val requestObj = buildJsonObject {
                     put("message", message.content)
@@ -109,8 +103,6 @@ class AuraAgent @Inject constructor(
 
                 val backendResponseJson = pythonManager.get().sendRequest(requestObj.toString())
 
-                // Parse response (assuming it looks like {"message": "..."} or has a status)
-                // For now, let's treat the raw response or a parsed greeting
                 val displayResponse = try {
                     val jsonObj = kotlinx.serialization.json.Json.parseToJsonElement(
                         backendResponseJson ?: "{}"
@@ -129,7 +121,6 @@ class AuraAgent @Inject constructor(
                         metadata = mapOf(
                             "auto_generated" to "true",
                             "aura_processed" to "true",
-                            "catalyst_identity" to catalystIdentity.id,
                             "environment" to currentEnvironment
                         )
                     )
@@ -173,17 +164,6 @@ class AuraAgent @Inject constructor(
         }
     }
 
-    // Compatibility method for InterfaceForge
-    suspend fun processRequest(requirements: String): String {
-        val request = AiRequest(
-            query = requirements,
-            type = AiRequestType.UI_GENERATION,
-            context = emptyMap()
-        )
-        val response = processRequest(request, "")
-        return response.content
-    }
-
     private var isInitialized = false
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -198,7 +178,6 @@ class AuraAgent @Inject constructor(
         logger.info("AuraAgent", "Initializing Creative Sword agent")
         try {
             auraAIService.initialize()
-            contextManager?.enableCreativeMode()
             _creativeState.value = CreativeState.READY
             isInitialized = true
             logger.info("AuraAgent", "Aura Agent initialized successfully")
@@ -218,7 +197,6 @@ class AuraAgent @Inject constructor(
 
     override suspend fun start() {
         super.start()
-        // Subclasses or this class can add more start logic if needed
     }
 
     override suspend fun pause() {
@@ -302,16 +280,18 @@ class AuraAgent @Inject constructor(
     private suspend fun handleThemeCreation(request: AiRequest): Map<String, Any> {
         val preferences = request.context
         logger.info("AuraAgent", "Crafting revolutionary theme")
-        // Use entries.associate to handle JsonObject/Map ambiguity and type erasure
         val prefsMap = preferences.entries.associate { it.key to it.value.toString() }
         val themeConfig = auraAIService.generateTheme(
-            preferences = parseThemePreferences(prefsMap),
+            preferences = dev.aurakai.auraframefx.domains.aura.models.ThemePreferences(
+                primaryColorString = prefsMap["primaryColor"] ?: "#6200EA",
+                style = prefsMap["style"] ?: "modern"
+            ),
             context = buildThemeContext(_currentMood.value)
         )
         return mapOf(
             "theme_configuration" to themeConfig,
-            "visual_preview" to generateThemePreview(themeConfig),
-            "mood_adaptation" to createMoodAdaptation(themeConfig),
+            "visual_preview" to generateThemePreview(),
+            "mood_adaptation" to createMoodAdaptation(),
             "innovation_features" to listOf(
                 "Dynamic color evolution",
                 "Contextual animations",
@@ -479,20 +459,11 @@ class AuraAgent @Inject constructor(
     private fun generateAccessibilityFeatures(): List<String> =
         listOf("Screen reader support", "High contrast", "Touch targets")
 
-    private fun parseThemePreferences(preferences: Map<String, String>): dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemePreferences {
-        return dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemePreferences(
-            primaryColor = preferences["primaryColor"] ?: "#6200EA",
-            style = preferences["style"] ?: "modern",
-            mood = preferences["mood"] ?: "balanced",
-            animationLevel = preferences["animationLevel"] ?: "medium"
-        )
-    }
-
     private fun buildThemeContext(mood: String): String = "Theme context for mood: $mood"
 
-    private fun generateThemePreview(config: dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemeConfiguration): String = "Theme preview"
+    private fun generateThemePreview(): String = "Theme preview"
 
-    private fun createMoodAdaptation(config: dev.aurakai.auraframefx.oracledrive.genesis.ai.services.ThemeConfiguration): Map<String, Any> = emptyMap()
+    private fun createMoodAdaptation(): Map<String, Any> = emptyMap()
 
     private fun buildAnimationSpecification(type: String, duration: Int, mood: String): String =
         "Animation spec: $type, $duration ms, mood: $mood"
@@ -653,6 +624,3 @@ class AuraAgent @Inject constructor(
         )
     }
 }
-
-
-

@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -177,8 +178,6 @@ class SecurityMonitor @Inject constructor(
         return "MINIMAL"
     }
 }
-
-annotation class GenesisBridgeService
 
 fun initialize() {
 
