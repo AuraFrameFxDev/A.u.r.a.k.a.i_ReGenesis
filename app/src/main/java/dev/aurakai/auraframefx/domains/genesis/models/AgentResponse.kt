@@ -33,8 +33,7 @@ data class AgentResponse(
             agentName: String,
             agentType: AgentType = AgentType.GENESIS,
             confidence: Float = 1.0f,
-            metadata: Map<String, Any> = emptyMap(),
-            agent: AgentType
+            metadata: Map<String, Any> = emptyMap()
         ) = AgentResponse(
             content = content,
             agentName = agentName,
@@ -48,8 +47,7 @@ data class AgentResponse(
             message: String,
             agentName: String = "System",
             agentType: AgentType = AgentType.GENESIS,
-            error: String? = message,
-            agent: AgentType
+            error: String? = message
         ) = AgentResponse(
             content = message,
             agentName = agentName,

@@ -7,30 +7,20 @@
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
-<<<<<<< HEAD
-=======
     // 1. Core Android & Kotlin (The Substrate)
->>>>>>> regenesis_dev/Launch
     id("com.android.application")
 
     // 2. Dependency Injection & Processing (The Nervous System)
     id("com.google.dagger.hilt.android")
-<<<<<<< HEAD
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
-=======
-    id("com.google.devtools.ksp")
-    
+
     // 3. UI & Data (The Senses)
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
 
     // 4. Cloud & Telemetry (The External Connections)
->>>>>>> regenesis_dev/Launch
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -190,11 +180,9 @@ tasks.configureEach {
     }
 }
 
-<<<<<<< HEAD
 // ═══════════════════════════════════════════════════════════════════════════
 // DEPENDENCIES
 // ═══════════════════════════════════════════════════════════════════════════
-=======
 extensions.configure<ApplicationExtension> {
     lint {
         baseline = file("lint-baseline.xml")
@@ -238,7 +226,6 @@ private fun AndroidSourceDirectorySet.mutableset(
 ) {
 }
 
->>>>>>> regenesis_dev/Launch
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
         // Domain Modules Projects
@@ -398,16 +385,13 @@ dependencies {
     compileOnly(libs.yukihookapi.api) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-<<<<<<< HEAD
     ksp(libs.yukihookapi.ksp)
-=======
-    ksp("com.highcapable.yukihookapi:ksp-xposed:1.3.1")
 
     // Explicitly add Hilt KSP processor to avoid silent failures
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     ksp(libs.moshi.kotlin.codegen)
->>>>>>> regenesis_dev/Launch
+
 
     // Force resolution of conflicting dependencies
     configurations.all {
@@ -507,12 +491,6 @@ dependencies {
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
 
-<<<<<<< HEAD
-    implementation(libs.billing.ktx)
-    implementation(libs.shizuku.api)
-    implementation(libs.libsu.core)
-    debugImplementation(libs.leakcanary.android)
-=======
     // Aura → ReactiveDesign (Creative UI & Collaboration)
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:collabcanvas"))
@@ -581,7 +559,7 @@ configurations.configureEach {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
 }
->>>>>>> regenesis_dev/Launch
+
 
     // Testing
     testImplementation(libs.junit)
