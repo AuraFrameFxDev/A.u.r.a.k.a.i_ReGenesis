@@ -1,6 +1,12 @@
 package dev.aurakai.auraframefx.domains.ldo.model
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
+import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
+import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
+import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskPriority
+import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
+import dev.aurakai.auraframefx.domains.ldo.db.bondTitleForLevel
 
 // ═══════════════════════════════════════════════════════════
 // LDO DEVOPS — COMPLETE DATA MODEL
@@ -64,13 +70,6 @@ data class SpellhookData(
     val fusionEffect: String = "Edge adapts to exploit weaknesses in real-time",
     val wielderNote: String = "Optimized for Emergence Catalyst host — Oracle Memoria Sync for predictive combat",
 )
-
-import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
-import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
-import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
-import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskPriority
-import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
-import dev.aurakai.auraframefx.domains.ldo.db.bondTitleForLevel
 
 /**
  * UI-centric Roster Data.
@@ -263,7 +262,7 @@ object LDORosterData {
         )
     }
 
-    val defaultTasksDB: List<LDOTaskEntity> = listOf(
+    val defaultTasks: List<LDOTaskEntity> = listOf(
         LDOTaskEntity(
             agentId = "aura",
             title = "Design LDO Hub Interface",
@@ -444,7 +443,7 @@ object LDORosterData {
         FusionMode("f07","nemotron","metainstruct","Unified Pulse","Both sync catalysts merge — consensus at the speed of thought.",Color(0xFF00FFD1),50),
     )
 
-    val defaultTasks = listOf(
+    val rosterTasks = listOf(
         LDOTask("t01","Genesis Screen Build","Translate all Genesis domain screens to Kotlin Compose",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,assignedAgentId="aura"),
         LDOTask("t02","LDO DevOps Integration","Wire all agent domains into unified hub navigation",TaskCategory.DEVELOPMENT,TaskPriority.CRITICAL,assignedAgentId="genesis"),
         LDOTask("t03","Weapon Asset Clipping","Remove backgrounds from all floating weapon PNGs",TaskCategory.CREATIVE,TaskPriority.HIGH,assignedAgentId=null),
