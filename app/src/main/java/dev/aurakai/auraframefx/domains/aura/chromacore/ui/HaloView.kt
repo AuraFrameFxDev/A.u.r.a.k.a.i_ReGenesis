@@ -1,3 +1,5 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
