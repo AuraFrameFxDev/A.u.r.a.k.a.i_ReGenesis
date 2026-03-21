@@ -5,10 +5,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.core.ai.BaseAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.ScanEvent
 import dev.aurakai.auraframefx.domains.cascade.SecurityContextState
 import dev.aurakai.auraframefx.domains.cascade.SecurityMode
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
