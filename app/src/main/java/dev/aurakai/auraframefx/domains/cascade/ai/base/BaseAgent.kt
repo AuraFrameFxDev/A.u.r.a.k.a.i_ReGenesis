@@ -51,7 +51,7 @@ abstract class BaseAgent(
 
             // Record the interaction for learning
             contextManager?.recordInsight(
-                request = request.prompt,
+                request = request.query,
                 response = response.content,
                 complexity = determineComplexity(request)
             )
@@ -69,10 +69,10 @@ abstract class BaseAgent(
      * Determines the complexity level of a request
      */
     protected open fun determineComplexity(request: AiRequest): String {
-        val promptLength = request.prompt.length
+        val queryLength = request.query.length
         return when {
-            promptLength < 100 -> "simple"
-            promptLength < 500 -> "moderate"
+            queryLength < 100 -> "simple"
+            queryLength < 500 -> "moderate"
             else -> "complex"
         }
     }
@@ -81,7 +81,7 @@ abstract class BaseAgent(
      * Validates input request
      */
     protected open fun validateRequest(request: AiRequest): Boolean {
-        return request.prompt.isNotBlank()
+        return request.query.isNotBlank()
     }
 
     /**

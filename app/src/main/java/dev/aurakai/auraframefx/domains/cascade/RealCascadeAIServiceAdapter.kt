@@ -1,14 +1,12 @@
 package dev.aurakai.auraframefx.domains.cascade
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
-import javax.inject.Inject
-import javax.inject.Singleton
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Real implementation of CascadeAIService adapter.
@@ -23,7 +21,7 @@ class RealCascadeAIServiceAdapter @Inject constructor(
         // Real implementation logic
         // For now, returning a basic success response to satisfy the interface
         return AgentResponse.success(
-            content = "Real Cascade processing: ${request.prompt}",
+            content = "Real Cascade processing: ${request.query}",
             agentName = "CascadeAI",
         )
     }

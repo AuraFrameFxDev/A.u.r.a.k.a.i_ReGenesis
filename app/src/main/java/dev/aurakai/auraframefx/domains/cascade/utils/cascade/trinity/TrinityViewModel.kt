@@ -1,10 +1,8 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
-import TrinityUiState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.chromacore.ui.TrinityUiState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -131,7 +129,7 @@ open class TrinityViewModel @Inject constructor(
                     updateState {
                         it.copy(
                             lastAgentResponse = response,
-                            lastAgentType = agentType
+                            lastAgentCategory = agentType
                         )
                     }
                 }.onFailure { error ->
