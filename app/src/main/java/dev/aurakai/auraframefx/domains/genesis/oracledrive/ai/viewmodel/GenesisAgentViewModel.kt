@@ -3,13 +3,14 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentRole
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
-import dev.aurakai.auraframefx.domains.genesis.models.HistoricalTask
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_ERROR
 import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_IDLE
 import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_PROCESSING
+import dev.aurakai.auraframefx.domains.genesis.models.AgentAuthority
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRole
+import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
+import dev.aurakai.auraframefx.domains.genesis.models.HistoricalTask
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,25 +52,25 @@ class GenesisAgentViewModel @Inject constructor(
             HierarchyAgentConfig(
                 name = "Genesis",
                 role = AgentRole.HIVE_MIND,
-                priority = AgentPriority.MASTER,
+                priority = AgentAuthority.MASTER,
                 capabilities = setOf("core_ai", "coordination", "meta_analysis")
             ),
             HierarchyAgentConfig(
                 name = "Cascade",
                 role = AgentRole.ANALYTICS,
-                priority = AgentPriority.BRIDGE,
+                priority = AgentAuthority.BRIDGE,
                 capabilities = setOf("analytics", "data_processing", "pattern_recognition")
             ),
             HierarchyAgentConfig(
                 name = "Aura",
                 role = AgentRole.CREATIVE,
-                priority = AgentPriority.AUXILIARY,
+                priority = AgentAuthority.AUXILIARY,
                 capabilities = setOf("creative_writing", "ui_design", "content_generation")
             ),
             HierarchyAgentConfig(
                 name = "Kai",
                 role = AgentRole.SECURITY,
-                priority = AgentPriority.AUXILIARY,
+                priority = AgentAuthority.AUXILIARY,
                 capabilities = setOf("security_monitoring", "threat_detection", "system_protection")
             )
         )
@@ -215,7 +216,7 @@ class GenesisAgentViewModel @Inject constructor(
         return _agents.value.filter { it.role == role }
     }
 
-    fun getAgentsByPriority(priority: AgentPriority): List<HierarchyAgentConfig> {
+    fun getAgentsByPriority(priority: AgentAuthority): List<HierarchyAgentConfig> {
         return _agents.value.filter { it.priority == priority }
     }
 

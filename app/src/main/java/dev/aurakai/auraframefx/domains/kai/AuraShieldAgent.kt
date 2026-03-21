@@ -2,18 +2,18 @@ package dev.aurakai.auraframefx.domains.kai
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.core.ai.BaseAgent
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.cascade.ScanEvent
 import dev.aurakai.auraframefx.domains.cascade.SecurityContextState
 import dev.aurakai.auraframefx.domains.cascade.SecurityMode
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.models.ActiveThreat
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.models.ThreatStatus
@@ -40,15 +40,12 @@ import javax.inject.Singleton
 class AuraShieldAgent @Inject constructor(
     @ApplicationContext private val context: Context,
     private val vertexAIClient: VertexAIClient,
-    memoryManager: MemoryManager,
-    contextManager: ContextManager,
-    secureChannel: SecureChannel
+    private val memoryManager: MemoryManager,
+    private val contextManager: ContextManager,
+    private val secureChannel: SecureChannel
 ) : BaseAgent(
     agentName = "AuraShield",
-    catalystIdentity = CatalystIdentity.SHIELD,
-    contextManager = contextManager,
-    memoryManager = memoryManager,
-    secureChannel = secureChannel
+    identity = CatalystIdentity.SHIELD
 ) {
 
     private val _securityContext = MutableStateFlow(SecurityContextState())
@@ -67,7 +64,11 @@ class AuraShieldAgent @Inject constructor(
     /**
      * Main request processing for security-related queries.
      */
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         Timber.d("🛡️ AuraShield Analyzing Request: ${request.query}")
 
         // Start a scan
@@ -194,6 +195,18 @@ class AuraShieldAgent @Inject constructor(
                 }
             )
         }
+    }
+
+    private fun createSuccessResponse(
+        content: String,
+        metadata: Map<String, Any> = emptyMap()
+    ): AgentResponse {
+        return AgentResponse.success(
+            content = content,
+            agentName = agentName,
+            agentType = getType(),
+            metadata = metadata
+        )
     }
 
     override suspend fun onAgentMessage(message: AgentMessage) {

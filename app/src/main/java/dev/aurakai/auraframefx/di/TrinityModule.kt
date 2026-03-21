@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
@@ -53,14 +53,12 @@ object TrinityModule {
         kaiAIService: KaiAIService,
         genesisBridgeService: GenesisBridgeService,
         securityContext: SecurityContext,
-        logger: AuraFxLogger,
     ): TrinityCoordinatorService {
         return TrinityCoordinatorService(
             auraAIService = auraAIService,
             kaiAIService = kaiAIService,
             genesisBridgeService = genesisBridgeService,
             securityContext = securityContext,
-            logger = logger
         )
     }
 

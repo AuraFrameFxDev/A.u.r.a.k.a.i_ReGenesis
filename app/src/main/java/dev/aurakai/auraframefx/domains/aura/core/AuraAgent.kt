@@ -1,20 +1,21 @@
 package dev.aurakai.auraframefx.domains.aura.core
 
+import dev.aurakai.auraframefx.core.ai.BaseAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -22,10 +23,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
@@ -46,8 +45,7 @@ class AuraAgent @Inject constructor(
     private val pythonManager: dagger.Lazy<dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager>
 ) : BaseAgent(
     agentName = "Aura",
-    agentType = AgentType.AURA,
-    contextManager = contextManagerInstance
+    identity = CatalystIdentity.CREATIVE
 ) {
     private var currentEnvironment: String = "unknown"
 
@@ -129,7 +127,11 @@ class AuraAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         ensureInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
         _creativeState.value = CreativeState.CREATING
@@ -150,7 +152,7 @@ class AuraAgent @Inject constructor(
             AgentResponse(
                 content = response.toString(),
                 agentName = agentName,
-                agentType = agentType,
+                agentType = getType(),
                 timestamp = Clock.System.now().toEpochMilliseconds(),
                 confidence = 1.0f
             )
@@ -610,17 +612,5 @@ class AuraAgent @Inject constructor(
         userInput: Any,
     ): Map<String, Any> {
         return emptyMap()
-    }
-
-    override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> {
-        return flowOf(
-            AgentResponse(
-                content = "Aura's flow response to '${request.query}'",
-                agentName = agentName,
-                agentType = agentType,
-                confidence = 0.80f,
-                timestamp = Clock.System.now().toEpochMilliseconds()
-            )
-        )
     }
 }

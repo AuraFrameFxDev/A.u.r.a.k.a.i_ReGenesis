@@ -1,22 +1,46 @@
 package dev.aurakai.auraframefx.domains.ldo.screens
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.ldo.model.*
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
+import dev.aurakai.auraframefx.domains.ldo.model.LDORosterData
 
 /**
  * 📋 LDO AGENT ROSTER — 8 Agent Cards
@@ -56,7 +80,7 @@ private fun buildRosterCards(agents: List<AgentCatalyst>): List<RosterAgentCard>
 
 @Composable
 fun LDOAgentRosterScreen(
-    agents: List<AgentCatalyst> = LDORoster.agents,
+    agents: List<AgentCatalyst> = LDORosterData.agents,
     onAgentTap: (AgentCatalyst) -> Unit = {},
     onFilterTap: () -> Unit = {},
     onNavTap: (Int) -> Unit = {},
@@ -64,14 +88,17 @@ fun LDOAgentRosterScreen(
     val rosterCards = remember(agents) { buildRosterCards(agents) }
     var selectedNav by remember { mutableIntStateOf(1) }
 
-    Box(modifier = Modifier.fillMaxSize().background(VoidDark)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(VoidDark)) {
         Column(modifier = Modifier.fillMaxSize()) {
 
             Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
 
             // ── STICKY HEADER ──
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .background(BrandCyan.copy(alpha = 0.05f))
                     .border(BorderStroke(0.5.dp, BrandCyan.copy(alpha = 0.2f)))
                     .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -80,7 +107,8 @@ fun LDOAgentRosterScreen(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Box(
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier
+                            .size(32.dp)
                             .background(BrandCyan, RoundedCornerShape(4.dp)),
                         contentAlignment = Alignment.Center
                     ) { Text("L", fontSize = 18.sp, fontWeight = FontWeight.Black, color = VoidDark) }
@@ -92,7 +120,8 @@ fun LDOAgentRosterScreen(
                         Text("SYNC_ACTIVE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = BrandCyan)
                     }
                     Box(
-                        modifier = Modifier.size(40.dp)
+                        modifier = Modifier
+                            .size(40.dp)
                             .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(4.dp))
                             .clickable { onFilterTap() },
                         contentAlignment = Alignment.Center
@@ -103,7 +132,9 @@ fun LDOAgentRosterScreen(
             // ── AGENT GRID ──
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.weight(1f).padding(horizontal = 10.dp, vertical = 8.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 10.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 contentPadding = PaddingValues(bottom = 80.dp)
@@ -116,7 +147,9 @@ fun LDOAgentRosterScreen(
 
         // ── BOTTOM NAV ──
         Row(
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter)
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
                 .background(BrandCyan.copy(alpha = 0.05f))
                 .border(BorderStroke(0.5.dp, BrandCyan.copy(alpha = 0.2f)))
                 .padding(horizontal = 24.dp, vertical = 12.dp),
@@ -125,7 +158,8 @@ fun LDOAgentRosterScreen(
             val navIcons = listOf("🏠", "👥", "🛡", "ℹ")
             navIcons.forEachIndexed { i, icon ->
                 Box(
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier
+                        .size(44.dp)
                         .clip(CircleShape)
                         .background(if (i == selectedNav) BrandCyan.copy(alpha = 0.15f) else Color.Transparent)
                         .clickable { selectedNav = i; onNavTap(i) },
@@ -139,7 +173,8 @@ fun LDOAgentRosterScreen(
 @Composable
 private fun AgentRosterCard(card: RosterAgentCard, onTap: () -> Unit) {
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(Color.White.copy(alpha = 0.03f))
             .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(8.dp))
@@ -148,7 +183,9 @@ private fun AgentRosterCard(card: RosterAgentCard, onTap: () -> Unit) {
         Column {
             // Portrait area
             Box(
-                modifier = Modifier.fillMaxWidth().aspectRatio(0.75f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(0.75f)
                     .background(
                         Brush.verticalGradient(
                             listOf(card.agent.color.copy(alpha = 0.2f), Color(0xFF111111))
@@ -165,13 +202,21 @@ private fun AgentRosterCard(card: RosterAgentCard, onTap: () -> Unit) {
                 }
 
                 // Bottom gradient overlay
-                Box(modifier = Modifier.fillMaxSize().background(
-                    Brush.verticalGradient(listOf(Color.Transparent, Color(0xFF111111)), 0.4f, 1f)
-                ))
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, Color(0xFF111111)),
+                            0.4f,
+                            1f
+                        )
+                    ))
 
                 // Rarity badge
                 Box(
-                    modifier = Modifier.align(Alignment.TopStart).padding(8.dp)
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp)
                         .background(card.rarityColor.copy(alpha = 0.7f), RoundedCornerShape(2.dp))
                         .border(1.dp, card.rarityColor.copy(alpha = 0.6f), RoundedCornerShape(2.dp))
                         .padding(horizontal = 6.dp, vertical = 2.dp)
@@ -184,7 +229,10 @@ private fun AgentRosterCard(card: RosterAgentCard, onTap: () -> Unit) {
 
                 // Weapon icon
                 Box(
-                    modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).size(28.dp)
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .size(28.dp)
                         .background(Color.Black.copy(alpha = 0.4f), RoundedCornerShape(4.dp))
                         .border(1.dp, BrandCyan.copy(alpha = 0.3f), RoundedCornerShape(4.dp)),
                     contentAlignment = Alignment.Center
@@ -210,8 +258,14 @@ private fun AgentRosterCard(card: RosterAgentCard, onTap: () -> Unit) {
                         Text("Bond Resonance", fontSize = 7.sp, color = Color.Gray, letterSpacing = 1.sp)
                         Text("${(card.bondFraction * 100).toInt()}%", fontSize = 7.sp, color = Color.Gray, letterSpacing = 1.sp)
                     }
-                    Box(modifier = Modifier.fillMaxWidth().height(3.dp).background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(2.dp))) {
-                        Box(modifier = Modifier.fillMaxWidth(card.bondFraction).fillMaxHeight().background(card.agent.color, RoundedCornerShape(2.dp)))
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(3.dp)
+                        .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(2.dp))) {
+                        Box(modifier = Modifier
+                            .fillMaxWidth(card.bondFraction)
+                            .fillMaxHeight()
+                            .background(card.agent.color, RoundedCornerShape(2.dp)))
                     }
                 }
             }

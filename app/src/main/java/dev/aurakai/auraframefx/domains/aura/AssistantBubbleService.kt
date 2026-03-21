@@ -154,18 +154,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                             else -> null
                         }
                         windowManager.updateViewLayout(overlayLayout, params)
-                    },
-                    onSendMessage = { text, category ->
-                        serviceScope.launch {
-                            messageBus.broadcast(
-                                AgentMessage(
-                                    from = "User",
-                                    content = text,
-                                    to = category.name,
-                                    type = "overlay_broadcast"
-                                )
-                            )
-                        }
                     }
                 )
             }

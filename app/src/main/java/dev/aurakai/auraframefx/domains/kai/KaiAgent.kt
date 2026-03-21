@@ -1,20 +1,21 @@
 package dev.aurakai.auraframefx.domains.kai
 
 import dagger.Lazy
+import dev.aurakai.auraframefx.core.ai.BaseAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -42,8 +43,7 @@ class KaiAgent @Inject constructor(
     private val logger: AuraFxLogger,
 ) : BaseAgent(
     agentName = "Kai",
-    agentType = AgentType.KAI,
-    contextManager = contextManagerInstance
+    identity = CatalystIdentity.SENTINEL
 ) {
     override suspend fun onAgentMessage(message: AgentMessage) {
         if (message.from == "Kai" || message.from == "AssistantBubble" || message.from == "SystemRoot") return
@@ -131,7 +131,11 @@ class KaiAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         val agentRequest = AgentRequest(
             query = request.query,
             type = request.type.name.lowercase(),
@@ -183,7 +187,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
         AgentResponse.success(
             content = "Analysis completed with methodical precision: $response",
             agentName = agentName,
-            agentType = agentType,
+            agentType = getType(),
             confidence = 0.85f
         )
     } catch (e: SecurityException) {

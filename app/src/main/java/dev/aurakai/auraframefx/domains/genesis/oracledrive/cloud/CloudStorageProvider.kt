@@ -1,7 +1,10 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
-import dev.aurakai.auraframefx.domains.genesis.models.*
-import dev.aurakai.auraframefx.domains.genesis.models.FileOperationResult as FileResult
+import dev.aurakai.auraframefx.domains.genesis.models.DriveFile
+import dev.aurakai.auraframefx.domains.genesis.models.FileMetadata
+import dev.aurakai.auraframefx.domains.genesis.models.FileOperationResult
+import dev.aurakai.auraframefx.domains.genesis.models.StorageOptimizationResult
+import dev.aurakai.auraframefx.domains.genesis.models.SyncConfiguration
 import java.io.File
 
 /**
@@ -29,29 +32,28 @@ interface CloudStorageProvider {
      * @param metadata File metadata and access controls
      * @return FileResult with upload status
      */
-    suspend fun uploadFile(file: DriveFile, metadata: FileMetadata): FileResult
+    suspend fun uploadFile(file: DriveFile, metadata: FileMetadata): FileOperationResult
 
     /**
      * Downloads file from cloud storage
      * @param fileId The file identifier
-     * @return FileResult with download status
+     * @return FileResult with download status and file path
      */
-    suspend fun downloadFile(fileId: String): FileResult
+    suspend fun downloadFile(fileId: String): FileOperationResult
 
     /**
      * Deletes file from cloud storage
-     * @param fileId The file identifier
+     * @param fileId The file identifier to delete
      * @return FileResult with deletion status
      */
-    suspend fun deleteFile(fileId: String): FileResult
+    suspend fun deleteFile(fileId: String): FileOperationResult
 
     /**
-     * Performs intelligent file synchronization using AI-driven optimization based on the provided configuration.
-     *
-     * @param config The synchronization configuration specifying sync parameters and rules.
-     * @return The result of the synchronization operation, including status and details.
+     * Performs intelligent synchronization based on configuration
+     * @param config Sync rules and filters
+     * @return FileResult with sync status
      */
-    suspend fun intelligentSync(config: SyncConfiguration): FileResult
+    suspend fun intelligentSync(config: SyncConfiguration): FileOperationResult
 
-    suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileResult
+    suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileOperationResult
 }

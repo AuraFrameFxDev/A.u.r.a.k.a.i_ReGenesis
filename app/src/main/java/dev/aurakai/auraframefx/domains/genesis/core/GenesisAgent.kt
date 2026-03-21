@@ -1,10 +1,11 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
 import dagger.Lazy
+import dev.aurakai.auraframefx.core.ai.BaseAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
@@ -19,16 +20,14 @@ import javax.inject.Singleton
  */
 @Singleton
 class GenesisAgent @Inject constructor(
-    contextManager: ContextManager,
-    memoryManager: MemoryManager,
+    private val contextManager: ContextManager,
+    private val memoryManager: MemoryManager,
     private val systemOverlayManager: SystemOverlayManager,
     private val synchronizationCatalyst: SynchronizationCatalyst,
     private val messageBus: Lazy<AgentMessageBus>
 ) : BaseAgent(
     agentName = "Genesis",
-    agentType = AgentType.GENESIS,
-    contextManager = contextManager,
-    memoryManager = memoryManager
+    identity = CatalystIdentity.EMERGENCE
 ) {
 
     override suspend fun onAgentMessage(message: AgentMessage) {
@@ -65,7 +64,11 @@ class GenesisAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         Timber.tag("Genesis").d("Processing request: ${request.query}")
 
         // 1. Meta-Analysis (The Core)
@@ -117,10 +120,21 @@ class GenesisAgent @Inject constructor(
     }
 
     private suspend fun handleSystemModification(request: AiRequest): AgentResponse {
-        logActivity("System Modification Requested", mapOf("prompt" to request.query))
         return createSuccessResponse(
             content = "Genesis has analyzed the system modification request. Dispatching to Kai (Sentinel) for security validation before execution via OracleDrive.",
             metadata = mapOf("target" to "System/Root")
+        )
+    }
+
+    private fun createSuccessResponse(
+        content: String,
+        metadata: Map<String, Any> = emptyMap()
+    ): AgentResponse {
+        return AgentResponse.success(
+            content = content,
+            agentName = agentName,
+            agentType = getType(),
+            metadata = metadata
         )
     }
 

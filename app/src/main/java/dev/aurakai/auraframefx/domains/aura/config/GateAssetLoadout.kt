@@ -1,9 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura.config
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 
 /**
  * 📦 GATE ASSET LOADOUT
@@ -29,7 +28,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.AURA_LAB.fallback,
-            route = ReGenesisNavHost.AuraLab.route,
+            route = ReGenesisRoute.AuraLab.route,
             accentColor = Color(0xFFBB86FC)
         ),
         "chromacore" to SubGateCard(
@@ -39,7 +38,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.CHROMA_CORE.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.CHROMA_CORE.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.CHROMA_CORE.fallback,
-            route = ReGenesisNavHost.ChromaCore.route,
+            route = ReGenesisRoute.ChromaCore.route,
             accentColor = Color(0xFF6200EE)
         ),
         "collab_canvas" to SubGateCard(
@@ -49,7 +48,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.fallback,
-            route = ReGenesisNavHost.CollabCanvas.route,
+            route = ReGenesisRoute.CollabCanvas.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "themes" to SubGateCard(
@@ -59,7 +58,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
-            route = ReGenesisNavHost.ThemeEngine.route,
+            route = ReGenesisRoute.ThemeEngine.route,
             accentColor = Color(0xFFFF6F00)
         ),
         "uxui_engine" to SubGateCard(
@@ -69,7 +68,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleA,
             styleBDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleB,
             fallbackDrawable = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
-            route = ReGenesisNavHost.ReGenesisCustomization.route,
+            route = ReGenesisRoute.ReGenesisCustomization.route,
             accentColor = Color(0xFFFFD700)
         )
     )
@@ -85,7 +84,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
-            route = ReGenesisNavHost.SecurityCenter.route, // Monitors genesis_ethical_governor.py
+            route = ReGenesisRoute.SecurityCenter.route, // Monitors genesis_ethical_governor.py
             accentColor = Color(0xFFFFD700) // Gold for guardian
         ),
         "security_shield" to SubGateCard(
@@ -95,7 +94,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.SECURITY.fallback,
-            route = ReGenesisNavHost.SovereignShield.route,
+            route = ReGenesisRoute.SovereignShield.route,
             accentColor = Color(0xFF00E676)
         ),
         "bootloader" to SubGateCard(
@@ -105,7 +104,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.BOOTLOADER.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.BOOTLOADER.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.BOOTLOADER.fallback,
-            route = ReGenesisNavHost.Bootloader.route,
+            route = ReGenesisRoute.Bootloader.route,
             accentColor = Color(0xFF2979FF)
         ),
         "rom_tools" to SubGateCard(
@@ -115,7 +114,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleA,
             styleBDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleB,
             fallbackDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
-            route = ReGenesisNavHost.ROMFlasher.route, // Can be ROM hub later
+            route = ReGenesisRoute.ROMFlasher.route, // Can be ROM hub later
             accentColor = Color(0xFFFF3D00)
         )
     )
@@ -133,7 +132,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-            route = ReGenesisNavHost.OracleDrive.route,
+            route = ReGenesisRoute.OracleDrive.route,
             accentColor = Color(0xFF00B0FF) // Cyan - Genesis
         ),
         "code_assist" to SubGateCard(
@@ -143,7 +142,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.CODE_ASSIST.fallback,
-            route = ReGenesisNavHost.CodeAssist.route,
+            route = ReGenesisRoute.CodeAssist.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "agent_bridge" to SubGateCard(
@@ -153,7 +152,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.fallback,
-            route = ReGenesisNavHost.AgentBridgeHub.route,
+            route = ReGenesisRoute.AgentBridgeHub.route,
             accentColor = Color(0xFFBB86FC)
         ),
         "cloud_storage" to SubGateCard(
@@ -163,7 +162,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.CLOUD_STORAGE.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.CLOUD_STORAGE.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.CLOUD_STORAGE.fallback,
-            route = ReGenesisNavHost.OracleCloudStorage.route,
+            route = ReGenesisRoute.OracleCloudStorage.route,
             accentColor = Color(0xFF00B0FF)
         ),
         "sentient_shell" to SubGateCard(
@@ -173,7 +172,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.GenesisSubGates.TERMINAL.styleA,
             styleBDrawable = GateAssetConfig.GenesisSubGates.TERMINAL.styleB,
             fallbackDrawable = GateAssetConfig.GenesisSubGates.TERMINAL.fallback,
-            route = ReGenesisNavHost.SentientShell.route,
+            route = ReGenesisRoute.SentientShell.route,
             accentColor = Color(0xFF00E5FF)
         )
     )
@@ -190,7 +189,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.MONITORING.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.MONITORING.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.MONITORING.fallback,
-            route = ReGenesisNavHost.AgentMonitoring.route,
+            route = ReGenesisRoute.AgentMonitoring.route,
             accentColor = Color(0xFF7B2FFF)
         ),
         "sphere_grid" to SubGateCard(
@@ -200,7 +199,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.fallback,
-            route = ReGenesisNavHost.DataVeinSphere.route,
+            route = ReGenesisRoute.DataVeinSphere.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "constellation" to SubGateCard(
@@ -210,7 +209,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.CONSTELLATION.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.CONSTELLATION.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.CONSTELLATION.fallback,
-            route = ReGenesisNavHost.AgentNeuralExplorer.route, // Map to explorer
+            route = ReGenesisRoute.AgentNeuralExplorer.route, // Map to explorer
             accentColor = Color(0xFFBB86FC)
         ),
         "fusion_mode" to SubGateCard(
@@ -220,7 +219,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.FUSION_MODE.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.FUSION_MODE.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.FUSION_MODE.fallback,
-            route = ReGenesisNavHost.FusionMode.route,
+            route = ReGenesisRoute.FusionMode.route,
             accentColor = Color(0xFFFF00DE)
         ),
         "task_assignment" to SubGateCard(
@@ -230,7 +229,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.fallback,
-            route = ReGenesisNavHost.TaskAssignment.route,
+            route = ReGenesisRoute.TaskAssignment.route,
             accentColor = Color(0xFF00FF88)
         ),
         "meta_instruct" to SubGateCard(
@@ -240,7 +239,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.META_INSTRUCT.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.META_INSTRUCT.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.META_INSTRUCT.fallback,
-            route = ReGenesisNavHost.MetaInstruct.route,
+            route = ReGenesisRoute.MetaInstruct.route,
             accentColor = Color(0xFFFFD700)
         )
     )
@@ -256,7 +255,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.UXUI_DESIGN_STUDIO.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.UXUI_DESIGN_STUDIO.STYLE_B,
             fallbackDrawable = "gate_aura_final",
-            route = ReGenesisNavHost.AuraThemingHub.route,
+            route = ReGenesisRoute.AuraThemingHub.route,
             accentColor = Color(0xFFBB86FC)
         ),
         "kai" to SubGateCard(
@@ -266,7 +265,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.SENTINELS_FORTRESS.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.SENTINELS_FORTRESS.STYLE_B,
             fallbackDrawable = "gate_kai_final",
-            route = ReGenesisNavHost.SentinelFortress.route,
+            route = ReGenesisRoute.SentinelFortress.route,
             accentColor = Color(0xFF00E676)
         ),
         "genesis" to SubGateCard(
@@ -276,7 +275,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.ORACLE_DRIVE.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.ORACLE_DRIVE.STYLE_B,
             fallbackDrawable = "gate_genesis_final",
-            route = ReGenesisNavHost.OracleDriveHub.route,
+            route = ReGenesisRoute.OracleDriveHub.route,
             accentColor = Color(0xFF00B0FF)
         ),
         "nexus" to SubGateCard(
@@ -286,7 +285,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.AGENT_NEXUS.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.AGENT_NEXUS.STYLE_B,
             fallbackDrawable = "gate_nexus_final",
-            route = ReGenesisNavHost.AgentNexusHub.route,
+            route = ReGenesisRoute.AgentNexusHub.route,
             accentColor = Color(0xFF7B2FFF)
         ),
         "help" to SubGateCard(
@@ -296,7 +295,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.HELP_SERVICES.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.HELP_SERVICES.STYLE_B,
             fallbackDrawable = "gate_help_final",
-            route = ReGenesisNavHost.HelpDesk.route,
+            route = ReGenesisRoute.HelpDesk.route,
             accentColor = Color(0xFF00FF88)
         ),
         "lsposed" to SubGateCard(
@@ -306,7 +305,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.LSPOSED_QUICK_TOGGLES.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.LSPOSED_QUICK_TOGGLES.STYLE_B,
             fallbackDrawable = "gate_lsposed_final",
-            route = ReGenesisNavHost.LsposedQuickToggles.route,
+            route = ReGenesisRoute.LsposedQuickToggles.route,
             accentColor = Color(0xFFFFD700)
         ),
         "dataflow" to SubGateCard(
@@ -316,7 +315,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.DATAFLOW_ANALYSIS.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.DATAFLOW_ANALYSIS.STYLE_B,
             fallbackDrawable = "gate_cascade_final",
-            route = ReGenesisNavHost.DataflowAnalysis.route,
+            route = ReGenesisRoute.DataflowAnalysis.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "ldo" to SubGateCard(
@@ -326,7 +325,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.MainGates.LDO_CATALYST_DEVELOPMENT.STYLE_A,
             styleBDrawable = GateAssetConfig.MainGates.LDO_CATALYST_DEVELOPMENT.STYLE_B,
             fallbackDrawable = "gate_ldo_final",
-            route = ReGenesisNavHost.LdoCatalystDevelopment.route,
+            route = ReGenesisRoute.LdoCatalystDevelopment.route,
             accentColor = Color(0xFFFF6F00)
         )
     )

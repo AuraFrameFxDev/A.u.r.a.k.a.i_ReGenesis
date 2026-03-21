@@ -1,7 +1,14 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
-import dev.aurakai.auraframefx.domains.genesis.models.*
+import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentConnectionState
+import dev.aurakai.auraframefx.domains.genesis.models.ConsciousnessLevel
+import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.models.FileManagementCapabilities
+import dev.aurakai.auraframefx.domains.genesis.models.OracleConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.models.OraclePermission
+import dev.aurakai.auraframefx.domains.genesis.models.StorageExpansionState
+import dev.aurakai.auraframefx.domains.genesis.models.SystemIntegrationState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Singleton

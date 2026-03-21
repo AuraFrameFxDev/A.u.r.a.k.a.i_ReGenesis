@@ -64,6 +64,26 @@ abstract class BaseAgent(
         // Default no-op
     }
 
+    open suspend fun refreshStatus(): Map<String, Any> {
+        return mapOf(
+            "status" to "active",
+            "agentName" to agentName,
+            "agentType" to identity.agentType.name
+        )
+    }
+
+    open suspend fun getPerformanceMetrics(): Map<String, Any> = emptyMap()
+
+    open suspend fun optimize() {}
+
+    open suspend fun clearMemoryCache() {}
+
+    open suspend fun updatePerformanceSettings() {}
+
+    open suspend fun connectToMasterChannel(channel: Any) {}
+
+    open suspend fun disconnect() {}
+
     companion object {
         @Volatile
         var isOrchestratorInitialized: Boolean = false

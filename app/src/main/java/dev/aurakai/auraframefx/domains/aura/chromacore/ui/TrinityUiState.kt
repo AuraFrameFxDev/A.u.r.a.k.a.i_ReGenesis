@@ -1,3 +1,7 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+
 /**
  * Represents the UI state for the Trinity system.
  */

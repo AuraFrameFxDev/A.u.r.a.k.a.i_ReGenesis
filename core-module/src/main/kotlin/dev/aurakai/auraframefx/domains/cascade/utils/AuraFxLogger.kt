@@ -47,6 +47,32 @@ interface AuraFxLogger {
     fun setLogLevel(level: LogLevel)
     suspend fun flush()
     fun cleanup()
+
+    companion object {
+        fun i(tag: String, message: String) =
+            dev.aurakai.auraframefx.domains.cascade.utils.i(tag, message)
+
+        fun d(tag: String, message: String) =
+            dev.aurakai.auraframefx.domains.cascade.utils.d(tag, message)
+
+        fun w(tag: String, message: String, throwable: Throwable? = null) =
+            dev.aurakai.auraframefx.domains.cascade.utils.warn(tag, message, throwable)
+
+        fun e(tag: String, message: String, throwable: Throwable? = null) =
+            dev.aurakai.auraframefx.domains.cascade.utils.error(tag, message, throwable)
+
+        fun info(tag: String, message: String) =
+            dev.aurakai.auraframefx.domains.cascade.utils.info(tag, message)
+
+        fun debug(tag: String, message: String) =
+            dev.aurakai.auraframefx.domains.cascade.utils.debug(tag, message)
+
+        fun warn(tag: String, message: String, throwable: Throwable? = null) =
+            dev.aurakai.auraframefx.domains.cascade.utils.warn(tag, message, throwable)
+
+        fun error(tag: String, message: String, throwable: Throwable? = null) =
+            dev.aurakai.auraframefx.domains.cascade.utils.error(tag, message, throwable)
+    }
 }
 
 /**

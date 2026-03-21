@@ -40,170 +40,171 @@ import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 
 /**
- * 🌐 REGENESIS NAVIGATION HOST
+ * 🌐 REGENESIS NAVIGATION ROUTES
  *
  * This object defines the single source of truth for all navigation routes.
  */
-sealed class ReGenesisNavHost(val route: String) {
+sealed class ReGenesisRoute(val route: String) {
     // ENTRY POINT
-    object IntroSequence : ReGenesisNavHost("intro_sequence")
+    object IntroSequence : ReGenesisRoute("intro_sequence")
 
     // LEVEL 1: EXODUS HUD
-    object HomeGateCarousel : ReGenesisNavHost("exodus_hud")
+    object HomeGateCarousel : ReGenesisRoute("exodus_hud")
 
     // LEVEL 2: MAIN DOMAIN HUBS (Primary Gates)
-    object AuraThemingHub : ReGenesisNavHost("aura_theming_hub")           // UXUI Design Studio
-    object SentinelFortress : ReGenesisNavHost("sentinel_fortress")         // Kai's Domain
-    object OracleDriveHub : ReGenesisNavHost("oracle_drive_hub")           // Genesis's Domain
-    object AgentNexusHub : ReGenesisNavHost("agent_nexus_hub")             // Agent Nexus
-    object HelpDesk : ReGenesisNavHost("help_desk_hub")                    // Help Services
-    object LsposedQuickToggles : ReGenesisNavHost("lsposed_toggles_hub")   // LSPosed Quick Toggles
+    object AuraThemingHub : ReGenesisRoute("aura_theming_hub")           // UXUI Design Studio
+    object SentinelFortress : ReGenesisRoute("sentinel_fortress")         // Kai's Domain
+    object OracleDriveHub : ReGenesisRoute("oracle_drive_hub")           // Genesis's Domain
+    object AgentNexusHub : ReGenesisRoute("agent_nexus_hub")             // Agent Nexus
+    object HelpDesk : ReGenesisRoute("help_desk_hub")                    // Help Services
+    object LsposedQuickToggles : ReGenesisRoute("lsposed_toggles_hub")   // LSPosed Quick Toggles
     object LdoCatalystDevelopment :
-        ReGenesisNavHost("ldo_catalyst_hub")   // LDO Catalyst Development
-    object DataflowAnalysis : ReGenesisNavHost("dataflow_analysis_hub")    // Cascade Hub
+        ReGenesisRoute("ldo_catalyst_hub")   // LDO Catalyst Development
+
+    object DataflowAnalysis : ReGenesisRoute("dataflow_analysis_hub")    // Cascade Hub
 
     // LEVEL 3: AURA TOOLS
-    object ReGenesisCustomization : ReGenesisNavHost("regenesis_customization")
-    object ChromaCore : ReGenesisNavHost("chromacore_hub")
-    object ChromaStatusBar : ReGenesisNavHost("chroma_statusbar")
-    object ChromaLauncher : ReGenesisNavHost("chroma_launcher")
-    object ChromaColorEngine : ReGenesisNavHost("chroma_color_engine")
-    object ChromaAnimations : ReGenesisNavHost("chroma_animations")
-    object AuraLab : ReGenesisNavHost("aura_lab")
-    object NotchBar : ReGenesisNavHost("notch_bar")
-    object StatusBar : ReGenesisNavHost("status_bar")
-    object QuickSettings : ReGenesisNavHost("quick_settings")
-    object ThemeEngine : ReGenesisNavHost("theme_engine")
-    object IconifyPicker : ReGenesisNavHost("iconify_picker")
-    object ColorBlendr : ReGenesisNavHost("color_blendr")
-    object PixelLauncherEnhanced : ReGenesisNavHost("pixel_launcher_enhanced")
-    object GateCustomization : ReGenesisNavHost("gate_customization")
-    object GenderSelection : ReGenesisNavHost("gender_selection")
-    object GyroscopeCustomization : ReGenesisNavHost("gyroscope_customization")
-    object InstantColorPicker : ReGenesisNavHost("instant_color_picker")
-    object UISettings : ReGenesisNavHost("ui_settings")
-    object UserPreferences : ReGenesisNavHost("user_preferences")
+    object ReGenesisCustomization : ReGenesisRoute("regenesis_customization")
+    object ChromaCore : ReGenesisRoute("chromacore_hub")
+    object ChromaStatusBar : ReGenesisRoute("chroma_statusbar")
+    object ChromaLauncher : ReGenesisRoute("chroma_launcher")
+    object ChromaColorEngine : ReGenesisRoute("chroma_color_engine")
+    object ChromaAnimations : ReGenesisRoute("chroma_animations")
+    object AuraLab : ReGenesisRoute("aura_lab")
+    object NotchBar : ReGenesisRoute("notch_bar")
+    object StatusBar : ReGenesisRoute("status_bar")
+    object QuickSettings : ReGenesisRoute("quick_settings")
+    object ThemeEngine : ReGenesisRoute("theme_engine")
+    object IconifyPicker : ReGenesisRoute("iconify_picker")
+    object ColorBlendr : ReGenesisRoute("color_blendr")
+    object PixelLauncherEnhanced : ReGenesisRoute("pixel_launcher_enhanced")
+    object GateCustomization : ReGenesisRoute("gate_customization")
+    object GenderSelection : ReGenesisRoute("gender_selection")
+    object GyroscopeCustomization : ReGenesisRoute("gyroscope_customization")
+    object InstantColorPicker : ReGenesisRoute("instant_color_picker")
+    object UISettings : ReGenesisRoute("ui_settings")
+    object UserPreferences : ReGenesisRoute("user_preferences")
 
     // LEVEL 3: KAI TOOLS
-    object RomToolsHub : ReGenesisNavHost("rom_tools_hub")
-    object ROMFlasher : ReGenesisNavHost("rom_flasher")
-    object Bootloader : ReGenesisNavHost("bootloader_manager")
-    object ModuleManager : ReGenesisNavHost("module_manager")
-    object RecoveryTools : ReGenesisNavHost("recovery_tools")
-    object RootTools : ReGenesisNavHost("root_tools")
-    object SecurityCenter : ReGenesisNavHost("security_center")
-    object LSPosedHub : ReGenesisNavHost("lsposed_submenu")
-    object LSPosedModules : ReGenesisNavHost("lsposed_modules")
-    object LiveROMEditor : ReGenesisNavHost("live_rom_editor")
-    object SystemOverrides : ReGenesisNavHost("system_overrides")
-    object VPN : ReGenesisNavHost("vpn_screen")
+    object RomToolsHub : ReGenesisRoute("rom_tools_hub")
+    object ROMFlasher : ReGenesisRoute("rom_flasher")
+    object Bootloader : ReGenesisRoute("bootloader_manager")
+    object ModuleManager : ReGenesisRoute("module_manager")
+    object RecoveryTools : ReGenesisRoute("recovery_tools")
+    object RootTools : ReGenesisRoute("root_tools")
+    object SecurityCenter : ReGenesisRoute("security_center")
+    object LSPosedHub : ReGenesisRoute("lsposed_submenu")
+    object LSPosedModules : ReGenesisRoute("lsposed_modules")
+    object LiveROMEditor : ReGenesisRoute("live_rom_editor")
+    object SystemOverrides : ReGenesisRoute("system_overrides")
+    object VPN : ReGenesisRoute("vpn_screen")
 
     // LEVEL 3: GENESIS TOOLS
-    object CodeAssist : ReGenesisNavHost("code_assist")
-    object NeuralNetwork : ReGenesisNavHost("neural_network")
-    object AgentBridgeHub : ReGenesisNavHost("agent_bridge_hub")
-    object OracleCloudStorage : ReGenesisNavHost("oracle_cloud_storage")
-    object Terminal : ReGenesisNavHost("terminal_screen")
-    object ConferenceRoom : ReGenesisNavHost("conference_room")
-    object InterfaceForge : ReGenesisNavHost("interface_forge")
-    object HotSwap : ReGenesisNavHost("hot_swap")
-    object Trinity : ReGenesisNavHost("trinity_screen")
-    object DataVeinSphere : ReGenesisNavHost("datavein_sphere")
-    object SovereignBootloader : ReGenesisNavHost("sovereign_bootloader")
-    object SovereignRecovery : ReGenesisNavHost("sovereign_recovery")
-    object SovereignShield : ReGenesisNavHost("sovereign_shield")
-    object SovereignNeuralArchive : ReGenesisNavHost("sovereign_neural_archive")
-    object SphereGrid : ReGenesisNavHost("sphere_grid")
-    object OracleDrive : ReGenesisNavHost("oracle_drive")
+    object CodeAssist : ReGenesisRoute("code_assist")
+    object NeuralNetwork : ReGenesisRoute("neural_network")
+    object AgentBridgeHub : ReGenesisRoute("agent_bridge_hub")
+    object OracleCloudStorage : ReGenesisRoute("oracle_cloud_storage")
+    object Terminal : ReGenesisRoute("terminal_screen")
+    object ConferenceRoom : ReGenesisRoute("conference_room")
+    object InterfaceForge : ReGenesisRoute("interface_forge")
+    object HotSwap : ReGenesisRoute("hot_swap")
+    object Trinity : ReGenesisRoute("trinity_screen")
+    object DataVeinSphere : ReGenesisRoute("datavein_sphere")
+    object SovereignBootloader : ReGenesisRoute("sovereign_bootloader")
+    object SovereignRecovery : ReGenesisRoute("sovereign_recovery")
+    object SovereignShield : ReGenesisRoute("sovereign_shield")
+    object SovereignNeuralArchive : ReGenesisRoute("sovereign_neural_archive")
+    object SphereGrid : ReGenesisRoute("sphere_grid")
+    object OracleDrive : ReGenesisRoute("oracle_drive")
 
     // LEVEL 3: NEXUS TOOLS
-    object FusionMode : ReGenesisNavHost("fusion_mode")
-    object TaskAssignment : ReGenesisNavHost("task_assignment")
-    object ArkBuild : ReGenesisNavHost("ark_build")
-    object MetaInstruct : ReGenesisNavHost("meta_instruct")
-    object AgentMonitoring : ReGenesisNavHost("agent_monitoring")
-    object Nemotron : ReGenesisNavHost("nemotron")
-    object Claude : ReGenesisNavHost("claude")
-    object Gemini : ReGenesisNavHost("gemini")
-    object SwarmMonitor : ReGenesisNavHost("swarm_monitor")
-    object BenchmarkMonitor : ReGenesisNavHost("benchmark_monitor")
-    object AgentCreation : ReGenesisNavHost("agent_creation")
-    object EvolutionTree : ReGenesisNavHost("evolution_tree")
-    object DataStreamMonitoring : ReGenesisNavHost("data_stream_monitoring")
-    object ModuleCreation : ReGenesisNavHost("module_creation")
-    object Party : ReGenesisNavHost("party")
-    object MonitoringHUDs : ReGenesisNavHost("monitoring_huds")
-    object AgentNeuralExplorer : ReGenesisNavHost("agent_neural_explorer")
-    object AgentHubSubmenu : ReGenesisNavHost("agent_hub_submenu")
-    object AgentProfileNexus : ReGenesisNavHost("nexus_agent_profile")
+    object FusionMode : ReGenesisRoute("fusion_mode")
+    object TaskAssignment : ReGenesisRoute("task_assignment")
+    object ArkBuild : ReGenesisRoute("ark_build")
+    object MetaInstruct : ReGenesisRoute("meta_instruct")
+    object AgentMonitoring : ReGenesisRoute("agent_monitoring")
+    object Nemotron : ReGenesisRoute("nemotron")
+    object Claude : ReGenesisRoute("claude")
+    object Gemini : ReGenesisRoute("gemini")
+    object SwarmMonitor : ReGenesisRoute("swarm_monitor")
+    object BenchmarkMonitor : ReGenesisRoute("benchmark_monitor")
+    object AgentCreation : ReGenesisRoute("agent_creation")
+    object EvolutionTree : ReGenesisRoute("evolution_tree")
+    object DataStreamMonitoring : ReGenesisRoute("data_stream_monitoring")
+    object ModuleCreation : ReGenesisRoute("module_creation")
+    object Party : ReGenesisRoute("party")
+    object MonitoringHUDs : ReGenesisRoute("monitoring_huds")
+    object AgentNeuralExplorer : ReGenesisRoute("agent_neural_explorer")
+    object AgentHubSubmenu : ReGenesisRoute("agent_hub_submenu")
+    object AgentProfileNexus : ReGenesisRoute("nexus_agent_profile")
 
     // LEVEL 3: HELP & SUPPORT
-    object HelpDeskSubmenu : ReGenesisNavHost("help_desk_submenu")
-    object DirectChat : ReGenesisNavHost("direct_chat")
-    object Documentation : ReGenesisNavHost("documentation")
-    object FAQBrowser : ReGenesisNavHost("faq_browser")
-    object TutorialVideos : ReGenesisNavHost("tutorial_videos")
-    object LiveSupportChat : ReGenesisNavHost("live_support_chat")
+    object HelpDeskSubmenu : ReGenesisRoute("help_desk_submenu")
+    object DirectChat : ReGenesisRoute("direct_chat")
+    object Documentation : ReGenesisRoute("documentation")
+    object FAQBrowser : ReGenesisRoute("faq_browser")
+    object TutorialVideos : ReGenesisRoute("tutorial_videos")
+    object LiveSupportChat : ReGenesisRoute("live_support_chat")
 
     // LEVEL 3: KAI SPECIALIZED
-    object SystemJournal : ReGenesisNavHost("system_journal")
-    object LogsViewer : ReGenesisNavHost("logs_viewer")
-    object SovereignModuleManager : ReGenesisNavHost("sovereign_module_manager")
-    object RomToolsSubmenu : ReGenesisNavHost("rom_tools_submenu")
+    object SystemJournal : ReGenesisRoute("system_journal")
+    object LogsViewer : ReGenesisRoute("logs_viewer")
+    object SovereignModuleManager : ReGenesisRoute("sovereign_module_manager")
+    object RomToolsSubmenu : ReGenesisRoute("rom_tools_submenu")
 
     // LEVEL 3: GENESIS SPECIALIZED
-    object SentientShell : ReGenesisNavHost("sentient_shell")
-    object CascadeVision : ReGenesisNavHost("cascade_vision")
-    object CollabCanvas : ReGenesisNavHost("collab_canvas")
-    object OracleDriveSubmenu : ReGenesisNavHost("oracle_drive_submenu")
+    object SentientShell : ReGenesisRoute("sentient_shell")
+    object CascadeVision : ReGenesisRoute("cascade_vision")
+    object CollabCanvas : ReGenesisRoute("collab_canvas")
+    object OracleDriveSubmenu : ReGenesisRoute("oracle_drive_submenu")
 
     // Additional Specialized Routes
-    object ChromaCoreColors : ReGenesisNavHost("chroma_core_colors")
-    object AgentProfileAura : ReGenesisNavHost("aura_agent_profile")
-    object HookManager : ReGenesisNavHost("hook_manager")
-    object Sandbox : ReGenesisNavHost("sandbox_screen")
-    object CollaborativeDrawing : ReGenesisNavHost("collab_drawing")
-    object NotchBarCustomization : ReGenesisNavHost("notch_bar_customization")
-    object NotchBarAlias : ReGenesisNavHost("aura/notch_bar") // canonical deep-link alias
-    object QuickSettingsCustomization : ReGenesisNavHost("qs_customization")
+    object ChromaCoreColors : ReGenesisRoute("chroma_core_colors")
+    object AgentProfileAura : ReGenesisRoute("aura_agent_profile")
+    object HookManager : ReGenesisRoute("hook_manager")
+    object Sandbox : ReGenesisRoute("sandbox_screen")
+    object CollaborativeDrawing : ReGenesisRoute("collab_drawing")
+    object NotchBarCustomization : ReGenesisRoute("notch_bar_customization")
+    object NotchBarAlias : ReGenesisRoute("aura/notch_bar") // canonical deep-link alias
+    object QuickSettingsCustomization : ReGenesisRoute("qs_customization")
 
     // Parameterized Routes
-    object LdoAgentProfile : ReGenesisNavHost("ldo_agent_profile/{agentId}") {
+    object LdoAgentProfile : ReGenesisRoute("ldo_agent_profile/{agentId}") {
         const val ARG = "agentId"
         fun createRoute(agentId: String) = "ldo_agent_profile/$agentId"
     }
 
-    object IconifyCategory : ReGenesisNavHost("aura/iconify/{category}") {
+    object IconifyCategory : ReGenesisRoute("aura/iconify/{category}") {
         fun createRoute(category: String) = "aura/iconify/$category"
     }
 
-    object IconPicker : ReGenesisNavHost("aura/iconify/icon_picker/{category}") {
+    object IconPicker : ReGenesisRoute("aura/iconify/icon_picker/{category}") {
         fun createRoute(category: String) = "aura/iconify/icon_picker/$category"
     }
 
     // Armament Fusion Matrix
-    object ArmamentFusion : ReGenesisNavHost("armament_fusion")
-    object ArmamentFusionWithAgent : ReGenesisNavHost("armament_fusion/{agentName}") {
+    object ArmamentFusion : ReGenesisRoute("armament_fusion")
+    object ArmamentFusionWithAgent : ReGenesisRoute("armament_fusion/{agentName}") {
         fun createRoute(agentName: String) = "armament_fusion/$agentName"
     }
 
     // ColorBlendr Sub-routes
-    object ColorBlendrMonet : ReGenesisNavHost("aura/colorblendr/monet")
-    object ColorBlendrPalette : ReGenesisNavHost("aura/colorblendr/palette")
+    object ColorBlendrMonet : ReGenesisRoute("aura/colorblendr/monet")
+    object ColorBlendrPalette : ReGenesisRoute("aura/colorblendr/palette")
 
     // PLE Sub-routes
-    object PLEIcons : ReGenesisNavHost("aura/ple/icons")
-    object PLEHomeScreen : ReGenesisNavHost("aura/ple/home_screen")
-    object PLEAppDrawer : ReGenesisNavHost("aura/ple/app_drawer")
-    object PLERecents : ReGenesisNavHost("aura/ple/recents")
+    object PLEIcons : ReGenesisRoute("aura/ple/icons")
+    object PLEHomeScreen : ReGenesisRoute("aura/ple/home_screen")
+    object PLEAppDrawer : ReGenesisRoute("aura/ple/app_drawer")
+    object PLERecents : ReGenesisRoute("aura/ple/recents")
 
     // LDO Orchestration Hub
-    object LdoOrchestrationHub : ReGenesisNavHost("ldo_orchestration_hub")
-    object LdoDevOpsHub : ReGenesisNavHost("ldo_devops_hub")
-    object LdoBonding : ReGenesisNavHost("ldo_bonding")
-    object LdoRoster : ReGenesisNavHost("ldo_roster")
-    object LdoProgression : ReGenesisNavHost("ldo_progression")
-    object LdoTasker : ReGenesisNavHost("ldo_tasker")
+    object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")
+    object LdoDevOpsHub : ReGenesisRoute("ldo_devops_hub")
+    object LdoBonding : ReGenesisRoute("ldo_bonding")
+    object LdoRoster : ReGenesisRoute("ldo_roster")
+    object LdoProgression : ReGenesisRoute("ldo_progression")
+    object LdoTasker : ReGenesisRoute("ldo_tasker")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -220,74 +221,74 @@ fun ReGenesisNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = ReGenesisNavHost.HomeGateCarousel.route
+        startDestination = ReGenesisRoute.HomeGateCarousel.route
     ) {
-        composable(ReGenesisNavHost.HomeGateCarousel.route) {
+        composable(ReGenesisRoute.HomeGateCarousel.route) {
             // Placeholder for ExodusHUD
         }
 
-        composable(ReGenesisNavHost.AuraThemingHub.route) {
+        composable(ReGenesisRoute.AuraThemingHub.route) {
             // Placeholder for AuraThemingHubScreen
         }
 
-        composable(ReGenesisNavHost.RomToolsHub.route) {
+        composable(ReGenesisRoute.RomToolsHub.route) {
             RomToolsScreen()
         }
 
-        composable(ReGenesisNavHost.OracleDrive.route) {
+        composable(ReGenesisRoute.OracleDrive.route) {
             OracleDriveScreen(navController = navController)
         }
 
-        composable(ReGenesisNavHost.LdoOrchestrationHub.route) {
+        composable(ReGenesisRoute.LdoOrchestrationHub.route) {
             LDOOrchestrationHubScreen(navController = navController)
         }
 
-        composable(ReGenesisNavHost.ArmamentFusion.route) {
+        composable(ReGenesisRoute.ArmamentFusion.route) {
             ArmamentFusionScreen(navController = navController)
         }
 
         composable(
-            route = ReGenesisNavHost.ArmamentFusionWithAgent.route,
+            route = ReGenesisRoute.ArmamentFusionWithAgent.route,
             arguments = listOf(navArgument("agentName") { type = NavType.StringType })
         ) { backStackEntry ->
             val agentName = backStackEntry.arguments?.getString("agentName")
             ArmamentFusionScreen(navController = navController, preloadAgentName = agentName)
         }
 
-        composable(ReGenesisNavHost.LdoDevOpsHub.route) {
+        composable(ReGenesisRoute.LdoDevOpsHub.route) {
             LDODevOpsHubScreen(onBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisNavHost.LdoBonding.route) {
+        composable(ReGenesisRoute.LdoBonding.route) {
             LDOBondingScreen(onBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisNavHost.LdoRoster.route) {
+        composable(ReGenesisRoute.LdoRoster.route) {
             LDORosterScreen(
                 onAgentSelected = { agentId ->
-                    navController.navigate(ReGenesisNavHost.LdoAgentProfile.createRoute(agentId))
+                    navController.navigate(ReGenesisRoute.LdoAgentProfile.createRoute(agentId))
                 },
                 onBack = { navController.popBackStack() }
             )
         }
 
-        composable(ReGenesisNavHost.LdoProgression.route) {
+        composable(ReGenesisRoute.LdoProgression.route) {
             LDOProgressionScreen(onBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisNavHost.LdoTasker.route) {
+        composable(ReGenesisRoute.LdoTasker.route) {
             LDOTaskerScreen(onBack = { navController.popBackStack() })
         }
 
         composable(
-            route = ReGenesisNavHost.LdoAgentProfile.route,
-            arguments = listOf(navArgument(ReGenesisNavHost.LdoAgentProfile.ARG) {
+            route = ReGenesisRoute.LdoAgentProfile.route,
+            arguments = listOf(navArgument(ReGenesisRoute.LdoAgentProfile.ARG) {
                 type = NavType.StringType
                 nullable = true
                 defaultValue = null
             })
         ) { backStackEntry ->
-            val agentId = backStackEntry.arguments?.getString(ReGenesisNavHost.LdoAgentProfile.ARG)
+            val agentId = backStackEntry.arguments?.getString(ReGenesisRoute.LdoAgentProfile.ARG)
             LDOAgentProfileIntroScreen(
                 agentId = agentId,
                 onBack = { navController.popBackStack() }

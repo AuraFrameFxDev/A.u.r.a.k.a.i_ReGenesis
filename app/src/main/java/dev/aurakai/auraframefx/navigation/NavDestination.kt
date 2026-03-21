@@ -25,7 +25,7 @@ sealed class NavDestination(val route: String, val title: String? = null, val ic
     // Agent Hub
     object AgentHub : NavDestination("agent_hub", "Agent Hub", null)
     object DirectChat : NavDestination("direct_chat", "Direct Chat", null)
-    object TaskAssignment : ReGenesisNavHost("task_assignment", "Task Assignment", null)
+    object TaskAssignment : NavDestination("task_assignment", "Task Assignment", null)
     object AgentMonitoring : NavDestination("agent_monitoring", "Agent Monitoring", null)
     object FusionMode : NavDestination("fusion", "Fusion Mode", null)
     object CodeAssist : NavDestination("code_assist", "Code Assist", null)

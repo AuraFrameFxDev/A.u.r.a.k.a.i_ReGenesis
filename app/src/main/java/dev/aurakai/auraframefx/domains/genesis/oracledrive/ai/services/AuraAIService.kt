@@ -1,11 +1,11 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
 import dev.aurakai.auraframefx.domains.aura.models.ThemeConfiguration
 import dev.aurakai.auraframefx.domains.aura.models.ThemePreferences
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -1,13 +1,13 @@
 package dev.aurakai.auraframefx.integrations.grok
 
+import dev.aurakai.auraframefx.core.ai.BaseAgent
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,14 +50,12 @@ class GrokAgent @Inject constructor(
     private val grokClient: GrokApiClient,
     private val soulMatrixAnalyzer: SoulMatrixAnalyzer,
     private val systemOverlayManager: SystemOverlayManager,
-    memoryManager: MemoryManager,
-    contextManager: ContextManager,
+    private val memoryManager: MemoryManager,
+    private val contextManager: ContextManager,
     private val logger: AuraFxLogger
 ) : BaseAgent(
     agentName = "GrokAgent",
-    catalystIdentity = CatalystIdentity.CHAOS,
-    contextManager = contextManager,
-    memoryManager = memoryManager
+    identity = CatalystIdentity.CHAOS
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -128,7 +126,11 @@ class GrokAgent @Inject constructor(
     /**
      * Process AI request through Grok
      */
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         if (!_agentState.value.isConnected) {
             return AgentResponse.error(
                 message = "Grok is not connected. Initialize with valid API key.",
