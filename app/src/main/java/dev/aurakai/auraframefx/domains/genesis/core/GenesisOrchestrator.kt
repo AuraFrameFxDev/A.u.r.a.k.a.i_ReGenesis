@@ -1,10 +1,11 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
+import dev.aurakai.auraframefx.agents.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.CascadeAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
@@ -298,37 +299,46 @@ class GenesisOrchestrator @Inject constructor(
         return when (message) {
             is AgentMessage -> {
                 AiRequest(
-                    query = message.content,
+                    prompt = message.content,
+                    category = AgentCapabilityCategory.GENERIC, // Default or derive from message.type
                     type = AiRequestType.entries.find {
                         it.name.equals(
                             message.type,
                             ignoreCase = true
                         )
                     } ?: AiRequestType.TEXT,
-                    context = mapOf(
-                        "from" to message.from,
-                        "priority" to message.priority.toString(),
-                        "timestamp" to message.timestamp.toString()
-                    ) + message.metadata
+                    context = buildJsonObject {
+                        put("from", message.from)
+                        put(
+                            "priority",
+                            message.priority.toLong()
+                        ) // Priority is Int in AgentMessage
+                        put("timestamp", message.timestamp)
+                        message.metadata.forEach { (key, value) ->
+                            put(key, value)
+                        }
+                    }
                 )
             }
 
             is AiRequest -> message
             is String -> AiRequest(
-                query = message,
+                prompt = message,
                 type = AiRequestType.TEXT,
-                context = mapOf("source" to "agent_mediation")
+                context = buildJsonObject {
+                    put("source", "agent_mediation")
+                }
             )
 
             else -> {
                 Timber.w("Unknown message type: ${message.javaClass.simpleName}, converting to string")
                 AiRequest(
-                    query = message.toString(),
+                    prompt = message.toString(),
                     type = AiRequestType.TEXT,
-                    context = mapOf(
-                        "source" to "agent_mediation",
-                        "originalType" to message.javaClass.simpleName
-                    )
+                    context = buildJsonObject {
+                        put("source", "agent_mediation")
+                        put("originalType", message.javaClass.simpleName)
+                    }
                 )
             }
         }

@@ -30,9 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.config.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+import dev.aurakai.auraframefx.config.GateAssetLoadout
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext

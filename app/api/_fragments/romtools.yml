@@ -20,6 +20,79 @@
       '200': { description: Analysis complete, content: { application/json: { schema: { $ref: '#/components/schemas/BootAnalysisResult' } } } }
       '400': { description: Invalid input, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
       '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
+/romtools/boot-image/modify:
+  post:
+    operationId: romModifyBootImage
+    summary: Modify boot image
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ admin ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/BootModificationRequest' }
+    responses:
+      '200': { description: Modification successful, content: { application/json: { schema: { $ref: '#/components/schemas/ModificationResult' } } } }
+      '403': { description: Permission denied, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
+/romtools/partitions:
+  get:
+    operationId: romListPartitions
+    summary: List system partitions
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ read ]
+    responses:
+      '200':
+        description: Partition list retrieved
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/PartitionInfo' }
+
+/romtools/partitions/{partitionName}/mount:
+  post:
+    operationId: romMountPartition
+    summary: Mount partition
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ admin ]
+    parameters:
+      - name: partitionName
+        in: path
+        required: true
+        schema: { type: string }
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/MountRequest' }
+    responses:
+      '200': { description: Partition mounted successfully }
+      '403': { description: Permission denied }
+      '500': { description: Server error }
+
+/romtools/partitions/{partitionName}/unmount:
+  post:
+    operationId: romUnmountPartition
+    summary: Unmount partition
+    tags: [ ROM Tools ]
+    security:
+      - OAuth2: [ admin ]
+    parameters:
+      - name: partitionName
+        in: path
+        required: true
+        schema: { type: string }
+    responses:
+      '200': { description: Partition unmounted successfully }
+      '403': { description: Permission denied }
+      '500': { description: Server error }
+
 /romtools/datavein/analyze:
   post:
     operationId: romAnalyzeDatavein
@@ -40,6 +113,7 @@
     responses:
       '200': { description: Analysis complete, content: { application/json: { schema: { $ref: '#/components/schemas/DataveinAnalysisResult' } } } }
       '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
 /romtools/security/scan:
   post:
     operationId: romSecurityScan
@@ -55,4 +129,3 @@
     responses:
       '200': { description: Security scan results, content: { application/json: { schema: { $ref: '#/components/schemas/SecurityScanResult' } } } }
       '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
-

@@ -273,12 +273,12 @@ class KaiSystemViewModel @Inject constructor(
             val message = if (colonIdx > 0) rest.substring(colonIdx + 1).trim() else rest
 
             val (level, colorHex) = when (levelChar) {
-                "E" -> "ERROR" to 0xFFFF4444
-                "W" -> "WARN" to 0xFFFFD700
-                "I" -> "INFO" to 0xFF00E5FF
-                "D" -> "DEBUG" to 0xFF00FF85
-                "V" -> "VERBOSE" to 0xFF888888
-                else -> levelChar to 0xFF00E5FF
+                "E" -> "ERROR" to 0xFFFF4444L
+                "W" -> "WARN" to 0xFFFFD700L
+                "I" -> "INFO" to 0xFF00E5FF L
+                "D" -> "DEBUG" to 0xFF00FF85L
+                "V" -> "VERBOSE" to 0xFF888888L
+                else -> levelChar to 0xFF00E5FF L
             }
 
             LogEntry(level = level, tag = tag, message = message, timestamp = timestamp, color = colorHex)

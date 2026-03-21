@@ -4,93 +4,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.FlashOn
+import androidx.compose.material.icons.filled.Power
+import androidx.compose.material.icons.filled.Security
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.components.GridMenuItem
-import dev.aurakai.auraframefx.domains.aura.ui.components.Level3GridMenu
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-@Composable
-fun SecurityStatusCard(
-    title: String,
-    status: String,
-    statusColor: Color,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    description: String
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(0.1f))
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp).fillMaxWidth(),
-            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Text(
-                    text = status,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = statusColor,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = description,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun SecurityLogEntry(
-    time: String,
-    message: String
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(
-            text = "[$time]",
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.Cyan,
-            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
-        )
-        Text(
-            text = message,
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.LightGray
-        )
-    }
-}
 
 /**
  * SecurityCenterScreen — Kai Domain Command Center.
@@ -180,12 +110,9 @@ fun SecurityCenterScreen(
             item {
                 val threatColor = when (state.threatLevel) {
                     ThreatLevel.NONE -> Color(0xFF00FFD4)
-                    ThreatLevel.INFO -> Color.Cyan
                     ThreatLevel.LOW -> Color.Yellow
                     ThreatLevel.MEDIUM -> Color(0xFFFF8C00)
-                    ThreatLevel.WARNING -> Color(0xFFFF8C00)
                     ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color(0xFFFF4444)
-                    ThreatLevel.AI_ERROR -> Color.Magenta
                 }
                 SecurityStatusCard(
                     title = "Threat Level",
@@ -308,49 +235,59 @@ private fun formatScanTime(epochMs: Long): String {
 }
 
 @Composable
-fun SecurityCenterScreen(onNavigateBack: () -> Unit = {}) {
-    val menuItems = listOf(
-        GridMenuItem(
-            id = "firewall",
-            title = "Global Firewall",
-            subtitle = "Manage app traffic rules",
-            icon = Icons.Filled.Security,
-            route = "action_firewall",
-            accentColor = Color(0xFF00FF85)
-        ),
-        GridMenuItem(
-            id = "selinux",
-            title = "SELinux Status",
-            subtitle = "Enforcing mode controls",
-            icon = Icons.Filled.AdminPanelSettings,
-            route = "action_selinux",
-            accentColor = Color(0xFF00E5FF)
-        ),
-        GridMenuItem(
-            id = "app_ops",
-            title = "AppOps Manager",
-            subtitle = "Deep permission granulars",
-            icon = Icons.Filled.Gavel,
-            route = "action_app_ops",
-            accentColor = Color(0xFFFF6B00)
-        ),
-        GridMenuItem(
-            id = "malware_scan",
-            title = "Threat Scan",
-            subtitle = "Analyze heuristics",
-            icon = Icons.Filled.Warning,
-            route = "action_scan",
-            accentColor = Color.White
-        )
-    )
+private fun SecurityStatusCard(
+    title: String,
+    status: String,
+    statusColor: Color,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    description: String
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, statusColor.copy(alpha = 0.3f))
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            Surface(
+                color = statusColor.copy(alpha = 0.1f),
+                shape = MaterialTheme.shapes.small,
+                modifier = Modifier.size(40.dp)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(icon, null, tint = statusColor, modifier = Modifier.size(24.dp))
+                }
+            }
 
-    Level3GridMenu(
-        title = "SECURITY CENTER",
-        subtitle = "SENTINEL PROTOCOLS",
-        menuItems = menuItems,
-        onItemClick = { /* TODO */ },
-        onBackClick = onNavigateBack,
-        backgroundDrawable = R.drawable.bg_security_firewall,
-        accentColor = Color(0xFF00FF85)
-    )
+            Spacer(Modifier.width(16.dp))
+
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(title, color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(status, color = statusColor, style = MaterialTheme.typography.labelSmall)
+                }
+                Spacer(Modifier.height(4.dp))
+                Text(description, color = Color.Gray, style = MaterialTheme.typography.bodySmall)
+            }
+        }
+    }
+}
+
+@Composable
+private fun SecurityLogEntry(time: String, message: String) {
+    Row(verticalAlignment = Alignment.Top) {
+        Text(
+            time,
+            color = Color.Cyan.copy(0.6f),
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.width(64.dp)
+        )
+        Text(message, color = Color.White.copy(0.7f), style = MaterialTheme.typography.bodySmall)
+    }
 }

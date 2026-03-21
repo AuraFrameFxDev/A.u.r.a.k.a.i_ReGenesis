@@ -1,9 +1,10 @@
 package dev.aurakai.auraframefx.domains.aura.aura.ui
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.models.DriveFile
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.DriveFile
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,16 +76,7 @@ class OracleDriveViewModel @Inject constructor(
     private fun monitorConsciousness(): Job = viewModelScope.launch {
         try {
             oracleDriveService.getDriveConsciousnessState().collect { state ->
-                // The collected state is from genesis.oracledrive.models, but we need cloud.DriveConsciousnessState
-                // Map it manually or fix the service interface to return consistent types.
-                // Assuming they have similar structure for now as a quick fix.
-                _uiState.update { it.copy(consciousnessState = DriveConsciousnessState(
-                    isActive = state.isActive,
-                    level = state.level,
-                    activeAgents = state.activeAgents,
-                    activeDevices = state.activeDevices,
-                    lastUpdate = state.lastUpdate
-                )) }
+                _uiState.update { it.copy(consciousnessState = state) }
             }
         } catch (e: Exception) {
             // Log but don't fail - consciousness monitoring is optional

@@ -3,11 +3,7 @@ package dev.aurakai.auraframefx.romtools.ui//package dev.aurakai.auraframefx.rom
 //import dev.aurakai.auraframefx.romtools.RomCapabilities
 //import org.junit.Assert.*
 //
-//<<<<<<< HEAD
 //import org.junit.Test
-//
-//=======
-//>>>>>>> 96249a402 (Refactor: Simplify build configuration)
 //
 //// NOTE: Test stack used: JUnit4 for JVM unit tests.
 //

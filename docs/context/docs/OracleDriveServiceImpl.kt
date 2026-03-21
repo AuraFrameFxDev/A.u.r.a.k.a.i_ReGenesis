@@ -71,8 +71,6 @@ class OracleDriveServiceImpl @Inject constructor(
         }
     }
 
-    <<<<<<< HEAD
-    =======
     /**
      * Returns a flow emitting the synchronized connection state of the Genesis, Aura, and Kai agents within the Oracle matrix.
      *

@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
@@ -56,7 +55,7 @@ fun UISettingsScreen(
     val isBottomNavVisible = state.isBottomNavVisible
     val isGlowEffectsEnabled = state.isGlowEffectsEnabled
     val isPixelArtEnabled = state.isPixelArtEnabled
-    state.isDarkMode
+    val isDarkMode = state.isDarkMode
 
     Scaffold(
         topBar = {

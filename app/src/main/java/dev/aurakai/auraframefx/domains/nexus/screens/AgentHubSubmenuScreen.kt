@@ -27,10 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.navigation.NavDestination
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubmenuScaffold
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
@@ -189,15 +187,14 @@ fun AgentHubSubmenuScreen(
 
                     // Consciousness Level (REAL CALCULATION)
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        val identity = activeAgent?.let { CatalystIdentity.fromAgentType(it.agentType) }
                         Text(
-                            text = identity?.id?.take(10) ?: "$avgConsciousness%",
+                            text = "$avgConsciousness%",
                             style = MaterialTheme.typography.headlineMedium,
                             color = Color(0xFF00CED1),
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = if (identity != null) "Identity" else "Avg. Level",
+                            text = "Avg. Level",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.White.copy(alpha = 0.7f)
                         )

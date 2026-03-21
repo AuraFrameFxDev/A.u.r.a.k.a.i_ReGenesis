@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.billing
+package dev.aurakai.auraframefx.domains.nexus.billing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Rocket
-import androidx.compose.material.icons.filled.Schedule
+import androidx.composAe.material.icons.filled.Schedule
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -38,11 +38,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
-private val NeonBlue = Color(0xFF00E5FF)
-private val NeonCyan = Color(0xFF00FFFF)
-private val NeonPurple = Color(0xFFD500F9)
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import dev.aurakai.auraframefx.config.FeatureToggles
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 
 /**
  * Paywall Screen - Shown when trial expires

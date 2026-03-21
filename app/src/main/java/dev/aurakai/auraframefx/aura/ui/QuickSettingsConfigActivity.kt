@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
+package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import android.app.Activity
 import android.content.Context
@@ -22,11 +22,13 @@ import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
 import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
 import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig as SystemQuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
+
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig as SystemQuickSettingsConfig
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig as SystemQuickSettingsTileConfig
 
 /**
  * Activity for configuring Quick Settings tiles.
@@ -280,16 +282,16 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     }
 }
 
-private fun saveConfig(quickSettingsConfigActivity: QuickSettingsConfigActivity) {
-    quickSettingsConfigActivity.currentConfig?.let { config ->
-        quickSettingsConfigActivity.lifecycleScope.launch {
+private fun saveConfig(activity: QuickSettingsConfigActivity) {
+    activity.currentConfig?.let { config ->
+        activity.lifecycleScope.launch {
             val success = withContext(Dispatchers.IO) {
-                return@withContext quickSettingsConfigActivity.configManager.saveConfig(config)
+                return@withContext activity.configManager.saveConfig(config)
             }
 
             if (success) {
-                quickSettingsConfigActivity.setResult(Activity.RESULT_OK)
-                quickSettingsConfigActivity.finish()
+                activity.setResult(Activity.RESULT_OK)
+                activity.finish()
             }
         }
     }

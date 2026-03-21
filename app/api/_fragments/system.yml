@@ -24,6 +24,7 @@
       '200': { description: Configuration updated }
       '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
       '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
 /conference/rooms:
   post:
     operationId: systemCreateConferenceRoom
@@ -41,3 +42,34 @@
       '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
       '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
 
+/tasks/schedule:
+  post:
+    operationId: systemScheduleTask
+    summary: Schedule a new task
+    tags: [ System Management ]
+    security:
+      - OAuth2: [ write ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/TaskScheduleRequest' }
+    responses:
+      '202': { description: Task scheduled, content: { application/json: { schema: { $ref: '#/components/schemas/TaskStatus' } } } }
+      '400': { description: Invalid request, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '401': { description: Unauthorized, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+
+/tasks/{taskId}:
+  get:
+    operationId: systemGetTaskStatus
+    summary: Get task status
+    tags: [ System Management ]
+    parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema: { type: string }
+    responses:
+      '200': { description: Task status retrieved, content: { application/json: { schema: { $ref: '#/components/schemas/TaskStatus' } } } }
+      '404': { description: Task not found, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+      '500': { description: Server error, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }

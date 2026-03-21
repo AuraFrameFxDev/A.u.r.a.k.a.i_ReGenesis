@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,13 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.models.AgentProfile
-import dev.aurakai.auraframefx.models.AgentProfiles
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.AgentProfile
+import dev.aurakai.auraframefx.domains.genesis.models.AgentProfiles
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.models.CapabilityLevel
-import androidx.compose.foundation.lazy.items
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.CapabilityLevel
 
 /**
  * Comprehensive Agent Profile Screen
@@ -172,7 +171,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            imageVector = getAgentIcon(profile.agentType),
+                            imageVector = getAgentIcon(profile.agentType.toAgentType()),
                             contentDescription = profile.displayName,
                             modifier = Modifier.size(60.dp),
                             tint = Color.White
@@ -514,13 +513,14 @@ private fun getCapabilityLevelColor(level: CapabilityLevel): Color {
 }
 
 @Composable
-private fun getAgentIcon(category: AgentCapabilityCategory): ImageVector {
-    return when (category) {
-        AgentCapabilityCategory.CREATIVE -> Icons.Default.Brush
-        AgentCapabilityCategory.SECURITY -> Icons.Default.Shield
-        AgentCapabilityCategory.ORCHESTRATION -> Icons.Default.AutoAwesome
-        AgentCapabilityCategory.INTELLIGENCE -> Icons.Default.Architecture
-        AgentCapabilityCategory.MEMORY -> Icons.Default.Storage
-        AgentCapabilityCategory.ANALYSIS -> Icons.Default.Psychology
+private fun getAgentIcon(agentType: AgentType): ImageVector {
+    return when (agentType) {
+        AgentType.AURA -> Icons.Default.Brush
+        AgentType.KAI -> Icons.Default.Shield
+        AgentType.GENESIS -> Icons.Default.AutoAwesome
+        AgentType.CLAUDE -> Icons.Default.Architecture
+        AgentType.CASCADE -> Icons.Default.Storage
+        AgentType.NEURAL_WHISPER -> Icons.Default.Psychology
+        else -> Icons.Default.Person
     }
 }

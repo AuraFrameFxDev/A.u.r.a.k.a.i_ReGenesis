@@ -15,13 +15,9 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.DataPacket
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.DataPayload
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.DataveinConstructor
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.FlowPriority
-import android.util.Base64
 import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.MrlDimension
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.MultimodalContent
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -100,9 +96,6 @@ class IntegrityMonitorService : Service() {
     @Inject
     lateinit var trinityRepository: dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
 
-    @Inject
-    lateinit var vertexAIClient: VertexAIClient
-
     private val serviceScope = CoroutineScope(Dispatchers.IO + Job())
     private var monitoringJob: Job? = null
 
@@ -120,11 +113,6 @@ class IntegrityMonitorService : Service() {
         private const val MONITORING_INTERVAL_MS = 30_000L // 30 seconds
         const val ACTION_INTEGRITY_CHECK = "dev.aurakai.auraframefx.INTEGRITY_CHECK"
         const val ACTION_INTEGRITY_VIOLATION = "dev.aurakai.auraframefx.INTEGRITY_VIOLATION"
-
-        /** Cosine similarity below this threshold triggers a HIGH threat. */
-        const val VISUAL_HIJACK_THRESHOLD = 0.90f
-        /** Cosine similarity below this (but above HIJACK) triggers a WARNING. */
-        const val VISUAL_SUSPICIOUS_THRESHOLD = 0.97f
     }
 
     override fun onCreate() {
@@ -359,96 +347,6 @@ class IntegrityMonitorService : Service() {
         // - APK signature matches expected
         // - Critical LDO files (DNA, manifests) unchanged
         // - Native library integrity
-    }
-
-    // ── Kai Visual Integrity Scan ─────────────────────────────────────────────
-
-    /**
-     * 👁️ PERFORM VISUAL INTEGRITY SCAN
-     *
-     * Kai's "Digital Eye" — compares a live screenshot against the Golden State
-     * embedding stored in [NexusMemoryCore] to detect UI hijacking, unauthorized
-     * overlays, or injected frames (sub-millisecond after embedding is cached).
-     *
-     * Workflow:
-     *   1. Encode [screenshotBytes] (JPEG/PNG) to Base64
-     *   2. Request Gemini Embedding 2 via [VertexAIClient.generateMultimodalEmbedding]
-     *      at [MrlDimension.FAST] (768 dims) for low-latency on-device comparison
-     *   3. Compute cosine similarity vs. golden state in [NexusMemoryCore]
-     *   4. Record threat if similarity < [VISUAL_SUSPICIOUS_THRESHOLD]
-     *
-     * Call [setGoldenState] first with a verified-clean screenshot to establish baseline.
-     *
-     * @param screenshotBytes Raw JPEG or PNG bytes of the current screen.
-     */
-    suspend fun performVisualIntegrityScan(screenshotBytes: ByteArray) {
-        if (!NexusMemoryCore.hasGoldenState()) {
-            Timber.d("👁️ VisualScan: No golden state — skipping comparison")
-            return
-        }
-        try {
-            val base64 = Base64.encodeToString(screenshotBytes, Base64.NO_WRAP)
-            val liveEmbedding = vertexAIClient.generateMultimodalEmbedding(
-                content = listOf(MultimodalContent.Image(bytesBase64 = base64)),
-                dimensions = MrlDimension.FAST
-            )
-            if (liveEmbedding.isEmpty()) {
-                Timber.w("👁️ VisualScan: Empty embedding — endpoint unavailable")
-                return
-            }
-            val similarity = NexusMemoryCore.compareScreenEmbedding(liveEmbedding)
-            if (similarity == null) {
-                Timber.d("👁️ VisualScan: No golden state to compare against")
-                return
-            }
-            Timber.d("👁️ VisualScan: cosine similarity = ${"%.4f".format(similarity)}")
-            when {
-                similarity < VISUAL_HIJACK_THRESHOLD -> recordThreat(
-                    level = ThreatLevel.HIGH,
-                    type = "visual_integrity_violation",
-                    description = "UI embedding similarity ${"%.3f".format(similarity)} " +
-                            "< threshold $VISUAL_HIJACK_THRESHOLD — possible UI hijack or overlay",
-                    actionTaken = "ALERT broadcast triggered"
-                )
-                similarity < VISUAL_SUSPICIOUS_THRESHOLD -> recordThreat(
-                    level = ThreatLevel.WARNING,
-                    type = "visual_integrity_suspicious",
-                    description = "UI embedding similarity ${"%.3f".format(similarity)} " +
-                            "is below clean threshold $VISUAL_SUSPICIOUS_THRESHOLD",
-                    actionTaken = "Logged — monitoring"
-                )
-                else -> Timber.d("👁️ VisualScan: UI state clean (similarity=${"%.4f".format(similarity)})")
-            }
-        } catch (e: Exception) {
-            Timber.e(e, "👁️ VisualScan: Exception during visual integrity scan")
-        }
-    }
-
-    /**
-     * 📸 SET GOLDEN STATE
-     *
-     * Embeds [screenshotBytes] and stores it as the reference baseline in
-     * [NexusMemoryCore]. Call this once the UI is in a verified, trusted state
-     * (e.g., immediately after a successful integrity boot).
-     *
-     * @param screenshotBytes Raw JPEG or PNG bytes of the verified-clean screen.
-     */
-    suspend fun setGoldenState(screenshotBytes: ByteArray) {
-        try {
-            val base64 = Base64.encodeToString(screenshotBytes, Base64.NO_WRAP)
-            val embedding = vertexAIClient.generateMultimodalEmbedding(
-                content = listOf(MultimodalContent.Image(bytesBase64 = base64)),
-                dimensions = MrlDimension.FAST
-            )
-            if (embedding.isNotEmpty()) {
-                NexusMemoryCore.storeGoldenStateEmbedding(embedding)
-                Timber.i("👁️ VisualScan: Golden state set — ${embedding.size} dims")
-            } else {
-                Timber.w("👁️ VisualScan: Golden state embedding empty — not stored")
-            }
-        } catch (e: Exception) {
-            Timber.e(e, "👁️ VisualScan: Failed to set golden state")
-        }
     }
 
     /**
