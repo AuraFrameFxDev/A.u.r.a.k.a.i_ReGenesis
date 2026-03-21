@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.romtools.retention
 
-import android.content.pm.PackageManager
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
 import junit.framework.TestCase.assertFalse
@@ -19,11 +18,9 @@ class AurakaiRetentionManagerTest {
 
     private val testPackageName = "dev.aurakai.auraframefx"
     private lateinit var retentionManager: AurakaiRetentionManager
-    private lateinit var mockPackageManager: PackageManager
 
     @BeforeEach
     fun setup() {
-        mockPackageManager = mockk(relaxed = true)
         retentionManager = mockk(relaxed = true)
     }
 
@@ -34,7 +31,6 @@ class AurakaiRetentionManagerTest {
         @Test
         @DisplayName("Should succeed if at least 2 of 4 mechanisms work")
         fun `should succeed with minimum redundancy`() = runTest {
-            // Given
             val mechanisms = mapOf(
                 RetentionMechanism.APK_BACKUP to true,
                 RetentionMechanism.ADDON_D_SCRIPT to true,
@@ -49,7 +45,6 @@ class AurakaiRetentionManagerTest {
                 timestamp = System.currentTimeMillis()
             )
 
-            // Then
             assertTrue(status.isFullyProtected)
             assertEquals(2, status.mechanisms.count { it.value })
         }
@@ -57,7 +52,6 @@ class AurakaiRetentionManagerTest {
         @Test
         @DisplayName("Should fail if only 1 mechanism works")
         fun `should fail with insufficient redundancy`() = runTest {
-            // Given
             val mechanisms = mapOf(
                 RetentionMechanism.APK_BACKUP to true,
                 RetentionMechanism.ADDON_D_SCRIPT to false,
@@ -72,12 +66,10 @@ class AurakaiRetentionManagerTest {
                 timestamp = System.currentTimeMillis()
             )
 
-            // Then
             assertFalse(status.isFullyProtected)
         }
     }
 
-    // Additional helper data class
     data class BackupPaths(
         val apkPath: String,
         val dataPath: String,

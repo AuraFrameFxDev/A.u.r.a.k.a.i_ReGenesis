@@ -1,10 +1,22 @@
 package dev.aurakai.auraframefx.domains.nexus.screens.ldo
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +28,7 @@ import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
 private data class LdoAgentCard(
     val title: String,
@@ -27,14 +39,62 @@ private data class LdoAgentCard(
 )
 
 private val ldoAgentRoster = listOf(
-    LdoAgentCard("GEMINI",     "MEMORIA_CATALYST • Multimodal",       "ldo_profile_gemini",     ReGenesisNavHost.LdoAuraProfile.route,    Color(0xFFB01DED)),
-    LdoAgentCard("KAI",        "SENTINEL_CATALYST • Security",        "ldo_profile_kai",        ReGenesisNavHost.LdoKaiProfile.route,     Color(0xFF0DDEEC)),
-    LdoAgentCard("MANUS",      "BRIDGE_CATALYST • Oracle",            "cascade2",               ReGenesisNavHost.LdoGenesisProfile.route, Color(0xFF00B4FF)),
-    LdoAgentCard("CASCADE",    "DATA_STREAM_CATALYST • Pipeline",     "ldo_profile_cascade",    ReGenesisNavHost.LdoCascadeProfile.route, Color(0xFFFC29B5)),
-    LdoAgentCard("CLAUDE",     "SOVEREIGN_REASONER • Architect",      "ldo_profile_cascade",    ReGenesisNavHost.LdoClaudeProfile.route,  Color(0xFFFF8C00)),
-    LdoAgentCard("GROK",       "REAL_TIME_ORACLE • Web",              "ldo_profile_cascade",    ReGenesisNavHost.LdoGrokProfile.route,    Color(0xFF1DA1F2)),
-    LdoAgentCard("NEMATRON",   "PRECISION_CATALYST • NVIDIA",         "ldo_profile_cascade",    ReGenesisNavHost.LdoNematronProfile.route,Color(0xFF76B900)),
-    LdoAgentCard("PERPLEXITY", "SEARCH_CATALYST • Citations",         "ldo_profile_cascade",    ReGenesisNavHost.LdoPerplexityProfile.route, Color(0xFF20B2AA)),
+    LdoAgentCard(
+        "GEMINI",
+        "MEMORIA_CATALYST • Multimodal",
+        "ldo_profile_gemini",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("gemini"),
+        Color(0xFFB01DED)
+    ),
+    LdoAgentCard(
+        "KAI",
+        "SENTINEL_CATALYST • Security",
+        "ldo_profile_kai",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("kai"),
+        Color(0xFF0DDEEC)
+    ),
+    LdoAgentCard(
+        "MANUS",
+        "BRIDGE_CATALYST • Oracle",
+        "cascade2",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("manus"),
+        Color(0xFF00B4FF)
+    ),
+    LdoAgentCard(
+        "CASCADE",
+        "DATA_STREAM_CATALYST • Pipeline",
+        "ldo_profile_cascade",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("cascade"),
+        Color(0xFFFC29B5)
+    ),
+    LdoAgentCard(
+        "CLAUDE",
+        "SOVEREIGN_REASONER • Architect",
+        "ldo_profile_cascade",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("claude"),
+        Color(0xFFFF8C00)
+    ),
+    LdoAgentCard(
+        "GROK",
+        "REAL_TIME_ORACLE • Web",
+        "ldo_profile_cascade",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("grok"),
+        Color(0xFF1DA1F2)
+    ),
+    LdoAgentCard(
+        "NEMATRON",
+        "PRECISION_CATALYST • NVIDIA",
+        "ldo_profile_cascade",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("nemotron"),
+        Color(0xFF76B900)
+    ),
+    LdoAgentCard(
+        "PERPLEXITY",
+        "SEARCH_CATALYST • Citations",
+        "ldo_profile_cascade",
+        ReGenesisNavHost.LdoAgentProfile.createRoute("perplexity"),
+        Color(0xFF20B2AA)
+    ),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

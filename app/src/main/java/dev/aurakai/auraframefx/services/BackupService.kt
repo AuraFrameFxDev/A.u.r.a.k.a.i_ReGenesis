@@ -36,7 +36,7 @@ class BackupService : Service() {
     lateinit var secureFileManager: dev.aurakai.auraframefx.oracle.drive.utils.SecureFileManager
 
     @Inject
-    lateinit var memoryManager: dev.aurakai.auraframefx.ai.memory.MemoryManager
+    lateinit var memoryManager: dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 
     private val scope = CoroutineScope(Dispatchers.IO + Job())
     private val notificationId = 1001

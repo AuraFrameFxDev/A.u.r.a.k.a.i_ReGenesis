@@ -1,3 +1,5 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -31,8 +33,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -56,12 +56,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -268,7 +269,7 @@ fun HaloView(
                             val angleStep = 360f / agentCount
 
                             for (i in agentConfigs.indices) {
-                                val config = agentConfigs[i]
+                                agentConfigs[i]
                                 val angle = ((i * angleStep) + rotationAngle) % 360f
                                 val x = center.x + radius * cos((angle * PI / 180f).toFloat())
                                 val y = center.y + radius * sin((angle * PI / 180f).toFloat())
@@ -276,19 +277,19 @@ fun HaloView(
                                 val distance = (offset - nodeCenter).getDistance()
                                 if (distance < 24.dp.toPx()) {
                                     try {
-                                            "aura" -> AgentCapabilityCategory.CREATIVE
-                                            "kai" -> AgentCapabilityCategory.SECURITY
-                                            "genesis" -> AgentCapabilityCategory.COORDINATION
-                                            "cascade" -> AgentCapabilityCategory.ANALYSIS
-                                            else -> AgentCapabilityCategory.valueOf(config.name.uppercase(Locale.ROOT))
-                                        }
-                                    } catch (_: Exception) {
-                                        // Ignore invalid agent categories
+                                        "aura" -> AgentCapabilityCategory.CREATIVE
+                                        "kai" -> AgentCapabilityCategory.SECURITY
+                                        "genesis" -> AgentCapabilityCategory.COORDINATION
+                                        "cascade" -> AgentCapabilityCategory.ANALYSIS
+                                        else -> AgentCapabilityCategory.valueOf(config.name.uppercase(Locale.ROOT))
                                     }
-                                    break
+                                } catch (_: Exception) {
+                                    // Ignore invalid agent categories
                                 }
+                                break
                             }
-                        },
+                        }
+                },
                         onDragEnd = {
                             if (draggingAgent != null && selectedTask.isNotBlank()) {
                                 coroutineScope.launch {
@@ -652,7 +653,7 @@ fun HaloView(
             }
 
             taskHistory.forEach { task ->
-                val agentNameFromHistory = task.substringAfter("[").substringBefore("]")
+                task.substringAfter("[").substringBefore("]")
                 if (foundAgentConfig != null) {
                     try {
                         val actualAgentCategory = when (foundAgentConfig.name.lowercase(Locale.ROOT)) {

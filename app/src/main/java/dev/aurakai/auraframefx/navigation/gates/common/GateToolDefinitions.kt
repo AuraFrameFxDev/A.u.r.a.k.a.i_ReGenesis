@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.navigation.gates.common
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
 // Data classes for Domain Hub Tool Cards
 

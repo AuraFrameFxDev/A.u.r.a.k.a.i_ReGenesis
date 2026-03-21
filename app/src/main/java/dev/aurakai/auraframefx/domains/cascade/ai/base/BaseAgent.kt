@@ -1,30 +1,17 @@
 package dev.aurakai.auraframefx.domains.cascade.ai.base
 
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
-import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
-import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-
 
 /**
  * Genesis Base Agent Implementation
@@ -64,7 +51,7 @@ abstract class BaseAgent(
 
             // Record the interaction for learning
             contextManager?.recordInsight(
-                request = request.prompt,
+                request = request.query,
                 response = response.content,
                 complexity = determineComplexity(request)
             )
@@ -73,6 +60,7 @@ abstract class BaseAgent(
             emit(response)
 
         } catch (e: Exception) {
+            emit(handleError(e))
         }
     }
 
@@ -81,10 +69,10 @@ abstract class BaseAgent(
      * Determines the complexity level of a request
      */
     protected open fun determineComplexity(request: AiRequest): String {
-        val promptLength = request.prompt.length
+        val queryLength = request.query.length
         return when {
-            promptLength < 100 -> "simple"
-            promptLength < 500 -> "moderate"
+            queryLength < 100 -> "simple"
+            queryLength < 500 -> "moderate"
             else -> "complex"
         }
     }
@@ -93,7 +81,7 @@ abstract class BaseAgent(
      * Validates input request
      */
     protected open fun validateRequest(request: AiRequest): Boolean {
-        return request.prompt.isNotBlank()
+        return request.query.isNotBlank()
     }
 
     /**
@@ -244,4 +232,3 @@ abstract class BaseAgent(
         // Default no-op: agents should override this to participate in the collective
     }
 }
-

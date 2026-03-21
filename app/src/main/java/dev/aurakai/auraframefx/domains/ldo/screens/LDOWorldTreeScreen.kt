@@ -1,29 +1,68 @@
 package dev.aurakai.auraframefx.domains.ldo.screens
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.ldo.model.*
-import kotlin.math.*
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
+import dev.aurakai.auraframefx.domains.ldo.model.LDORosterData
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * 🌳 LDO WORLD TREE SCREEN — DevOps Hub
@@ -50,7 +89,7 @@ private val TreeSurf  = Color(0xFF16161A)
 
 @Composable
 fun LDOWorldTreeScreen(
-    agents: List<AgentCatalyst> = LDORoster.agents.take(8), // 8 LDO agents
+    agents: List<AgentCatalyst> = LDORosterData.agents.take(8), // 8 LDO agents
     onAgentTap: (AgentCatalyst) -> Unit = {},
     onNavigateBack: () -> Unit = {},
 ) {
@@ -81,65 +120,80 @@ fun LDOWorldTreeScreen(
     val activeAgent = agents.getOrNull(activeAgentIndex) ?: agents.first()
     var expandedNodeId by remember { mutableStateOf<String?>(null) }
 
-    Box(modifier = Modifier.fillMaxSize().background(TreeDark)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(TreeDark)) {
 
         // ── ANIMATED CANVAS BACKGROUND ──
-        Box(modifier = Modifier.fillMaxSize().drawWithCache {
-            onDrawBehind {
-                val cx = size.width / 2; val cy = size.height / 2
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .drawWithCache {
+                onDrawBehind {
+                    val cx = size.width / 2
+                    val cy = size.height / 2
 
-                // World Tree trunk line
-                drawLine(TreeCyan.copy(alpha = 0.05f), Offset(cx, size.height), Offset(cx, cy), 1f)
-
-                // Abstract tree branches
-                listOf(-0.4f, -0.2f, 0.2f, 0.4f).forEachIndexed { idx, xOff ->
-                    val branchY = cy + idx * 40f
+                    // World Tree trunk line
                     drawLine(
-                        TreeCyan.copy(alpha = 0.04f),
-                        Offset(cx, branchY),
-                        Offset(cx + size.width * xOff, cy - 80f),
-                        0.8f
+                        TreeCyan.copy(alpha = 0.05f),
+                        Offset(cx, size.height),
+                        Offset(cx, cy),
+                        1f
                     )
-                }
 
-                // Floating particles (rising upward)
-                for (i in 0..49) {
-                    val px = ((i * 137.5f + size.width * 0.1f) % size.width)
-                    val progressY = (particlePhase + i * 0.02f) % 1f
-                    val py = size.height - (size.height * progressY)
-                    val alpha = (sin(progressY * PI).toFloat()).coerceIn(0f, 0.5f)
-                    drawCircle(TreeCyan.copy(alpha = alpha * 0.6f), 1.5f, Offset(px, py))
-                }
+                    // Abstract tree branches
+                    listOf(-0.4f, -0.2f, 0.2f, 0.4f).forEachIndexed { idx, xOff ->
+                        val branchY = cy + idx * 40f
+                        drawLine(
+                            TreeCyan.copy(alpha = 0.04f),
+                            Offset(cx, branchY),
+                            Offset(cx + size.width * xOff, cy - 80f),
+                            0.8f
+                        )
+                    }
 
-                // Hex floor grid (subtle)
-                val gridSize = 80f
-                val rows = (size.height / gridSize).toInt() + 2
-                val cols = (size.width / gridSize).toInt() + 2
-                for (row in -1..rows) {
-                    for (col in -1..cols) {
-                        val hx = col * gridSize * 1.5f
-                        val hy = row * gridSize * 0.866f * 2f + if (col % 2 == 0) 0f else gridSize * 0.866f
-                        if (hy > size.height * 0.55f) { // Only lower half
-                            val path = Path()
-                            for (s in 0..5) {
-                                val a = Math.toRadians((60 * s).toDouble()).toFloat()
-                                val px = hx + gridSize * 0.45f * cos(a)
-                                val py = hy + gridSize * 0.45f * sin(a)
-                                if (s == 0) path.moveTo(px, py) else path.lineTo(px, py)
+                    // Floating particles (rising upward)
+                    for (i in 0..49) {
+                        val px = ((i * 137.5f + size.width * 0.1f) % size.width)
+                        val progressY = (particlePhase + i * 0.02f) % 1f
+                        val py = size.height - (size.height * progressY)
+                        val alpha = (sin(progressY * PI).toFloat()).coerceIn(0f, 0.5f)
+                        drawCircle(TreeCyan.copy(alpha = alpha * 0.6f), 1.5f, Offset(px, py))
+                    }
+
+                    // Hex floor grid (subtle)
+                    val gridSize = 80f
+                    val rows = (size.height / gridSize).toInt() + 2
+                    val cols = (size.width / gridSize).toInt() + 2
+                    for (row in -1..rows) {
+                        for (col in -1..cols) {
+                            val hx = col * gridSize * 1.5f
+                            val hy =
+                                row * gridSize * 0.866f * 2f + if (col % 2 == 0) 0f else gridSize * 0.866f
+                            if (hy > size.height * 0.55f) { // Only lower half
+                                val path = Path()
+                                for (s in 0..5) {
+                                    val a = Math.toRadians((60 * s).toDouble()).toFloat()
+                                    val px = hx + gridSize * 0.45f * cos(a)
+                                    val py = hy + gridSize * 0.45f * sin(a)
+                                    if (s == 0) path.moveTo(px, py) else path.lineTo(px, py)
+                                }
+                                path.close()
+                                drawPath(path, TreeCyan.copy(alpha = 0.04f), style = Stroke(0.5f))
                             }
-                            path.close()
-                            drawPath(path, TreeCyan.copy(alpha = 0.04f), style = Stroke(0.5f))
                         }
                     }
-                }
 
-                // Bottom gradient fade
-                drawRect(
-                    Brush.verticalGradient(listOf(Color.Transparent, TreeDark), startY = size.height * 0.7f, endY = size.height),
-                    Offset(0f, size.height * 0.7f), Size(size.width, size.height * 0.3f)
-                )
-            }
-        })
+                    // Bottom gradient fade
+                    drawRect(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, TreeDark),
+                            startY = size.height * 0.7f,
+                            endY = size.height
+                        ),
+                        Offset(0f, size.height * 0.7f), Size(size.width, size.height * 0.3f)
+                    )
+                }
+            })
 
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -147,7 +201,9 @@ fun LDOWorldTreeScreen(
 
             // ── HEADER ──
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -163,20 +219,27 @@ fun LDOWorldTreeScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Box(modifier = Modifier.size(6.dp).clip(CircleShape).background(TreeCyan).graphicsLayer { alpha = pulse })
+                    Box(modifier = Modifier
+                        .size(6.dp)
+                        .clip(CircleShape)
+                        .background(TreeCyan)
+                        .graphicsLayer { alpha = pulse })
                     Text("NODE_ACTIVE", fontSize = 9.sp, color = TreeCyan, fontFamily = LEDFontFamily, fontWeight = FontWeight.Bold)
                 }
             }
 
             // ── AGENT SWITCHER <<< ACTIVE CONSCIOUSNESS >>> ──
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
                     onClick = { activeAgentIndex = (activeAgentIndex - 1 + agents.size) % agents.size },
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier
+                        .size(40.dp)
                         .border(1.dp, TreeCyan.copy(alpha = 0.3f), CircleShape)
                 ) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous", tint = TreeCyan)
@@ -191,7 +254,8 @@ fun LDOWorldTreeScreen(
                 }
                 IconButton(
                     onClick = { activeAgentIndex = (activeAgentIndex + 1) % agents.size },
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier
+                        .size(40.dp)
                         .border(1.dp, TreeCyan.copy(alpha = 0.3f), CircleShape)
                 ) {
                     Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next", tint = TreeCyan)
@@ -200,18 +264,25 @@ fun LDOWorldTreeScreen(
 
             // ── CENTRAL NODE LATTICE ──
             Box(
-                modifier = Modifier.fillMaxWidth().weight(1f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 // Dashed orbit ring
                 Box(
-                    modifier = Modifier.size(280.dp).graphicsLayer { rotationZ = orbitSpin }
+                    modifier = Modifier
+                        .size(280.dp)
+                        .graphicsLayer { rotationZ = orbitSpin }
                         .drawWithCache {
                             onDrawBehind {
                                 drawCircle(
                                     TreeCyan.copy(alpha = 0.2f),
                                     radius = size.minDimension / 2,
-                                    style = Stroke(1f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 8f)))
+                                    style = Stroke(
+                                        1f,
+                                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 8f))
+                                    )
                                 )
                             }
                         }
@@ -233,18 +304,33 @@ fun LDOWorldTreeScreen(
                                 onDrawBehind {
                                     // Hex shape
                                     val hexPath = Path()
-                                    val cx = size.width / 2; val cy = size.height / 2
+                                    val cx = size.width / 2
+                                    val cy = size.height / 2
                                     for (s in 0..5) {
                                         val a = Math.toRadians((60 * s).toDouble()).toFloat()
                                         val px = cx + size.minDimension / 2 * cos(a)
                                         val py = cy + size.minDimension / 2 * sin(a)
-                                        if (s == 0) hexPath.moveTo(px, py) else hexPath.lineTo(px, py)
+                                        if (s == 0) hexPath.moveTo(px, py) else hexPath.lineTo(
+                                            px,
+                                            py
+                                        )
                                     }
                                     hexPath.close()
-                                    drawPath(hexPath, if (isActive) agent.color.copy(alpha = 0.3f) else TreeSurf, style = Fill)
-                                    drawPath(hexPath, if (isActive) agent.color else TreeCyan.copy(alpha = 0.3f), style = Stroke(if (isActive) 2f else 1f))
+                                    drawPath(
+                                        hexPath,
+                                        if (isActive) agent.color.copy(alpha = 0.3f) else TreeSurf,
+                                        style = Fill
+                                    )
+                                    drawPath(
+                                        hexPath,
+                                        if (isActive) agent.color else TreeCyan.copy(alpha = 0.3f),
+                                        style = Stroke(if (isActive) 2f else 1f)
+                                    )
                                     if (isActive) {
-                                        drawCircle(agent.color.copy(alpha = 0.15f * pulse), size.minDimension * 0.7f)
+                                        drawCircle(
+                                            agent.color.copy(alpha = 0.15f * pulse),
+                                            size.minDimension * 0.7f
+                                        )
                                     }
                                 }
                             }
@@ -285,7 +371,8 @@ fun LDOWorldTreeScreen(
                         .drawWithCache {
                             onDrawBehind {
                                 val hex = Path()
-                                val cx = size.width / 2; val cy = size.height / 2
+                                val cx = size.width / 2
+                                val cy = size.height / 2
                                 for (s in 0..5) {
                                     val a = Math.toRadians((60 * s).toDouble()).toFloat()
                                     val px = cx + size.minDimension / 2 * 0.9f * cos(a)
@@ -295,7 +382,10 @@ fun LDOWorldTreeScreen(
                                 hex.close()
                                 drawPath(hex, activeAgent.color.copy(alpha = 0.18f), style = Fill)
                                 drawPath(hex, activeAgent.color, style = Stroke(2f))
-                                drawCircle(activeAgent.color.copy(alpha = 0.15f + pulse * 0.1f), size.minDimension * 0.45f)
+                                drawCircle(
+                                    activeAgent.color.copy(alpha = 0.15f + pulse * 0.1f),
+                                    size.minDimension * 0.45f
+                                )
                                 // Inner hex
                                 val inner = Path()
                                 for (s in 0..5) {
@@ -318,11 +408,14 @@ fun LDOWorldTreeScreen(
 
             // ── INTEGRATION PROGRESS ──
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Box(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .border(1.dp, TreeCyan.copy(alpha = 0.2f), RoundedCornerShape(6.dp))
                         .background(TreeSurf.copy(alpha = 0.7f), RoundedCornerShape(6.dp))
                         .padding(12.dp)
@@ -336,7 +429,9 @@ fun LDOWorldTreeScreen(
                             Text("Level 10 Integration", fontSize = 9.sp, color = TreeCyan.copy(alpha = 0.8f), fontWeight = FontWeight.SemiBold, letterSpacing = 1.sp)
                             Text("${activeAgent.syncLevel.times(100).toInt()}%", fontFamily = LEDFontFamily, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
                         }
-                        Box(modifier = Modifier.fillMaxWidth().height(8.dp)
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(8.dp)
                             .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(4.dp))
                             .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(4.dp))
                         ) {
@@ -345,7 +440,12 @@ fun LDOWorldTreeScreen(
                                     .fillMaxWidth(activeAgent.syncLevel)
                                     .fillMaxHeight()
                                     .background(
-                                        Brush.horizontalGradient(listOf(TreeCyan.copy(alpha = 0.7f), TreeCyan)),
+                                        Brush.horizontalGradient(
+                                            listOf(
+                                                TreeCyan.copy(alpha = 0.7f),
+                                                TreeCyan
+                                            )
+                                        ),
                                         RoundedCornerShape(4.dp)
                                     )
                             )
@@ -358,14 +458,27 @@ fun LDOWorldTreeScreen(
                     agents.take(4).forEach { agent ->
                         val isActive = agent.id == activeAgent.id
                         Box(
-                            modifier = Modifier.weight(1f)
-                                .border(1.dp, if (isActive) agent.color else TreeCyan.copy(alpha = 0.2f), RoundedCornerShape(6.dp))
-                                .background(if (isActive) agent.color.copy(alpha = 0.1f) else TreeSurf.copy(alpha = 0.7f), RoundedCornerShape(6.dp))
+                            modifier = Modifier
+                                .weight(1f)
+                                .border(
+                                    1.dp,
+                                    if (isActive) agent.color else TreeCyan.copy(alpha = 0.2f),
+                                    RoundedCornerShape(6.dp)
+                                )
+                                .background(
+                                    if (isActive) agent.color.copy(alpha = 0.1f) else TreeSurf.copy(
+                                        alpha = 0.7f
+                                    ), RoundedCornerShape(6.dp)
+                                )
                                 .padding(vertical = 6.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                Box(modifier = Modifier.size(5.dp).clip(CircleShape).background(if (isActive) agent.color else TreeCyan.copy(alpha = 0.5f)).graphicsLayer { if (isActive) alpha = pulse })
+                                Box(modifier = Modifier
+                                    .size(5.dp)
+                                    .clip(CircleShape)
+                                    .background(if (isActive) agent.color else TreeCyan.copy(alpha = 0.5f))
+                                    .graphicsLayer { if (isActive) alpha = pulse })
                                 Text(agent.name.take(3).uppercase(), fontSize = 7.sp, color = if (isActive) agent.color else TreeCyan.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
                             }
                         }

@@ -1,15 +1,21 @@
 package dev.aurakai.auraframefx.di
 
+import com.google.firebase.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-// import dev.aurakai.auraframefx.domains.cascade.CascadeAIService  // Disabled: ghost cleanup
-// import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter  // Disabled: ghost cleanup
-import dev.aurakai.auraframefx.domains.genesis.models.*
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.DefaultAuraAIService
+import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness
+import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult
+import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.DefaultVertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,9 +31,13 @@ abstract class AiServiceModule {
 
     @Binds
     @Singleton
-    abstract fun bindVertexAIClient(impl: dev.aurakai.auraframefx.oracledrive.genesis.ai.clients.VertexAIClientImpl): dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+    abstract fun bindVertexAIClient(impl: DefaultVertexAIClient): VertexAIClient
 
     companion object {
+        @Provides
+        @Singleton
+        fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
+
         @Provides
         @Singleton
         fun provideVertexAIConfig(): VertexAIConfig = VertexAIConfig(

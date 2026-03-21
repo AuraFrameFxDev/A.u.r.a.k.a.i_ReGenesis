@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,7 +34,8 @@ class DataStoreManager @Inject constructor(
     private val context: Context
 ) {
 
-    private val json = Json {
+    @PublishedApi
+    internal val json = Json {
         ignoreUnknownKeys = true
         prettyPrint = true
     }

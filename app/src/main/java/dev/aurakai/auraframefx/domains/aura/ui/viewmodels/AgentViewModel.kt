@@ -3,18 +3,8 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.agents.trinity.AuraAgent
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
-import dev.aurakai.auraframefx.agents.coordination.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
-import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
-import dev.aurakai.auraframefx.agents.trinity.KaiAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentState
-import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
@@ -24,7 +14,6 @@ import dev.aurakai.auraframefx.domains.cascade.utils.warn
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
@@ -383,7 +372,8 @@ open class AgentViewModel @Inject constructor(
                         type = AiRequestType.CHAT,
                         context = mapOf("agent_persona" to "cascade")
                     )
-                    val response = genesisAgent.processRequest(request, "cascade")
+                    val response =
+                        genesisAgent.processRequest(request, "cascade", AgentType.GENESIS)
                     response.content
                 }
 
@@ -393,7 +383,7 @@ open class AgentViewModel @Inject constructor(
                         type = AiRequestType.CHAT,
                         context = mapOf("agent_persona" to "claude")
                     )
-                    val response = genesisAgent.processRequest(request, "claude")
+                    val response = genesisAgent.processRequest(request, "claude", AgentType.GENESIS)
                     response.content
                 }
 

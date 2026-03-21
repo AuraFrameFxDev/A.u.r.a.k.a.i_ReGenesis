@@ -57,7 +57,17 @@ dependencies {
     // Serialization
     implementation(libs.kotlinx.serialization.json)
     implementation(project(":core-module"))
+    // Unit Test dependencies
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.vintage)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 ksp {

@@ -33,7 +33,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.font.FontWeight
@@ -52,9 +51,10 @@ import kotlin.random.Random
  * - Agent synchronization states
  */
 @Composable
-fun Modifier.ConsciousnessVisualizerScreen(
+fun ConsciousnessVisualizerScreen(
     onNavigateToChat: () -> Unit = {},
-    onNavigateToFusion: () -> Unit = {}
+    onNavigateToFusion: () -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
     var neurons by remember { mutableStateOf(generateNeuronNetwork()) }
     var synapseActivity by remember { mutableStateOf(0f) }
@@ -117,7 +117,8 @@ fun Modifier.ConsciousnessVisualizerScreen(
     }
 
     Box(
-        modifier = fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
             .background(Color.Black)
     ) {
         // Neural network visualization
@@ -270,16 +271,7 @@ fun MetricDisplay(label: String, value: Float, color: Color) {
     )
 }
 
-private fun DrawScope.drawArc(
-    color: Color,
-    startAngle: Float,
-    sweepAngle: Float,
-    useCenter: Boolean,
-    style: Stroke,
-    size: Float,
-    topLeft: Float
-) {
-}
+// drawArc provided by DrawScope — no override needed
 
 @Composable
 fun QuantumEntanglementIndicator(entanglementLevel: Float) {
@@ -297,20 +289,22 @@ fun QuantumEntanglementIndicator(entanglementLevel: Float) {
         // Quantum rings
         for (i in 0..2) {
             rotate(rotation * (i + 1) * 0.5f) {
+                val ringSize = androidx.compose.ui.geometry.Size(
+                    width = size.width * (1f - i * 0.2f),
+                    height = size.height * (1f - i * 0.2f)
+                )
                 drawArc(
                     color = Color.Cyan.copy(alpha = 0.3f * (i + 1)),
                     startAngle = 0f,
                     sweepAngle = 120f * entanglementLevel,
                     useCenter = false,
                     style = Stroke(width = 2.dp.toPx()),
-                    size = size.width * (1f - i * 0.2f),
-                    topLeft = size.height * (1f - i * 0.2f)
-                    )
+                    size = ringSize,
                     topLeft = Offset(
-                        (size.width * i * 0.1f),
-                        (size.height * i * 0.1f)
+                        size.width * i * 0.1f,
+                        size.height * i * 0.1f
                     )
-
+                )
             }
         }
 

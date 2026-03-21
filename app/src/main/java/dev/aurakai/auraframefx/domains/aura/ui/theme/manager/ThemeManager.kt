@@ -1,12 +1,12 @@
 package dev.aurakai.auraframefx.domains.aura.ui.theme.manager
 
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraTheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.CyberpunkTheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.ForestTheme
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.SolarFlareTheme
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.i
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import javax.inject.Inject
 import javax.inject.Singleton
 

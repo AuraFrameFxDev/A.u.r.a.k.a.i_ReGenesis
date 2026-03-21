@@ -15,9 +15,9 @@
 
 package dev.aurakai.auraframefx.domains.genesis.models
 
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 
 /**
  *

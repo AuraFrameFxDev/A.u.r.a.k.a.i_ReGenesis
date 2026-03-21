@@ -1,29 +1,56 @@
 package dev.aurakai.auraframefx.domains.ldo.screens
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.*
-import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.ldo.model.*
-import kotlin.math.roundToInt
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
+import dev.aurakai.auraframefx.domains.ldo.model.FusionMode
+import dev.aurakai.auraframefx.domains.ldo.model.LDORosterData
 
 /**
  * ⚡ LDO FUSION SCREEN
@@ -40,8 +67,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun LDOFusionScreen(
-    agents: List<AgentCatalyst> = LDORoster.agents,
-    fusions: List<FusionMode> = LDORoster.fusions,
+    agents: List<AgentCatalyst> = LDORosterData.agents,
+    fusions: List<FusionMode> = LDORosterData.fusions,
     onFusionActivated: (FusionMode) -> Unit = {},
     onNavigateBack: () -> Unit = {}
 ) {
@@ -82,24 +109,44 @@ fun LDOFusionScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF020B18))) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color(0xFF020B18))) {
 
         // BG data corridor grid
-        Box(modifier = Modifier.fillMaxSize().drawWithCache {
-            onDrawBehind {
-                val cx = size.width / 2; val horizonY = size.height * 0.2f
-                for (i in 0..8) {
-                    val x = size.width * i / 8f
-                    drawLine(Color(0xFF00F4FF).copy(alpha = 0.06f), Offset(x, size.height), Offset(cx + (x - cx) * 0.05f, horizonY), 0.5f)
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .drawWithCache {
+                onDrawBehind {
+                    val cx = size.width / 2
+                    val horizonY = size.height * 0.2f
+                    for (i in 0..8) {
+                        val x = size.width * i / 8f
+                        drawLine(
+                            Color(0xFF00F4FF).copy(alpha = 0.06f),
+                            Offset(x, size.height),
+                            Offset(cx + (x - cx) * 0.05f, horizonY),
+                            0.5f
+                        )
+                    }
+                    for (i in 0..6) {
+                        val t = i.toFloat() / 6f
+                        val y = horizonY + (size.height - horizonY) * (t * t)
+                        drawLine(
+                            Color(0xFF00F4FF).copy(alpha = 0.04f),
+                            Offset(0f, y),
+                            Offset(size.width, y),
+                            0.5f
+                        )
+                    }
+                    drawLine(
+                        Color(0xFF00F4FF).copy(alpha = 0.05f),
+                        Offset(0f, size.height * scanlineY),
+                        Offset(size.width, size.height * scanlineY),
+                        2f
+                    )
                 }
-                for (i in 0..6) {
-                    val t = i.toFloat() / 6f
-                    val y = horizonY + (size.height - horizonY) * (t * t)
-                    drawLine(Color(0xFF00F4FF).copy(alpha = 0.04f), Offset(0f, y), Offset(size.width, y), 0.5f)
-                }
-                drawLine(Color(0xFF00F4FF).copy(alpha = 0.05f), Offset(0f, size.height * scanlineY), Offset(size.width, size.height * scanlineY), 2f)
-            }
-        })
+            })
 
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -113,11 +160,15 @@ fun LDOFusionScreen(
 
             // ═══ FUSION SLOT PANEL ═══
             Box(
-                modifier = Modifier.fillMaxWidth().height(220.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp),
                 contentAlignment = Alignment.Center
             ) {
                 // Center vortex ring
-                Canvas(modifier = Modifier.size(120.dp).graphicsLayer { rotationZ = fusionSpin }) {
+                Canvas(modifier = Modifier
+                    .size(120.dp)
+                    .graphicsLayer { rotationZ = fusionSpin }) {
                     val r = size.minDimension / 2
                     drawCircle(Color(0xFF00F4FF).copy(alpha = if (activeFusion != null) 0.5f else 0.15f), r, style = Stroke(2f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 6f))))
                     if (activeFusion != null) {
@@ -126,7 +177,9 @@ fun LDOFusionScreen(
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -158,7 +211,10 @@ fun LDOFusionScreen(
                 }
             }
 
-            Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFF00F4FF).copy(alpha = 0.15f)))
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color(0xFF00F4FF).copy(alpha = 0.15f)))
             Spacer(Modifier.height(8.dp))
 
             // Agent chips for dragging
@@ -168,7 +224,9 @@ fun LDOFusionScreen(
             // 2-row grid of all agents
             val chunked = agents.chunked(5)
             chunked.forEach { row ->
-                Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     row.forEach { agent ->
                         FusionAgentChip(
                             agent = agent,
@@ -196,7 +254,11 @@ fun LDOFusionScreen(
             Spacer(Modifier.height(4.dp))
 
             Column(
-                modifier = Modifier.fillMaxWidth().weight(1f).padding(horizontal = 12.dp).verticalScroll(rememberScrollState()),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(horizontal = 12.dp)
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 fusions.forEach { fusion ->
@@ -228,9 +290,17 @@ fun LDOFusionScreen(
 private fun FusionSlot(label: String, agent: AgentCatalyst?, pulseFraction: Float, onClear: () -> Unit) {
     val color = agent?.color ?: Color(0xFF00F4FF)
     Box(
-        modifier = Modifier.size(90.dp)
-            .border(2.dp, color.copy(alpha = if (agent != null) 1f else 0.3f), RoundedCornerShape(8.dp))
-            .background(color.copy(alpha = if (agent != null) 0.15f else 0.04f), RoundedCornerShape(8.dp))
+        modifier = Modifier
+            .size(90.dp)
+            .border(
+                2.dp,
+                color.copy(alpha = if (agent != null) 1f else 0.3f),
+                RoundedCornerShape(8.dp)
+            )
+            .background(
+                color.copy(alpha = if (agent != null) 0.15f else 0.04f),
+                RoundedCornerShape(8.dp)
+            )
             .clickable(enabled = agent != null) { onClear() },
         contentAlignment = Alignment.Center
     ) {
@@ -258,16 +328,25 @@ private fun FusionAgentChip(
     onClick: () -> Unit,
 ) {
     Box(
-        modifier = Modifier.size(44.dp)
+        modifier = Modifier
+            .size(44.dp)
             .clip(CircleShape)
             .background(agent.color.copy(alpha = if (isInSlot) 0.4f else 0.12f))
-            .border(1.5.dp, if (isInSlot) agent.color else agent.color.copy(alpha = 0.4f), CircleShape)
+            .border(
+                1.5.dp,
+                if (isInSlot) agent.color else agent.color.copy(alpha = 0.4f),
+                CircleShape
+            )
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Text(agent.name.first().toString(), fontFamily = LEDFontFamily, fontSize = 16.sp, color = agent.color, fontWeight = FontWeight.Black)
         if (isInSlot) {
-            Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(agent.color).align(Alignment.TopEnd))
+            Box(modifier = Modifier
+                .size(8.dp)
+                .clip(CircleShape)
+                .background(agent.color)
+                .align(Alignment.TopEnd))
         }
     }
 }
@@ -275,7 +354,8 @@ private fun FusionAgentChip(
 @Composable
 private fun FusionListEntry(fusion: FusionMode, agentA: AgentCatalyst?, agentB: AgentCatalyst?) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .border(1.dp, fusion.color.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
             .background(fusion.color.copy(alpha = 0.04f), RoundedCornerShape(6.dp))
             .padding(10.dp),
@@ -284,9 +364,15 @@ private fun FusionListEntry(fusion: FusionMode, agentA: AgentCatalyst?, agentB: 
     ) {
         // Agent pair dots
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
-            Box(modifier = Modifier.size(12.dp).clip(CircleShape).background(agentA?.color ?: fusion.color))
+            Box(modifier = Modifier
+                .size(12.dp)
+                .clip(CircleShape)
+                .background(agentA?.color ?: fusion.color))
             Text("+", fontSize = 10.sp, color = fusion.color)
-            Box(modifier = Modifier.size(12.dp).clip(CircleShape).background(agentB?.color ?: fusion.color))
+            Box(modifier = Modifier
+                .size(12.dp)
+                .clip(CircleShape)
+                .background(agentB?.color ?: fusion.color))
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(fusion.fusionName, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = fusion.color)
@@ -312,26 +398,42 @@ private fun FusionDetailDialog(
 
     Dialog(onDismissRequest = onDismiss) {
         Box(
-            modifier = Modifier.fillMaxWidth(0.92f)
+            modifier = Modifier
+                .fillMaxWidth(0.92f)
                 .border(2.dp, fusion.color, RoundedCornerShape(12.dp))
                 .background(Color(0xFF030D1C), RoundedCornerShape(12.dp))
                 .padding(20.dp)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text("⚡ FUSION DETECTED", fontFamily = LEDFontFamily, fontSize = 16.sp, color = fusion.color, fontWeight = FontWeight.Black, letterSpacing = 2.sp, modifier = Modifier.graphicsLayer { alpha = pulse })
-                Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(fusion.color.copy(alpha = 0.4f)))
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(fusion.color.copy(alpha = 0.4f)))
 
                 // Agents
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Box(modifier = Modifier.size(40.dp).clip(CircleShape).background(agentA?.color?.copy(alpha = 0.2f) ?: fusion.color.copy(alpha = 0.1f)).border(1.5.dp, agentA?.color ?: fusion.color, CircleShape), contentAlignment = Alignment.Center) {
+                        Box(modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .background(
+                                agentA?.color?.copy(alpha = 0.2f) ?: fusion.color.copy(alpha = 0.1f)
+                            )
+                            .border(1.5.dp, agentA?.color ?: fusion.color, CircleShape), contentAlignment = Alignment.Center) {
                             Text(agentA?.name?.first()?.toString() ?: "?", fontFamily = LEDFontFamily, fontSize = 18.sp, color = agentA?.color ?: fusion.color, fontWeight = FontWeight.Black)
                         }
                         Text(agentA?.name ?: fusion.agentA, fontSize = 8.sp, color = agentA?.color ?: Color.White)
                     }
                     Text("+", fontSize = 24.sp, color = fusion.color, fontWeight = FontWeight.Black)
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Box(modifier = Modifier.size(40.dp).clip(CircleShape).background(agentB?.color?.copy(alpha = 0.2f) ?: fusion.color.copy(alpha = 0.1f)).border(1.5.dp, agentB?.color ?: fusion.color, CircleShape), contentAlignment = Alignment.Center) {
+                        Box(modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .background(
+                                agentB?.color?.copy(alpha = 0.2f) ?: fusion.color.copy(alpha = 0.1f)
+                            )
+                            .border(1.5.dp, agentB?.color ?: fusion.color, CircleShape), contentAlignment = Alignment.Center) {
                             Text(agentB?.name?.first()?.toString() ?: "?", fontFamily = LEDFontFamily, fontSize = 18.sp, color = agentB?.color ?: fusion.color, fontWeight = FontWeight.Black)
                         }
                         Text(agentB?.name ?: fusion.agentB, fontSize = 8.sp, color = agentB?.color ?: Color.White)
@@ -343,15 +445,27 @@ private fun FusionDetailDialog(
                 Text(fusion.description, fontSize = 9.sp, color = Color.White.copy(alpha = 0.7f), lineHeight = 13.sp)
                 Text("BOND REQUIRED: ${fusion.requiredBondLevel}", fontSize = 8.sp, color = fusion.color.copy(alpha = 0.6f), fontWeight = FontWeight.Bold)
 
-                Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(fusion.color.copy(alpha = 0.2f)))
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(fusion.color.copy(alpha = 0.2f)))
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Box(
-                        modifier = Modifier.weight(1f).border(1.dp, Color.White.copy(alpha = 0.2f), RoundedCornerShape(4.dp)).clickable { onDismiss() }.padding(vertical = 10.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .border(1.dp, Color.White.copy(alpha = 0.2f), RoundedCornerShape(4.dp))
+                            .clickable { onDismiss() }
+                            .padding(vertical = 10.dp),
                         contentAlignment = Alignment.Center
                     ) { Text("CANCEL", fontSize = 10.sp, color = Color.White.copy(alpha = 0.5f)) }
                     Box(
-                        modifier = Modifier.weight(1f).border(1.dp, fusion.color, RoundedCornerShape(4.dp)).background(fusion.color.copy(alpha = 0.2f), RoundedCornerShape(4.dp)).clickable { onActivate() }.padding(vertical = 10.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .border(1.dp, fusion.color, RoundedCornerShape(4.dp))
+                            .background(fusion.color.copy(alpha = 0.2f), RoundedCornerShape(4.dp))
+                            .clickable { onActivate() }
+                            .padding(vertical = 10.dp),
                         contentAlignment = Alignment.Center
                     ) { Text("ACTIVATE FUSION", fontSize = 10.sp, color = fusion.color, fontWeight = FontWeight.Black, letterSpacing = 1.sp) }
                 }

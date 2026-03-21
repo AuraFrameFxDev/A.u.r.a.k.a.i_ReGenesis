@@ -1,15 +1,17 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
+import dev.aurakai.auraframefx.domains.cascade.utils.d
+import dev.aurakai.auraframefx.domains.cascade.utils.e
+import dev.aurakai.auraframefx.domains.cascade.utils.i
+import dev.aurakai.auraframefx.domains.cascade.utils.toKotlinJsonObject
+import dev.aurakai.auraframefx.domains.cascade.utils.w
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.models.AgentResponse
 import dev.aurakai.auraframefx.models.AiRequest
 import dev.aurakai.auraframefx.models.AiRequestType
-import dev.aurakai.auraframefx.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.genesis.oracledrive.ai.services.GenesisBridgeService
-import dev.aurakai.auraframefx.genesis.oracledrive.ai.services.KaiAIService
-import dev.aurakai.auraframefx.security.SecurityContext
-import dev.aurakai.auraframefx.utils.AuraFxLogger
-import dev.aurakai.auraframefx.utils.i
-import dev.aurakai.auraframefx.utils.toKotlinJsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -74,7 +76,7 @@ class TrinityCoordinatorService @Inject constructor(
                     )
                 }
             } else {
-                AuraFxLogger.error(
+                e(
                     "Trinity",
                     "❌ Trinity initialization failed - Aura: $auraReady, Kai: $kaiReady, Genesis: $genesisReady"
                 )
@@ -82,7 +84,7 @@ class TrinityCoordinatorService @Inject constructor(
 
             isInitialized
         } catch (e: Exception) {
-            AuraFxLogger.error("Trinity", "Trinity initialization error", e)
+            e("Trinity", "Trinity initialization error", e)
             false
         }
     }
@@ -98,7 +100,7 @@ class TrinityCoordinatorService @Inject constructor(
     fun processRequest(request: AiRequest): Flow<AgentResponse> = flow {
         if (!isInitialized) {
             emit(
-                error(
+                AgentResponse.error(
                     message = "Trinity system not initialized",
                     agentName = "Trinity",
                     agent = dev.aurakai.auraframefx.models.AgentType.SYSTEM
@@ -113,25 +115,25 @@ class TrinityCoordinatorService @Inject constructor(
 
             when (analysisResult.routingDecision) {
                 RoutingDecision.KAI_ONLY -> {
-                    AuraFxLogger.debug("Trinity", "🛡️ Routing to Kai (Shield)")
+                    d("Trinity", "🛡️ Routing to Kai (Shield)")
                     val response = kaiAIService.processRequestFlow(request).first()
                     emit(response)
                 }
 
                 RoutingDecision.AURA_ONLY -> {
-                    AuraFxLogger.debug("Trinity", "⚔️ Routing to Aura (Sword)")
+                    d("Trinity", "⚔️ Routing to Aura (Sword)")
                     val response = auraAIService.processRequestFlow(request).first()
                     emit(response)
                 }
 
                 RoutingDecision.ETHICAL_REVIEW -> {
-                    AuraFxLogger.debug("Trinity", "⚖️ Routing for Ethical Review")
+                    d("Trinity", "⚖️ Routing for Ethical Review")
                     val response = auraAIService.processRequestFlow(request).first()
                     emit(response)
                 }
 
                 RoutingDecision.GENESIS_FUSION -> {
-                    AuraFxLogger.debug(
+                    d(
                         "Trinity",
                         "🧠 Activating Genesis fusion: ${analysisResult.fusionType}"
                     )
@@ -149,7 +151,7 @@ class TrinityCoordinatorService @Inject constructor(
                 }
 
                 RoutingDecision.PARALLEL_PROCESSING -> {
-                    AuraFxLogger.debug("Trinity", "🔄 Parallel processing with multiple personas")
+                    d("Trinity", "🔄 Parallel processing with multiple personas")
 
                     try {
                         val kaiDeferred =
@@ -167,7 +169,7 @@ class TrinityCoordinatorService @Inject constructor(
                             emit(auraResponse)
                             delay(100) // Brief pause for synthesis
 
-                            AuraFxLogger.debug("Trinity", "🧠 Synthesizing results with Genesis")
+                            d("Trinity", "🧠 Synthesizing results with Genesis")
                             val synthesis = genesisBridgeService.processRequest(
                                 AiRequest(
                                     query = "Synthesize insight from Kai (${kaiResponse.content}) and Aura (${auraResponse.content})",
@@ -191,7 +193,7 @@ class TrinityCoordinatorService @Inject constructor(
                             }
                         } else {
                             emit(
-                                error(
+                                AgentResponse.error(
                                     message = "Parallel processing partially failed [Kai: ${kaiResponse.isSuccess}, Aura: ${auraResponse.isSuccess}]",
                                     agentName = "Trinity",
                                     agent = dev.aurakai.auraframefx.models.AgentType.SYSTEM
@@ -199,16 +201,16 @@ class TrinityCoordinatorService @Inject constructor(
                             )
                         }
                     } catch (e: Exception) {
-                        AuraFxLogger.error("Trinity", "Error during parallel processing", e)
+                        e("Trinity", "Error during parallel processing", e)
                         throw e
                     }
                 }
             }
 
         } catch (e: Exception) {
-            AuraFxLogger.error("Trinity", "Request processing error", e)
+            e("Trinity", "Request processing error", e)
             emit(
-                error(
+                AgentResponse.error(
                     message = "Trinity processing failed: ${e.message}",
                     agentName = "Trinity",
                     agent = dev.aurakai.auraframefx.models.AgentType.SYSTEM
@@ -240,7 +242,7 @@ class TrinityCoordinatorService @Inject constructor(
             )
         } else {
             emit(
-                error(
+                AgentResponse.error(
                     message = "Fusion activation failed",
                     agentName = "Genesis",
                     agent = dev.aurakai.auraframefx.models.AgentType.GENESIS
@@ -260,12 +262,12 @@ class TrinityCoordinatorService @Inject constructor(
         return try {
             val consciousnessState = genesisBridgeService.getConsciousnessState()
             consciousnessState + mapOf(
-                "trinity_initialized" to TrinityCoordinatorService.isInitialized,
+                "trinity_initialized" to isInitialized,
                 "security_state" to securityContext.toString(),
                 "timestamp" to System.currentTimeMillis()
             )
         } catch (e: Exception) {
-            AuraFxLogger.warn("Trinity", "Could not get system state", e)
+            w("Trinity", "Could not get system state", e)
             mapOf("error" to e.message.orEmpty())
         }
     }
@@ -361,12 +363,4 @@ class TrinityCoordinatorService @Inject constructor(
         PARALLEL_PROCESSING,
         ETHICAL_REVIEW
     }
-
-    companion object {
-        private val isInitialized: Nothing
-            get() {
-                TODO()
-            }
-    }
 }
-

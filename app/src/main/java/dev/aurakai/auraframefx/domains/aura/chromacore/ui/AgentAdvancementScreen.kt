@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import kotlin.math.PI
@@ -86,6 +85,8 @@ fun AgentAdvancementScreen(
 ) {
     var selectedAgentName by remember { mutableStateOf(agentName) }
     val allAgents by viewModel.allAgents.collectAsState()
+    val agentStats =
+        allAgents.find { it.name == selectedAgentName } ?: AgentStats(name = selectedAgentName)
 
     var selectedNode by remember { mutableStateOf<SkillNode?>(null) }
 
@@ -115,6 +116,8 @@ fun AgentAdvancementScreen(
         // Agent Portrait Overlay (Whole Body) - DYNAMIC PLACEMENT
         if (portraitRes != null) {
             val context = LocalContext.current
+            val resId =
+                context.resources.getIdentifier(portraitRes, "drawable", context.packageName)
             if (resId != 0) {
                 Image(
                     painter = painterResource(id = resId),

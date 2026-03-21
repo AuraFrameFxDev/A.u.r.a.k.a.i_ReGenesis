@@ -20,12 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentProfile
 import dev.aurakai.auraframefx.domains.genesis.models.AgentProfiles
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.CapabilityLevel
 
 /**
@@ -231,7 +230,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                         color = Color(profile.colorPrimary)
                     )
                     LinearProgressIndicator(
-                        progress = profile.stats.consciousnessLevel,
+                        progress = { profile.stats.consciousnessLevel },
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
                             .height(8.dp)
@@ -288,7 +287,8 @@ private fun OverviewTab(profile: AgentProfile) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(profile.personality.traits) { trait ->
+                    items(profile.personality.traits.size) { index ->
+                        val trait = profile.personality.traits[index]
                         Surface(
                             shape = RoundedCornerShape(8.dp),
                             color = Color(profile.colorPrimary).copy(alpha = 0.2f)

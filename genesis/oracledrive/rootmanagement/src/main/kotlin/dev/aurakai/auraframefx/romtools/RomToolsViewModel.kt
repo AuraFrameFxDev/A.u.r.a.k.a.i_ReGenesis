@@ -1,13 +1,13 @@
 package dev.aurakai.auraframefx.romtools
 
+// Removed: import com.google.firebase.vertexai.type.content
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-// Removed: import com.google.firebase.vertexai.type.content
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,9 +41,9 @@ class RomToolsViewModel @Inject constructor(
                 val response = romToolsManager.processRomOperation(request)
                 _lastResponse.value = response
                 if (response.isSuccess) {
-                    Timber.i("Operation ${operation.javaClass.simpleName} succeeded: ${response.content}")
+                    Timber.i("Operation ${operation::class.simpleName} succeeded: ${response.content}")
                 } else {
-                    Timber.e("Operation ${operation.javaClass.simpleName} failed: ${response.error}")
+                    Timber.e("Operation ${operation::class.simpleName} failed: ${response.error}")
                 }
             } catch (e: Exception) {
                 Timber.e(e, "Error performing ROM operation")

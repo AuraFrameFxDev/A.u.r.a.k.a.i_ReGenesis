@@ -26,9 +26,9 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,7 +36,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 
 /**
  * 🫧 ASSISTANT BUBBLE SERVICE
@@ -146,7 +145,7 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                     onActionClick = { action ->
                         Timber.i("Neural Link Action: $action")
                         // Map Sidebar actions to app routes
-                        val route = when (action) {
+                        when (action) {
                             "VOICE" -> "sandbox_screen"       // Laboratory
                             "CONNECT" -> "data_stream_monitoring"
                             "ASSIGN" -> "task_assignment"
@@ -155,18 +154,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                             else -> null
                         }
                         windowManager.updateViewLayout(overlayLayout, params)
-                    },
-                    onSendMessage = { text, category ->
-                        serviceScope.launch {
-                            messageBus.broadcast(
-                                AgentMessage(
-                                    from = "User",
-                                    content = text,
-                                    to = category.name,
-                                    type = "overlay_broadcast"
-                                )
-                            )
-                        }
                     }
                 )
             }

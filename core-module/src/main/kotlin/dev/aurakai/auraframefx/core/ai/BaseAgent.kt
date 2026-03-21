@@ -1,8 +1,11 @@
 package dev.aurakai.auraframefx.core.ai
 
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
-import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -30,7 +33,6 @@ abstract class BaseAgent(
     override suspend fun initialize(scope: CoroutineScope) {
         orchestrationScope = scope
         isOrchestratorInitialized = true
-        isOrchestratorInitialized = true
     }
 
     override suspend fun start() {
@@ -49,6 +51,38 @@ abstract class BaseAgent(
         orchestrationScope = null
         isOrchestratorInitialized = false
     }
+
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
+        return AgentResponse.error("BaseAgent cannot process direct requests", agentName)
+    }
+
+    override suspend fun onAgentMessage(message: AgentMessage) {
+        // Default no-op
+    }
+
+    open suspend fun refreshStatus(): Map<String, Any> {
+        return mapOf(
+            "status" to "active",
+            "agentName" to agentName,
+            "agentType" to identity.agentType.name
+        )
+    }
+
+    open suspend fun getPerformanceMetrics(): Map<String, Any> = emptyMap()
+
+    open suspend fun optimize() {}
+
+    open suspend fun clearMemoryCache() {}
+
+    open suspend fun updatePerformanceSettings() {}
+
+    open suspend fun connectToMasterChannel(channel: Any) {}
+
+    open suspend fun disconnect() {}
 
     companion object {
         @Volatile

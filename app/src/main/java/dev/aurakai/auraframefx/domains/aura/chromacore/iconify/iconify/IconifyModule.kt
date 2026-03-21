@@ -28,7 +28,7 @@ object IconifyModule {
     }
 
     // NOTE: Use the application-wide OkHttpClient from NetworkModule.
-    // If Iconify requires a specialized client in future, provide it with a @Named qualifier.
+    // If Iconify requires a specialized client in the future, provide it with a @Named qualifier.
 
     @Provides
     @Singleton

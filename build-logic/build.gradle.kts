@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `kotlin-dsl`        // applies java-gradle-plugin
 }
@@ -103,14 +101,14 @@ dependencies {
 //       id("genesis.android.application")  // All-in-one: Android, Hilt, KSP, Compose, Serialization, Firebase
 //   }
 //
-// For standard library module WITHOUT Hilt:
+// For standard library module (Now includes Hilt by default):
 //   plugins {
-//       id("genesis.android.library")  // Base library: Android, Compose, Serialization (NO Hilt)
+//       id("genesis.android.library")  // Base library: Android, Compose, Serialization, Hilt, KSP
 //   }
 //
-// For library module WITH Hilt:
+// For legacy reasons or explicit Hilt naming:
 //   plugins {
-//       id("genesis.android.library.hilt")  // Library with Hilt DI + KSP
+//       id("genesis.android.library.hilt")  // Same as genesis.android.library
 //   }
 //
 // For YukiHook/Xposed module:

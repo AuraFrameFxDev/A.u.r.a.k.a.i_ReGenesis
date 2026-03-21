@@ -1,17 +1,17 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.kai.TaskPriority
-import dev.aurakai.auraframefx.domains.kai.TaskResult
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.toKotlinJsonObject
-import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
-import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
+import dev.aurakai.auraframefx.domains.kai.KaiAgent
+import dev.aurakai.auraframefx.domains.kai.TaskExecution
+import dev.aurakai.auraframefx.domains.kai.TaskPriority
+import dev.aurakai.auraframefx.domains.kai.TaskResult
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -25,7 +25,6 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.PriorityBlockingQueue
 import javax.inject.Inject
 import javax.inject.Singleton
-import dev.aurakai.auraframefx.domains.kai.TaskExecution
 import kotlinx.serialization.Serializable as KotlinxSerializable
 
 /**
@@ -361,7 +360,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data
         )
-        return auraAgent.processRequest(request, execution.agent.name)
+        return auraAgent.processRequest(request, execution.agent.name, AgentType.AURA)
     }
 
     /**
@@ -381,7 +380,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data
         )
-        return kaiAgent.processRequest(request, execution.agent.name)
+        return kaiAgent.processRequest(request, execution.agent.name, AgentType.KAI)
     }
 
     /**
@@ -395,7 +394,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data
         )
-        return genesisAgent.processRequest(request, execution.agent.name)
+        return genesisAgent.processRequest(request, execution.agent.name, AgentType.GENESIS)
     }
 
     /**

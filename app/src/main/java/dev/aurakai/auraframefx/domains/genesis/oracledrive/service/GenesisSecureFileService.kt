@@ -2,8 +2,8 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.genesis.security.CryptographyManager
 import dev.aurakai.auraframefx.domains.genesis.storage.SecureStorage
+import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,13 +17,13 @@ import javax.inject.Singleton
  * Genesis-backed secure file service implementation.
  * Handles encrypted file operations for the Oracle Drive system.
  *
- * All files are encrypted at rest using the provided CryptographyManager
+ * All files are encrypted at rest using the provided EncryptionManager
  * and stored in app-private storage via SecureStorage.
  */
 @Singleton
 class GenesisSecureFileService @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val cryptographyManager: CryptographyManager,
+    private val encryptionManager: EncryptionManager,
     private val secureStorage: SecureStorage
 ) : SecureFileService {
 
@@ -47,8 +47,8 @@ class GenesisSecureFileService @Inject constructor(
 
             val file = File(targetDir, fileName)
 
-            // Encrypt the data using CryptographyManager
-            val encryptedData = cryptographyManager.encrypt(data)
+            // Encrypt the data using EncryptionManager
+            val encryptedData = encryptionManager.encrypt(data)
 
             // Write encrypted data to file
             file.writeBytes(encryptedData)
@@ -88,8 +88,8 @@ class GenesisSecureFileService @Inject constructor(
             // Read encrypted data
             val encryptedData = file.readBytes()
 
-            // Decrypt using CryptographyManager
-            val decryptedData = cryptographyManager.decrypt(encryptedData)
+            // Decrypt using EncryptionManager
+            val decryptedData = encryptionManager.decrypt(encryptedData)
 
             Timber.d("Successfully read and decrypted file: ${file.absolutePath}")
             emit(FileOperationResult.Data(decryptedData, fileName))

@@ -1,11 +1,12 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.pipeline
 
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,7 +54,7 @@ class AIPipelineProcessor @Inject constructor(
         val cascadeAgentResponse = cascadeService.processRequest(
             AiRequest(
                 query = task,
-                type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT
+                type = AiRequestType.TEXT
             ),
             context = "pipeline_processing"
         )
@@ -70,9 +71,8 @@ class AIPipelineProcessor @Inject constructor(
         // Process through Kai for security analysis if needed
         if (selectedAgents.contains(AgentType.KAI)) {
             val kaiAgentResponse = kaiService.processRequest(
-                AiRequest(prompt = task, category = AgentCapabilityCategory.SECURITY),
-                context = "security_analysis",
-                category = AgentCapabilityCategory.SECURITY
+                AiRequest(query = task, type = AiRequestType.SECURITY),
+                context = "security_analysis"
             )
             responses.add(
                 AgentMessage(

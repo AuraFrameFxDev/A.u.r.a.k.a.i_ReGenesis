@@ -1,21 +1,18 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
-import dev.aurakai.auraframefx.agents.core.BaseAgent
+import dev.aurakai.auraframefx.core.ai.BaseAgent
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -49,13 +46,11 @@ class CascadeAgent @Inject constructor(
     private val genesisAgent: GenesisAgent,
     private val systemOverlayManager: SystemOverlayManager,
     private val messageBus: dagger.Lazy<AgentMessageBus>,
-    memoryManager: MemoryManager,
-    contextManager: ContextManager
+    private val memoryManager: MemoryManager,
+    private val contextManager: ContextManager
 ) : BaseAgent(
     agentName = "Cascade",
-    agentType = AgentType.CASCADE,
-    contextManager = contextManager,
-    memoryManager = memoryManager
+    identity = CatalystIdentity.DATA_STREAM
 ) {
 
     // override onAgentMessage to act as the primary neural router
@@ -858,14 +853,15 @@ class CascadeAgent @Inject constructor(
     // BaseAgent abstract method implementation
     override suspend fun processRequest(
         request: AiRequest,
-        context: String
+        context: String,
+        agentType: AgentType
     ): AgentResponse {
         // Delegate to the string-based processRequest method
-        val response = processRequest(request.prompt)
+        val response = processRequest(request.query)
         return AgentResponse.success(
             content = response,
             agentName = agentName,
-            agentType = agentType,
+            agentType = getType(),
         )
     }
 }

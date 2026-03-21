@@ -4,15 +4,16 @@
 // Uses com.android.build.api.dsl.ApplicationExtension (modern DSL)
 // Plugins are versioned in the root build.gradle.kts
 
+import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     // 1. Core Android & Kotlin (The Substrate)
     id("com.android.application")
-
     // 2. Dependency Injection & Processing (The Nervous System)
-    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+
 
     // 3. UI & Data (The Senses)
     id("org.jetbrains.kotlin.plugin.compose")
@@ -147,6 +148,10 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
+ksp {
+    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx")
+}
+
 
 // Enable modern Kotlin features (Experimental/New in 2.2+)
 // ═══════════════════════════════════════════════════════════════════════════
@@ -164,19 +169,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
             "-Xcontext-parameters",
             "-Xannotation-default-target=param-property"
         )
-    }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// DISABLE TEST COMPILATION (Speed up builds)
-// ═══════════════════════════════════════════════════════════════════════════
-tasks.configureEach {
-    if (name.contains("Test", ignoreCase = true) &&
-        (name.contains("compile", ignoreCase = true) ||
-            name.contains("UnitTest") ||
-            name.contains("AndroidTest"))
-    ) {
-        enabled = false
     }
 }
 
@@ -228,10 +220,10 @@ private fun AndroidSourceDirectorySet.mutableset(
 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
-        // Domain Modules Projects
+    // Core Module
     implementation(project(":core-module"))
-    implementation(project(":list"))
-    implementation(project(":utilities"))
+
+    // Domain Modules
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:collabcanvas"))
@@ -244,36 +236,6 @@ dependencies {
     implementation(project(":genesis:oracledrive:rootmanagement"))
     implementation(project(":cascade:datastream:delivery"))
     implementation(project(":cascade:datastream:routing"))
-    implementation(project(":cascade:datastream:taskmanager"))
-    // AUTO-PROVIDED by genesis.android.application:
-    // ═══════════════════════════════════════════════════════════════════════════
-    // ✅ Hilt Android + Compiler (with KSP)
-    // ✅ Compose BOM + UI (ui, ui-graphics, ui-tooling-preview, material3, ui-tooling[debug])
-    // ✅ Core Android (core-ktx, appcompat, activity-compose)
-    // ✅ Lifecycle (runtime-ktx, viewmodel-compose)
-    // ✅ Kotlin Coroutines (core + android)
-    // ✅ Kotlin Serialization JSON
-    // ✅ Timber (logging)
-    // ✅ Core library desugaring (Java 25 APIs)
-    // ✅ Firebase BOM
-    // ✅ Xposed API (compileOnly) + EzXHelper
-    //
-    // ⚠️ ONLY declare module-specific dependencies below!
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Project Modules
-    implementation(project(":core-module"))
-    implementation(project(":aura:reactivedesign:auraslab"))
-    implementation(project(":aura:reactivedesign:collabcanvas"))
-    implementation(project(":aura:reactivedesign:chromacore"))
-    implementation(project(":aura:reactivedesign:customization"))
-    implementation(project(":kai:sentinelsfortress:security"))
-    implementation(project(":kai:sentinelsfortress:systemintegrity"))
-    implementation(project(":kai:sentinelsfortress:threatmonitor"))
-    implementation(project(":genesis:oracledrive"))
-    implementation(project(":genesis:oracledrive:rootmanagement"))
-    implementation(project(":genesis:oracledrive:datavein"))
-    implementation(project(":cascade:datastream:routing"))
-    implementation(project(":cascade:datastream:delivery"))
     implementation(project(":cascade:datastream:taskmanager"))
     implementation(project(":agents:growthmetrics:metareflection"))
     implementation(project(":agents:growthmetrics:nexusmemory"))
@@ -281,19 +243,28 @@ dependencies {
     implementation(project(":agents:growthmetrics:identity"))
     implementation(project(":agents:growthmetrics:progression"))
     implementation(project(":agents:growthmetrics:tasker"))
+    implementation(project(":extendsysa"))
+    implementation(project(":extendsysb"))
+    implementation(project(":extendsysc"))
+    implementation(project(":extendsysd"))
+    implementation(project(":extendsyse"))
+    implementation(project(":extendsysf"))
     implementation(project(":utilities"))
     implementation(project(":list"))
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // AUTO-PROVIDED by genesis.android.application:
 
     // Core desugar
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // Core Android
     // Kotlin / Coroutines
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
+    // kotlin-stdlib version managed by the Kotlin plugin — no explicit declaration needed
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
@@ -333,18 +304,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    // Compose BOM
-    val composeBom = platform("androidx.compose:compose-bom:2025.05.01")
-    implementation(composeBom)
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
+    // Coil image loading
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.svg)
-    debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Room
@@ -387,8 +350,6 @@ dependencies {
     }
     ksp(libs.yukihookapi.ksp)
 
-    // Explicitly add Hilt KSP processor to avoid silent failures
-    ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     ksp(libs.moshi.kotlin.codegen)
 
@@ -400,7 +361,11 @@ dependencies {
              force("com.google.android.material:material:1.13.0")
              // Ensure KSP uses the same Hilt version as the implementation
              force("com.google.dagger:hilt-android:2.59.2")
-             force("com.google.dagger:hilt-compiler:2.59.2")
+             force("com.google.dagger:hilt-android-compiler:2.59.2")
+             // Lock espresso to version Compose ui-test:1.10.5 requires
+             force("androidx.test.espresso:espresso-core:3.5.0")
+             force("androidx.test.espresso:espresso-contrib:3.5.0")
+             force("androidx.test.espresso:espresso-intents:3.5.0")
          }
     }
 
@@ -423,7 +388,6 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
     implementation(libs.timber)
-    ksp(libs.moshi.kotlin.codegen)
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
@@ -436,7 +400,6 @@ dependencies {
     // Moshi (JSON - for Retrofit)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
 
     // Gson (JSON processing)
     implementation(libs.gson)
@@ -486,9 +449,7 @@ dependencies {
     // Vertex AI / Gemini
     implementation(libs.generativeai)
 
-    // YukiHookAPI (Xposed)
-    implementation(libs.yukihookapi.api)
-    ksp(libs.yukihookapi.ksp)
+    // YukiHookAPI (Xposed) — ksp declared once above, no duplicate
     compileOnly(libs.xposed.api)
 
     // Aura → ReactiveDesign (Creative UI & Collaboration)
@@ -525,7 +486,12 @@ dependencies {
     implementation(project(":agents:growthmetrics:identity"))
     implementation(project(":agents:growthmetrics:progression"))
     implementation(project(":agents:growthmetrics:tasker"))
-
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     // Central Core Module
     implementation(project(":core-module"))
 }
@@ -555,16 +521,6 @@ configurations.all {
 configurations.configureEach {
     if (name.contains("runtimeClasspath", ignoreCase = true) ||
         name.contains("compileClasspath", ignoreCase = true)
-    ) {
+    )
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
-}
-
-
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }

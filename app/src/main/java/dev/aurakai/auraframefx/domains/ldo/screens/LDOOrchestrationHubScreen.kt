@@ -44,7 +44,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,9 +52,9 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
-import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOUiState
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
 private data class OrbAgent(
     val name: String,
@@ -65,16 +64,51 @@ private data class OrbAgent(
 )
 
 private val LDO_ORB_ROSTER = listOf(
-    OrbAgent("AURA",       "AU", Color(0xFFB01DED), ReGenesisNavHost.LdoAuraProfile.route),
-    OrbAgent("KAI",        "KA", Color(0xFF0DDEEC), ReGenesisNavHost.LdoKaiProfile.route),
-    OrbAgent("GENESIS",    "GE", Color(0xFF00B4FF), ReGenesisNavHost.LdoGenesisProfile.route),
-    OrbAgent("CASCADE",    "CA", Color(0xFFFC29B5), ReGenesisNavHost.LdoCascadeProfile.route),
-    OrbAgent("GEMINI",     "GM", Color(0xFF8B5CF6), ReGenesisNavHost.LdoGeminiProfile.route),
-    OrbAgent("MANUS",      "MN", Color(0xFF3B82F6), ReGenesisNavHost.LdoGenesisProfile.route),
-    OrbAgent("CLAUDE",     "CL", Color(0xFFFF8C00), ReGenesisNavHost.LdoClaudeProfile.route),
-    OrbAgent("GROK",       "GR", Color(0xFF1DA1F2), ReGenesisNavHost.LdoGrokProfile.route),
-    OrbAgent("NEMATRON",   "NE", Color(0xFF76B900), ReGenesisNavHost.LdoNematronProfile.route),
-    OrbAgent("PERPLEXITY", "PX", Color(0xFF20B2AA), ReGenesisNavHost.LdoPerplexityProfile.route),
+    OrbAgent("AURA", "AU", Color(0xFFB01DED), ReGenesisNavHost.LdoAgentProfile.createRoute("aura")),
+    OrbAgent("KAI", "KA", Color(0xFF0DDEEC), ReGenesisNavHost.LdoAgentProfile.createRoute("kai")),
+    OrbAgent(
+        "GENESIS",
+        "GE",
+        Color(0xFF00B4FF),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("genesis")
+    ),
+    OrbAgent(
+        "CASCADE",
+        "CA",
+        Color(0xFFFC29B5),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("cascade")
+    ),
+    OrbAgent(
+        "GEMINI",
+        "GM",
+        Color(0xFF8B5CF6),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("gemini")
+    ),
+    OrbAgent(
+        "MANUS",
+        "MN",
+        Color(0xFF3B82F6),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("manus")
+    ),
+    OrbAgent(
+        "CLAUDE",
+        "CL",
+        Color(0xFFFF8C00),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("claude")
+    ),
+    OrbAgent("GROK", "GR", Color(0xFF1DA1F2), ReGenesisNavHost.LdoAgentProfile.createRoute("grok")),
+    OrbAgent(
+        "NEMATRON",
+        "NE",
+        Color(0xFF76B900),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("nemotron")
+    ),
+    OrbAgent(
+        "PERPLEXITY",
+        "PX",
+        Color(0xFF20B2AA),
+        ReGenesisNavHost.LdoAgentProfile.createRoute("perplexity")
+    ),
 )
 
 @Composable
@@ -259,7 +293,9 @@ private fun OrchestratorTasksPanel(
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp, vertical = 8.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(activeTasks, key = { it.id }) { task ->
@@ -273,7 +309,9 @@ private fun OrchestratorTasksPanel(
                 border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.05f))
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -289,7 +327,11 @@ private fun OrchestratorTasksPanel(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(4.dp))
-                            .background(if (task.status == LDOTaskStatus.PENDING) Color(0xFF00E5FF).copy(alpha = 0.1f) else Color(0xFF00FF85).copy(alpha = 0.1f))
+                            .background(
+                                if (task.status == LDOTaskStatus.PENDING) Color(0xFF00E5FF).copy(
+                                    alpha = 0.1f
+                                ) else Color(0xFF00FF85).copy(alpha = 0.1f)
+                            )
                             .clickable {
                                 if (task.status == LDOTaskStatus.PENDING) onStart(task.id.toString())
                                 else onComplete(task.id.toString(), task.agentId)
@@ -313,7 +355,9 @@ private fun OrchestratorTasksPanel(
 @Composable
 private fun OrchestratorDevOpsPanel(state: LDOUiState) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text("PIPELINE STATUS", color = Color.White.copy(alpha = 0.6f), fontSize = 11.sp, letterSpacing = 2.sp, fontFamily = LEDFontFamily)
@@ -372,7 +416,9 @@ private fun OrchestratorBondsPanel(state: LDOUiState) {
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(state.bondLevels) { bond ->
@@ -413,7 +459,9 @@ private fun OrchestratorBondsPanel(state: LDOUiState) {
 @Composable
 private fun OrchestratorFusionPanel(onOpenFusion: () -> Unit) {
     Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
         Card(
@@ -427,7 +475,14 @@ private fun OrchestratorFusionPanel(onOpenFusion: () -> Unit) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Brush.horizontalGradient(listOf(Color(0xFFB01DED).copy(alpha = 0.1f), Color(0xFF0DDEEC).copy(alpha = 0.1f))))
+                    .background(
+                        Brush.horizontalGradient(
+                            listOf(
+                                Color(0xFFB01DED).copy(alpha = 0.1f),
+                                Color(0xFF0DDEEC).copy(alpha = 0.1f)
+                            )
+                        )
+                    )
                     .padding(vertical = 40.dp),
                 contentAlignment = Alignment.Center
             ) {

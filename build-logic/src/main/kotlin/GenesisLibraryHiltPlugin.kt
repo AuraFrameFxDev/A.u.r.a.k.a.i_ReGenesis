@@ -86,13 +86,19 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             }
 
             // 5. Dependencies
-            dependencies.apply {
-                // Hilt
-                add("implementation", "com.google.dagger:hilt-android:2.59.2")
-                add("ksp", "com.google.dagger:hilt-android-compiler:2.59.2")
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
 
-                // Compose (Using Version Catalog references is better, but hardcoded here for logic)
-                add("api", platform("androidx.compose:compose-bom:2025.12.01"))
+            dependencies.apply {
+                // Hilt — version from libs.versions.toml
+                add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+                add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+                // Compose BOM — version from libs.versions.toml (single source of truth)
+                add("api", platform("androidx.compose:compose-bom:$composeBomVersion"))
                 add("api", "androidx.compose.runtime:runtime")
                 add("api", "androidx.compose.ui:ui")
                 add("api", "androidx.compose.material3:material3")

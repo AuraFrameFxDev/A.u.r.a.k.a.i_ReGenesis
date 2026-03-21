@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.DefaultMemoryManager
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.cascade.utils.memory.DefaultMemoryManager
+import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import javax.inject.Singleton
 
 @Module

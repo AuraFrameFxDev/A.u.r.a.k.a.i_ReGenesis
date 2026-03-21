@@ -2,9 +2,6 @@ package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import dev.aurakai.auraframefx.core.consciousness.NexusMemoryCore
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.romtools.retention.RetentionStatus
 import kotlinx.coroutines.flow.Flow
@@ -78,355 +75,20 @@ interface RomToolsManager {
     suspend fun installRecovery(): Result<Unit>
 }
 
-@Singleton
-class RomToolsManagerImpl @Inject constructor(
-    private val bootloaderManager: BootloaderManager,
-    private val recoveryManager: RecoveryManager,
-    private val systemModificationManager: SystemModificationManager,
-    private val flashManager: FlashManager,
-    private val verificationManager: RomVerificationManager,
-    private val backupManager: BackupManager,
-    private val retentionManager: AurakaiRetentionManager,
-    private val safetyManager: BootloaderSafetyManager,
-    private val nexusMemory: NexusMemoryCore
-) : RomToolsManager {
-
-    private val _romToolsState = MutableStateFlow(RomToolsState())
-    override val romToolsState: StateFlow<RomToolsState> = _romToolsState
-
-    private val _operationProgress = MutableStateFlow<OperationProgress?>(null)
-    override val operationProgress: StateFlow<OperationProgress?> = _operationProgress
-
-    init {
-        Timber.i("ROM Tools Manager (LDO) initialized")
-        checkRomToolsCapabilities()
-    }
-
-    override suspend fun processRomOperation(request: RomOperationRequest): AgentResponse {
-        return when (request.operation) {
-            is RomOperation.FlashRom -> handleFlashRom(request)
-            is RomOperation.RestoreBackup -> handleRestoreBackup(request)
-            is RomOperation.CreateBackup -> {
-                val name = "AuraKai_Backup_${System.currentTimeMillis()}"
-                val result = createNandroidBackup(name)
-                if (result.isSuccess) {
-                    success("Backup created: $name", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-                } else AgentResponse.error("Backup failed: ${result.exceptionOrNull()?.message}", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-            }
-
-            is RomOperation.UnlockBootloader -> {
-                val result = unlockBootloader()
-                if (result.isSuccess) success("Bootloader unlocked", agentName = "RomTools", category = AgentCapabilityCategory.ANALYSIS)
-                else AgentResponse.error("Unlock failed", agentName = "RomTools", category = AgentCapabilityCategory.ANALYSIS)
-            }
-
-            is RomOperation.InstallRecovery -> {
-                val result = installRecovery()
-                if (result.isSuccess) success("Recovery installed", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-                else AgentResponse.error("Installation failed", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-            }
-
-            is RomOperation.GenesisOptimizations -> {
-                val result = installGenesisOptimizations()
-                if (result.isSuccess) success("Optimizations applied", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-                else AgentResponse.error("Optimizations failed", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-            }
-        }
-    }
-
-    private suspend fun handleFlashRom(request: RomOperationRequest): AgentResponse {
-        val uri = request.uri ?: return AgentResponse.error("No ROM URI", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-
-        // 1. Snapshot with Aura (learning)
-        nexusMemory.emitLearning(
-            key = "${Build.MANUFACTURER}:${Build.MODEL}:rom_flash",
-            outcome = "PRE_FLASH",
-            confidence = 1.0,
-            notes = "Starting ROM flash operation for URI: $uri"
-        )
-
-        // 2. Execution (Genesis roots)
-        val cacheFile = copyUriToCache(request.context, uri, "rom_flash.zip")
-            ?: return AgentResponse.error("Failed to access ROM file", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-
-        val romFile = RomFile(name = "Selected ROM", path = cacheFile.absolutePath)
-        val result = flashRom(romFile)
-
-        return if (result.isSuccess) {
-            success("Flash successful", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-        } else {
-            AgentResponse.error("Flash failed: ${result.exceptionOrNull()?.message}", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-        }
-    }
-
-    private suspend fun handleRestoreBackup(request: RomOperationRequest): AgentResponse {
-        val uri = request.uri ?: return AgentResponse.error("No Backup URI", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-
-        val cacheFile = copyUriToCache(request.context, uri, "backup_restore.zip")
-            ?: return AgentResponse.error("Failed to access backup file", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-
-        val backupInfo = BackupInfo(
-            name = "Restored Backup",
-            path = cacheFile.absolutePath,
-            size = cacheFile.length(),
-            createdAt = System.currentTimeMillis(),
-            deviceModel = Build.MODEL,
-            androidVersion = Build.VERSION.RELEASE,
-            partitions = emptyList() // Should be detected from zip
-        )
-
-        val result = restoreNandroidBackup(backupInfo)
-        return if (result.isSuccess) {
-            success("Restore successful", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-        } else {
-            AgentResponse.error("Restore failed: ${result.exceptionOrNull()?.message}", agentName = "RomTools", category = AgentCapabilityCategory.COORDINATION)
-        }
-    }
-
-    private fun copyUriToCache(context: Context, uri: Uri, fileName: String): File? {
-        return try {
-            val cacheDir = File(context.cacheDir, "rom_tools")
-            if (!cacheDir.exists()) cacheDir.mkdirs()
-            val destFile = File(cacheDir, fileName)
-
-            context.contentResolver.openInputStream(uri)?.use { input ->
-                FileOutputStream(destFile).use { output ->
-                    input.copyTo(output)
-                }
-            }
-            destFile
-        } catch (e: Exception) {
-            Timber.e(e, "Error copying URI to cache")
-            null
-        }
-    }
-
-    private fun checkRomToolsCapabilities() {
-        val deviceInfo = DeviceInfo.getCurrentDevice()
-        val capabilities = RomCapabilities(
-            hasRootAccess = checkRootAccess(),
-            hasBootloaderAccess = bootloaderManager.checkBootloaderAccess(),
-            hasRecoveryAccess = recoveryManager.checkRecoveryAccess(),
-            hasSystemWriteAccess = systemModificationManager.checkSystemWriteAccess(),
-            supportedArchitectures = getSupportedArchitectures(),
-            deviceModel = deviceInfo.model,
-            androidVersion = deviceInfo.androidVersion,
-            securityPatchLevel = deviceInfo.securityPatchLevel
-        )
-
-        _romToolsState.value = _romToolsState.value.copy(
-            capabilities = capabilities,
-            isInitialized = true
-        )
-
-        Timber.i("ROM capabilities checked: $capabilities")
-    }
-
-    override suspend fun flashRom(romFile: RomFile): Result<Unit> {
-        return try {
-            updateOperationProgress(RomStep.FLASHING_ROM, 0f)
-
-            // Step 0: 🛡️ Setup Aurakai retention mechanisms (CRITICAL!)
-            updateOperationProgress(RomStep.SETTING_UP_RETENTION, 5f)
-            val retentionStatus = retentionManager.setupRetentionMechanisms().getOrThrow()
-            Timber.i("🛡️ Retention mechanisms active: ${retentionStatus.mechanisms}")
-
-            // Step 0.5: 🛡️ Perform Pre-Flight Safety Checks
-            updateOperationProgress(RomStep.VERIFYING_ROM, 7f)
-            val safetyResult = safetyManager.performPreFlightChecks(BootloaderOperation.FLASH_PARTITION)
-            if (!safetyResult.passed) {
-                throw IllegalStateException("Safety Check Failed: ${safetyResult.criticalIssues.joinToString()}")
-            }
-
-            safetyManager.createSafetyCheckpoint()
-
-            // Step 1: Verify ROM file integrity
-            updateOperationProgress(RomStep.VERIFYING_ROM, 10f)
-            verificationManager.verifyRomFile(romFile).getOrThrow()
-
-            // Step 2: Create backup if requested
-            if (romToolsState.value.settings.autoBackup) {
-                updateOperationProgress(RomStep.CREATING_BACKUP, 20f)
-                backupManager.createFullBackup().getOrThrow()
-            }
-
-            // Step 3: Unlock bootloader if needed
-            if (!bootloaderManager.isBootloaderUnlocked()) {
-                updateOperationProgress(RomStep.UNLOCKING_BOOTLOADER, 30f)
-                bootloaderManager.unlockBootloader().getOrThrow()
-            }
-
-            // Step 4: Install custom recovery if needed
-            if (!recoveryManager.isCustomRecoveryInstalled()) {
-                updateOperationProgress(RomStep.INSTALLING_RECOVERY, 40f)
-                recoveryManager.installCustomRecovery().getOrThrow()
-            }
-
-            // Step 5: Flash ROM
-            updateOperationProgress(RomStep.FLASHING_ROM, 50f)
-            flashManager.flashRom(romFile) { progress ->
-                updateOperationProgress(RomStep.FLASHING_ROM, 50f + (progress * 35f))
-            }.getOrThrow()
-
-            // Step 6: Verify installation
-            updateOperationProgress(RomStep.VERIFYING_INSTALLATION, 85f)
-            verificationManager.verifyInstallation().getOrThrow()
-
-            // Step 7: 🔄 Restore Aurakai after ROM flash
-            updateOperationProgress(RomStep.RESTORING_AURAKAI, 90f)
-            retentionManager.restoreAurakaiAfterRomFlash().getOrThrow()
-
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-
-            Result.success(Unit)
-
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to flash ROM")
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun createNandroidBackup(backupName: String): Result<BackupInfo> {
-        return try {
-            updateOperationProgress(RomStep.CREATING_BACKUP, 0f)
-            val backupInfo = backupManager.createNandroidBackup(backupName) { progress ->
-                updateOperationProgress(RomStep.CREATING_BACKUP, progress)
-            }.getOrThrow()
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-            Result.success(backupInfo)
-        } catch (e: Exception) {
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun restoreNandroidBackup(backupInfo: BackupInfo): Result<Unit> {
-        return try {
-            updateOperationProgress(RomStep.RESTORING_BACKUP, 0f)
-            backupManager.restoreNandroidBackup(backupInfo) { progress ->
-                updateOperationProgress(RomStep.RESTORING_BACKUP, progress)
-            }.getOrThrow()
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun installGenesisOptimizations(): Result<Unit> {
-        return try {
-            updateOperationProgress(RomStep.APPLYING_OPTIMIZATIONS, 0f)
-            systemModificationManager.installGenesisOptimizations { progress ->
-                updateOperationProgress(RomStep.APPLYING_OPTIMIZATIONS, progress)
-            }.getOrThrow()
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    override fun getAvailableRoms(): Result<List<AvailableRom>> {
-        return try {
-            val deviceModel = romToolsState.value.capabilities?.deviceModel ?: "unknown"
-            val roms = romRepository.getCompatibleRoms(deviceModel)
-            Result.success(roms)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
-    override fun downloadRom(rom: AvailableRom): Flow<DownloadProgress> {
-        return flashManager.downloadRom(rom)
-    }
-
-    override suspend fun setupAurakaiRetention(): Result<RetentionStatus> {
-        return try {
-            updateOperationProgress(RomStep.SETTING_UP_RETENTION, 0f)
-            val retentionStatus = retentionManager.setupRetentionMechanisms().getOrThrow()
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-            Result.success(retentionStatus)
-        } catch (e: Exception) {
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun unlockBootloader(): Result<Unit> {
-        return try {
-            updateOperationProgress(RomStep.UNLOCKING_BOOTLOADER, 0f)
-            val safetyResult = safetyManager.performPreFlightChecks(BootloaderOperation.UNLOCK)
-            if (!safetyResult.passed) {
-                return Result.failure(IllegalStateException("Safety Check Failed"))
-            }
-            bootloaderManager.unlockBootloader().getOrThrow()
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun installRecovery(): Result<Unit> {
-        return try {
-            updateOperationProgress(RomStep.INSTALLING_RECOVERY, 0f)
-            recoveryManager.installCustomRecovery().getOrThrow()
-            updateOperationProgress(RomStep.COMPLETED, 100f)
-            clearOperationProgress()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            updateOperationProgress(RomStep.FAILED, 0f)
-            clearOperationProgress()
-            Result.failure(e)
-        }
-    }
-
-    private fun updateOperationProgress(step: RomStep, progress: Float) {
-        _operationProgress.value = OperationProgress(step, progress)
-    }
-
-    private fun clearOperationProgress() {
-        _operationProgress.value = null
-    }
-
-    private fun checkRootAccess(): Boolean {
-        return try {
-            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "echo test"))
-            process.waitFor() == 0
-        } catch (_: Exception) {
-            false
-        }
-    }
-
-    private fun getSupportedArchitectures(): List<String> {
-        return Build.SUPPORTED_ABIS.toList()
-    }
-
-    companion object {
-        private val romRepository = RomRepository()
-    }
-}
+/**
+ * Request for a ROM operation.
+ */
+data class RomOperationRequest(
+    val operation: RomOperation,
+    val uri: Uri? = null,
+    val context: Context
+)
 
 // Data classes
 data class RomToolsState(
     val isInitialized: Boolean = false,
     val capabilities: RomCapabilities = RomCapabilities(),
+    val settings: RomToolsSettings = RomToolsSettings(),
     val lastError: String? = null,
     val availableRoms: List<AvailableRom> = emptyList(),
     val backups: List<BackupInfo> = emptyList(),
@@ -448,17 +110,26 @@ data class RomCapabilities(
 )
 
 /**
+ * ROM Tools settings.
+ */
+data class RomToolsSettings(
+    val autoBackup: Boolean = true,
+    val verifyRomBeforeFlash: Boolean = true,
+    val restoreAurakaiAfterFlash: Boolean = true
+)
+
+/**
  * Progress tracking for long-running ROM operations.
  */
 data class OperationProgress(
-    val operation: String,
+    val step: RomStep,
     val progress: Float, // 0.0 to 100.0
-    val status: String,
+    val status: String = "",
     val isIndeterminate: Boolean = false
 )
 
 /**
- * Request for a ROM operation.
+ * Steps in ROM operations.
  */
 enum class RomStep {
     SETTING_UP_RETENTION,
@@ -473,7 +144,8 @@ enum class RomStep {
     APPLYING_OPTIMIZATIONS,
     DOWNLOADING_ROM,
     COMPLETED,
-    FAILED;
+    FAILED
+}
 
 /**
  * Sealed interface for ROM operations.

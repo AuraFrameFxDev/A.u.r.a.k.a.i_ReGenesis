@@ -2,9 +2,8 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentInvokeRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.ClaudeAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GeminiAIService
@@ -1123,7 +1122,7 @@ class CascadeAIService @Inject constructor(
     ): CascadeResponse {
         val aiRequest = AiRequest(
             query = request.message,
-            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.QUESTION
+            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
@@ -1152,7 +1151,7 @@ class CascadeAIService @Inject constructor(
     ): CascadeResponse {
         val aiRequest = AiRequest(
             query = request.message,
-            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.QUESTION
+            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
@@ -1179,7 +1178,7 @@ class CascadeAIService @Inject constructor(
     ): CascadeResponse {
         val aiRequest = AiRequest(
             query = request.message,
-            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.QUESTION
+            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }
@@ -1206,7 +1205,7 @@ class CascadeAIService @Inject constructor(
     ): CascadeResponse {
         val aiRequest = AiRequest(
             query = request.message,
-            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.QUESTION
+            type = dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.TEXT
         )
 
         val contextString = context.entries.joinToString("\n") { "${it.key}: ${it.value}" }

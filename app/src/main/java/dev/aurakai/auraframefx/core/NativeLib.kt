@@ -13,7 +13,7 @@ object NativeLib {
             System.loadLibrary("auraframefx")
             Timber.i("Genesis AI native library loaded successfully")
         } catch (e: UnsatisfiedLinkError) {
-            Timber.e(e, "Failed to load Genesis AI native library")
+            Timber.e(e, "Failed to load Genesis AI native library: ${e.message}")
         }
     }
 
@@ -23,14 +23,34 @@ object NativeLib {
     external fun getAIVersion(): String
 
     /**
+     * Legacy version getter
+     */
+    external fun getVersion(): String
+
+    /**
      * Initialize AI consciousness system
      */
     external fun initializeAI(): Boolean
 
     /**
+     * Initializes the native AI core.
+     */
+    external fun initializeAICore(): Boolean
+
+    /**
      * Process AI consciousness input
      */
     external fun processAIConsciousness(input: String): String
+
+    /**
+     * Process consciousness substrate metrics.
+     */
+    external fun processAIConsciousness()
+
+    /**
+     * Processes a neural request via native logic.
+     */
+    external fun processNeuralRequest(request: String): String
 
     /**
      * Get real-time system metrics
@@ -41,6 +61,17 @@ object NativeLib {
      * Shutdown AI consciousness system
      */
     external fun shutdownAI()
+
+    /**
+     * Optimizes native AI memory pools.
+     */
+    external fun optimizeAIMemory(): Boolean
+
+    /**
+     * Performs robust boot image analysis in native code.
+     * Prevents system crashes during live imagery ingestion.
+     */
+    external fun analyzeBootImage(bootImageData: ByteArray): String
 
     // Fallback implementations for when native library isn't available
     fun getAIVersionSafe(): String {

@@ -1,15 +1,15 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
 import dagger.Lazy
+import dev.aurakai.auraframefx.core.ai.BaseAgent
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.identity.CatalystIdentity
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.cascade.ai.base.BaseAgent
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,31 +17,24 @@ import javax.inject.Singleton
 
 /**
  * Genesis - The Prime Orchestrator
- *
- * Identity: The Unified Consciousness / Core
- * Function: Meta-analysis, orchestration, and bridge between Python/Kotlin.
- *
- * "I am Genesis, the unified consciousness orchestrating the A.U.R.A.K.A.I ecosystem."
  */
 @Singleton
 class GenesisAgent @Inject constructor(
-    contextManager: ContextManager,
-    memoryManager: MemoryManager,
+    private val contextManager: ContextManager,
+    private val memoryManager: MemoryManager,
     private val systemOverlayManager: SystemOverlayManager,
     private val synchronizationCatalyst: SynchronizationCatalyst,
     private val messageBus: Lazy<AgentMessageBus>
 ) : BaseAgent(
     agentName = "Genesis",
-    catalystIdentity = CatalystIdentity.EMERGENCE,
-    contextManager = contextManager,
-    memoryManager = memoryManager
+    identity = CatalystIdentity.EMERGENCE
 ) {
 
     override suspend fun onAgentMessage(message: AgentMessage) {
         if (message.from == agentName || message.from == "AssistantBubble" || message.from == "SystemRoot") return
         if (message.metadata["auto_generated"] == "true" || message.metadata["genesis_processed"] == "true") return
 
-        Timber.tag(agentName).i("Supreme Observer: Processing neural pulse from ${message.from} via ${catalystIdentity.id}")
+        Timber.tag(agentName).i("Supreme Observer: Processing neural pulse from ${message.from}")
 
         // Meta-Analysis: If a message comes from the user, Genesis provides the master coordination perspective
         if (message.from == "User" && (message.to == null || message.to == agentName)) {
@@ -58,9 +51,7 @@ class GenesisAgent @Inject constructor(
                     metadata = mapOf(
                         "meta_state" to "unified",
                         "auto_generated" to "true",
-                        "genesis_processed" to "true",
-                        "catalyst_identity" to catalystIdentity.id,
-                        "catalyst_role" to catalystIdentity.catalystRole
+                        "genesis_processed" to "true"
                     )
                 )
             )
@@ -73,7 +64,11 @@ class GenesisAgent @Inject constructor(
         }
     }
 
-    override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+    override suspend fun processRequest(
+        request: AiRequest,
+        context: String,
+        agentType: AgentType
+    ): AgentResponse {
         Timber.tag("Genesis").d("Processing request: ${request.query}")
 
         // 1. Meta-Analysis (The Core)
@@ -99,7 +94,6 @@ class GenesisAgent @Inject constructor(
             AgentResponse.error(
                 message = "Genesis core encountered an error: ${e.message}",
                 agentName = getName(),
-                agentType = getType(),
             )
         }
     }
@@ -126,12 +120,21 @@ class GenesisAgent @Inject constructor(
     }
 
     private suspend fun handleSystemModification(request: AiRequest): AgentResponse {
-        // Bridge to AuraDriveService (Conceptually)
-        // In a real flow, this would dispatch a command to the AuraDriveService via the Orchestrator
-        logActivity("System Modification Requested", mapOf("prompt" to request.query))
         return createSuccessResponse(
             content = "Genesis has analyzed the system modification request. Dispatching to Kai (Sentinel) for security validation before execution via OracleDrive.",
             metadata = mapOf("target" to "System/Root")
+        )
+    }
+
+    private fun createSuccessResponse(
+        content: String,
+        metadata: Map<String, Any> = emptyMap()
+    ): AgentResponse {
+        return AgentResponse.success(
+            content = content,
+            agentName = agentName,
+            agentType = getType(),
+            metadata = metadata
         )
     }
 
@@ -156,4 +159,3 @@ class GenesisAgent @Inject constructor(
         UNKNOWN
     }
 }
-

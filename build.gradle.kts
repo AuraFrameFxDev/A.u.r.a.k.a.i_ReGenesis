@@ -7,23 +7,25 @@
 // Apply plugin version management to all projects
 plugins {
     // Base plugins with versions - Updated to stable releases
-    id("org.jetbrains.kotlin.android") version "2.3.10" apply false
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.10" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0" apply false
-    id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.10" apply false
+    id("org.jetbrains.kotlin.android") version "2.3.20" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.20" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.20" apply false
+    id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.20" apply false
 
     // Android plugins
     id("com.android.application") version "9.2.0-alpha05" apply false
     id("com.android.library") version "9.2.0-alpha05" apply false
 
     // Other plugins - Updated to latest stable versions
-    id("com.google.dagger.hilt.android") version "2.59.1" apply false
-    id("com.google.devtools.ksp") version "2.3.5" apply false
+    id("com.google.dagger.hilt.android") version "2.59.2" apply false
+    id("com.google.devtools.ksp") version "2.3.6" apply false
     id("com.google.gms.google-services") version "4.4.4" apply false
     id("com.google.firebase.crashlytics") version "3.0.6" apply false
 }
 
-val skipTests = providers.gradleProperty("aurafx.skip.tests").orElse("false").map { it.toBoolean() }.getOrElse(false)!!
+val skipTests =
+    providers.gradleProperty("aurafx.skip.tests").orElse("false").map { it.toBoolean() }
+        .getOrElse(false)
 
 subprojects {
     // ═══════════════════════════════════════════════════════════════════════════
@@ -46,6 +48,17 @@ subprojects {
             packaging {
                 resources {
                     pickFirsts += "**/YukiHookAPIProperties.class"
+                }
+            }
+
+            if (skipTests) {
+                sourceSets {
+                    getByName("test") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                    getByName("androidTest") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
                 }
             }
         }
@@ -72,6 +85,17 @@ subprojects {
                     pickFirsts += "**/YukiHookAPIProperties.class"
                 }
             }
+
+            if (skipTests) {
+                sourceSets {
+                    getByName("test") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                    getByName("androidTest") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                }
+            }
         }
 
         if (skipTests) {
@@ -88,6 +112,15 @@ subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+        }
+    }
+
+    // Globally disable test tasks if skipTests is true
+    if (skipTests) {
+        tasks.configureEach {
+            if (name.contains("Test", ignoreCase = true) || this is Test) {
+                enabled = false
+            }
         }
     }
 }
