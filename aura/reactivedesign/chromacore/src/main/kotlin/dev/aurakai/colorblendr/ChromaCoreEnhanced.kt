@@ -36,6 +36,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
+import kotlin.math.pow
 import kotlin.math.sin
 
 /**
@@ -141,11 +142,17 @@ object ChromaCoreEnhanced {
 
     private fun relativeLuminance(color: Color): Float {
         val r =
-            if (color.red <= 0.03928f) color.red / 12.92f else Math.pow(((color.red + 0.055) / 1.055).toDouble(
-                ), 2.4).toFloat()
-        val g = if (color.green <= 0.03928f) color.green / 12.92f else Math.pow(((color.green + 0.055) / 1.055).toDouble(), 2.4).toFloat()
-        val b = if (color.blue <= 0.03928f) color.blue / 12.92f else ((color.blue + 0.055) / 1.055)
-            .pow( 2.4).toFloat()
+            if (color.red <= 0.03928f) color.red / 12.92f else ((color.red + 0.055f) / 1.055f).pow(
+                2.4f
+            )
+        val g =
+            if (color.green <= 0.03928f) color.green / 12.92f else ((color.green + 0.055f) / 1.055f).pow(
+                2.4f
+            )
+        val b =
+            if (color.blue <= 0.03928f) color.blue / 12.92f else ((color.blue + 0.055f) / 1.055f).pow(
+                2.4f
+            )
 
         return 0.2126f * r + 0.7152f * g + 0.0722f * b
     }

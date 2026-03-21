@@ -153,7 +153,9 @@ fun RomToolsScreen(
         }
     }
 
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
+    Box(modifier = modifier
+        .fillMaxSize()
+        .background(Color.Black)) {
         // Backdrop rendering
         if (backdropEnabled) {
             when (backdropState) {
@@ -382,10 +384,18 @@ private fun OperationProgressCard(
         border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFF6B35).copy(alpha = 0.5f))
     ) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(text = operation.operation.uppercase(), color = Color(0xFFFF6B35), fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = operation.step.name.uppercase(),
+                color = Color(0xFFFF6B35),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            )
             LinearProgressIndicator(
                 progress = { operation.progress / 100f },
-                modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+                    .clip(RoundedCornerShape(4.dp)),
                 color = Color(0xFF00E5FF),
                 trackColor = Color.White.copy(alpha = 0.1f)
             )
@@ -412,7 +422,9 @@ private fun RomToolActionCard(
         shape = RoundedCornerShape(12.dp),
         border = androidx.compose.foundation.BorderStroke(1.dp, if (isEnabled) action.color.copy(alpha = 0.3f) else Color.Gray.copy(alpha = 0.1f))
     ) {
-        Row(modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(imageVector = action.icon, contentDescription = null, tint = if (isEnabled) action.color else Color.Gray, modifier = Modifier.size(32.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = action.title.uppercase(), color = if (isEnabled) Color.White else Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.Bold)
@@ -459,7 +471,17 @@ fun RomOperation.getDisplayName(): String {
 @Composable
 private fun StaticBackdropImage(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.fillMaxSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(colors = listOf(Color(0xFF1A1A2E), Color(0xFF0F0F1E)))),
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                androidx.compose.ui.graphics.Brush.verticalGradient(
+                    colors = listOf(
+                        Color(
+                            0xFF1A1A2E
+                        ), Color(0xFF0F0F1E)
+                    )
+                )
+            ),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {

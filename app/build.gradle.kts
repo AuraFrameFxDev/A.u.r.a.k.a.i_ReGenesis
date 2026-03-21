@@ -148,6 +148,10 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
+ksp {
+    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx")
+}
+
 
 // Enable modern Kotlin features (Experimental/New in 2.2+)
 // ═══════════════════════════════════════════════════════════════════════════
@@ -290,7 +294,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // Core Android
     // Kotlin / Coroutines
@@ -380,8 +384,6 @@ dependencies {
     }
     ksp(libs.yukihookapi.ksp)
 
-    // Explicitly add Hilt KSP processor to avoid silent failures
-    ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     ksp(libs.moshi.kotlin.codegen)
 
@@ -420,7 +422,6 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.moshi.kotlin)
     implementation(libs.timber)
-    ksp(libs.moshi.kotlin.codegen)
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
@@ -433,7 +434,6 @@ dependencies {
     // Moshi (JSON - for Retrofit)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
 
     // Gson (JSON processing)
     implementation(libs.gson)
