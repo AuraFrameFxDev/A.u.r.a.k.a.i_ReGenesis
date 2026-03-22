@@ -1,4 +1,7 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import android.content.SharedPreferences
+import dev.aurakai.auraframefx.domains.aura.ui.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -150,7 +153,21 @@ class QuickSettingsCustomizer @Inject constructor(
             val shapeStr = prefs.getString("tile_shape_$tileId", null)
             val animationStr = prefs.getString("tile_animation_$tileId", null)
 
-            val shape = shapeStr?.let { OverlayShape.valueOf(it) } ?: OverlayShape.ROUNDED_RECTANGLE
+            val shape = shapeStr?.let {
+                try {
+                    OverlayShape.valueOf(it)
+                } catch (e: Exception) {
+                    OverlayShape.ROUNDED_RECTANGLE
+                }
+            } ?: OverlayShape.ROUNDED_RECTANGLE
+
+            val animation = animationStr?.let {
+                try {
+                    QuickSettingsAnimation.valueOf(it)
+                } catch (e: Exception) {
+                    QuickSettingsAnimation.FADE
+                }
+            } ?: QuickSettingsAnimation.FADE
 
             tiles.add(
                 QuickSettingsTileConfig(
@@ -177,4 +194,3 @@ class QuickSettingsCustomizer @Inject constructor(
         )
     }
 }
-

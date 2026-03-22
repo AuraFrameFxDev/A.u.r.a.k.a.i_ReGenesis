@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import dev.aurakai.auraframefx.domains.aura.ui.*
 import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.ThemeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.d
 import dev.aurakai.auraframefx.domains.cascade.utils.e
@@ -19,22 +20,11 @@ import javax.inject.Singleton
 
 // Stubs for missing types used in this class
 enum class LockScreenElementType { CLOCK, WEATHER, NOTIFICATION, SHORTCUT, CUSTOM }
-class OverlayShape
-class LockScreenAnimation
-class ImageResource
-data class LockScreenConfig(
-    val elements: List<LockScreenElement> = emptyList(),
-    val background: BackgroundConfig? = null,
-    val showGenesisElements: Boolean = true,
-    val clockConfig: ClockConfig = ClockConfig(),
-    val hapticFeedback: HapticFeedbackConfig = HapticFeedbackConfig(),
-    val animation: LockScreenAnimationConfig = LockScreenAnimationConfig()
-)
 
 data class LockScreenElement(
     val type: LockScreenElementType,
     val shape: OverlayShape? = null,
-    val animation: LockScreenAnimation? = null
+    val animation: LockScreenConfigAnimation? = null
 )
 
 data class BackgroundConfig(val image: ImageResource? = null)

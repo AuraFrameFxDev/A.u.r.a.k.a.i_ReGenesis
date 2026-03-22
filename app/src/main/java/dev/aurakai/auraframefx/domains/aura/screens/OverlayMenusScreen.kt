@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +27,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
@@ -48,13 +50,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.domains.aura.ui.components.common.CodedTextBox
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
-import dev.aurakai.auraframefx.ui.components.common.CodedTextBox
 
 /**
  * Overlay Menus Customization Screen — Aura in control.
- * Persisted toggles come from AuraUIControlViewModel.
- * autoHideDelay is UI-only cosmetic state (no system hook yet).
  */
 @Composable
 fun OverlayMenusScreen(
@@ -64,7 +64,6 @@ fun OverlayMenusScreen(
     val state by viewModel.overlayMenuState.collectAsState()
 
     val sidebarPositions = listOf("Left", "Right", "Bottom")
-    // Cosmetic-only — not yet persisted (no system hook for auto-hide delay)
     var autoHideDelay by remember { mutableFloatStateOf(3f) }
     var searchQuery by remember { mutableStateOf("") }
 
@@ -85,13 +84,15 @@ fun OverlayMenusScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Overlay Search (UI-only filter — no server-side filtering needed here)
-        androidx.compose.material3.OutlinedTextField(
+        // Overlay Search
+        OutlinedTextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
             label = { Text("Search Overlays...", color = Color(0xFFFF4500).copy(alpha = 0.5f)) },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
-            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFFFF4500),
                 unfocusedBorderColor = Color(0xFFFF4500).copy(alpha = 0.3f),
                 focusedTextColor = Color.White,
@@ -102,13 +103,18 @@ fun OverlayMenusScreen(
 
         // Preview Card
         Card(
-            modifier = Modifier.fillMaxWidth().height(150.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp),
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 if (state.auraOverlayEnabled) {
                     Card(
-                        modifier = Modifier.size(60.dp).align(Alignment.TopStart).offset(20.dp, 20.dp),
+                        modifier = Modifier
+                            .size(60.dp)
+                            .align(Alignment.TopStart)
+                            .offset(20.dp, 20.dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFFFF69B4).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(30.dp)
                     ) {
@@ -120,7 +126,10 @@ fun OverlayMenusScreen(
 
                 if (state.kaiOverlayEnabled) {
                     Card(
-                        modifier = Modifier.size(60.dp).align(Alignment.TopEnd).offset((-20).dp, 20.dp),
+                        modifier = Modifier
+                            .size(60.dp)
+                            .align(Alignment.TopEnd)
+                            .offset((-20).dp, 20.dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFFDC143C).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(30.dp)
                     ) {
@@ -132,7 +141,10 @@ fun OverlayMenusScreen(
 
                 if (state.chatBubbleEnabled) {
                     Card(
-                        modifier = Modifier.size(50.dp).align(Alignment.BottomEnd).offset((-20).dp, (-20).dp),
+                        modifier = Modifier
+                            .size(50.dp)
+                            .align(Alignment.BottomEnd)
+                            .offset((-20).dp, (-20).dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFF4169E1).copy(alpha = 0.8f)),
                         shape = RoundedCornerShape(25.dp)
                     ) {
@@ -145,13 +157,19 @@ fun OverlayMenusScreen(
                 if (state.sidebarPosition != "Bottom") {
                     val alignment = if (state.sidebarPosition == "Left") Alignment.CenterStart else Alignment.CenterEnd
                     Card(
-                        modifier = Modifier.width(8.dp).height(100.dp).align(alignment),
+                        modifier = Modifier
+                            .width(8.dp)
+                            .height(100.dp)
+                            .align(alignment),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)),
                         shape = RoundedCornerShape(4.dp)
                     ) {}
                 } else {
                     Card(
-                        modifier = Modifier.height(8.dp).width(100.dp).align(Alignment.BottomCenter),
+                        modifier = Modifier
+                            .height(8.dp)
+                            .width(100.dp)
+                            .align(Alignment.BottomCenter),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFFFF4500).copy(alpha = 0.6f)),
                         shape = RoundedCornerShape(4.dp)
                     ) {}
@@ -161,7 +179,9 @@ fun OverlayMenusScreen(
                     text = "Overlay Preview",
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.5f),
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 8.dp)
                 )
             }
         }
@@ -181,7 +201,9 @@ fun OverlayMenusScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(Icons.Default.Palette, "Aura Overlay", tint = Color(0xFFFF69B4), modifier = Modifier.size(32.dp))
@@ -206,7 +228,9 @@ fun OverlayMenusScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(Icons.Default.Security, "Kai Overlay", tint = Color(0xFFDC143C), modifier = Modifier.size(32.dp))
@@ -231,7 +255,9 @@ fun OverlayMenusScreen(
             colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.6f))
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(Icons.AutoMirrored.Filled.Chat, "Chat Bubble", tint = Color(0xFF4169E1), modifier = Modifier.size(32.dp))
@@ -263,7 +289,9 @@ fun OverlayMenusScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 sidebarPositions.forEach { position ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
@@ -313,7 +341,9 @@ fun OverlayMenusScreen(
 
                 permissions.forEach { (permission, granted) ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(

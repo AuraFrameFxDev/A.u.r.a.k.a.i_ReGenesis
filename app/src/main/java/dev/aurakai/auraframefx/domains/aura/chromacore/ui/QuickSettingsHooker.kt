@@ -1,12 +1,9 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
 
 /**
  * YukiHook hooker for customizing the Android Quick Settings panel.
@@ -81,10 +81,11 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
     private fun applyGenesisLayout(qsPanel: ViewGroup) {
         try {
             // Apply padding and spacing from config
-            val padding = config.layout.padding
-            qsPanel.setPadding(padding.start, padding.top, padding.end, padding.bottom)
-
-            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${config.layout.columns})")
+            config.layout?.let { layout ->
+                val padding = layout.padding
+                qsPanel.setPadding(padding.start, padding.top, padding.end, padding.bottom)
+                YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${layout.columns})")
+            }
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to apply layout config: ${e.message}")
         }
@@ -127,7 +128,7 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
         )
 
         // Status indicator
-        if (config.showGenesisIndicator) {
+        if (config.showGenesisIndicator == true) {
             Box(
                 modifier = Modifier
                     .size(8.dp)
@@ -137,4 +138,3 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
         }
     }
 }
-

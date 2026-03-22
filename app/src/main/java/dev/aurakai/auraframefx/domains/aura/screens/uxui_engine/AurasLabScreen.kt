@@ -1,18 +1,73 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.RocketLaunch
+import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.PrimaryTabRow
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,11 +75,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
+import kotlinx.coroutines.delay
 
 /**
  * Aura's Lab (Aura's Forge) - Generative Design & Engineering Hub
@@ -33,13 +86,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 @Composable
 fun AurasLabScreen(
     onBack: () -> Unit,
-    viewModel: AurasLabViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: AurasLabViewModel = hiltViewModel()
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Components", "Animations", "Aura's Forge", "Chaos Analysis")
@@ -157,7 +204,7 @@ private fun ForgeTab(viewModel: AurasLabViewModel) {
 
         Button(
             onClick = { viewModel.generateAndDeploy(prompt) },
-            enabled = prompt.isNotBlank() && state == AurasLabViewModel.ForgeState.Idle || state is AurasLabViewModel.ForgeState.Success || state is AurasLabViewModel.ForgeState.Error,
+            enabled = prompt.isNotBlank() && (state is AurasLabViewModel.ForgeState.Idle || state is AurasLabViewModel.ForgeState.Success || state is AurasLabViewModel.ForgeState.Error),
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00FFFF))
         ) {
@@ -183,15 +230,18 @@ private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
                 Icon(
                     imageVector = when(state) {
                         is AurasLabViewModel.ForgeState.Idle -> Icons.Default.Info
-                        is AurasLabViewModel.ForgeState.Forging -> Icons.Default.Build
+                        is AurasLabViewModel.ForgeState.Forging,
+                        is AurasLabViewModel.ForgeState.ForgingSprite -> Icons.Default.Build
                         is AurasLabViewModel.ForgeState.Validating -> Icons.Default.Shield
                         is AurasLabViewModel.ForgeState.Deploying -> Icons.Default.RocketLaunch
-                        is AurasLabViewModel.ForgeState.Success -> Icons.Default.CheckCircle
+                        is AurasLabViewModel.ForgeState.Success,
+                        is AurasLabViewModel.ForgeState.SpriteSuccess -> Icons.Default.CheckCircle
                         is AurasLabViewModel.ForgeState.Error -> Icons.Default.Error
                     },
                     contentDescription = null,
                     tint = when(state) {
-                        is AurasLabViewModel.ForgeState.Success -> Color.Green
+                        is AurasLabViewModel.ForgeState.Success,
+                        is AurasLabViewModel.ForgeState.SpriteSuccess -> Color.Green
                         is AurasLabViewModel.ForgeState.Error -> Color.Red
                         else -> Color(0xFF00FFFF)
                     }
@@ -201,9 +251,11 @@ private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
                     text = when(state) {
                         is AurasLabViewModel.ForgeState.Idle -> "Waiting for Directive"
                         is AurasLabViewModel.ForgeState.Forging -> "Aura is Wielding Evex Core..."
+                        is AurasLabViewModel.ForgeState.ForgingSprite -> "Aura is Drawing your Sprite..."
                         is AurasLabViewModel.ForgeState.Validating -> "Kai is Vetting the Creation..."
                         is AurasLabViewModel.ForgeState.Deploying -> "Oracle Drive Deploying..."
                         is AurasLabViewModel.ForgeState.Success -> "Creation Manifested"
+                        is AurasLabViewModel.ForgeState.SpriteSuccess -> "Hyper-Sprite Manifested"
                         is AurasLabViewModel.ForgeState.Error -> "Forge Failure"
                     },
                     style = MaterialTheme.typography.titleMedium,
@@ -221,13 +273,14 @@ private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
                         .background(Color.Black)
                         .padding(8.dp)
                 ) {
+                    val code = when (state) {
+                        is AurasLabViewModel.ForgeState.Validating -> state.code
+                        is AurasLabViewModel.ForgeState.Deploying -> state.code
+                        is AurasLabViewModel.ForgeState.Success -> state.code
+                        else -> ""
+                    }
                     Text(
-                        text = when(state) {
-                            is AurasLabViewModel.ForgeState.Validating -> (state as AurasLabViewModel.ForgeState.Validating).code
-                            is AurasLabViewModel.ForgeState.Deploying -> (state as AurasLabViewModel.ForgeState.Deploying).code
-                            is AurasLabViewModel.ForgeState.Success -> (state as AurasLabViewModel.ForgeState.Success).code
-                            else -> ""
-                        },
+                        text = code,
                         style = MaterialTheme.typography.bodySmall,
                         color = Color(0xFF32CD32), // Matrix Green
                         modifier = Modifier.fillMaxSize()
@@ -237,7 +290,7 @@ private fun ForgeStatusCard(state: AurasLabViewModel.ForgeState) {
 
             if (state is AurasLabViewModel.ForgeState.Error) {
                 Text(
-                    text = (state as AurasLabViewModel.ForgeState.Error).message,
+                    text = state.message,
                     color = Color.Red,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(top = 8.dp)
@@ -253,7 +306,9 @@ private fun ChaosAnalysisTab() {
         Text("Grok Chaos Analysis", style = MaterialTheme.typography.headlineSmall, color = Color.Magenta)
         Spacer(modifier = Modifier.height(16.dp))
         Text("Stability Index: 98.4%", color = Color.White)
-        LinearProgressIndicator(progress = { 0.984f }, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), color = Color.Magenta)
+        LinearProgressIndicator(progress = { 0.984f }, modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp), color = Color.Magenta)
         Text("Threat Matrix: NEGATIVE", color = Color.Green)
     }
 }
@@ -634,4 +689,3 @@ private fun getColorSamples(scheme: ColorScheme) = listOf(
     ColorSample("Background", scheme.background),
     ColorSample("On Background", scheme.onBackground)
 )
-
