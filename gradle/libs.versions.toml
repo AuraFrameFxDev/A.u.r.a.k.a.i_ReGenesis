@@ -49,7 +49,7 @@ securityCrypto = "1.1.0"
 work = "2.11.1"
 compose-bom = "2026.03.00"
 compose-material-icons = "1.7.4"
-firebaseBom = "34.10.0"
+firebaseBom = "34.11.0"
 retrofit = "3.0.0"
 okhttp = "5.3.2"
 moshi = "1.15.2"
@@ -220,10 +220,10 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 # Firebase (via BOM - KTX merged into main modules)
 # ============================================================================
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "23.0.0" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "23.2.0" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.4" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version = "24.0.1" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "26.1.1" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "26.1.2" }
 firebase-database = { module = "com.google.firebase:firebase-database", version = "22.0.1" }
 firebase-storage = { module = "com.google.firebase:firebase-storage", version = "22.0.1" }
 firebase-config = { module = "com.google.firebase:firebase-config", version = "23.0.1" }
