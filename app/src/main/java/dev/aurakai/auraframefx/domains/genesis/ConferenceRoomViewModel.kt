@@ -3,13 +3,12 @@ package dev.aurakai.auraframefx.domains.genesis
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.NeuralWhisper
-import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
-import dev.aurakai.auraframefx.domains.aura.NeuralWhisper
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -83,7 +82,7 @@ class ConferenceRoomViewModel @Inject constructor(
 
             // Listen to Collective Consciousness (AgentMessageBus)
             launch {
-                trinityRepository.collectiveStream.collect { agentMsg: dev.aurakai.auraframefx.domains.cascade.models.AgentMessage ->
+                trinityRepository.collectiveStream.collect { agentMsg: AgentMessage ->
                     // Map AgentMessage to ChatMessage for the UI
                     val chatMsg = ChatMessage(
                         id = UUID.randomUUID().toString(),

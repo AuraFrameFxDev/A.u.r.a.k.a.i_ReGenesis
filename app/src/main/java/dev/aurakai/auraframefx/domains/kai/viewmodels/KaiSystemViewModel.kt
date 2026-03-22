@@ -11,15 +11,11 @@ import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.system.ShizukuManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 // ─── State objects ────────────────────────────────────────────────────────────
@@ -275,10 +271,10 @@ class KaiSystemViewModel @Inject constructor(
             val (level, colorHex) = when (levelChar) {
                 "E" -> "ERROR" to 0xFFFF4444L
                 "W" -> "WARN" to 0xFFFFD700L
-                "I" -> "INFO" to 0xFF00E5FF L
+                "I" -> "INFO" to 0xFF00E5FFL
                 "D" -> "DEBUG" to 0xFF00FF85L
                 "V" -> "VERBOSE" to 0xFF888888L
-                else -> levelChar to 0xFF00E5FF L
+                else -> levelChar to 0xFF00E5FFL
             }
 
             LogEntry(level = level, tag = tag, message = message, timestamp = timestamp, color = colorHex)

@@ -10,6 +10,7 @@ import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
@@ -50,7 +51,7 @@ open class TrinityRepository @Inject constructor(
      */
     suspend fun broadcastUserMessage(message: String) {
         messageBus.broadcast(
-            dev.aurakai.auraframefx.domains.cascade.models.AgentMessage(
+            AgentMessage(
                 from = "User",
                 content = message,
                 type = "user_broadcast",
@@ -137,7 +138,11 @@ open class TrinityRepository @Inject constructor(
                             type = AiRequestType.CHAT,
                             context = mapOf("source" to "trinity_repo")
                         )
-                        genesisAgent.processRequest(request, "trinity_repo").content
+                        genesisAgent.processRequest(
+                            request,
+                            "trinity_repo",
+                            AgentType.GENESIS
+                        ).content
                     }
 
                     else -> "Agent ${targetAgent.name} not reachable via Trinity Bridge."

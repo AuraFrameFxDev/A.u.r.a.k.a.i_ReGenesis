@@ -62,12 +62,12 @@ class DefaultKaiAIService @Inject constructor(
 
         return try {
             // Analyze request for security threats
-            val securityScore = analyzeSecurityThreat(request.prompt)
+            val securityScore = analyzeSecurityThreat(request.query)
 
             val response = if (securityScore["threat_level"] == "high") {
                 "SECURITY ALERT: High-risk content detected. Request blocked for safety."
             } else {
-                "Kai security analysis: ${request.prompt} - Threat level: ${securityScore["threat_level"]}"
+                "Kai security analysis: ${request.query} - Threat level: ${securityScore["threat_level"]}"
             }
 
             AgentResponse(
@@ -136,7 +136,7 @@ class DefaultKaiAIService @Inject constructor(
 
         try {
             // Perform security analysis
-            val analysisResult = analyzeSecurityThreat(request.prompt)
+            val analysisResult = analyzeSecurityThreat(request.query)
 
             // Emit initial response
             emit(

@@ -58,7 +58,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.screens.GenderIdentity
-import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 
 /**
  * 🎮 System Journal - User Profile & Menu
@@ -228,7 +228,7 @@ fun SystemJournalScreen(
                             when (option.route) {
                                 "gender_selection" -> {
                                     // Navigate to full gender selection
-                                    navController.navigate(ReGenesisNavHost.GenderSelection.route)
+                                    navController.navigate(ReGenesisRoute.GenderSelection.route)
                                 }
 
                                 else -> {

@@ -71,7 +71,7 @@ class DefaultAuraAIService @Inject constructor(
     }
 
     override fun processRequestFlow(request: AiRequest): Flow<AgentResponse> = flow {
-        val content = generateText(request.prompt, request.context.toString())
+        val content = generateText(request.query, request.context.toString())
         emit(
             AgentResponse(
                 content = content,
@@ -82,7 +82,7 @@ class DefaultAuraAIService @Inject constructor(
     }
 
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
-        val content = generateText(request.prompt, context)
+        val content = generateText(request.query, context)
         return AgentResponse(
             content = content,
             confidence = 1.0f,

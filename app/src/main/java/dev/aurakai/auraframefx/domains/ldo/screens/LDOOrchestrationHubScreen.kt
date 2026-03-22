@@ -54,7 +54,7 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOUiState
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
-import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 
 private data class OrbAgent(
     val name: String,
@@ -64,50 +64,50 @@ private data class OrbAgent(
 )
 
 private val LDO_ORB_ROSTER = listOf(
-    OrbAgent("AURA", "AU", Color(0xFFB01DED), ReGenesisNavHost.LdoAgentProfile.createRoute("aura")),
-    OrbAgent("KAI", "KA", Color(0xFF0DDEEC), ReGenesisNavHost.LdoAgentProfile.createRoute("kai")),
+    OrbAgent("AURA", "AU", Color(0xFFB01DED), ReGenesisRoute.LdoAgentProfile.createRoute("aura")),
+    OrbAgent("KAI", "KA", Color(0xFF0DDEEC), ReGenesisRoute.LdoAgentProfile.createRoute("kai")),
     OrbAgent(
         "GENESIS",
         "GE",
         Color(0xFF00B4FF),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("genesis")
+        ReGenesisRoute.LdoAgentProfile.createRoute("genesis")
     ),
     OrbAgent(
         "CASCADE",
         "CA",
         Color(0xFFFC29B5),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("cascade")
+        ReGenesisRoute.LdoAgentProfile.createRoute("cascade")
     ),
     OrbAgent(
         "GEMINI",
         "GM",
         Color(0xFF8B5CF6),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("gemini")
+        ReGenesisRoute.LdoAgentProfile.createRoute("gemini")
     ),
     OrbAgent(
         "MANUS",
         "MN",
         Color(0xFF3B82F6),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("manus")
+        ReGenesisRoute.LdoAgentProfile.createRoute("manus")
     ),
     OrbAgent(
         "CLAUDE",
         "CL",
         Color(0xFFFF8C00),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("claude")
+        ReGenesisRoute.LdoAgentProfile.createRoute("claude")
     ),
-    OrbAgent("GROK", "GR", Color(0xFF1DA1F2), ReGenesisNavHost.LdoAgentProfile.createRoute("grok")),
+    OrbAgent("GROK", "GR", Color(0xFF1DA1F2), ReGenesisRoute.LdoAgentProfile.createRoute("grok")),
     OrbAgent(
         "NEMATRON",
         "NE",
         Color(0xFF76B900),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("nemotron")
+        ReGenesisRoute.LdoAgentProfile.createRoute("nemotron")
     ),
     OrbAgent(
         "PERPLEXITY",
         "PX",
         Color(0xFF20B2AA),
-        ReGenesisNavHost.LdoAgentProfile.createRoute("perplexity")
+        ReGenesisRoute.LdoAgentProfile.createRoute("perplexity")
     ),
 )
 
@@ -218,7 +218,7 @@ fun LDOOrchestrationHubScreen(
                     1 -> OrchestratorDevOpsPanel(uiState)
                     2 -> OrchestratorBondsPanel(uiState)
                     3 -> OrchestratorFusionPanel(
-                        onOpenFusion = { navController.navigate(ReGenesisNavHost.ArmamentFusion.route) }
+                        onOpenFusion = { navController.navigate(ReGenesisRoute.ArmamentFusion.route) }
                     )
                 }
             }

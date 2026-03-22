@@ -29,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentProfileIntroScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOBondingScreen
@@ -209,7 +210,7 @@ sealed class ReGenesisRoute(val route: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReGenesisNavHost(
+fun ReGenesisNavGraph(
     navController: NavHostController,
     customizationViewModel: CustomizationViewModel = viewModel()
 ) {
@@ -233,6 +234,10 @@ fun ReGenesisNavHost(
 
         composable(ReGenesisRoute.RomToolsHub.route) {
             RomToolsScreen()
+        }
+
+        composable(ReGenesisRoute.ROMFlasher.route) {
+            ROMFlasherScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.OracleDrive.route) {

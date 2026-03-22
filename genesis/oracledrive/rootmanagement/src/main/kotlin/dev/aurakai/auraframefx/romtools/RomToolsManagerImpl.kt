@@ -128,7 +128,11 @@ class RomToolsManagerImpl @Inject constructor(
         val cacheFile = copyUriToCache(request.context, uri, "rom_flash.zip")
             ?: return AgentResponse.error("Failed to access ROM file", agentName = "RomTools")
 
-        val romFile = RomFile(file = cacheFile, name = "Selected ROM")
+        val romFile = RomFile(
+            name = "Selected ROM",
+            path = cacheFile.absolutePath,
+            size = cacheFile.length()
+        )
         val result = flashRom(romFile)
 
         return if (result.isSuccess) {

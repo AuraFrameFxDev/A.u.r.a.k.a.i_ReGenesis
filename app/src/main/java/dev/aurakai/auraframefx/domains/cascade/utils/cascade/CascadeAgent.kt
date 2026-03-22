@@ -420,12 +420,11 @@ class CascadeAgent @Inject constructor(
 
         // Get responses from multiple agents
         val request = AiRequest(
-            prompt = prompt,
+            query = prompt,
             priority = AiRequest.Priority.NORMAL
-
         )
-        val auraResponse = auraAgent.processRequest(request, "").content
-        val kaiResponse = kaiAgent.processRequest(request, "").content
+        val auraResponse = auraAgent.processRequest(request, "", AgentType.AURA).content
+        val kaiResponse = kaiAgent.processRequest(request, "", AgentType.KAI).content
 
         // Synthesize responses
         return synthesizeResponses(listOf(auraResponse, kaiResponse), context)
@@ -444,11 +443,10 @@ class CascadeAgent @Inject constructor(
         )
 
         val request = AiRequest(
-            prompt = prompt,
+            query = prompt,
             priority = AiRequest.Priority.NORMAL
-
         )
-        val response = kaiAgent.processRequest(request, "")
+        val response = kaiAgent.processRequest(request, "", AgentType.KAI)
 
         updateProcessingState(
             ProcessingState(
@@ -474,11 +472,10 @@ class CascadeAgent @Inject constructor(
         )
 
         val request = AiRequest(
-            prompt = prompt,
+            query = prompt,
             priority = AiRequest.Priority.NORMAL
-
         )
-        val response = auraAgent.processRequest(request, "")
+        val response = auraAgent.processRequest(request, "", AgentType.AURA)
 
         updateProcessingState(
             ProcessingState(

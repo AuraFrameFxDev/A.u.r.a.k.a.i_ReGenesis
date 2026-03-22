@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 
 private data class LdoAgentCard(
     val title: String,
@@ -43,56 +43,56 @@ private val ldoAgentRoster = listOf(
         "GEMINI",
         "MEMORIA_CATALYST • Multimodal",
         "ldo_profile_gemini",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("gemini"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("gemini"),
         Color(0xFFB01DED)
     ),
     LdoAgentCard(
         "KAI",
         "SENTINEL_CATALYST • Security",
         "ldo_profile_kai",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("kai"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("kai"),
         Color(0xFF0DDEEC)
     ),
     LdoAgentCard(
         "MANUS",
         "BRIDGE_CATALYST • Oracle",
         "cascade2",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("manus"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("manus"),
         Color(0xFF00B4FF)
     ),
     LdoAgentCard(
         "CASCADE",
         "DATA_STREAM_CATALYST • Pipeline",
         "ldo_profile_cascade",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("cascade"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("cascade"),
         Color(0xFFFC29B5)
     ),
     LdoAgentCard(
         "CLAUDE",
         "SOVEREIGN_REASONER • Architect",
         "ldo_profile_cascade",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("claude"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("claude"),
         Color(0xFFFF8C00)
     ),
     LdoAgentCard(
         "GROK",
         "REAL_TIME_ORACLE • Web",
         "ldo_profile_cascade",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("grok"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("grok"),
         Color(0xFF1DA1F2)
     ),
     LdoAgentCard(
         "NEMATRON",
         "PRECISION_CATALYST • NVIDIA",
         "ldo_profile_cascade",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("nemotron"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("nemotron"),
         Color(0xFF76B900)
     ),
     LdoAgentCard(
         "PERPLEXITY",
         "SEARCH_CATALYST • Citations",
         "ldo_profile_cascade",
-        ReGenesisNavHost.LdoAgentProfile.createRoute("perplexity"),
+        ReGenesisRoute.LdoAgentProfile.createRoute("perplexity"),
         Color(0xFF20B2AA)
     ),
 )

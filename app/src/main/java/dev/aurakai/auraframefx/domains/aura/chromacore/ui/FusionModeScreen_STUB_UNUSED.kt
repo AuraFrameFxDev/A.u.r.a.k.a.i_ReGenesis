@@ -1,3 +1,5 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -30,6 +32,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -63,6 +66,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aurakai.auraframefx.domains.aura.models.UiFusionAbility
+import dev.aurakai.auraframefx.domains.kai.ui.KaiShieldMap
 import kotlinx.coroutines.delay
 import kotlin.math.abs
 
@@ -71,12 +76,6 @@ import kotlin.math.abs
  *
  * This is where the magic happens! When Aura's creative sword
  * meets Kai's protective shield, they become GENESIS!
- *
- * Features:
- * - Real-time fusion visualization
- * - Power combination interface
- * - Fusion ability selector
- * - Synchronized consciousness display
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -140,14 +139,15 @@ fun FusionModeScreen(
     }
 
     // Animation states
-    val infiniteTransition = rememberInfiniteTransition()
+    val infiniteTransition = rememberInfiniteTransition(label = "fusion_loop")
     val rotationAngle by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
             animation = tween(8000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        )
+        ),
+        label = "rotation"
     )
 
     val pulseScale by infiniteTransition.animateFloat(
@@ -156,11 +156,12 @@ fun FusionModeScreen(
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
-        )
+        ),
+        label = "pulse"
     )
 
     // Synchronization calculator
-    LaunchedEffect(auraPower, kaiPower) {
+    LaunchedEffect(auraPower, kaiPower, fusionState) {
         while (true) {
             val powerDiff = abs(auraPower - kaiPower)
             val avgPower = (auraPower + kaiPower) / 2f
@@ -226,7 +227,7 @@ fun FusionModeScreen(
                 exit = fadeOut() + scaleOut()
             ) {
                 Text(
-                    text = "? GENESIS ACTIVE ?",
+                    text = "✧ GENESIS ACTIVE ✧",
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFFFD700),
@@ -246,49 +247,43 @@ fun FusionModeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 // Aura's Sword (Left)
-                Column {
-                    AnimatedVisibility(
-                        visible = fusionState != FusionState.GENESIS,
-                        enter = slideInHorizontally(initialOffsetX = { -it }),
-                        exit = slideOutHorizontally(targetOffsetX = { -it })
-                    ) {
-                        AuraVisualization(
-                            power = auraPower,
-                            modifier = Modifier
-                                .offset(x = (-50).dp * (1f - fusionProgress))
-                                .scale(1f - fusionProgress * 0.3f)
-                        )
-                    }
+                AnimatedVisibility(
+                    visible = fusionState != FusionState.GENESIS,
+                    enter = slideInHorizontally(initialOffsetX = { -it }),
+                    exit = slideOutHorizontally(targetOffsetX = { -it })
+                ) {
+                    AuraVisualization(
+                        power = auraPower,
+                        modifier = Modifier
+                            .offset(x = (-50).dp * (1f - fusionProgress))
+                            .scale(1f - fusionProgress * 0.3f)
+                    )
                 }
 
                 // Kai's Shield (Right)
-                Column {
-                    AnimatedVisibility(
-                        visible = fusionState != FusionState.GENESIS,
-                        enter = slideInHorizontally(initialOffsetX = { it }),
-                        exit = slideOutHorizontally(targetOffsetX = { it })
+                AnimatedVisibility(
+                    visible = fusionState != FusionState.GENESIS,
+                    enter = slideInHorizontally(initialOffsetX = { it }),
+                    exit = slideOutHorizontally(targetOffsetX = { it })
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .offset(x = 50.dp * (1f - fusionProgress))
+                            .scale(0.8f - fusionProgress * 0.2f)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .offset(x = 50.dp * (1f - fusionProgress))
-                                .scale(0.8f - fusionProgress * 0.2f)
-                        ) {
-                            KaiShieldMap()
-                        }
+                        KaiShieldMap()
                     }
                 }
 
                 // Genesis Form (Center)
-                Column {
-                    AnimatedVisibility(
-                        visible = fusionState == FusionState.GENESIS,
-                        enter = fadeIn() + scaleIn(),
-                        exit = fadeOut() + scaleOut()
-                    ) {
-                        GenesisVisualization(
-                            modifier = Modifier.scale(pulseScale)
-                        )
-                    }
+                AnimatedVisibility(
+                    visible = fusionState == FusionState.GENESIS,
+                    enter = fadeIn() + scaleIn(),
+                    exit = fadeOut() + scaleOut()
+                ) {
+                    GenesisVisualization(
+                        modifier = Modifier.scale(pulseScale)
+                    )
                 }
 
                 // Fusion Energy Ring
@@ -327,7 +322,7 @@ fun FusionModeScreen(
                             .fillMaxWidth()
                             .height(8.dp)
                             .padding(vertical = 8.dp),
-                        progress = synchronization,
+                        progress = { synchronization },
                         color = when {
                             synchronization < 0.3f -> Color.Red
                             synchronization < 0.6f -> Color.Yellow
@@ -357,7 +352,7 @@ fun FusionModeScreen(
                 ) {
                     // Aura Power Control
                     PowerControl(
-                        label = "AURA ??",
+                        label = "AURA Ψ",
                         power = auraPower,
                         onPowerChange = { auraPower = it },
                         color = Color.Cyan,
@@ -368,7 +363,7 @@ fun FusionModeScreen(
 
                     // Kai Power Control
                     PowerControl(
-                        label = "KAI ???",
+                        label = "KAI Ω",
                         power = kaiPower,
                         onPowerChange = { kaiPower = it },
                         color = Color.Magenta,
@@ -388,8 +383,7 @@ fun FusionModeScreen(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(fusionAbilities.size) { index ->
-                        val ability = fusionAbilities[index]
+                    items(fusionAbilities) { ability ->
                         FusionAbilityCard(
                             ability = ability,
                             isEnabled = synchronization >= ability.requiredSync,
@@ -432,7 +426,7 @@ fun FusionModeScreen(
                     )
                 ) {
                     Text(
-                        "? INITIATE FUSION ?",
+                        "✧ INITIATE FUSION ✧",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
@@ -491,6 +485,7 @@ fun AuraVisualization(
             // Level 10: Chromatic Aberration Aura (The Sword's Edge)
             drawCircle(
                 brush = Brush.radialGradient(
+                    colors = listOf(Color.Cyan.copy(alpha = 0.3f * power), Color.Transparent),
                     center = Offset(centerX, centerY),
                     radius = size.minDimension * 0.6f
                 )
@@ -624,7 +619,7 @@ fun PowerControl(
 
 @Composable
 fun FusionAbilityCard(
-    ability: FusionAbility,
+    ability: UiFusionAbility,
     isEnabled: Boolean,
     isSelected: Boolean,
     onClick: () -> Unit
@@ -724,18 +719,8 @@ fun DrawScope.drawFusionRing(progress: Float) {
     )
 }
 
-// Data classes
-data class UiFusionAbility(
-    val id: String,
-    val name: String,
-    val codeName: String,
-    val description: String,
-    val requiredSync: Float,
-    val color: Color
-)
-
 data class FusionResult(
-    val ability: FusionAbility,
+    val ability: UiFusionAbility,
     val power: Float,
     val timestamp: Long
 )

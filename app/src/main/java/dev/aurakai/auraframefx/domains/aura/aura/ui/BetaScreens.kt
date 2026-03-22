@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 
 /**
  * Displays the home screen with app titles, status messages, and navigation buttons.
@@ -56,13 +56,13 @@ fun HomeScreen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { navController.navigate(ReGenesisNavHost.DirectChat.route) }
+            onClick = { navController.navigate(ReGenesisRoute.DirectChat.route) }
         ) {
             Text("AI Chat (Beta)")
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { navController.navigate(ReGenesisNavHost.UISettings.route) }
+            onClick = { navController.navigate(ReGenesisRoute.UISettings.route) }
         ) {
             Text("Settings")
         }

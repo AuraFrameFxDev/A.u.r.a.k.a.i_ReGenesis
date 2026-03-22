@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.navigation.ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.navigation.gates.components.SubmenuCard
 import dev.aurakai.auraframefx.navigation.gates.components.SubmenuItem
 
@@ -51,14 +51,14 @@ fun OracleDriveSubmenuScreen(
             title = "Module Creation",
             description = "AI-assisted module generation and template selection",
             icon = Icons.Default.Add,
-            route = ReGenesisNavHost.ModuleCreation.route,
+            route = ReGenesisRoute.ModuleCreation.route,
             color = Color(0xFF9370DB) // Medium Purple
         ),
         SubmenuItem(
             title = "Direct Chat",
             description = "One-on-one conversations with AI agents",
             icon = Icons.AutoMirrored.Filled.Chat,
-            route = ReGenesisNavHost.DirectChat.route,
+            route = ReGenesisRoute.DirectChat.route,
             color = Color(0xFF4169E1) // Royal Blue
         ),
         SubmenuItem(
@@ -72,14 +72,14 @@ fun OracleDriveSubmenuScreen(
             title = "System Overrides",
             description = "Emergency module disable and god mode",
             icon = Icons.Default.AdminPanelSettings,
-            route = ReGenesisNavHost.SystemOverrides.route,
+            route = ReGenesisRoute.SystemOverrides.route,
             color = Color(0xFFFF4500) // Orange Red
         ),
         SubmenuItem(
             title = "Module Manager",
             description = "Enable/disable modules and configuration",
             icon = Icons.Default.Settings,
-            route = ReGenesisNavHost.ModuleManager.route,
+            route = ReGenesisRoute.ModuleManager.route,
             color = Color(0xFFFFD700) // Gold
         )
     )

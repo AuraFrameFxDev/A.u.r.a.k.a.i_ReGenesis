@@ -13,6 +13,7 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
+    implementation(project(":core-module"))
     // ═══════════════════════════════════════════════════════════════════════
     // AUTO-PROVIDED by genesis.android.library.hilt:
     // ✅ Hilt (android + compiler via KSP)

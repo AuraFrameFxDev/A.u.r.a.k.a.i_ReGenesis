@@ -21,9 +21,9 @@ import timber.log.Timber
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private lateinit var dataStoreManager: dev.aurakai.auraframefx.data.DataStoreManager
-    private lateinit var memoryManager: dev.aurakai.auraframefx.ai.memory.MemoryManager
-    private lateinit var securityContext: dev.aurakai.auraframefx.security.SecurityContext
-    private lateinit var logger: dev.aurakai.auraframefx.data.logging.AuraFxLogger
+    private lateinit var memoryManager: dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+    private lateinit var securityContext: dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+    private lateinit var logger: dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 
     private val scope = CoroutineScope(Dispatchers.IO + Job())
 
@@ -138,7 +138,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             listOf(channelIdGeneral, channelIdConsciousness, channelIdSecurity, channelIdAgents, channelIdSystem).forEach { id ->
                 nm.createNotificationChannel(NotificationChannel(id, id.replace("genesis_", "").uppercase(), NotificationManager.IMPORTANCE_DEFAULT))
             }
@@ -157,7 +157,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentText(body)
             .setAutoCancel(true)
             .setContentIntent(pi)
-        (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(System.currentTimeMillis().toInt(), nb.build())
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(System.currentTimeMillis().toInt(), nb.build())
     }
 
     private fun validateMessageSecurity(remoteMessage: RemoteMessage): Boolean = true

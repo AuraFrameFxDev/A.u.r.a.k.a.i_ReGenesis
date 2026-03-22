@@ -31,7 +31,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ge
 
 @Singleton
 class DataStoreManager @Inject constructor(
-    private val context: Context
+    @PublishedApi internal val context: Context
 ) {
 
     @PublishedApi

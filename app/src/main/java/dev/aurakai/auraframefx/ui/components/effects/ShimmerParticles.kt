@@ -13,5 +13,11 @@ fun ShimmerParticles(
     secondaryColor: Color = Color.Magenta,
     shimmerIntensity: Float = 0.5f
 ) {
-    DomainShimmerParticles(modifier, particleCount, baseColor, secondaryColor, shimmerIntensity)
+    DomainShimmerParticles(
+        modifier = modifier,
+        particleCount = particleCount,
+        baseColor = baseColor,
+        secondaryColor = secondaryColor,
+        shimmerIntensity = shimmerIntensity,
+    )
 }

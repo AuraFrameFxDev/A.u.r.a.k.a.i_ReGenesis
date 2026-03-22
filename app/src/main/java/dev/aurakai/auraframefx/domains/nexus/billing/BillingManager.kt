@@ -12,7 +12,6 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
-import com.android.billingclient.api.QueryProductDetailsResult
 import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +28,7 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-a/**
+/**
  * Genesis Protocol Billing Manager
  *
  * Manages Google Play subscriptions with the following pricing:
@@ -209,7 +208,7 @@ open class BillingManager @Inject constructor(
                     .setProductList(productList)
                     .build()
 
-                val result = billingClient.queryProductDetails(params)
+                val result: GenesisProductDetailsResult = billingClient.queryProductDetails(params)
 
                 if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     val productDetails = result.productDetailsList?.firstOrNull()
@@ -308,7 +307,7 @@ suspend fun BillingClient.queryPurchasesAsync(params: QueryPurchasesParams): Pur
 
 data class PurchasesResult(val billingResult: BillingResult, val purchasesList: List<Purchase>)
 
-data class ProductDetailsResult(
+data class GenesisProductDetailsResult(
     val billingResult: BillingResult,
     val productDetailsList: List<ProductDetails>?
 )
@@ -321,17 +320,10 @@ suspend fun BillingClient.acknowledgePurchase(params: AcknowledgePurchaseParams)
     }
 }
 
-suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams): ProductDetailsResult {
+suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams): GenesisProductDetailsResult {
     return suspendCoroutine { continuation ->
         queryProductDetailsAsync(params) { billingResult, productDetailsList ->
-            continuation.resume(ProductDetailsResult(billingResult, productDetailsList))
+            continuation.resume(GenesisProductDetailsResult(billingResult, productDetailsList))
         }
     }
-}
-
-fun ProductDetailsResult(
-    billingResult: BillingResult,
-    productDetailsList: List<ProductDetails>?
-): ProductDetailsResult {
-    return ProductDetailsResult(billingResult, productDetailsList)
 }

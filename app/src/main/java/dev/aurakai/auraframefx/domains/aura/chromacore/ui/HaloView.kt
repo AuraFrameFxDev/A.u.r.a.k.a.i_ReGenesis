@@ -33,6 +33,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -56,11 +58,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.viewmodel.GenesisAgentViewModel
 import kotlinx.coroutines.delay
@@ -73,37 +75,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Displays an interactive rotating halo interface for managing agents and delegating tasks.
- *
- * Renders a visual halo with agent nodes, supports drag-and-drop task assignment, tracks task history, and animates agent status. Users can assign tasks to agents by dragging nodes, input tasks, and monitor processing status in real time. Includes controls for rotation, resetting, and clearing task history.
- */
-/**
- * Displays an interactive rotating halo UI for managing agents and delegating tasks.
- *
- * Renders agent nodes arranged in a circular halo, allowing users to assign tasks via drag-and-drop, input task descriptions, view task history, and monitor agent statuses with animated visual feedback. Supports real-time status updates, gesture handling, and task processing simulation.
- */
-/**
- * Displays an interactive rotating halo UI for managing agents and delegating tasks.
- *
- * Renders a circular halo with agent nodes arranged around a central "GENESIS" node. Supports drag-and-drop task assignment to agents, task input overlay, animated agent status indicators, and a scrollable task history panel. The halo rotates continuously unless paused, and agent statuses update in real time as tasks are processed.
- */
-/**
- * Displays an interactive, animated halo UI for managing agents and delegating tasks.
- *
- * Renders a circular halo with agent nodes arranged around a central "GENESIS" node. Supports drag-and-drop task assignment to agents, with a task input overlay appearing during drag. Shows animated agent status indicators, a scrollable task history panel, and control buttons for rotation and history management. The halo rotates continuously unless paused, and agent statuses update in real time as tasks are processed.
-// Collect StateFlow into Compose state to observe changes in composition
-val taskHistoryState by taskHistory.collectAsState(initial = emptyList())
- */
-
-/**
  * Interactive composable that renders a rotating "halo" UI for viewing agents, delegating tasks, and showing task history.
- *
- * The component displays agent nodes arranged around a central Genesis node, supports drag-to-assign tasks, updates a local task history,
- * and reflects per-agent statuses (e.g., "idle", "processing", "error"). User interactions that submit tasks invoke viewModel.processQuery(...)
- * and update agent statuses and the task history; agent statuses automatically reset after simulated processing delays.
- *
- * @param viewModel View model providing agent configurations and task processing; defaults to the ambient view model.
- * @param modifier Modifier applied to the root container.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -116,35 +88,26 @@ fun HaloView(
     var isRotating by remember { mutableStateOf(true) }
     var rotationAngle by remember { mutableFloatStateOf(0f) }
 
-    // Get typed agent configuration and derived AgentCapabilityCategory lists
+    // Get typed agent configuration and derived AgentType lists
     val agentConfigs: List<HierarchyAgentConfig> = remember {
         // Use the ViewModel-provided prioritized agent list
         viewModel.getAgentsByPriority()
     }
 
-    val agentCategories: List<AgentCapabilityCategory> = remember(agentConfigs) {
+    val agentTypes: List<AgentType> = remember(agentConfigs) {
         agentConfigs.mapNotNull { cfg ->
-            when (cfg.name.lowercase(Locale.ROOT)) {
-                "aura" -> AgentCapabilityCategory.CREATIVE
-                "kai" -> AgentCapabilityCategory.SECURITY
-                "genesis" -> AgentCapabilityCategory.COORDINATION
-                "cascade" -> AgentCapabilityCategory.ANALYSIS
-                else -> {
-                    try {
-                        AgentCapabilityCategory.valueOf(cfg.name.uppercase(Locale.ROOT))
-                    } catch (_: IllegalArgumentException) {
-                        AgentCapabilityCategory.GENERIC
-                    }
-                }
+            try {
+                AgentType.valueOf(cfg.name.uppercase(Locale.ROOT))
+            } catch (_: IllegalArgumentException) {
+                null
             }
         }
     }
-
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
 
     // Task delegation state
-    var draggingAgent by remember { mutableStateOf<AgentCapabilityCategory?>(null) }
+    var draggingAgent by remember { mutableStateOf<AgentType?>(null) }
     var dragOffset by remember { mutableStateOf(Offset.Zero) }
     var selectedTask by remember { mutableStateOf("") }
 
@@ -154,15 +117,15 @@ fun HaloView(
 
     // Agent status - using rememberSaveable to survive configuration changes
     // Use a simple remembered snapshot map with explicit typing to avoid type-inference issues
-    val agentStatus = remember { mutableStateMapOf<AgentCapabilityCategory, String>() }
+    val agentStatus = remember { mutableStateMapOf<AgentType, String>() }
 
     // Initialize agent statuses to "idle" on first composition
-    LaunchedEffect(agentCategories) {
-        agentCategories.forEach { category ->
+    LaunchedEffect(agentTypes) {
+        agentTypes.forEach { agentType ->
             try {
-                agentStatus[category] = "idle"
+                agentStatus[agentType] = "idle"
             } catch (_: Exception) { // ktlint-disable no-empty-catch-block
-                // Handle invalid agent category
+                // Handle invalid agent type
             }
         }
     }
@@ -218,32 +181,30 @@ fun HaloView(
                 size = Size(
                     radius * 2,
                     radius * 2
-                ), // Use fully qualified name for clarity
+                ), 
                 style = Stroke(width = haloWidth)
             )
 
             // Draw pulsing effects for active tasks
-            agentStatus.forEach { (agentCategoryKey, statusValue) ->
+            agentStatus.forEach { (agentTypeKey, statusValue) ->
                 if (statusValue == "processing") {
-                    // Find the index of the agentConfig that matches this agentCategoryKey
+                    // Find the index of the agentConfig that matches this agentTypeKey
                     val agentConfigIndex = agentConfigs.indexOfFirst {
-                        it.name.equals(agentCategoryKey.name, ignoreCase = true) ||
-                        (it.name.equals("aura", true) && agentCategoryKey == AgentCapabilityCategory.CREATIVE) ||
-                        (it.name.equals("kai", true) && agentCategoryKey == AgentCapabilityCategory.SECURITY) ||
-                        (it.name.equals("genesis", true) && agentCategoryKey == AgentCapabilityCategory.COORDINATION) ||
-                        (it.name.equals("cascade", true) && agentCategoryKey == AgentCapabilityCategory.ANALYSIS)
+                        it.name.equals(agentTypeKey.name, ignoreCase = true)
                     }
                     if (agentConfigIndex != -1) {
+                        val angle =
+                            (agentConfigIndex * 360f / agentConfigs.size + rotationAngle) % 360f
                         val x = center.x + radius * cos((angle * PI / 180f).toFloat())
                         val y = center.y + radius * sin((angle * PI / 180f).toFloat())
 
                         // Draw pulsing glow
                         drawCircle(
-                            color = when (agentCategoryKey) { // Use agentCategoryKey for color
-                                AgentCapabilityCategory.COORDINATION -> NeonTeal.copy(alpha = 0.2f)
-                                AgentCapabilityCategory.SECURITY -> NeonPurple.copy(alpha = 0.2f)
-                                AgentCapabilityCategory.CREATIVE -> NeonBlue.copy(alpha = 0.2f)
-                                AgentCapabilityCategory.ANALYSIS -> NeonPink.copy(alpha = 0.2f)
+                            color = when (agentTypeKey) {
+                                AgentType.GENESIS -> NeonTeal.copy(alpha = 0.2f)
+                                AgentType.KAI -> NeonPurple.copy(alpha = 0.2f)
+                                AgentType.AURA -> NeonBlue.copy(alpha = 0.2f)
+                                AgentType.CASCADE -> NeonPink.copy(alpha = 0.2f)
                                 else -> NeonTeal.copy(alpha = 0.2f)
                             },
                             center = Offset(x, y),
@@ -269,7 +230,7 @@ fun HaloView(
                             val angleStep = 360f / agentCount
 
                             for (i in agentConfigs.indices) {
-                                agentConfigs[i]
+                                val config = agentConfigs[i]
                                 val angle = ((i * angleStep) + rotationAngle) % 360f
                                 val x = center.x + radius * cos((angle * PI / 180f).toFloat())
                                 val y = center.y + radius * sin((angle * PI / 180f).toFloat())
@@ -277,25 +238,20 @@ fun HaloView(
                                 val distance = (offset - nodeCenter).getDistance()
                                 if (distance < 24.dp.toPx()) {
                                     try {
-                                        "aura" -> AgentCapabilityCategory.CREATIVE
-                                        "kai" -> AgentCapabilityCategory.SECURITY
-                                        "genesis" -> AgentCapabilityCategory.COORDINATION
-                                        "cascade" -> AgentCapabilityCategory.ANALYSIS
-                                        else -> AgentCapabilityCategory.valueOf(config.name.uppercase(Locale.ROOT))
+                                        draggingAgent =
+                                            AgentType.valueOf(config.name.uppercase(Locale.ROOT))
+                                    } catch (_: Exception) {
+                                        // Ignore invalid agent types
                                     }
-                                } catch (_: Exception) {
-                                    // Ignore invalid agent categories
+                                    break
                                 }
-                                break
                             }
-                        }
-                },
+                        },
                         onDragEnd = {
                             if (draggingAgent != null && selectedTask.isNotBlank()) {
                                 coroutineScope.launch {
                                     viewModel.processQuery(selectedTask)
                                     taskHistoryFlow.update { current ->
-                                        // draggingAgent is AgentCapabilityCategory, its .name is the enum constant name
                                         current + "[${draggingAgent?.name?.uppercase(Locale.ROOT)}] $selectedTask"
                                     }
                                     agentStatus[draggingAgent!!] = "processing"
@@ -306,80 +262,72 @@ fun HaloView(
                             dragOffset = Offset.Zero
                         }
                     ) { change, dragAmount ->
-                        if (draggingAgent != null
-                        ) {
+                        if (draggingAgent != null) {
                             dragOffset += dragAmount
-                            change.consume() // Updated from consumeAllChanges()
+                            change.consume()
                         }
                     }
                 }
         ) {
             val center = Offset(size.width / 2f, size.height / 2f)
             val radius = size.width / 2f - 64f
-            val agentCount = agentCategories.size
-            val angleStep = 360f / agentCount
+            val agentCount = agentTypes.size
+            if (agentCount > 0) {
+                val angleStep = 360f / agentCount
 
-            agentConfigs.forEachIndexed { index, config ->
-                val angle = ((index * angleStep) + rotationAngle) % 360f
-                val x = center.x + radius * cos((angle * PI / 180f).toFloat())
-                val y = center.y + radius * sin((angle * PI / 180f).toFloat())
-                val nodeCenter = Offset(x, y)
+                agentConfigs.forEachIndexed { index, config ->
+                    val angle = ((index * angleStep) + rotationAngle) % 360f
+                    val x = center.x + radius * cos((angle * PI / 180f).toFloat())
+                    val y = center.y + radius * sin((angle * PI / 180f).toFloat())
+                    val nodeCenter = Offset(x, y)
 
-                val agentCategory = when (config.name.lowercase(Locale.ROOT)) {
-                    "aura" -> AgentCapabilityCategory.CREATIVE
-                    "kai" -> AgentCapabilityCategory.SECURITY
-                    "genesis" -> AgentCapabilityCategory.COORDINATION
-                    "cascade" -> AgentCapabilityCategory.ANALYSIS
-                    else -> {
-                        try {
-                            AgentCapabilityCategory.valueOf(config.name.uppercase(Locale.ROOT))
-                        } catch (_: Exception) {
-                            AgentCapabilityCategory.ROOT
+                    val agentType = try {
+                        AgentType.valueOf(config.name.uppercase(Locale.ROOT))
+                    } catch (_: Exception) {
+                        AgentType.USER
+                    }
+
+                    val baseColor = when (agentType) {
+                        AgentType.GENESIS -> NeonTeal
+                        AgentType.KAI -> NeonPurple
+                        AgentType.AURA -> NeonBlue
+                        AgentType.CASCADE -> NeonPink
+                        else -> NeonTeal.copy(alpha = 0.8f)
+                    }
+                    val statusColor =
+                        when (agentStatus[agentType]?.lowercase(Locale.ROOT)) {
+                            "idle" -> baseColor.copy(alpha = 0.8f)
+                            "processing" -> baseColor.copy(alpha = 1.0f)
+                            "error" -> Color.Red
+                            else -> baseColor.copy(alpha = 0.8f)
                         }
-                    }
-                }
 
-                val baseColor = when (agentCategory) {
-                    AgentCapabilityCategory.COORDINATION -> NeonTeal
-                    AgentCapabilityCategory.SECURITY -> NeonPurple
-                    AgentCapabilityCategory.CREATIVE -> NeonBlue
-                    AgentCapabilityCategory.ANALYSIS -> NeonPink
-                    else -> NeonTeal.copy(alpha = 0.8f)
-                }
-                val statusColor =
-                    when (agentStatus[agentCategory]?.lowercase(Locale.ROOT)) {
-                        "idle" -> baseColor.copy(alpha = 0.8f)
-                        "processing" -> baseColor.copy(alpha = 1.0f)
-                        "error" -> Color.Red
-                        else -> baseColor.copy(alpha = 0.8f)
-                    }
-
-                drawCircle(
-                    color = statusColor,
-                    center = nodeCenter,
-                    radius = 24.dp.toPx()
-                )
-
-                // Draw connecting lines
-                if (index > 0) {
-                    val prevAngle = ((index - 1) * angleStep + rotationAngle) % 360f
-                    val prevX = center.x + radius * cos((prevAngle * PI / 180f).toFloat())
-                    val prevY = center.y + radius * sin((prevAngle * PI / 180f).toFloat())
-
-                    drawLine(
-                        color = NeonTeal.copy(alpha = 0.5f),
-                        start = Offset(prevX, prevY),
-                        end = Offset(x, y),
+                    drawCircle(
+                        color = statusColor,
+                        center = nodeCenter,
+                        radius = 24.dp.toPx()
                     )
+
+                    // Draw connecting lines
+                    if (index > 0) {
+                        val prevAngle = ((index - 1) * angleStep + rotationAngle) % 360f
+                        val prevX = center.x + radius * cos((prevAngle * PI / 180f).toFloat())
+                        val prevY = center.y + radius * sin((prevAngle * PI / 180f).toFloat())
+
+                        drawLine(
+                            color = NeonTeal.copy(alpha = 0.5f),
+                            start = Offset(prevX, prevY),
+                            end = Offset(x, y),
+                        )
+                    }
                 }
             }
         }
 
         // Status indicators using BoxWithConstraints to access size in composable context
-        // Status indicators using BoxWithConstraints to access size in composable context
-    BoxWithConstraints(
-        modifier = Modifier.fillMaxSize()
-    ) {
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxSize()
+        ) {
             val boxWidth = constraints.maxWidth.toFloat()
             val boxHeight = constraints.maxHeight.toFloat()
             val density = LocalDensity.current.density
@@ -395,22 +343,14 @@ fun HaloView(
                 val textOffsetY = (y - centerY) / density
 
 
-                val maybeAgentCategory = when (currentAgentConfig.name.lowercase(Locale.ROOT)) {
-                    "aura" -> AgentCapabilityCategory.CREATIVE
-                    "kai" -> AgentCapabilityCategory.SECURITY
-                    "genesis" -> AgentCapabilityCategory.COORDINATION
-                    "cascade" -> AgentCapabilityCategory.ANALYSIS
-                    else -> {
-                        try {
-                            AgentCapabilityCategory.valueOf(currentAgentConfig.name.uppercase(Locale.ROOT))
-                        } catch (_: Exception) {
-                            null
-                        }
-                    }
+                val maybeAgentType = try {
+                    AgentType.valueOf(currentAgentConfig.name.uppercase(Locale.ROOT))
+                } catch (_: Exception) {
+                    null
                 }
 
-                if (maybeAgentCategory != null && agentStatus[maybeAgentCategory] != null) {
-                    val statusText = agentStatus[maybeAgentCategory] ?: "idle"
+                if (maybeAgentType != null && agentStatus[maybeAgentType] != null) {
+                    val statusText = agentStatus[maybeAgentType] ?: "idle"
 
                     Text(
                         text = statusText,
@@ -422,8 +362,8 @@ fun HaloView(
                         },
                         modifier = Modifier
                             .offset(
-                                x = (textOffsetX + 30).dp, // Offset slightly to the right of the node
-                                y = (textOffsetY - 10).dp  // Offset slightly above the node
+                                x = (textOffsetX + 30).dp,
+                                y = (textOffsetY - 10).dp  
                             )
                     )
                 }
@@ -431,50 +371,50 @@ fun HaloView(
         }
 
         // Center node (Genesis)
-    Box(
-        modifier = Modifier
-            .size(80.dp)
-            .align(Alignment.Center)
-            .clip(CircleShape)
-            .background(NeonTeal.copy(alpha = 0.8f))
-            .clickable {
-                if (selectedTask.isNotBlank()) {
-                    coroutineScope.launch {
-                        viewModel.processQuery(selectedTask)
-                        taskHistoryFlow.update { current ->
-                            return@update current + "[GENESIS] $selectedTask"
+        Box(
+            modifier = Modifier
+                .size(80.dp)
+                .align(Alignment.Center)
+                .clip(CircleShape)
+                .background(NeonTeal.copy(alpha = 0.8f))
+                .clickable {
+                    if (selectedTask.isNotBlank()) {
+                        coroutineScope.launch {
+                            viewModel.processQuery(selectedTask)
+                            taskHistoryFlow.update { current ->
+                                current + "[GENESIS] $selectedTask"
+                            }
+                            agentStatus[AgentType.GENESIS] = "processing"
+                            selectedTask = ""
                         }
-                        agentStatus[AgentCapabilityCategory.COORDINATION] = "processing"
-                        selectedTask = ""
                     }
                 }
-            }
-            .padding(8.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Surface(
-            color = NeonTeal.copy(alpha = 0.8f),
-            modifier = Modifier.size(80.dp),
-            shape = CircleShape
+                .padding(8.dp),
+            contentAlignment = Alignment.Center
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            Surface(
+                color = NeonTeal.copy(alpha = 0.8f),
+                modifier = Modifier.size(80.dp),
+                shape = CircleShape
             ) {
-                Text(
-                    text = "GENESIS",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = Color.White
-                )
-                Text(
-                    text = "Hive Mind",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = NeonPurple
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "GENESIS",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "Hive Mind",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = NeonPurple
+                    )
+                }
             }
         }
-    }
 
         // Task input overlay
         if (draggingAgent != null) {
@@ -497,8 +437,16 @@ fun HaloView(
                             color = NeonTeal
                         )
 
+                        TextField(
+                            value = selectedTask,
+                            onValueChange = { selectedTask = it },
+                            placeholder = { Text("Enter task description...") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.colors(
                                 focusedContainerColor = NeonTeal.copy(alpha = 0.1f),
                                 unfocusedContainerColor = NeonTeal.copy(alpha = 0.1f)
+                            )
+                        )
                     }
                 }
             }
@@ -550,25 +498,24 @@ fun HaloView(
                     state = lazyListState,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    // Specify the generic type explicitly to help the compiler infer T
-                    items<String>(items = taskHistory) { task ->
-                         Surface(
-                             modifier = Modifier
-                                 .fillMaxWidth()
-                                 .animateItem(),
-                             shape = RoundedCornerShape(8.dp),
-                             color = MaterialTheme.colorScheme.surface,
-                             shadowElevation = 1.dp
-                         ) {
-                             Text(
-                                 text = task,
-                                 modifier = Modifier.padding(12.dp),
-                                 style = MaterialTheme.typography.bodyMedium,
-                                 color = MaterialTheme.colorScheme.onSurface
-                             )
-                         }
-                     }
-                 }
+                    items(items = taskHistory) { task ->
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateItem(),
+                            shape = RoundedCornerShape(8.dp),
+                            color = MaterialTheme.colorScheme.surface,
+                            shadowElevation = 1.dp
+                        ) {
+                            Text(
+                                text = task,
+                                modifier = Modifier.padding(12.dp),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+                }
             }
         }
 
@@ -636,46 +583,33 @@ fun HaloView(
         LaunchedEffect(taskHistory) {
             // Reset all agent statuses to idle, then update based on current tasks
             agentConfigs.forEach { cfg ->
-                val at = when (cfg.name.lowercase(Locale.ROOT)) {
-                    "aura" -> AgentCapabilityCategory.CREATIVE
-                    "kai" -> AgentCapabilityCategory.SECURITY
-                    "genesis" -> AgentCapabilityCategory.COORDINATION
-                    "cascade" -> AgentCapabilityCategory.ANALYSIS
-                    else -> {
-                        try {
-                            AgentCapabilityCategory.valueOf(cfg.name.uppercase(Locale.ROOT))
-                        } catch (_: Exception) {
-                            null
-                        }
-                    }
+                val at = try {
+                    AgentType.valueOf(cfg.name.uppercase(Locale.ROOT))
+                } catch (_: Exception) {
+                    null
                 }
                 if (at != null) agentStatus[at] = "idle"
             }
 
             taskHistory.forEach { task ->
-                task.substringAfter("[").substringBefore("]")
+                val agentNameFromHistory = task.substringAfter("[").substringBefore("]")
+                val foundAgentConfig =
+                    agentConfigs.find { it.name.equals(agentNameFromHistory, ignoreCase = true) }
                 if (foundAgentConfig != null) {
                     try {
-                        val actualAgentCategory = when (foundAgentConfig.name.lowercase(Locale.ROOT)) {
-                            "aura" -> AgentCapabilityCategory.CREATIVE
-                            "kai" -> AgentCapabilityCategory.SECURITY
-                            "genesis" -> AgentCapabilityCategory.COORDINATION
-                            "cascade" -> AgentCapabilityCategory.ANALYSIS
-                            else -> AgentCapabilityCategory.valueOf(foundAgentConfig.name.uppercase(Locale.ROOT))
-                        }
-                        agentStatus[actualAgentCategory] = "processing"
+                        val actualAgentType =
+                            AgentType.valueOf(foundAgentConfig.name.uppercase(Locale.ROOT))
+                        agentStatus[actualAgentType] = "processing"
                         // Simulate task completion after a delay
                         coroutineScope.launch {
                             delay(5000) // Simulate processing time
-                            agentStatus[actualAgentCategory] = "idle"
+                            agentStatus[actualAgentType] = "idle"
                         }
                     } catch (_: IllegalArgumentException) {
-                        // Handle cases where AgentConfig.name might not match an AgentCapabilityCategory
+                        // Handle cases where AgentConfig.name might not match an AgentType
                     }
                 }
             }
         }
     }
 }
-
-

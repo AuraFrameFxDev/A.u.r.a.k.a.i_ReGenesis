@@ -33,15 +33,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.romtools.AvailableRom
-import dev.aurakai.auraframefx.romtools.RomFile
-import dev.aurakai.auraframefx.romtools.RomToolsManager
 import dev.aurakai.auraframefx.domains.aura.ui.components.unified.AuraColors
 import dev.aurakai.auraframefx.domains.aura.ui.components.unified.AuraShapes
 import dev.aurakai.auraframefx.domains.aura.ui.components.unified.AuraSpacing
@@ -49,6 +44,9 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.unified.BannerSeverity
 import dev.aurakai.auraframefx.domains.aura.ui.components.unified.FluidGlassCard
 import dev.aurakai.auraframefx.domains.aura.ui.components.unified.SectionHeader
 import dev.aurakai.auraframefx.domains.aura.ui.components.unified.WarningBanner
+import dev.aurakai.auraframefx.romtools.AvailableRom
+import dev.aurakai.auraframefx.romtools.RomFile
+import dev.aurakai.auraframefx.romtools.RomToolsManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -108,7 +106,7 @@ class ROMFlasherViewModel @Inject constructor(
             val capabilities = romToolsManager.romToolsState.value.capabilities
             _uiState.value = _uiState.value.copy(
                 hasRootAccess = capabilities?.hasRootAccess ?: false,
-                hasBootloaderAccess = capabilities?.hasBootloaderAccess ?: false,
+                hasBootloaderAccess = capabilities.hasBootloaderAccess ?: false,
                 hasRecoveryAccess = capabilities?.hasRecoveryAccess ?: false
             )
         }
@@ -283,13 +281,8 @@ enum class FlashStage {
 
 @Composable
 fun ROMFlasherScreen(
-    viewModel: ROMFlasherViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    onNavigateBack: () -> Unit = {},
+    viewModel: ROMFlasherViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current

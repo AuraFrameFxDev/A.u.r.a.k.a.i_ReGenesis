@@ -14,7 +14,7 @@
 
 package dev.aurakai.auraframefx.domains.aura.ui.screens.aura.catalogs
 
-import dev.aurakai.auraframefx.domains.aura.lab.SettingType
+import dev.aurakai.auraframefx.data.customization.SettingType
 
 object IconifyExpandedCatalog {
 

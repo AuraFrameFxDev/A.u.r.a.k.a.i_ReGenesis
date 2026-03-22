@@ -1,3 +1,5 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -17,6 +19,10 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.databinding.ActivityQuickSettingsConfigBinding
+import dev.aurakai.auraframefx.domains.aura.QuickSettingsConfigManager
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
+import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsTileConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +37,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuickSettingsConfigBinding
     lateinit var configManager: QuickSettingsConfigManager
     private lateinit var adapter: TileConfigAdapter
-    var currentConfig: SystemQuickSettingsConfig? = null
+    var currentConfig: QuickSettingsConfig? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +73,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
             val config = withContext(Dispatchers.IO) {
                 configManager.loadConfig()
             }
-            config.also { currentConfig = it }
+            currentConfig = config
             adapter.submitList(newTiles = config.tiles)
             updatePreview()
         }
@@ -79,7 +85,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
         }
     }
 
-    private fun showTileConfigDialog(tile: SystemQuickSettingsTileConfig) {
+    private fun showTileConfigDialog(tile: QuickSettingsTileConfig) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_tile_config, null)
 
         // Initialize views
@@ -126,7 +132,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun applyTilePreviewStyle(card: MaterialCardView, tile: SystemQuickSettingsTileConfig) {
+    private fun applyTilePreviewStyle(card: MaterialCardView, tile: QuickSettingsTileConfig) {
         // Apply card background
         tile.background?.let { background ->
             when (background) {
@@ -134,7 +140,6 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
                     card.setCardBackgroundColor(background.color.toInt())
                     card.alpha = background.alpha
                 }
-                // Handle other background types as needed
             }
         } ?: run {
             card.setCardBackgroundColor(
@@ -185,15 +190,13 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
 
     private fun updatePreview() {
         // Update the preview based on the current config
-        // This is a simplified example - in a real app, you'd update a preview view
-        // to show how the Quick Settings will look with the current configuration
     }
 
     class TileConfigAdapter(
-        private val onItemClick: (SystemQuickSettingsTileConfig) -> Unit,
+        private val onItemClick: (QuickSettingsTileConfig) -> Unit,
     ) : Adapter<TileConfigAdapter.TileViewHolder>() {
 
-        private var tiles: List<SystemQuickSettingsTileConfig> = emptyList()
+        private var tiles: List<QuickSettingsTileConfig> = emptyList()
 
         class TileViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val tileName: TextView = view.findViewById(R.id.tileName)
@@ -201,8 +204,9 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
             val cardView: MaterialCardView = view.findViewById(R.id.tileCard)
         }
 
-        fun submitList(newTiles: List<SystemQuickSettingsTileConfig>) {
+        fun submitList(newTiles: List<QuickSettingsTileConfig>) {
             tiles = newTiles
+            notifyDataSetChanged()
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TileViewHolder {
@@ -233,6 +237,7 @@ class QuickSettingsConfigActivity : AppCompatActivity() {
             }
         }
 
+        private fun applyTileStyle(cardView: MaterialCardView, tile: QuickSettingsTileConfig) {
             // Apply background color based on tile state
             val backgroundColor = if (tile.enabled) {
                 ContextCompat.getColor(cardView.context, R.color.primary)
@@ -282,4 +287,3 @@ private fun saveConfig(quickSettingsConfigActivity: QuickSettingsConfigActivity)
         }
     }
 }
-

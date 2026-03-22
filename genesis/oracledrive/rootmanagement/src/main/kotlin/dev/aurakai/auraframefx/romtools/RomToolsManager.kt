@@ -6,7 +6,6 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.romtools.retention.RetentionStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import java.io.File
 
 /**
  * Main interface for ROM Tools management operations.
@@ -163,12 +162,11 @@ sealed interface RomOperation {
  * Information about a ROM file.
  */
 data class RomFile(
-    val file: File,
     val name: String,
-    val path: String = file.absolutePath,
+    val path: String,
     val version: String? = null,
     val checksum: String = "",
-    val size: Long = file.length()
+    val size: Long = 0
 )
 
 /**

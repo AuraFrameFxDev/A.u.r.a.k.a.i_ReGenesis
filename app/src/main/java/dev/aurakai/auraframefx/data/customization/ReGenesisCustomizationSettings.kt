@@ -12,9 +12,6 @@
 
 package dev.aurakai.auraframefx.data.customization
 
-import androidx.annotation.DrawableRes
-import androidx.compose.ui.graphics.Color
-
 // ============================================================================
 // ICONIFY SETTINGS (from Mahmud0808/Iconify)
 // Total: ~200+ individual settings across categories
@@ -844,7 +841,11 @@ enum class SettingType {
     COLOR_PICKER,
     IMAGE_PICKER,
     APP_SELECTOR,
-    TEXT_INPUT
+    TEXT_INPUT,
+    LIST,
+    IMAGE,
+    EDIT_TEXT,
+    FILE_PICKER
 }
 
 data class SettingItem(

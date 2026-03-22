@@ -17,5 +17,13 @@ fun NeonText(
     fontWeight: FontWeight = FontWeight.Normal,
     animateTyping: Boolean = false
 ) {
-    DomainNeonText(text, fontSize, color, glowColor, modifier, fontWeight, animateTyping)
+    DomainNeonText(
+        text = text,
+        modifier = modifier,
+        color = color,
+        glowColor = glowColor,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        animateTyping = animateTyping,
+    )
 }

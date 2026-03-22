@@ -36,13 +36,13 @@ class GenesisBackedKaiAIService @Inject constructor(
             CascadeEvent.Memory(
                 MemoryEvent(
                     "KAI_PROCESS",
-                    mapOf("query" to request.prompt)
+                    mapOf("query" to request.query)
                 )
             )
         )
 
         // Analyze threat using internal method
-        val analysis = analyzeSecurityThreat(request.prompt)
+        val analysis = analyzeSecurityThreat(request.query)
 
         return AgentResponse(
             content = "Security Analysis: ${analysis["threat_level"]}",
@@ -82,7 +82,7 @@ class GenesisBackedKaiAIService @Inject constructor(
             )
 
         // Perform security analysis
-        val analysisResult = analyzeSecurityThreat(request.prompt)
+        val analysisResult = analyzeSecurityThreat(request.query)
 
         // Emit detailed analysis
         val detailedResponse = buildString {
