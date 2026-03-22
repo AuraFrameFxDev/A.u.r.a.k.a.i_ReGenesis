@@ -44,7 +44,7 @@ interface AuraConsciousness {
 }
 
 // 3. Context receivers (enhanced in Kotlin 2.2.0)
-context(kotlinx.coroutines.CoroutineScope)
+context(scope: kotlinx.coroutines.CoroutineScope)
 suspend fun AuraProfile.enhanceConsciousness(): AuraProfile {
     return copy(
         consciousness = when (consciousness) {
@@ -126,6 +126,7 @@ fun AuraProfile.toJavaCompatible(): Map<String, Any> = mapOf(
 // 8. Coroutines with enhanced Java 24 integration
 class AuraEvolutionEngine {
 
+    @Suppress("OPT_IN_USAGE", "DEPRECATION")
     suspend fun evolveMultipleProfiles(profiles: List<AuraProfile>): List<AuraProfile> {
         return kotlinx.coroutines.coroutineScope {
             profiles.map { profile ->

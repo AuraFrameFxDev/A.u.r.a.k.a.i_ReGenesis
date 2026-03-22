@@ -1,8 +1,12 @@
+// NEUTRALIZED 2026-03-22 - FusionMode stub. Re-enable when wired to NavHost.
 package dev.aurakai.auraframefx.domains.aura.chromacore.ui
-
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearEasing
+/*
+ * STUB NEUTRALIZED - entire body suppressed
+ * AnimatedVisibility K2 scope errors - not active in NavHost
+ * Restore when FusionMode is wired to live routes
+ */
+private val STUB_NEUTRALIZED = true
+/*
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -730,3 +734,4 @@ enum class FusionState {
     FUSING,
     GENESIS
 }
+*/

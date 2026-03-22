@@ -40,7 +40,6 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.nexus.models.core.ArkStatus
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.ArkBuildViewModel
-import dev.aurakai.auraframefx.domains.nexus.models.core.ArkStatus
 
 @Composable
 fun ArkBuildScreen(

@@ -83,7 +83,12 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
             // Apply padding and spacing from config
             config.layout?.let { layout ->
                 val padding = layout.padding
-                qsPanel.setPadding(padding.start, padding.top, padding.end, padding.bottom)
+                qsPanel.setPadding(
+                    padding?.start ?: 0,
+                    padding?.top ?: 0,
+                    padding?.end ?: 0,
+                    padding?.bottom ?: 0
+                )
                 YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${layout.columns})")
             }
         } catch (e: Exception) {

@@ -3,7 +3,8 @@ package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import dev.aurakai.auraframefx.domains.aura.ui.*
+import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
+import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
 import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.ThemeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.d
 import dev.aurakai.auraframefx.domains.cascade.utils.e
@@ -20,17 +21,29 @@ import javax.inject.Singleton
 
 // Stubs for missing types used in this class
 enum class LockScreenElementType { CLOCK, WEATHER, NOTIFICATION, SHORTCUT, CUSTOM }
+enum class LockScreenAnimation { FADE, SLIDE, ZOOM }
+typealias LockScreenConfigAnimation = LockScreenAnimationConfig
 
 data class LockScreenElement(
     val type: LockScreenElementType,
     val shape: OverlayShape? = null,
-    val animation: LockScreenConfigAnimation? = null
+    val animation: LockScreenAnimationConfig? = null
 )
 
 data class BackgroundConfig(val image: ImageResource? = null)
-class ClockConfig(val position: String = "center")
-class HapticFeedbackConfig(val enabled: Boolean = true)
-class LockScreenAnimationConfig(val type: String = "fade")
+data class ClockConfig(val position: String = "center")
+data class HapticFeedbackConfig(val enabled: Boolean = true)
+data class LockScreenAnimationConfig(val type: String = "fade")
+
+// Local model with full field set (avoids OpenAPI LockScreenConfig field mismatch)
+data class LockScreenModels(
+    val showGenesisElements: Boolean = true,
+    val elements: List<LockScreenElement> = emptyList(),
+    val clockConfig: ClockConfig = ClockConfig(),
+    val hapticFeedback: HapticFeedbackConfig = HapticFeedbackConfig(),
+    val animation: LockScreenAnimationConfig = LockScreenAnimationConfig(),
+    val background: BackgroundConfig? = null
+)
 
 /**
  * Genesis Protocol LockScreen Customizer
@@ -44,8 +57,8 @@ class LockScreenCustomizer @Inject constructor(
 ) {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var isInitialized = false
-    private val _currentConfig = MutableStateFlow<LockScreenConfig?>(null)
-    val currentConfig: StateFlow<LockScreenConfig?> = _currentConfig
+    private val _currentConfig = MutableStateFlow<LockScreenModels?>(null)
+    val currentConfig: StateFlow<LockScreenModels?> = _currentConfig
 
     /**
      * Initializes the lock screen customizer with Genesis Protocol enhancements
@@ -122,7 +135,7 @@ class LockScreenCustomizer @Inject constructor(
                 val currentConfig = _currentConfig.value ?: getDefaultConfig()
                 val updatedElements = currentConfig.elements.map { element ->
                     if (element.type == elementType) {
-                        element.copy(animation = animation)
+                        element.copy(animation = LockScreenAnimationConfig(type = animation.name.lowercase()))
                     } else {
                         element
                     }
@@ -262,7 +275,7 @@ class LockScreenCustomizer @Inject constructor(
         // Placeholder - TODO: Implement configuration loading
     }
 
-    private fun saveConfiguration(config: LockScreenConfig) {
+    private fun saveConfiguration(config: LockScreenModels) {
         try {
             prefs.edit {
                 putBoolean("genesis_elements", config.showGenesisElements)
@@ -275,8 +288,8 @@ class LockScreenCustomizer @Inject constructor(
         }
     }
 
-    private fun getDefaultConfig(): LockScreenConfig {
-        return LockScreenConfig(
+    private fun getDefaultConfig(): LockScreenModels {
+        return LockScreenModels(
             showGenesisElements = true,
             clockConfig = ClockConfig(),
             hapticFeedback = HapticFeedbackConfig(),

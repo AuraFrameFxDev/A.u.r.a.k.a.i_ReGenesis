@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.model.agent_states
 
-import dev.aurakai.auraframefx.ai.agents.AuraShieldAgent
+import dev.aurakai.auraframefx.domains.kai.AuraShieldAgent
 import kotlinx.serialization.Serializable
 
 @Serializable

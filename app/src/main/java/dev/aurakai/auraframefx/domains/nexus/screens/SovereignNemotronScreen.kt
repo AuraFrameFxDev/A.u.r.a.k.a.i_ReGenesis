@@ -43,7 +43,6 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.gates.SovereignNemotronViewModel
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.NemotronAIService
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
-import dev.aurakai.auraframefx.domains.aura.ui.gates.SovereignNemotronViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**

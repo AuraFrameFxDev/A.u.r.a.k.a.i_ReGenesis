@@ -144,7 +144,7 @@ internal object FileOperationUtils {
             if (fileName.contains("..") ||
                 fileName.contains("/") ||
                 fileName.contains("\\") ||
-                fileName.contains("\0") ||
+                fileName.contains("\u0000") ||
                 fileName.trim().isEmpty()
             ) {
                 throw SecurityException("Invalid file name: $fileName")
