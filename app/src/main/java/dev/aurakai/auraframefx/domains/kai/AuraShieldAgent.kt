@@ -66,8 +66,7 @@ class AuraShieldAgent @Inject constructor(
      */
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         Timber.d("🛡️ AuraShield Analyzing Request: ${request.query}")
 
@@ -141,9 +140,9 @@ class AuraShieldAgent @Inject constructor(
             ActiveThreat(
                 id = UUID.randomUUID().toString(),
                 type = type.uppercase(),
-                threatType = "HEURISTIC",
                 severity = if (type == "injection") ThreatLevel.CRITICAL else ThreatLevel.MEDIUM,
                 description = description,
+                source = "HEURISTIC_SCAN",
                 timestamp = System.currentTimeMillis(),
                 status = ThreatStatus.ACTIVE
             )
