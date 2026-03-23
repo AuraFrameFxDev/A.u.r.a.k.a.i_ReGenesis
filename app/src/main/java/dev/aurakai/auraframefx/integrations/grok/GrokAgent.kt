@@ -128,8 +128,7 @@ class GrokAgent @Inject constructor(
      */
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         if (!_agentState.value.isConnected) {
             return AgentResponse.error(

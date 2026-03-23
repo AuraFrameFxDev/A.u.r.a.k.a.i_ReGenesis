@@ -360,7 +360,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data
         )
-        return auraAgent.processRequest(request, execution.agent.name, AgentType.AURA)
+        return auraAgent.processRequest(request, execution.agent.name)
     }
 
     /**
@@ -380,7 +380,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data
         )
-        return kaiAgent.processRequest(request, execution.agent.name, AgentType.KAI)
+        return kaiAgent.processRequest(request, execution.agent.name)
     }
 
     /**
@@ -394,7 +394,7 @@ class TaskExecutionManager @Inject constructor(
                 ?: AiRequestType.TEXT,
             context = execution.data
         )
-        return genesisAgent.processRequest(request, execution.agent.name, AgentType.GENESIS)
+        return genesisAgent.processRequest(request, execution.agent.name)
     }
 
     /**
