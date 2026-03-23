@@ -211,8 +211,9 @@ open class BillingManager @Inject constructor(
                 val result = billingClient.queryProductDetailsAsyncWrapper(params)
 
                 if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    _subscriptionState.value = SubscriptionState.Premium // Placeholder for Success state
-                    val productDetails = result.productDetailsList?.firstOrNull()
+                    val productDetails = result.productDetailsList
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.firstOrNull()
 
                     if (productDetails != null) {
                         // Get subscription offer (free trial)

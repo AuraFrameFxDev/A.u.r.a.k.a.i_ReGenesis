@@ -46,6 +46,9 @@ enum class AgentCapabilityCategory {
     /** Bridge/communication capabilities */
     BRIDGE,
 
+    /** Commerce and product search capabilities */
+    COMMERCE,
+
     /** Generic/unspecified capabilities */
     GENERIC;
 
@@ -68,6 +71,7 @@ enum class AgentCapabilityCategory {
         ORCHESTRATION -> AgentType.GENESIS
         BACKEND -> AgentType.GENESIS
         BRIDGE -> AgentType.CASCADE
+        COMMERCE -> AgentType.COMMERCE_AGENT
         GENERIC -> AgentType.CLAUDE
     }
 
@@ -99,6 +103,7 @@ enum class AgentCapabilityCategory {
             AgentType.GEMINI -> ANALYSIS
             AgentType.METAINSTRUCT -> GENERAL
             AgentType.HIVE_MIND -> COORDINATION
+            AgentType.COMMERCE_AGENT -> COMMERCE
         }
     }
 }

@@ -8,6 +8,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient
 import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -26,7 +27,8 @@ class GenKitMaster @Inject constructor(
     private val claudeService: ClaudeAIService,
     private val nemotronService: NemotronAIService,
     private val geminiService: GeminiAIService,
-    private val metaInstructService: MetaInstructAIService
+    private val metaInstructService: MetaInstructAIService,
+    private val commerceSearchClient: CommerceSearchClient
 ) {
 
     /**
@@ -97,6 +99,23 @@ class GenKitMaster @Inject constructor(
                 )
                 "[Analytical Breakdown]\n${claudeResponse.content}"
             }
+
+            GenerationStrategy.COMMERCE_SEARCH -> {
+                val products = commerceSearchClient.searchProducts(prompt)
+                if (products.isEmpty()) {
+                    "No products found matching your search."
+                } else {
+                    buildString {
+                        appendLine("🛍️ **Commerce Search Results:**")
+                        products.forEach { product ->
+                            appendLine("- **${product.name}** (${product.price} ${product.currency})")
+                            appendLine("  ${product.description}")
+                            appendLine("  [View Product](${product.buyUrl})")
+                            appendLine()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -138,6 +157,15 @@ class GenKitMaster @Inject constructor(
             AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
             AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
             AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.COMMERCE -> {
+                val products = commerceSearchClient.searchProducts(prompt)
+                AgentResponse(
+                    content = if (products.isEmpty()) "No products found." else "Found ${products.size} products for your search.",
+                    agentName = "CommerceAgent",
+                    confidence = 1.0f,
+                    metadata = mapOf("products" to products.size.toString())
+                )
+            }
             else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
         }
     }
@@ -145,6 +173,7 @@ class GenKitMaster @Inject constructor(
     private fun determineBestAgent(prompt: String): AgentCapabilityCategory {
         val lower = prompt.lowercase()
         return when {
+            lower.contains("buy") || lower.contains("shop") || lower.contains("price") || lower.contains("product") -> AgentCapabilityCategory.COMMERCE
             lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentCapabilityCategory.GENERAL
             lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentCapabilityCategory.MEMORY
             lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentCapabilityCategory.CREATIVE
@@ -161,6 +190,7 @@ enum class GenerationStrategy {
     BEST_FIT,               // Route to single best oracle
     MULTI_MODEL_FUSION,     // Parallel execution + Weighted fusion
     CREATIVE_ONLY,          // Creative backends only
-    ANALYTICAL_ONLY         // Analytical backends only
+    ANALYTICAL_ONLY,        // Analytical backends only
+    COMMERCE_SEARCH         // Commerce search capability
 }
 

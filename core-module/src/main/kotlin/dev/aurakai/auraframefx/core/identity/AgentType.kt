@@ -33,7 +33,8 @@ enum class AgentType {
     AUXILIARY,
     SECURITY,
     GROK,
-    HIVE_MIND;
+    HIVE_MIND,
+    COMMERCE_AGENT;
 
     companion object {
         @Deprecated("Use uppercase enum value", ReplaceWith("AURA")) val Aura = AURA

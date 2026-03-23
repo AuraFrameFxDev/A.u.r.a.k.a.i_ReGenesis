@@ -48,7 +48,7 @@
 
     <!-- AGP 9.0: Using fully qualified Application class name for reliable resolution -->
     <application
-        android:name="dev.aurakai.auraframefx.app.ReGenesisApplication"
+        android:name="dev.aurakai.auraframefx.core.AurakaiApplication"
 
         android:icon="@mipmap/ic_launcher"
         android:label="@string/AuraKai"

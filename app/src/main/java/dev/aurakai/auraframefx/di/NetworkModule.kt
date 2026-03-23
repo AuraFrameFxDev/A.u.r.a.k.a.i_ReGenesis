@@ -17,6 +17,10 @@ import dev.aurakai.auraframefx.domains.genesis.network.AuthApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
+import dev.aurakai.auraframefx.domains.genesis.network.WebSearchClient
+import dev.aurakai.auraframefx.domains.genesis.network.DefaultWebSearchClient
+import dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient
+import dev.aurakai.auraframefx.domains.genesis.network.DefaultCommerceSearchClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AppCoroutineDispatchers
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
@@ -154,6 +158,18 @@ object NetworkModule {
     @Singleton
     fun provideThemeApi(retrofit: Retrofit): ThemeApi {
         return retrofit.create(ThemeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebSearchClient(impl: DefaultWebSearchClient): WebSearchClient {
+        return impl
+    }
+
+    @Provides
+    @Singleton
+    fun provideCommerceSearchClient(impl: DefaultCommerceSearchClient): CommerceSearchClient {
+        return impl
     }
 
     @Provides
