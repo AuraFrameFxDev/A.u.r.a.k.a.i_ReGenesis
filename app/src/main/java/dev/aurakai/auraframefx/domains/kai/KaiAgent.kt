@@ -18,9 +18,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.*
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import kotlinx.coroutines.CoroutineScope
@@ -141,9 +139,7 @@ class KaiAgent @Inject constructor(
         val agentRequest = AgentRequest(
             query = request.query,
             type = request.type.name.lowercase(),
-            context = request.context.entries.associate {
-                it.key to (it.value.jsonPrimitive.contentOrNull ?: it.value.toString())
-            },
+            context = request.context,
             metadata = request.metadata
         )
         return processRequest(agentRequest)

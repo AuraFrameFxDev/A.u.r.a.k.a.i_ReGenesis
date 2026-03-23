@@ -341,7 +341,7 @@ open class AgentViewModel @Inject constructor(
                         context = mapOf("source" to "direct_chat")
                     )
                     val response =
-                        genesisAgent.processRequest(request, "direct_chat", AgentType.GENESIS)
+                        genesisAgent.processRequest(request, "direct_chat")
                     response.content
                 }
 
@@ -374,7 +374,7 @@ open class AgentViewModel @Inject constructor(
                         context = mapOf("agent_persona" to "cascade")
                     )
                     val response =
-                        genesisAgent.processRequest(request, "cascade", AgentType.GENESIS)
+                        genesisAgent.processRequest(request, "cascade")
                     response.content
                 }
 
@@ -384,7 +384,7 @@ open class AgentViewModel @Inject constructor(
                         type = AiRequestType.CHAT,
                         context = mapOf("agent_persona" to "claude")
                     )
-                    val response = genesisAgent.processRequest(request, "claude", AgentType.GENESIS)
+                    val response = genesisAgent.processRequest(request, "claude")
                     response.content
                 }
 

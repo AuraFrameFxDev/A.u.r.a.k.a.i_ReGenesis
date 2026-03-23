@@ -147,8 +147,7 @@ open class TrinityRepository @Inject constructor(
                         )
                         genesisAgent.processRequest(
                             request,
-                            "trinity_repo",
-                            AgentType.GENESIS
+                            "trinity_repo"
                         ).content
                     }
 

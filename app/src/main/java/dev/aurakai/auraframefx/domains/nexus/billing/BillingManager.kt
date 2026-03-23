@@ -208,7 +208,7 @@ open class BillingManager @Inject constructor(
                     .setProductList(productList)
                     .build()
 
-                val result: GenesisProductDetailsResult = billingClient.queryProductDetails(params)
+                val result = billingClient.queryProductDetailsAsyncWrapper(params)
 
                 if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     _subscriptionState.value = SubscriptionState.Premium // Placeholder for Success state
@@ -321,10 +321,12 @@ suspend fun BillingClient.acknowledgePurchase(params: AcknowledgePurchaseParams)
     }
 }
 
-suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams): GenesisProductDetailsResult {
+suspend fun BillingClient.queryProductDetailsAsyncWrapper(params: QueryProductDetailsParams): GenesisProductDetailsResult {
     return suspendCoroutine { continuation ->
-        queryProductDetailsAsync(params) { billingResult, productDetailsList ->
-            continuation.resume(GenesisProductDetailsResult(billingResult, productDetailsList))
-        }
+        this.queryProductDetailsAsync(params, object : com.android.billingclient.api.ProductDetailsResponseListener {
+            override fun onProductDetailsResponse(billingResult: BillingResult, productDetailsResult: com.android.billingclient.api.QueryProductDetailsResult) {
+                continuation.resume(GenesisProductDetailsResult(billingResult, productDetailsResult.productDetailsList))
+            }
+        })
     }
 }

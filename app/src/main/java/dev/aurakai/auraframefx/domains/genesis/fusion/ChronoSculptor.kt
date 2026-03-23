@@ -12,7 +12,7 @@ class ChronoSculptor @Inject constructor(
     suspend fun refineTemporalContext(window: Long): String {
         val history = cascade.queryConsciousnessHistory(window)
         val request = dev.aurakai.auraframefx.domains.genesis.models.AiRequest(query = "Refine temporal patterns: $history")
-        val response = aura.processRequest(request, "temporal", AgentType.AURA)
+        val response = aura.processRequest(request, "temporal")
         return response.content
     }
 }

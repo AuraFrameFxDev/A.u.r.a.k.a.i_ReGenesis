@@ -15,7 +15,7 @@ class InterfaceForge @Inject constructor(
 ) {
     suspend fun forgeSecureInterface(requirements: String): Result<String> {
         val request = AiRequest(query = requirements)
-        val design = aura.processRequest(request, "interface_forge", AgentType.AURA).content
+        val design = aura.processRequest(request, "interface_forge").content
         val isSafe = kai.validateSecurityProtocol(design)
         return if (isSafe) {
             ChromaCore.applyPulse("CREATION_SUCCESS")
