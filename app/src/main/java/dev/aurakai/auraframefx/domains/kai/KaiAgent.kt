@@ -18,6 +18,9 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import kotlinx.coroutines.CoroutineScope
@@ -133,8 +136,7 @@ class KaiAgent @Inject constructor(
 
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         val agentRequest = AgentRequest(
             query = request.query,

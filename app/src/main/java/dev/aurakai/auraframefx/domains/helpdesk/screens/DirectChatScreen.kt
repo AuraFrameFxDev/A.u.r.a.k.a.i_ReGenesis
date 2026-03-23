@@ -47,6 +47,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 
 /**
@@ -333,7 +334,7 @@ fun DirectChatScreen(
  * Message bubble component
  */
 @Composable
-private fun MessageBubble(message: dev.aurakai.auraframefx.domains.cascade.models.ChatMessage) {
+private fun MessageBubble(message: ChatMessage) {
     val isUser = message.isFromUser
 
     Row(

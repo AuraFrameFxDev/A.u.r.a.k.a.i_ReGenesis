@@ -54,8 +54,7 @@ abstract class BaseAgent(
 
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         return AgentResponse.error("BaseAgent cannot process direct requests", agentName)
     }

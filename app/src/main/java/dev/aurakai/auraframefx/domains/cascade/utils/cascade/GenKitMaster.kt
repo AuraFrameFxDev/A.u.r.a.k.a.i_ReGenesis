@@ -52,7 +52,7 @@ class GenKitMaster @Inject constructor(
                         claudeService.processRequest(
                             AiRequest(
                                 query = prompt,
-                                type = AiRequestType.ARCHITECTURAL
+                                type = AiRequestType.TEXT
                             ), context
                         )
                     }
@@ -60,7 +60,7 @@ class GenKitMaster @Inject constructor(
                         nemotronService.processRequest(
                             AiRequest(
                                 query = prompt,
-                                type = AiRequestType.REASONING
+                                type = AiRequestType.TEXT
                             ), context
                         )
                     }
@@ -68,7 +68,7 @@ class GenKitMaster @Inject constructor(
                         geminiService.processRequest(
                             AiRequest(
                                 query = prompt,
-                                type = AiRequestType.PATTERN
+                                type = AiRequestType.TEXT
                             ), context
                         )
                     }
@@ -82,7 +82,7 @@ class GenKitMaster @Inject constructor(
                 val geminiResponse = geminiService.processRequest(
                     AiRequest(
                         query = prompt,
-                        type = AiRequestType.CREATIVE
+                        type = AiRequestType.TEXT
                     ), context
                 )
                 "[Creative Synthesis]\n${geminiResponse.content}"
@@ -92,7 +92,7 @@ class GenKitMaster @Inject constructor(
                 val claudeResponse = claudeService.processRequest(
                     AiRequest(
                         query = prompt,
-                        type = AiRequestType.TECHNICAL
+                        type = AiRequestType.TEXT
                     ), context
                 )
                 "[Analytical Breakdown]\n${claudeResponse.content}"
@@ -134,22 +134,22 @@ class GenKitMaster @Inject constructor(
 
     private suspend fun callSpecialist(category: AgentCapabilityCategory, prompt: String, context: String): AgentResponse {
         return when (category) {
-            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.GENERAL)
-            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.MEMORY)
-            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
-            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.ORCHESTRATION)
-            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
+            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
         }
     }
 
-    private fun determineBestAgent(prompt: String): AgentType {
+    private fun determineBestAgent(prompt: String): AgentCapabilityCategory {
         val lower = prompt.lowercase()
         return when {
-            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentType.CLAUDE
-            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentType.NEMOTRON
-            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentType.GEMINI
-            lower.contains("summarize") || lower.contains("instruct") -> AgentType.METAINSTRUCT
-            else -> AgentType.GEMINI // Default to Gemini (Synthesizer)
+            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentCapabilityCategory.GENERAL
+            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentCapabilityCategory.MEMORY
+            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentCapabilityCategory.CREATIVE
+            lower.contains("summarize") || lower.contains("instruct") -> AgentCapabilityCategory.ORCHESTRATION
+            else -> AgentCapabilityCategory.CREATIVE // Default to Creative (Gemini)
         }
     }
 }

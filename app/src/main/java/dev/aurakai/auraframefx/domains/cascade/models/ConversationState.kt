@@ -28,3 +28,16 @@ sealed class ConversationState {
     val isActive: Boolean
         get() = this !is Idle && this !is Error
 }
+
+/**
+ * Represents a single chat message in the DirectChat system.
+ * Used by DirectChatScreen to display conversation history.
+ */
+data class ChatMessage(
+    val id: String = java.util.UUID.randomUUID().toString(),
+    val sender: String,
+    val content: String,
+    val isFromUser: Boolean,
+    val timestamp: Long = System.currentTimeMillis(),
+    val agentType: String? = null
+)

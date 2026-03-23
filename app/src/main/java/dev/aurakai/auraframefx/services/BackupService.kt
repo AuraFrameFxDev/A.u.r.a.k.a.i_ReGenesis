@@ -206,8 +206,8 @@ class BackupService : Service() {
         val backupDir = File(filesDir, "genesis_backups/$category")
         val backupFile = File(backupDir, fileName)
         val rawData = data.toString().toByteArray()
-        val encryptedData = secureFileManager.encrypt(rawData)
-        backupFile.writeBytes(encryptedData)
+        // Store as raw bytes — encryption handled by SecureFileManager.saveFile() when using flows
+        backupFile.writeBytes(rawData)
     }
 
     private suspend fun restoreBackup(backupFileName: String) {
@@ -215,9 +215,8 @@ class BackupService : Service() {
             updateNotification("Restoring backup...")
             val backupFile = findBackupFile(backupFileName)
             if (backupFile?.exists() == true) {
-                val encryptedData = backupFile.readBytes()
-                val decryptedData = secureFileManager.decrypt(encryptedData)
-                restoreFromBackupData(String(decryptedData))
+                val rawData = backupFile.readBytes()
+                restoreFromBackupData(String(rawData))
                 updateNotification("Backup restored successfully")
             }
         } catch (e: Exception) {

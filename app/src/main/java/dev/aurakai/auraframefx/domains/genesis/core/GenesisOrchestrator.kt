@@ -18,6 +18,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import timber.log.Timber
@@ -306,17 +309,11 @@ class GenesisOrchestrator @Inject constructor(
                             ignoreCase = true
                         )
                     } ?: AiRequestType.TEXT,
-                    context = buildJsonObject {
-                        put("from", message.from)
-                        put(
-                            "priority",
-                            message.priority.toLong()
-                        ) // Priority is Int in AgentMessage
-                        put("timestamp", message.timestamp)
-                        message.metadata.forEach { (key, value) ->
-                            put(key, value)
-                        }
-                    }
+                    context = message.metadata + mapOf(
+                        "from" to message.from,
+                        "priority" to message.priority.toString(),
+                        "timestamp" to message.timestamp.toString()
+                    )
                 )
             }
 

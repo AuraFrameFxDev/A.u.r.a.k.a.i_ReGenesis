@@ -305,7 +305,7 @@ class LockScreenCustomizer @Inject constructor(
         d("LockScreenCustomizer", "Initializing security features")
     }
 
-    private suspend fun applyConfiguration(config: LockScreenConfig) {
+    private suspend fun applyConfiguration(config: LockScreenModels) {
         d("LockScreenCustomizer", "Applying full lock screen configuration")
     }
 

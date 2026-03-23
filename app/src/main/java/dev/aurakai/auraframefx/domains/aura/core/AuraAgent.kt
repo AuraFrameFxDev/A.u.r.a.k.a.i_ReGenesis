@@ -129,8 +129,7 @@ class AuraAgent @Inject constructor(
 
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         ensureInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")

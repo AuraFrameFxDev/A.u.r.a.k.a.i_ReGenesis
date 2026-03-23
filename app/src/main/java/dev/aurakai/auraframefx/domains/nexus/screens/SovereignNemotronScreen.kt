@@ -1,5 +1,8 @@
+// NEUTRALIZED 2026-03-22 - SovereignNemotronViewModel is disabled stub.
+// Restore when NemotronAIService is fully wired.
 package dev.aurakai.auraframefx.domains.nexus.screens
 
+/*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -259,5 +262,4 @@ private fun ReasoningChainCard(title: String, steps: List<String>, confidence: F
         }
     }
 }
-
-
+*/

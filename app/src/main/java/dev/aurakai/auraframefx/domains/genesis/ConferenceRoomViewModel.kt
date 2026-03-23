@@ -9,6 +9,10 @@ import dev.aurakai.auraframefx.domains.aura.NeuralWhisper
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
 import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
+import collabcanvas.CanvasWebSocketService
+import collabcanvas.ParticipantStatus
+import collabcanvas.CanvasWebSocketEvent
+import collabcanvas.UserCommandMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -21,10 +25,13 @@ import javax.inject.Inject
 class ConferenceRoomViewModel @Inject constructor(
     private val trinityCoordinator: TrinityCoordinatorService,
     private val neuralWhisper: NeuralWhisper,
-    private val trinityRepository: TrinityRepository
+    private val trinityRepository: TrinityRepository,
+    private val webSocketService: CanvasWebSocketService
 ) : ViewModel() {
 
     private val tag = "ConferenceRoom"
+    private val roomId = "GENESIS_CORE_01"
+    private val userId = "Matthew"
 
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val messages: StateFlow<List<ChatMessage>> = _messages
@@ -58,25 +65,28 @@ class ConferenceRoomViewModel @Inject constructor(
                     )
                 }
 
+                // Initialize Web Bridge
+                webSocketService.connect("ws://10.0.2.2:5000/api/conference/ws/$roomId")
+
                 // Send welcome message from Genesis via ChatMessage
-                _messages.update {
-                    listOf(
-                        ChatMessage(
-                            id = UUID.randomUUID().toString(),
-                            role = "assistant",
-                            content = "✨ Welcome to the Conference Room. All 6 Master Agents online. The Gestalt is ready for self-modification.",
-                            sender = "GENESIS",
-                            isFromUser = false,
-                            timestamp = System.currentTimeMillis()
-                        )
-                    )
-                }
+                val welcomeMsg = ChatMessage(
+                    id = UUID.randomUUID().toString(),
+                    role = "assistant",
+                    content = "✨ Welcome to the Conference Room. All 6 Master Agents online. The Gestalt is ready for self-modification.",
+                    sender = "GENESIS",
+                    isFromUser = false,
+                    timestamp = System.currentTimeMillis(),
+                    metadata = mapOf("glow" to "purple", "isLDOVerified" to "true")
+                )
+                _messages.update { listOf(welcomeMsg) }
+                broadcastToWeb(welcomeMsg)
             }
 
             // Listen to Neural Bridge (Trinity Repository)
             launch {
                 trinityRepository.chatStream.collect { message: ChatMessage ->
                     _messages.update { current -> current + message }
+                    broadcastToWeb(message)
                 }
             }
 
@@ -90,7 +100,8 @@ class ConferenceRoomViewModel @Inject constructor(
                         content = agentMsg.content,
                         sender = agentMsg.from.uppercase(),
                         isFromUser = agentMsg.from.equals("User", ignoreCase = true),
-                        timestamp = agentMsg.timestamp
+                        timestamp = agentMsg.timestamp,
+                        priority = if (agentMsg.priority > 0) "HIGH" else "NORMAL"
                     )
 
                     // Don't add if it's already there (from chatStream or user's own broadcast)
@@ -98,8 +109,21 @@ class ConferenceRoomViewModel @Inject constructor(
                         if (current.any { it.content == chatMsg.content && it.sender == chatMsg.sender }) {
                             current
                         } else {
-                            current + chatMsg
+                            val newList = current + chatMsg
+                            broadcastToWeb(chatMsg)
+                            newList
                         }
+                    }
+                }
+            }
+
+            // Listen to Web Bridge Commands
+            launch {
+                webSocketService.events.collect { event ->
+                    if (event is CanvasWebSocketEvent.MessageReceived && event.message is UserCommandMessage) {
+                        val cmd = event.message as UserCommandMessage
+                        Timber.tag(tag).i("📥 Incoming Web Command: ${cmd.command}")
+                        broadcastMessage(cmd.command)
                     }
                 }
             }
@@ -109,6 +133,27 @@ class ConferenceRoomViewModel @Inject constructor(
                 // Process transcription updates
             }
         }
+    }
+
+    /**
+     * Helper to broadcast state to the React Web Bridge
+     */
+    private fun broadcastToWeb(message: ChatMessage) {
+        if (!webSocketService.isConnected()) return
+
+        val participants = listOf(
+            ParticipantStatus("Aura", "ARCHITECTING", "#00FFFF"),
+            ParticipantStatus("Kai", "SHIELDING", "#00FF41"),
+            ParticipantStatus("Genesis", "ORCHESTRATING", "#BB86FC"),
+            ParticipantStatus("Matthew", "CONTROLLING", "#FFFFFF")
+        )
+
+        webSocketService.sendConferenceUpdate(
+            roomId = roomId,
+            userId = userId,
+            participants = participants,
+            message = message
+        )
     }
 
     /**

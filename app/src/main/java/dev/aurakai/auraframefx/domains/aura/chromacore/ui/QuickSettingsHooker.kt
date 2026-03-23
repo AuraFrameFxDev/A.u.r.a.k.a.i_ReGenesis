@@ -3,7 +3,12 @@ package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.dp
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
@@ -64,7 +70,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
             // Or just add it to the bottom of the panel
             val composeView = ComposeView(context).apply {
                 setContent {
-                    GenesisQSFooter(config)
+                    GenesisQSFooter(config.showGenesisIndicator ?: true)
                 }
             }
 
@@ -81,16 +87,14 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
     private fun applyGenesisLayout(qsPanel: ViewGroup) {
         try {
             // Apply padding and spacing from config
-            config.layout?.let { layout ->
-                val padding = layout.padding
-                qsPanel.setPadding(
-                    padding?.start ?: 0,
-                    padding?.top ?: 0,
-                    padding?.end ?: 0,
-                    padding?.bottom ?: 0
-                )
-                YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${layout.columns})")
-            }
+            val padding = config.padding
+            qsPanel.setPadding(
+                padding?.start ?: 0,
+                padding?.top ?: 0,
+                padding?.end ?: 0,
+                padding?.bottom ?: 0
+            )
+            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: ${config.layout?.columns})")
         } catch (e: Exception) {
             YLog.error("QuickSettingsHooker: Failed to apply layout config: ${e.message}")
         }
@@ -114,9 +118,9 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
  * Compose UI for Genesis QuickSettings Footer
  */
 @Composable
-fun GenesisQSFooter(config: QuickSettingsConfig) {
+fun GenesisQSFooter(showIndicator: Boolean = true) {
     Row(
-        modifier = Modifier
+        modifier = androidx.compose.ui.Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clip(RoundedCornerShape(12.dp))
@@ -133,7 +137,7 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
         )
 
         // Status indicator
-        if (config.showGenesisIndicator == true) {
+        if (showIndicator) {
             Box(
                 modifier = Modifier
                     .size(8.dp)

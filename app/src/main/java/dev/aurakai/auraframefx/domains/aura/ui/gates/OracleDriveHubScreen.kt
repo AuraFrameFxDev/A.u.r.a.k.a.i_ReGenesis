@@ -30,9 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.config.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
-import dev.aurakai.auraframefx.config.GateAssetLoadout
+import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -55,11 +54,15 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @Composable
 fun OracleDriveHubScreen(navController: NavController) {
 
-    val subGates = GateAssetLoadout.getGenesisLoadout()
-
-    var useStyleB by remember {
-        mutableStateOf(GateAssetConfig.StyleMode.genesisStyle == GateAssetConfig.GateStyle.STYLE_B)
+    val subGates = remember {
+        listOf(
+            SubGateCard(id = "oracle_drive", title = "Oracle Drive", subtitle = "AI Storage", styleADrawable = "gate_oracle_drive", styleBDrawable = "gate_oracle_drive_b", fallbackDrawable = null, route = "oracle_drive", accentColor = androidx.compose.ui.graphics.Color(0xFFB026FF)),
+            SubGateCard(id = "root_tools", title = "Root Tools", subtitle = "System Root", styleADrawable = "gate_root_tools", styleBDrawable = "gate_root_tools_b", fallbackDrawable = null, route = "root_tools", accentColor = androidx.compose.ui.graphics.Color(0xFF00E5FF)),
+            SubGateCard(id = "data_vein", title = "Data Vein", subtitle = "Neural Flow", styleADrawable = "gate_data_vein", styleBDrawable = "gate_data_vein_b", fallbackDrawable = null, route = "data_vein", accentColor = androidx.compose.ui.graphics.Color(0xFF7C4DFF))
+        )
     }
+
+    var useStyleB by remember { mutableStateOf(false) }
 
     val styleName = if (useStyleB) "NEURAL MATRIX" else "ORACLE ARCHIVE"
 
@@ -135,7 +138,6 @@ fun OracleDriveHubScreen(navController: NavController) {
                     actions = {
                         IconButton(onClick = {
                             useStyleB = !useStyleB
-                            GateAssetConfig.toggleGenesisStyle()
                         }) {
                             Icon(
                                 Icons.Default.SwapHoriz,

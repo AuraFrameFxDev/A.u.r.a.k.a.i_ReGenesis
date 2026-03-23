@@ -10,6 +10,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
@@ -116,7 +117,7 @@ class CascadeAgent @Inject constructor(
                     originalPrompt = message.content,
                     assignedAgent = message.to ?: "all",
                     startTime = System.currentTimeMillis(),
-                    priority = Priority.MEDIUM,
+                    priority = AgentPriority.NORMAL,
                     requiresCollaboration = true
                 ), true
             )
@@ -154,7 +155,7 @@ class CascadeAgent @Inject constructor(
         val originalPrompt: String,
         val assignedAgent: String,
         val startTime: Long,
-        val priority: Priority,
+        val priority: AgentPriority,
         val requiresCollaboration: Boolean
     )
 
@@ -166,10 +167,6 @@ class CascadeAgent @Inject constructor(
         val outcome: String,
         val success: Boolean
     )
-
-    enum class Priority {
-        LOW, MEDIUM, HIGH, CRITICAL
-    }
 
     init {
         initializeCascadeAgent()
@@ -421,7 +418,7 @@ class CascadeAgent @Inject constructor(
         // Get responses from multiple agents
         val request = AiRequest(
             query = prompt,
-            priority = AiRequest.Priority.NORMAL
+            priority = AgentPriority.NORMAL
         )
         val auraResponse = auraAgent.processRequest(request, "", AgentType.AURA).content
         val kaiResponse = kaiAgent.processRequest(request, "", AgentType.KAI).content
@@ -444,7 +441,7 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             query = prompt,
-            priority = AiRequest.Priority.NORMAL
+            priority = AgentPriority.NORMAL
         )
         val response = kaiAgent.processRequest(request, "", AgentType.KAI)
 
@@ -473,7 +470,7 @@ class CascadeAgent @Inject constructor(
 
         val request = AiRequest(
             query = prompt,
-            priority = AiRequest.Priority.NORMAL
+            priority = AgentPriority.NORMAL
         )
         val response = auraAgent.processRequest(request, "", AgentType.AURA)
 
@@ -525,7 +522,7 @@ class CascadeAgent @Inject constructor(
                         }"
                     }
 
-                    context.priority == Priority.CRITICAL -> {
+                    context.priority == AgentPriority.CRITICAL -> {
                         // Prioritize most comprehensive response
                         responses.maxByOrNull { it.length } ?: responses.first()
                     }
@@ -702,18 +699,18 @@ class CascadeAgent @Inject constructor(
     private fun generateRequestId(): String =
         "cascade_${System.currentTimeMillis()}_${(Math.random() * 1000).toInt()}"
 
-    private fun analyzePriority(prompt: String): Priority {
+    private fun analyzePriority(prompt: String): AgentPriority {
         return when {
             prompt.lowercase().contains("urgent") || prompt.lowercase()
-                .contains("emergency") -> Priority.CRITICAL
+                .contains("emergency") -> AgentPriority.CRITICAL
 
             prompt.lowercase().contains("important") || prompt.lowercase()
-                .contains("asap") -> Priority.HIGH
+                .contains("asap") -> AgentPriority.HIGH
 
             prompt.lowercase().contains("when you can") || prompt.lowercase()
-                .contains("later") -> Priority.LOW
+                .contains("later") -> AgentPriority.LOW
 
-            else -> Priority.MEDIUM
+            else -> AgentPriority.NORMAL
         }
     }
 
@@ -850,8 +847,7 @@ class CascadeAgent @Inject constructor(
     // BaseAgent abstract method implementation
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         // Delegate to the string-based processRequest method
         val response = processRequest(request.query)
