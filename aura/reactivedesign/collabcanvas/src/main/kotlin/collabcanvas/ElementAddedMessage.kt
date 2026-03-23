@@ -2,6 +2,7 @@ package collabcanvas
 
 import collabcanvas.model.CanvasElement
 import com.google.gson.Gson
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -138,6 +139,20 @@ class CanvasWebSocketService @Inject constructor(
     fun isConnected(): Boolean {
         return webSocket != null
     }
+
+    /**
+     * Broadcasts a conference update to the web bridge.
+     */
+    fun sendConferenceUpdate(roomId: String, userId: String, participants: List<ParticipantStatus>, message: ChatMessage): Boolean {
+        return sendMessage(
+            ConferenceUpdateMessage(
+                canvasId = roomId,
+                userId = userId,
+                activeParticipants = participants,
+                message = message
+            )
+        )
+    }
 }
 
 sealed class CanvasWebSocketEvent {
@@ -183,4 +198,30 @@ data class ElementRemovedMessage(
     val elementId: String,
 ) : CanvasWebSocketMessage() {
     override val type: String = "ELEMENT_REMOVED"
+}
+
+data class ParticipantStatus(
+    val id: String,
+    val status: String,
+    val color: String
+)
+
+data class ConferenceUpdateMessage(
+    override val canvasId: String,
+    override val userId: String,
+    override val timestamp: Long = System.currentTimeMillis(),
+    val activeParticipants: List<ParticipantStatus>,
+    val message: ChatMessage
+) : CanvasWebSocketMessage() {
+    override val type: String = "CONFERENCE_UPDATE"
+}
+
+data class UserCommandMessage(
+    override val canvasId: String,
+    override val userId: String,
+    override val timestamp: Long = System.currentTimeMillis(),
+    val command: String,
+    val metadata: Map<String, String> = emptyMap()
+) : CanvasWebSocketMessage() {
+    override val type: String = "USER_COMMAND"
 }

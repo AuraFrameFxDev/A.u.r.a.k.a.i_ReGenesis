@@ -211,6 +211,7 @@ open class BillingManager @Inject constructor(
                 val result: GenesisProductDetailsResult = billingClient.queryProductDetails(params)
 
                 if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    _subscriptionState.value = SubscriptionState.Premium // Placeholder for Success state
                     val productDetails = result.productDetailsList?.firstOrNull()
 
                     if (productDetails != null) {
