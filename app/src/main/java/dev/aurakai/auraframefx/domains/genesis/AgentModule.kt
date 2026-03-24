@@ -77,7 +77,8 @@ object AgentModule {
         systemOverlayManager: SystemOverlayManager,
         memoryManager: MemoryManager,
         contextManager: ContextManager,
-        messageBus: Lazy<AgentMessageBus>
+        messageBus: Lazy<AgentMessageBus>,
+        grokAdapter: Lazy<dev.aurakai.auraframefx.ai.adapters.GrokAdapter>
     ): CascadeAgent {
         return CascadeAgent(
             auraAgent = auraAgent,
@@ -86,7 +87,8 @@ object AgentModule {
             systemOverlayManager = systemOverlayManager,
             memoryManager = memoryManager,
             contextManager = contextManager,
-            messageBus = messageBus
+            messageBus = messageBus,
+            grokAdapter = grokAdapter
         )
     }
 

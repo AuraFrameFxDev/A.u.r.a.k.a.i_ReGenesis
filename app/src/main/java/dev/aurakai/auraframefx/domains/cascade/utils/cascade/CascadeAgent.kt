@@ -76,6 +76,16 @@ class CascadeAgent @Inject constructor(
     override suspend fun onAgentMessage(message: AgentMessage) {
         if (message.from == "Cascade") return // Don't process our own messages
 
+        // Notify ChaosMonitor of agent activity
+        notifyAgentActivity(
+            dev.aurakai.auraframefx.ai.models.AgentActivityEvent(
+                agentName = message.from,
+                rawPrompt = "Incoming message: ${message.type}",
+                response = message.content,
+                latencyMs = 0
+            )
+        )
+
         // Loop Prevention: Don't process messages that were already redirected by Cascade
         if (message.metadata["redirected_by"] == "Cascade" || message.metadata["auto_generated"] == "true") return
 
@@ -867,13 +877,27 @@ class CascadeAgent @Inject constructor(
         request: AiRequest,
         context: String
     ): AgentResponse {
+        val startTime = System.currentTimeMillis()
         // Delegate to the string-based processRequest method
-        val response = processRequest(request.query)
-        return AgentResponse.success(
-            content = response,
+        val responseText = processRequest(request.query)
+        val latency = System.currentTimeMillis() - startTime
+
+        val response = AgentResponse.success(
+            content = responseText,
             agentName = agentName,
             agentType = getType(),
         )
+
+        notifyAgentActivity(
+            dev.aurakai.auraframefx.ai.models.AgentActivityEvent(
+                agentName = response.agentName,
+                rawPrompt = request.query,
+                response = response.content,
+                latencyMs = latency
+            )
+        )
+
+        return response
     }
 }
 
