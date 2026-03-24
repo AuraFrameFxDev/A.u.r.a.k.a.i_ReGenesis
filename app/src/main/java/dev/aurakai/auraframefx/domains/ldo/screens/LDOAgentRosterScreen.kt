@@ -40,7 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
-import dev.aurakai.auraframefx.domains.ldo.model.LDORosterData
+import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 
 /**
  * 📋 LDO AGENT ROSTER — 8 Agent Cards
@@ -80,7 +80,7 @@ private fun buildRosterCards(agents: List<AgentCatalyst>): List<RosterAgentCard>
 
 @Composable
 fun LDOAgentRosterScreen(
-    agents: List<AgentCatalyst> = LDORosterData.agents,
+    agents: List<AgentCatalyst> = LDORoster.agents,
     onAgentTap: (AgentCatalyst) -> Unit = {},
     onFilterTap: () -> Unit = {},
     onNavTap: (Int) -> Unit = {},
