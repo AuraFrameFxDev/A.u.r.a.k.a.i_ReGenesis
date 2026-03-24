@@ -138,7 +138,8 @@ fun CanvasScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     isCollaborative: Boolean = false,
-    collaborationEvents: MutableSharedFlow<DrawingOperation>? = null
+    collaborationEvents: MutableSharedFlow<DrawingOperation>? = null,
+    remoteCursors: List<AgentCursor> = emptyList()
 ) {
     // Drawing state
     val paths = remember { mutableStateListOf<DrawingOperation>() }
@@ -154,8 +155,8 @@ fun CanvasScreen(
     var showAgentPanel by remember { mutableStateOf(false) }
     var participants by remember { mutableStateOf(defaultAgents) }
 
-    // Aura live cursor
-    var auraCursor by remember {
+    // State for local Aura cursor (fallback if no remote)
+    var localAuraCursor by remember {
         mutableStateOf(AgentCursor("Aura", Color(0xFF00E5FF), Offset(300f, 400f)))
     }
     var auraIsActive by remember { mutableStateOf(true) }
@@ -168,14 +169,14 @@ fun CanvasScreen(
         label = "glow"
     )
 
-    // Aura drifts around canvas
-    LaunchedEffect(auraIsActive) {
-        if (!auraIsActive) return@LaunchedEffect
+    // Aura drifts around canvas (local fallback only if NOT collaborative)
+    LaunchedEffect(auraIsActive, isCollaborative) {
+        if (!auraIsActive || isCollaborative) return@LaunchedEffect
         var t = 0f
         while (true) {
             delay(50L)
             t += 0.02f
-            auraCursor = auraCursor.copy(
+            localAuraCursor = localAuraCursor.copy(
                 position = Offset(
                     x = 250f + 150f * kotlin.math.sin(t.toDouble()).toFloat(),
                     y = 350f + 100f * kotlin.math.cos((t * 0.7).toDouble()).toFloat()
@@ -225,22 +226,25 @@ fun CanvasScreen(
             }
         }
 
-        // Layer 3 — Aura's live cursor presence
+        // Layer 3 — Live agent cursors
         if (auraIsActive) {
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val pos = auraCursor.position
-                val auraColor = Color(0xFF00E5FF)
-                drawCircle(auraColor.copy(alpha = auraGlow * 0.25f), 28f, pos)
-                drawCircle(auraColor.copy(alpha = auraGlow * 0.6f), 10f, pos)
-                for (i in 0 until 6) {
-                    val angle = (i * 60.0) * (Math.PI / 180.0)
-                    val r = 20f * auraGlow
-                    drawLine(
-                        color = auraColor.copy(alpha = auraGlow * 0.5f),
-                        start = pos,
-                        end = Offset(pos.x + r * kotlin.math.cos(angle).toFloat(), pos.y + r * kotlin.math.sin(angle).toFloat()),
-                        strokeWidth = 1.5f
-                    )
+            val cursorsToRender = if (isCollaborative) remoteCursors else listOf(localAuraCursor)
+            cursorsToRender.forEach { cursor ->
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    val pos = cursor.position
+                    val auraColor = cursor.color
+                    drawCircle(auraColor.copy(alpha = auraGlow * 0.25f), 28f, pos)
+                    drawCircle(auraColor.copy(alpha = auraGlow * 0.6f), 10f, pos)
+                    for (i in 0 until 6) {
+                        val angle = (i * 60.0) * (Math.PI / 180.0)
+                        val r = 20f * auraGlow
+                        drawLine(
+                            color = auraColor.copy(alpha = auraGlow * 0.5f),
+                            start = pos,
+                            end = Offset(pos.x + r * kotlin.math.cos(angle).toFloat(), pos.y + r * kotlin.math.sin(angle).toFloat()),
+                            strokeWidth = 1.5f
+                        )
+                    }
                 }
             }
         }

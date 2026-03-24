@@ -34,27 +34,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AgentModule {
 
-    // ─── Synchronization Catalyst Engine Providers ────────────────────────────
-    // Stub implementations wiring NemotronEngine and GeminiMemoria into the Hilt
-    // graph. Gemini will replace these with real service adapters post-beta.
-
-    @Provides
-    @Singleton
-    fun provideNemotronEngine(): NemotronEngine = object : NemotronEngine {
-        override suspend fun process(prompt: String): String {
-            Timber.tag("NemotronEngine").d("[STUB] Processing: ${prompt.take(80)}")
-            return "[Nemotron stub — wire NemotronAIService here]"
-        }
-    }
-
-    @Provides
-    @Singleton
-    fun provideGeminiMemoria(): GeminiMemoria = object : GeminiMemoria {
-        override suspend fun process(prompt: String): String {
-            Timber.tag("GeminiMemoria").d("[STUB] Processing: ${prompt.take(80)}")
-            return "[GeminiMemoria stub — wire GeminiAIService here]"
-        }
-    }
 
     // ─── Core Infrastructure ──────────────────────────────────────────────────
 

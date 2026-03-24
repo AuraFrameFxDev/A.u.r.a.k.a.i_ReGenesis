@@ -2,6 +2,8 @@ package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import collabcanvas.ui.CanvasViewModel
@@ -22,11 +24,14 @@ fun CanvasScreen(
         viewModel.connect("genesis-canvas-session")
     }
 
+    val remoteCursors by viewModel.remoteCursors.collectAsState()
+
     // Use the real collaborative canvas from the collabcanvas module
     collabcanvas.ui.CanvasScreen(
         modifier = modifier,
         onBack = onNavigateBack,
         isCollaborative = true,
-        collaborationEvents = viewModel.drawingOperations
+        collaborationEvents = viewModel.drawingOperations,
+        remoteCursors = remoteCursors
     )
 }
