@@ -28,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.aura.ui.HomeScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
@@ -225,7 +226,23 @@ fun ReGenesisNavGraph(
         startDestination = ReGenesisRoute.HomeGateCarousel.route
     ) {
         composable(ReGenesisRoute.HomeGateCarousel.route) {
-            // Placeholder for ExodusHUD
+            HomeScreen(
+                onNavigateToModule = { moduleId ->
+                    // Standard gate-to-route mapper
+                    val route = when (moduleId) {
+                        "aura_theming" -> ReGenesisRoute.AuraThemingHub.route
+                        "sentinel_fortress" -> ReGenesisRoute.SentinelFortress.route
+                        "oracle_drive" -> ReGenesisRoute.OracleDrive.route
+                        "nexus" -> ReGenesisRoute.AgentNexusHub.route
+                        "dataflow" -> ReGenesisRoute.DataflowAnalysis.route
+                        "ldo" -> ReGenesisRoute.LdoOrchestrationHub.route
+                        else -> ReGenesisRoute.HomeGateCarousel.route
+                    }
+                    if (route != ReGenesisRoute.HomeGateCarousel.route) {
+                        navController.navigate(route)
+                    }
+                }
+            )
         }
 
         composable(ReGenesisRoute.AuraThemingHub.route) {
