@@ -4,7 +4,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.colorblendr.ChromaCore
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +18,8 @@ class InterfaceForge @Inject constructor(
         val design = aura.processRequest(request, "interface_forge").content
         val isSafe = kai.validateSecurityProtocol(design)
         return if (isSafe) {
-            ChromaCore.applyPulse("CREATION_SUCCESS")
+            // ChromaCore pulse — wired when colorblendr module is available
+            Timber.i("InterfaceForge", "Interface forged successfully: CREATION_SUCCESS")
             Result.success(design)
         } else {
             Result.failure(SecurityException("Kai Veto: Unsafe UX pattern detected"))
