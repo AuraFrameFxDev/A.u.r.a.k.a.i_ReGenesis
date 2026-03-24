@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.ai.adapters.GrokAdapter
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
@@ -78,7 +79,7 @@ object AgentModule {
         memoryManager: MemoryManager,
         contextManager: ContextManager,
         messageBus: Lazy<AgentMessageBus>,
-        grokAdapter: Lazy<dev.aurakai.auraframefx.ai.adapters.GrokAdapter>
+        grokAdapter: Lazy<GrokAdapter>
     ): CascadeAgent {
         return CascadeAgent(
             auraAgent = auraAgent,

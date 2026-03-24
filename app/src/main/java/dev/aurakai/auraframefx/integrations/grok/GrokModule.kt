@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.ai.adapters.GrokAdapter
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
@@ -90,7 +91,7 @@ object GrokModule {
     @Singleton
     fun provideGrokAdapter(
         grokAgent: GrokAgent
-    ): dev.aurakai.auraframefx.ai.adapters.GrokAdapter {
+    ): GrokAdapter {
         return grokAgent
     }
 
