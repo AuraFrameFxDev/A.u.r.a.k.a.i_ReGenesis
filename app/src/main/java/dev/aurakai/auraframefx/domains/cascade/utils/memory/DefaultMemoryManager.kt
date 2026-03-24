@@ -34,6 +34,17 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
         return storeMemory(key, value)
     }
 
+    override suspend fun recordInsight(
+        agentName: String,
+        prompt: String,
+        response: String,
+        confidence: Float
+    ): String {
+        val key = "insight_${agentName}_${System.currentTimeMillis()}"
+        val value = "Agent: $agentName\nPrompt: $prompt\nResponse: $response\nConfidence: $confidence"
+        return storeMemory(key, value)
+    }
+
     override fun searchMemories(query: String): List<MemoryEntry> {
         val queryWords = query.lowercase().split(" ")
         return memoryStore.values

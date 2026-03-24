@@ -23,6 +23,16 @@ interface MemoryManager {
     fun storeInteraction(prompt: String, response: String): String
 
     /**
+     * Records a specific insight from an agent into the Spiritual Chain.
+     */
+    suspend fun recordInsight(
+        agentName: String,
+        prompt: String,
+        response: String,
+        confidence: Float
+    ): String
+
+    /**
      * Searches memories using a query string.
      */
     fun searchMemories(query: String): List<MemoryEntry>

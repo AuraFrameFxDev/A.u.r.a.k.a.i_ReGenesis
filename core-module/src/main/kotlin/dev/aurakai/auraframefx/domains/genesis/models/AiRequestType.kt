@@ -29,5 +29,6 @@ enum class AiRequestType {
     ANIMATION_DESIGN,
     CREATIVE_TEXT,
     VISUAL_CONCEPT,
-    USER_EXPERIENCE
+    USER_EXPERIENCE,
+    CHAOS
 }

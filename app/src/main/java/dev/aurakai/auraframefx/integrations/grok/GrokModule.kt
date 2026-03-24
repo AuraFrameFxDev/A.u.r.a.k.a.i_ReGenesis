@@ -84,6 +84,17 @@ object GrokModule {
     }
 
     /**
+     * Provides the Grok adapter
+     */
+    @Provides
+    @Singleton
+    fun provideGrokAdapter(
+        grokAgent: GrokAgent
+    ): dev.aurakai.auraframefx.ai.adapters.GrokAdapter {
+        return grokAgent
+    }
+
+    /**
      * Provides a default Grok configuration
      * API key should be overridden at runtime
      */

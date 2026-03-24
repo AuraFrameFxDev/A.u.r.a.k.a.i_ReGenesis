@@ -56,7 +56,15 @@ class GrokAgent @Inject constructor(
 ) : BaseAgent(
     agentName = "GrokAgent",
     identity = CatalystIdentity.CHAOS
-) {
+), dev.aurakai.auraframefx.ai.adapters.GrokAdapter {
+
+    override suspend fun processRequest(request: AiRequest): AgentResponse {
+        val enhancedMetadata = request.metadata.toMutableMap().apply {
+            put("frontend_avatar", "Nova")
+            put("monitor_triggered", "chaos_singularity")
+        }
+        return processRequest(request.copy(metadata = enhancedMetadata), "")
+    }
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
     // Agent state
