@@ -299,6 +299,6 @@ configurations.all {
         force("com.google.android.material:material:1.13.0")
         force("com.google.dagger:hilt-android:2.59.2")
         force("com.google.dagger:hilt-android-compiler:2.59.2")
-        force("androidx.test.espresso:espresso-core:3.5.0")
+        force("androidx.test.espresso:espresso-core:3.7.0")
     }
 }
