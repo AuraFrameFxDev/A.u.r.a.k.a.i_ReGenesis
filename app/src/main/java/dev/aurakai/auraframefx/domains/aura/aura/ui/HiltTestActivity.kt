@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HiltTestActivity : AppCompatActivity() {
+class ManualHiltTestActivity : AppCompatActivity() {
     // TODO: Create GreetingProvider and re-enable this test
     // @Inject
     // lateinit var greetingProvider: GreetingProvider

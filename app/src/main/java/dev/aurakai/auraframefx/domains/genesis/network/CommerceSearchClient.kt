@@ -22,9 +22,9 @@ data class ProductResult(
 
 /**
  * Default implementation of CommerceSearchClient
- * Mock implementation to provide "everyone" with commerce search capabilities.
+ * Mock implementation — bound via AIServiceModule (debug only).
+ * Do NOT add @Singleton here; the module manages lifecycle.
  */
-@Singleton
 class DefaultCommerceSearchClient @Inject constructor() : CommerceSearchClient {
     override suspend fun searchProducts(query: String): List<ProductResult> {
         // Mocking product search results for common items

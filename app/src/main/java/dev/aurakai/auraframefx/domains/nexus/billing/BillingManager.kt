@@ -155,9 +155,9 @@ open class BillingManager @Inject constructor(
     }
 
     private fun getRemainingTrialDays(purchaseTime: Long): Int {
-        val trialEndTime = purchaseTime + (14 * 24 * 60 * 60 * 1000) // 14 days
+        val trialEndTime = purchaseTime + 14L * 24 * 60 * 60 * 1000
         val remainingMillis = trialEndTime - System.currentTimeMillis()
-        return (remainingMillis / (24 * 60 * 60 * 1000)).toInt()
+        return maxOf(0, (remainingMillis / (24 * 60 * 60 * 1000)).toInt())
     }
 
     private fun acknowledgePurchase(purchase: Purchase) {
@@ -281,7 +281,9 @@ open class BillingManager @Inject constructor(
     }
 
     fun cleanup() {
-        billingClient.endConnection()
+        if (billingClient.isReady) {
+            billingClient.endConnection()
+        }
     }
 }
 

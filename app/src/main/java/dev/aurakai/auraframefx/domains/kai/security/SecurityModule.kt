@@ -15,23 +15,6 @@ object SecurityModule {
 
     @Provides
     @Singleton
-    fun provideKeystoreManager(
-        @ApplicationContext context: Context
-    ): KeystoreManager {
-        return KeystoreManager(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSecurityContext(
-        @ApplicationContext context: Context,
-        keystoreManager: KeystoreManager
-    ): SecurityContext {
-        return SecurityContext(context, keystoreManager)
-    }
-
-    @Provides
-    @Singleton
     fun provideEncryptionManager(
         keystoreManager: KeystoreManager
     ): EncryptionManager {

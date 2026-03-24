@@ -61,8 +61,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.ChessFontFamily
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.genesis.ConferenceRoomViewModel
 import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
+import dev.aurakai.auraframefx.domains.genesis.ConferenceRoomViewModel
 
 // --- COLORS & THEME LOCALS ---
 private val AuraPurple = Color(0xFFD500F9)

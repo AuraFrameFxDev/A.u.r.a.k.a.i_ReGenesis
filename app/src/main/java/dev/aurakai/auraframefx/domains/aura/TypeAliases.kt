@@ -48,7 +48,7 @@ typealias VertexAIClient = dev.aurakai.auraframefx.domains.genesis.ai.clients.Ve
 // Network Aliases
 // ============================================================================
 
-typealias BaseUrl = dev.aurakai.auraframefx.domains.genesis.BaseUrl // Point to the actual annotation
+typealias BaseUrl = dev.aurakai.auraframefx.core.di.qualifiers.BaseUrl // Point to the actual annotation
 typealias MultiValueMap = MutableMap<String, List<String>>
 
 // ============================================================================

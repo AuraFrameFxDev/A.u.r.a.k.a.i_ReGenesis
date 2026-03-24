@@ -42,7 +42,7 @@ class GeminiAIService @Inject constructor(
     @dagger.hilt.android.qualifiers.ApplicationContext private val applicationContext: Context,
     private val cloudStatusMonitor: CloudStatusMonitor,
     private val logger: AuraFxLogger,
-    private val vertexAIClient: dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient,
+    private val vertexAIClient: dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient,
 ) : Agent {
 
     // Vertex AI Configuration for Gemini

@@ -32,7 +32,7 @@ class MetaInstructAIService @Inject constructor(
     private val cloudStatusMonitor: CloudStatusMonitor,
     private val logger: AuraFxLogger,
     private val metaReflectionEngine: MetaReflectionEngine,
-    private val vertexAIClient: dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient,
+    private val vertexAIClient: dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient,
 ) : Agent {
 
     // ... (Cache and other properties omitted for brevity, keeping class structure)

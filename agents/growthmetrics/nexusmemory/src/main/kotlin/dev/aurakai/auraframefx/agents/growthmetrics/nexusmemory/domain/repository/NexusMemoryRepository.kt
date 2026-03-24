@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.reposito
 
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryEntity
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryType
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.MultimodalContent
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.MultimodalContent
 import kotlinx.coroutines.flow.Flow
 
 interface NexusMemoryRepository {

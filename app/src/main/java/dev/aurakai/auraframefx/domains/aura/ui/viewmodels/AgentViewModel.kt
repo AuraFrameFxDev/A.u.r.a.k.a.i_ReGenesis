@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
 import dev.aurakai.auraframefx.domains.cascade.utils.error
@@ -13,9 +13,9 @@ import dev.aurakai.auraframefx.domains.cascade.utils.warn
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
@@ -270,6 +270,8 @@ open class AgentViewModel @Inject constructor(
 
     fun sendMessage(agentName: String, message: String) {
         viewModelScope.launch {
+            // Local UI Update for immediate feedback (optional, since repo emits it too)
+            // But doing it here ensures the "User" message appears in the correct Agent's chat history
             val userMsg = ChatMessage(
                 content = message,
                 role = "user",
@@ -278,12 +280,20 @@ open class AgentViewModel @Inject constructor(
             )
             addMessage(agentName, userMsg)
 
-            // Route to correct agent via AgentType — no hardcoded strings
-            val agentType = AgentType.entries.firstOrNull {
-                it.name.equals(agentName, ignoreCase = true)
-            } ?: AgentType.GENESIS
+            // Send to Repository (Neural Bridge)
+            val type = try {
+                AgentType.valueOf(agentName.uppercase())
+            } catch (e: Exception) {
+                AgentType.GENESIS
+            }
+            // We don't need to add the repo's echo of "User" message if we added it locally
+            // But we DO need the response.
 
-            trinityRepository.processUserMessage(message, agentType)
+            // To avoid double-entry of User message (from repo echo), we can filter or just let repo handle it.
+            // Let's use the repo solely.
+            trinityRepository.processUserMessage(message, type)
+
+            // Listen for the specific response? No, the global collector in init should handle it.
         }
     }
 
@@ -322,46 +332,63 @@ open class AgentViewModel @Inject constructor(
             """.trimIndent()
         }
 
-        val agentType = AgentType.entries.firstOrNull {
-            it.name.equals(agentName, ignoreCase = true)
-        } ?: AgentType.GENESIS
-
         return try {
-            when (agentType) {
-                AgentType.GENESIS -> {
+            when (agentName) {
+                "Genesis" -> {
                     val request = AiRequest(
                         query = userMessage,
                         type = AiRequestType.CHAT,
                         context = mapOf("source" to "direct_chat")
                     )
-                    genesisAgent.processRequest(request, "direct_chat").content
+                    val response = genesisAgent.processRequest(request, "direct_chat")
+                    response.content
                 }
 
-                AgentType.AURA -> {
+                "Aura" -> {
                     val interaction = EnhancedInteractionData(
                         content = userMessage,
-                        context = buildJsonObject { put("mode", "creative_chat") }.toString()
+                        context = buildJsonObject {
+                            put("mode", "creative_chat")
+                        }.toString()
                     )
-                    auraAgent.handleCreativeInteraction(interaction).content
+                    val response = auraAgent.handleCreativeInteraction(interaction)
+                    response.content
                 }
 
-                AgentType.KAI -> {
+                "Kai" -> {
                     val interaction = EnhancedInteractionData(
                         content = userMessage,
-                        context = buildJsonObject { put("mode", "security_chat") }.toString()
+                        context = buildJsonObject {
+                            put("mode", "security_chat")
+                        }.toString()
                     )
-                    kaiAgent.handleSecurityInteraction(interaction).content
+                    val response = kaiAgent.handleSecurityInteraction(interaction)
+                    response.content
+                }
+
+                "Cascade" -> {
+                    val request = AiRequest(
+                        query = "As Cascade, the analytics specialist: $userMessage",
+                        type = AiRequestType.CHAT,
+                        context = mapOf("agent_persona" to "cascade")
+                    )
+                    val response = genesisAgent.processRequest(request, "cascade")
+                    response.content
+                }
+
+                "Claude" -> {
+                    val request = AiRequest(
+                        query = "As Claude, the build system architect: $userMessage",
+                        type = AiRequestType.CHAT,
+                        context = mapOf("agent_persona" to "claude")
+                    )
+                    val response = genesisAgent.processRequest(request, "claude")
+                    response.content
                 }
 
                 else -> {
-                    // Cascade, LDO agents, and others route through Genesis with persona context
-                    val persona = agentType.name.lowercase()
-                    val request = AiRequest(
-                        query = "As ${agentType.name}, respond to: $userMessage",
-                        type = AiRequestType.CHAT,
-                        context = mapOf("agent_persona" to persona)
-                    )
-                    genesisAgent.processRequest(request, persona).content
+                    warn("AgentViewModel", "Unknown agent: $agentName, using fallback")
+                    "I'm here to assist you. Let me know what you need. 🤖"
                 }
             }
         } catch (e: NoSuchMethodError) {

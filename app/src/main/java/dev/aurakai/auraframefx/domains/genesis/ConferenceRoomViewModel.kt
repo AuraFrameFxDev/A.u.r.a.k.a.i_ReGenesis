@@ -65,8 +65,12 @@ class ConferenceRoomViewModel @Inject constructor(
                     )
                 }
 
-                // Initialize Web Bridge
-                webSocketService.connect("ws://10.0.2.2:5000/api/conference/ws/$roomId")
+                // Initialize Web Bridge — uses BuildConfig so debug=ws emulator, release=wss production
+                val wsBase = dev.aurakai.auraframefx.BuildConfig.GENESIS_BACKEND_URL
+                    .replace("https://", "wss://")
+                    .replace("http://", "ws://")
+                    .trimEnd('/')
+                webSocketService.connect("$wsBase/api/conference/ws/$roomId")
 
                 // Send welcome message from Genesis via ChatMessage
                 val welcomeMsg = ChatMessage(

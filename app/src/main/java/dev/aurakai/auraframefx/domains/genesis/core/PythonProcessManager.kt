@@ -487,7 +487,11 @@ class PythonProcessManager @Inject constructor(
     // Compatibility methods for legacy callers
     fun isBackendRunning(): Boolean = isHealthy()
 
-    fun getBackendUrl(): String = "http://localhost:5000" // Default for flask
+    fun getBackendUrl(): String = try {
+        dev.aurakai.auraframefx.BuildConfig.GENESIS_BACKEND_URL
+    } catch (e: Exception) {
+        "http://localhost:5000"
+    }
 
     fun startGenesisBackend(): Boolean {
         start()

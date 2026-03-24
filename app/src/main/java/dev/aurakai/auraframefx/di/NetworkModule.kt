@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import collabcanvas.di.CollabCanvasUrl
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.di.qualifiers.BaseUrl
+import dev.aurakai.auraframefx.core.di.qualifiers.BaseUrl
 import dev.aurakai.auraframefx.domains.genesis.config.ClaudeEnvConfig
 import dev.aurakai.auraframefx.domains.aura.AuraNetwork
 import dev.aurakai.auraframefx.domains.genesis.network.AuraApiService
@@ -19,8 +19,6 @@ import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.network.WebSearchClient
 import dev.aurakai.auraframefx.domains.genesis.network.DefaultWebSearchClient
-import dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient
-import dev.aurakai.auraframefx.domains.genesis.network.DefaultCommerceSearchClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AppCoroutineDispatchers
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
@@ -163,12 +161,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideWebSearchClient(impl: DefaultWebSearchClient): WebSearchClient {
-        return impl
-    }
-
-    @Provides
-    @Singleton
-    fun provideCommerceSearchClient(impl: DefaultCommerceSearchClient): CommerceSearchClient {
         return impl
     }
 

@@ -43,7 +43,8 @@ extensions.configure<ApplicationExtension> {
                 arguments.addAll(listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DANDROID_PLATFORM=android-33",
-                    "-DCMAKE_BUILD_TYPE=Release"
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
                 ))
                 abiFilters.clear()
                 abiFilters.add("arm64-v8a")

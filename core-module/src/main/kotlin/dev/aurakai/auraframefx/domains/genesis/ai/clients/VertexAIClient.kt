@@ -1,5 +1,8 @@
 package dev.aurakai.auraframefx.domains.genesis.ai.clients
 
+import javax.inject.Inject
+import javax.inject.Singleton
+
 // ============================================================================
 // Multimodal Content Types — for Gemini Embedding 2 (MRL-aware)
 // ============================================================================
@@ -52,7 +55,8 @@ interface VertexAIClient {
 /**
  * Default implementation of VertexAIClient
  */
-class DefaultVertexAIClient : VertexAIClient {
+@Singleton
+class DefaultVertexAIClient @Inject constructor() : VertexAIClient {
 
     override suspend fun generateCode(
         specification: String,

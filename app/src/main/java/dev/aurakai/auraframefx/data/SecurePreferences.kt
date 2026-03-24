@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.data
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,7 +11,7 @@ import javax.inject.Singleton
  * Manages secure storage of sensitive data like OAuth tokens or API keys.
  */
 @Singleton
-class SecurePreferences @Inject constructor(private val context: Context) {
+class SecurePreferences @Inject constructor(@ApplicationContext private val context: Context) {
 
     // Use applicationContext to prevent activity/fragment context leaks
     private val appContext = context.applicationContext

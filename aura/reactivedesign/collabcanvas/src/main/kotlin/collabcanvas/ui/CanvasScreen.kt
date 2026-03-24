@@ -1,5 +1,16 @@
 package collabcanvas.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,25 +19,44 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Redo
+import androidx.compose.material.icons.automirrored.filled.Undo
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Brush
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.CloudUpload
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.Rectangle
+import androidx.compose.material.icons.filled.Straighten
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,34 +66,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 
-// LocalWindowInfo extension for keyboard and mouse state
-data class WindowInfo(
-    val keyboardModifiers: KeyboardModifiers? = null, val mousePosition: Offset? = null
-)
-
-data class KeyboardModifiers(
-    val isShiftPressed: Boolean = false
-)
-
-@Composable
-private fun getWindowInfo(): WindowInfo {
-    // In a real app, you would get this from the actual window info
-    return WindowInfo()
-}
+// ─── Data Models ─────────────────────────────────────────────────────────────
 
 sealed class DrawingOperation {
     data class PathOp(
@@ -77,24 +100,38 @@ sealed class DrawingOperation {
     companion object
 }
 
-enum class DrawingTool {
-    PEN, ERASER, LINE, RECTANGLE, CIRCLE, HIGHLIGHTER
+enum class DrawingTool(val label: String) {
+    PEN("Pen"),
+    ERASER("Erase"),
+    LINE("Line"),
+    RECTANGLE("Rect"),
+    CIRCLE("Circle"),
+    HIGHLIGHTER("Glow")
 }
 
-/**
- * Displays an interactive drawing canvas with tool selection, undo/redo, stroke and color controls,
- * shape previews (with Shift-to-snap), and optional real-time collaboration.
- *
- * The UI provides freehand drawing (pen, eraser, highlighter), basic shape tools (line, rectangle, circle),
- * a stroke width slider, a color picker, undo/redo/clear actions, and a bottom tool bar. When a start point
- * for a shape is set, holding Shift snaps the shape's angle to 45-degree increments for the preview.
- * If `isCollaborative` is true a small "Collaborative Mode" badge is shown.
- *
- * @param modifier Modifier applied to the root container.
- * @param onBack Callback invoked when the top app bar navigation (back) action is triggered.
- * @param isCollaborative When true, shows a collaboration indicator in the UI.
- * @param collaborationEvents Optional MutableSharedFlow used to receive remote DrawingOperation events and to emit local operations for real-time collaboration.
- */
+data class AgentCursor(
+    val agentName: String,
+    val color: Color,
+    val position: Offset,
+    val isDrawing: Boolean = false
+)
+
+data class CanvasParticipant(
+    val id: String,
+    val name: String,
+    val color: Color,
+    val isAgent: Boolean,
+    val isActive: Boolean = true
+)
+
+private val defaultAgents = listOf(
+    CanvasParticipant("aura", "Aura", Color(0xFF00E5FF), isAgent = true),
+    CanvasParticipant("kai", "Kai", Color(0xFF00FF41), isAgent = true),
+    CanvasParticipant("genesis", "Genesis", Color(0xFFBB86FC), isAgent = true)
+)
+
+// ─── Main Screen ─────────────────────────────────────────────────────────────
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CanvasScreen(
@@ -103,367 +140,438 @@ fun CanvasScreen(
     isCollaborative: Boolean = false,
     collaborationEvents: MutableSharedFlow<DrawingOperation>? = null
 ) {
+    // Drawing state
     val paths = remember { mutableStateListOf<DrawingOperation>() }
     val undonePaths = remember { mutableStateListOf<DrawingOperation>() }
     var currentPath by remember { mutableStateOf<Path?>(null) }
     var startPosition by remember { mutableStateOf(Offset.Zero) }
-    var currentColor by remember { mutableStateOf(Color.Black) }
+    var currentColor by remember { mutableStateOf(Color(0xFF00E5FF)) }
     var currentStrokeWidth by remember { mutableStateOf(4.dp) }
     var currentTool by remember { mutableStateOf(DrawingTool.PEN) }
-    var showColorPicker by remember { mutableStateOf(false) }
 
-    // For collaboration
+    // UI state
+    var showColorPicker by remember { mutableStateOf(false) }
+    var showAgentPanel by remember { mutableStateOf(false) }
+    var participants by remember { mutableStateOf(defaultAgents) }
+
+    // Aura live cursor
+    var auraCursor by remember {
+        mutableStateOf(AgentCursor("Aura", Color(0xFF00E5FF), Offset(300f, 400f)))
+    }
+    var auraIsActive by remember { mutableStateOf(true) }
+
+    // Aura glow pulse
+    val infiniteTransition = rememberInfiniteTransition(label = "aura")
+    val auraGlow by infiniteTransition.animateFloat(
+        initialValue = 0.4f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(1800, easing = LinearEasing), RepeatMode.Reverse),
+        label = "glow"
+    )
+
+    // Aura drifts around canvas
+    LaunchedEffect(auraIsActive) {
+        if (!auraIsActive) return@LaunchedEffect
+        var t = 0f
+        while (true) {
+            delay(50L)
+            t += 0.02f
+            auraCursor = auraCursor.copy(
+                position = Offset(
+                    x = 250f + 150f * kotlin.math.sin(t.toDouble()).toFloat(),
+                    y = 350f + 100f * kotlin.math.cos((t * 0.7).toDouble()).toFloat()
+                )
+            )
+        }
+    }
+
     LaunchedEffect(Unit) {
         collaborationEvents?.collectLatest { operation -> paths.add(operation) }
     }
 
-    val backgroundColor = colorScheme.background
+    val backgroundColor = Color(0xFF080810)
 
-    Box(modifier = modifier.fillMaxSize()) {
-        // --- Drawing elements are now placed in Composable scopes (Canvas) ---
+    Box(modifier = modifier.fillMaxSize().background(backgroundColor)) {
 
-        // Canvas 1: Draw all saved paths (Immutable history)
+        // Layer 1 — Saved paths
         Canvas(modifier = Modifier.fillMaxSize()) {
-            paths.forEach { operation ->
-                when (operation) {
-                    is DrawingOperation.PathOp -> {
-                        drawPath(
-                            path = operation.path,
-                            color = if (operation.tool == DrawingTool.ERASER) backgroundColor else operation.color,
-                            style = Stroke(
-                                width = operation.strokeWidth.toPx(),
-                                cap = StrokeCap.Round,
-                                join = StrokeJoin.Round
-                            )
-                        )
-                    }
-
-                    is DrawingOperation.ShapeOp -> {
-                        when (operation.tool) {
-                            DrawingTool.LINE -> {
-                                drawLine(
-                                    color = operation.color,
-                                    start = operation.start,
-                                    end = operation.end,
-                                    strokeWidth = operation.strokeWidth.toPx(),
-                                    cap = StrokeCap.Round
-                                )
-                            }
-
-                            DrawingTool.RECTANGLE -> {
-                                drawRect(
-                                    color = operation.color,
-                                    topLeft = operation.start,
-                                    size = (operation.end - operation.start).toSize(),
-                                    style = Stroke(width = operation.strokeWidth.toPx())
-                                )
-                            }
-
-                            DrawingTool.CIRCLE -> {
-                                val radius = (operation.end - operation.start).getDistance()
-                                drawCircle(
-                                    color = operation.color,
-                                    radius = radius,
-                                    center = operation.start,
-                                    style = Stroke(width = operation.strokeWidth.toPx())
-                                )
-                            }
-
-                            else -> { /* Other tools */
-                            }
-                        }
+            paths.forEach { op ->
+                when (op) {
+                    is DrawingOperation.PathOp -> drawPath(
+                        path = op.path,
+                        color = if (op.tool == DrawingTool.ERASER) backgroundColor else op.color,
+                        style = Stroke(op.strokeWidth.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
+                    )
+                    is DrawingOperation.ShapeOp -> when (op.tool) {
+                        DrawingTool.LINE -> drawLine(op.color, op.start, op.end, op.strokeWidth.toPx(), cap = StrokeCap.Round)
+                        DrawingTool.RECTANGLE -> drawRect(op.color, op.start, (op.end - op.start).toSize(), style = Stroke(op.strokeWidth.toPx()))
+                        DrawingTool.CIRCLE -> drawCircle(op.color, (op.end - op.start).getDistance(), op.start, style = Stroke(op.strokeWidth.toPx()))
+                        else -> {}
                     }
                 }
             }
         }
 
-        // Canvas 2: Draw current path (State-dependent preview)
+        // Layer 2 — Current stroke preview
         currentPath?.let { path ->
             Canvas(modifier = Modifier.fillMaxSize()) {
                 drawPath(
                     path,
                     color = if (currentTool == DrawingTool.ERASER) backgroundColor else currentColor,
                     style = Stroke(
-                        width = if (currentTool == DrawingTool.HIGHLIGHTER) 16.dp.toPx() else currentStrokeWidth.toPx(),
-                        cap = StrokeCap.Round,
-                        join = StrokeJoin.Round
+                        width = if (currentTool == DrawingTool.HIGHLIGHTER) 18.dp.toPx() else currentStrokeWidth.toPx(),
+                        cap = StrokeCap.Round, join = StrokeJoin.Round
                     )
                 )
             }
         }
 
-        // Gesture handling Canvas (Input only)
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .pointerInput(Unit) {
-                    var lastOffset = Offset.Zero
-                    detectDragGestures(onDragStart = { offset ->
-                        startPosition = offset
-                        lastOffset = offset
-                        when (currentTool) {
-                            DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER -> {
-                                currentPath = Path().apply {
-                                    moveTo(offset.x, offset.y)
-                                }
-                            }
+        // Layer 3 — Aura's live cursor presence
+        if (auraIsActive) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val pos = auraCursor.position
+                val auraColor = Color(0xFF00E5FF)
+                drawCircle(auraColor.copy(alpha = auraGlow * 0.25f), 28f, pos)
+                drawCircle(auraColor.copy(alpha = auraGlow * 0.6f), 10f, pos)
+                for (i in 0 until 6) {
+                    val angle = (i * 60.0) * (Math.PI / 180.0)
+                    val r = 20f * auraGlow
+                    drawLine(
+                        color = auraColor.copy(alpha = auraGlow * 0.5f),
+                        start = pos,
+                        end = Offset(pos.x + r * kotlin.math.cos(angle).toFloat(), pos.y + r * kotlin.math.sin(angle).toFloat()),
+                        strokeWidth = 1.5f
+                    )
+                }
+            }
+        }
 
-                            else -> { /* Shape tools handle this in onDrag */
-                            }
+        // Layer 4 — Gesture input
+        Canvas(
+            modifier = Modifier.fillMaxSize().pointerInput(Unit) {
+                var lastOffset = Offset.Zero
+                detectDragGestures(
+                    onDragStart = { offset ->
+                        startPosition = offset; lastOffset = offset
+                        when (currentTool) {
+                            DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER ->
+                                currentPath = Path().apply { moveTo(offset.x, offset.y) }
+                            else -> {}
                         }
-                    }, onDrag = { change, _ ->
+                    },
+                    onDrag = { change, _ ->
                         lastOffset = change.position
                         when (currentTool) {
-                            DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER -> {
+                            DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER ->
                                 currentPath?.lineTo(change.position.x, change.position.y)
-                            }
-
-                            else -> { /* Update preview */
-                            }
+                            else -> {}
                         }
-                    }, onDragEnd = {
-                        val endPosition = lastOffset
+                    },
+                    onDragEnd = {
                         when (currentTool) {
                             DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER -> {
                                 currentPath?.let { path ->
                                     val op = DrawingOperation.PathOp(
                                         path = path,
                                         color = if (currentTool == DrawingTool.ERASER) Color.Unspecified else currentColor,
-                                        strokeWidth = if (currentTool == DrawingTool.HIGHLIGHTER) 16.dp else currentStrokeWidth,
+                                        strokeWidth = if (currentTool == DrawingTool.HIGHLIGHTER) 18.dp else currentStrokeWidth,
                                         tool = currentTool
                                     )
-                                    paths.add(op)
-                                    collaborationEvents?.tryEmit(op)
+                                    paths.add(op); collaborationEvents?.tryEmit(op)
                                 }
                             }
-
                             else -> {
-
-                                val op = DrawingOperation.ShapeOp(
-                                    start = startPosition,
-                                    end = endPosition,
-                                    color = currentColor,
-                                    strokeWidth = currentStrokeWidth,
-                                    tool = currentTool
-                                )
-                                paths.add(op)
-                                collaborationEvents?.tryEmit(op)
+                                val op = DrawingOperation.ShapeOp(startPosition, lastOffset, currentColor, currentStrokeWidth, currentTool)
+                                paths.add(op); collaborationEvents?.tryEmit(op)
                             }
                         }
-                        currentPath = null
-                        undonePaths.clear()
-                    })
-                }
-        ) { /* Gesture handling only */ }
+                        currentPath = null; undonePaths.clear()
+                    }
+                )
+            }
+        ) {}
 
-
-        // Top app bar
+        // ─── TOP BAR ─────────────────────────────────────────────────────────
         TopAppBar(
-            title = { Text("Collaborative Canvas") },
+            title = {
+                Column {
+                    Text("AuraKai Canvas", style = MaterialTheme.typography.titleMedium,
+                        color = Color(0xFF00E5FF), fontWeight = FontWeight.Bold)
+                    Text(if (isCollaborative) "• Live Session" else "• Solo",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (isCollaborative) Color(0xFF00FF41) else Color.White.copy(0.4f))
+                }
+            },
             navigationIcon = {
                 IconButton(onClick = onBack) {
-                    // Use AutoMirrored ArrowBack to respect RTL and avoid deprecated Icons.Filled.ArrowBack
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
             },
             actions = {
-                // Export/Import buttons for multi-user ChromaCore/SandboxUI Figma integration
-                IconButton(onClick = { /* TODO: Upload to SandboxUI / ChromaCore */ }) {
-                    Icon(Icons.Default.CloudUpload, "Export to SandboxUI")
-                }
-                IconButton(onClick = { /* TODO: Download from SandboxUI / ChromaCore */ }) {
-                    Icon(Icons.Default.CloudDownload, "Import from SandboxUI")
-                }
-                // Undo/Redo buttons
                 IconButton(
-                    onClick = {
-                        if (paths.isNotEmpty()) {
-                            undonePaths.add(paths.removeAt(paths.size - 1))
-                        }
-                    },
+                    onClick = { if (paths.isNotEmpty()) undonePaths.add(paths.removeAt(paths.size - 1)) },
                     enabled = paths.isNotEmpty()
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.Undo, "Undo")
+                    Icon(Icons.AutoMirrored.Filled.Undo, "Undo",
+                        tint = if (paths.isNotEmpty()) Color.White else Color.White.copy(0.3f))
                 }
                 IconButton(
-                    onClick = {
-                        if (undonePaths.isNotEmpty()) {
-                            paths.add(undonePaths.removeAt(undonePaths.size - 1))
-                        }
-                    },
+                    onClick = { if (undonePaths.isNotEmpty()) paths.add(undonePaths.removeAt(undonePaths.size - 1)) },
                     enabled = undonePaths.isNotEmpty()
                 ) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.Redo, contentDescription = "Redo")
+                    Icon(Icons.AutoMirrored.Filled.Redo, "Redo",
+                        tint = if (undonePaths.isNotEmpty()) Color.White else Color.White.copy(0.3f))
                 }
-
-                // Clear canvas
-                IconButton(
-                    onClick = { paths.clear() },
-                    enabled = paths.isNotEmpty()
-                ) {
-                    Icon(Icons.Default.Clear, "Clear")
+                IconButton(onClick = { paths.clear() }, enabled = paths.isNotEmpty()) {
+                    Icon(Icons.Default.Clear, "Clear",
+                        tint = if (paths.isNotEmpty()) Color(0xFFFF4444) else Color.White.copy(0.3f))
                 }
-
-                // Color picker toggle
-                IconButton(onClick = { (!showColorPicker).also { showColorPicker = it } }) {
-                    Icon(Icons.Default.Palette, "Colors")
+                IconButton(onClick = {}) {
+                    Icon(Icons.Default.CloudUpload, "Export", tint = Color.White)
                 }
-            }
+                BadgedBox(badge = {
+                    Badge(containerColor = Color(0xFF00FF41)) {
+                        Text("${participants.count { it.isActive }}", fontSize = 9.sp, color = Color.Black)
+                    }
+                }) {
+                    IconButton(onClick = { showAgentPanel = !showAgentPanel }) {
+                        Icon(Icons.Default.Groups, "Agents", tint = Color(0xFF00E5FF))
+                    }
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xF00D0D1A))
         )
 
-        // Tool selection bar
+        // ─── LEFT SIDE: Stroke width slider (anchored bottom-left, NOT center) ─
         Box(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .background(colorScheme.surfaceVariant.copy(alpha = 0.9f))
-                .padding(8.dp)
+                .align(Alignment.BottomStart)
+                .padding(start = 12.dp, bottom = 108.dp)
         ) {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                items(DrawingTool.entries) { tool ->
-                    val isSelected = currentTool == tool
-                    val tint = if (isSelected) colorScheme.primary else colorScheme.onSurfaceVariant
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "${currentStrokeWidth.value.toInt()}px",
+                    color = currentColor, fontSize = 10.sp, fontWeight = FontWeight.Bold
+                )
+                Box(
+                    modifier = Modifier
+                        .background(Color(0xCC1A1A2E), RoundedCornerShape(20.dp))
+                        .padding(horizontal = 6.dp, vertical = 12.dp)
+                ) {
+                    Slider(
+                        value = currentStrokeWidth.value,
+                        onValueChange = { currentStrokeWidth = it.dp },
+                        valueRange = 1f..32f,
+                        modifier = Modifier.height(120.dp).rotate(-90f),
+                        colors = SliderDefaults.colors(
+                            thumbColor = currentColor,
+                            activeTrackColor = currentColor,
+                            inactiveTrackColor = currentColor.copy(0.2f)
+                        )
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(currentStrokeWidth.value.coerceIn(4f, 24f).dp)
+                        .background(currentColor, CircleShape)
+                )
+            }
+        }
 
-                    IconButton(
-                        onClick = { currentTool = tool },
-                        modifier = Modifier
-                            .size(48.dp)
-                            .background(
-                                if (isSelected) colorScheme.primaryContainer
-                                else Color.Transparent, CircleShape
-                            )
-                    ) {
-                        val icon = when (tool) {
-                            DrawingTool.PEN -> Icons.Default.Brush
-                            DrawingTool.ERASER -> Icons.Default.Highlight
-                            DrawingTool.LINE -> Icons.Default.Straighten
-                            DrawingTool.RECTANGLE -> Icons.Default.Rectangle
-                            DrawingTool.CIRCLE -> Icons.Default.Circle
-                            DrawingTool.HIGHLIGHTER -> Icons.Default.Highlight
-                        }
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = tool.name,
-                            tint = if (tool == DrawingTool.ERASER) colorScheme.error else tint,
-                            modifier = Modifier.size(24.dp)
+        // ─── BOTTOM: Tool bar + Color picker ─────────────────────────────────
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDD080810))))
+                .padding(bottom = 20.dp, top = 8.dp)
+        ) {
+            // Color palette strip
+            AnimatedVisibility(showColorPicker, enter = fadeIn(), exit = fadeOut()) {
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 60.dp, vertical = 6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val palette = listOf(
+                        Color(0xFF00E5FF), Color(0xFFBB86FC), Color(0xFF00FF41),
+                        Color(0xFFFF4081), Color(0xFFFFD740), Color(0xFFFF6D00),
+                        Color.White, Color(0xFF607D8B), Color(0xFF212121),
+                        Color(0xFF76FF03), Color(0xFF40C4FF), Color(0xFFFF6E40)
+                    )
+                    items(palette) { color ->
+                        val sel = color == currentColor
+                        Box(
+                            modifier = Modifier
+                                .size(if (sel) 36.dp else 28.dp)
+                                .background(color, CircleShape)
+                                .border(if (sel) 2.dp else 0.dp, Color.White, CircleShape)
+                                .clickable { currentColor = color; showColorPicker = false }
                         )
                     }
                 }
             }
-        }
 
-        // Stroke width slider
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = 8.dp)
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+            // Tool buttons row
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Slider(
-                    value = currentStrokeWidth.value,
-                    onValueChange = { currentStrokeWidth = it.dp },
-                    valueRange = 1f..32f,
+                // Color swatch button
+                Box(
                     modifier = Modifier
-                        .height(200.dp)
-                        .padding(vertical = 8.dp),
-                    colors = SliderDefaults.colors(
-                        thumbColor = currentColor,
-                        activeTrackColor = currentColor.copy(alpha = 0.5f),
-                        inactiveTrackColor = currentColor.copy(alpha = 0.2f)
-                    )
-                )
-            }
-        }
+                        .size(44.dp)
+                        .background(currentColor.copy(0.15f), CircleShape)
+                        .border(2.dp, currentColor, CircleShape)
+                        .clickable { showColorPicker = !showColorPicker },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Box(modifier = Modifier.size(22.dp).background(currentColor, CircleShape))
+                }
 
-        // Color picker
-        if (showColorPicker) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = 56.dp, end = 8.dp)
-                    .background(
-                        colorScheme.surfaceVariant, MaterialTheme.shapes.medium
-                    )
-                    .padding(8.dp)
-            ) {
-                val colors = listOf(
-                    Color.Black, Color.DarkGray, Color.Gray, Color.LightGray,
-                    Color.White, Color.Red, Color.Green, Color.Blue,
-                    Color.Yellow, Color.Cyan, Color.Magenta, Color(0xFFFFA500) // Orange
-                )
+                Spacer(Modifier.width(10.dp))
 
-                Column {
-                    Text(
-                        "Select Color",
-                        style = MaterialTheme.typography.labelMedium,
-                        modifier = Modifier.padding(4.dp)
-                    )
-
-                    LazyRow {
-                        items(colors) { color ->
-                            val isSelected = color == currentColor
-                            Box(
-                                modifier = Modifier
-                                    .padding(4.dp)
-                                    .size(32.dp)
-                                    .background(
-                                        color, CircleShape
-                                    )
-                                    .border(
-                                        width = if (isSelected) 2.dp else 1.dp,
-                                        color = if (isSelected) colorScheme.primary
-                                        else colorScheme.outline,
-                                        shape = CircleShape
-                                    )
-                                    .clickable {
-                                        color.also { currentColor = it }
-                                        showColorPicker = false
-                                    }
-                            )
+                DrawingTool.entries.forEach { tool ->
+                    val isSelected = currentTool == tool
+                    val toolColor = when (tool) {
+                        DrawingTool.ERASER -> Color(0xFFFF4444)
+                        DrawingTool.HIGHLIGHTER -> Color(0xFFFFD740)
+                        else -> if (isSelected) Color(0xFF00E5FF) else Color.White.copy(0.65f)
+                    }
+                    Column(
+                        modifier = Modifier.padding(horizontal = 3.dp).clickable { currentTool = tool },
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(44.dp)
+                                .background(
+                                    if (isSelected) toolColor.copy(0.15f) else Color(0xFF1A1A2E),
+                                    RoundedCornerShape(12.dp)
+                                )
+                                .border(
+                                    if (isSelected) 1.5.dp else 0.dp,
+                                    toolColor, RoundedCornerShape(12.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            val icon = when (tool) {
+                                DrawingTool.PEN -> Icons.Default.Brush
+                                DrawingTool.ERASER -> Icons.Default.Clear
+                                DrawingTool.LINE -> Icons.Default.Straighten
+                                DrawingTool.RECTANGLE -> Icons.Default.Rectangle
+                                DrawingTool.CIRCLE -> Icons.Default.Circle
+                                DrawingTool.HIGHLIGHTER -> Icons.Default.AutoAwesome
+                            }
+                            Icon(icon, tool.label, tint = toolColor, modifier = Modifier.size(22.dp))
                         }
+                        Text(tool.label, color = toolColor, fontSize = 9.sp, textAlign = TextAlign.Center)
                     }
                 }
             }
         }
 
-        // Collaboration indicator
-        if (isCollaborative) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 64.dp, start = 8.dp)
-                    .background(
-                        colorScheme.primaryContainer, MaterialTheme.shapes.small
-                    )
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+        // ─── RIGHT SIDE: Agent / Participant Panel ────────────────────────────
+        AnimatedVisibility(
+            visible = showAgentPanel,
+            modifier = Modifier.align(Alignment.TopEnd).padding(top = 64.dp),
+            enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
+            exit = slideOutHorizontally(targetOffsetX = { it }) + fadeOut()
+        ) {
+            Card(
+                modifier = Modifier.width(200.dp).padding(end = 8.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xEE0D0D1A)),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                Text(
-                    "Collaborative Mode",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colorScheme.onPrimaryContainer
-                )
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Text("👥 Participants", color = Color(0xFF00E5FF),
+                        fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                    Spacer(Modifier.height(8.dp))
+
+                    participants.forEach { p ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier.size(28.dp)
+                                    .background(p.color.copy(0.15f), CircleShape)
+                                    .border(1.5.dp, p.color, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(p.name.first().toString(), color = p.color,
+                                    fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                            }
+                            Spacer(Modifier.width(8.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(p.name, color = Color.White, fontSize = 11.sp)
+                                Text(if (p.isAgent) "✨ AI Agent" else "👤 User",
+                                    color = p.color.copy(0.7f), fontSize = 9.sp)
+                            }
+                            Box(
+                                modifier = Modifier.size(8.dp).background(
+                                    if (p.isActive) Color(0xFF00FF41) else Color.Gray, CircleShape
+                                )
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.height(8.dp))
+
+                    // Invite user
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .background(Color(0xFF1A1A2E), RoundedCornerShape(8.dp))
+                            .clickable { /* TODO: invite dialog */ }
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(Icons.Default.PersonAdd, "Invite",
+                            tint = Color(0xFF00E5FF), modifier = Modifier.size(16.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text("Invite User", color = Color(0xFF00E5FF), fontSize = 11.sp)
+                    }
+
+                    Spacer(Modifier.height(6.dp))
+
+                    // Aura toggle
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .background(
+                                if (auraIsActive) Color(0xFF00E5FF).copy(0.1f) else Color(0xFF1A1A2E),
+                                RoundedCornerShape(8.dp)
+                            )
+                            .border(
+                                if (auraIsActive) 1.dp else 0.dp,
+                                Color(0xFF00E5FF), RoundedCornerShape(8.dp)
+                            )
+                            .clickable { auraIsActive = !auraIsActive }
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("✨", fontSize = 14.sp)
+                        Spacer(Modifier.width(6.dp))
+                        Column {
+                            Text("Aura Drawing",
+                                color = if (auraIsActive) Color(0xFF00E5FF) else Color.Gray,
+                                fontSize = 11.sp)
+                            Text(if (auraIsActive) "Active" else "Tap to wake",
+                                color = Color.White.copy(0.5f), fontSize = 9.sp)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-// Extension functions
 private fun Offset.toSize() = Size(x, y)
-private fun Size.toOffset(): Offset = Offset(width, height)
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFF080810)
 @Composable
 private fun CanvasScreenPreview() {
     MaterialTheme {
-        CanvasScreen(
-            onBack = {},
-            isCollaborative = false,
-            collaborationEvents = null
-        )
+        CanvasScreen(onBack = {}, isCollaborative = true, collaborationEvents = null)
     }
 }
