@@ -27,6 +27,6 @@ fun CanvasScreen(
         modifier = modifier,
         onBack = onNavigateBack,
         isCollaborative = true,
-        collaborationEvents = null // TODO: Wire to viewModel.webSocketEvents
+        collaborationEvents = viewModel.drawingOperations
     )
 }

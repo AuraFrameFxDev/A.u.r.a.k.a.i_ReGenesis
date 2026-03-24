@@ -153,6 +153,62 @@ class CanvasWebSocketService @Inject constructor(
             )
         )
     }
+
+    /**
+     * Broadcasts a new drawing element to the web bridge.
+     */
+    fun sendElementAdded(canvasId: String, userId: String, element: CanvasElement): Boolean {
+        return sendMessage(
+            ElementAddedMessage(
+                canvasId = canvasId,
+                userId = userId,
+                element = element
+            )
+        )
+    }
+
+    /**
+     * Broadcasts an updated drawing element to the web bridge.
+     */
+    fun sendElementUpdated(canvasId: String, userId: String, elementId: String, updates: Map<String, Any>): Boolean {
+        return sendMessage(
+            ElementUpdatedMessage(
+                canvasId = canvasId,
+                userId = userId,
+                elementId = elementId,
+                updates = updates
+            )
+        )
+    }
+
+    /**
+     * Broadcasts a user command to the web bridge.
+     */
+    fun sendUserCommand(canvasId: String, userId: String, command: String, metadata: Map<String, String> = emptyMap()): Boolean {
+        return sendMessage(
+            UserCommandMessage(
+                canvasId = canvasId,
+                userId = userId,
+                command = command,
+                metadata = metadata
+            )
+        )
+    }
+
+    /**
+     * Broadcasts a cursor update to the web bridge.
+     */
+    fun sendCursorUpdate(canvasId: String, userId: String, x: Float, y: Float, isDrawing: Boolean): Boolean {
+        return sendMessage(
+            CursorUpdateMessage(
+                canvasId = canvasId,
+                userId = userId,
+                x = x,
+                y = y,
+                isDrawing = isDrawing
+            )
+        )
+    }
 }
 
 sealed class CanvasWebSocketEvent {
@@ -224,4 +280,15 @@ data class UserCommandMessage(
     val metadata: Map<String, String> = emptyMap()
 ) : CanvasWebSocketMessage() {
     override val type: String = "USER_COMMAND"
+}
+
+data class CursorUpdateMessage(
+    override val canvasId: String,
+    override val userId: String,
+    override val timestamp: Long = System.currentTimeMillis(),
+    val x: Float,
+    val y: Float,
+    val isDrawing: Boolean = false
+) : CanvasWebSocketMessage() {
+    override val type: String = "CURSOR_UPDATE"
 }

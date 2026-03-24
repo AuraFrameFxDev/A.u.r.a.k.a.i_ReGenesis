@@ -15,12 +15,15 @@ import dev.aurakai.auraframefx.agents.growthmetrics.identity.repository.Identity
 import javax.inject.Named
 import javax.inject.Singleton
 
+private const val IDENTITY_DATASTORE = "identity"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object IdentityModule {
 
     @Provides
     @Singleton
+    @Named(IDENTITY_DATASTORE)
     fun provideIdentityDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("identity_prefs") }
@@ -29,7 +32,9 @@ object IdentityModule {
 
     @Provides
     @Singleton
-    fun provideIdentityRepository(dataStore: DataStore<Preferences>): IdentityRepository {
+    fun provideIdentityRepository(
+        @Named(IDENTITY_DATASTORE) dataStore: DataStore<Preferences>
+    ): IdentityRepository {
         return IdentityRepositoryImpl(dataStore)
     }
 }
