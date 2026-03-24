@@ -1,9 +1,10 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.ai
 
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
+import com.highcapable.yukihookapi.hook.factory.configs
 import com.highcapable.yukihookapi.hook.factory.encase
-import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
+import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.domains.aura.chromacore.engine.hooks.ChromaCoreHooker
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.QuickSettingsHooker
 import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
@@ -13,7 +14,7 @@ import dev.aurakai.auraframefx.domains.kai.hooks.NotchBarHooker
  * 🌌 GENESIS HOOK ENTRY POINT — YukiHookAPI 1.3.x
  *
  * Single LSPosed/Xposed entry for all ReGenesis hooks.
- * KSP generates GenesisHookEntry_YukiHookXposedInit from @InjectYukiHookWithXposed,
+ * KSP generates GenesisXposedEntry from @InjectYukiHookWithXposed,
  * which is referenced in assets/xposed_init.
  *
  * Hook scope (must match assets/xposed_init and res/values/arrays.xml xposed_scope):
@@ -23,10 +24,10 @@ import dev.aurakai.auraframefx.domains.kai.hooks.NotchBarHooker
  *   com.android.settings           → ColorBlendr Material You engine
  */
 @InjectYukiHookWithXposed(entryClassName = "GenesisXposedEntry")
-object GenesisHookEntry : IYukiHookXposedInit {
+class GenesisHookEntry : IYukiHookXposedInit {
 
-    override fun onInit() = ModuleApplication.withStartupParam {
-        // Module SharedPreferences bridge ready — chromacore_xposed_prefs accessible
+    override fun onInit() = configs {
+        isDebug = BuildConfig.DEBUG
     }
 
     override fun onHook() = encase {

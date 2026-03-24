@@ -114,8 +114,8 @@ class CanvasViewModel @Inject constructor(
             while (true) {
                 if (isConnected) {
                     t += 0.05f
-                    val auraX = 250f + 150f * sin(t.toDouble()).toFloat()
-                    val auraY = 350f + 100f * cos((t * 0.7).toDouble()).toFloat()
+                    val auraX = 250f + 150f * sin(t)
+                    val auraY = 350f + 100f * cos(t * 0.7f)
 
                     webSocketService.sendCursorUpdate(
                         canvasId = roomId,
