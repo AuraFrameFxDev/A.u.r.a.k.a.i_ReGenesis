@@ -43,14 +43,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 
 /**
+ * Direct Chat Screen
  * One-on-one conversations with AI agents
  *
  * ✨ Now powered by AgentViewModel for real agent intelligence!
@@ -93,7 +91,7 @@ fun DirectChatScreen(
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
                     tint = Color(0xFF4169E1)
                 )
@@ -334,7 +332,7 @@ fun DirectChatScreen(
  * Message bubble component
  */
 @Composable
-private fun MessageBubble(message: ChatMessage) {
+private fun MessageBubble(message: dev.aurakai.auraframefx.domains.cascade.models.ChatMessage) {
     val isUser = message.isFromUser
 
     Row(
