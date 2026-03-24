@@ -113,6 +113,7 @@ fun SecurityCenterScreen(
                     ThreatLevel.LOW -> Color.Yellow
                     ThreatLevel.MEDIUM -> Color(0xFFFF8C00)
                     ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color(0xFFFF4444)
+                    else -> Color.Gray
                 }
                 SecurityStatusCard(
                     title = "Threat Level",

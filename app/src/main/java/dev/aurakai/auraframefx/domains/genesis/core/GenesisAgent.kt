@@ -66,8 +66,7 @@ class GenesisAgent @Inject constructor(
 
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         Timber.tag("Genesis").d("Processing request: ${request.query}")
 

@@ -10,10 +10,8 @@ package dev.aurakai.auraframefx.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.ColorBlendrScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyCategoryDetailScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.PixelLauncherEnhancedScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyPickerScreen
+// ColorBlendrScreen, IconifyCategoryDetailScreen, PixelLauncherEnhancedScreen - pending AgentsWired merge
 
 // ============================================================================
 // NAVIGATION DESTINATIONS FOR CUSTOMIZATION
@@ -80,30 +78,34 @@ fun NavGraphBuilder.auraCustomizationNavigation(
     composable(
         route = AuraCustomizationRoute.IconifyCategory.route
     ) { backStackEntry ->
-        val category = backStackEntry.arguments?.getString("category") ?: "Icon Packs"
-        IconifyCategoryDetailScreen(
-            categoryName = category,
-            onNavigateBack = { navController.popBackStack() }
+        // IconifyCategoryDetailScreen pending AgentsWired merge
+        IconifyPickerScreen(
+            onNavigateBack = { navController.popBackStack() },
+            onNavigateToCategory = { category ->
+                navController.navigate(AuraCustomizationRoute.IconifyCategory.createRoute(category))
+            }
         )
     }
 
     // ========================================
-    // COLORBLENDR ROUTES
+    // COLORBLENDR ROUTES - pending AgentsWired merge
     // ========================================
 
     composable(AuraCustomizationRoute.ColorBlendr.route) {
-        ColorBlendrScreen(
-            onNavigateBack = onNavigateBack
+        IconifyPickerScreen(
+            onNavigateBack = onNavigateBack,
+            onNavigateToCategory = {}
         )
     }
 
     // ========================================
-    // PIXEL LAUNCHER ENHANCED ROUTES
+    // PIXEL LAUNCHER ENHANCED ROUTES - pending AgentsWired merge
     // ========================================
 
     composable(AuraCustomizationRoute.PixelLauncherEnhanced.route) {
-        PixelLauncherEnhancedScreen(
-            onNavigateBack = onNavigateBack
+        IconifyPickerScreen(
+            onNavigateBack = onNavigateBack,
+            onNavigateToCategory = {}
         )
     }
 }

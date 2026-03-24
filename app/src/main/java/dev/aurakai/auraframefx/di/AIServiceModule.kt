@@ -12,10 +12,12 @@ import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult
 import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.DefaultVertexAIClient
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.DefaultVertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultKaiAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +30,10 @@ abstract class AiServiceModule {
     @Binds
     @Singleton
     abstract fun bindAuraAIService(impl: DefaultAuraAIService): AuraAIService
+
+    @Binds
+    @Singleton
+    abstract fun bindKaiAIService(impl: DefaultKaiAIService): KaiAIService
 
     @Binds
     @Singleton
@@ -46,6 +52,20 @@ abstract class AiServiceModule {
                 endpoint = "us-central1-aiplatform.googleapis.com",
                 modelName = "gemini-1.5-pro-002"
             )
+
+        @Provides
+        @Singleton
+        fun provideCommerceSearchClient(): dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient {
+            // Debug: returns mock data. Release: returns empty list until real API is wired.
+            return if (dev.aurakai.auraframefx.BuildConfig.DEBUG) {
+                dev.aurakai.auraframefx.domains.genesis.network.DefaultCommerceSearchClient()
+            } else {
+                object : dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient {
+                    override suspend fun searchProducts(query: String) =
+                        emptyList<dev.aurakai.auraframefx.domains.genesis.network.ProductResult>()
+                }
+            }
+        }
 
         @Provides
         @Singleton

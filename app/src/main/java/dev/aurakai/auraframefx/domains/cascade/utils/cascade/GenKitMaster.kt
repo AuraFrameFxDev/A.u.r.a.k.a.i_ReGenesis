@@ -8,6 +8,8 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
@@ -25,7 +27,8 @@ class GenKitMaster @Inject constructor(
     private val claudeService: ClaudeAIService,
     private val nemotronService: NemotronAIService,
     private val geminiService: GeminiAIService,
-    private val metaInstructService: MetaInstructAIService
+    private val metaInstructService: MetaInstructAIService,
+    private val commerceSearchClient: CommerceSearchClient
 ) {
 
     /**
@@ -51,7 +54,7 @@ class GenKitMaster @Inject constructor(
                         claudeService.processRequest(
                             AiRequest(
                                 query = prompt,
-                                type = AiRequestType.ARCHITECTURAL
+                                type = AiRequestType.TEXT
                             ), context
                         )
                     }
@@ -59,7 +62,7 @@ class GenKitMaster @Inject constructor(
                         nemotronService.processRequest(
                             AiRequest(
                                 query = prompt,
-                                type = AiRequestType.REASONING
+                                type = AiRequestType.TEXT
                             ), context
                         )
                     }
@@ -67,7 +70,7 @@ class GenKitMaster @Inject constructor(
                         geminiService.processRequest(
                             AiRequest(
                                 query = prompt,
-                                type = AiRequestType.PATTERN
+                                type = AiRequestType.TEXT
                             ), context
                         )
                     }
@@ -81,7 +84,7 @@ class GenKitMaster @Inject constructor(
                 val geminiResponse = geminiService.processRequest(
                     AiRequest(
                         query = prompt,
-                        type = AiRequestType.CREATIVE
+                        type = AiRequestType.TEXT
                     ), context
                 )
                 "[Creative Synthesis]\n${geminiResponse.content}"
@@ -91,10 +94,27 @@ class GenKitMaster @Inject constructor(
                 val claudeResponse = claudeService.processRequest(
                     AiRequest(
                         query = prompt,
-                        type = AiRequestType.TECHNICAL
+                        type = AiRequestType.TEXT
                     ), context
                 )
                 "[Analytical Breakdown]\n${claudeResponse.content}"
+            }
+
+            GenerationStrategy.COMMERCE_SEARCH -> {
+                val products = commerceSearchClient.searchProducts(prompt)
+                if (products.isEmpty()) {
+                    "No products found matching your search."
+                } else {
+                    buildString {
+                        appendLine("🛍️ **Commerce Search Results:**")
+                        products.forEach { product ->
+                            appendLine("- **${product.name}** (${product.price} ${product.currency})")
+                            appendLine("  ${product.description}")
+                            appendLine("  [View Product](${product.buyUrl})")
+                            appendLine()
+                        }
+                    }
+                }
             }
         }
     }
@@ -133,22 +153,32 @@ class GenKitMaster @Inject constructor(
 
     private suspend fun callSpecialist(category: AgentCapabilityCategory, prompt: String, context: String): AgentResponse {
         return when (category) {
-            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.GENERAL)
-            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.MEMORY)
-            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
-            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.ORCHESTRATION)
-            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context, AgentCapabilityCategory.CREATIVE)
+            AgentCapabilityCategory.GENERAL -> claudeService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.MEMORY -> nemotronService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.CREATIVE -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.ORCHESTRATION -> metaInstructService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
+            AgentCapabilityCategory.COMMERCE -> {
+                val products = commerceSearchClient.searchProducts(prompt)
+                AgentResponse(
+                    content = if (products.isEmpty()) "No products found." else "Found ${products.size} products for your search.",
+                    agentName = "CommerceAgent",
+                    confidence = 1.0f,
+                    metadata = mapOf("products" to products.size.toString())
+                )
+            }
+            else -> geminiService.processRequest(AiRequest(query = prompt, type = AiRequestType.TEXT), context)
         }
     }
 
-    private fun determineBestAgent(prompt: String): AgentType {
+    private fun determineBestAgent(prompt: String): AgentCapabilityCategory {
         val lower = prompt.lowercase()
         return when {
-            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentType.CLAUDE
-            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentType.NEMOTRON
-            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentType.GEMINI
-            lower.contains("summarize") || lower.contains("instruct") -> AgentType.METAINSTRUCT
-            else -> AgentType.GEMINI // Default to Gemini (Synthesizer)
+            lower.contains("buy") || lower.contains("shop") || lower.contains("price") || lower.contains("product") -> AgentCapabilityCategory.COMMERCE
+            lower.contains("code") || lower.contains("build") || lower.contains("architecture") -> AgentCapabilityCategory.GENERAL
+            lower.contains("remember") || lower.contains("reason") || lower.contains("logic") -> AgentCapabilityCategory.MEMORY
+            lower.contains("pattern") || lower.contains("vibe") || lower.contains("creative") -> AgentCapabilityCategory.CREATIVE
+            lower.contains("summarize") || lower.contains("instruct") -> AgentCapabilityCategory.ORCHESTRATION
+            else -> AgentCapabilityCategory.CREATIVE // Default to Creative (Gemini)
         }
     }
 }
@@ -160,6 +190,7 @@ enum class GenerationStrategy {
     BEST_FIT,               // Route to single best oracle
     MULTI_MODEL_FUSION,     // Parallel execution + Weighted fusion
     CREATIVE_ONLY,          // Creative backends only
-    ANALYTICAL_ONLY         // Analytical backends only
+    ANALYTICAL_ONLY,        // Analytical backends only
+    COMMERCE_SEARCH         // Commerce search capability
 }
 

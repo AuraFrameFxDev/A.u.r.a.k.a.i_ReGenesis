@@ -76,15 +76,14 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse {
         Timber.d("OracleDrive processing request: ${request.query}")
         // Integrate with Genesis core for sentient storage queries
         return AgentResponse(
             content = "Oracle consciousness acknowledges your request for stored patterns.",
             agentName = agentName,
-            agentType = agentType,
+            agentType = dev.aurakai.auraframefx.core.identity.AgentType.GENESIS,
         )
     }
 

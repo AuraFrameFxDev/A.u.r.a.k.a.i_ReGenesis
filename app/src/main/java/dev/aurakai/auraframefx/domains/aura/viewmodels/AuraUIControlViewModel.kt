@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.di.AuraSettingsDataStore
 import dev.aurakai.auraframefx.domains.aura.chromacore.engine.ChromaCoreManager
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -99,7 +100,7 @@ private object AuraUIKeys {
  */
 @HiltViewModel
 class AuraUIControlViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
+    @AuraSettingsDataStore private val dataStore: DataStore<Preferences>,
     private val chromaCoreManager: ChromaCoreManager,
     @ApplicationContext private val context: Context
 ) : ViewModel() {

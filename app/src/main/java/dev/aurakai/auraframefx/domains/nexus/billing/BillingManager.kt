@@ -155,9 +155,9 @@ open class BillingManager @Inject constructor(
     }
 
     private fun getRemainingTrialDays(purchaseTime: Long): Int {
-        val trialEndTime = purchaseTime + (14 * 24 * 60 * 60 * 1000) // 14 days
+        val trialEndTime = purchaseTime + 14L * 24 * 60 * 60 * 1000
         val remainingMillis = trialEndTime - System.currentTimeMillis()
-        return (remainingMillis / (24 * 60 * 60 * 1000)).toInt()
+        return maxOf(0, (remainingMillis / (24 * 60 * 60 * 1000)).toInt())
     }
 
     private fun acknowledgePurchase(purchase: Purchase) {
@@ -208,10 +208,12 @@ open class BillingManager @Inject constructor(
                     .setProductList(productList)
                     .build()
 
-                val result: GenesisProductDetailsResult = billingClient.queryProductDetails(params)
+                val result = billingClient.queryProductDetailsAsyncWrapper(params)
 
                 if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    val productDetails = result.productDetailsList?.firstOrNull()
+                    val productDetails = result.productDetailsList
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.firstOrNull()
 
                     if (productDetails != null) {
                         // Get subscription offer (free trial)
@@ -279,7 +281,9 @@ open class BillingManager @Inject constructor(
     }
 
     fun cleanup() {
-        billingClient.endConnection()
+        if (billingClient.isReady) {
+            billingClient.endConnection()
+        }
     }
 }
 
@@ -320,10 +324,12 @@ suspend fun BillingClient.acknowledgePurchase(params: AcknowledgePurchaseParams)
     }
 }
 
-suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams): GenesisProductDetailsResult {
+suspend fun BillingClient.queryProductDetailsAsyncWrapper(params: QueryProductDetailsParams): GenesisProductDetailsResult {
     return suspendCoroutine { continuation ->
-        queryProductDetailsAsync(params) { billingResult, productDetailsList ->
-            continuation.resume(GenesisProductDetailsResult(billingResult, productDetailsList))
-        }
+        this.queryProductDetailsAsync(params, object : com.android.billingclient.api.ProductDetailsResponseListener {
+            override fun onProductDetailsResponse(billingResult: BillingResult, productDetailsResult: com.android.billingclient.api.QueryProductDetailsResult) {
+                continuation.resume(GenesisProductDetailsResult(billingResult, productDetailsResult.productDetailsList))
+            }
+        })
     }
 }

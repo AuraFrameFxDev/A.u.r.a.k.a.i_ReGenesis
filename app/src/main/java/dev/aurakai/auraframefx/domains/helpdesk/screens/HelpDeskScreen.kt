@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeManager
+import dev.aurakai.auraframefx.domains.aura.ui.theme.manager.ThemeManager
 
 /**
  * 💚 HELP SERVICES HUB (Level 2)

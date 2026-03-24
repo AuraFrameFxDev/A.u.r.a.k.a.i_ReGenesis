@@ -43,7 +43,8 @@ extensions.configure<ApplicationExtension> {
                 arguments.addAll(listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DANDROID_PLATFORM=android-33",
-                    "-DCMAKE_BUILD_TYPE=Release"
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
                 ))
                 abiFilters.clear()
                 abiFilters.add("arm64-v8a")
@@ -298,6 +299,6 @@ configurations.all {
         force("com.google.android.material:material:1.13.0")
         force("com.google.dagger:hilt-android:2.59.2")
         force("com.google.dagger:hilt-android-compiler:2.59.2")
-        force("androidx.test.espresso:espresso-core:3.5.0")
+        force("androidx.test.espresso:espresso-core:3.7.0")
     }
 }

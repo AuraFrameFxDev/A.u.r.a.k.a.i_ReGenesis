@@ -1,24 +1,19 @@
 package dev.aurakai.auraframefx.model.agent_states
 
-import dev.aurakai.auraframefx.ai.agents.AuraShieldAgent
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
+import dev.aurakai.auraframefx.domains.kai.models.ThreatStatus
 import kotlinx.serialization.Serializable
-
-@Serializable
-data class SecurityContextState(
-    val securityLevel: String = "standard",
-    val lastCheck: Long = 0,
-    val isEncrypted: Boolean = true
-)
 
 @Serializable
 data class ActiveThreat(
     val id: String,
-    val type: AuraShieldAgent.ThreatType,
-    val severity: AuraShieldAgent.ThreatSeverity,
+    val type: String, // Identity defined by source agent
+    val severity: ThreatLevel,
     val description: String,
     val source: String,
-    val timestamp: Long,
-    val isActive: Boolean
+    val timestamp: Long = System.currentTimeMillis(),
+    val status: ThreatStatus = ThreatStatus.ACTIVE,
+    val metadata: Map<String, String> = emptyMap()
 )
 
 @Serializable

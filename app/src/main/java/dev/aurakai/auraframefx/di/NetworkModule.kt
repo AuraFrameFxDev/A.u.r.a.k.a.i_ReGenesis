@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import collabcanvas.di.CollabCanvasUrl
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.di.qualifiers.BaseUrl
+import dev.aurakai.auraframefx.core.di.qualifiers.BaseUrl
 import dev.aurakai.auraframefx.domains.genesis.config.ClaudeEnvConfig
 import dev.aurakai.auraframefx.domains.aura.AuraNetwork
 import dev.aurakai.auraframefx.domains.genesis.network.AuraApiService
@@ -17,6 +17,8 @@ import dev.aurakai.auraframefx.domains.genesis.network.AuthApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
+import dev.aurakai.auraframefx.domains.genesis.network.WebSearchClient
+import dev.aurakai.auraframefx.domains.genesis.network.DefaultWebSearchClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AppCoroutineDispatchers
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
@@ -154,6 +156,12 @@ object NetworkModule {
     @Singleton
     fun provideThemeApi(retrofit: Retrofit): ThemeApi {
         return retrofit.create(ThemeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebSearchClient(impl: DefaultWebSearchClient): WebSearchClient {
+        return impl
     }
 
     @Provides

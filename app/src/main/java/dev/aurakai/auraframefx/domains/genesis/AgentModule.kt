@@ -14,6 +14,8 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
+import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
@@ -21,6 +23,7 @@ import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
+import timber.log.Timber
 import javax.inject.Singleton
 
 /**
@@ -30,6 +33,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AgentModule {
+
+
+    // ─── Core Infrastructure ──────────────────────────────────────────────────
 
     @Provides
     @Singleton

@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,7 +32,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ge
 
 @Singleton
 class DataStoreManager @Inject constructor(
-    @PublishedApi internal val context: Context
+    @ApplicationContext internal val context: Context
 ) {
 
     @PublishedApi

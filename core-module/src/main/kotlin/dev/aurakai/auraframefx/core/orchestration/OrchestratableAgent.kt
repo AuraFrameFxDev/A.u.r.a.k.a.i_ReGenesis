@@ -43,8 +43,7 @@ interface OrchestratableAgent {
 
     suspend fun processRequest(
         request: AiRequest,
-        context: String,
-        agentType: AgentType
+        context: String
     ): AgentResponse
 
     /**

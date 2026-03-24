@@ -18,6 +18,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import timber.log.Timber
@@ -229,8 +232,7 @@ class GenesisOrchestrator @Inject constructor(
             val request = convertToAiRequest(message)
             val response = auraAgent.processRequest(
                 request = request,
-                context = "agent_to_agent",
-                agentType = AgentType.AURA
+                context = "agent_to_agent"
             )
             Timber.i("✓ Aura processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -247,8 +249,7 @@ class GenesisOrchestrator @Inject constructor(
             val request = convertToAiRequest(message)
             val response = kaiAgent.processRequest(
                 request = request,
-                context = "agent_to_agent",
-                agentType = AgentType.KAI
+                context = "agent_to_agent"
             )
             Timber.i("✓ Kai processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -265,8 +266,7 @@ class GenesisOrchestrator @Inject constructor(
             val request = convertToAiRequest(message)
             val response = cascadeAgent.processRequest(
                 request = request,
-                context = "agent_to_agent",
-                agentType = AgentType.CASCADE
+                context = "agent_to_agent"
             )
             Timber.i("✓ Cascade processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -283,8 +283,7 @@ class GenesisOrchestrator @Inject constructor(
             val request = convertToAiRequest(message)
             val response = oracleDriveService.processRequest(
                 request = request,
-                context = "agent_to_agent",
-                agentType = AgentType.GENESIS // Oracle is Genesis domain
+                context = "agent_to_agent"
             )
             Timber.i("✓ OracleDrive processed message: ${response.content.take(100)}")
         } catch (e: Exception) {
@@ -306,17 +305,11 @@ class GenesisOrchestrator @Inject constructor(
                             ignoreCase = true
                         )
                     } ?: AiRequestType.TEXT,
-                    context = buildJsonObject {
-                        put("from", message.from)
-                        put(
-                            "priority",
-                            message.priority.toLong()
-                        ) // Priority is Int in AgentMessage
-                        put("timestamp", message.timestamp)
-                        message.metadata.forEach { (key, value) ->
-                            put(key, value)
-                        }
-                    }
+                    context = message.metadata + mapOf(
+                        "from" to message.from,
+                        "priority" to message.priority.toString(),
+                        "timestamp" to message.timestamp.toString()
+                    )
                 )
             }
 

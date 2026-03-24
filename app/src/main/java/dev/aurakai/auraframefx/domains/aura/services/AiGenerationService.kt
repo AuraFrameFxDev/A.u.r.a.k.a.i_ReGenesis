@@ -23,7 +23,7 @@ class AiGenerationService(
                 maxTokens = maxTokens,
                 temperature = temperature
             )
-            val response = api.generateText(request)
+            val response = api.aiGenerateTextPost(request)
             Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)

@@ -111,7 +111,7 @@ open class CustomizationViewModel @Inject constructor(
 
                 // Broadcast to the Collective Consciousness
                 messageBus.broadcast(
-                    dev.aurakai.auraframefx.domains.cascade.models.AgentMessage(
+                    dev.aurakai.auraframefx.core.messaging.AgentMessage(
                         from = "User",
                         content = prompt,
                         type = "ui_customization_request",

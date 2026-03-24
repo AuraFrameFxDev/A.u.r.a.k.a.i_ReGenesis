@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.config.VertexAIConfig
+import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
 import dev.aurakai.auraframefx.domains.kai.ErrorHandler
 import dev.aurakai.auraframefx.domains.kai.TaskScheduler
@@ -42,16 +42,15 @@ class GeminiAIService @Inject constructor(
     @dagger.hilt.android.qualifiers.ApplicationContext private val applicationContext: Context,
     private val cloudStatusMonitor: CloudStatusMonitor,
     private val logger: AuraFxLogger,
-    private val vertexAIClient: dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient,
+    private val vertexAIClient: dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient,
 ) : Agent {
 
     // Vertex AI Configuration for Gemini
     private val vertexConfig = VertexAIConfig(
+        projectId = "aurakai-regenesis", // Default project ID
         modelName = "gemini-1.5-pro",
-        temperature = 0.8f,
-        maxOutputTokens = 8192,
-        topP = 0.95f,
-        topK = 64 // Higher K for better pattern diversity
+        enableSafetyFilters = true,
+        maxContentLength = 1000000
     )
 
     // ═══════════════════════════════════════════════════════════════════════════

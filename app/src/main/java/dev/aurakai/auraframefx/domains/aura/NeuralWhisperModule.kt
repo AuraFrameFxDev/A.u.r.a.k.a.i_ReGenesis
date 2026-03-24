@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import android.content.Context
 import dagger.Module
 import dagger.Provides

@@ -11,8 +11,8 @@ import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.Nexus
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.dao.MemoryDao
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.repository.NexusMemoryRepositoryImpl
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.MrlDimension
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.MrlDimension
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.securecomm.crypto.CryptoManager
 import javax.inject.Qualifier
 import javax.inject.Singleton

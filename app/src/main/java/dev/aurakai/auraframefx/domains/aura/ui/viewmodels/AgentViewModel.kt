@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
 import dev.aurakai.auraframefx.domains.cascade.utils.error
@@ -13,9 +13,9 @@ import dev.aurakai.auraframefx.domains.cascade.utils.warn
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.models.AgentState
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.genesis.repositories.PersistentAgentRepository
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
@@ -340,8 +340,7 @@ open class AgentViewModel @Inject constructor(
                         type = AiRequestType.CHAT,
                         context = mapOf("source" to "direct_chat")
                     )
-                    val response =
-                        genesisAgent.processRequest(request, "direct_chat", AgentType.GENESIS)
+                    val response = genesisAgent.processRequest(request, "direct_chat")
                     response.content
                 }
 
@@ -373,8 +372,7 @@ open class AgentViewModel @Inject constructor(
                         type = AiRequestType.CHAT,
                         context = mapOf("agent_persona" to "cascade")
                     )
-                    val response =
-                        genesisAgent.processRequest(request, "cascade", AgentType.GENESIS)
+                    val response = genesisAgent.processRequest(request, "cascade")
                     response.content
                 }
 
@@ -384,7 +382,7 @@ open class AgentViewModel @Inject constructor(
                         type = AiRequestType.CHAT,
                         context = mapOf("agent_persona" to "claude")
                     )
-                    val response = genesisAgent.processRequest(request, "claude", AgentType.GENESIS)
+                    val response = genesisAgent.processRequest(request, "claude")
                     response.content
                 }
 

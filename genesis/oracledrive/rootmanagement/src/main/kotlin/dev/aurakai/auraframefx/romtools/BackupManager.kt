@@ -38,7 +38,7 @@ interface BackupManager {
  */
 @Singleton
 class BackupManagerImpl @Inject constructor(
-    @field:ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context
 ) : BackupManager {
 
     private fun getBackupBaseDir() = File(context.getExternalFilesDir(null), "backups").apply {

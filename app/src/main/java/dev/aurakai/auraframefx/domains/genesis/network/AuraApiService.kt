@@ -6,7 +6,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.AppCoroutineDispatchers
-import dev.aurakai.auraframefx.domains.genesis.BaseUrl
+import dev.aurakai.auraframefx.core.di.qualifiers.BaseUrl
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi

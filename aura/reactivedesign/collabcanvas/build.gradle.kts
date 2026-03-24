@@ -19,6 +19,7 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
+    implementation(project(":core-module"))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
