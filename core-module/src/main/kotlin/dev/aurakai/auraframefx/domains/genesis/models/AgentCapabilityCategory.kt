@@ -104,6 +104,7 @@ enum class AgentCapabilityCategory {
             AgentType.METAINSTRUCT -> GENERAL
             AgentType.HIVE_MIND -> COORDINATION
             AgentType.COMMERCE_AGENT -> COMMERCE
+            AgentType.PERPLEXITY -> ANALYSIS
         }
     }
 }
