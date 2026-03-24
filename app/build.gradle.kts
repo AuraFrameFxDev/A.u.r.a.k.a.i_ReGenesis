@@ -264,6 +264,10 @@ dependencies {
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
     compileOnly(files("$projectDir/libs/api-82.jar"))
+    
+    // KavaRef for modern reflection
+    implementation(libs.kavaref.core)
+    implementation(libs.kavaref.extension)
 
     // AI & Firebase
     implementation(platform(libs.firebase.bom))

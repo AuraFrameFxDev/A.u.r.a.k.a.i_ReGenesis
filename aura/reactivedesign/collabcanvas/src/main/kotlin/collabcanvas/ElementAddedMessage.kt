@@ -2,6 +2,10 @@ package collabcanvas
 
 import collabcanvas.model.CanvasElement
 import com.google.gson.Gson
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import java.lang.reflect.Type
 import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,8 +24,12 @@ import javax.inject.Singleton
 @Singleton
 class CanvasWebSocketService @Inject constructor(
     @Named("BasicOkHttpClient") private val okHttpClient: OkHttpClient,
-    private val gson: Gson,
+    gson: Gson,
 ) {
+    private val gson = gson.newBuilder()
+        .registerTypeHierarchyAdapter(CanvasWebSocketMessage::class.java, CanvasWebSocketMessageDeserializer())
+        .create()
+
     // Removed TAG property
     private var webSocket: WebSocket? = null
     private val _events = MutableSharedFlow<CanvasWebSocketEvent>()
@@ -291,4 +299,24 @@ data class CursorUpdateMessage(
     val isDrawing: Boolean = false
 ) : CanvasWebSocketMessage() {
     override val type: String = "CURSOR_UPDATE"
+}
+
+class CanvasWebSocketMessageDeserializer : JsonDeserializer<CanvasWebSocketMessage> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ): CanvasWebSocketMessage {
+        val jsonObject = json.asJsonObject
+        val type = jsonObject.get("type")?.asString ?: ""
+        return when (type) {
+            "ELEMENT_ADDED" -> context.deserialize(json, ElementAddedMessage::class.java)
+            "ELEMENT_UPDATED" -> context.deserialize(json, ElementUpdatedMessage::class.java)
+            "ELEMENT_REMOVED" -> context.deserialize(json, ElementRemovedMessage::class.java)
+            "CONFERENCE_UPDATE" -> context.deserialize(json, ConferenceUpdateMessage::class.java)
+            "USER_COMMAND" -> context.deserialize(json, UserCommandMessage::class.java)
+            "CURSOR_UPDATE" -> context.deserialize(json, CursorUpdateMessage::class.java)
+            else -> throw IllegalArgumentException("Unknown message type: $type")
+        }
+    }
 }

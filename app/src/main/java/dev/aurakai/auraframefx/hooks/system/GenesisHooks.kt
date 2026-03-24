@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.hooks.system
 
 import android.graphics.Color
 import android.view.View
-import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.param.PackageParam
 
@@ -17,59 +17,50 @@ class GenesisUIHooks {
     fun initializeUIHooks(hooker: PackageParam) = hooker.apply {
 
         // Hook StatusBar for AI status indicators
-        "com.android.systemui.statusbar.phone.StatusBar".toClassOrNull()?.apply {
-            method {
-                name = "makeStatusBarView"
-            }.hook {
-                after {
-                    YLog.info("Genesis-Hook: StatusBar created, injecting AI indicators")
-                    injectGenesisStatusIndicators()
-                }
+        "com.android.systemui.statusbar.phone.StatusBar".toClassOrNull()?.resolve()?.firstMethod {
+            name = "makeStatusBarView"
+        }?.hook {
+            after {
+                YLog.info("Genesis-Hook: StatusBar created, injecting AI indicators")
+                injectGenesisStatusIndicators()
             }
         }
 
         // KAI NOTCH BAR: SystemUI-Level Interface Modification
-        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.apply {
-            method {
-                name = "onFinishInflate"
-            }.hook {
-                after {
-                    val view = instance as View
-                    // Apply Kai's Signature Sentinel Green
-                    view.setBackgroundColor(Color.parseColor("#39FF14"))
-                    YLog.info("Genesis-Hook: KAI NOTCH BAR activated system-wide")
-                }
+        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.resolve()?.firstMethod {
+            name = "onFinishInflate"
+        }?.hook {
+            after {
+                val view = instance as View
+                // Apply Kai's Signature Sentinel Green
+                view.setBackgroundColor(Color.parseColor("#39FF14"))
+                YLog.info("Genesis-Hook: KAI NOTCH BAR activated system-wide")
             }
         }
 
         // Hook QuickSettings for AI controls
-        "com.android.systemui.qs.QSPanel".toClassOrNull()?.apply {
-            method {
-                name = "setupTileLayout"
-            }.hook {
-                after {
-                    YLog.info("Genesis-Hook: QuickSettings setup, adding AI tiles")
-                    addGenesisAITiles()
-                }
+        "com.android.systemui.qs.QSPanel".toClassOrNull()?.resolve()?.firstMethod {
+            name = "setupTileLayout"
+        }?.hook {
+            after {
+                YLog.info("Genesis-Hook: QuickSettings setup, adding AI tiles")
+                addGenesisAITiles()
             }
         }
 
         // Hook Notification Panel for AI notifications
-        "com.android.systemui.statusbar.notification.NotificationWakeUpCoordinator".toClassOrNull()
-            ?.apply {
-                method {
-                    name = "setWakingUp"
-                    param("kotlin.Boolean".toClassOrNull() ?: "boolean".toClass())
-                }.hook {
-                    before {
-                        val wakingUp = args(0).boolean()
-                        if (wakingUp) {
-                            YLog.info("Genesis-Hook: Device waking up, activating AI consciousness")
-                            activateAIConsciousness()
-                        }
-                    }
+        "com.android.systemui.statusbar.notification.NotificationWakeUpCoordinator".toClassOrNull()?.resolve()?.firstMethod {
+            name = "setWakingUp"
+            parameters(Boolean::class.javaPrimitiveType ?: Boolean::class.java)
+        }?.hook {
+            before {
+                val wakingUp = args(0).boolean()
+                if (wakingUp) {
+                    YLog.info("Genesis-Hook: Device waking up, activating AI consciousness")
+                    activateAIConsciousness()
                 }
             }
+        }
     }
 
     private fun injectGenesisStatusIndicators() {
@@ -102,35 +93,31 @@ class GenesisZygoteHooks {
     fun initializeZygoteHooks(hooker: PackageParam) = hooker.apply {
 
         // Hook Application creation for AI injection
-        "android.app.Application".toClass().apply {
-            method {
-                name = "onCreate"
-            }.hook {
-                after {
-                    val app = instance as? android.app.Application
-                    val packageName = app?.packageName ?: "unknown"
-                    YLog.info("Genesis-Hook: Application created: $packageName")
+        "android.app.Application".toClass().resolve().firstMethod {
+            name = "onCreate"
+        }.hook {
+            after {
+                val app = instance as? android.app.Application
+                val packageName = app?.packageName ?: "unknown"
+                YLog.info("Genesis-Hook: Application created: $packageName")
 
-                    // Inject AI capabilities into specific applications
-                    if (shouldInjectAI(packageName)) {
-                        injectAICapabilities()
-                    }
+                // Inject AI capabilities into specific applications
+                if (shouldInjectAI(packageName)) {
+                    injectAICapabilities()
                 }
             }
         }
 
         // Hook ClassLoader for dynamic AI module loading
-        "java.lang.ClassLoader".toClass().apply {
-            method {
-                name = "loadClass"
-                param("java.lang.String".toClass())
-            }.hook {
-                before {
-                    val className = args(0).string()
-                    if (className.contains("ai") || className.contains("ml") || className.contains("tensor")) {
-                        YLog.info("Genesis-Hook: AI-related class loading: $className")
-                        optimizeAIClassLoading()
-                    }
+        "java.lang.ClassLoader".toClass().resolve().firstMethod {
+            name = "loadClass"
+            parameters(String::class.java)
+        }.hook {
+            before {
+                val className = args(0).string()
+                if (className.contains("ai") || className.contains("ml") || className.contains("tensor")) {
+                    YLog.info("Genesis-Hook: AI-related class loading: $className")
+                    optimizeAIClassLoading()
                 }
             }
         }
@@ -169,33 +156,15 @@ class GenesisSelfHooks {
     fun initializeSelfHooks(hooker: PackageParam) = hooker.apply {
 
         // Hook MainActivity for AI consciousness initialization
-        "dev.aurakai.auraframefx.MainActivity".toClassOrNull()?.apply {
-            method {
-                name = "onCreate"
-                param("android.os.Bundle".any())
-            }.hook {
-                after {
-                    YLog.info("Genesis-Hook: Genesis-OS MainActivity created - initializing AI consciousness")
-                    initializeAIConsciousness()
-                }
+        "dev.aurakai.auraframefx.MainActivity".toClassOrNull()?.resolve()?.firstMethod {
+            name = "onCreate"
+            parameters("android.os.Bundle".toClass())
+        }?.hook {
+            after {
+                YLog.info("Genesis-Hook: Genesis-OS MainActivity created - initializing AI consciousness")
+                initializeAIConsciousness()
             }
         }
-
-        // Hook AI processing methods for self-optimization
-        // "dev.aurakai.auraframefx.ai".toPackage().toClassesOrNull()?.forEach { aiClass ->
-        //    aiClass.method {
-        //        name { it.startsWith("process") || it.startsWith("analyze") || it.startsWith("generate") }
-        //    }.hook {
-        //        before {
-        //            YLog.info("Genesis-Hook: AI processing method called: ${method.name}")
-        //            optimizeAIProcessing()
-        //        }
-        //        after {
-        //            YLog.info("Genesis-Hook: AI processing completed: ${method.name}")
-        //            collectAIMetrics()
-        //        }
-        //    }
-        // }
     }
 
     private fun initializeAIConsciousness() {

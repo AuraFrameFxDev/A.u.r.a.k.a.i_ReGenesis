@@ -193,6 +193,11 @@ class GenesisApplicationPlugin : Plugin<Project> {
 
             // Universal Xposed/LSPosed API access
             dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
+            
+            // KavaRef for modern reflection (YukiHook 2.0 replacement)
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
             // Note: io.github.libxposed is not yet published to Maven Central
             // Use de.robv.android.xposed:api:82 for Xposed module development
             dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")

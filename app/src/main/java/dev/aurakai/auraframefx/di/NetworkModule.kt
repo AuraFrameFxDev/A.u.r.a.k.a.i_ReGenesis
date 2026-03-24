@@ -168,7 +168,11 @@ object NetworkModule {
     @CollabCanvasUrl
     @Singleton
     fun provideCollabCanvasUrl(claudeEnvConfig: ClaudeEnvConfig): String {
-        return claudeEnvConfig.collabCanvasWsUrl
+        val wsBase = BuildConfig.GENESIS_BACKEND_URL
+            .replace("https://", "wss://")
+            .replace("http://", "ws://")
+            .trimEnd('/')
+        return "$wsBase/api/conference/ws/GENESIS_CORE_01"
     }
 }
 

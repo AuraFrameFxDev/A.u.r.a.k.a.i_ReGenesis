@@ -90,11 +90,19 @@ import kotlinx.coroutines.flow.collectLatest
 
 sealed class DrawingOperation {
     data class PathOp(
-        val path: Path, val color: Color, val strokeWidth: Dp, val tool: DrawingTool
+        val path: Path,
+        val points: List<Offset>,
+        val color: Color,
+        val strokeWidth: Dp,
+        val tool: DrawingTool
     ) : DrawingOperation()
 
     data class ShapeOp(
-        val start: Offset, val end: Offset, val color: Color, val strokeWidth: Dp, val tool: DrawingTool
+        val start: Offset,
+        val end: Offset,
+        val color: Color,
+        val strokeWidth: Dp,
+        val tool: DrawingTool
     ) : DrawingOperation()
 
     companion object
@@ -179,7 +187,7 @@ fun CanvasScreen(
             localAuraCursor = localAuraCursor.copy(
                 position = Offset(
                     x = 250f + 150f * kotlin.math.sin(t.toDouble()).toFloat(),
-                    y = 350f + 100f * kotlin.math.cos((t * 0.7).toDouble()).toFloat()
+                    y = 350f + 100f * kotlin.math.cos((t * 0.7)).toFloat()
                 )
             )
         }
@@ -253,9 +261,12 @@ fun CanvasScreen(
         Canvas(
             modifier = Modifier.fillMaxSize().pointerInput(Unit) {
                 var lastOffset = Offset.Zero
+                val points = mutableListOf<Offset>()
                 detectDragGestures(
                     onDragStart = { offset ->
                         startPosition = offset; lastOffset = offset
+                        points.clear()
+                        points.add(offset)
                         when (currentTool) {
                             DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER ->
                                 currentPath = Path().apply { moveTo(offset.x, offset.y) }
@@ -264,6 +275,7 @@ fun CanvasScreen(
                     },
                     onDrag = { change, _ ->
                         lastOffset = change.position
+                        points.add(change.position)
                         when (currentTool) {
                             DrawingTool.PEN, DrawingTool.ERASER, DrawingTool.HIGHLIGHTER ->
                                 currentPath?.lineTo(change.position.x, change.position.y)
@@ -276,6 +288,7 @@ fun CanvasScreen(
                                 currentPath?.let { path ->
                                     val op = DrawingOperation.PathOp(
                                         path = path,
+                                        points = points.toList(),
                                         color = if (currentTool == DrawingTool.ERASER) Color.Unspecified else currentColor,
                                         strokeWidth = if (currentTool == DrawingTool.HIGHLIGHTER) 18.dp else currentStrokeWidth,
                                         tool = currentTool

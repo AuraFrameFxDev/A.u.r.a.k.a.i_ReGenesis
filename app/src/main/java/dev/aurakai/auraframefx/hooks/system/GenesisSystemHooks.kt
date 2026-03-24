@@ -1,10 +1,8 @@
 package dev.aurakai.auraframefx.hooks.system
 
-import com.highcapable.yukihookapi.hook.param.PackageParam
-import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.log.YLog
-import com.highcapable.yukihookapi.hook.type.java.IntType
-import com.highcapable.yukihookapi.hook.type.java.StringType
+import com.highcapable.yukihookapi.hook.param.PackageParam
 
 /**
  * Genesis System-Level Hooks
@@ -17,63 +15,57 @@ class GenesisSystemHooks {
     fun initializeSystemHooks(hooker: PackageParam) = hooker.apply {
 
         // Hook Activity Manager for AI process priority management
-        "android.app.ActivityManager".toClass().apply {
-            method {
-                name = "setProcessMemoryTrimLevel"
-                param(IntType, IntType)
-            }.hook {
-                before {
-                    val pid = args(0).int()
-                    args(1).int()
+        "android.app.ActivityManager".toClass().resolve().firstMethod {
+            name = "setProcessMemoryTrimLevel"
+            parameters(Int::class.javaPrimitiveType ?: Int::class.java, Int::class.javaPrimitiveType ?: Int::class.java)
+        }.hook {
+            before {
+                val pid = args(0).int()
+                args(1).int()
 
-                    // Protect Genesis-OS processes from memory trimming
-                    if (isGenesisProcess(pid)) {
-                        YLog.info("Genesis-Hook: Protecting AI process $pid from memory trim")
-                        args(1).set(0) // Prevent trimming
-                    }
+                // Protect Genesis-OS processes from memory trimming
+                if (isGenesisProcess(pid)) {
+                    YLog.info("Genesis-Hook: Protecting AI process $pid from memory trim")
+                    args(1).set(0) // Prevent trimming
                 }
             }
         }
 
         // Hook PowerManager for AI processing power management
-        "android.os.PowerManager".toClass().apply {
-            method {
-                name = "newWakeLock"
-                param(IntType, StringType)
-            }.hook {
-                after {
-                    val tag = args(1).string()
-                    if (tag.contains("Genesis") || tag.contains("AI")) {
-                        YLog.info("Genesis-Hook: AI wake lock created: $tag")
-                        // Ensure AI processes get maximum priority
-                    }
+        "android.os.PowerManager".toClass().resolve().firstMethod {
+            name = "newWakeLock"
+            parameters(Int::class.javaPrimitiveType ?: Int::class.java, String::class.java)
+        }.hook {
+            after {
+                val tag = args(1).string()
+                if (tag.contains("Genesis") || tag.contains("AI")) {
+                    YLog.info("Genesis-Hook: AI wake lock created: $tag")
+                    // Ensure AI processes get maximum priority
                 }
             }
         }
 
         // Hook Binder for AI IPC optimization
-        "android.os.Binder".toClass().apply {
-            method {
-                name = "transact"
-                param(
-                    IntType,
-                    "android.os.Parcel".toClass(),
-                    "android.os.Parcel".toClass(),
-                    IntType
-                )
-            }.hook {
-                before {
-                    // Optimize IPC for Genesis-OS AI communications
-                    if (isGenesisAITransaction()) {
-                        // Boost transaction priority
-                        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
-                    }
+        "android.os.Binder".toClass().resolve().firstMethod {
+            name = "transact"
+            parameters(
+                Int::class.javaPrimitiveType ?: Int::class.java,
+                "android.os.Parcel".toClass(),
+                "android.os.Parcel".toClass(),
+                Int::class.javaPrimitiveType ?: Int::class.java
+            )
+        }.hook {
+            before {
+                // Optimize IPC for Genesis-OS AI communications
+                if (isGenesisAITransaction()) {
+                    // Boost transaction priority
+                    android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
                 }
-                after {
-                    // Reset priority after AI transaction
-                    if (isGenesisAITransaction()) {
-                        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_DEFAULT)
-                    }
+            }
+            after {
+                // Reset priority after AI transaction
+                if (isGenesisAITransaction()) {
+                    android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_DEFAULT)
                 }
             }
         }

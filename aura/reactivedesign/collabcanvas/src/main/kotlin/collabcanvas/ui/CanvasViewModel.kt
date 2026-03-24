@@ -2,6 +2,7 @@ package collabcanvas.ui
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import collabcanvas.CanvasWebSocketEvent
@@ -135,7 +136,7 @@ class CanvasViewModel @Inject constructor(
                 CanvasElement(
                     id = UUID.randomUUID().toString(),
                     type = ElementType.PATH,
-                    path = PathData(), // Simplified
+                    path = PathData(points = op.points, isComplete = true),
                     color = op.color,
                     strokeWidth = op.strokeWidth.value,
                     createdBy = userId
@@ -150,7 +151,7 @@ class CanvasViewModel @Inject constructor(
                         DrawingTool.CIRCLE -> ElementType.OVAL
                         else -> ElementType.PATH
                     },
-                    path = PathData(), // Simplified
+                    path = PathData(points = listOf(op.start, op.end), isComplete = true),
                     color = op.color,
                     strokeWidth = op.strokeWidth.value,
                     createdBy = userId
@@ -160,9 +161,55 @@ class CanvasViewModel @Inject constructor(
     }
 
     private fun mapElementToOperation(element: CanvasElement): DrawingOperation? {
-        // Reverse mapping logic here
-        // For now returning a placeholder PathOp to demonstrate the flow
-        return null // Needs more detailed PathData implementation
+        val color = element.color
+        val strokeWidth = element.strokeWidth.dp
+
+        return when (element.type) {
+            ElementType.PATH -> {
+                val path = collabcanvas.model.toPath(element.path)
+                DrawingOperation.PathOp(
+                    path = path,
+                    points = element.path.points,
+                    color = color,
+                    strokeWidth = strokeWidth,
+                    tool = DrawingTool.PEN
+                )
+            }
+            ElementType.LINE -> {
+                if (element.path.points.size >= 2) {
+                    DrawingOperation.ShapeOp(
+                        start = element.path.points[0],
+                        end = element.path.points[1],
+                        color = color,
+                        strokeWidth = strokeWidth,
+                        tool = DrawingTool.LINE
+                    )
+                } else null
+            }
+            ElementType.RECTANGLE -> {
+                if (element.path.points.size >= 2) {
+                    DrawingOperation.ShapeOp(
+                        start = element.path.points[0],
+                        end = element.path.points[1],
+                        color = color,
+                        strokeWidth = strokeWidth,
+                        tool = DrawingTool.RECTANGLE
+                    )
+                } else null
+            }
+            ElementType.OVAL -> {
+                if (element.path.points.size >= 2) {
+                    DrawingOperation.ShapeOp(
+                        start = element.path.points[0],
+                        end = element.path.points[1],
+                        color = color,
+                        strokeWidth = strokeWidth,
+                        tool = DrawingTool.CIRCLE
+                    )
+                } else null
+            }
+            else -> null
+        }
     }
 
     /**
@@ -170,9 +217,13 @@ class CanvasViewModel @Inject constructor(
      *
      * @param canvasId Unique identifier for the canvas session
      */
+    /**
+     * Connect to WebSocket server for collaborative drawing
+     *
+     * @param canvasId Unique identifier for the canvas session
+     */
     fun connect(canvasId: String = "default-canvas") {
-        if (this.isConnected
-        ) {
+        if (this.isConnected) {
             Timber.d("Already connected to canvas $canvasId")
             return
         }
@@ -180,7 +231,7 @@ class CanvasViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 // Construct WebSocket URL from injected base URL
-                val wsUrl = "$wsBaseUrl/canvas/$canvasId"
+                val wsUrl = wsBaseUrl
 
                 Timber.d("Connecting to collaborative canvas: $wsUrl")
                 webSocketService.connect(wsUrl)

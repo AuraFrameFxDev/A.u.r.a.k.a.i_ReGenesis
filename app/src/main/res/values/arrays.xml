@@ -1,8 +1,21 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="sample_array">
         <item>Sample 1</item>
         <item>Sample 2</item>
+    </string-array>
+
+    <!-- LSPosed scope: packages this module hooks into -->
+    <string-array name="xposed_scope">
+        <item>android</item>
+        <item>com.android.systemui</item>
+        <item>com.android.chrome</item>
+        <item>com.android.camera2</item>
+        <item>com.google.android.gms</item>
+        <item>com.android.launcher3</item>
+        <item>com.google.android.apps.nexuslauncher</item>
+        <item>com.android.settings</item>
+        <item>dev.aurakai.auraframefx</item>
     </string-array>
 
 </resources>

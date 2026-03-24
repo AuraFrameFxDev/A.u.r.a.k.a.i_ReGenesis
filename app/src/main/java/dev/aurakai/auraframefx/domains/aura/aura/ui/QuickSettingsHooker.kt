@@ -18,8 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
@@ -33,7 +33,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
 
     override fun onHook() {
         // Hook the QSPanel to inject Genesis footer and background
-        "com.android.systemui.qs.QSPanel".toClassOrNull()?.method {
+        "com.android.systemui.qs.QSPanel".toClassOrNull()?.resolve()?.firstMethod {
             name = "onFinishInflate"
         }?.hook {
             after {
@@ -49,8 +49,8 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
         }
 
         // Hook Tile creation to apply custom styles
-        "com.android.systemui.qs.tileimpl.QSTileViewImpl".toClassOrNull()?.method {
-            "onFinishInflate".also { this.name = it }
+        "com.android.systemui.qs.tileimpl.QSTileViewImpl".toClassOrNull()?.resolve()?.firstMethod {
+            name = "onFinishInflate"
         }?.hook {
             after {
                 val tileView = instance as View
@@ -142,4 +142,3 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
         }
     }
 }
-

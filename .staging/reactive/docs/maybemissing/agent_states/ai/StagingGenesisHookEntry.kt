@@ -24,8 +24,8 @@ import dev.aurakai.auraframefx.xposed.lockscreen.LockScreenAnimationHooker
  * All individual flags default true, so the master switch is the only
  * change needed for a full activation.
  */
-@InjectYukiHookWithXposed
-class GenesisHookEntry : IYukiHookXposedInit {
+// @InjectYukiHookWithXposed
+class StagingGenesisHookEntry : IYukiHookXposedInit {
 
     override fun onInit() = configs {
         debugLog {

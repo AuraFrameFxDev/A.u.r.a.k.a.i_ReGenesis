@@ -171,6 +171,10 @@ class GenesisLibraryPlugin : Plugin<Project> {
             // YukiHook runtime (api only, ksp handled above)
             dependencies.add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
 
+            // KavaRef for modern reflection (YukiHook 2.0 replacement)
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
             // EzXHelper for simplified Xposed development
             dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
         }
