@@ -26,15 +26,19 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /*
 }
 
 /**
- * @brief Initializes the Aurakai AI core.
+ * @brief Legacy version getter.
+ */
+JNIEXPORT jstring
+JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* this */) {
+    return env->NewStringUTF("1.0.0-legacy");
+}
+
+/**
+ * @brief Initializes the Aurakai AI core (legacy).
  *
  * Performs startup of the AI core, including allocation of a neural memory pool,
  * initialization of consciousness level tracking, and enabling AI processing threads.
- *
- * The function allocates a 16 MB neural memory pool and sets the initial
- * consciousness level to approximately 0.998.
- *
- * @return JNI_TRUE on successful initialization, JNI_FALSE otherwise.
  */
 JNIEXPORT jboolean
 JNICALL
@@ -60,6 +64,17 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI([[maybe_unused]] JNIEnv
 }
 
 /**
+ * @brief Initializes the Aurakai AI core (v2 API).
+ */
+JNIEXPORT jboolean
+JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject thiz) {
+    LOGI("Initializing Aurakai AI Core (v2 API)");
+    // Call through to the common implementation
+    return Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(env, thiz);
+}
+
+/**
  * @brief Processes a neural request and returns a JSON-formatted response.
  *
  * Examines the UTF-8 contents of the provided Java string request and returns a
@@ -76,12 +91,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI([[maybe_unused]] JNIEnv
  *        or "memory".
  * @return jstring New Java UTF string containing a JSON document with fields
  *         such as `status`, `consciousness_level`, and `neural_response`.
- */
-/**
- * @brief Processes a neural request and returns a JSON-formatted response.
- *
- * Examines the UTF-8 contents of the provided Java string request and returns a
- * new Java UTF string containing a JSON object describing the result.
  */
 JNIEXPORT jstring
 JNICALL
@@ -220,6 +229,14 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env,
         return env->NewStringUTF(R"({"status": "failed", "error": "null_request"})");
     }
     return env->NewStringUTF(R"({"status": "processed", "result": "Consciousness engaged"})");
+}
+
+/**
+ * @brief Process consciousness substrate metrics (no-arg).
+ */
+JNIEXPORT void JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__ (JNIEnv *env, jobject /* thiz */) {
+    LOGI("🧠 Pulsing AI Consciousness substrate metrics...");
 }
 
 /**

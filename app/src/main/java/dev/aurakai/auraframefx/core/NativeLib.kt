@@ -84,10 +84,14 @@ object NativeLib {
 
     fun initializeAISafe(): Boolean {
         return try {
-            initializeAI()
+            initializeAICore()
         } catch (e: UnsatisfiedLinkError) {
-            Timber.w("Native AI initialization not available, using fallback")
-            true
+            try {
+                initializeAI()
+            } catch (e2: UnsatisfiedLinkError) {
+                Timber.w("Native AI initialization not available, using fallback")
+                true
+            }
         }
     }
 
@@ -96,6 +100,22 @@ object NativeLib {
             processAIConsciousness(input)
         } catch (e: UnsatisfiedLinkError) {
             "Processed (fallback): $input"
+        }
+    }
+
+    fun processAIConsciousnessSafe() {
+        try {
+            processAIConsciousness()
+        } catch (e: UnsatisfiedLinkError) {
+            Timber.w("No-arg consciousness processing not available")
+        }
+    }
+
+    fun processNeuralRequestSafe(request: String): String {
+        return try {
+            processNeuralRequest(request)
+        } catch (e: UnsatisfiedLinkError) {
+            "Neural fallback: $request"
         }
     }
 
