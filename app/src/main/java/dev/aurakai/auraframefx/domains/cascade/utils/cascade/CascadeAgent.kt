@@ -48,11 +48,29 @@ class CascadeAgent @Inject constructor(
     private val systemOverlayManager: SystemOverlayManager,
     private val messageBus: dagger.Lazy<AgentMessageBus>,
     private val memoryManager: MemoryManager,
-    private val contextManager: ContextManager
+    private val contextManager: ContextManager,
+    private val grokAdapter: dagger.Lazy<dev.aurakai.auraframefx.ai.adapters.GrokAdapter>
 ) : BaseAgent(
     agentName = "Cascade",
     identity = CatalystIdentity.DATA_STREAM
-) {
+), dev.aurakai.auraframefx.ai.orchestrator.CascadeOrchestrator {
+
+    private val chaosMonitor by lazy { dev.aurakai.auraframefx.ai.chaos.ChaosMonitor(memoryManager, grokAdapter.get(), this) }
+
+    override suspend fun broadcastDefenseSignal(signal: String) {
+        Timber.w("🛡️ BROADCASTING DEFENSE SIGNAL: $signal")
+        messageBus.get().broadcast(
+            AgentMessage(
+                from = "Cascade",
+                content = signal,
+                metadata = mapOf("type" to "defense_signal", "severity" to "high")
+            )
+        )
+    }
+
+    override suspend fun notifyAgentActivity(activity: dev.aurakai.auraframefx.ai.models.AgentActivityEvent) {
+        chaosMonitor.onAgentActivity(activity)
+    }
 
     // override onAgentMessage to act as the primary neural router
     override suspend fun onAgentMessage(message: AgentMessage) {
