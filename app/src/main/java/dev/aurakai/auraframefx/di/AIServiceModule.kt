@@ -50,7 +50,7 @@ abstract class AiServiceModule {
                 projectId = "collabcanvas",
                 location = "us-central1",
                 endpoint = "us-central1-aiplatform.googleapis.com",
-                modelName = "gemini-1.5-pro-002"
+                modelName = "gemini-3.1-pro-preview"
             )
 
         @Provides
