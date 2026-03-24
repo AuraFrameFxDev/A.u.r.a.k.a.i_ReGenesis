@@ -89,6 +89,8 @@ subprojects { subproject ->
                     exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
                 }
                 ksp(libs.yukihookapi.ksp)
+                implementation(libs.kavaref.core)
+                implementation(libs.kavaref.extension)
 
                 // Xposed API (compile only)
                 compileOnly(libs.xposed.api)
