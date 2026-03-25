@@ -1,19 +1,17 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.engine.hooks
 
 import android.view.View
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.factory.toClassOrNull
 import com.highcapable.yukihookapi.hook.log.YLog
 
 /**
- * 🎨 CHROMA CORE HOOKER — YukiHookAPI 1.3.x
+ * 🎨 CHROMA CORE HOOKER — Migrated to KavaRef
  *
  * Unified Xposed hooker for ChromaCore (Iconify + ColorBlendr + PixelLauncher).
  * Loaded by GenesisHookEntry into: SystemUI, Launcher3, Pixel Launcher, Settings.
  *
  * Reads prefs from "chromacore_xposed_prefs" written by AuraUIControlViewModel.
- * Uses YukiHookAPI's built-in toClassOrNull() for safe class resolution.
  */
 class ChromaCoreHooker : YukiBaseHooker() {
 
@@ -29,23 +27,20 @@ class ChromaCoreHooker : YukiBaseHooker() {
     // ── Status Bar ────────────────────────────────────────────────────────────
 
     private fun hookStatusBar() {
-        "com.android.systemui.statusbar.phone.PhoneStatusBarView"
-            .toClassOrNull() ?: return
-
-        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()
-            ?.method { name = "onFinishInflate" }
-            ?.hook {
-                after {
-                    val bgTransparent = prefs.getBoolean("statusbar_bg_transparent", false)
-                    val showIcons = prefs.getBoolean("statusbar_show_icons", true)
-                    YLog.info("ChromaCore·StatusBar transparent=$bgTransparent icons=$showIcons")
-                    if (bgTransparent) {
-                        runCatching {
-                            (instance as View).setBackgroundColor(android.graphics.Color.TRANSPARENT)
-                        }
+        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.resolve()?.firstMethod {
+            name = "onFinishInflate"
+        }?.hook {
+            after {
+                val bgTransparent = prefs.getBoolean("statusbar_bg_transparent", false)
+                val showIcons = prefs.getBoolean("statusbar_show_icons", true)
+                YLog.info("ChromaCore·StatusBar transparent=$bgTransparent icons=$showIcons")
+                if (bgTransparent) {
+                    runCatching {
+                        (instance as View).setBackgroundColor(android.graphics.Color.TRANSPARENT)
                     }
                 }
             }
+        }
     }
 
     // ── Launcher Grid ─────────────────────────────────────────────────────────
@@ -55,7 +50,9 @@ class ChromaCoreHooker : YukiBaseHooker() {
             ?: "com.google.android.apps.nexuslauncher.NexusLauncherActivity".toClassOrNull()
             ?: return
 
-        cls.method { name = "init"; paramCount = 0 }.ignored().hook {
+        cls.resolve().firstMethod {
+            name = "init"
+        }.hook {
             after {
                 val grid = prefs.getString("launcher_grid_config", "5x5")
                 YLog.info("ChromaCore·Launcher grid → $grid")
@@ -64,6 +61,8 @@ class ChromaCoreHooker : YukiBaseHooker() {
                     if (parts.size == 2) {
                         val cols = parts[0].toIntOrNull() ?: return@runCatching
                         val rows = parts[1].toIntOrNull() ?: return@runCatching
+                        
+                        // Use KavaRef for field access too if possible, or just standard reflection
                         instance.javaClass.getDeclaredField("numColumns")
                             .apply { isAccessible = true }.set(instance, cols)
                         instance.javaClass.getDeclaredField("numRows")
@@ -77,9 +76,9 @@ class ChromaCoreHooker : YukiBaseHooker() {
     // ── Dynamic Colors (ColorBlendr Material You) ─────────────────────────────
 
     private fun hookDynamicColors() {
-        val cls = "com.android.systemui.monet.ColorScheme".toClassOrNull() ?: return
-
-        cls.method { name = "getColors"; paramCount = 0 }.ignored().hook {
+        "com.android.systemui.monet.ColorScheme".toClassOrNull()?.resolve()?.firstMethod {
+            name = "getColors"
+        }?.hook {
             after {
                 val customSeed = prefs.getInt("colorblendr_seed_color", -1)
                 if (customSeed != -1) {
@@ -92,10 +91,9 @@ class ChromaCoreHooker : YukiBaseHooker() {
     // ── Notch / Display Cutout ────────────────────────────────────────────────
 
     private fun hookNotchCutout() {
-        val cls = "com.android.systemui.statusbar.phone.StatusBarWindowView"
-            .toClassOrNull() ?: return
-
-        cls.method { name = "onApplyWindowInsets"; paramCount = 1 }.ignored().hook {
+        "com.android.systemui.statusbar.phone.StatusBarWindowView".toClassOrNull()?.resolve()?.firstMethod {
+            name = "onApplyWindowInsets"
+        }?.hook {
             before {
                 val hide = prefs.getBoolean("hide_display_cutout", false)
                 if (hide) YLog.info("ChromaCore·Hiding display cutout")

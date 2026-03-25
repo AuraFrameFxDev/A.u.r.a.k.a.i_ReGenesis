@@ -17,7 +17,7 @@ class HookEntry : IYukiHookXposedInit {
         // When implementing CollabCanvas hooks, add them here:
         // Example:
         // loadApp(name = "com.android.systemui") {
-        //     "com.android.systemui.qs.QSPanel".toClass().method {
+        //     "com.android.systemui.qs.QSPanel".toClass().resolve().firstMethod {
         //         name = "updateResources"
         //     }.hook {
         //         after {

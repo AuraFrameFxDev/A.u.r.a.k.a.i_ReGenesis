@@ -1,12 +1,11 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.factory.toClassOrNull
 import com.highcapable.yukihookapi.hook.log.YLog
 
 /**
- * 🎛️ QUICK SETTINGS HOOKER — YukiHookAPI 1.3.x
+ * 🎛️ QUICK SETTINGS HOOKER — Migrated to KavaRef
  *
  * Hooks SystemUI Quick Settings panel to apply tile layout and column
  * customizations set via AuraUIControlViewModel → chromacore_xposed_prefs.
@@ -24,7 +23,9 @@ class QuickSettingsHooker : YukiBaseHooker() {
             ?: "com.android.systemui.qs.QuickQSPanel".toClassOrNull()
             ?: return
 
-        cls.method { name = "onFinishInflate" }.ignored().hook {
+        cls.resolve().firstMethod {
+            name = "onFinishInflate"
+        }.hook {
             after {
                 val cols = prefs.getInt("qs_columns", 4)
                 YLog.info("ChromaCore·QSPanel cols=$cols")
@@ -37,9 +38,9 @@ class QuickSettingsHooker : YukiBaseHooker() {
     }
 
     private fun hookQsTileLabel() {
-        val cls = "com.android.systemui.qs.tileimpl.QSTileView".toClassOrNull() ?: return
-
-        cls.method { name = "handleStateChanged"; paramCount = 1 }.ignored().hook {
+        "com.android.systemui.qs.tileimpl.QSTileView".toClassOrNull()?.resolve()?.firstMethod {
+            name = "handleStateChanged"
+        }?.hook {
             after {
                 val showLabels = prefs.getBoolean("qs_show_labels", true)
                 if (!showLabels) {

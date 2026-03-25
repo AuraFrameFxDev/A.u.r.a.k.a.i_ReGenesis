@@ -3,15 +3,14 @@ package dev.aurakai.auraframefx.domains.kai.hooks
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.graphics.toArgb
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.factory.toClassOrNull
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.xposed.prefs.data.PrefsData
 import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
 
 /**
- * 🛡️ NOTCH BAR HOOKER — YukiHookAPI 1.3.x
+ * 🛡️ NOTCH BAR HOOKER — Migrated to KavaRef
  *
  * Hooks PhoneStatusBarView to apply Kai's notch bar customizations:
  * background color, height, and visibility — read from chromacore_xposed_prefs.
@@ -25,10 +24,9 @@ class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
     override fun onHook() {
         prefs("chromacore_xposed_prefs")
 
-        val cls = "com.android.systemui.statusbar.phone.PhoneStatusBarView"
-            .toClassOrNull() ?: return
-
-        cls.method { name = "onFinishInflate" }.hook {
+        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.resolve()?.firstMethod {
+            name = "onFinishInflate"
+        }?.hook {
             after {
                 val view = instance as? View ?: return@after
 
