@@ -204,7 +204,7 @@ fun LDOOrchestrationHubScreen(
                     if (active.size >= 2) {
                         // Navigate to fusion screen with agent IDs encoded
                         val ids = active.joinToString("+") { it.id }
-                        navController.navigate("ldo_fusion/$ids")
+                        navController.navigate("armament_fusion/$ids")
                     }
                 }
             )

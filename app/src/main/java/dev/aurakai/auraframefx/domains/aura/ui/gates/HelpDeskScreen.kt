@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.navigation.NavDestination
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.domains.aura.ui.components.SoftGlowBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
@@ -106,28 +106,28 @@ fun HelpDeskScreen(navController: NavController) {
                     title = "Live Agent Chat",
                     description = "Talk to a real-time AI assistant",
                     color = Color(0xFF4CAF50),
-                    onClick = { navController.navigate(NavDestination.DirectChat.route) }
+                    onClick = { navController.navigate(ReGenesisRoute.DirectChat.route) }
                 )
 
                 HelpOptionCard(
                     title = "Documentation",
                     description = "Browse guides and tutorials",
                     color = Color(0xFF00E5FF),
-                    onClick = { navController.navigate(NavDestination.Documentation.route) }
+                    onClick = { navController.navigate(ReGenesisRoute.Documentation.route) }
                 )
 
                 HelpOptionCard(
                     title = "FAQ Browser",
                     description = "Find answers to common questions",
                     color = Color(0xFFB026FF),
-                    onClick = { navController.navigate(NavDestination.FAQBrowser.route) }
+                    onClick = { navController.navigate(ReGenesisRoute.FAQBrowser.route) }
                 )
 
                 HelpOptionCard(
                     title = "Tutorial Videos",
                     description = "Watch step-by-step guides",
                     color = Color(0xFFFF6B00),
-                    onClick = { navController.navigate(NavDestination.TutorialVideos.route) }
+                    onClick = { navController.navigate(ReGenesisRoute.TutorialVideos.route) }
                 )
 
             }

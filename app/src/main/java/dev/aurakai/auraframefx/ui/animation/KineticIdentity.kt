@@ -41,49 +41,59 @@ object KineticIdentity {
     // ========== SIGNATURE ANIMATION SPECS ==========
 
     /** A bold, energetic entrance for major UI elements */
-    val DaringEnter: AnimationSpec<Float> = tween(
+    val DaringEnter: FiniteAnimationSpec<Float> = tween(
         durationMillis = DRAMATIC_DURATION,
         easing = FastOutSlowInEasing
     )
 
     /** A quick, subtle exit animation */
-    val SubtleExit: AnimationSpec<Float> = tween(
+    val SubtleExit: FiniteAnimationSpec<Float> = tween(
         durationMillis = STANDARD_DURATION,
         easing = FastOutLinearInEasing
     )
 
     /** A bouncy, slightly chaotic spring for interactive feedback - The "Mad Hatter" touch */
-    val GlitchyFocus: AnimationSpec<Float> = spring(
+    val GlitchyFocus: FiniteAnimationSpec<IntOffset> = spring(
         dampingRatio = Spring.DampingRatioMediumBouncy,
         stiffness = Spring.StiffnessLow
     )
 
     /** Smooth, confident spring for primary interactions */
-    val ConfidentSpring: AnimationSpec<Float> = spring(
+    val ConfidentSpring: FiniteAnimationSpec<IntOffset> = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+    )
+    
+    val ConfidentSpringFloat: FiniteAnimationSpec<Float> = spring(
         dampingRatio = Spring.DampingRatioNoBouncy,
         stiffness = Spring.StiffnessMedium
     )
 
     /** Energetic bounce for success states */
-    val VictoryBounce: AnimationSpec<Float> = spring(
+    val VictoryBounce: FiniteAnimationSpec<IntOffset> = spring(
+        dampingRatio = Spring.DampingRatioLowBouncy,
+        stiffness = Spring.StiffnessHigh
+    )
+    
+    val VictoryBounceFloat: FiniteAnimationSpec<Float> = spring(
         dampingRatio = Spring.DampingRatioLowBouncy,
         stiffness = Spring.StiffnessHigh
     )
 
     /** Dramatic slow-motion for critical moments */
-    val DramaticSlow: AnimationSpec<Float> = tween(
+    val DramaticSlow: FiniteAnimationSpec<Float> = tween(
         durationMillis = EPIC_DURATION,
         easing = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1f)
     )
 
     /** Quick pulse for notifications */
-    val AlertPulse: AnimationSpec<Float> = tween(
+    val AlertPulse: FiniteAnimationSpec<Float> = tween(
         durationMillis = MICRO_DURATION,
         easing = LinearEasing
     )
 
     /** Organic breathing animation */
-    val OrganicBreath: AnimationSpec<Float> = tween(
+    val OrganicBreath: FiniteAnimationSpec<Float> = tween(
         durationMillis = 2000,
         easing = CubicBezierEasing(0.4f, 0f, 0.6f, 1f)
     )
@@ -92,7 +102,7 @@ object KineticIdentity {
 
     /** Digital materialization - particles coalescing into form */
     val MaterializeEnter: EnterTransition =
-        fadeIn(DaringEnter as FiniteAnimationSpec<Float>) +
+        fadeIn(animationSpec = DaringEnter) +
                 scaleIn(
                     animationSpec = DaringEnter,
                     initialScale = 0.3f,
@@ -103,36 +113,36 @@ object KineticIdentity {
     val GlitchEnter: EnterTransition =
         fadeIn(tween(MICRO_DURATION)) +
                 slideInHorizontally(
-                    animationSpec = GlitchyFocus as FiniteAnimationSpec<IntOffset>,
+                    animationSpec = GlitchyFocus,
                     initialOffsetX = { -it / 4 }
                 )
 
     /** Confident slide from right - for navigation */
     val SlideFromRight: EnterTransition =
         slideInHorizontally(
-            animationSpec = ConfidentSpring as FiniteAnimationSpec<IntOffset>,
+            animationSpec = ConfidentSpring,
             initialOffsetX = { it }
-        ) + fadeIn(ConfidentSpring as FiniteAnimationSpec<Float>)
+        ) + fadeIn(animationSpec = ConfidentSpringFloat)
 
     /** Floating up from bottom - for dialogs */
     val FloatFromBottom: EnterTransition =
         slideInVertically(
-            animationSpec = VictoryBounce as FiniteAnimationSpec<IntOffset>,
+            animationSpec = VictoryBounce,
             initialOffsetY = { it }
-        ) + fadeIn(VictoryBounce as FiniteAnimationSpec<Float>)
+        ) + fadeIn(animationSpec = VictoryBounceFloat)
 
     /** Dramatic zoom entrance */
     val DramaticZoom: EnterTransition =
         scaleIn(
-            animationSpec = DramaticSlow as FiniteAnimationSpec<Float>,
+            animationSpec = DramaticSlow,
             initialScale = 0.1f
-        ) + fadeIn(DramaticSlow)
+        ) + fadeIn(animationSpec = DramaticSlow)
 
     // ========== EXIT TRANSITIONS ==========
 
     /** Digital deconstruction - form dissolving into particles */
     val DeconstructExit: ExitTransition =
-        fadeOut(SubtleExit as FiniteAnimationSpec<Float>) +
+        fadeOut(animationSpec = SubtleExit) +
                 scaleOut(
                     animationSpec = SubtleExit,
                     targetScale = 0.8f,
@@ -150,23 +160,23 @@ object KineticIdentity {
     /** Slide to left - for navigation */
     val SlideToLeft: ExitTransition =
         slideOutHorizontally(
-            animationSpec = ConfidentSpring as FiniteAnimationSpec<IntOffset>,
+            animationSpec = ConfidentSpring,
             targetOffsetX = { -it }
-        ) + fadeOut(ConfidentSpring as FiniteAnimationSpec<Float>)
+        ) + fadeOut(animationSpec = ConfidentSpringFloat)
 
     /** Sink down - for dialogs */
     val SinkDown: ExitTransition =
         slideOutVertically(
-            animationSpec = SubtleExit as FiniteAnimationSpec<IntOffset>,
+            animationSpec = SubtleExit.toIntOffsetSpec(),
             targetOffsetY = { it }
-        ) + fadeOut(SubtleExit as FiniteAnimationSpec<Float>)
+        ) + fadeOut(animationSpec = SubtleExit)
 
     /** Dramatic zoom out */
     val DramaticZoomOut: ExitTransition =
         scaleOut(
-            animationSpec = DramaticSlow as FiniteAnimationSpec<Float>,
+            animationSpec = DramaticSlow,
             targetScale = 2f
-        ) + fadeOut(DramaticSlow)
+        ) + fadeOut(animationSpec = DramaticSlow)
 
     // ========== COMBINED TRANSITION SETS ==========
 
@@ -175,13 +185,9 @@ object KineticIdentity {
         val enterFromRight = SlideFromRight
         val exitToLeft = SlideToLeft
         val enterFromLeft =
-            slideInHorizontally(ConfidentSpring as FiniteAnimationSpec<IntOffset>) { -it } + fadeIn(
-                ConfidentSpring as FiniteAnimationSpec<Float>
-            )
+            slideInHorizontally(animationSpec = ConfidentSpring) { -it } + fadeIn(animationSpec = ConfidentSpringFloat)
         val exitToRight =
-            slideOutHorizontally(ConfidentSpring as FiniteAnimationSpec<IntOffset>) { it } + fadeOut(
-                ConfidentSpring as FiniteAnimationSpec<Float>
-            )
+            slideOutHorizontally(animationSpec = ConfidentSpring) { it } + fadeOut(animationSpec = ConfidentSpringFloat)
     }
 
     /** Modal dialogs and overlays */
@@ -217,19 +223,27 @@ object KineticIdentity {
     fun createGlitchShake(
         durationMillis: Int = MICRO_DURATION,
         intensity: Float = 10f,
-    ): AnimationSpec<Float> = tween(
+    ): FiniteAnimationSpec<Float> = tween(
         durationMillis = durationMillis,
         easing = LinearEasing
     )
 
     fun createDramaticPause(
         pauseDurationMillis: Int = 500,
-        actionSpec: AnimationSpec<Float> = DaringEnter,
-    ): AnimationSpec<Float> = tween(
+        actionSpec: FiniteAnimationSpec<Float> = DaringEnter,
+    ): FiniteAnimationSpec<Float> = tween(
         durationMillis = pauseDurationMillis + ((actionSpec as? TweenSpec<*>)?.durationMillis
             ?: STANDARD_DURATION),
         easing = CubicBezierEasing(0f, 0f, 0.2f, 1f)
     )
+    
+    private fun FiniteAnimationSpec<Float>.toIntOffsetSpec(): FiniteAnimationSpec<IntOffset> {
+        return if (this is TweenSpec) {
+            tween(this.durationMillis, this.delay, this.easing)
+        } else {
+            spring()
+        }
+    }
 }
 
 /**
@@ -237,18 +251,16 @@ object KineticIdentity {
  */
 
 fun <T> AnimationSpec<T>.afterDelay(delayMillis: Int): AnimationSpec<T> =
-    tween(
-        durationMillis = delayMillis + when (this) {
-            is TweenSpec<*> -> this.durationMillis
-            is SpringSpec<*> -> 1000 // Estimate for spring
-            else -> KineticIdentity.STANDARD_DURATION
-        }
-    )
+    when (this) {
+        is TweenSpec -> tween(delayMillis + this.durationMillis, this.delay, this.easing)
+        is SpringSpec -> this // Spring doesn't easily support additive delay this way
+        else -> this
+    }
 
 fun <T> AnimationSpec<T>.infinite(repeatMode: RepeatMode = RepeatMode.Restart): InfiniteRepeatableSpec<T> =
     infiniteRepeatable(this as DurationBasedAnimationSpec<T>, repeatMode)
 
 fun AnimationSpec<Float>.withEasing(easing: Easing): AnimationSpec<Float> = when (this) {
-    is TweenSpec -> tween(this.durationMillis, easing = easing)
+    is TweenSpec -> tween(this.durationMillis, this.delay, easing)
     else -> this
 }
