@@ -4,7 +4,7 @@
 #include <android/log.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include "bitnet.h"
 
 #define TAG "BitNetJNI"
@@ -28,8 +28,9 @@ static float readThermalSubstrate(const char* zonePath) {
 
     if (bytes > 0) {
         buffer[bytes] = '\0';
-        long millideg = strtol(buffer, nullptr, 10);
-        return millideg / 1000.0f;
+        char* end;
+        long millideg = strtol(buffer, &end, 10);
+        return static_cast<float>(millideg) / 1000.0f;
     }
     return -1.0f;
 }
