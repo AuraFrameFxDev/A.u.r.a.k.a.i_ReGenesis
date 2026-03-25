@@ -40,7 +40,7 @@ class BitNetLocalService : Service() {
             }
 
             // Call native JNI function
-            generateLocalResponse(prompt)
+            generateLocalResponse(prompt, currentNThreads)
         } catch (e: Exception) {
             Timber.e(e, "BitNet Inference Failed")
             "Error: Local Core Unreachable"
@@ -81,7 +81,7 @@ class BitNetLocalService : Service() {
      * Native Method Declarations
      * Links to the C++ implementation in bitnet_bridge.cpp
      */
-    private external fun generateLocalResponse(prompt: String): String
+    private external fun generateLocalResponse(prompt: String, nThreads: Int): String
     private external fun readThermalZone(zonePath: String): Float
 
     companion object {

@@ -51,7 +51,8 @@ JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalResponse(
     JNIEnv* env,
     jobject /* this */,
-    jstring j_prompt) {
+    jstring j_prompt,
+    jint nThreads) {
 
     // Lazy initialization of the model
     if (!model) {
@@ -59,8 +60,10 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalRes
         model = new BitNetModel("/sdcard/models/bitnet-100b.gguf");
 
         // Thermal/Performance Optimization: Pin to Big Cores (e.g., cores 4-7 on Snapdragon)
+        // We use nThreads to potentially guide the pinning or model config
         cpu_set_t set;
         CPU_ZERO(&set);
+        // Assuming Snapdragon 8 Gen 3: Cores 4-7 are the "Big" cluster
         for (int i = 4; i < 8; ++i) {
             CPU_SET(i, &set);
         }
@@ -68,7 +71,7 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalRes
         if (sched_setaffinity(0, sizeof(set), &set) < 0) {
             __android_log_print(ANDROID_LOG_WARN, TAG, "Failed to set CPU affinity");
         } else {
-            __android_log_print(ANDROID_LOG_INFO, TAG, "Pinned thread to big cores (4-7)");
+            __android_log_print(ANDROID_LOG_INFO, TAG, "Pinned thread to big cores (4-7) with target %d threads", nThreads);
         }
     }
 
