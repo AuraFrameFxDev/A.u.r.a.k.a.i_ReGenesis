@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.RemoteException
 import com.example.app.ipc.IAuraDriveCallback
-import com.example.app.ipc.IAuraDriveService
+import dev.aurakai.auraframefx.oracledrive.connector.IAuraDriveService
 import dev.aurakai.auraframefx.security.MemoryVerifier
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers

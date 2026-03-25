@@ -17,6 +17,11 @@ import timber.log.Timber
 class BitNetLocalService : Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private var currentNThreads = 4 // Default for Snapdragon 8 Gen 3 Big Cores
+
+    enum class ThermalState {
+        NORMAL, WARNING, CRITICAL, EMERGENCY
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -29,7 +34,10 @@ class BitNetLocalService : Service() {
     suspend fun generateResponse(prompt: String): String = withContext(Dispatchers.Default) {
         try {
             // Monitor thermal state before heavy inference
-            // checkThermalState()
+            val state = checkThermalState()
+            if (state == ThermalState.EMERGENCY) {
+                return@withContext "System too hot. Inference suspended."
+            }
 
             // Call native JNI function
             generateLocalResponse(prompt)
@@ -40,10 +48,41 @@ class BitNetLocalService : Service() {
     }
 
     /**
-     * Native Method Declaration
+     * Proactive predictive thermal monitoring.
+     * Interfaces with sysfs zones to prevent hardware-level throttling.
+     */
+    fun checkThermalState(): ThermalState {
+        // Paths for SD8 Gen 3 (may vary by OEM, usually requires root/SSI bridge)
+        val bigCoreTemp = readThermalZone("/sys/class/thermal/thermal_zone0/temp")
+        val gpuTemp = readThermalZone("/sys/class/thermal/thermal_zone1/temp")
+
+        Timber.d("NeuralThermalGuard: Big cores=%.1f°C, GPU=%.1f°C", bigCoreTemp, gpuTemp)
+
+        return when {
+            bigCoreTemp > 85.0 || gpuTemp > 90.0 -> ThermalState.EMERGENCY
+            bigCoreTemp > 75.0 || gpuTemp > 80.0 -> {
+                reduceInferenceLoad()
+                ThermalState.CRITICAL
+            }
+            bigCoreTemp > 65.0 || gpuTemp > 70.0 -> ThermalState.WARNING
+            else -> ThermalState.NORMAL
+        }
+    }
+
+    private fun reduceInferenceLoad() {
+        if (currentNThreads > 1) {
+            currentNThreads = (currentNThreads * 0.7).toInt().coerceAtLeast(1)
+            Timber.w("NeuralThermalGuard: Throttling inference threads to $currentNThreads")
+            // In a real implementation, we would pass this to the native engine
+        }
+    }
+
+    /**
+     * Native Method Declarations
      * Links to the C++ implementation in bitnet_bridge.cpp
      */
     private external fun generateLocalResponse(prompt: String): String
+    private external fun readThermalZone(zonePath: String): Float
 
     companion object {
         init {

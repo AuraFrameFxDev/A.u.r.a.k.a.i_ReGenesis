@@ -2,6 +2,9 @@
 #include <string>
 #include <sched.h>
 #include <android/log.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "bitnet.h"
 
 #define TAG "BitNetJNI"
@@ -9,9 +12,43 @@
 // Static instance for the session
 static BitNetModel* model = nullptr;
 
+/**
+ * Returns temperature in Celsius from the specified sysfs zone.
+ * Snapdragon 8 Gen 3 thermal values are usually in millidegrees.
+ */
+static float readThermalSubstrate(const char* zonePath) {
+    int fd = open(zonePath, O_RDONLY);
+    if (fd < 0) {
+        return -1.0f;
+    }
+
+    char buffer[32];
+    ssize_t bytes = read(fd, buffer, sizeof(buffer) - 1);
+    close(fd);
+
+    if (bytes > 0) {
+        buffer[bytes] = '\0';
+        long millideg = strtol(buffer, nullptr, 10);
+        return millideg / 1000.0f;
+    }
+    return -1.0f;
+}
+
 extern "C" {
+
+JNIEXPORT jfloat JNICALL
+Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_readThermalZone(
+    JNIEnv* env,
+    jobject /* this */,
+    jstring zonePath) {
+    const char* path = env->GetStringUTFChars(zonePath, nullptr);
+    float temp = readThermalSubstrate(path);
+    env->ReleaseStringUTFChars(zonePath, path);
+    return temp;
+}
+
 JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_services_BitNetLocalService_generateLocalResponse(
+Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalResponse(
     JNIEnv* env,
     jobject /* this */,
     jstring j_prompt) {
