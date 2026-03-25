@@ -94,7 +94,7 @@ object KineticIdentity {
     val MaterializeEnter: EnterTransition =
         fadeIn(DaringEnter as FiniteAnimationSpec<Float>) +
                 scaleIn(
-                    animationSpec = DaringEnter as FiniteAnimationSpec<Float>,
+                    animationSpec = DaringEnter,
                     initialScale = 0.3f,
                     transformOrigin = TransformOrigin.Center
                 )
@@ -126,7 +126,7 @@ object KineticIdentity {
         scaleIn(
             animationSpec = DramaticSlow as FiniteAnimationSpec<Float>,
             initialScale = 0.1f
-        ) + fadeIn(DramaticSlow as FiniteAnimationSpec<Float>)
+        ) + fadeIn(DramaticSlow)
 
     // ========== EXIT TRANSITIONS ==========
 
@@ -134,7 +134,7 @@ object KineticIdentity {
     val DeconstructExit: ExitTransition =
         fadeOut(SubtleExit as FiniteAnimationSpec<Float>) +
                 scaleOut(
-                    animationSpec = SubtleExit as FiniteAnimationSpec<Float>,
+                    animationSpec = SubtleExit,
                     targetScale = 0.8f,
                     transformOrigin = TransformOrigin.Center
                 )
@@ -166,7 +166,7 @@ object KineticIdentity {
         scaleOut(
             animationSpec = DramaticSlow as FiniteAnimationSpec<Float>,
             targetScale = 2f
-        ) + fadeOut(DramaticSlow as FiniteAnimationSpec<Float>)
+        ) + fadeOut(DramaticSlow)
 
     // ========== COMBINED TRANSITION SETS ==========
 
