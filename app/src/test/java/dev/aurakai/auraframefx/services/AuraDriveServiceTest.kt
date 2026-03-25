@@ -4,7 +4,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.os.RemoteException
-import com.example.app.ipc.IAuraDriveCallback
+import dev.aurakai.auraframefx.ipc.IAuraDriveCallback
 import dev.aurakai.auraframefx.oracledrive.connector.IAuraDriveService
 import dev.aurakai.auraframefx.security.MemoryVerifier
 import io.mockk.*
