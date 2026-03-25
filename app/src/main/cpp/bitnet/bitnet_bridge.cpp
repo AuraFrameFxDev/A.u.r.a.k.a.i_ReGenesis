@@ -49,6 +49,31 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_readThermalZone(
 }
 
 JNIEXPORT jstring JNICALL
+Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_getThermalZoneType(
+    JNIEnv* env,
+    jobject /* this */,
+    jint zoneId) {
+    char path[128];
+    snprintf(path, sizeof(path), "/sys/class/thermal/thermal_zone%d/type", zoneId);
+    int fd = open(path, O_RDONLY);
+    if (fd < 0) return nullptr;
+
+    char buffer[128];
+    ssize_t bytes = read(fd, buffer, sizeof(buffer) - 1);
+    close(fd);
+
+    if (bytes > 0) {
+        // Remove trailing newline and null terminate
+        while (bytes > 0 && (buffer[bytes - 1] == '\n' || buffer[bytes - 1] == '\r')) {
+            bytes--;
+        }
+        buffer[bytes] = '\0';
+        return env->NewStringUTF(buffer);
+    }
+    return nullptr;
+}
+
+JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalResponse(
     JNIEnv* env,
     jobject /* this */,

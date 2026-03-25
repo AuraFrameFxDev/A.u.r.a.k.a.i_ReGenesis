@@ -19,12 +19,49 @@ class BitNetLocalService : Service() {
     private var lastEmergencyTime = 0L
     private val EMERGENCY_COOLDOWN_MS = 30000L // 30 seconds cooldown after emergency
 
+    private var cpuThermalZonePath: String? = null
+    private var gpuThermalZonePath: String? = null
+
     enum class ThermalState {
         NORMAL, WARNING, CRITICAL, EMERGENCY
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        findThermalZones()
+    }
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    /**
+     * Scans sysfs to find the most relevant thermal zones for CPU and GPU.
+     * This ensures the Thermal Sentinel works across different OEM implementations of SD8 Gen 3.
+     */
+    private fun findThermalZones() {
+        // Scan common range of thermal zones
+        for (i in 0..120) {
+            val type = getThermalZoneType(i) ?: continue
+            val path = "/sys/class/thermal/thermal_zone$i/temp"
+            
+            when {
+                type.contains("cpu", ignoreCase = true) || type.contains("gold", ignoreCase = true) || type.contains("prime", ignoreCase = true) -> {
+                    if (cpuThermalZonePath == null || type.contains("max", ignoreCase = true)) {
+                        cpuThermalZonePath = path
+                        Timber.i("Thermal Sentinel: Mapped CPU to $path ($type)")
+                    }
+                }
+                type.contains("gpu", ignoreCase = true) || type.contains("adreno", ignoreCase = true) -> {
+                    gpuThermalZonePath = path
+                    Timber.i("Thermal Sentinel: Mapped GPU to $path ($type)")
+                }
+            }
+        }
+        
+        // Fallback to defaults if scanning fails
+        if (cpuThermalZonePath == null) cpuThermalZonePath = "/sys/class/thermal/thermal_zone0/temp"
+        if (gpuThermalZonePath == null) gpuThermalZonePath = "/sys/class/thermal/thermal_zone1/temp"
     }
 
     /**
@@ -58,14 +95,8 @@ class BitNetLocalService : Service() {
      * Interfaces with sysfs zones to prevent hardware-level throttling.
      */
     fun checkThermalState(): ThermalState {
-        // Paths for SD8 Gen 3 (may vary by OEM, usually requires root/SSI bridge)
-        // Zone mapping based on common Snapdragon 8 Gen 3 sysfs:
-        // thermal_zone0 usually CPU cluster 0 (Silver)
-        // thermal_zone34+ often CPU cluster 2/3 (Gold/Prime)
-        // thermal_zone74+ often GPU
-        
-        val cpuTemp = readThermalZone("/sys/class/thermal/thermal_zone0/temp")
-        val gpuTemp = readThermalZone("/sys/class/thermal/thermal_zone1/temp")
+        val cpuTemp = cpuThermalZonePath?.let { readThermalZone(it) } ?: -1.0f
+        val gpuTemp = gpuThermalZonePath?.let { readThermalZone(it) } ?: -1.0f
 
         Timber.d("NeuralThermalGuard: CPU=%.1f°C, GPU=%.1f°C | Threads: $currentNThreads", cpuTemp, gpuTemp)
 
@@ -109,6 +140,7 @@ class BitNetLocalService : Service() {
      */
     private external fun generateLocalResponse(prompt: String, nThreads: Int): String
     private external fun readThermalZone(zonePath: String): Float
+    private external fun getThermalZoneType(zoneId: Int): String?
 
     companion object {
         init {

@@ -1,25 +1,20 @@
 package dev.aurakai.auraframefx.domains.aura.aura.ui
 
-import com.highcapable.yukihookapi.hook.core.annotation.LegacyHookApi
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import dev.aurakai.auraframefx.domains.aura.aura.animations.LockScreenConfigAnimation
 
-// import dev.aurakai.auraframefx.aura.ui.LockScreenConfig // Removed incorrect import
-
-@LegacyHookApi
 class LockScreenHooker(val config: LockScreenConfig) : YukiBaseHooker() {
 
     private lateinit var choosename: String
 
     override fun onHook() {
-        // TODO: Implement actual Xposed hook logic
+        // TODO: Implement actual Xposed hook logic using KavaRef when ready
         YLog.warn("LockScreenHooker: onHook() called but no hooks implemented yet")
     }
 
 }
 
-@LegacyHookApi
 private fun applyGenesisShowAnimation(
     lockScreenHooker: LockScreenHooker, applySlideAnimation: () -> Unit,
     applyFadeAnimation: () -> Unit,
@@ -55,4 +50,3 @@ private fun applyGenesisShowAnimation(
         YLog.error("Error applying animation", e)
     }
 }
-
