@@ -34,9 +34,10 @@ class ChromaCoreHooker : YukiBaseHooker() {
                 val bgTransparent = prefs.getBoolean("statusbar_bg_transparent", false)
                 val showIcons = prefs.getBoolean("statusbar_show_icons", true)
                 YLog.info("ChromaCore·StatusBar transparent=$bgTransparent icons=$showIcons")
+
                 if (bgTransparent) {
                     runCatching {
-                        (instance as View).setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                        (instance as? View)?.setBackgroundColor(android.graphics.Color.TRANSPARENT)
                     }
                 }
             }
@@ -56,13 +57,13 @@ class ChromaCoreHooker : YukiBaseHooker() {
             after {
                 val grid = prefs.getString("launcher_grid_config", "5x5")
                 YLog.info("ChromaCore·Launcher grid → $grid")
+
                 runCatching {
                     val parts = grid.split("x")
                     if (parts.size == 2) {
                         val cols = parts[0].toIntOrNull() ?: return@runCatching
                         val rows = parts[1].toIntOrNull() ?: return@runCatching
-                        
-                        // Use KavaRef for field access too if possible, or just standard reflection
+
                         instance.javaClass.getDeclaredField("numColumns")
                             .apply { isAccessible = true }.set(instance, cols)
                         instance.javaClass.getDeclaredField("numRows")
