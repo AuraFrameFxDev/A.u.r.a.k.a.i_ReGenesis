@@ -113,7 +113,7 @@ private val LINEAGE_NODES = listOf(
 
 @Composable
 fun LineageMapScreen(
-    navController: NavController,
+    navHostController: NavController,
     onNavigateBack: () -> Unit = {}
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "lineage")
@@ -165,7 +165,7 @@ fun LineageMapScreen(
                             val dist = sqrt((mappedTap.x - nx).pow(2) + (mappedTap.y - ny).pow(2))
                             if (dist < node.type.size * 0.8f) {
                                 selectedNode = if (selectedNode == node) null else node
-                                node.route?.let { navController.navigate(it) }
+                                node.route?.let { navHostController.navigate(it) }
                             }
                         }
                     }

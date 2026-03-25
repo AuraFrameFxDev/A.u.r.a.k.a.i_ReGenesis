@@ -106,6 +106,7 @@ enum class AgentCapabilityCategory {
             AgentType.COMMERCE_AGENT -> COMMERCE
             AgentType.PERPLEXITY -> ANALYSIS
             AgentType.CHAOS -> ANALYSIS
+            else -> ANALYSIS
         }
     }
 }

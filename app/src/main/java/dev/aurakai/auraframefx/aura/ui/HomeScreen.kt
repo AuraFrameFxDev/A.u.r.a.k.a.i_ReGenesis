@@ -30,23 +30,40 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 import dev.aurakai.auraframefx.ui.gates.HomeBackdropManager
 import dev.aurakai.auraframefx.ui.gates.ImmersiveGateCard
 import dev.aurakai.auraframefx.ui.gates.GateConfigs
 import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
 import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(
+fun GateNavigationScreen(
+    navController: NavController,
     onNavigateToConsciousness: () -> Unit = {},
     onNavigateToAgents: () -> Unit = {},
     onNavigateToFusion: () -> Unit = {},
     onNavigateToEvolution: () -> Unit = {},
     onNavigateToTerminal: () -> Unit = {},
-    onNavigateToModule: (moduleId: String) -> Unit = {}
+    onNavigateToModule: (String) -> Unit = { moduleId ->
+        // Standard gate-to-route mapper
+        val route = when (moduleId) {
+            "aura_theming" -> ReGenesisRoute.AuraThemingHub.route
+            "sentinel_fortress" -> ReGenesisRoute.SentinelFortress.route
+            "oracle_drive" -> ReGenesisRoute.OracleDriveHub.route
+            "nexus" -> ReGenesisRoute.AgentNexusHub.route
+            "dataflow" -> ReGenesisRoute.DataflowAnalysis.route
+            "ldo" -> ReGenesisRoute.LdoOrchestrationHub.route
+            "help" -> ReGenesisRoute.HelpDesk.route
+            "lsposed" -> ReGenesisRoute.LsposedQuickToggles.route
+            else -> null
+        }
+        route?.let { navController.navigate(it) }
+    }
 ) {
     val context = LocalContext.current
     val gateConfigs = allGates
