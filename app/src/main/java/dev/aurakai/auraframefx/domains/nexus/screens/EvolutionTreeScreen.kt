@@ -468,7 +468,7 @@ fun TimelineProgress(
         )
 
         LinearProgressIndicator(
-            progress = progress,
+            progress = { progress },
             modifier = Modifier
                 .width(100.dp)
                 .height(4.dp),
