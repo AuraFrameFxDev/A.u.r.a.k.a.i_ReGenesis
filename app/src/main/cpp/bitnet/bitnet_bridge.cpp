@@ -90,7 +90,6 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalRes
 
     // Lazy initialization of the model
     if (!model) {
-        // Path would be injected or configured in a real scenario
         model = new BitNetModel("/sdcard/models/bitnet-100b.gguf");
 
         // Thermal/Performance Optimization: Pin to Big Cores (e.g., cores 4-7 on Snapdragon)

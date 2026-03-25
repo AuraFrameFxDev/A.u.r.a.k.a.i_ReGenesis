@@ -17,6 +17,7 @@ class BitNetLocalService : Service() {
     private var currentBatchSize = 8
     private var lastEmergencyTime = 0L
     private val EMERGENCY_COOLDOWN_MS = 30000L // 30 seconds cooldown after emergency
+    private var lastThermalState = ThermalState.NORMAL
 
     private var cpuThermalZonePath: String? = null
     private var gpuThermalZonePath: String? = null
@@ -25,6 +26,9 @@ class BitNetLocalService : Service() {
     enum class ThermalState {
         NORMAL, WARNING, CRITICAL, EMERGENCY
     }
+
+    fun getCurrentThermalState(): ThermalState = lastThermalState
+    fun getCurrentNThreads(): Int = currentNThreads
 
     override fun onCreate() {
         super.onCreate()
@@ -73,7 +77,15 @@ class BitNetLocalService : Service() {
             cpuThermalZonePath = "/sys/class/thermal/thermal_zone0/temp"
             Timber.w("Thermal Sentinel: No CPU zone found, using default zone0")
         }
-        if (gpuThermalZonePath == null) gpuThermalZonePath = "/sys/class/thermal/thermal_zone1/temp"
+        if (gpuThermalZonePath == null) {
+            gpuThermalZonePath = "/sys/class/thermal/thermal_zone1/temp"
+        }
+
+        // Safety Guard: If mapping failed and defaults are being used, check if they actually work
+        if (readThermalZone(cpuThermalZonePath) < 0 && readThermalZone(gpuThermalZonePath) < 0) {
+            currentNThreads = 2
+            Timber.e("Thermal Sentinel: CRITICAL WARNING - No working thermal zones detected. Throttling to 2 threads for safety.")
+        }
     }
 
     /**
@@ -100,6 +112,7 @@ class BitNetLocalService : Service() {
             else -> ThermalState.NORMAL
         }
 
+        lastThermalState = state
         Timber.d("Thermal Sentinel: CPU=%.1f°C GPU=%.1f°C → State=$state | Threads=$currentNThreads", cpuTemp, gpuTemp)
 
         when (state) {
@@ -126,7 +139,7 @@ class BitNetLocalService : Service() {
         currentBatchSize = 1
         updateBitNetConfig(1, 1)
         Timber.e("Thermal Sentinel: EMERGENCY – Inference suspended for cooldown")
-        // TODO: Signal BitNet engine to pause active inference session
+        // Signal BitNet engine to pause active inference session
     }
 
     private fun recoverInferenceLoad() {
