@@ -5,9 +5,11 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstdlib>
+#include <cstring>
 #include "bitnet.h"
 
-#define TAG "BitNetJNI"
+#define LOG_TAG "ThermalSentinel"
+#define JNI_TAG "BitNetJNI"
 
 // Static instance for the session
 static BitNetModel* model = nullptr;
@@ -17,12 +19,15 @@ static BitNetModel* model = nullptr;
  * Snapdragon 8 Gen 3 thermal values are usually in millidegrees.
  */
 static float readThermalSubstrate(const char* zonePath) {
+    if (zonePath == nullptr) return -1.0f;
+
     int fd = open(zonePath, O_RDONLY);
     if (fd < 0) {
+        __android_log_print(ANDROID_LOG_WARN, LOG_TAG, "Failed to open %s", zonePath);
         return -1.0f;
     }
 
-    char buffer[32];
+    char buffer[64];
     ssize_t bytes = read(fd, buffer, sizeof(buffer) - 1);
     close(fd);
 
@@ -30,7 +35,9 @@ static float readThermalSubstrate(const char* zonePath) {
         buffer[bytes] = '\0';
         char* end;
         long millideg = strtol(buffer, &end, 10);
-        return static_cast<float>(millideg) / 1000.0f;
+        if (end != buffer) {
+            return static_cast<float>(millideg) / 1000.0f;
+        }
     }
     return -1.0f;
 }
@@ -40,8 +47,9 @@ extern "C" {
 JNIEXPORT jfloat JNICALL
 Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_readThermalZone(
     JNIEnv* env,
-    jobject /* this */,
+    jobject /* thiz */,
     jstring zonePath) {
+    if (zonePath == nullptr) return -1.0f;
     const char* path = env->GetStringUTFChars(zonePath, nullptr);
     float temp = readThermalSubstrate(path);
     env->ReleaseStringUTFChars(zonePath, path);
@@ -51,10 +59,11 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_readThermalZone(
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_getThermalZoneType(
     JNIEnv* env,
-    jobject /* this */,
+    jobject /* thiz */,
     jint zoneId) {
     char path[128];
     snprintf(path, sizeof(path), "/sys/class/thermal/thermal_zone%d/type", zoneId);
+
     int fd = open(path, O_RDONLY);
     if (fd < 0) return nullptr;
 
@@ -63,7 +72,6 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_getThermalZoneTy
     close(fd);
 
     if (bytes > 0) {
-        // Remove trailing newline and null terminate
         while (bytes > 0 && (buffer[bytes - 1] == '\n' || buffer[bytes - 1] == '\r')) {
             bytes--;
         }
@@ -86,18 +94,16 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalRes
         model = new BitNetModel("/sdcard/models/bitnet-100b.gguf");
 
         // Thermal/Performance Optimization: Pin to Big Cores (e.g., cores 4-7 on Snapdragon)
-        // We use nThreads to potentially guide the pinning or model config
         cpu_set_t set;
         CPU_ZERO(&set);
-        // Assuming Snapdragon 8 Gen 3: Cores 4-7 are the "Big" cluster
         for (int i = 4; i < 8; ++i) {
             CPU_SET(i, &set);
         }
 
         if (sched_setaffinity(0, sizeof(set), &set) < 0) {
-            __android_log_print(ANDROID_LOG_WARN, TAG, "Failed to set CPU affinity");
+            __android_log_print(ANDROID_LOG_WARN, JNI_TAG, "Failed to set CPU affinity");
         } else {
-            __android_log_print(ANDROID_LOG_INFO, TAG, "Pinned thread to big cores (4-7) with target %d threads", nThreads);
+            __android_log_print(ANDROID_LOG_INFO, JNI_TAG, "Pinned thread to big cores (4-7) with target %d threads", nThreads);
         }
     }
 
