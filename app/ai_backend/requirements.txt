@@ -7,6 +7,7 @@ openai>=1.0.0           # OpenAI SDK (used for NVIDIA Nemotron & MiniMax APIs)
 # Web Framework and API
 flask>=2.3.0
 flask-cors>=4.0.0
+flask-sock>=0.6.0
 gunicorn>=21.0.0
 requests>=2.31.0
 

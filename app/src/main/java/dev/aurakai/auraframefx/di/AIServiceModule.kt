@@ -104,6 +104,8 @@ abstract class AiServiceModule {
             }
 
             override suspend fun syncDatabaseMetadata(): OracleSyncResult {
+                // Simulate stress by delaying
+                kotlinx.coroutines.delay(1200)
                 return OracleSyncResult(
                     success = true,
                     syncedFiles = 78

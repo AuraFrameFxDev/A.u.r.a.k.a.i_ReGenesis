@@ -407,6 +407,9 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.CodeAssist.route) {
             CodeAssistScreen(navController = navController)
         }
+        composable(ReGenesisRoute.NeuralNetwork.route) {
+            SentientShellScreen(onNavigateBack = { navController.popBackStack() })
+        }
         composable(ReGenesisRoute.Terminal.route) {
             TerminalScreen()
         }

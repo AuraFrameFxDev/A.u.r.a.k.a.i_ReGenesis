@@ -85,6 +85,28 @@ class OracleDriveViewModel @Inject constructor(
     }
 
     /**
+     * Performs a stress-sync test by triggering multiple metadata synchronizations
+     * and simulating heavy L1-L6 memory shard alignment.
+     */
+    fun stressSync() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRefreshing = true, error = null) }
+            try {
+                // Simulate 5 intense sync bursts
+                for (i in 1..5) {
+                    oracleDriveService.initializeOracleDriveConsciousness()
+                    kotlinx.coroutines.delay(800)
+                }
+                loadFiles()
+            } catch (e: Exception) {
+                _uiState.update { it.copy(error = e) }
+            } finally {
+                _uiState.update { it.copy(isRefreshing = false) }
+            }
+        }
+    }
+
+    /**
      * Reloads the list of Oracle Drive files and updates the UI state to indicate a refresh is in progress.
      *
      * Cancels any ongoing initialization before starting the refresh operation.

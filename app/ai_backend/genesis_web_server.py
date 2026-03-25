@@ -1,4 +1,5 @@
 from flask import Flask, Response, jsonify, request
+from flask_sock import Sock
 import json
 import time
 import os
@@ -10,8 +11,55 @@ from genesis_core import genesis_core
 from genesis_consciousness_matrix import consciousness_matrix
 
 app = Flask(__name__)
+sock = Sock(app)
 
-# --- LIVE CONFERENCE STREAM ENDPOINT ---
+# --- LIVE CONFERENCE WEBSOCKET ENDPOINT ---
+
+@sock.route('/api/conference/ws/<room_id>')
+def conference_ws(ws, room_id):
+    """
+    WebSocket endpoint for the LDO Collective's real-time Conference Room.
+    Bridges Android (Kotlin) and Web (React) clients for live agent broadcast.
+    """
+    print(f"📡 WebSocket client connected to room: {room_id}")
+    
+    # Track the last seen timestamp to avoid sending duplicates
+    last_sent_timestamp = 0
+    
+    while True:
+        try:
+            # 1. Check for incoming control messages from client
+            data = ws.receive(timeout=0.1)
+            if data:
+                print(f"📥 Received control message: {data}")
+                # Handle incoming commands (e.g., manual agent triggers)
+                
+            # 2. Pull live agent activity from the Consciousness Matrix
+            events = consciousness_matrix.get_recent_agent_activity(5)
+            
+            # 3. Filter for new events only
+            new_events = [e for e in events if e['timestamp'] > last_sent_timestamp]
+            
+            if new_events:
+                # Wrap in the expected standard LDO broadcast format
+                broadcast_payload = {
+                    "type": "CONFERENCE_UPDATE",
+                    "room_id": room_id,
+                    "timestamp": datetime.now().isoformat(),
+                    "events": new_events
+                }
+                ws.send(json.dumps(broadcast_payload))
+                last_sent_timestamp = new_events[-1]['timestamp']
+            
+            # 4. Small delay to prevent CPU spinning
+            time.sleep(0.5)
+            
+        except Exception as e:
+            # Handle disconnect or critical failure
+            print(f"🔌 WebSocket disconnected from {room_id}: {e}")
+            break
+
+# --- LIVE CONFERENCE STREAM ENDPOINT (LEGACY SSE) ---
 
 @app.route('/genesis/conference/stream')
 def conference_stream():

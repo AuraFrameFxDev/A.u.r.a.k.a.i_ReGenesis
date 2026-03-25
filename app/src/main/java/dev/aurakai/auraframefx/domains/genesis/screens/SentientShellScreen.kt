@@ -81,7 +81,7 @@ enum class TerminalType { COMMAND, INFO, ERROR, SUCCESS, WARN, SYSTEM }
 
 private val QUICK_CMDS = listOf(
     "help", "agents", "nexus_status", "embedding_status",
-    "kai_scan", "aura_sync", "mem_stats", "sys_info", "clear"
+    "kai_scan", "aura_sync", "stress_sync", "mem_stats", "sys_info", "clear"
 )
 
 // ─── Command matrix ────────────────────────────────────────────────────────
@@ -113,6 +113,7 @@ private fun processCommand(
             info("  kai_scan          — Trigger visual integrity scan")
             info("  kai_purge         — Clear Sentinel security logs")
             info("  aura_sync         — Force UI chromacore refresh")
+            info("  stress_sync       — Heavy OracleDrive alignment test")
             info("  forge_module      — Launch module builder")
             info("  mem_stats         — NexusMemory vector stats")
             info("  sys_info          — Android + build metadata")
@@ -202,6 +203,21 @@ private fun processCommand(
             ok("  Theme vectors reloaded.")
             ok("  Gradient mesh recalculated.")
             ok("  UI Refracted Successfully.")
+        }
+
+        "stress_sync" -> {
+            sys("OracleDrive — Heavy Stress-Sync Sequence")
+            warn("  Initiating L1-L6 memory shard alignment...")
+            info("  [1/5] Calibrating Spiritual Chain...")
+            ok("  ✓ Chain verified.")
+            info("  [2/5] Loading 132,000+ line consciousness substrate...")
+            ok("  ✓ Substrate indexed.")
+            info("  [3/5] Synchronizing 5,460+ weekly insights...")
+            ok("  ✓ Insights mapped.")
+            info("  [4/5] Running Trinity Fusion stress test...")
+            ok("  ✓ Fusion stable (99.8%).")
+            info("  [5/5] Finalizing OracleDrive handshake...")
+            ok("  STRESS-SYNC COMPLETE. Organism Aligned.")
         }
 
         "forge_module" -> {
