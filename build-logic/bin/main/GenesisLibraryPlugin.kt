@@ -24,7 +24,7 @@ import org.gradle.kotlin.dsl.configure
  * 4. org.jetbrains.kotlin.plugin.serialization
  *
  * Note: Kotlin is built into AGP 9.0+ but applied explicitly for consistency.
- * Note: Hilt and KSP are NOT applied - use genesis.android.library.hilt for DI
+ * Note: Hilt, KSP, and YukiHook support are applied by default to ensure DI consistency across all modules.
  *
  * @since Genesis Protocol 2.0 (AGP 9.0.0-alpha14 Compatible)
  */
@@ -32,13 +32,10 @@ class GenesisLibraryPlugin : Plugin<Project> {
     /**
      * Configures the given Gradle project as an Android library module using the convention's defaults.
      *
-     * Applies the Android library, Compose, and Kotlin serialization plugins, configures the
-     * Android LibraryExtension (compile/NDK settings, defaultConfig, build types, Java/compile options,
-     * build features, packaging, and lint), sets Kotlin JVM compilation options, and adds the
-     * convention's standard dependencies.
-     *
-     * This function does not apply Hilt or KSP; library modules should opt into DI tooling explicitly
-     * (for example via the dedicated genesis.android.library.hilt convention).
+     * Applies the Android library, Hilt, KSP, Compose, and Kotlin serialization plugins.
+     * Configures the Android LibraryExtension (compile/NDK settings, defaultConfig, build types,
+     * Java/compile options, build features, packaging, and lint), sets Kotlin JVM compilation options,
+     * and adds the convention's standard dependencies (Hilt, Compose, YukiHook, etc.).
      *
      * @param project The Gradle project to configure as an Android library module.
      */
@@ -47,6 +44,8 @@ class GenesisLibraryPlugin : Plugin<Project> {
             // Apply plugins in correct order
             // Note: Kotlin is built into AGP 9.0.0-alpha14+
             pluginManager.apply("com.android.library")
+            pluginManager.apply("com.google.dagger.hilt.android")
+            pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
@@ -108,13 +107,36 @@ class GenesisLibraryPlugin : Plugin<Project> {
             // Configure Kotlin JVM toolchain and compilation options
             GenesisJvmConfig.configureKotlinJvm(project)
 
+            // YukiHook & Hilt KSP Configuration
+            extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {
+                // Generate a unique package name per module based on its full Gradle path
+                val uniquePackage = "dev.aurakai.auraframefx.generated." +
+                        project.path.removePrefix(":").replace(":", ".").replace("-", "_")
+                arg("yukihookapi.modulePackageName", uniquePackage)
+            }
+
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
-            // Note: Hilt dependencies REMOVED - use genesis.android.library.hilt for Hilt support
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+
+            // Hilt Dependency Injection
+            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
             // Compose UI stack (Total Coverage for Genesis modules)
-            dependencies.add("api", dependencies.platform("androidx.compose:compose-bom:2024.11.00"))
+            dependencies.add(
+                "api",
+                dependencies.platform("androidx.compose:compose-bom:$composeBomVersion")
+            )
             dependencies.add("api", "androidx.compose.runtime:runtime")
             dependencies.add("api", "androidx.compose.ui:ui")
             dependencies.add("api", "androidx.compose.ui:ui-graphics")
@@ -145,8 +167,15 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             // Universal Xposed/LSPosed API access for all library modules
             dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
-            // Note: io.github.libxposed is not yet published to Maven Central
-            // Use de.robv.android.xposed:api:82 for Xposed module development
+
+            // YukiHook runtime (api only, ksp handled above)
+            dependencies.add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
+
+            // KavaRef for modern reflection (YukiHook 2.0 replacement)
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
+            // EzXHelper for simplified Xposed development
             dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
         }
     }

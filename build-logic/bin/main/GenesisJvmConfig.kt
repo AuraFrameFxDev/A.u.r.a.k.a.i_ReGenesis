@@ -47,7 +47,7 @@ object GenesisJvmConfig {
         with(project) {
             // Configure Kotlin compilation to match Java toolchain
             // MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
-            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+            tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(JvmTarget.JVM_25)
                     freeCompilerArgs.addAll(
