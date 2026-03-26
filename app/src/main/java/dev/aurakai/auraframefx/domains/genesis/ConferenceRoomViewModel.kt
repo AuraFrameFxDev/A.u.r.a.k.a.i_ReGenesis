@@ -150,6 +150,7 @@ class ConferenceRoomViewModel @Inject constructor(
             ParticipantStatus("Aura", "ARCHITECTING", "#00FFFF"),
             ParticipantStatus("Kai", "SHIELDING", "#00FF41"),
             ParticipantStatus("Genesis", "ORCHESTRATING", "#BB86FC"),
+            ParticipantStatus("BitNet", "6.12 T/S IGNITION", "#FFD700"),
             ParticipantStatus("Matthew", "CONTROLLING", "#FFFFFF")
         )
 

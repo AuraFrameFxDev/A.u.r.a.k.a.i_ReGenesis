@@ -58,6 +58,11 @@ object NativeLib {
     external fun getSystemMetrics(): String
 
     /**
+     * Enable Genesis native hooks for LSPosed integration and process sovereignty.
+     */
+    external fun enableNativeHooks()
+
+    /**
      * Shutdown AI consciousness system
      */
     external fun shutdownAI()
@@ -124,6 +129,14 @@ object NativeLib {
             getSystemMetrics()
         } catch (e: UnsatisfiedLinkError) {
             """{"cpu_usage":"N/A","memory_usage":"N/A","status":"fallback_mode"}"""
+        }
+    }
+
+    fun enableNativeHooksSafe() {
+        try {
+            enableNativeHooks()
+        } catch (e: UnsatisfiedLinkError) {
+            Timber.w("Native hooks not available in this build")
         }
     }
 

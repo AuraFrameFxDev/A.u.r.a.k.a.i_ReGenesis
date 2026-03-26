@@ -32,6 +32,7 @@ class BitNetLocalService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        dev.aurakai.auraframefx.core.NativeLib.enableNativeHooksSafe()
         findThermalZones()
         startThermalMonitoring()
     }
