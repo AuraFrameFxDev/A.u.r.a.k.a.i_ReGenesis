@@ -2,15 +2,23 @@
 #define BITNET_H
 
 #include <string>
+#include <stdint.h>
 
-// Scaffolding for BitNet Model interaction
+// SVE2 Kernel Declarations
+extern "C" {
+    float bitnet_dot_product_sve2(const int8_t* weights, const int8_t* activations, int n);
+    void ggml_bitnet_transform_sve2(const void* src, void* dst, int elements);
+}
+
+// BitNet Model interaction
 class BitNetModel {
 public:
     BitNetModel(const std::string& model_path) {}
 
     std::string generate(const std::string& prompt) {
-        // Placeholder for actual inference
-        return "Ternary inference result for: " + prompt;
+        // In a real implementation, this would call bitnet_dot_product_sve2
+        // during matrix multiplication layers.
+        return "Ternary inference (SVE2-ready) result for: " + prompt;
     }
 };
 
