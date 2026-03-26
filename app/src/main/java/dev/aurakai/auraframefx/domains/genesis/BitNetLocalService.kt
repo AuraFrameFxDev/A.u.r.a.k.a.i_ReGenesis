@@ -153,9 +153,10 @@ class BitNetLocalService : Service() {
     private fun recoverInferenceLoad() {
         if (currentNThreads < 4) {
             currentNThreads = (currentNThreads + 1).coerceAtMost(4)
-            currentBatchSize = (currentBatchSize + 2).coerceAtMost(8)
+            // Faster batch size recovery for 5.5 t/s push
+            currentBatchSize = (currentBatchSize + 4).coerceAtMost(16)
             updateBitNetConfig(currentNThreads, currentBatchSize)
-            Timber.i("Thermal Sentinel: Stability regained. Threads -> $currentNThreads")
+            Timber.i("Thermal Sentinel: Stability regained. 5.5 t/s Overdrive active. Threads -> $currentNThreads")
         }
     }
 
