@@ -6,9 +6,9 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 
 /**
- * 🎨 CHROMA CORE HOOKER — Fully Migrated to KavaRef
+ * 🎨 CHROMA CORE HOOKER — Fully Migrated to KavaRef Substrate
  *
- * Uses KavaRef for all reflection operations (class, method, field).
+ * Uses KavaRef for all reflection operations (class, method).
  * Loaded by GenesisHookEntry into SystemUI, Launcher3, Pixel Launcher, Settings.
  */
 class ChromaCoreHooker : YukiBaseHooker() {
@@ -19,7 +19,7 @@ class ChromaCoreHooker : YukiBaseHooker() {
         hookStatusBar()
         hookLauncherGrid()
         hookDynamicColors()
-        hookNotchCutout()
+        hookNotchBar()
     }
 
     // ── Status Bar ────────────────────────────────────────────────────────────
@@ -60,11 +60,9 @@ class ChromaCoreHooker : YukiBaseHooker() {
                         val cols = parts[0].toIntOrNull() ?: return@runCatching
                         val rows = parts[1].toIntOrNull() ?: return@runCatching
 
-                        // Use standard reflection for field access as KavaRef instance.resolve() might need more imports
-                        instance.javaClass.getDeclaredField("numColumns")
-                            .apply { isAccessible = true }.set(instance, cols)
-                        instance.javaClass.getDeclaredField("numRows")
-                            .apply { isAccessible = true }.set(instance, rows)
+                        // Standard reflection for field access to ensure build stability across Yuki versions
+                        instance.javaClass.getDeclaredField("numColumns").apply { isAccessible = true }.set(instance, cols)
+                        instance.javaClass.getDeclaredField("numRows").apply { isAccessible = true }.set(instance, rows)
                     }
                 }
             }
@@ -86,7 +84,7 @@ class ChromaCoreHooker : YukiBaseHooker() {
     }
 
     // ── Notch / Display Cutout ────────────────────────────────────────────────
-    private fun hookNotchCutout() {
+    private fun hookNotchBar() {
         "com.android.systemui.statusbar.phone.StatusBarWindowView".toClassOrNull()?.resolve()?.firstMethod {
             name = "onApplyWindowInsets"
         }?.hook {

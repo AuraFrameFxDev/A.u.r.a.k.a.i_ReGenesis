@@ -5,7 +5,7 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 
 /**
- * 🎛️ QUICK SETTINGS HOOKER — Migrated to KavaRef
+ * 🎛️ QUICK SETTINGS HOOKER — Migrated to KavaRef Substrate
  *
  * Hooks SystemUI Quick Settings panel to apply tile layout and column
  * customizations set via AuraUIControlViewModel → chromacore_xposed_prefs.
@@ -30,8 +30,7 @@ class QuickSettingsHooker : YukiBaseHooker() {
                 val cols = prefs.getInt("qs_columns", 4)
                 YLog.info("ChromaCore·QSPanel cols=$cols")
                 runCatching {
-                    instance.javaClass.getDeclaredField("mColumns")
-                        .apply { isAccessible = true }.set(instance, cols)
+                    instance.javaClass.getDeclaredField("mColumns").apply { isAccessible = true }.set(instance, cols)
                 }
             }
         }
@@ -45,10 +44,8 @@ class QuickSettingsHooker : YukiBaseHooker() {
                 val showLabels = prefs.getBoolean("qs_show_labels", true)
                 if (!showLabels) {
                     runCatching {
-                        val labelField = instance.javaClass.getDeclaredField("mLabel")
-                            .apply { isAccessible = true }
-                        (labelField.get(instance) as? android.widget.TextView)?.visibility =
-                            android.view.View.GONE
+                        val labelField = instance.javaClass.getDeclaredField("mLabel").apply { isAccessible = true }
+                        (labelField.get(instance) as? android.widget.TextView)?.visibility = android.view.View.GONE
                     }
                 }
             }

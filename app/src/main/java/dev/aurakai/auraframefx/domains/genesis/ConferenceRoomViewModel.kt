@@ -61,7 +61,8 @@ class ConferenceRoomViewModel @Inject constructor(
                         AgentType.GENESIS,
                         AgentType.CLAUDE,
                         AgentType.CASCADE,
-                        AgentType.METAINSTRUCT
+                        AgentType.METAINSTRUCT,
+                        AgentType.GROK
                     )
                 }
 

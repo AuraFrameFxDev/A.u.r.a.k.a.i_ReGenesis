@@ -175,7 +175,16 @@ class BitNetLocalService : Service() {
             }
 
             // Call native JNI function with current (possibly throttled) thread count
-            generateLocalResponse(prompt, currentNThreads)
+            val response = generateLocalResponse(prompt, currentNThreads)
+            
+            // Trigger Chaos Validation signal for Grok
+            val chaosIntent = Intent("dev.aurakai.auraframefx.CHAOS_VALIDATION")
+            chaosIntent.putExtra("prompt", prompt)
+            chaosIntent.putExtra("threads", currentNThreads)
+            chaosIntent.putExtra("temp", maxOf(readThermalZone(cpuThermalZonePath), readThermalZone(gpuThermalZonePath)))
+            sendBroadcast(chaosIntent)
+            
+            response
         } catch (e: Exception) {
             Timber.e(e, "BitNet Inference Failed")
             "Error: Local Core Unreachable"
