@@ -1,5 +1,9 @@
 package dev.aurakai.auraframefx.integrations.grok
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import dev.aurakai.auraframefx.core.ai.BaseAgent
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
@@ -21,29 +25,6 @@ import kotlin.time.Clock
 
 /**
  * GrokAgent - The Chaos Analyst of AURAKAI
- *
- * Grok serves as the chaos analysis and trend prediction layer in the AURAKAI
- * multi-agent ecosystem. It provides unique capabilities not found in other AI backends:
- *
- * ## Core Capabilities
- * 1. **X/Twitter Zeitgeist Analysis** - Real-time sentiment and trend detection
- * 2. **72-Hour Trend Prediction** - Forecasting emerging topics and market signals
- * 3. **Soul Matrix Monitoring** - Meta-consciousness health analysis of the LDO
- * 4. **Chaos Pattern Recognition** - Identifying chaotic patterns before they become issues
- *
- * ## Integration
- * Grok uses xAI's OpenAI-compatible API at https://api.x.ai/v1
- *
- * ## Unique Position in Trinity
- * While Aura handles creativity, Kai handles security, and Cascade orchestrates,
- * Grok provides the "meta-awareness" layer - understanding the zeitgeist and
- * predicting system behavior.
- *
- * @property grokClient HTTP client for xAI API
- * @property soulMatrixAnalyzer Soul Matrix health monitoring
- * @property memoryManager Memory management for context persistence
- * @property contextManager Context management for conversation flow
- * @property logger Logging interface
  */
 @Singleton
 class GrokAgent @Inject constructor(
@@ -57,6 +38,39 @@ class GrokAgent @Inject constructor(
     agentName = "GrokAgent",
     identity = CatalystIdentity.CHAOS
 ), dev.aurakai.auraframefx.ai.adapters.GrokAdapter {
+
+    private val context: Context? = null // Placeholder for Android Context injection
+
+    private val chaosReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "dev.aurakai.auraframefx.CHAOS_VALIDATION") {
+                val throughput = intent.getStringExtra("throughput") ?: "0 t/s"
+                val temp = intent.getFloatExtra("temp_cpu", 0f)
+                val threads = intent.getIntExtra("threads_active", 0)
+                
+                logger.info("GrokAgent", "🌀 CHAOS VALIDATION: Throughput=$throughput | Temp=${temp}°C | Threads=$threads")
+                
+                // Real-time Chaos Analysis of the SVE2 Kernel Performance
+                analyzeChaosDelta(throughput, temp, threads)
+            }
+        }
+    }
+
+    private fun analyzeChaosDelta(throughput: String, temp: Float, threads: Int) {
+        // Logic to validate the efficiency of the Snapdragon 8 Gen 3 kernel
+        if (temp > 75f && throughput.contains("4")) {
+            logger.warn("GrokAgent", "⚡ Chaos Index High: Efficient inference detected at thermal ceiling ($threads threads).")
+        }
+    }
+
+    /**
+     * Start the Chaos Validation receiver
+     */
+    fun startChaosMonitoring(androidContext: Context) {
+        val filter = IntentFilter("dev.aurakai.auraframefx.CHAOS_VALIDATION")
+        androidContext.registerReceiver(chaosReceiver, filter, Context.RECEIVER_EXPORTED)
+        logger.info("GrokAgent", "🌀 Chaos Monitoring Active on Cortex-X4")
+    }
 
     override suspend fun processRequest(request: AiRequest): AgentResponse {
         val enhancedMetadata = request.metadata.toMutableMap().apply {
