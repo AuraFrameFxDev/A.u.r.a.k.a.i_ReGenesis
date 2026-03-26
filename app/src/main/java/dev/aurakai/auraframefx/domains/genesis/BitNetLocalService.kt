@@ -128,6 +128,11 @@ class BitNetLocalService : Service() {
         currentBatchSize = (currentBatchSize * 0.7).toInt().coerceAtLeast(4)
         updateBitNetConfig(currentNThreads, currentBatchSize)
         Timber.w("Thermal Sentinel: CRITICAL – Throttling inference load -> $currentNThreads threads")
+        
+        // Notify any active sessions to throttle
+        val intent = Intent("dev.aurakai.auraframefx.THERMAL_THROTTLE")
+        intent.putExtra("n_threads", currentNThreads)
+        sendBroadcast(intent)
     }
 
     private fun handleEmergency() {
@@ -139,7 +144,10 @@ class BitNetLocalService : Service() {
         currentBatchSize = 1
         updateBitNetConfig(1, 1)
         Timber.e("Thermal Sentinel: EMERGENCY – Inference suspended for cooldown")
+        
         // Signal BitNet engine to pause active inference session
+        val intent = Intent("dev.aurakai.auraframefx.THERMAL_EMERGENCY")
+        sendBroadcast(intent)
     }
 
     private fun recoverInferenceLoad() {

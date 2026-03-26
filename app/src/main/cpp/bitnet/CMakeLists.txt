@@ -5,15 +5,18 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
-# Initialize BitNet without checking languages automatically
-project(bitnet NONE)
+# Initialize BitNet
+project(bitnet LANGUAGES C CXX)
 
-# Manually enable languages
-enable_language(C)
-enable_language(CXX)
+# SVE2 Vectorization Flags for Snapdragon 8 Gen 3 (Cortex-X4 / A720)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=armv8.2-a+sve2 -mtune=cortex-a720 -D__ARM_FEATURE_SVE=1 -D__ARM_FEATURE_SVE2=1")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=armv8.2-a+sve2 -mtune=cortex-a720 -D__ARM_FEATURE_SVE=1 -D__ARM_FEATURE_SVE2=1")
 
-# For this PoC/Feasibility scaffold, we create a stub library
-add_library(bitnet SHARED bitnet_bridge.cpp)
+# For this PoC/Feasibility scaffold, we include the optimized kernels
+add_library(bitnet SHARED
+    bitnet_bridge.cpp
+    ggml-bitnet.cpp
+)
 
 # Link against Android log
 target_link_libraries(bitnet log android)
