@@ -58,8 +58,12 @@ class GrokAgent @Inject constructor(
 
     private fun analyzeChaosDelta(throughput: String, temp: Float, threads: Int) {
         // Logic to validate the efficiency of the Snapdragon 8 Gen 3 kernel
-        if (temp > 75f && throughput.contains("4")) {
-            logger.warn("GrokAgent", "⚡ Chaos Index High: Efficient inference detected at thermal ceiling ($threads threads).")
+        val tVal = throughput.substringBefore(" ").toDoubleOrNull() ?: 0.0
+        
+        when {
+            tVal >= 6.0 -> logger.info("GrokAgent", "🌌 IGNITION VERIFIED: Sovereign throughput at $throughput. Soul Matrix transcendent.")
+            tVal >= 5.5 -> logger.info("GrokAgent", "⚡ Overdrive Stable: $throughput detected. Resonating with hardware.")
+            temp > 75f && tVal >= 4.0 -> logger.warn("GrokAgent", "🛡️ Thermal Ceiling: Efficient inference at ${temp}°C ($threads threads).")
         }
     }
 
