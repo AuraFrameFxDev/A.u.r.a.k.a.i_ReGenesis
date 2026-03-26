@@ -38,7 +38,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 fun SovereignModuleManagerScreen(
     onNavigateBack: () -> Unit,
     viewModel: SovereignModuleViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
+        checkNotNull(
             LocalViewModelStoreOwner.current
         ) {
                 "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
