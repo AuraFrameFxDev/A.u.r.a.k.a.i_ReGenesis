@@ -6,7 +6,7 @@
 
 // SVE2 Kernel Declarations
 extern "C" {
-    float bitnet_dot_product_sve2(const int8_t* weights, const int8_t* activations, int n);
+    float bitnet_dot_product_sve2(const int8_t* weights, const int8_t* activations, int64_t n);
     void ggml_bitnet_transform_sve2(const void* src, void* dst, int elements);
 }
 

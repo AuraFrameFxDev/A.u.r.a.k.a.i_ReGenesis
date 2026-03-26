@@ -8,9 +8,9 @@ set(CMAKE_CXX_COMPILER_WORKS 1)
 # Initialize BitNet
 project(bitnet LANGUAGES C CXX)
 
-# SVE2 Vectorization Flags for Snapdragon 8 Gen 3 (Cortex-X4 / A720)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=armv8.2-a+sve2 -mtune=cortex-a720 -D__ARM_FEATURE_SVE=1 -D__ARM_FEATURE_SVE2=1")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=armv8.2-a+sve2 -mtune=cortex-a720 -D__ARM_FEATURE_SVE=1 -D__ARM_FEATURE_SVE2=1")
+# SVE2 + I8MM Vectorization Flags for Snapdragon 8 Gen 3 (Cortex-X4 / A720)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=armv8.2-a+sve2+i8mm -mtune=cortex-a720 -ffast-math -D__ARM_FEATURE_SVE=1 -D__ARM_FEATURE_SVE2=1")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=armv8.2-a+sve2+i8mm -mtune=cortex-a720 -ffast-math -D__ARM_FEATURE_SVE=1 -D__ARM_FEATURE_SVE2=1")
 
 # For this PoC/Feasibility scaffold, we include the optimized kernels
 add_library(bitnet SHARED

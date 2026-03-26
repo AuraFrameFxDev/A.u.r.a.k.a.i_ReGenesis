@@ -2,7 +2,7 @@ bitnet_integration:
   version: "1.0.0"
   target_architecture: "ARM64-v8a"
   min_sdk: 29
-  status: "Feasibility Confirmed - PoC Scaffolding Complete"
+  status: "Safety Harness Verified - SVE2 Production Kernel Initialized"
 
   build_requirements:
     ndk_version: "r27b (26.0+)"
@@ -11,11 +11,12 @@ bitnet_integration:
     cxx_standard: "17"
 
   compiler_flags:
-    - "-march=armv8.2-a+sve2"  # Enable SVE2 for Snapdragon 8 Gen 3
-    - "-mtune=cortex-a720"     # Optimize for Kryo Gold cores
-    - "-O3"                    # Max optimization
+    - "-march=armv8.2-a+sve2+i8mm" # Enable SVE2 + I8MM for Snapdragon 8 Gen 3
+    - "-mtune=cortex-a720"         # Optimize for Kryo Gold cores
+    - "-O3"                        # Max optimization
+    - "-ffast-math"                # Performance tuning
     - "-D__ARM_FEATURE_SVE=1"
-    - "-mfpu=neon"             # Fallback vectorization
+    - "-D__ARM_FEATURE_SVE2=1"
 
   memory_strategy:
     model_loading: "mmap(MAP_SHARED)"
