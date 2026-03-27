@@ -12,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 
 // ── Aura (screens/uxui_engine) ────────────────────────────────────────────────
@@ -641,7 +642,10 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.ArbitersOfCreation.route) {
             ArbitersOfCreationScreen(onNavigateBack = { navController.popBackStack() })
         }
-        composable(ReGenesisRoute.PandoraBox.route) {
+        composable(
+            route = ReGenesisRoute.PandoraBox.route,
+            deepLinks = listOf(navDeepLink { uriPattern = "aurakai://pandora_box" })
+        ) {
             PandoraBoxScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(

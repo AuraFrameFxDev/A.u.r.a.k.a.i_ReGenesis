@@ -5,6 +5,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import dev.aurakai.auraframefx.domains.kai.security.veto.PredictiveVetoMonitor
+import dev.aurakai.auraframefx.sovereignty.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -26,7 +27,7 @@ class PandoraBoxServiceImpl @Inject constructor(
     private val predictiveVetoMonitor: PredictiveVetoMonitor,
     @PandoraPreferences private val securePrefs: SecurePreferences,
     // Fix #4 — use injected @ApplicationScope instead of leaked internal scope
-    @dev.aurakai.auraframefx.sovereignty.ApplicationScope private val appScope: CoroutineScope
+    @ApplicationScope private val appScope: CoroutineScope
 ) : PandoraBoxService {
 
     private val _currentState = MutableStateFlow(loadState())

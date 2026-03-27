@@ -72,7 +72,12 @@ fun PandoraBoxScreen(
                     .clip(RoundedCornerShape(24.dp))
                     .background(Color.Black)
                     .border(2.dp, currentGlowColor, RoundedCornerShape(24.dp))
-                    .shadow(if (uiState.currentTier != UnlockTier.Sealed) 40.dp else 0.dp, currentGlowColor.copy(alpha = 0.5f)),
+                    .shadow(
+                        elevation = if (uiState.currentTier != UnlockTier.Sealed) 40.dp else 0.dp,
+                        shape = RoundedCornerShape(24.dp),
+                        ambientColor = currentGlowColor,
+                        spotColor = currentGlowColor
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
