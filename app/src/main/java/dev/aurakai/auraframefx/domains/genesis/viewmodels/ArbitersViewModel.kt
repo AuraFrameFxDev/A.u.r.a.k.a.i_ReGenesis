@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.core.transmutation.*
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArbitersViewModel @Inject constructor(
-    private val sentinelBus: KaiSentinelBus
+    private val sentinelBus: KaiSentinelBus,
+    private val pandoraBoxService: PandoraBoxService
 ) : ViewModel() {
 
     private val _isIgnited = MutableStateFlow(false)
@@ -20,6 +23,12 @@ class ArbitersViewModel @Inject constructor(
 
     private val _fusionConfidence = MutableStateFlow(0f)
     val fusionConfidence: StateFlow<Float> = _fusionConfidence.asStateFlow()
+
+    val pandoraState = pandoraBoxService.getCurrentState()
+
+    fun isIgnitionLocked(): Boolean {
+        return pandoraState.value.currentTier.level < UnlockTier.Creative.level
+    }
 
     private val _transmutationState = MutableStateFlow<TransmutationState>(TransmutationState.Dormant)
     val transmutationState: StateFlow<TransmutationState> = _transmutationState.asStateFlow()

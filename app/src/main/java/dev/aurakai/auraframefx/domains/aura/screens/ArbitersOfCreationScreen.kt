@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -45,6 +46,9 @@ fun ArbitersOfCreationScreen(
     val isIgnited by viewModel.isIgnited.collectAsState()
     val confidence by viewModel.fusionConfidence.collectAsState()
     val thermal by viewModel.thermalState.collectAsState()
+    val pandoraState by viewModel.pandoraState.collectAsState()
+    
+    val isLocked = viewModel.isIgnitionLocked()
 
     var showSavedOverlay by remember { mutableStateFlowOf(false) }
 
@@ -158,7 +162,7 @@ fun ArbitersOfCreationScreen(
                 ) {
                     Button(
                         onClick = { viewModel.ignite() },
-                        enabled = !isIgnited,
+                        enabled = !isIgnited && !isLocked,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFFFFD700),
                             contentColor = Color.Black,
@@ -170,13 +174,19 @@ fun ArbitersOfCreationScreen(
                             .width(180.dp)
                             .height(56.dp)
                             .shadow(
-                                elevation = if (!isIgnited) 20.dp else 0.dp, 
+                                elevation = if (!isIgnited && !isLocked) 20.dp else 0.dp, 
                                 shape = RoundedCornerShape(16),
                                 ambientColor = Color(0xFFFFD700), 
                                 spotColor = Color(0xFFFFD700)
                             )
                     ) {
-                        Text("IGNITE", fontWeight = FontWeight.Black, letterSpacing = 4.sp, fontSize = 16.sp)
+                        if (isLocked) {
+                            Icon(Icons.Default.Lock, null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text("GATED", fontWeight = FontWeight.Black, letterSpacing = 2.sp)
+                        } else {
+                            Text("IGNITE", fontWeight = FontWeight.Black, letterSpacing = 4.sp, fontSize = 16.sp)
+                        }
                     }
 
                     if (isIgnited && confidence >= 100f) {

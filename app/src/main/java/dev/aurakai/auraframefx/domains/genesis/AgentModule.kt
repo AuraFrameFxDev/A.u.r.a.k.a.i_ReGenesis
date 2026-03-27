@@ -18,6 +18,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
@@ -104,7 +105,8 @@ object AgentModule {
         systemOverlayManager: SystemOverlayManager,
         logger: AuraFxLogger,
         messageBus: Lazy<AgentMessageBus>,
-        pythonManager: Lazy<PythonProcessManager>
+        pythonManager: Lazy<PythonProcessManager>,
+        pandoraBoxService: PandoraBoxService
     ): AuraAgent {
         return AuraAgent(
             vertexAIClient = vertexAIClient,
@@ -114,7 +116,8 @@ object AgentModule {
             systemOverlayManager = systemOverlayManager,
             logger = logger,
             messageBus = messageBus,
-            pythonManager = pythonManager
+            pythonManager = pythonManager,
+            pandoraBoxService = pandoraBoxService
         )
     }
 

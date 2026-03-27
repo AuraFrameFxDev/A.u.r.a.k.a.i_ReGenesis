@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +29,17 @@ class RomToolsViewModel @Inject constructor(
     val romToolsState: StateFlow<RomToolsState> = romToolsManager.romToolsState
     val operationProgress: StateFlow<OperationProgress?> = romToolsManager.operationProgress
     val pandoraState = pandoraBoxService.getCurrentState()
+
+    fun isOperationLocked(operation: RomOperation): Boolean {
+        val tier = pandoraState.value.currentTier.level
+        return when (operation) {
+            is RomOperation.FlashRom, is RomOperation.RestoreBackup, is RomOperation.CreateBackup -> 
+                tier < UnlockTier.System.level
+            is RomOperation.UnlockBootloader, is RomOperation.GenesisOptimizations -> 
+                tier < UnlockTier.Sovereign.level
+            else -> false
+        }
+    }
 
     private val _lastResponse = MutableStateFlow<AgentResponse?>(null)
     val lastResponse: StateFlow<AgentResponse?> = _lastResponse.asStateFlow()
