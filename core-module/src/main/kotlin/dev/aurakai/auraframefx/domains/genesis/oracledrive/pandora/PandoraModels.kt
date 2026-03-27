@@ -15,7 +15,7 @@ sealed class UnlockTier {
     @Serializable
     object Sovereign : UnlockTier()
 
-    val level: Int get() = when(this) {
+    val level: Int get() = when (this) {
         is Sealed -> 0
         is Creative -> 1
         is System -> 2
@@ -41,7 +41,8 @@ data class PandoraAuditEvent(
 
 interface PandoraBoxService {
     fun getCurrentState(): StateFlow<PandoraBoxState>
-    fun requestUnlock(tier: UnlockTier, userConsent: Boolean): UnlockResult
+    fun getAuditLog(): StateFlow<List<PandoraAuditEvent>>   // Fix #2 — expose log as Flow
+    suspend fun requestUnlock(tier: UnlockTier, userConsent: Boolean): UnlockResult  // Fix #3 — suspend
     fun lockBox(): Boolean
     fun isCapabilityUnlocked(capability: AgentCapabilityCategory): Boolean
 }

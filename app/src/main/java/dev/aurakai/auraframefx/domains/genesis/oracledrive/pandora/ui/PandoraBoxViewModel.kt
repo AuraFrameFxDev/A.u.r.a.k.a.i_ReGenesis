@@ -9,13 +9,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-enum class PandoraConsentState {
-    Idle,
-    ConsentPending,
-    Validating,
-    Unlocked,
-    Denied
-}
+enum class PandoraConsentState { Idle, ConsentPending, Validating, Unlocked, Denied }
 
 data class PandoraBoxUiState(
     val currentTier: UnlockTier = UnlockTier.Sealed,
@@ -32,47 +26,47 @@ class PandoraBoxViewModel @Inject constructor(
     private val _consentState = MutableStateFlow(PandoraConsentState.Idle)
     private val _feedbackMessage = MutableStateFlow<String?>(null)
 
+    // Fix #1 — ticker forces timeRemainingMs to recompute every second
+    private val ticker: Flow<Unit> = flow {
+        while (true) {
+            emit(Unit)
+            delay(1000)
+        }
+    }
+
     val uiState: StateFlow<PandoraBoxUiState> = combine(
         pandoraService.getCurrentState(),
         _consentState,
-        _feedbackMessage
-    ) { state, consent, msg ->
+        _feedbackMessage,
+        ticker  // drives live countdown
+    ) { state, consent, msg, _ ->
         PandoraBoxUiState(
             currentTier = state.currentTier,
-            timeRemainingMs = maxOf(0, state.expiryTimestamp - System.currentTimeMillis()),
+            timeRemainingMs = maxOf(0L, state.expiryTimestamp - System.currentTimeMillis()),
             consentState = consent,
             feedbackMessage = msg
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PandoraBoxUiState())
 
-    private val _auditLog = MutableStateFlow<List<PandoraAuditEvent>>(emptyList())
-    val auditLog: StateFlow<List<PandoraAuditEvent>> = _auditLog.asStateFlow()
+    // Fix #2 — wired to live StateFlow from service, terminal panel now populates
+    val auditLog: StateFlow<List<PandoraAuditEvent>> = pandoraService
+        .getAuditLog()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    init {
-        // Poll for time remaining update
-        viewModelScope.launch {
-            while (true) {
-                delay(1000)
-                // Flow will naturally update via combine
-            }
-        }
-    }
-
-    fun requestUnlock(tier: UnlockTier) {
-        _consentState.value = PandoraConsentState.ConsentPending
-    }
+    // Fix #7 — removed dead requestUnlock() that never used its tier param
+    // Screen calls confirmConsent() directly — that's the correct entry point
 
     fun confirmConsent(tier: UnlockTier) {
         viewModelScope.launch {
             _consentState.value = PandoraConsentState.Validating
             _feedbackMessage.value = "Validating provenance chain..."
-            delay(1500) // Aesthetic delay for validation
+            delay(1200) // aesthetic delay — feels like real validation
 
-            val result = pandoraService.requestUnlock(tier, true)
-            when (result) {
+            // Fix #3 — requestUnlock is now suspend, runs on IO in impl
+            when (val result = pandoraService.requestUnlock(tier, true)) {
                 is UnlockResult.Success -> {
                     _consentState.value = PandoraConsentState.Unlocked
-                    _feedbackMessage.value = "Pandora's Box opened: ${tier.javaClass.simpleName} tier."
+                    _feedbackMessage.value = "Pandora's Box opened: ${tier::class.simpleName} tier."
                 }
                 is UnlockResult.Denied -> {
                     _consentState.value = PandoraConsentState.Denied
