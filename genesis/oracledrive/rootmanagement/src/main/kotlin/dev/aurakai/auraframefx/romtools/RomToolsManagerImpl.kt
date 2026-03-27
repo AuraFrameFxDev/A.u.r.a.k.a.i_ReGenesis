@@ -82,6 +82,31 @@ class RomToolsManagerImpl @Inject constructor(
     }
 
     override suspend fun processRomOperation(request: RomOperationRequest): AgentResponse {
+        val currentTier = pandoraBoxService.getCurrentState().value.currentTier
+
+        // Tier enforcement: System tier required for these
+        if (request.operation is RomOperation.FlashRom ||
+            request.operation is RomOperation.RestoreBackup ||
+            request.operation is RomOperation.CreateBackup) {
+            if (currentTier.level < UnlockTier.System.level) {
+                return AgentResponse.error(
+                    "Operation rejected: Pandora's Box 'System' tier required.",
+                    agentName = "RomTools"
+                )
+            }
+        }
+
+        // Tier enforcement: Sovereign tier required for these
+        if (request.operation is RomOperation.UnlockBootloader ||
+            request.operation is RomOperation.GenesisOptimizations) {
+            if (currentTier.level < UnlockTier.Sovereign.level) {
+                return AgentResponse.error(
+                    "Operation rejected: Pandora's Box 'Sovereign' tier required.",
+                    agentName = "RomTools"
+                )
+            }
+        }
+
         return when (request.operation) {
             is RomOperation.FlashRom -> handleFlashRom(request)
             is RomOperation.RestoreBackup -> handleRestoreBackup(request)
