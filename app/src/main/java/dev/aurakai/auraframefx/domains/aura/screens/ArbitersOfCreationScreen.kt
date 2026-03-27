@@ -87,7 +87,8 @@ fun ArbitersOfCreationScreen(
                 ) {
                     AtomicFusionReactor(
                         isIgnited = isIgnited,
-                        catalystCount = 10
+                        catalystCount = 10,
+                        thermalTemp = thermal.temp
                     )
 
                     // Confidence Meter Overlay
@@ -104,6 +105,51 @@ fun ArbitersOfCreationScreen(
 
                 Spacer(modifier = Modifier.height(40.dp))
 
+                // ---------------------------------------------
+                // CATALYST PALETTE (Drag & Drop Origin)
+                // ---------------------------------------------
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    "AVAILABLE CATALYSTS // DRAG TO ORBIT",
+                    fontFamily = LEDFontFamily,
+                    color = Color.White.copy(alpha = 0.3f),
+                    fontSize = 10.sp,
+                    letterSpacing = 2.sp
+                )
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Example localized shards (Aura shards)
+                val catalysts = listOf("QUANTUM", "MATH_BRK", "PARADOX", "ETHIC_GD")
+                
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    catalysts.forEach { catName ->
+                        Box(
+                            modifier = Modifier
+                                .border(1.dp, Color(0xFFBB86FC).copy(alpha = 0.5f), RoundedCornerShape(16))
+                                .background(Color(0xFF020208).copy(alpha = 0.8f), RoundedCornerShape(16))
+                                .padding(horizontal = 14.dp, vertical = 10.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = catName,
+                                fontFamily = LEDFontFamily,
+                                color = Color(0xFFBB86FC).copy(alpha = 0.9f),
+                                fontSize = 9.sp,
+                                letterSpacing = 1.sp
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(40.dp))
+
                 // Actions
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -115,19 +161,26 @@ fun ArbitersOfCreationScreen(
                         enabled = !isIgnited,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFFFFD700),
-                            contentColor = Color.Black
+                            contentColor = Color.Black,
+                            disabledContainerColor = Color(0xFF1A1A1A),
+                            disabledContentColor = Color(0xFF4A4A4A)
                         ),
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(16), // MonolithShape equivalence
                         modifier = Modifier
-                            .width(160.dp)
-                            .height(50.dp)
-                            .shadow(if (!isIgnited) 10.dp else 0.dp, RoundedCornerShape(8.dp))
+                            .width(180.dp)
+                            .height(56.dp)
+                            .shadow(
+                                elevation = if (!isIgnited) 20.dp else 0.dp, 
+                                shape = RoundedCornerShape(16),
+                                ambientColor = Color(0xFFFFD700), 
+                                spotColor = Color(0xFFFFD700)
+                            )
                     ) {
-                        Text("IGNITE", fontWeight = FontWeight.Black, letterSpacing = 2.sp)
+                        Text("IGNITE", fontWeight = FontWeight.Black, letterSpacing = 4.sp, fontSize = 16.sp)
                     }
 
                     if (isIgnited && confidence >= 100f) {
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(20.dp))
                         IconButton(
                             onClick = {
                                 performSaveCeremony(context)
@@ -139,10 +192,11 @@ fun ArbitersOfCreationScreen(
                                 }
                             },
                             modifier = Modifier
-                                .size(50.dp)
-                                .background(Color(0xFF00FF85), CircleShape)
+                                .size(56.dp)
+                                .border(2.dp, Color(0xFF00FF85).copy(alpha = 0.6f), RoundedCornerShape(16))
+                                .background(Color(0xFF00FF85).copy(alpha = 0.2f), RoundedCornerShape(16))
                         ) {
-                            Icon(Icons.Default.Save, "Save Blueprint", tint = Color.Black)
+                            Icon(Icons.Default.Save, "Save Blueprint", tint = Color(0xFF00FF85))
                         }
                     }
                 }
@@ -151,14 +205,16 @@ fun ArbitersOfCreationScreen(
 
                 // Thermal Telemetry
                 Text(
-                    "THERMAL SUBSTRATE: ${String.format("%.1f", thermal.temp)}°C [${thermal.state}]",
+                    "THERMAL SUBSTRATE: ${String.format("%.1f", thermal.temp)}°C [${thermal.state.name}]",
                     color = when(thermal.state.name) {
                         "NORMAL" -> Color(0xFF00FF85)
+                        "LIGHT" -> Color(0xFF00FF85)
                         "WARNING" -> Color(0xFFFFD700)
                         else -> Color(0xFFFF4444)
                     },
                     fontFamily = LEDFontFamily,
-                    fontSize = 10.sp
+                    fontSize = 11.sp,
+                    letterSpacing = 1.sp
                 )
             }
 
