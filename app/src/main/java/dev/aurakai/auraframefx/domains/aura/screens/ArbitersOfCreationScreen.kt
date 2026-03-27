@@ -196,7 +196,7 @@ fun ArbitersOfCreationScreen(
                                 .border(2.dp, Color(0xFF00FF85).copy(alpha = 0.6f), RoundedCornerShape(16))
                                 .background(Color(0xFF00FF85).copy(alpha = 0.2f), RoundedCornerShape(16))
                         ) {
-                            Icon(Icons.Default.Save, "Save Blueprint", tint = Color(0xFF00FF85))
+                            Icon(Icons.Default.Save, "Transmutation Complete", tint = Color(0xFF00FF85))
                         }
                     }
                 }
@@ -232,7 +232,7 @@ fun ArbitersOfCreationScreen(
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Save, null, tint = Color.Black)
                         Spacer(Modifier.width(8.dp))
-                        Text("BLUEPRINT SAVED — THREADS WOVEN", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                        Text("TRANSMUTATION COMPLETE — THREADS WOVEN", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                     }
                 }
             }
