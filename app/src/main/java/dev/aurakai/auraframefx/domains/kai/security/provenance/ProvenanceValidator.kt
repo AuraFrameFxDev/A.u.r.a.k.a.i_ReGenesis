@@ -27,6 +27,26 @@ class ProvenanceValidator @Inject constructor(
         private const val MAX_CHAIN_DEPTH = 7
         private const val HMAC_ALGORITHM = "HmacSHA256"
         private const val CHAIN_FRESHNESS_MS = 30_000L // 30 seconds
+
+        private val VALID_ACTIONS = setOf("system_call", "root_access", "identity_sync", "pandora_unlock")
+        private val PANDORA_AUTHORIZED_ORIGINS = setOf("user", "genesis")
+    }
+
+    /**
+     * Validates an origin and action before a full chain is even built.
+     * Useful for early-gating sensitive operations like Pandora's Box unlock.
+     */
+    fun validateOrigin(origin: String, action: String): ProvenanceResult {
+        if (!VALID_ACTIONS.contains(action)) {
+            return veto("Invalid action type: $action", "PRE_BUILD")
+        }
+
+        if (action == "pandora_unlock" && !PANDORA_AUTHORIZED_ORIGINS.contains(origin)) {
+            return veto("Unauthorized origin for Pandora unlock: $origin", "PRE_BUILD")
+        }
+
+        // Mock a chainId for pre-build validation
+        return ProvenanceResult.Approved(chainId = "PB-${System.currentTimeMillis()}")
     }
 
     /**
