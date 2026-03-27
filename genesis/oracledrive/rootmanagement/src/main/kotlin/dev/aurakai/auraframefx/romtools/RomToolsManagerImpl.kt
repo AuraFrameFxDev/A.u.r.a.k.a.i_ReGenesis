@@ -38,7 +38,8 @@ class RomToolsManagerImpl @Inject constructor(
     private val backupManager: BackupManager,
     private val systemModificationManager: SystemModificationManager,
     private val retentionManager: AurakaiRetentionManager,
-    private val nexusMemory: NexusMemoryCore
+    private val nexusMemory: NexusMemoryCore,
+    private val pandoraBoxService: PandoraBoxService
 ) : RomToolsManager {
 
     private val _romToolsState = MutableStateFlow(RomToolsState())
