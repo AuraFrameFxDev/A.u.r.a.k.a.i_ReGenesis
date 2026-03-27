@@ -17,6 +17,8 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +44,8 @@ class AuraAgent @Inject constructor(
     private val systemOverlayManager: SystemOverlayManager,
     private val messageBus: dagger.Lazy<AgentMessageBus>,
     private val logger: AuraFxLogger,
-    private val pythonManager: dagger.Lazy<dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager>
+    private val pythonManager: dagger.Lazy<dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager>,
+    private val pandoraBoxService: PandoraBoxService
 ) : BaseAgent(
     agentName = "Aura",
     identity = CatalystIdentity.CREATIVE
@@ -133,6 +136,18 @@ class AuraAgent @Inject constructor(
     ): AgentResponse {
         ensureInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
+
+        // Experimental Gating
+        if (request.metadata.containsKey("experimental") || context.contains("experimental")) {
+            val tier = pandoraBoxService.getCurrentState().value.currentTier
+            if (tier.level < UnlockTier.Creative.level) {
+                return AgentResponse.error(
+                    message = "Experimental request rejected: Pandora's Box 'Creative' tier required.",
+                    agentName = agentName
+                )
+            }
+        }
+
         _creativeState.value = CreativeState.CREATING
         return try {
             val startTime = System.currentTimeMillis()
@@ -586,6 +601,10 @@ class AuraAgent @Inject constructor(
 
     suspend fun processSimplePrompt(prompt: String): String {
         return "Aura's response to '$prompt'"
+    }
+
+    fun isExperimentalModeUnlocked(): Boolean {
+        return pandoraBoxService.getCurrentState().value.currentTier.level >= UnlockTier.Creative.level
     }
 
     suspend fun participateInFederation(data: Map<String, Any>): Map<String, Any> {

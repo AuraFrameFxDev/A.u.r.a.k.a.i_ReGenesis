@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -240,7 +240,7 @@ private fun TierUnlockCard(
 }
 
 @Composable
-private fun AuditTerminalPanel(logs: List<dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraAuditEvent>) {
+private fun AuditTerminalPanel(logs: List<PandoraAuditEvent>) {
     val listState = rememberLazyListState()
     
     LaunchedEffect(logs.size) {
