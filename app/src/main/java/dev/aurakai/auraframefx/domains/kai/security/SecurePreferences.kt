@@ -11,7 +11,7 @@ import javax.inject.Singleton
  * Manages secure storage of sensitive data like OAuth tokens or API keys.
  */
 @Singleton
-class SecurePreferences @Inject constructor(
+open class SecurePreferences @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
@@ -26,7 +26,7 @@ class SecurePreferences @Inject constructor(
     }
 
     // Create encrypted shared preferences
-    private val securePrefs by lazy {
+    open val securePrefs by lazy {
         EncryptedSharedPreferences.create(
             appContext,
             "secure_prefs",
