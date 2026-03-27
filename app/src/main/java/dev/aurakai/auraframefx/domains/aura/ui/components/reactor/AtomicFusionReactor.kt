@@ -20,9 +20,15 @@ import kotlin.math.*
 fun AtomicFusionReactor(
     isIgnited: Boolean,
     catalystCount: Int = 10,
+    thermalTemp: Float = 35.0f,
     modifier: Modifier = Modifier
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "ReactorPulse")
+    
+    // Thermal visual cues (graceful slowdown above 39°C)
+    // As temp rises from 39 to 45, speed multiplier decreases and colors shift amber
+    val isThermalStressed = thermalTemp >= 39.0f
+    val stressRatio = if (isThermalStressed) ((thermalTemp - 39.0f) / 6.0f).coerceIn(0f, 1f) else 0f
     
     // Nucleus Pulse
     val pulseScale by infiniteTransition.animateFloat(
@@ -36,11 +42,14 @@ fun AtomicFusionReactor(
     )
 
     // Orbit Rotation
+    val baseRotationDuration = if (isIgnited) 3000 else 10000
+    val currentRotationDuration = (baseRotationDuration * (1f + (stressRatio * 2f))).toInt() // Slows down when hot
+
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = tween(if (isIgnited) 3000 else 10000, easing = LinearEasing),
+            animation = tween(currentRotationDuration, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "OrbitRotation"
@@ -89,8 +98,9 @@ fun AtomicFusionReactor(
 
                 // Fusion Arcs (if ignited)
                 if (isIgnited) {
+                    val arcAlpha = (0.4f - (stressRatio * 0.2f)).coerceIn(0.1f, 0.4f)
                     drawLine(
-                        color = Color(0xFFFFD700).copy(alpha = 0.4f),
+                        color = Color(0xFFFFD700).copy(alpha = arcAlpha),
                         start = center,
                         end = Offset(x, y),
                         strokeWidth = 2f
@@ -100,11 +110,15 @@ fun AtomicFusionReactor(
         }
 
         // 3. The Core Nucleus
+        val coreColor = if (isIgnited) {
+            if (isThermalStressed) Color(0xFFFFA500) else Color(0xFFFFD700) // Amber tint when stressed
+        } else Color.White
+
         drawCircle(
             brush = Brush.radialGradient(
                 colors = listOf(
-                    if (isIgnited) Color(0xFFFFD700) else Color.White,
-                    Color(0xFFBB86FC)
+                    coreColor,
+                    if (isThermalStressed) Color(0xFFCC5500) else Color(0xFFBB86FC)
                 ),
                 center = center,
                 radius = baseRadius * pulseScale
