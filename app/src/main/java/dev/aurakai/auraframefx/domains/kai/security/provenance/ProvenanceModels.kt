@@ -4,8 +4,16 @@ package dev.aurakai.auraframefx.domains.kai.security.provenance
  * Sealed result of provenance chain validation.
  */
 sealed class ProvenanceResult {
-    data class Approved(val chainId: String) : ProvenanceResult()
-    data class Vetoed(val reason: String, val chainId: String) : ProvenanceResult()
+    abstract val chainId: String
+    abstract val isValid: Boolean
+    open val reason: String = ""
+    
+    data class Approved(override val chainId: String) : ProvenanceResult() {
+        override val isValid: Boolean = true
+    }
+    data class Vetoed(override val reason: String, override val chainId: String) : ProvenanceResult() {
+        override val isValid: Boolean = false
+    }
 }
 
 /**

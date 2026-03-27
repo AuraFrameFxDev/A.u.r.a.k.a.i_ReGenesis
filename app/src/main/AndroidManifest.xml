@@ -89,6 +89,12 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="Pandora\u0027s Box Open">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="aurakai" android:host="pandora_box" />
+            </intent-filter>
         </activity>
 
         <!-- Services -->
@@ -195,6 +201,16 @@
             android:name=".domains.aura.AuraBubbleTileService"
             android:exported="true"
             android:label="Aura Bubble"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".domains.genesis.oracledrive.pandora.PandoraBoxTileService"
+            android:exported="true"
+            android:label="Pandora\u0027s Box"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

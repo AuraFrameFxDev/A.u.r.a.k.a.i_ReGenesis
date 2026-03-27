@@ -24,6 +24,8 @@ import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomiz
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.QuickSettingsCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
+import dev.aurakai.auraframefx.domains.aura.screens.ArbitersOfCreationScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.ui.PandoraBoxScreen
 import dev.aurakai.auraframefx.domains.aura.screens.themes.ThemeEngineScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.CollabCanvasScreen as GenesisCollabCanvasScreen
 import dev.aurakai.auraframefx.domains.aura.screens.UserPreferencesScreen
@@ -635,6 +637,12 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.LdoTasker.route) {
             LDOTaskerScreen(onBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.ArbitersOfCreation.route) {
+            ArbitersOfCreationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.PandoraBox.route) {
+            PandoraBoxScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(
             route = ReGenesisRoute.LdoAgentProfile.route,

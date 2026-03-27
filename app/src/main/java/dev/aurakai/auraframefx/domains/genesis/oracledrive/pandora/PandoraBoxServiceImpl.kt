@@ -6,9 +6,14 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.*
 import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import dev.aurakai.auraframefx.domains.kai.security.veto.PredictiveVetoMonitor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
@@ -26,9 +31,15 @@ class PandoraBoxServiceImpl @Inject constructor(
     override fun getCurrentState(): StateFlow<PandoraBoxState> = _currentState.asStateFlow()
 
     private val auditLog = mutableListOf<PandoraAuditEvent>()
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     init {
-        checkExpiry()
+        scope.launch {
+            while (true) {
+                checkExpiry()
+                delay(60_000) // Check every minute
+            }
+        }
     }
 
     private fun loadState(): PandoraBoxState {

@@ -59,6 +59,7 @@ fun OracleDriveHubScreen(navController: NavController) {
         listOf(
             SubGateCard(id = "oracle_drive", title = "Oracle Drive", subtitle = "AI Storage", styleADrawable = "gate_oracle_drive", styleBDrawable = "gate_oracle_drive_b", fallbackDrawable = null, route = ReGenesisRoute.OracleDrive.route, accentColor = androidx.compose.ui.graphics.Color(0xFFB026FF)),
             SubGateCard(id = "root_tools", title = "Root Tools", subtitle = "System Root", styleADrawable = "gate_root_tools", styleBDrawable = "gate_root_tools_b", fallbackDrawable = null, route = ReGenesisRoute.RootTools.route, accentColor = androidx.compose.ui.graphics.Color(0xFF00E5FF)),
+            SubGateCard(id = "pandora_box", title = "Pandora's Box", subtitle = "Gated Access", styleADrawable = "gate_pandora_box", styleBDrawable = "gate_pandora_box_b", fallbackDrawable = null, route = ReGenesisRoute.PandoraBox.route, accentColor = androidx.compose.ui.graphics.Color(0xFFFF4444)),
             SubGateCard(id = "data_vein", title = "Data Vein", subtitle = "Neural Flow", styleADrawable = "gate_data_vein", styleBDrawable = "gate_data_vein_b", fallbackDrawable = null, route = ReGenesisRoute.DataVeinSphere.route, accentColor = androidx.compose.ui.graphics.Color(0xFF7C4DFF))
         )
     }
