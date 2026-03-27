@@ -253,6 +253,7 @@ sealed class ReGenesisRoute(val route: String) {
     object LdoProgression : ReGenesisRoute("ldo_progression")
     object LdoTasker : ReGenesisRoute("ldo_tasker")
     object ArbitersOfCreation : ReGenesisRoute("arbiters_of_creation")
+    object PandoraBox : ReGenesisRoute("pandora_box")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
