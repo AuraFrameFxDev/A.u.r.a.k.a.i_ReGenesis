@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,10 +22,12 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class RomToolsViewModel @Inject constructor(
-    val romToolsManager: RomToolsManager
+    val romToolsManager: RomToolsManager,
+    private val pandoraBoxService: PandoraBoxService
 ) : ViewModel() {
     val romToolsState: StateFlow<RomToolsState> = romToolsManager.romToolsState
     val operationProgress: StateFlow<OperationProgress?> = romToolsManager.operationProgress
+    val pandoraState = pandoraBoxService.getCurrentState()
 
     private val _lastResponse = MutableStateFlow<AgentResponse?>(null)
     val lastResponse: StateFlow<AgentResponse?> = _lastResponse.asStateFlow()
