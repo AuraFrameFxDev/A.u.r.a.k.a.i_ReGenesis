@@ -62,6 +62,11 @@ class PredictiveVetoMonitor @Inject constructor(
     }
 
     /**
+     * Check whether a veto is currently active (Throttle or Critical).
+     */
+    fun isVetoActive(): Boolean = _vetoState.value == VetoState.THROTTLE || _vetoState.value == VetoState.CRITICAL
+
+    /**
      * Check whether the current state allows a new request to proceed.
      * Returns null if allowed, or a reason string if throttled.
      */
