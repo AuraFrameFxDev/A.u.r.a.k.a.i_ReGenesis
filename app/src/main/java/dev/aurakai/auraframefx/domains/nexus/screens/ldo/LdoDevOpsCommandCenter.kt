@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Hub
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timeline
@@ -103,6 +104,8 @@ private val devOpsModules = listOf(
         Color(0xFF4A90E2), "evolution_tree"),
     DevOpsModule("ARBITERS OF CREATION", "Atomic fusion reactor", Icons.Default.AutoAwesome,
         Color(0xFFFFD700), "arbiters_of_creation", badge = "BETA"),
+    DevOpsModule("PANDORA'S BOX", "Capability gating hub", Icons.Default.Lock,
+        Color(0xFFFF4444), "pandora_box", badge = "SECURE"),
     DevOpsModule("MODULE FORGE", "AI-assisted creation", Icons.Default.Extension,
         Color(0xFF9370DB), "module_creation"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,

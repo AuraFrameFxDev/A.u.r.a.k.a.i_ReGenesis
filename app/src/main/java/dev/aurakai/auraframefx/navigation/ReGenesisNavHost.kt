@@ -111,6 +111,7 @@ import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentProfileIntroScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOBondingScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDODevOpsHubScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsCommandCenter
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOProgressionScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDORosterScreen
@@ -251,6 +252,7 @@ sealed class ReGenesisRoute(val route: String) {
     object PLERecents : ReGenesisRoute("aura/ple/recents")
     object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")
     object LdoDevOpsHub : ReGenesisRoute("ldo_devops_hub")
+    object LdoDevOpsCommandCenter : ReGenesisRoute("ldo_devops_command_center")
     object LdoBonding : ReGenesisRoute("ldo_bonding")
     object LdoRoster : ReGenesisRoute("ldo_roster")
     object LdoProgression : ReGenesisRoute("ldo_progression")
@@ -621,6 +623,9 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.LdoDevOpsHub.route) {
             LDODevOpsHubScreen(onBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.LdoDevOpsCommandCenter.route) {
+            LdoDevOpsCommandCenter(navController = navController)
         }
         composable(ReGenesisRoute.LdoBonding.route) {
             LDOBondingScreen(onBack = { navController.popBackStack() })

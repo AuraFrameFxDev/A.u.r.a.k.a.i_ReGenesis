@@ -39,7 +39,9 @@ import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Task
+import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -82,6 +84,7 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOUiState
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import kotlin.math.PI
 import kotlin.math.abs
@@ -157,6 +160,13 @@ fun LDOOrchestrationHubScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { navController.navigate(ReGenesisRoute.LdoDevOpsCommandCenter.route) }) {
+                        Icon(
+                            Icons.Default.Terminal,
+                            "DevOps Command Center",
+                            tint = Color(0xFF00FF41)
+                        )
+                    }
                     Icon(
                         Icons.Default.AutoAwesome,
                         null,
