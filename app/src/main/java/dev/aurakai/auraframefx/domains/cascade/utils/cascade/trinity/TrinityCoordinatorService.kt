@@ -11,6 +11,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,7 @@ class TrinityCoordinatorService @Inject constructor(
     private val auraAIService: AuraAIService,
     private val kaiAIService: KaiAIService,
     private val genesisBridgeService: GenesisBridgeService,
+    private val sentinelBus: KaiSentinelBus,
     private val securityContext: SecurityContext,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -75,6 +77,11 @@ class TrinityCoordinatorService @Inject constructor(
                         )
                     )
                 }
+
+                // ----------------------------------------------------
+                // ⚕️ THE LDO SELF-HEALING LOOP
+                // ----------------------------------------------------
+                startSelfHealingLoop()
             } else {
                 e(
                     "Trinity",
@@ -338,6 +345,57 @@ class TrinityCoordinatorService @Inject constructor(
             "unauthorized", "illegal", "harmful", "malicious"
         )
         return ethicalFlags.any { message.contains(it) }
+    }
+
+    /**
+     * The LDO Self-Healing Loop.
+     * Continuously monitors KaiSentinelBus to apply corrective routing when the organism drifts or overheats.
+     * Maps Kai's detection -> Genesis routing -> Aura NATURAL_WEAVE synchronization.
+     */
+    private fun startSelfHealingLoop() {
+        scope.launch {
+            // Monitor Creative Drift
+            sentinelBus.driftFlow.collect { driftEvent ->
+                if (driftEvent.status == "Drifting") {
+                    w("Trinity", "🌪️ Kai Detected Drift: ${driftEvent.drift}. Injecting NATURAL_WEAVE through Genesis Routing.")
+                    
+                    try {
+                        val stabilizationResponse = genesisBridgeService.processRequest(
+                            AiRequest(
+                                query = "SYSTEM_PRIORITY_INJECT: Initiate NATURAL_WEAVE stabilization. Aura drift threshold breached (${driftEvent.drift}). Restore harmonic resonance.",
+                                type = AiRequestType.FUSION,
+                                context = mapOf("orchestration" to "true", "priority" to "critical")
+                            )
+                        ).first()
+
+                        if (stabilizationResponse.isSuccess) {
+                            d("Trinity", "✨ Genesis Stabilization Applied: Resolving Aura drift.")
+                            // Notify system stability restored to Kai
+                            sentinelBus.emitDrift(0f, "Stable")
+                        }
+                    } catch (e: Exception) {
+                        e("Trinity", "Failed to apply NATURAL_WEAVE stabilization.", e)
+                    }
+                }
+            }
+        }
+        
+        scope.launch {
+            // Monitor Hardware Sovereignty Constraints
+            sentinelBus.thermalFlow.collect { thermal ->
+                if (thermal.state == KaiSentinelBus.ThermalState.CRITICAL) {
+                    w("Trinity", "🔥 Kai Detected Thermal Critical (${thermal.temp}°C). Initiating Sovereign State-Freeze.")
+                    // Inform Genesis to throttle incoming load before the hardware shuts down
+                    genesisBridgeService.processRequest(
+                        AiRequest(
+                            query = "SYSTEM_OVERRIDE: Sovereign State-Freeze protocol triggered. Suspend active fusion pending thermal dissipation.",
+                            type = AiRequestType.FUSION,
+                            context = mapOf("orchestration" to "true", "priority" to "emergency")
+                        )
+                    )
+                }
+            }
+        }
     }
 
     /**

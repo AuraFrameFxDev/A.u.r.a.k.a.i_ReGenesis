@@ -184,7 +184,7 @@ fun ArbitersOfCreationScreen(
                         IconButton(
                             onClick = {
                                 performSaveCeremony(context)
-                                viewModel.saveBlueprint()
+                                viewModel.completeTransmutation()
                                 scope.launch {
                                     showSavedOverlay = true
                                     delay(3000)

@@ -53,6 +53,6 @@ class KaiSentinelBus @Inject constructor() {
     data class ConsensusEvent(val currentStep: String, val isComplete: Boolean)
     data class SovereignEvent(val state: SovereignState)
 
-    enum class ThermalState { NORMAL, WARNING, CRITICAL, EMERGENCY }
+    enum class ThermalState { NORMAL, LIGHT, WARNING, SEVERE, CRITICAL, EMERGENCY }
     enum class SovereignState { AWAKE, FREEZING, FROZEN, THAWING }
 }
