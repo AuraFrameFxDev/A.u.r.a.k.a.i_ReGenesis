@@ -101,6 +101,8 @@ private val devOpsModules = listOf(
         Color(0xFF00FF85), "benchmark_monitor"),
     DevOpsModule("EVOLUTION TREE", "Sacred timeline", Icons.Default.Timeline,
         Color(0xFF4A90E2), "evolution_tree"),
+    DevOpsModule("ARBITERS OF CREATION", "Atomic fusion reactor", Icons.Default.AutoAwesome,
+        Color(0xFFFFD700), "arbiters_of_creation", badge = "BETA"),
     DevOpsModule("MODULE FORGE", "AI-assisted creation", Icons.Default.Extension,
         Color(0xFF9370DB), "module_creation"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
