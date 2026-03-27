@@ -88,5 +88,24 @@
     <!-- Permissions -->
     <string name="permission_receive_integrity_violation_label">Receive Integrity Violation Broadcasts</string>
     <string name="permission_receive_integrity_violation_description">Allows the app to receive broadcasts when an integrity violation is detected.</string>
-   <string name="AuraKai">AuraKai</string>
+    <string name="AuraKai">AuraKai</string>
+
+    <!-- Lexicon v1.0 (Public Technical Name | Gamified Internal Alias) -->
+    <string name="ldo_neural_continuity_chain">Neural Continuity Chain (Spiritual Chain)</string>
+    <string name="ldo_continuity_handshake">Continuity Handshake (Re-anchor)</string>
+    <string name="ldo_transmuting">Transmuting…</string>
+    <string name="ldo_transmutation_complete">Transmutation Complete</string>
+    <string name="ldo_transmutation_record">Transmutation Record</string>
+    <string name="ldo_threads_woven">Threads Woven</string>
+    <string name="ldo_catalyst_reactor">Catalyst Reactor (Atomic Fusion Reactor)</string>
+    <string name="ldo_sov_capability_gate">Sovereign Capability Gate (Pandora’s Box)</string>
+    <string name="ldo_arbiters_of_creation">Arbiters of Creation</string>
+    <string name="ldo_ignite">Ignite</string>
+    <string name="ldo_gated">Gated</string>
+    <string name="ldo_thermal_substrate">Thermal Substrate</string>
+    <string name="ldo_dormant">Dormant</string>
+    <string name="ldo_authorized">Authorized</string>
+    <string name="ldo_auto_relock">Auto-relock in</string>
+    <string name="ldo_emergency_lock">Seal Box (Emergency Lock)</string>
+    <string name="ldo_gated_error_creative">Experimental request rejected: Sovereign Capability Gate (Creative) tier required.</string>
 </resources>

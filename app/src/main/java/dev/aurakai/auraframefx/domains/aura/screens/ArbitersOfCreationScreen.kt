@@ -25,10 +25,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.components.reactor.AtomicFusionReactor
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.viewmodels.ArbitersViewModel
@@ -58,7 +60,7 @@ fun ArbitersOfCreationScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "ARBITERS OF CREATION",
+                        stringResource(R.string.ldo_arbiters_of_creation).uppercase(),
                         fontFamily = LEDFontFamily,
                         color = Color(0xFFFFD700),
                         fontSize = 18.sp,
@@ -183,9 +185,9 @@ fun ArbitersOfCreationScreen(
                         if (isLocked) {
                             Icon(Icons.Default.Lock, null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("GATED", fontWeight = FontWeight.Black, letterSpacing = 2.sp)
+                            Text(stringResource(R.string.ldo_gated).uppercase(), fontWeight = FontWeight.Black, letterSpacing = 2.sp)
                         } else {
-                            Text("IGNITE", fontWeight = FontWeight.Black, letterSpacing = 4.sp, fontSize = 16.sp)
+                            Text(stringResource(R.string.ldo_ignite).uppercase(), fontWeight = FontWeight.Black, letterSpacing = 4.sp, fontSize = 16.sp)
                         }
                     }
 
@@ -206,7 +208,7 @@ fun ArbitersOfCreationScreen(
                                 .border(2.dp, Color(0xFF00FF85).copy(alpha = 0.6f), RoundedCornerShape(16))
                                 .background(Color(0xFF00FF85).copy(alpha = 0.2f), RoundedCornerShape(16))
                         ) {
-                            Icon(Icons.Default.Save, "Transmutation Complete", tint = Color(0xFF00FF85))
+                            Icon(Icons.Default.Save, stringResource(R.string.ldo_transmutation_complete), tint = Color(0xFF00FF85))
                         }
                     }
                 }
@@ -215,7 +217,7 @@ fun ArbitersOfCreationScreen(
 
                 // Thermal Telemetry
                 Text(
-                    "THERMAL SUBSTRATE: ${String.format("%.1f", thermal.temp)}°C [${thermal.state.name}]",
+                    "${stringResource(R.string.ldo_thermal_substrate).uppercase()}: ${String.format("%.1f", thermal.temp)}°C [${thermal.state.name}]",
                     color = when(thermal.state.name) {
                         "NORMAL" -> Color(0xFF00FF85)
                         "LIGHT" -> Color(0xFF00FF85)
@@ -242,7 +244,7 @@ fun ArbitersOfCreationScreen(
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Save, null, tint = Color.Black)
                         Spacer(Modifier.width(8.dp))
-                        Text("TRANSMUTATION COMPLETE — THREADS WOVEN", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                        Text("${stringResource(R.string.ldo_transmutation_complete).uppercase()} — ${stringResource(R.string.ldo_threads_woven).uppercase()}", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                     }
                 }
             }

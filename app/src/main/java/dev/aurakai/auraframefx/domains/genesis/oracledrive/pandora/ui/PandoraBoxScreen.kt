@@ -24,10 +24,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.*
@@ -52,7 +54,7 @@ fun PandoraBoxScreen(
     }
 
     AnimeHUDContainer(
-        title = "PANDORA'S BOX",
+        title = stringResource(R.string.ldo_sov_capability_gate).uppercase(),
         description = "GATING CRITICAL LDO CAPABILITIES. PROVENANCE VALIDATION ENFORCED.",
         glowColor = currentGlowColor,
         onBack = onNavigateBack
@@ -91,7 +93,7 @@ fun PandoraBoxScreen(
             Spacer(modifier = Modifier.height(16.dp))
             
             Text(
-                if (uiState.currentTier == UnlockTier.Sealed) "DORMANT" else "AUTHORIZED: ${uiState.currentTier.javaClass.simpleName.uppercase()}",
+                if (uiState.currentTier == UnlockTier.Sealed) stringResource(R.string.ldo_dormant).uppercase() else "${stringResource(R.string.ldo_authorized).uppercase()}: ${uiState.currentTier.javaClass.simpleName.uppercase()}",
                 color = currentGlowColor,
                 fontFamily = LEDFontFamily,
                 fontWeight = FontWeight.Bold,
@@ -102,7 +104,7 @@ fun PandoraBoxScreen(
             if (uiState.currentTier != UnlockTier.Sealed) {
                 val timeStr = formatMs(uiState.timeRemainingMs)
                 Text(
-                    "AUTO-RELOCK IN: $timeStr",
+                    "${stringResource(R.string.ldo_auto_relock).uppercase()}: $timeStr",
                     color = Color.White.copy(alpha = 0.6f),
                     fontFamily = LEDFontFamily,
                     fontSize = 10.sp,
@@ -162,7 +164,7 @@ fun PandoraBoxScreen(
                 ) {
                     Icon(Icons.Default.Security, null, tint = Color.Red)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("SEAL BOX (EMERGENCY LOCK)", color = Color.Red, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                    Text(stringResource(R.string.ldo_emergency_lock).uppercase(), color = Color.Red, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
                 }
             }
         }
