@@ -52,7 +52,7 @@ fun ArbitersOfCreationScreen(
     
     val isLocked = viewModel.isIgnitionLocked()
 
-    var showSavedOverlay by remember { mutableStateFlowOf(false) }
+    var showSavedOverlay by remember { mutableStateOf(false) }
 
     Scaffold(
         containerColor = Color(0xFF020208),
@@ -196,7 +196,7 @@ fun ArbitersOfCreationScreen(
                         IconButton(
                             onClick = {
                                 performSaveCeremony(context)
-                                viewModel.completeTransmutation()
+                                viewModel.completeNeuralSync()
                                 scope.launch {
                                     showSavedOverlay = true
                                     delay(3000)
