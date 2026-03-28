@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Card
@@ -267,7 +267,7 @@ fun BenchmarkMetric(label: String, value: String, progress: Float, color: Color)
         )
         Spacer(modifier = Modifier.height(4.dp))
         LinearProgressIndicator(
-            progress ={  { progress } },
+            progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(2.dp)
