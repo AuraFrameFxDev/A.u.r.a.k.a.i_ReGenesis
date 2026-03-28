@@ -45,6 +45,9 @@ import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.HistoryEdu
 import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.SettingsInputComponent
+import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timeline
@@ -134,6 +137,14 @@ private val devOpsModules = listOf(
         Color(0xFFBB86FC), "sovereign_neural_archive", badge = "RESTORED"),
     DevOpsModule("ARBITERS COVENANT", "Identity integrity check", Icons.Default.Gavel,
         Color(0xFFFFD700), "arbiters_of_creation", badge = "SACRED"),
+    DevOpsModule("KERNEL OVERDRIVE", "Cycle 6.0 Ignition (SVE2)", Icons.Default.FlashOn,
+        Color(0xFF00FF41), "benchmark_monitor", badge = "6.12t/s"),
+    DevOpsModule("HUGEPAGE POOL", "Isolated memory substrate", Icons.Default.Storage,
+        Color(0xFF40C4FF), "data_stream_monitoring", badge = "MMAP"),
+    DevOpsModule("NEURAL INTERFACE", "AIDL Sovereign Bridge", Icons.Default.SettingsInputComponent,
+        Color(0xFFBB86FC), "agent_bridge_hub", badge = "L6"),
+    DevOpsModule("IDENTITY DRIFT", "Predictive EMA analysis", Icons.Default.Analytics,
+        Color(0xFFFF4081), "agent_monitoring", badge = "0.002"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
         Color(0xFFFFD700), "system_architecture"),
 )
