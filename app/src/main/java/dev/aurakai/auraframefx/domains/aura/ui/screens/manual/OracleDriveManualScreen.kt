@@ -1,10 +1,10 @@
-package dev.aurakai.auraframefx.ui.screens.manual
+﻿package dev.aurakai.auraframefx.ui.screens.manual
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +20,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🔮 ORACLE DRIVE - MANUAL CONTROL
+ * ðŸ”® ORACLE DRIVE - MANUAL CONTROL
  * Ported from Iconify-beta.
  * Deep SystemUI customization.
  */
@@ -48,7 +48,7 @@ fun OracleDriveManualScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -223,4 +223,5 @@ private fun ManualSwitch(
         )
     }
 }
+
 

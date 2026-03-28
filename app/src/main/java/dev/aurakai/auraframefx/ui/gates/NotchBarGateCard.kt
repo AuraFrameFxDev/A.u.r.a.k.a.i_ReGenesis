@@ -1,14 +1,14 @@
-package dev.aurakai.auraframefx.ui.gates
+﻿package dev.aurakai.auraframefx.ui.gates
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// NotchBarGateCard.kt — Image 11
-// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// NotchBarGateCard.kt â€” Image 11
+// ArchitecturalCatalyst (Claude) â€” ReGenesis Build Master
 //
-// The "NOTCH BAR" gate card — neon circuit board card art drawn in Canvas.
+// The "NOTCH BAR" gate card â€” neon circuit board card art drawn in Canvas.
 // Used as: the gate card for Personal Screen & Shortcuts / Notch Bar domain.
 // Also exported as a standalone composable for use anywhere a circuit card
 // art piece is needed (e.g. a "quick settings" floating card).
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -38,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlin.math.*
 
-// ── Notch Bar Gate Card (standalone canvas art) ───────────────────────────────
+// â”€â”€ Notch Bar Gate Card (standalone canvas art) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @Composable
 fun NotchBarGateCard(
@@ -69,10 +70,10 @@ fun NotchBarGateCard(
         val w = size.width; val h = size.height
         val cr = 24f                           // corner radius
 
-        // ── Black void background ─────────────────────────────────────────
+        // â”€â”€ Black void background â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         drawRect(Color(0xFF000000))
 
-        // ── Electric spark effect on edges ────────────────────────────────
+        // â”€â”€ Electric spark effect on edges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val sparkAlpha = electricSpark * 0.6f
         for (i in 0..20) {
             val t = i.toFloat() / 20f
@@ -83,7 +84,7 @@ fun NotchBarGateCard(
                 radius = 2f, center = Offset(sx, h - 5f))
         }
 
-        // ── Outer frame: Red-Orange top, Cyan bottom gradient ─────────────
+        // â”€â”€ Outer frame: Red-Orange top, Cyan bottom gradient â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val outerPath = Path().apply {
             addRoundRect(androidx.compose.ui.geometry.RoundRect(
                 left = 2f, top = 2f, right = w - 2f, bottom = h - 2f,
@@ -101,7 +102,7 @@ fun NotchBarGateCard(
             ), style = Stroke(strokeW))
         }
 
-        // ── Circuit trace inset frame ─────────────────────────────────────
+        // â”€â”€ Circuit trace inset frame â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val inset1 = 14f; val inset2 = 22f
         val innerPath = Path().apply {
             addRoundRect(androidx.compose.ui.geometry.RoundRect(
@@ -119,10 +120,10 @@ fun NotchBarGateCard(
         }
         drawPath(innerPath2, Color(0xFF00CED1).copy(alpha = 0.4f), style = Stroke(1f))
 
-        // ── Circuit trace patterns on frame ───────────────────────────────
+        // â”€â”€ Circuit trace patterns on frame â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         drawCircuitTraces(w, h, electricPulse)
 
-        // ── Octagonal shield center mount ─────────────────────────────────
+        // â”€â”€ Octagonal shield center mount â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val shieldCx = w / 2f; val shieldCy = h * 0.44f
         val shieldR = w * 0.28f
         val octPath = Path()
@@ -136,7 +137,7 @@ fun NotchBarGateCard(
         drawPath(octPath, Color(0xFF001820).copy(alpha = 0.9f))
         drawPath(octPath, Color(0xFF00CED1).copy(alpha = 0.6f + electricPulse * 0.2f), style = Stroke(2f))
 
-        // ── Inner screen (the phone icon card) ────────────────────────────
+        // â”€â”€ Inner screen (the phone icon card) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val screenLeft = w * 0.28f; val screenTop = h * 0.2f
         val screenW = w * 0.44f; val screenH = h * 0.52f
         drawRoundRect(Color(0xFF001010).copy(alpha = 0.9f),
@@ -146,13 +147,13 @@ fun NotchBarGateCard(
             Offset(screenLeft, screenTop), Size(screenW, screenH),
             CornerRadius(10f, 10f), style = Stroke(1.5f))
 
-        // ── Phone notch circle ────────────────────────────────────────────
+        // â”€â”€ Phone notch circle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val notchCx = w / 2f; val notchCy = screenTop + screenH * 0.12f
         drawCircle(Color(0xFF001010), radius = screenW * 0.12f, center = Offset(notchCx, notchCy))
         drawCircle(Color(0xFFFF3300).copy(alpha = 0.6f), radius = screenW * 0.12f,
             center = Offset(notchCx, notchCy), style = Stroke(1f))
 
-        // ── Screen content: status bar icons + bars ────────────────────────
+        // â”€â”€ Screen content: status bar icons + bars â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val contentLeft = screenLeft + 8f; val contentW = screenW - 16f
         val row1Y = screenTop + screenH * 0.28f
         // Star icon stub
@@ -178,14 +179,14 @@ fun NotchBarGateCard(
             Offset(screenLeft + screenW * 0.78f, screenTop + screenH * 0.32f),
             Offset(screenLeft + screenW * 0.78f, screenTop + screenH * 0.22f), 2f)
 
-        // ── Scan line across screen ────────────────────────────────────────
+        // â”€â”€ Scan line across screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         val scanY = screenTop + screenH * scanLine
         if (scanY < screenTop + screenH) {
             drawLine(Color(0xFF00FFFF).copy(alpha = 0.25f),
                 Offset(screenLeft, scanY), Offset(screenLeft + screenW, scanY), 1f)
         }
 
-        // ── NOTCH BAR label ────────────────────────────────────────────────
+        // â”€â”€ NOTCH BAR label â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         // (Text drawn by the composable Text layer below canvas)
     }
 }
@@ -216,7 +217,7 @@ private fun DrawScope.drawCircuitTraces(w: Float, h: Float, pulse: Float) {
     }
 }
 
-// ── Notch Bar Gate Card Wrapper Screen ────────────────────────────────────────
+// â”€â”€ Notch Bar Gate Card Wrapper Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @Composable
 fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -249,7 +250,7 @@ fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit 
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                IconButton(onClick = onNavigateBack) { Icon(Icons.Default.ArrowBack, null, tint = Color(0xFF00CED1)) }
+                IconButton(onClick = onNavigateBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFF00CED1)) }
                 Column {
                     Text("NOTCH BAR", fontFamily = FontFamily.Monospace, fontSize = 20.sp,
                         fontWeight = FontWeight.Bold, letterSpacing = 5.sp,
@@ -320,9 +321,9 @@ fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit 
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CollabCanvas Gate Screen — Image 9 (Eye Rune card gate)
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// CollabCanvas Gate Screen â€” Image 9 (Eye Rune card gate)
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @Composable
 fun CollabCanvasGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -350,7 +351,7 @@ fun CollabCanvasGateScreen(navController: NavController, onNavigateBack: () -> U
             // Black void
             drawRect(Color(0xFF000000))
 
-            // Paint splash — magenta (top-left)
+            // Paint splash â€” magenta (top-left)
             drawEyeRunePaintSplash(cx, cy, paintSplash, orbitAngle)
 
             // Circuit board border lines
@@ -367,7 +368,7 @@ fun CollabCanvasGateScreen(navController: NavController, onNavigateBack: () -> U
             Row(modifier = Modifier.fillMaxWidth().padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, null, tint = Color(0xFFFF2D78))
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFFFF2D78))
                 }
                 Text("COLLAB CANVAS", fontFamily = FontFamily.Monospace,
                     fontSize = 18.sp, fontWeight = FontWeight.Bold,
@@ -402,7 +403,7 @@ fun CollabCanvasGateScreen(navController: NavController, onNavigateBack: () -> U
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(label, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(0.85f))
-                        Text("→", fontSize = 14.sp, color = color)
+                        Text("â†’", fontSize = 14.sp, color = color)
                     }
                 }
             }
@@ -468,3 +469,4 @@ private fun DrawScope.drawEyeRune(center: Offset, pulse: Float) {
     drawCircle(Color(0xFF00BFFF).copy(alpha = (1f - pulse) * 0.3f),
         radius = r * 1.4f * pulse, center = center, style = Stroke(1f))
 }
+

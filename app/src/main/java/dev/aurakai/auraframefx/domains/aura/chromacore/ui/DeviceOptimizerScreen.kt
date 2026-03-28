@@ -1,4 +1,4 @@
-import androidx.compose.foundation.layout.*
+﻿import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -26,7 +26,7 @@ fun DeviceOptimizerScreen() {
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "⚡ Device Optimizer",
+            text = "âš¡ Device Optimizer",
             style = MaterialTheme.typography.headlineMedium,
             color = Color(0xFF00FF00) // Lime Green
         )
@@ -73,7 +73,7 @@ fun DeviceOptimizerScreen() {
                         }
                     )
                     LinearProgressIndicator(
-                        progress = { ramUsage.value / 100f },
+                        progress ={  { ramUsage.value / 100f } },
                         modifier = Modifier.fillMaxWidth(),
                         color = when {
                             ramUsage.value > 90 -> Color.Red
@@ -117,7 +117,7 @@ fun DeviceOptimizerScreen() {
                         }
                     )
                     LinearProgressIndicator(
-                        progress = { batteryLevel.value / 100f },
+                        progress ={  { batteryLevel.value / 100f } },
                         modifier = Modifier.fillMaxWidth(),
                         color = when {
                             batteryLevel.value < 20 -> Color.Red
@@ -164,7 +164,7 @@ fun DeviceOptimizerScreen() {
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 LinearProgressIndicator(
-                    progress = { storageUsed.value / 100f },
+                    progress ={  { storageUsed.value / 100f } },
                     modifier = Modifier.fillMaxWidth(),
                     color = when {
                         storageUsed.value > 90 -> Color.Red
@@ -326,3 +326,4 @@ fun DeviceOptimizerScreen() {
         }
     }
 }
+

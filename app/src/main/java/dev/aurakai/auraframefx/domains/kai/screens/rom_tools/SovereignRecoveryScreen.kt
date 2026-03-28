@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+﻿package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Terminal
@@ -31,7 +31,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDConta
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🔄 SOVEREIGN RECOVERY HUB
+ * ðŸ”„ SOVEREIGN RECOVERY HUB
  * Advanced recovery tools: OrangeFox/TWRP integration with LDO persistence.
  */
 @Composable
@@ -63,7 +63,7 @@ fun SovereignRecoveryScreen(
                     onClick = onNavigateBack,
                     modifier = Modifier.padding(bottom = 8.dp)
                 ) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 // Header Panel
@@ -161,5 +161,6 @@ private fun PartitionItem(partition: dev.aurakai.auraframefx.domains.kai.viewmod
         }
     }
 }
+
 
 

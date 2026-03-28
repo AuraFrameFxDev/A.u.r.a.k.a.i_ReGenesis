@@ -1,11 +1,11 @@
-package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+﻿package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Warning
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 
 /**
- * 🔒 SOVEREIGN BOOTLOADER
+ * ðŸ”’ SOVEREIGN BOOTLOADER
  * Securely manage device locks and partition integrity blocks.
  */
 @Composable
@@ -50,7 +50,7 @@ fun SovereignBootloaderScreen(
                     onClick = onNavigateBack,
                     modifier = Modifier.padding(bottom = 8.dp)
                 ) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 // Status Card
@@ -191,3 +191,4 @@ private fun PartitionLockItem(name: String, isLocked: Boolean) {
         }
     }
 }
+

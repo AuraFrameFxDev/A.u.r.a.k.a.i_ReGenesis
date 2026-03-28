@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,7 +32,7 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * Screen 6 — LDO Roster
+ * Screen 6 â€” LDO Roster
  * Full agent roster showing all stats in a detailed card format.
  * Sorted by evolution level. All data from Room via LDOViewModel.
  */
@@ -59,7 +59,7 @@ fun LDORosterScreen(
                 letterSpacing = 2.sp
             )
             Text(
-                "${state.agents.size} agents · Sorted by evolution",
+                "${state.agents.size} agents Â· Sorted by evolution",
                 color = Color.White.copy(alpha = 0.5f),
                 fontSize = 12.sp
             )
@@ -71,7 +71,7 @@ fun LDORosterScreen(
 
             if (state.isLoading) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Summoning roster…", color = Color.White.copy(alpha = 0.4f))
+                    Text("Summoning rosterâ€¦", color = Color.White.copy(alpha = 0.4f))
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -172,7 +172,7 @@ private fun RosterDetailCard(
 
             // Special ability
             Text(
-                "⚡ ${agent.specialAbility}",
+                "âš¡ ${agent.specialAbility}",
                 color = agentColor.copy(alpha = 0.7f),
                 fontSize = 11.sp
             )
@@ -193,7 +193,7 @@ private fun CompactStatBar(label: String, value: Float, color: Color) {
             modifier = Modifier.padding(end = 6.dp)
         )
         LinearProgressIndicator(
-            progress = { value },
+            progress ={  { value } },
             modifier = Modifier.weight(1f).height(4.dp),
             color = color,
             trackColor = Color.White.copy(alpha = 0.06f)
@@ -214,3 +214,4 @@ private fun RosterMetric(label: String, value: String, color: Color) {
         Text(label, color = Color.White.copy(alpha = 0.35f), fontSize = 9.sp)
     }
 }
+

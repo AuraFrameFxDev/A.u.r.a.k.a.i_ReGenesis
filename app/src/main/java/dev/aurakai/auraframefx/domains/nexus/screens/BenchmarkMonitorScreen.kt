@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Card
@@ -48,7 +48,7 @@ import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 /**
- * 📊 BENCHMARK MONITOR SCREEN
+ * ðŸ“Š BENCHMARK MONITOR SCREEN
  *
  * Deep performance analysis for every AI agent.
  * Tracks latency, throughput, reasoning depth, and alignment accuracy.
@@ -76,7 +76,7 @@ fun BenchmarkMonitorScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                 }
                 Column {
                     Text(
@@ -267,7 +267,7 @@ fun BenchmarkMetric(label: String, value: String, progress: Float, color: Color)
         )
         Spacer(modifier = Modifier.height(4.dp))
         LinearProgressIndicator(
-            progress = { progress },
+            progress ={  { progress } },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(2.dp)
@@ -277,4 +277,6 @@ fun BenchmarkMetric(label: String, value: String, progress: Float, color: Color)
         )
     }
 }
+
+
 

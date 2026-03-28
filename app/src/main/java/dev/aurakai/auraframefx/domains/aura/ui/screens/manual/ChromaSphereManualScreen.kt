@@ -1,9 +1,9 @@
-package dev.aurakai.auraframefx.ui.screens.manual
+﻿package dev.aurakai.auraframefx.ui.screens.manual
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,7 +19,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraNeonCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🎨 CHROMA SPHERE - MANUAL CONTROL
+ * ðŸŽ¨ CHROMA SPHERE - MANUAL CONTROL
  * Ported from ColorBlendr-master.
  * Granular control over the Monet Theme Engine.
  */
@@ -47,7 +47,7 @@ fun ChromaSphereManualScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -248,4 +248,5 @@ fun StyleButton(style: String, isSelected: Boolean, onClick: () -> Unit) {
         Text(style, fontSize = 10.sp)
     }
 }
+
 

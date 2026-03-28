@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.screens
+﻿package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CloudQueue
 import androidx.compose.material.icons.filled.Security
@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
 /**
- * 💻 CODE ASSIST SCREEN
+ * ðŸ’» CODE ASSIST SCREEN
  *
  * Genesis-tier neural compiler interface. Provides AI-driven code refactoring,
  * architectural analysis, and LDO-compliance modernization.
@@ -77,7 +77,7 @@ fun CodeAssistScreen(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
             }
             Column {
                 Text(
@@ -253,3 +253,4 @@ fun CodeAssistScreen(navController: NavHostController) {
         }
     }
 }
+

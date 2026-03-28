@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,9 +34,9 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * Screen 2 — LDO DevOps Hub
+ * Screen 2 â€” LDO DevOps Hub
  * Orchestration overview: active pipelines, agent workloads, critical task flags.
- * All data from LDOViewModel → Room. No hardcoded lists.
+ * All data from LDOViewModel â†’ Room. No hardcoded lists.
  */
 @Composable
 fun LDODevOpsHubScreen(
@@ -112,7 +112,7 @@ fun LDODevOpsHubScreen(
 
             if (state.isLoading) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Loading pipeline…", color = Color.White.copy(alpha = 0.4f))
+                    Text("Loading pipelineâ€¦", color = Color.White.copy(alpha = 0.4f))
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -199,14 +199,14 @@ private fun AgentWorkloadCard(
             Spacer(modifier = Modifier.height(6.dp))
 
             LinearProgressIndicator(
-                progress = { workload },
+                progress ={  { workload } },
                 modifier = Modifier.fillMaxWidth().height(4.dp),
                 color = agentColor,
                 trackColor = Color.White.copy(alpha = 0.08f)
             )
 
             Text(
-                "${agent.tasksCompleted} completed · Lv.${agent.evolutionLevel} · ${agent.skillPoints} SP",
+                "${agent.tasksCompleted} completed Â· Lv.${agent.evolutionLevel} Â· ${agent.skillPoints} SP",
                 color = Color.White.copy(alpha = 0.35f),
                 fontSize = 10.sp,
                 modifier = Modifier.padding(top = 4.dp)
@@ -222,3 +222,4 @@ private fun WorkloadStat(label: String, value: Int, color: Color) {
         Text(label, color = Color.White.copy(alpha = 0.4f), fontSize = 9.sp)
     }
 }
+

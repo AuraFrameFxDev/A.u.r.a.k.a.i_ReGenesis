@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -24,7 +24,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -51,7 +51,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
@@ -59,7 +59,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentCreationViewModel
 import dev.aurakai.auraframefx.core.identity.AgentType
 
 /**
- * 🥚 AGENT CREATION SCREEN
+ * ðŸ¥š AGENT CREATION SCREEN
  *
  * Part of the Nexus domain. Allows the user to synthesize new AI agents
  * for specialized tasks within the ReGenesis collective.
@@ -96,7 +96,7 @@ fun AgentCreationScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                 }
                 Text(
                     "NEURAL SYNTHESIS",
@@ -204,7 +204,7 @@ fun AgentCreationScreen(
             if (isCreating) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     LinearProgressIndicator(
-                        progress = { progress },
+                        progress ={  { progress } },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(12.dp)
@@ -300,4 +300,6 @@ fun domainColor(domain: AgentType): Color {
         else -> Color.White
     }
 }
+
+
 

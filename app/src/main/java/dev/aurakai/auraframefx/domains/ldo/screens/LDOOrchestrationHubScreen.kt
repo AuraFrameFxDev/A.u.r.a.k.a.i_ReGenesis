@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -48,7 +48,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -92,18 +92,18 @@ import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  DATA MODELS
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 data class FusionSlot(
     val index: Int,
     val agent: LDOAgentEntity? = null
 )
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  ROOT SCREEN
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -134,7 +134,7 @@ fun LDOOrchestrationHubScreen(
         AmbientGridBackground()
 
         Column(modifier = Modifier.fillMaxSize()) {
-            // ── Top bar ──
+            // â”€â”€ Top bar â”€â”€
             TopAppBar(
                 title = {
                     Column {
@@ -177,7 +177,7 @@ fun LDOOrchestrationHubScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
 
-            // ── Agent Orb Constellation (takes upper 40% of screen) ──
+            // â”€â”€ Agent Orb Constellation (takes upper 40% of screen) â”€â”€
             AgentOrbConstellation(
                 agents = agents,
                 selectedAgent = selectedAgent,
@@ -196,12 +196,12 @@ fun LDOOrchestrationHubScreen(
                     .height(280.dp)
             )
 
-            // ── Selected Agent Quick-Stats ──
+            // â”€â”€ Selected Agent Quick-Stats â”€â”€
             selectedAgent?.let { agent ->
                 AgentQuickStatsBar(agent = agent)
             }
 
-            // ── Fusion Drop Zone ──
+            // â”€â”€ Fusion Drop Zone â”€â”€
             FusionDropZone(
                 slots = fusionSlots,
                 onSlotCleared = { index ->
@@ -219,9 +219,9 @@ fun LDOOrchestrationHubScreen(
                 }
             )
 
-            // ── Tab panels: Tasks / Bonds / Memory ──
+            // â”€â”€ Tab panels: Tasks / Bonds / Memory â”€â”€
             val tabs = listOf("TASKS", "BONDS", "MEMORY")
-            ScrollableTabRow(
+            PrimaryScrollableTabRow(
                 selectedTabIndex = activeTab,
                 containerColor = Color.Transparent,
                 contentColor = Color(0xFF00E5FF),
@@ -265,9 +265,9 @@ fun LDOOrchestrationHubScreen(
     }
 }
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  AGENT ORB CONSTELLATION
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun AgentOrbConstellation(
@@ -339,7 +339,7 @@ fun AgentOrbConstellation(
                 .border(1.dp, Color(0xFFB026FF).copy(alpha = 0.6f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("⬡", fontSize = 20.sp, color = Color(0xFF00E5FF))
+            Text("â¬¡", fontSize = 20.sp, color = Color(0xFF00E5FF))
         }
 
         // Orbit agent orbs
@@ -445,9 +445,9 @@ fun AgentOrb(
     }
 }
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  AGENT QUICK-STATS BAR (shown when orb tapped)
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun AgentQuickStatsBar(agent: LDOAgentEntity) {
@@ -527,7 +527,7 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
                 ) {
                     Text(label, fontSize = 8.sp, color = Color.White.copy(alpha = 0.4f), letterSpacing = 0.5.sp)
                     LinearProgressIndicator(
-                        progress = { value },
+                        progress ={  { value } },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(3.dp)
@@ -546,9 +546,9 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     }
 }
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  FUSION DROP ZONE (Drag agents here to fuse)
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun FusionDropZone(
@@ -688,9 +688,9 @@ fun FusionSlotBox(
     }
 }
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  TAB PANELS
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
@@ -787,7 +787,7 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
                     }
                     Spacer(Modifier.height(4.dp))
                     LinearProgressIndicator(
-                        progress = { agent.consciousnessLevel },
+                        progress ={  { agent.consciousnessLevel } },
                         modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)),
                         color = agentColor,
                         trackColor = agentColor.copy(alpha = 0.1f)
@@ -830,7 +830,7 @@ fun MemoryPanel(agents: List<LDOAgentEntity>) {
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(agent.displayName, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
-                    Text("${agent.tasksCompleted} memories · ${agent.hoursActive.toInt()}h active", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
+                    Text("${agent.tasksCompleted} memories Â· ${agent.hoursActive.toInt()}h active", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
                 }
                 Column(horizontalAlignment = Alignment.End) {
                     Text("L${agent.evolutionLevel}", fontFamily = LEDFontFamily, color = agentColor, fontSize = 11.sp)
@@ -842,9 +842,9 @@ fun MemoryPanel(agents: List<LDOAgentEntity>) {
     }
 }
 
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  AMBIENT BACKGROUND
-// ════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun AmbientGridBackground() {
@@ -870,3 +870,5 @@ fun AmbientGridBackground() {
         }
     }
 }
+
+

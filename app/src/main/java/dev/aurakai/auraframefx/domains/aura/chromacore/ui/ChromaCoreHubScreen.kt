@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+﻿package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,7 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Animation
 import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.SettingsInputComponent
@@ -49,10 +49,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.chromacore.engine.ChromaCoreConfig
 
 /**
- * 🎨 CHROMA CORE HUB SCREEN (Level 2)
+ * ðŸŽ¨ CHROMA CORE HUB SCREEN (Level 2)
  * The main interface for the Unified UXUI Engine.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +79,7 @@ fun ChromaCoreHubScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -182,7 +184,7 @@ fun ChromaStatusCard(settings: ChromaCoreConfig) {
         Column {
             Text("Engine Status", color = Color.White.copy(alpha = 0.7f), fontSize = 14.sp)
             Text(
-                "Stabilized Blueprints",
+                stringResource(R.string.ldo_transmutation_record),
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.ExtraBold
@@ -294,3 +296,4 @@ fun ChromaCategoryCard(category: ChromaCategory, onClick: () -> Unit) {
         }
     }
 }
+

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
+﻿package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -44,7 +44,7 @@ import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Terminal
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -66,7 +66,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
-// ─── Data ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 private data class CommandItem(
     val abbrev: String,   // 3-4 char label always shown
@@ -85,26 +85,26 @@ private val COMMAND_ITEMS = listOf(
 )
 
 private data class Shortcut(
-    val key: String,      // e.g. "⌘V"
+    val key: String,      // e.g. "âŒ˜V"
     val label: String,
     val icon: ImageVector,
     val action: String
 )
 
 private val SHORTCUTS = listOf(
-    Shortcut("⌘V", "Voice",    Icons.Default.Mic,              "VOICE"),
-    Shortcut("⌘T", "Terminal", Icons.Default.Terminal,         "TERMINAL"),
-    Shortcut("⌘B", "Build",    Icons.Default.Build,            "BUILD"),
-    Shortcut("⌘C", "Code",     Icons.Default.Code,             "CODE"),
-    Shortcut("⌘D", "Dash",     Icons.Default.DashboardCustomize, "DASHBOARD"),
+    Shortcut("âŒ˜V", "Voice",    Icons.Default.Mic,              "VOICE"),
+    Shortcut("âŒ˜T", "Terminal", Icons.Default.Terminal,         "TERMINAL"),
+    Shortcut("âŒ˜B", "Build",    Icons.Default.Build,            "BUILD"),
+    Shortcut("âŒ˜C", "Code",     Icons.Default.Code,             "CODE"),
+    Shortcut("âŒ˜D", "Dash",     Icons.Default.DashboardCustomize, "DASHBOARD"),
 )
 
-// ─── Main Composable ───────────────────────────────────────────────────────
+// â”€â”€â”€ Main Composable â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
- * 🛰️ NEURAL LINK SIDEBAR
+ * ðŸ›°ï¸ NEURAL LINK SIDEBAR
  * Command Deck with:
- *  - 10-second pulse fade on all labels (infinite, in→out→in)
+ *  - 10-second pulse fade on all labels (infinite, inâ†’outâ†’in)
  *  - Abbreviated 3-4 char item names for compact readability
  *  - Collapsible shortcuts menu for maximum user flexibility
  */
@@ -167,9 +167,9 @@ fun NeuralLinkSidebarUI(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // ── Header ───────────────────────────────────────────────
+                // â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Text(
-                    "NRL•LNK",
+                    "NRLâ€¢LNK",
                     fontFamily = LEDFontFamily,
                     color = Color.Cyan.copy(alpha = headerAlpha),
                     fontSize = 16.sp,
@@ -186,7 +186,7 @@ fun NeuralLinkSidebarUI(
                     modifier = Modifier.padding(bottom = 20.dp)
                 )
 
-                // ── Command items ─────────────────────────────────────────
+                // â”€â”€ Command items â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 COMMAND_ITEMS.forEach { item ->
                     SidebarCommandItem(
                         abbrev = item.abbrev,
@@ -199,10 +199,10 @@ fun NeuralLinkSidebarUI(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                Divider(color = Color.White.copy(alpha = 0.15f), thickness = 0.5.dp)
+                HorizontalDivider(color = Color.White.copy(alpha = 0.15f), thickness = 0.5.dp)
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // ── Shortcuts section ─────────────────────────────────────
+                // â”€â”€ Shortcuts section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -245,7 +245,7 @@ fun NeuralLinkSidebarUI(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // ── Close button ──────────────────────────────────────────
+                // â”€â”€ Close button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 IconButton(onClick = { onVisibleChange(false) }) {
                     Icon(
                         Icons.Default.KeyboardArrowRight,
@@ -279,7 +279,7 @@ fun NeuralLinkSidebarUI(
     }
 }
 
-// ─── Command item ──────────────────────────────────────────────────────────
+// â”€â”€â”€ Command item â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @Composable
 private fun SidebarCommandItem(
@@ -351,7 +351,7 @@ private fun SidebarCommandItem(
     }
 }
 
-// ─── Shortcut row ──────────────────────────────────────────────────────────
+// â”€â”€â”€ Shortcut row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @Composable
 private fun ShortcutRow(
@@ -403,3 +403,4 @@ private fun ShortcutRow(
         }
     }
 }
+

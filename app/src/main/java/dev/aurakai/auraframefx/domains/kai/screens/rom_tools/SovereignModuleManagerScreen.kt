@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+﻿package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.kai.viewmodels.SovereignModuleViewModel
@@ -31,7 +31,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDConta
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 📦 SOVEREIGN MODULE MANAGER
+ * ðŸ“¦ SOVEREIGN MODULE MANAGER
  * Unified control for Magisk, LSPosed, and KernelSU modules.
  */
 @Composable
@@ -133,7 +133,7 @@ private fun ModuleItem(module: SovereignModule, onToggle: () -> Unit) {
                     }
                 }
                 Text(module.description, color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp, lineHeight = 14.sp)
-                Text("v${module.version} • BY ${module.author}", color = accentColor, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                Text("v${module.version} â€¢ BY ${module.author}", color = accentColor, fontSize = 9.sp, fontWeight = FontWeight.Bold)
             }
 
             Switch(
@@ -147,5 +147,6 @@ private fun ModuleItem(module: SovereignModule, onToggle: () -> Unit) {
         }
     }
 }
+
 
 

@@ -20,7 +20,7 @@ open class SecurePreferences @Inject constructor(
 
     // Get or create master key for encryption
     private val masterKey: MasterKey by lazy {
-        MasterKey.Builder(appContext)
+        MasterKey.Builder(appContext, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
     }

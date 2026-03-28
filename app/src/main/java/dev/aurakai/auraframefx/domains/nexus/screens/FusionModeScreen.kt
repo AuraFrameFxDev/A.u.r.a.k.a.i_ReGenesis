@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -95,7 +95,7 @@ fun NexusFusionScreen(onNavigateBack: () -> Unit = {}) {
 
         // Header
         Text(
-            text = "⚛️ FUSION MODE",
+            text = "âš›ï¸ FUSION MODE",
             style = MaterialTheme.typography.headlineMedium,
             color = Color(0xFFFFD700),
             fontWeight = FontWeight.Bold
@@ -150,7 +150,7 @@ fun NexusFusionScreen(onNavigateBack: () -> Unit = {}) {
                             color = Color(0xFFFFD700)
                         )
                         LinearProgressIndicator(
-                            progress = { fusionProgress.floatValue },
+                            progress ={  { fusionProgress.floatValue } },
                             modifier = Modifier
                                 .fillMaxWidth(0.8f)
                                 .padding(vertical = 8.dp),
@@ -463,3 +463,4 @@ private fun FusionCanvas(
         }
     }
 }
+

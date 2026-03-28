@@ -1,4 +1,4 @@
-import androidx.compose.foundation.layout.*
+﻿import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -44,7 +44,7 @@ fun SecurityScannerScreen() {
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "🔍 Security Scanner",
+            text = "ðŸ” Security Scanner",
             style = MaterialTheme.typography.headlineMedium,
             color = Color(0xFFFFD700) // Gold
         )
@@ -81,7 +81,7 @@ fun SecurityScannerScreen() {
                         )
                         if (isScanning.value) {
                             LinearProgressIndicator(
-                                progress = { scanProgress.value },
+                                progress ={  { scanProgress.value } },
                                 modifier = Modifier.fillMaxWidth(),
                                 color = Color(0xFFFFD700)
                             )
@@ -239,3 +239,4 @@ data class ScanResult(
 enum class SecurityLevel {
     SECURE, WARNING, DANGER
 }
+

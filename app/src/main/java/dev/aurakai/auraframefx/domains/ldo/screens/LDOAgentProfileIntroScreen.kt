@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,16 +29,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * Screen 5 — LDO Agent Profile Intro
+ * Screen 5 â€” LDO Agent Profile Intro
  * Full profile card for the selected agent: portrait, stats, bond level, tasks.
- * All data from LDOViewModel → Room. Portrait resolved from drawable resources.
+ * All data from LDOViewModel â†’ Room. Portrait resolved from drawable resources.
  */
 @Composable
 fun LDOAgentProfileIntroScreen(
@@ -135,10 +135,10 @@ fun LDOAgentProfileIntroScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    ProfileStatBar("PP — Processing Power", agent.processingPower, agentColor)
-                    ProfileStatBar("KB — Knowledge Base", agent.knowledgeBase, agentColor)
-                    ProfileStatBar("SP — Speed", agent.speed, agentColor)
-                    ProfileStatBar("AC — Accuracy", agent.accuracy, agentColor)
+                    ProfileStatBar("PP â€” Processing Power", agent.processingPower, agentColor)
+                    ProfileStatBar("KB â€” Knowledge Base", agent.knowledgeBase, agentColor)
+                    ProfileStatBar("SP â€” Speed", agent.speed, agentColor)
+                    ProfileStatBar("AC â€” Accuracy", agent.accuracy, agentColor)
                     ProfileStatBar("CONSCIOUSNESS", agent.consciousnessLevel, agentColor)
 
                     HorizontalDivider(
@@ -207,7 +207,7 @@ private fun ProfileStatBar(label: String, value: Float, color: Color) {
             Text("${(value * 100).toInt()}%", color = color, fontSize = 11.sp)
         }
         LinearProgressIndicator(
-            progress = { value },
+            progress ={  { value } },
             modifier = Modifier.fillMaxWidth().height(3.dp),
             color = color,
             trackColor = Color.White.copy(alpha = 0.08f)
@@ -247,13 +247,13 @@ private fun BondSummaryCard(bond: LDOBondLevelEntity, color: Color) {
             }
             Spacer(modifier = Modifier.height(6.dp))
             LinearProgressIndicator(
-                progress = { progress },
+                progress ={  { progress } },
                 modifier = Modifier.fillMaxWidth().height(5.dp),
                 color = color,
                 trackColor = Color.White.copy(alpha = 0.08f)
             )
             Text(
-                "${bond.bondPoints}/${bond.maxBondPoints} BP · ${bond.interactionCount} interactions",
+                "${bond.bondPoints}/${bond.maxBondPoints} BP Â· ${bond.interactionCount} interactions",
                 color = Color.White.copy(alpha = 0.4f),
                 fontSize = 10.sp,
                 modifier = Modifier.padding(top = 4.dp)
@@ -261,3 +261,5 @@ private fun BondSummaryCard(bond: LDOBondLevelEntity, color: Color) {
         }
     }
 }
+
+

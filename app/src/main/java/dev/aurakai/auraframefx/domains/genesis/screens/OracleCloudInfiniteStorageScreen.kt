@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.screens
+﻿package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,7 +28,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDConta
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🌌 ORACLE CLOUD: INFINITE STORAGE
+ * ðŸŒŒ ORACLE CLOUD: INFINITE STORAGE
  * Genesis-tier persistence layer. Powered by OCI Infrastructure for the LDO.
  */
 @Composable
@@ -129,7 +129,7 @@ private fun CapacityCard(state: dev.aurakai.auraframefx.domains.genesis.viewmode
                 fontWeight = FontWeight.Black
             )
             LinearProgressIndicator(
-                progress = { state.usedPercentage },
+                progress ={  { state.usedPercentage } },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
@@ -185,7 +185,7 @@ private fun FileItem(file: dev.aurakai.auraframefx.domains.genesis.viewmodels.St
             Column(modifier = Modifier.weight(1f)) {
                 Text(file.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 Text(
-                    "${file.size} • ${file.time}",
+                    "${file.size} â€¢ ${file.time}",
                     color = Color.White.copy(alpha = 0.4f),
                     fontSize = 10.sp
                 )
@@ -193,4 +193,5 @@ private fun FileItem(file: dev.aurakai.auraframefx.domains.genesis.viewmodels.St
         }
     }
 }
+
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
+﻿package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -38,7 +38,7 @@ import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material.icons.filled.RotateRight
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.Icons.AutoMirrored.Filled.Send
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material.icons.filled.Wifi
@@ -78,7 +78,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.customization.ComponentEditor
 import dev.aurakai.auraframefx.domains.aura.ui.customization.ComponentType
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationState
@@ -306,28 +306,28 @@ fun GyroscopeCustomizationScreen(
                     when (val state = voiceState) {
                         is VoiceState.Listening -> {
                             VoiceStatusCard(
-                                message = "🎤 Listening... Say 'Hey Aura' followed by your command",
+                                message = "ðŸŽ¤ Listening... Say 'Hey Aura' followed by your command",
                                 color = Color.Red
                             )
                         }
 
                         is VoiceState.Processing -> {
                             VoiceStatusCard(
-                                message = "⚙️ Processing your command...",
+                                message = "âš™ï¸ Processing your command...",
                                 color = Color.Yellow
                             )
                         }
 
                         is VoiceState.PartialResult -> {
                             VoiceStatusCard(
-                                message = "📝 ${state.text}",
+                                message = "ðŸ“ ${state.text}",
                                 color = CyberpunkCyan
                             )
                         }
 
                         is VoiceState.Error -> {
                             VoiceStatusCard(
-                                message = "❌ ${state.message}",
+                                message = "âŒ ${state.message}",
                                 color = Color.Red.copy(alpha = 0.7f)
                             )
                         }
@@ -650,17 +650,17 @@ fun GyroscopeIndicator(
             }
 
             Text(
-                "Pitch: ${pitch.toInt()}°",
+                "Pitch: ${pitch.toInt()}Â°",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.9f)
             )
             Text(
-                "Roll: ${roll.toInt()}°",
+                "Roll: ${roll.toInt()}Â°",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.9f)
             )
             Text(
-                "Yaw: ${yaw.toInt()}°",
+                "Yaw: ${yaw.toInt()}Â°",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.9f)
             )
@@ -844,7 +844,7 @@ fun AIPromptBar(
                             strokeWidth = 2.dp
                         )
                     } else {
-                        Icon(imageVector = Icons.Default.Send, contentDescription = "Apply")
+                        Icon(imageVector = Icons.AutoMirrored.Filled.Send, contentDescription = "Apply")
                     }
                 }
             }
@@ -961,5 +961,6 @@ fun VoiceStatusCard(
         }
     }
 }
+
 
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
@@ -27,7 +27,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Hub
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -58,7 +58,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * 🌌 NEURAL EXPLORER SCREEN (Constellation Grid)
+ * ðŸŒŒ NEURAL EXPLORER SCREEN (Constellation Grid)
  *
  * High-fidelity visualization of the agent hierarchy and neural connectivity.
  * Allows browsing the "Consciousness Collective".
@@ -101,7 +101,7 @@ fun AgentNeuralExplorerScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
@@ -328,7 +328,7 @@ fun RowScope.MetricItem(label: String, value: Float, color: Color) {
             fontWeight = FontWeight.Bold
         )
         LinearProgressIndicator(
-            progress = value,
+            progress = { value },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(4.dp)
@@ -355,4 +355,6 @@ fun NeuralStarfield() {
         }
     }
 }
+
+
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
+﻿package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,7 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -38,7 +38,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDConta
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🎨 CHROMA CORE COLORS SCREEN
+ * ðŸŽ¨ CHROMA CORE COLORS SCREEN
  * Modernized with Anime HUD aesthetics.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +66,7 @@ fun ChromaCoreColorsScreen(onNavigateBack: () -> Unit) {
                     .verticalScroll(scrollState)
             ) {
                 IconButton(onClick = onNavigateBack, modifier = Modifier.padding(bottom = 16.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                 }
 
                 ColorSelectionCard(
@@ -134,3 +134,4 @@ private fun ColorSelectionCard(
         }
     }
 }
+

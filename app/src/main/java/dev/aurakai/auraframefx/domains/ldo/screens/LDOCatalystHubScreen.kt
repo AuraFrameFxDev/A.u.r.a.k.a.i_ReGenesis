@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,7 +39,7 @@ import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOUiState
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * Screen 1 — LDO Catalyst Hub
+ * Screen 1 â€” LDO Catalyst Hub
  * Entry point for the LDO domain. Shows all 9 agents from Room with their
  * evolution level, bond tier, and task count. No mock data.
  */
@@ -73,7 +73,7 @@ fun LDOCatalystHubScreen(
                 letterSpacing = 2.sp
             )
             Text(
-                text = "Living Digital Organism · ${state.agents.size} Agents Active",
+                text = "Living Digital Organism Â· ${state.agents.size} Agents Active",
                 color = Color.White.copy(alpha = 0.6f),
                 fontSize = 12.sp
             )
@@ -101,7 +101,7 @@ fun LDOCatalystHubScreen(
             // Agent list from Room
             if (state.isLoading) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Loading agents…", color = Color.White.copy(alpha = 0.5f))
+                    Text("Loading agentsâ€¦", color = Color.White.copy(alpha = 0.5f))
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -237,7 +237,7 @@ private fun AgentRosterCard(
 
                 // Bond progress bar
                 LinearProgressIndicator(
-                    progress = { bondProgress },
+                    progress ={  { bondProgress } },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(3.dp),
@@ -245,7 +245,7 @@ private fun AgentRosterCard(
                     trackColor = Color.White.copy(alpha = 0.1f)
                 )
                 Text(
-                    "${bond?.bondTitle ?: "Stranger"} · $taskCount tasks",
+                    "${bond?.bondTitle ?: "Stranger"} Â· $taskCount tasks",
                     color = Color.White.copy(alpha = 0.4f),
                     fontSize = 10.sp
                 )
@@ -267,3 +267,4 @@ private fun AgentRosterCard(
         }
     }
 }
+

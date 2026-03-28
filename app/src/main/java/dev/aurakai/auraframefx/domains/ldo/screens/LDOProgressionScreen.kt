@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -34,7 +34,7 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * Screen 7 — LDO Progression Map
+ * Screen 7 â€” LDO Progression Map
  * Visual evolution map showing agent advancement paths.
  * Data-driven: reads real evolution levels and skill points from Room.
  */
@@ -60,7 +60,7 @@ fun LDOProgressionScreen(
                 letterSpacing = 2.sp
             )
             Text(
-                "Evolution Paths · Kaigenesis Continuum",
+                "Evolution Paths Â· Kaigenesis Continuum",
                 color = Color.White.copy(alpha = 0.5f),
                 fontSize = 12.sp
             )
@@ -94,7 +94,7 @@ fun LDOProgressionScreen(
 
             if (state.isLoading) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Calculating progression…", color = Color.White.copy(alpha = 0.4f))
+                    Text("Calculating progressionâ€¦", color = Color.White.copy(alpha = 0.4f))
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -244,7 +244,7 @@ private fun AgentProgressionCard(
 
             // XP bar to next level
             LinearProgressIndicator(
-                progress = { xpProgress },
+                progress ={  { xpProgress } },
                 modifier = Modifier.fillMaxWidth().height(5.dp),
                 color = agentColor,
                 trackColor = Color.White.copy(alpha = 0.08f)
@@ -267,3 +267,4 @@ private fun AgentProgressionCard(
         }
     }
 }
+

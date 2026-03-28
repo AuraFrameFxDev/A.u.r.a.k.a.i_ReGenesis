@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.kai.screens.security_shield
+﻿package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.GppBad
 import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.PublicOff
@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.kai.viewmodels.SovereignShieldViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -35,7 +35,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 /**
- * 🛡️ SOVEREIGN SHIELD (The Anti-Big-Tech Standard)
+ * ðŸ›¡ï¸ SOVEREIGN SHIELD (The Anti-Big-Tech Standard)
  * Kai's core hardening hub. Disables trackers, telemetry, and non-sovereign data flows.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,7 +68,7 @@ fun SovereignShieldScreen(
                     onClick = onNavigateBack,
                     modifier = Modifier.padding(bottom = 8.dp)
                 ) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 // Privacy Score readout
@@ -165,7 +165,7 @@ private fun PrivacyScoreDisplay(score: Int) {
                 fontFamily = LEDFontFamily
             )
             LinearProgressIndicator(
-                progress = { score / 100f },
+                progress ={  { score / 100f } },
                 modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape),
                 color = Color(0xFFFF1111),
                 trackColor = Color.White.copy(alpha = 0.1f)
@@ -224,5 +224,7 @@ private fun ShieldToggleItem(
         }
     }
 }
+
+
 
 

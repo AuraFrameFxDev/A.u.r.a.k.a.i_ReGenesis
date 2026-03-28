@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
+﻿package dev.aurakai.auraframefx.domains.aura.aura.ui
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -356,7 +356,7 @@ private fun StatBarIndicator(
             Text("${(value * 100).toInt()}%", color = color, fontSize = 12.sp)
         }
         LinearProgressIndicator(
-            progress = { value },
+            progress ={  { value } },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(4.dp),
@@ -582,3 +582,4 @@ fun NodeDetailsCard(
 
 // End of AgentAdvancementScreen implementation
 // (removed accidental interface that conflicted with the composable name)
+

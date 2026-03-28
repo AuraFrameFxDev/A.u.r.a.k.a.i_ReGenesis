@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
+﻿package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -36,7 +36,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.Icons.AutoMirrored.Filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -70,7 +70,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * 🫧 ASSISTANT BUBBLE UI
+ * ðŸ«§ ASSISTANT BUBBLE UI
  * The floating interactive component for the global assistant.
  */
 @Composable
@@ -396,7 +396,7 @@ private fun AssistantChatWindow(
                         enabled = chatText.isNotBlank()
                     ) {
                         Icon(
-                            Icons.Default.Send,
+                            Icons.AutoMirrored.Filled.Send,
                             null,
                             tint = if (chatText.isNotBlank()) agent.glowColor else Color.Gray
                         )
@@ -406,4 +406,5 @@ private fun AssistantChatWindow(
         }
     }
 }
+
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.OfflineBolt
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.*
@@ -27,7 +27,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 
 /**
- * 👥 PARTY SCREEN (Digital Council)
+ * ðŸ‘¥ PARTY SCREEN (Digital Council)
  * 
  * Part of the Nexus domain. Interface for selecting and managing the active
  * "party" of AI agents that will collaborate on complex system tasks.
@@ -52,7 +52,7 @@ fun PartyScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -137,7 +137,7 @@ fun SynergyMeter(level: Float) {
             }
             Spacer(modifier = Modifier.height(12.dp))
             LinearProgressIndicator(
-                progress = { level },
+                progress ={  { level } },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(12.dp)
@@ -219,4 +219,6 @@ fun agentRole(agent: AgentType): String = when (agent) {
     AgentType.CASCADE -> "Data Streamer"
     else -> "Generic Unit"
 }
+
+
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+﻿package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -33,7 +33,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,7 +54,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * 🔥 ROM FLASHER SCREEN - FULLY FUNCTIONAL
+ * ðŸ”¥ ROM FLASHER SCREEN - FULLY FUNCTIONAL
  *
  * Real ROM flashing with:
  * - Available ROM detection
@@ -445,7 +445,7 @@ fun ROMFlasherScreen(
             if (state.flashSuccess) {
                 Spacer(modifier = Modifier.height(AuraSpacing.lg))
                 WarningBanner(
-                    message = "✅ ROM flashed successfully! AURAKAI will restore on next boot.",
+                    message = "âœ… ROM flashed successfully! AURAKAI will restore on next boot.",
                     severity = BannerSeverity.SUCCESS
                 )
             }
@@ -511,7 +511,7 @@ fun CapabilityRow(label: String, available: Boolean) {
             color = AuraColors.TextSecondary
         )
         Text(
-            text = if (available) "✓" else "✗",
+            text = if (available) "âœ“" else "âœ—",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold
             ),
@@ -628,7 +628,7 @@ fun ChecklistItem(
                 if (isLoading && progress != null) {
                     Spacer(modifier = Modifier.height(AuraSpacing.xs))
                     LinearProgressIndicator(
-                        progress = { progress },
+                        progress ={  { progress } },
                         modifier = Modifier.fillMaxWidth(),
                         color = AuraColors.NeonCyan,
                     )
@@ -685,7 +685,7 @@ fun FlashProgressIndicator(stage: FlashStage, progress: Float) {
         )
 
         LinearProgressIndicator(
-            progress = { progress },
+            progress ={  { progress } },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp),
@@ -701,5 +701,7 @@ fun FlashProgressIndicator(stage: FlashStage, progress: Float) {
         )
     }
 }
+
+
 
 

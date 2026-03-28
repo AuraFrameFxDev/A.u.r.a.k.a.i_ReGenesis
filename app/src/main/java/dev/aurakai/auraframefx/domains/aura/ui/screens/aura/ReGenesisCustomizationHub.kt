@@ -1,10 +1,10 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens.aura
+﻿package dev.aurakai.auraframefx.domains.aura.ui.screens.aura
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Animation
 import androidx.compose.material.icons.filled.Home
@@ -22,7 +22,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.ColorWaveBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
- * ⚙️ REGENESIS CUSTOMIZATION HUB
+ * âš™ï¸ REGENESIS CUSTOMIZATION HUB
  *
  * Central command for all system-level customizations including:
  * - Iconify (Mahmud0808)
@@ -52,7 +52,7 @@ fun ReGenesisCustomizationHub(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
@@ -195,4 +195,5 @@ private fun CategoryCard(
         }
     }
 }
+
 

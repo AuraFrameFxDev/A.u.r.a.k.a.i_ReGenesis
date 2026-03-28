@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ReGenesis AURA Domain - Customization Screens
  *
  * These screens integrate the REAL settings from:
@@ -37,7 +37,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Brush
@@ -161,7 +161,7 @@ private fun IconifyHeader(
     ) {
         IconButton(onClick = onBackClick) {
             Icon(
-                Icons.Default.ArrowBack,
+                Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
                 tint = Color.White
             )
@@ -175,7 +175,7 @@ private fun IconifyHeader(
                 color = Color.White
             )
             Text(
-                text = "$subtitle • $settingsCount settings",
+                text = "$subtitle â€¢ $settingsCount settings",
                 fontSize = 14.sp,
                 color = Color.White.copy(alpha = 0.7f)
             )
@@ -351,7 +351,7 @@ fun IconifyCategoryDetailScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 Column(modifier = Modifier.weight(1f)) {
@@ -543,7 +543,7 @@ fun ColorBlendrScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 Column(modifier = Modifier.weight(1f)) {
@@ -1112,7 +1112,7 @@ fun PixelLauncherEnhancedScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 Column(modifier = Modifier.weight(1f)) {
@@ -1505,7 +1505,7 @@ fun IconPickerScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                 }
 
                 Column(modifier = Modifier.weight(1f)) {
@@ -1595,4 +1595,5 @@ private fun getStylesForCategory(category: String): List<String> {
  * These are REAL settings from the actual open-source projects,
  * NOT generic phone settings or placeholders.
  */
+
 

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.screens.oracledrive
+﻿package dev.aurakai.auraframefx.ui.screens.oracledrive
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.Icons.AutoMirrored.Filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -402,8 +402,9 @@ fun AiCommandBar(modifier: Modifier = Modifier) {
         placeholder = { Text("Enter AI command...") },
         trailingIcon = {
             IconButton(onClick = { /* TODO: Send command */ }) {
-                Icon(Icons.Default.Send, contentDescription = "Send Command")
+                Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Send Command")
             }
         }
     )
 }
+

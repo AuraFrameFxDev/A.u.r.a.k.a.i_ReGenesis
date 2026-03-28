@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.components
+﻿package dev.aurakai.auraframefx.domains.aura.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Construction
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 /**
- * 🎨 STUB SCREEN - Beautiful placeholder for routes not yet implemented
+ * ðŸŽ¨ STUB SCREEN - Beautiful placeholder for routes not yet implemented
  * 
  * Temporary neon blue cards matching the holographic aesthetic
  * Will be replaced with personality-matched gate cards later
@@ -125,7 +125,7 @@ fun StubScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "🚧 COMING SOON",
+                        text = "ðŸš§ COMING SOON",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold
                         ),
@@ -154,7 +154,7 @@ fun StubScreen(
                     )
                 ) {
                     Icon(
-                        Icons.Default.ArrowBack,
+                        Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
                         tint = Color(0xFF00D9FF)
                     )
@@ -168,4 +168,5 @@ fun StubScreen(
         }
     }
 }
+
 

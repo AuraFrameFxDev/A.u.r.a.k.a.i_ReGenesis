@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.screens
+﻿package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -27,7 +27,7 @@ import dev.aurakai.auraframefx.domains.aura.viewmodels.CollaborativeWorkspaceVie
 import dev.aurakai.auraframefx.domains.aura.UIDesign
 
 /**
- * 🎨 COLLAB CANVAS SCREEN
+ * ðŸŽ¨ COLLAB CANVAS SCREEN
  * Where user and Aura design components together.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -140,7 +140,7 @@ private fun DesignCanvasItem(
 
             Spacer(modifier = Modifier.height(12.dp))
             LinearProgressIndicator(
-                progress = { 1.0f }, // Finalized for now
+                progress ={  { 1.0f } }, // Finalized for now
                 modifier = Modifier.fillMaxWidth(),
                 color = Color(0xFFB026FF),
                 trackColor = Color.White.copy(alpha = 0.1f)
@@ -148,4 +148,5 @@ private fun DesignCanvasItem(
         }
     }
 }
+
 

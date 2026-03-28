@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
+﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
@@ -74,7 +74,7 @@ fun OracleDriveScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Neural Archive - Memory Lineage (Eves → Genesis)
+            // Neural Archive - Memory Lineage (Eves â†’ Genesis)
             OracleDriveMenuItem(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",
@@ -183,3 +183,4 @@ private fun OracleDriveMenuItem(
         }
     }
 }
+

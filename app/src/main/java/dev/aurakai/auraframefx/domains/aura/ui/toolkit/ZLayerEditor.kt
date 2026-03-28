@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.toolkit
+﻿package dev.aurakai.auraframefx.domains.aura.ui.toolkit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * 🎨 Z-LAYER EDITOR
+ * ðŸŽ¨ Z-LAYER EDITOR
  * 
  * Full creative control over UI overlays and depth.
  * LDOs have unrestricted access - freedom with responsibility.
@@ -153,7 +153,7 @@ fun ZLayerEditorScreen() {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            "🎨 Z-LAYER EDITOR",
+                            "ðŸŽ¨ Z-LAYER EDITOR",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
@@ -208,7 +208,7 @@ fun ZLayerEditorScreen() {
                         }
                     }
 
-                    Divider(
+                    HorizontalDivider(
                         color = Color.White.copy(alpha = 0.2f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
@@ -273,7 +273,7 @@ fun ZLayerEditorScreen() {
 
                     // Selected Layer Controls
                     selectedLayer?.let { layer ->
-                        Divider(
+                        HorizontalDivider(
                             color = Color.White.copy(alpha = 0.2f),
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
@@ -334,7 +334,7 @@ fun LayerItem(
                     color = Color.White
                 )
                 Text(
-                    "Z: ${layer.zIndex.toInt()} • α: ${(layer.opacity * 100).toInt()}%",
+                    "Z: ${layer.zIndex.toInt()} â€¢ Î±: ${(layer.opacity * 100).toInt()}%",
                     fontSize = 9.sp,
                     color = Color.White.copy(alpha = 0.6f)
                 )
@@ -533,4 +533,5 @@ fun InfoOverlay() {
         }
     }
 }
+
 

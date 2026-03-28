@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -25,7 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.CellTower
 import androidx.compose.material3.Card
@@ -54,7 +54,7 @@ import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 /**
- * 🐝 AGENT SWARM SCREEN
+ * ðŸ AGENT SWARM SCREEN
  *
  * Visualization of active agent communication and collective consciousness.
  * Features a "Live Chatter" log and dynamic swarm nodes.
@@ -115,7 +115,7 @@ fun AgentSwarmScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                 }
                 Column {
                     Text(
@@ -299,4 +299,5 @@ data class SwarmMessage(
     val content: String,
     val color: Color
 )
+
 

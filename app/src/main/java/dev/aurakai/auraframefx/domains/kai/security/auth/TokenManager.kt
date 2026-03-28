@@ -28,7 +28,7 @@ class TokenManager @Inject constructor(
     private val appContext = context.applicationContext
 
     private val masterKey: MasterKey by lazy {
-        MasterKey.Builder(appContext)
+        MasterKey.Builder(appContext, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
     }

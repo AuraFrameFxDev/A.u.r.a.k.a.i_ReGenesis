@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens
+﻿package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Speed
@@ -29,7 +29,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel
 
 /**
- * 📊 MONITORING HUDS SCREEN
+ * ðŸ“Š MONITORING HUDS SCREEN
  *
  * Provides real-time visual telemetery for system performance,
  * network integrity, and neural load metrics.
@@ -62,7 +62,7 @@ fun MonitoringHUDsScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.White
                         )
@@ -169,7 +169,7 @@ fun IntegrityPulseCard(integrity: Float) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 LinearProgressIndicator(
-                    progress = { integrity },
+                    progress ={  { integrity } },
                     color = Color.Cyan,
                     trackColor = Color.Gray.copy(alpha = 0.2f),
                     modifier = Modifier
@@ -227,4 +227,6 @@ fun HudGaugeCard(
         }
     }
 }
+
+
 

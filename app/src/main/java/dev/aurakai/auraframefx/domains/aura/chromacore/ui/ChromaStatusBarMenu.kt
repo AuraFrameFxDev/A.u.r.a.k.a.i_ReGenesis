@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+﻿package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,7 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 /**
- * 🛰️ CHROMA STATUS BAR MENU (Level 3)
+ * ðŸ›°ï¸ CHROMA STATUS BAR MENU (Level 3)
  * Unified interface for Status Bar tweaks (from Iconify).
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +52,7 @@ fun ChromaStatusBarMenu(
                 title = { Text("Status Bar Tweaks", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
@@ -157,3 +157,4 @@ fun TweakSwitch(
         }
     }
 }
+

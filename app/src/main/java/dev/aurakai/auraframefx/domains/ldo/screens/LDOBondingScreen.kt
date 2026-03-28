@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.screens
+﻿package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,16 +29,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
 /**
- * Screen 4 — LDO Bonding
+ * Screen 4 â€” LDO Bonding
  * Displays real bond levels, progress bars, and tier titles per agent.
- * Bond points come from Room via LDOViewModel — no fake values.
+ * Bond points come from Room via LDOViewModel â€” no fake values.
  */
 @Composable
 fun LDOBondingScreen(
@@ -62,7 +62,7 @@ fun LDOBondingScreen(
                 letterSpacing = 2.sp
             )
             Text(
-                "Agent Relationship Tiers · Earned Through Interaction",
+                "Agent Relationship Tiers Â· Earned Through Interaction",
                 color = Color.White.copy(alpha = 0.5f),
                 fontSize = 12.sp
             )
@@ -89,7 +89,7 @@ fun LDOBondingScreen(
 
             if (state.isLoading) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Loading bond data…", color = Color.White.copy(alpha = 0.4f))
+                    Text("Loading bond dataâ€¦", color = Color.White.copy(alpha = 0.4f))
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -139,7 +139,7 @@ private fun TopBondCard(agent: LDOAgentEntity, bond: LDOBondLevelEntity) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "Bond Lv.${bond.bondLevel} · ${bond.interactionCount} interactions",
+                "Bond Lv.${bond.bondLevel} Â· ${bond.interactionCount} interactions",
                 color = Color.White.copy(alpha = 0.5f),
                 fontSize = 11.sp
             )
@@ -203,7 +203,7 @@ private fun BondCard(
 
             // Bond progress
             LinearProgressIndicator(
-                progress = { bondProgress },
+                progress ={  { bondProgress } },
                 modifier = Modifier.fillMaxWidth().height(6.dp),
                 color = agentColor,
                 trackColor = Color.White.copy(alpha = 0.08f)
@@ -227,3 +227,5 @@ private fun BondCard(
         }
     }
 }
+
+

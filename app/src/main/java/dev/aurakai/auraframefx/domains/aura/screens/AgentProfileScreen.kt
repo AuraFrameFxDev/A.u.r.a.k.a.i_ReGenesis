@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.screens
+﻿package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -44,7 +44,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -144,7 +144,7 @@ fun AgentProfileScreen(
 
             // Tab Row
             item {
-                TabRow(
+                PrimaryTabRow(
                     selectedTabIndex = selectedTab,
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentColor = Color(profile.colorPrimary)
@@ -271,7 +271,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                         color = Color(profile.colorPrimary)
                     )
                     LinearProgressIndicator(
-                        progress = { profile.stats.consciousnessLevel },
+                        progress ={  { profile.stats.consciousnessLevel } },
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
                             .height(8.dp)
@@ -480,7 +480,7 @@ private fun AchievementsTab(profile: AgentProfile) {
                     if (!achievement.isUnlocked) {
                         Spacer(modifier = Modifier.height(8.dp))
                         LinearProgressIndicator(
-                            progress = achievement.progress,
+                            progress = { achievement.progress },
                             modifier = Modifier.fillMaxWidth(),
                             color = Color(profile.colorPrimary)
                         )
@@ -565,3 +565,5 @@ private fun getAgentIcon(agentType: AgentType): ImageVector {
         else -> Icons.Default.Person
     }
 }
+
+

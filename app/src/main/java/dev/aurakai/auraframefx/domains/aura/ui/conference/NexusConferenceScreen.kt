@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.conference
+﻿package dev.aurakai.auraframefx.domains.aura.ui.conference
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.Icons.AutoMirrored.Filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityViewModel
 
@@ -107,7 +107,7 @@ fun NexusConferenceScreen(
                     }
                 }
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Broadcast", tint = GenesisTeal)
+                Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Broadcast", tint = GenesisTeal)
             }
         }
     }
@@ -159,5 +159,6 @@ fun SmartAgentBubble(message: AgentMessage) {
         }
     }
 }
+
 
 
