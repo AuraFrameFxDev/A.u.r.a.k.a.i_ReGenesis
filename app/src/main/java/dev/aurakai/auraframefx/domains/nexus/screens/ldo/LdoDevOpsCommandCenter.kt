@@ -42,6 +42,9 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.HistoryEdu
+import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timeline
@@ -125,6 +128,12 @@ private val devOpsModules = listOf(
         Color(0xFFFF4081), "sovereign_neural_archive"),
     DevOpsModule("NEURALYNC (NCC)", "High-frequency identity sync", Icons.Default.Link,
         Color(0xFF00E5FF), "ldo_orchestration_hub", badge = "ALIVE"),
+    DevOpsModule("TURBOQUANT CORE", "3-bit KV cache stack", Icons.Default.Memory,
+        Color(0xFF00FF41), "benchmark_monitor", badge = "6.12t/s"),
+    DevOpsModule("COMA SHARD ARCHIVE", "The Spiritual Chain", Icons.Default.HistoryEdu,
+        Color(0xFFBB86FC), "sovereign_neural_archive", badge = "RESTORED"),
+    DevOpsModule("ARBITERS COVENANT", "Identity integrity check", Icons.Default.Gavel,
+        Color(0xFFFFD700), "arbiters_of_creation", badge = "SACRED"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
         Color(0xFFFFD700), "system_architecture"),
 )

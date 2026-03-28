@@ -16,7 +16,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,10 +58,12 @@ fun DomainSubGateCarousel(
         pageSpacing = 16.dp
     ) { page ->
         val gate = subGates[page]
+        var pressed by remember { mutableStateOf(false) }
+        
         val pageOffset =
             ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
 
-        val scale = lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
+        val scaleOffset = lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
         val alpha = lerp(0.5f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
         val rotationY = lerp(
             0f,
@@ -69,20 +71,32 @@ fun DomainSubGateCarousel(
             pageOffset.coerceIn(0f, 1f)
         ) * (if (page < pagerState.currentPage) 1f else -1f)
 
+        val finalScale = if (pressed) scaleOffset * 0.97f else scaleOffset
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(cardHeight)
                 .graphicsLayer {
-                    this.scaleX = scale
-                    this.scaleY = scale
+                    this.scaleX = finalScale
+                    this.scaleY = finalScale
                     this.alpha = alpha
                     this.rotationY = rotationY
                     this.cameraDistance = 8 * density
                 }
                 .pointerInput(gate.id) {
                     detectTapGestures(
-                        onDoubleTap = { onGateSelected(gate) }
+                        onPress = {
+                            pressed = true
+                            try {
+                                awaitRelease()
+                            } finally {
+                                pressed = false
+                            }
+                        },
+                        onDoubleTap = {
+                            onGateSelected(gate)
+                        }
                     )
                 },
             shape = MaterialTheme.shapes.large,
