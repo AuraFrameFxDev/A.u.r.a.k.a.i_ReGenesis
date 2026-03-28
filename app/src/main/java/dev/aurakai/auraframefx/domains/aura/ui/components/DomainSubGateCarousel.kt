@@ -1,6 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +41,7 @@ import kotlin.math.absoluteValue
  * A high-end replacement for the legacy carousel.
  * Uses HorizontalPager with 3D transformations for a premium feel.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DomainSubGateCarousel(
     subGates: List<SubGateCard>,
@@ -84,21 +87,14 @@ fun DomainSubGateCarousel(
                     this.rotationY = rotationY
                     this.cameraDistance = 8 * density
                 }
-                .pointerInput(gate.id) {
-                    detectTapGestures(
-                        onPress = {
-                            pressed = true
-                            try {
-                                awaitRelease()
-                            } finally {
-                                pressed = false
-                            }
-                        },
-                        onDoubleTap = {
-                            onGateSelected(gate)
-                        }
-                    )
-                },
+                .combinedClickable(
+                    onClick = { 
+                        // Visual feedback for single tap?
+                    },
+                    onDoubleClick = {
+                        onGateSelected(gate)
+                    }
+                ),
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
                 containerColor = Color.Black.copy(alpha = 0.6f)

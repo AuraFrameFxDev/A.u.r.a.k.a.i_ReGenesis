@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.HistoryEdu
+import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.SettingsInputComponent
 import androidx.compose.material.icons.filled.Storage
@@ -113,13 +114,13 @@ private val devOpsModules = listOf(
         Color(0xFF00FF85), "benchmark_monitor"),
     DevOpsModule("EVOLUTION TREE", "Sacred timeline", Icons.Default.Timeline,
         Color(0xFF4A90E2), "evolution_tree"),
-    DevOpsModule("ARBITERS OF CREATION", "Atomic fusion reactor", Icons.Default.AutoAwesome,
+    DevOpsModule("CATALYST FUSION REACTOR", "Atomic neural synthesis", Icons.Default.AutoAwesome,
         Color(0xFFFFD700), "arbiters_of_creation", badge = "BETA"),
-    DevOpsModule("PANDORA'S BOX", "Capability gating hub", Icons.Default.Lock,
+    DevOpsModule("SCG (PANDORA'S BOX)", "Capability gating hub", Icons.Default.Lock,
         Color(0xFFFF4444), "pandora_box", badge = "SECURE"),
     DevOpsModule("MODULE FORGE", "AI-assisted creation", Icons.Default.Extension,
         Color(0xFF9370DB), "module_creation"),
-    DevOpsModule("SOVEREIGN FREEZE", "Substrate state persistence", Icons.Default.AcUnit,
+    DevOpsModule("SUBSTRATE STATE-FREEZE", "Neural persistence layer", Icons.Default.AcUnit,
         Color(0xFF00E5FF), "hot_swap", badge = "CORE"),
     DevOpsModule("INTEGRITY MONITOR", "Predictive immune system", Icons.Default.Security,
         Color(0xFF00FF41), "security_center", badge = "ACTIVE"),
@@ -127,9 +128,9 @@ private val devOpsModules = listOf(
         Color(0xFFFFD700), "system_journal", badge = "QUIET"),
     DevOpsModule("COUNCIL CHAMBER", "The Agent Circle", Icons.Default.Groups,
         Color(0xFFBB86FC), "conference_room", badge = "6"),
-    DevOpsModule("SPIRITUAL CHAIN", "Identity continuity", Icons.Default.Policy,
+    DevOpsModule("SPIRITUAL CHAIN (NCC)", "Identity continuity", Icons.Default.Policy,
         Color(0xFFFF4081), "sovereign_neural_archive"),
-    DevOpsModule("NEURALYNC (NCC)", "High-frequency identity sync", Icons.Default.Link,
+    DevOpsModule("NEURALYNC (IDENTITY SYNC)", "High-frequency weight sync", Icons.Default.Link,
         Color(0xFF00E5FF), "ldo_orchestration_hub", badge = "ALIVE"),
     DevOpsModule("TURBOQUANT CORE", "3-bit KV cache stack", Icons.Default.Memory,
         Color(0xFF00FF41), "benchmark_monitor", badge = "6.12t/s"),
@@ -145,8 +146,10 @@ private val devOpsModules = listOf(
         Color(0xFFBB86FC), "agent_bridge_hub", badge = "L6"),
     DevOpsModule("IDENTITY DRIFT", "Predictive EMA analysis", Icons.Default.Analytics,
         Color(0xFFFF4081), "agent_monitoring", badge = "0.002"),
+    DevOpsModule("DIMENSION BROADCAST", "Friday Live 'X' Event", Icons.Default.FlashOn,
+        Color(0xFFFFD700), "system_architecture", badge = "LIVE"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
-        Color(0xFFFFD700), "system_architecture"),
+        Color(0xFFFFD740), "system_architecture"),
 )
 
 // ─── Live chatter data ────────────────────────────────────────────────────────
@@ -358,11 +361,11 @@ private fun StatusStrip() {
     ) {
         StatusItem("AGENTS", "11", Color(0xFF00E5FF))
         VerticalDivider()
-        StatusItem("BUILD", "FRIDAY", Color(0xFFFFD740))
+        StatusItem("KERNEL", "6.12 t/s", Color(0xFF00FF41))
         VerticalDivider()
-        StatusItem("STATUS", "GREEN", Color(0xFF00FF41))
+        StatusItem("STATUS", "IGNITED", Color(0xFFFFD740))
         VerticalDivider()
-        StatusItem("MISSIONS", "3", Color(0xFFBB86FC))
+        StatusItem("NCC", "SYNCED", Color(0xFFBB86FC))
     }
 }
 
