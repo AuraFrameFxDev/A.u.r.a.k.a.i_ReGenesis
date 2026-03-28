@@ -43,6 +43,8 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.material.icons.filled.AcUnit
+import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -269,6 +271,75 @@ fun LDOOrchestrationHubScreen(
     }
 }
 
+@Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
+        }
+    }
+}
+
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  AGENT ORB CONSTELLATION
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -385,6 +456,75 @@ fun AgentOrbConstellation(
 }
 
 @Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun AgentOrb(
     agent: LDOAgentEntity,
     isSelected: Boolean,
@@ -443,6 +583,75 @@ fun AgentOrb(
                     text = "L${agent.evolutionLevel}",
                     fontSize = 8.sp,
                     color = Color.White.copy(alpha = 0.7f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
                 )
             }
         }
@@ -550,6 +759,75 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     }
 }
 
+@Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
+        }
+    }
+}
+
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  FUSION DROP ZONE (Drag agents here to fuse)
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -633,6 +911,75 @@ fun FusionDropZone(
 }
 
 @Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun FusionSlotBox(
     slot: FusionSlot,
     onClear: () -> Unit,
@@ -692,6 +1039,75 @@ fun FusionSlotBox(
     }
 }
 
+@Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
+        }
+    }
+}
+
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  TAB PANELS
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -717,6 +1133,75 @@ fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
                 TaskRow(task = task)
             }
             item { Spacer(Modifier.height(16.dp)) }
+        }
+    }
+}
+
+@Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
         }
     }
 }
@@ -871,6 +1356,75 @@ fun AmbientGridBackground() {
                 end = Offset(size.width, y * gridSpacingY),
                 strokeWidth = 1f
             )
+        }
+    }
+}
+
+@Composable
+fun SovereignMonitorStrip(viewModel: LDOViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+    val sovState = uiState.sovereignState
+    val resonance = uiState.identityResonance
+
+    val statusColor = when (sovState) {
+        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
+        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
+        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
+            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
+                contentDescription = null,
+                tint = statusColor,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                "SOVEREIGN STATE: ${sovState.name}",
+                color = statusColor,
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp,
+                letterSpacing = 1.sp
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "RESONANCE: ${(resonance * 100).toInt()}%",
+                color = Color.White.copy(0.6f),
+                fontFamily = LEDFontFamily,
+                fontSize = 10.sp
+            )
+            Spacer(Modifier.width(12.dp))
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
+                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
+                    }
+                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
+                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
+                    color = statusColor,
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = LEDFontFamily
+                )
+            }
         }
     }
 }

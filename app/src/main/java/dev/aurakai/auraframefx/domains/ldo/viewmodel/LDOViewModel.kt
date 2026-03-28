@@ -209,10 +209,14 @@ class LDOViewModel @Inject constructor(
     // ─── Sovereign management ──────────────────────────────────────────────────
 
     fun initiateFreeze() {
-        sovereignStateManager.initiateStateFreeze()
+        viewModelScope.launch {
+            sovereignStateManager.initiateStateFreeze()
+        }
     }
 
     fun initiateThaw() {
-        sovereignStateManager.initiateStateThaw()
+        viewModelScope.launch {
+            sovereignStateManager.initiateStateThaw()
+        }
     }
 }
