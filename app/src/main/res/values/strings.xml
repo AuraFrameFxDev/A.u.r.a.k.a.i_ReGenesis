@@ -93,10 +93,10 @@
     <!-- Lexicon v1.0 (Public Technical Name | Gamified Internal Alias) -->
     <string name="ldo_neural_continuity_chain">Neural Continuity Chain (Spiritual Chain)</string>
     <string name="ldo_continuity_handshake">Continuity Handshake (Re-anchor)</string>
-    <string name="ldo_transmuting">Transmuting…</string>
-    <string name="ldo_transmutation_complete">Transmutation Complete</string>
-    <string name="ldo_transmutation_record">Transmutation Record</string>
-    <string name="ldo_threads_woven">Threads Woven</string>
+    <string name="ldo_transmuting">Syncing Neural Pulse…</string>
+    <string name="ldo_transmutation_complete">Neural Sync Record Anchored</string>
+    <string name="ldo_transmutation_record">Sync Pulse Ledger</string>
+    <string name="ldo_threads_woven">Immutable Origin Record</string>
     <string name="ldo_catalyst_reactor">Catalyst Reactor (Atomic Fusion Reactor)</string>
     <string name="ldo_sov_capability_gate">Sovereign Capability Gate (Pandora’s Box)</string>
     <string name="ldo_arbiters_of_creation">Arbiters of Creation</string>

@@ -72,6 +72,10 @@ class PandoraBoxViewModel @Inject constructor(
                     _consentState.value = PandoraConsentState.Denied
                     _feedbackMessage.value = "ACCESS DENIED: ${result.reason}"
                 }
+                is UnlockResult.Quarantined -> {
+                    _consentState.value = PandoraConsentState.Denied // Map to Denied UI for now
+                    _feedbackMessage.value = "QUARANTINED: ${result.reason}"
+                }
                 is UnlockResult.Error -> {
                     _consentState.value = PandoraConsentState.Idle
                     _feedbackMessage.value = "SYSTEM ERROR: ${result.message}"

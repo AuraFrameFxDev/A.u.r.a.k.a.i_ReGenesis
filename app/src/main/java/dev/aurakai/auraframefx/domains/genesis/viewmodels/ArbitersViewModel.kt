@@ -49,17 +49,17 @@ class ArbitersViewModel @Inject constructor(
         }
     }
 
-    fun completeTransmutation() {
+    fun completeNeuralSync() {
         val record = TransmutationRecord(
             id = UUID.randomUUID().toString(),
-            blueprintId = "T-RECORD-OVR",
-            provenanceChain = emptyList(), // Origin locked by Pandora later
+            blueprintId = "NS-RECORD-OVR",
+            provenanceChain = emptyList(), // Origin locked by SCG later
             timestamp = System.currentTimeMillis(),
             confidence = _fusionConfidence.value
         )
         
         _transmutationState.value = TransmutationState.Complete(record)
-        // Reset the reactor visuals for the next fusion cycle
+        // Reset the reactor visuals for the next sync cycle
         _isIgnited.value = false
         _fusionConfidence.value = 0f
     }
