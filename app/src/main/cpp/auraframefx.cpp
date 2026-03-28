@@ -84,16 +84,13 @@ static float readSystemThermal() {
     for (const char* node : thermal_nodes) {
         std::ifstream file(node);
         if (file.is_open()) {
-            float temp = 0.0f;
-            if (!(file >> temp)) {
-                continue;
-            }
-            if (temp > 1000.0f) temp /= 1000.0f;
+            float temp;
+            file >> temp;
+            if (temp > 1000) temp /= 1000.0f; // Convert millidegree to degree
             return temp;
         }
     }
-    return -1.0f; // Sensor unavailable
-}
+    return 35.0f; // Default baseline if nodes missing
 }
 
 static int mapTempToState(float temp) {
