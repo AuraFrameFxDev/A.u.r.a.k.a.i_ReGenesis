@@ -40,6 +40,13 @@ class RoyalGuardServiceImpl : Service() {
                         )
                         false
                     }
+                    is ProvenanceResult.Quarantined -> {
+                        Timber.tag(TAG).w(
+                            "Action QUARANTINED: %s - %s (chain=%s)",
+                            actionKey, result.reason, result.chainId
+                        )
+                        false // Fail closed for system actions
+                    }
                 }
             } catch (e: Exception) {
                 Timber.tag(TAG).e(e, "Validation error for action: %s", actionKey)

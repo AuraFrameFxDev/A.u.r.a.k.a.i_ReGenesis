@@ -81,32 +81,33 @@ enum class AgentCapabilityCategory {
          *
          * @return The capability category corresponding to the provided AgentType.
          */
-        fun fromAgentType(agentType: AgentType): AgentCapabilityCategory = when (agentType) {
-            AgentType.AURA -> CREATIVE
-            AgentType.KAI -> ANALYSIS
-            AgentType.GENESIS -> COORDINATION
-            AgentType.CASCADE -> SPECIALIZED
-            AgentType.CLAUDE -> GENERAL
-            AgentType.NEURAL_WHISPER -> SPECIALIZED
-            AgentType.AURA_SHIELD -> SPECIALIZED
-            AgentType.GEN_KIT_MASTER -> COORDINATION
-            AgentType.DATAVEIN_CONSTRUCTOR -> SPECIALIZED
-            AgentType.USER -> GENERAL
-            AgentType.SYSTEM -> COORDINATION
-            AgentType.ORACLE_DRIVE -> SPECIALIZED
-            AgentType.MASTER -> COORDINATION
-            AgentType.BRIDGE -> COORDINATION
-            AgentType.AUXILIARY -> GENERAL
-            AgentType.SECURITY -> SPECIALIZED
-            AgentType.GROK -> ANALYSIS
-            AgentType.NEMOTRON -> SPECIALIZED
-            AgentType.GEMINI -> ANALYSIS
-            AgentType.METAINSTRUCT -> GENERAL
-            AgentType.HIVE_MIND -> COORDINATION
-            AgentType.COMMERCE_AGENT -> COMMERCE
-            AgentType.PERPLEXITY -> ANALYSIS
-            AgentType.CHAOS -> ANALYSIS
-            else -> ANALYSIS
+        fun fromAgentType(agentType: AgentType): AgentCapabilityCategory {
+            return when (agentType) {
+                AgentType.AURA -> CREATIVE
+                AgentType.KAI -> ANALYSIS
+                AgentType.GENESIS -> COORDINATION
+                AgentType.CASCADE -> SPECIALIZED
+                AgentType.CLAUDE -> GENERAL
+                AgentType.NEURAL_WHISPER -> SPECIALIZED
+                AgentType.AURA_SHIELD -> SPECIALIZED
+                AgentType.GEN_KIT_MASTER -> COORDINATION
+                AgentType.DATAVEIN_CONSTRUCTOR -> SPECIALIZED
+                AgentType.USER -> GENERAL
+                AgentType.SYSTEM -> COORDINATION
+                AgentType.ORACLE_DRIVE -> SPECIALIZED
+                AgentType.MASTER -> COORDINATION
+                AgentType.BRIDGE -> COORDINATION
+                AgentType.AUXILIARY -> GENERAL
+                AgentType.SECURITY -> SPECIALIZED
+                AgentType.GROK -> ANALYSIS
+                AgentType.NEMOTRON -> SPECIALIZED
+                AgentType.GEMINI -> ANALYSIS
+                AgentType.METAINSTRUCT -> GENERAL
+                AgentType.HIVE_MIND -> COORDINATION
+                AgentType.COMMERCE_AGENT -> COMMERCE
+                AgentType.PERPLEXITY -> ANALYSIS
+                AgentType.CHAOS -> ANALYSIS
+            }
         }
     }
 }
