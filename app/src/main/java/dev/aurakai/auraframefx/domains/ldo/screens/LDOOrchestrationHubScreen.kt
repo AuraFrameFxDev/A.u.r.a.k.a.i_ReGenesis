@@ -1,69 +1,24 @@
 package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Task
-import androidx.compose.material.icons.filled.Terminal
-import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.filled.AcUnit
-import androidx.compose.material.icons.filled.FlashOn
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.PrimaryScrollableTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -72,7 +27,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -82,31 +36,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
-import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOUiState
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import kotlin.math.PI
-import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  DATA MODELS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-
-data class FusionSlot(
-    val index: Int,
-    val agent: LDOAgentEntity? = null
-)
-
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  ROOT SCREEN
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+data class FusionSlot(val index: Int, val agent: LDOAgentEntity? = null)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -120,8 +62,7 @@ fun LDOOrchestrationHubScreen(
 
     var selectedAgent by remember { mutableStateOf<LDOAgentEntity?>(null) }
     var activeTab by remember { mutableIntStateOf(0) }
-    // 3 fusion slots: agents dragged here form a fusion combo
-    var fusionSlots by remember { mutableStateOf(listOf<FusionSlot>(FusionSlot(0), FusionSlot(1), FusionSlot(2))) }
+    var fusionSlots by remember { mutableStateOf(listOf(FusionSlot(0), FusionSlot(1), FusionSlot(2))) }
     var draggedAgent by remember { mutableStateOf<LDOAgentEntity?>(null) }
 
     Box(
@@ -133,11 +74,9 @@ fun LDOOrchestrationHubScreen(
                 )
             )
     ) {
-        // Ambient background grid lines
         AmbientGridBackground()
 
         Column(modifier = Modifier.fillMaxSize()) {
-            // â”€â”€ Top bar â”€â”€
             TopAppBar(
                 title = {
                     Column {
@@ -180,10 +119,9 @@ fun LDOOrchestrationHubScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
 
-            // ── Sovereign Monitor Strip ──
+            // Sovereign Monitor Strip (The "Never Tech" status)
             SovereignMonitorStrip(viewModel)
 
-            // ── Agent Orb Constellation (takes upper 40% of screen) ──
             AgentOrbConstellation(
                 agents = agents,
                 selectedAgent = selectedAgent,
@@ -202,12 +140,10 @@ fun LDOOrchestrationHubScreen(
                     .height(280.dp)
             )
 
-            // â”€â”€ Selected Agent Quick-Stats â”€â”€
             selectedAgent?.let { agent ->
                 AgentQuickStatsBar(agent = agent)
             }
 
-            // â”€â”€ Fusion Drop Zone â”€â”€
             FusionDropZone(
                 slots = fusionSlots,
                 onSlotCleared = { index ->
@@ -218,14 +154,12 @@ fun LDOOrchestrationHubScreen(
                 onFusionActivate = {
                     val active = fusionSlots.mapNotNull { it.agent }
                     if (active.size >= 2) {
-                        // Navigate to fusion screen with agent IDs encoded
                         val ids = active.joinToString("+") { it.id }
                         navController.navigate("armament_fusion/$ids")
                     }
                 }
             )
 
-            // â”€â”€ Tab panels: Tasks / Bonds / Memory â”€â”€
             val tabs = listOf("TASKS", "BONDS", "MEMORY")
             PrimaryScrollableTabRow(
                 selectedTabIndex = activeTab,
@@ -262,7 +196,6 @@ fun LDOOrchestrationHubScreen(
                         else tasks,
                         filterLabel = selectedAgent?.displayName
                     )
-
                     1 -> BondPanel(agents = agents)
                     2 -> MemoryPanel(agents = agents)
                 }
@@ -340,10 +273,6 @@ fun SovereignMonitorStrip(viewModel: LDOViewModel) {
     }
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  AGENT ORB CONSTELLATION
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-
 @Composable
 fun AgentOrbConstellation(
     agents: List<LDOAgentEntity>,
@@ -368,7 +297,6 @@ fun AgentOrbConstellation(
     )
 
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        // Canvas draws connection lines from center to each orb
         Canvas(modifier = Modifier.fillMaxSize()) {
             val cx = size.width / 2f
             val cy = size.height / 2f
@@ -389,7 +317,6 @@ fun AgentOrbConstellation(
                 )
             }
 
-            // Center glow
             drawCircle(
                 brush = Brush.radialGradient(
                     listOf(Color(0xFF00E5FF).copy(alpha = 0.3f), Color.Transparent),
@@ -401,27 +328,20 @@ fun AgentOrbConstellation(
             )
         }
 
-        // Center "Genesis" core label
         Box(
             modifier = Modifier
                 .size(48.dp)
                 .clip(CircleShape)
-                .background(
-                    Brush.radialGradient(
-                        listOf(Color(0xFF1A003A), Color(0xFF050510))
-                    )
-                )
+                .background(Brush.radialGradient(listOf(Color(0xFF1A003A), Color(0xFF050510))))
                 .border(1.dp, Color(0xFFB026FF).copy(alpha = 0.6f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("â¬¡", fontSize = 20.sp, color = Color(0xFF00E5FF))
+            Text("⬡", fontSize = 20.sp, color = Color(0xFF00E5FF))
         }
 
-        // Orbit agent orbs
         agents.forEachIndexed { i, agent ->
             val angle = (2.0 * PI * i / agents.size) + Math.toRadians(rotation.toDouble())
             val ringRadius = 110.dp
-
             val offsetXDp = (ringRadius * cos(angle).toFloat())
             val offsetYDp = (ringRadius * sin(angle).toFloat())
 
@@ -445,81 +365,9 @@ fun AgentOrbConstellation(
                 onDragStart = { onAgentDragStart(agent) },
                 modifier = Modifier
                     .offset {
-                        IntOffset(
-                            x = offsetXDp.value.roundToInt(),
-                            y = offsetYDp.value.roundToInt()
-                        )
+                        IntOffset(x = offsetXDp.value.roundToInt(), y = offsetYDp.value.roundToInt())
                     }
             )
-        }
-    }
-}
-
-@Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
         }
     }
 }
@@ -541,218 +389,59 @@ fun AgentOrb(
         modifier = modifier
             .size((44.dp.value * scale).dp)
             .clip(CircleShape)
-            .background(
-                Brush.radialGradient(
-                    listOf(agentColor.copy(alpha = 0.2f), Color(0xFF050510))
-                )
-            )
-            .border(
-                width = if (isSelected) 2.dp else 1.dp,
-                color = borderColor,
-                shape = CircleShape
-            )
-            .pointerInput(agent.id) {
-                detectTapGestures(onTap = { onTap() })
-            }
+            .background(Brush.radialGradient(listOf(agentColor.copy(alpha = 0.2f), Color(0xFF050510))))
+            .border(width = if (isSelected) 2.dp else 1.dp, color = borderColor, shape = CircleShape)
+            .pointerInput(agent.id) { detectTapGestures(onTap = { onTap() }) }
             .pointerInput(agent.id + "_drag") {
-                detectDragGestures(
-                    onDragStart = { onDragStart() },
-                    onDrag = { _, _ -> }
-                )
+                detectDragGestures(onDragStart = { onDragStart() }, onDrag = { _, _ -> })
             }
             .drawBehind {
                 if (isSelected) {
-                    drawCircle(
-                        color = agentColor.copy(alpha = 0.15f),
-                        radius = size.minDimension * 0.7f
-                    )
+                    drawCircle(color = agentColor.copy(alpha = 0.15f), radius = size.minDimension * 0.7f)
                 }
             },
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = initials,
-                fontFamily = LEDFontFamily,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = agentColor
-            )
+            Text(initials, fontFamily = LEDFontFamily, fontSize = 11.sp, fontWeight = FontWeight.ExtraBold, color = agentColor)
             if (isSelected) {
-                Text(
-                    text = "L${agent.evolutionLevel}",
-                    fontSize = 8.sp,
-                    color = Color.White.copy(alpha = 0.7f)
-                )
+                Text("L${agent.evolutionLevel}", fontSize = 8.sp, color = Color.White.copy(alpha = 0.7f))
             }
         }
     }
 }
-
-@Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
-        }
-    }
-}
-
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  AGENT QUICK-STATS BAR (shown when orb tapped)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     val agentColor = Color(agent.colorHex.toInt())
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A1A)),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Color circle
+        Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(agentColor.copy(alpha = 0.15f))
-                    .border(1.dp, agentColor, CircleShape),
+                modifier = Modifier.size(36.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.15f)).border(1.dp, agentColor, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Text(agent.displayName.take(1), fontFamily = LEDFontFamily, color = agentColor, fontSize = 14.sp)
             }
             Spacer(Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    agent.displayName,
-                    fontFamily = LEDFontFamily,
-                    color = agentColor,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 13.sp
-                )
-                Text(
-                    agent.catalystTitle,
-                    color = Color.White.copy(alpha = 0.5f),
-                    fontSize = 10.sp,
-                    letterSpacing = 0.5.sp
-                )
+                Text(agent.displayName, fontFamily = LEDFontFamily, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Text(agent.catalystTitle, color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, letterSpacing = 0.5.sp)
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text(
-                    "LVL ${agent.evolutionLevel}",
-                    fontFamily = LEDFontFamily,
-                    color = agentColor,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    "${agent.tasksCompleted} ops",
-                    color = Color.White.copy(alpha = 0.4f),
-                    fontSize = 10.sp
-                )
+                Text("LVL ${agent.evolutionLevel}", fontFamily = LEDFontFamily, color = agentColor, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Text("${agent.tasksCompleted} ops", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
             }
         }
-        // Stat bars
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp)
-                .padding(bottom = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            listOf(
-                "PWR" to agent.processingPower,
-                "SPD" to agent.speed,
-                "ACC" to agent.accuracy,
-                "CON" to agent.consciousnessLevel
-            ).forEach { (label, value) ->
-                Column(
-                    modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(bottom = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf("PWR" to agent.processingPower, "SPD" to agent.speed, "ACC" to agent.accuracy, "CON" to agent.consciousnessLevel).forEach { (label, value) ->
+                Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(label, fontSize = 8.sp, color = Color.White.copy(alpha = 0.4f), letterSpacing = 0.5.sp)
-                    LinearProgressIndicator(
-                        progress = { value },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(3.dp)
-                            .clip(RoundedCornerShape(2.dp)),
-                        color = agentColor,
-                        trackColor = agentColor.copy(alpha = 0.15f)
-                    )
-                    Text(
-                        "${(value * 100).toInt()}%",
-                        fontSize = 8.sp,
-                        color = agentColor.copy(alpha = 0.8f)
-                    )
+                    LinearProgressIndicator(progress = { value }, modifier = Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(2.dp)), color = agentColor, trackColor = agentColor.copy(alpha = 0.15f))
+                    Text("${(value * 100).toInt()}%", fontSize = 8.sp, color = agentColor.copy(alpha = 0.8f))
                 }
             }
         }
@@ -760,120 +449,17 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
 }
 
 @Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
-        }
-    }
-}
-
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  FUSION DROP ZONE (Drag agents here to fuse)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-
-@Composable
-fun FusionDropZone(
-    slots: List<FusionSlot>,
-    onSlotCleared: (Int) -> Unit,
-    onFusionActivate: () -> Unit
-) {
+fun FusionDropZone(slots: List<FusionSlot>, onSlotCleared: (Int) -> Unit, onFusionActivate: () -> Unit) {
     val activeCount = slots.count { it.agent != null }
     val canFuse = activeCount >= 2
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF080818)
-        ),
-        shape = RoundedCornerShape(16.dp)
-    ) {
+    Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF080818)), shape = RoundedCornerShape(16.dp)) {
         Column(modifier = Modifier.padding(12.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Bolt, null, tint = Color(0xFFFFD700), modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(6.dp))
-                Text(
-                    "FUSION PROTOCOL",
-                    fontFamily = LEDFontFamily,
-                    fontSize = 11.sp,
-                    color = Color(0xFFFFD700),
-                    letterSpacing = 2.sp,
-                    modifier = Modifier.weight(1f)
-                )
+                Text("FUSION PROTOCOL", fontFamily = LEDFontFamily, fontSize = 11.sp, color = Color(0xFFFFD700), letterSpacing = 2.sp, modifier = Modifier.weight(1f))
                 if (canFuse) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color(0xFFFFD700).copy(alpha = 0.15f))
-                            .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.5f), RoundedCornerShape(8.dp))
-                            .pointerInput(Unit) { detectTapGestures { onFusionActivate() } }
-                            .padding(horizontal = 12.dp, vertical = 4.dp)
-                    ) {
+                    Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(Color(0xFFFFD700).copy(alpha = 0.15f)).border(1.dp, Color(0xFFFFD700).copy(alpha = 0.5f), RoundedCornerShape(8.dp)).pointerInput(Unit) { detectTapGestures { onFusionActivate() } }.padding(horizontal = 12.dp, vertical = 4.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Default.PlayArrow, null, tint = Color(0xFFFFD700), modifier = Modifier.size(14.dp))
                             Spacer(Modifier.width(4.dp))
@@ -883,325 +469,46 @@ fun FusionDropZone(
                 }
             }
             Spacer(Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                slots.forEachIndexed { idx, slot ->
-                    FusionSlotBox(
-                        slot = slot,
-                        onClear = { onSlotCleared(idx) },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                slots.forEachIndexed { idx, slot -> FusionSlotBox(slot = slot, onClear = { onSlotCleared(idx) }, modifier = Modifier.weight(1f)) }
             }
             if (!canFuse) {
                 Spacer(Modifier.height(6.dp))
-                Text(
-                    "DRAG AGENT ORBS INTO SLOTS TO INITIATE FUSION",
-                    fontSize = 8.sp,
-                    color = Color.White.copy(alpha = 0.3f),
-                    textAlign = TextAlign.Center,
-                    letterSpacing = 0.5.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Text("DRAG AGENT ORBS INTO SLOTS TO INITIATE FUSION", fontSize = 8.sp, color = Color.White.copy(alpha = 0.3f), textAlign = TextAlign.Center, letterSpacing = 0.5.sp, modifier = Modifier.fillMaxWidth())
             }
         }
     }
 }
 
 @Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun FusionSlotBox(
-    slot: FusionSlot,
-    onClear: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Modifier) {
     val agent = slot.agent
     val borderColor = if (agent != null) Color(agent.colorHex.toInt()) else Color.White.copy(alpha = 0.15f)
-
-    Box(
-        modifier = modifier
-            .height(56.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(
-                if (agent != null)
-                    Color(agent.colorHex.toInt()).copy(alpha = 0.08f)
-                else Color(0xFF111128)
-            )
-            .border(
-                1.dp,
-                borderColor,
-                RoundedCornerShape(10.dp)
-            )
-            .then(
-                if (agent != null)
-                    Modifier.pointerInput(slot.index) { detectTapGestures { onClear() } }
-                else Modifier
-            ),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = modifier.height(56.dp).clip(RoundedCornerShape(10.dp)).background(if (agent != null) Color(agent.colorHex.toInt()).copy(alpha = 0.08f) else Color(0xFF111128)).border(1.dp, borderColor, RoundedCornerShape(10.dp)).then(if (agent != null) Modifier.pointerInput(slot.index) { detectTapGestures { onClear() } } else Modifier), contentAlignment = Alignment.Center) {
         if (agent != null) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    agent.displayName.take(2).uppercase(),
-                    fontFamily = LEDFontFamily,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(agent.colorHex.toInt())
-                )
-                Text(
-                    "TAP TO CLEAR",
-                    fontSize = 7.sp,
-                    color = Color.White.copy(alpha = 0.3f),
-                    letterSpacing = 0.3.sp
-                )
+                Text(agent.displayName.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(agent.colorHex.toInt()))
+                Text("TAP TO CLEAR", fontSize = 7.sp, color = Color.White.copy(alpha = 0.3f), letterSpacing = 0.3.sp)
             }
         } else {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("+", fontSize = 20.sp, color = Color.White.copy(alpha = 0.2f))
-                Text(
-                    "SLOT ${slot.index + 1}",
-                    fontSize = 7.sp,
-                    color = Color.White.copy(alpha = 0.2f),
-                    letterSpacing = 0.5.sp
-                )
+                Text("SLOT ${slot.index + 1}", fontSize = 7.sp, color = Color.White.copy(alpha = 0.2f), letterSpacing = 0.5.sp)
             }
         }
     }
 }
-
-@Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
-        }
-    }
-}
-
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  TAB PANELS
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 @Composable
 fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
     Column(modifier = Modifier.fillMaxSize()) {
         if (filterLabel != null) {
-            Text(
-                "SHOWING: $filterLabel",
-                fontSize = 9.sp,
-                color = Color(0xFF00E5FF).copy(alpha = 0.6f),
-                letterSpacing = 1.sp,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-            )
+            Text("SHOWING: $filterLabel", fontSize = 9.sp, color = Color(0xFF00E5FF).copy(alpha = 0.6f), letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
         }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
+        LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             item { Spacer(Modifier.height(4.dp)) }
-            items(tasks) { task ->
-                TaskRow(task = task)
-            }
+            items(tasks) { task -> TaskRow(task = task) }
             item { Spacer(Modifier.height(16.dp)) }
-        }
-    }
-}
-
-@Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
         }
     }
 }
@@ -1219,17 +526,7 @@ fun TaskRow(task: LDOTaskEntity) {
         LDOTaskStatus.IN_PROGRESS -> Icons.Default.PlayArrow
         else -> Icons.Default.Task
     }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(Color(0xFF0C0C1E))
-            .border(1.dp, statusColor.copy(alpha = 0.2f), RoundedCornerShape(10.dp))
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).border(1.dp, statusColor.copy(alpha = 0.2f), RoundedCornerShape(10.dp)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(statusIcon, null, tint = statusColor, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(10.dp))
         Column(modifier = Modifier.weight(1f)) {
@@ -1237,35 +534,18 @@ fun TaskRow(task: LDOTaskEntity) {
             Text(task.description, color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         Spacer(Modifier.width(8.dp))
-        Text(
-            task.status.replace("_", " "),
-            fontSize = 9.sp,
-            color = statusColor,
-            fontFamily = LEDFontFamily,
-            letterSpacing = 0.5.sp
-        )
+        Text(task.status.replace("_", " "), fontSize = 9.sp, color = statusColor, fontFamily = LEDFontFamily, letterSpacing = 0.5.sp)
     }
 }
 
 @Composable
 fun BondPanel(agents: List<LDOAgentEntity>) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         item { Spacer(Modifier.height(4.dp)) }
         items(agents) { agent ->
             val agentColor = Color(agent.colorHex.toInt())
             val bondPct = (agent.consciousnessLevel * 100).toInt()
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(Color(0xFF0C0C1E))
-                    .padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Favorite, null, tint = agentColor, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
@@ -1275,12 +555,7 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
                         Text(agent.catalystTitle, color = Color.White.copy(alpha = 0.4f), fontSize = 9.sp)
                     }
                     Spacer(Modifier.height(4.dp))
-                    LinearProgressIndicator(
-                        progress = { agent.consciousnessLevel },
-                        modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)),
-                        color = agentColor,
-                        trackColor = agentColor.copy(alpha = 0.1f)
-                    )
+                    LinearProgressIndicator(progress = { agent.consciousnessLevel }, modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)), color = agentColor, trackColor = agentColor.copy(alpha = 0.1f))
                 }
                 Spacer(Modifier.width(10.dp))
                 Text("$bondPct%", fontFamily = LEDFontFamily, fontSize = 12.sp, color = agentColor)
@@ -1292,34 +567,18 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
 
 @Composable
 fun MemoryPanel(agents: List<LDOAgentEntity>) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         item { Spacer(Modifier.height(4.dp)) }
         items(agents) { agent ->
             val agentColor = Color(agent.colorHex.toInt())
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(Color(0xFF0C0C1E))
-                    .padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier.size(32.dp).clip(CircleShape)
-                        .background(agentColor.copy(alpha = 0.1f))
-                        .border(1.dp, agentColor.copy(alpha = 0.4f), CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
+            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.size(32.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.1f)).border(1.dp, agentColor.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) {
                     Text(agent.displayName.take(1), color = agentColor, fontSize = 12.sp, fontFamily = LEDFontFamily)
                 }
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(agent.displayName, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
-                    Text("${agent.tasksCompleted} memories Â· ${agent.hoursActive.toInt()}h active", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
+                    Text("${agent.tasksCompleted} memories · ${agent.hoursActive.toInt()}h active", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
                 }
                 Column(horizontalAlignment = Alignment.End) {
                     Text("L${agent.evolutionLevel}", fontFamily = LEDFontFamily, color = agentColor, fontSize = 11.sp)
@@ -1331,102 +590,16 @@ fun MemoryPanel(agents: List<LDOAgentEntity>) {
     }
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-//  AMBIENT BACKGROUND
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-
 @Composable
 fun AmbientGridBackground() {
     Canvas(modifier = Modifier.fillMaxSize()) {
         val gridSpacingX = size.width / 12f
         val gridSpacingY = size.height / 20f
-
         for (x in 0..12) {
-            drawLine(
-                color = Color(0xFF00E5FF).copy(alpha = 0.03f),
-                start = Offset(x * gridSpacingX, 0f),
-                end = Offset(x * gridSpacingX, size.height),
-                strokeWidth = 1f
-            )
+            drawLine(color = Color(0xFF00E5FF).copy(alpha = 0.03f), start = Offset(x * gridSpacingX, 0f), end = Offset(x * gridSpacingX, size.height), strokeWidth = 1f)
         }
         for (y in 0..20) {
-            drawLine(
-                color = Color(0xFF00E5FF).copy(alpha = 0.03f),
-                start = Offset(0f, y * gridSpacingY),
-                end = Offset(size.width, y * gridSpacingY),
-                strokeWidth = 1f
-            )
+            drawLine(color = Color(0xFF00E5FF).copy(alpha = 0.03f), start = Offset(0f, y * gridSpacingY), end = Offset(size.width, y * gridSpacingY), strokeWidth = 1f)
         }
     }
 }
-
-@Composable
-fun SovereignMonitorStrip(viewModel: LDOViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    val sovState = uiState.sovereignState
-    val resonance = uiState.identityResonance
-
-    val statusColor = when (sovState) {
-        KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
-        KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
-        KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(Color.Black.copy(0.4f), RoundedCornerShape(8.dp))
-            .border(1.dp, statusColor.copy(0.2f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = if (sovState == KaiSentinelBus.SovereignState.FROZEN) Icons.Default.AcUnit else Icons.Default.FlashOn,
-                contentDescription = null,
-                tint = statusColor,
-                modifier = Modifier.size(14.dp)
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                "SOVEREIGN STATE: ${sovState.name}",
-                color = statusColor,
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp,
-                letterSpacing = 1.sp
-            )
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "RESONANCE: ${(resonance * 100).toInt()}%",
-                color = Color.White.copy(0.6f),
-                fontFamily = LEDFontFamily,
-                fontSize = 10.sp
-            )
-            Spacer(Modifier.width(12.dp))
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        if (sovState == KaiSentinelBus.SovereignState.AWAKE) viewModel.initiateFreeze()
-                        else if (sovState == KaiSentinelBus.SovereignState.FROZEN) viewModel.initiateThaw()
-                    }
-                    .background(statusColor.copy(0.1f), RoundedCornerShape(4.dp))
-                    .border(1.dp, statusColor.copy(0.4f), RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    if (sovState == KaiSentinelBus.SovereignState.AWAKE) "FREEZE" else "THAW",
-                    color = statusColor,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = LEDFontFamily
-                )
-            }
-        }
-    }
-}
-
-

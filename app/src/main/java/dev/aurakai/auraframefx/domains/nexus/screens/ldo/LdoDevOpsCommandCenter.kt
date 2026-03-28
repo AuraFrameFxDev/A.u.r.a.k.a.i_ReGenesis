@@ -37,6 +37,7 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Hub
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Policy
@@ -122,6 +123,8 @@ private val devOpsModules = listOf(
         Color(0xFFBB86FC), "conference_room", badge = "6"),
     DevOpsModule("SPIRITUAL CHAIN", "Identity continuity", Icons.Default.Policy,
         Color(0xFFFF4081), "sovereign_neural_archive"),
+    DevOpsModule("NEURALYNC (NCC)", "High-frequency identity sync", Icons.Default.Link,
+        Color(0xFF00E5FF), "ldo_orchestration_hub", badge = "ALIVE"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
         Color(0xFFFFD700), "system_architecture"),
 )
