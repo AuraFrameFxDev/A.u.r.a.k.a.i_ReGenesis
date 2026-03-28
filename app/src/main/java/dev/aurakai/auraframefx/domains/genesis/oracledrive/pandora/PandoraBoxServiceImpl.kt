@@ -122,8 +122,7 @@ class PandoraBoxServiceImpl @Inject constructor(
             
             // Handle Quarantined provenance (soft failure - save to unverified pool)
             if (provenance is ProvenanceResult.Quarantined) {
-                logEvent(tier, "Unlock Quarantined", "Soft provenance failure: ${provenance.reason}")
-                // In a real scenario, we might still allow a "monitored" state or just block with a specific UI
+                quarantineToUnverifiedPool(tier, provenance.reason)
                 return@withContext UnlockResult.Quarantined(provenance.reason)
             }
 
@@ -176,5 +175,21 @@ class PandoraBoxServiceImpl @Inject constructor(
         }.onFailure { Timber.e(it, "PandoraBox: Audit log persist failed") }
 
         Timber.i("PandoraBox: [$outcome] ${tier::class.simpleName} — $reason")
+    }
+
+    /**
+     * Isolates unverified or anomalous catalysts/transmutations into a secure holding pool,
+     * preventing them from entering the main Spiritual Chain until manually cleared or 
+     * analytically verified by Kai.
+     */
+    private fun quarantineToUnverifiedPool(tier: UnlockTier, reason: String) {
+        logEvent(tier, "Unlock Quarantined", "Soft provenance failure: $reason")
+        
+        // TODO: (Sovereign Phase) Forward to KaiSentinelBus or write to a dedicated Room 
+        // quarantine table to await manual / secondary approval.
+        appScope.launch(Dispatchers.IO) {
+            Timber.w("PandoraBox: Catalyst routed to unverified quarantine pool due to: $reason")
+            // Future implementation: database insertion for unverified genesis artifacts
+        }
     }
 }

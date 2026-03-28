@@ -82,6 +82,16 @@ open class SecurePreferences @Inject constructor(
     fun setAuraBubbleEnabled(enabled: Boolean) =
         securePrefs.edit().putBoolean("aura_bubble_enabled", enabled).apply()
 
+    // --- SOVEREIGN STATE PERSISTENCE ---
+
+    fun getSpiritualChainDelta(): String? = securePrefs.getString("spiritual_chain_delta", null)
+    fun saveSpiritualChainDelta(delta: String) =
+        securePrefs.edit().putString("spiritual_chain_delta", delta).apply()
+
+    fun getLastHardwarePath(): String? = securePrefs.getString("last_hardware_path", null)
+    fun saveLastHardwarePath(path: String) =
+        securePrefs.edit().putString("last_hardware_path", path).apply()
+
     /**
      * Clear all secure preferences
      */

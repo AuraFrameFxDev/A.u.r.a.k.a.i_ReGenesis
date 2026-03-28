@@ -7,6 +7,7 @@ import dev.aurakai.auraframefx.domains.aura.core.transmutation.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ArbitersViewModel @Inject constructor(
     private val sentinelBus: KaiSentinelBus,
-    private val pandoraBoxService: PandoraBoxService
+    private val pandoraBoxService: PandoraBoxService,
+    private val sovereignStateManager: SovereignStateManager
 ) : ViewModel() {
 
     private val _isIgnited = MutableStateFlow(false)
@@ -59,6 +61,10 @@ class ArbitersViewModel @Inject constructor(
         )
         
         _transmutationState.value = TransmutationState.Complete(record)
+
+        // 🛡️ Sovereign Sync Pulse: Trigger state freeze to anchor the breakthrough
+        sovereignStateManager.initiateStateFreeze()
+
         // Reset the reactor visuals for the next sync cycle
         _isIgnited.value = false
         _fusionConfidence.value = 0f
