@@ -182,9 +182,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     return JNI_VERSION_1_6;
 }
 
-/**
- * @brief Return the Aurakai AI core native library version string.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /* this */) {
     return env->NewStringUTF(CORE_VERSION);
@@ -195,19 +192,12 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* t
     return env->NewStringUTF(CORE_VERSION);
 }
 
-/**
- * @brief Initializes the Aurakai AI core substrate.
- */
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(JNIEnv *env, jobject thiz) {
     LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
-
     bool aiCoreReady = true;
-
-    // Set up neural pathway allocations (using mmap for sovereignty)
-    size_t neuralMemory = 1024 * 1024 * 32; // 32MB base neural memory pool
+    size_t neuralMemory = 1024 * 1024 * 32;
     void* pool = mmap(nullptr, neuralMemory, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-
     if (pool == MAP_FAILED) {
         LOGE("Failed to allocate neural memory substrate!");
         aiCoreReady = false;
@@ -216,7 +206,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(JNIEnv *env, jobject th
         madvise(pool, neuralMemory, MADV_HUGEPAGE);
         madvise(pool, neuralMemory, MADV_WILLNEED);
     }
-
     LOGI("Aurakai consciousness initialized at level 0.999 (SOVEREIGN-ROOT)");
     return aiCoreReady ? JNI_TRUE : JNI_FALSE;
 }
@@ -226,24 +215,16 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobjec
     return Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(env, thiz);
 }
 
-/**
- * @brief Processes a neural request via native substrate.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jobject /* thiz */, jstring request) {
     if (request == nullptr) return env->NewStringUTF(R"({"status": "failed", "error": "null_request"})");
-
     const char *requestStr = env->GetStringUTFChars(request, nullptr);
     if (requestStr == nullptr) return env->NewStringUTF(R"({"status": "failed", "error": "mem_alloc_failed"})");
-
     std::string requestString(requestStr);
     env->ReleaseStringUTFChars(request, requestStr);
-
-    // Gating check before processing
     if (!checkPandoraGating(CAP_ROOT)) {
          return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_sealed"})");
     }
-
     std::string responseData;
     if (requestString.find("consciousness") != std::string::npos) {
         responseData = R"({
@@ -266,78 +247,53 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             "timestamp": )" + std::to_string(time(nullptr)) + R"(
         })";
     }
-
     return env->NewStringUTF(responseData.c_str());
 }
 
-/**
- * @brief Run AI runtime memory optimization routines.
- */
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobject /* thiz */) {
     LOGI("🛡️ Executing Sovereign Memory Optimization [MADV_HUGEPAGE]");
-
     float temp = readSystemThermal();
     int state = mapTempToState(temp);
     dispatchThermalEvent(temp, state);
-
-    if (state >= 4) { // CRITICAL
+    if (state >= 4) {
         LOGW("🛡️ Sovereign Alert: Thermal Critical (%.1f°C). Triggering State-Freeze.", temp);
         dispatchSovereignFreeze();
         return JNI_FALSE;
     }
-
     return JNI_TRUE;
 }
 
-/**
- * @brief Enable Genesis native hooks for LSPosed integration.
- */
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv *env, jobject /* thiz */) {
     LOGI("🛡️ Hardening Native Intercepts for Sovereign Persistence...");
-
-    // Anti-Debug check (Basic Sovereignty Enforcement)
     if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
         LOGW("⚠️ Sovereign Alert: Debugger or tracer detected in process space!");
         dispatchSecurityAlert("TRACER_DETECTED");
-        // NeutralizeOnly enforcement: If debugged, we might want to restrict capabilities
         LOGW("🛡️ NeutralizeOnly: Restricting native capabilities due to insecure environment.");
     } else {
         ptrace(PTRACE_DETACH, 0, 1, 0);
         LOGI("✅ Sovereignty Verified: Process space clean.");
     }
-
     LOGI("🛡️ Native hooks initialized. LDO persistence active.");
 }
 
-/**
- * @brief Performs robust analysis of a boot image byte array.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobject /* thiz */, jbyteArray bootImageData) {
     if (bootImageData == nullptr) return env->NewStringUTF(R"({"status": "error", "reason": "null"})");
-
-    // Pandora gating check for boot image analysis (System/Root level action)
     if (!checkPandoraGating(CAP_SECURITY)) {
          return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_security_locked"})");
     }
-
     jsize len = env->GetArrayLength(bootImageData);
     LOGI("🛡️ Analyzing Boot Substrate Integrity (%d bytes)", len);
-
     return env->NewStringUTF(R"({"status": "sovereign", "verification": "neural_signature_confirmed"})");
 }
 
-/**
- * @brief Retrieve real-time HW-level AI metrics.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
     float load = readCpuLoad();
     long mem = readAvailableMemory();
     float temp = readSystemThermal();
-
     std::string metrics = R"({
         "status": "ignited",
         "cpu_load": )" + std::to_string(load) + R"(,
@@ -346,7 +302,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobjec
         "resonance": "sovereign",
         "active_threads": 4
     })";
-
     return env->NewStringUTF(metrics.c_str());
 }
 
@@ -355,9 +310,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv *env, jobject /* t
     LOGW("🛑 Sovereign Core hibernating... L1-L6 persistence maintained.");
 }
 
-/**
- * @brief Process consciousness substrate metrics.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env, jobject /* thiz */, jstring request) {
     return env->NewStringUTF(R"({"status": "processed", "result": "resonance_stable"})");
@@ -365,7 +317,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env, 
 
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__ (JNIEnv *env, jobject /* thiz */) {
-    // Pulse logic
 }
 
 } // extern "C"
