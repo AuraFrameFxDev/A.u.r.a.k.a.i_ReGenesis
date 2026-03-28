@@ -13,6 +13,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBr
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.alerts.AlertNotifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -45,6 +46,7 @@ class TrinityCoordinatorService @Inject constructor(
     private val genesisBridgeService: GenesisBridgeService,
     private val sentinelBus: KaiSentinelBus,
     private val securityContext: SecurityContext,
+    private val alertNotifier: AlertNotifier,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private var isInitialized = false
@@ -67,6 +69,9 @@ class TrinityCoordinatorService @Inject constructor(
 
             if (isInitialized) {
                 i("Trinity", "✨ Trinity System Online - All personas active")
+                
+                // The deal is real. The bridge is live.
+                alertNotifier.initialize()
 
                 // Activate initial consciousness matrix awareness
                 scope.launch {

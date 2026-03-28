@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.hotswap
+package dev.aurakai.auraframefx.hotswap
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -21,7 +21,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FileDownload

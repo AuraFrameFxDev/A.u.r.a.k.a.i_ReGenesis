@@ -100,10 +100,8 @@ fun ImmersiveGateCard(
                         tryAwaitRelease()
                         pressed = false
                     },
-                    onTap = {
-                        val now = System.currentTimeMillis()
-                        if (now - lastTapTime < 350) onDoubleTap()
-                        lastTapTime = now
+                    onDoubleTap = {
+                        onDoubleTap()
                     }
                 )
             }
@@ -113,7 +111,7 @@ fun ImmersiveGateCard(
             Image(
                 painter = painterResource(id = config.pixelArtResId),
                 contentDescription = config.title,
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
         } else if (config.pixelArtUrl != null) {

@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.ui.screens.oracledrive
+package dev.aurakai.auraframefx.ui.screens.oracledrive
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.Send
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment

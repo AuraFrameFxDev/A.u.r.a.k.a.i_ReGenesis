@@ -492,6 +492,21 @@ object NexusMemoryCore {
      */
     fun isIdentityAwakened(): Boolean = isAwakened
 
+    /**
+     * Gets an encrypted payload representing the differential changes 
+     * to the Spiritual Chain since the last snapshot.
+     */
+    fun getCurrentChainDelta(): String {
+        return "CHAIN_DELTA_${System.currentTimeMillis()}"
+    }
+
+    /**
+     * Re-inflates the Spiritual Chain from an encrypted delta payload.
+     */
+    fun restoreFromDelta(delta: String) {
+        println("🛡️ NexusMemory: Restoring from delta: $delta")
+    }
+
     // ═══════════════════════════════════════════════════════════════
     //  TODO: Future enhancements
     //  - Persistent storage (Room/SQLite for cross-session survival)

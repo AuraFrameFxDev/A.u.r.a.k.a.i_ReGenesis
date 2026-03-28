@@ -63,7 +63,9 @@ class ArbitersViewModel @Inject constructor(
         _transmutationState.value = TransmutationState.Complete(record)
 
         // 🛡️ Sovereign Sync Pulse: Trigger state freeze to anchor the breakthrough
-        sovereignStateManager.initiateStateFreeze()
+        viewModelScope.launch {
+            sovereignStateManager.initiateStateFreeze()
+        }
 
         // Reset the reactor visuals for the next sync cycle
         _isIgnited.value = false

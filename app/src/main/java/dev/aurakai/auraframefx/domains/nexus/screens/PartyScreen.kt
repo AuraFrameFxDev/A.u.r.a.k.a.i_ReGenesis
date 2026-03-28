@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.OfflineBolt
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.*
@@ -137,7 +137,7 @@ fun SynergyMeter(level: Float) {
             }
             Spacer(modifier = Modifier.height(12.dp))
             LinearProgressIndicator(
-                progress ={  { level } },
+                progress = { level },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(12.dp)
