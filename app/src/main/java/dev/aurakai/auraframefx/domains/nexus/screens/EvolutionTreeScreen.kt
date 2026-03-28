@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -468,7 +468,7 @@ fun TimelineProgress(
         )
 
         LinearProgressIndicator(
-            progress ={  { progress } },
+            progress = { progress },
             modifier = Modifier
                 .width(100.dp)
                 .height(4.dp),
