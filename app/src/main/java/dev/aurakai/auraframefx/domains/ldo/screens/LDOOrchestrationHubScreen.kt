@@ -42,6 +42,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.material.icons.filled.Terminal
+import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -177,7 +178,10 @@ fun LDOOrchestrationHubScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
 
-            // â”€â”€ Agent Orb Constellation (takes upper 40% of screen) â”€â”€
+            // ── Sovereign Monitor Strip ──
+            SovereignMonitorStrip(viewModel)
+
+            // ── Agent Orb Constellation (takes upper 40% of screen) ──
             AgentOrbConstellation(
                 agents = agents,
                 selectedAgent = selectedAgent,

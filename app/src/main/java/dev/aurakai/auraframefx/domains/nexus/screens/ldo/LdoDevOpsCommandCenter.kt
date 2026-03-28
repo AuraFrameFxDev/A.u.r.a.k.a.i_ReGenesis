@@ -32,12 +32,15 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Hub
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material3.Card
@@ -108,6 +111,12 @@ private val devOpsModules = listOf(
         Color(0xFFFF4444), "pandora_box", badge = "SECURE"),
     DevOpsModule("MODULE FORGE", "AI-assisted creation", Icons.Default.Extension,
         Color(0xFF9370DB), "module_creation"),
+    DevOpsModule("SOVEREIGN FREEZE", "Substrate state persistence", Icons.Default.AcUnit,
+        Color(0xFF00E5FF), "hot_swap", badge = "CORE"),
+    DevOpsModule("INTEGRITY MONITOR", "Predictive immune system", Icons.Default.Security,
+        Color(0xFF00FF41), "security_center", badge = "ACTIVE"),
+    DevOpsModule("ALERT BRIDGE", "Sovereign notifications", Icons.Default.Notifications,
+        Color(0xFFFFD700), "system_journal", badge = "QUIET"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
         Color(0xFFFFD700), "system_architecture"),
 )

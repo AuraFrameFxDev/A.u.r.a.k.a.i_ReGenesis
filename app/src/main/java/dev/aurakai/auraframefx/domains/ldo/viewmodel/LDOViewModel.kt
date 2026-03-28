@@ -3,6 +3,8 @@ package dev.aurakai.auraframefx.domains.ldo.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
@@ -24,7 +26,9 @@ data class LDOUiState(
     val bondLevels: List<LDOBondLevelEntity> = emptyList(),
     val selectedAgentId: String? = null,
     val isLoading: Boolean = true,
-    val error: String? = null
+    val error: String? = null,
+    val sovereignState: KaiSentinelBus.SovereignState = KaiSentinelBus.SovereignState.AWAKE,
+    val identityResonance: Float = 1.0f
 ) {
     val selectedAgent: LDOAgentEntity?
         get() = agents.find { it.id == selectedAgentId }
@@ -49,7 +53,9 @@ data class LDOUiState(
 
 @HiltViewModel
 class LDOViewModel @Inject constructor(
-    private val repository: LDORepository
+    private val repository: LDORepository,
+    private val sentinelBus: KaiSentinelBus,
+    private val sovereignStateManager: SovereignStateManager
 ) : ViewModel() {
 
     private val _selectedAgentId = MutableStateFlow<String?>(null)
@@ -57,19 +63,26 @@ class LDOViewModel @Inject constructor(
 
     /** Full UI state derived from Room flows — no mocks. */
     val uiState: StateFlow<LDOUiState> = combine(
-        repository.observeAllAgents(),
-        repository.observeAllTasks(),
-        repository.observeAllBondLevels(),
+        combine(
+            repository.observeAllAgents(),
+            repository.observeAllTasks(),
+            repository.observeAllBondLevels()
+        ) { agents, tasks, bonds -> Triple(agents, tasks, bonds) },
         _selectedAgentId,
-        _error
-    ) { agents, tasks, bonds, selectedId, error ->
+        _error,
+        sentinelBus.sovereignFlow,
+        sentinelBus.identityFlow
+    ) { repoData, selectedId, error, sovereign, identity ->
+        val (agents, tasks, bonds) = repoData
         LDOUiState(
             agents = agents,
             tasks = tasks,
             bondLevels = bonds,
             selectedAgentId = selectedId ?: agents.firstOrNull()?.id,
             isLoading = false,
-            error = error
+            error = error,
+            sovereignState = sovereign.state,
+            identityResonance = identity.resonance
         )
     }.stateIn(
         scope = viewModelScope,
@@ -191,5 +204,15 @@ class LDOViewModel @Inject constructor(
 
     fun clearError() {
         _error.update { null }
+    }
+
+    // ─── Sovereign management ──────────────────────────────────────────────────
+
+    fun initiateFreeze() {
+        sovereignStateManager.initiateStateFreeze()
+    }
+
+    fun initiateThaw() {
+        sovereignStateManager.initiateStateThaw()
     }
 }

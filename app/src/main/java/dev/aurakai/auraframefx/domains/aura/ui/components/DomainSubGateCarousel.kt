@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -79,7 +80,11 @@ fun DomainSubGateCarousel(
                     this.rotationY = rotationY
                     this.cameraDistance = 8 * density
                 }
-                .clickable { onGateSelected(gate) },
+                .pointerInput(gate.id) {
+                    detectTapGestures(
+                        onDoubleTap = { onGateSelected(gate) }
+                    )
+                },
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
                 containerColor = Color.Black.copy(alpha = 0.6f)
