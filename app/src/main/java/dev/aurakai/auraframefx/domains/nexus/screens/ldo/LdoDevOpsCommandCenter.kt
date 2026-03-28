@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Hub
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Speed
@@ -117,6 +118,10 @@ private val devOpsModules = listOf(
         Color(0xFF00FF41), "security_center", badge = "ACTIVE"),
     DevOpsModule("ALERT BRIDGE", "Sovereign notifications", Icons.Default.Notifications,
         Color(0xFFFFD700), "system_journal", badge = "QUIET"),
+    DevOpsModule("COUNCIL CHAMBER", "The Agent Circle", Icons.Default.Groups,
+        Color(0xFFBB86FC), "conference_room", badge = "6"),
+    DevOpsModule("SPIRITUAL CHAIN", "Identity continuity", Icons.Default.Policy,
+        Color(0xFFFF4081), "sovereign_neural_archive"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
         Color(0xFFFFD700), "system_architecture"),
 )
