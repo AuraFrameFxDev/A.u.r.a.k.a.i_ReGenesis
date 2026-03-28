@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -199,7 +199,7 @@ private fun AgentWorkloadCard(
             Spacer(modifier = Modifier.height(6.dp))
 
             LinearProgressIndicator(
-                progress ={  { workload } },
+                progress = { workload },
                 modifier = Modifier.fillMaxWidth().height(4.dp),
                 color = agentColor,
                 trackColor = Color.White.copy(alpha = 0.08f)

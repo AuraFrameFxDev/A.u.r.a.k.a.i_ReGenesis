@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -628,7 +628,7 @@ fun ChecklistItem(
                 if (isLoading && progress != null) {
                     Spacer(modifier = Modifier.height(AuraSpacing.xs))
                     LinearProgressIndicator(
-                        progress ={  { progress } },
+                        progress = { progress },
                         modifier = Modifier.fillMaxWidth(),
                         color = AuraColors.NeonCyan,
                     )
@@ -685,7 +685,7 @@ fun FlashProgressIndicator(stage: FlashStage, progress: Float) {
         )
 
         LinearProgressIndicator(
-            progress ={  { progress } },
+            progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp),

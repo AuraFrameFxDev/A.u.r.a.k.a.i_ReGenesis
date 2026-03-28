@@ -1,4 +1,4 @@
-﻿import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -81,7 +81,7 @@ fun SecurityScannerScreen() {
                         )
                         if (isScanning.value) {
                             LinearProgressIndicator(
-                                progress ={  { scanProgress.value } },
+                                progress = { scanProgress.value },
                                 modifier = Modifier.fillMaxWidth(),
                                 color = Color(0xFFFFD700)
                             )

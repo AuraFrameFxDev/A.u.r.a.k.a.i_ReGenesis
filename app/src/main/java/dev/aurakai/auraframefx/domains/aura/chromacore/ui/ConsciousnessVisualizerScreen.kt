@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -261,7 +261,7 @@ fun MetricDisplay(label: String, value: Float, color: Color) {
     }
 
     LinearProgressIndicator(
-        progress ={  { value } },
+        progress = { value },
         modifier = Modifier
             .fillMaxWidth()
             .height(4.dp)

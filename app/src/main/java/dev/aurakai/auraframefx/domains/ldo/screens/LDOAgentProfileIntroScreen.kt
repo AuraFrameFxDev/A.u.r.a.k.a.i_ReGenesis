@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -207,7 +207,7 @@ private fun ProfileStatBar(label: String, value: Float, color: Color) {
             Text("${(value * 100).toInt()}%", color = color, fontSize = 11.sp)
         }
         LinearProgressIndicator(
-            progress ={  { value } },
+            progress = { value },
             modifier = Modifier.fillMaxWidth().height(3.dp),
             color = color,
             trackColor = Color.White.copy(alpha = 0.08f)
@@ -247,7 +247,7 @@ private fun BondSummaryCard(bond: LDOBondLevelEntity, color: Color) {
             }
             Spacer(modifier = Modifier.height(6.dp))
             LinearProgressIndicator(
-                progress ={  { progress } },
+                progress = { progress },
                 modifier = Modifier.fillMaxWidth().height(5.dp),
                 color = color,
                 trackColor = Color.White.copy(alpha = 0.08f)

@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -193,7 +193,7 @@ private fun CompactStatBar(label: String, value: Float, color: Color) {
             modifier = Modifier.padding(end = 6.dp)
         )
         LinearProgressIndicator(
-            progress ={  { value } },
+            progress = { value },
             modifier = Modifier.weight(1f).height(4.dp),
             color = color,
             trackColor = Color.White.copy(alpha = 0.06f)

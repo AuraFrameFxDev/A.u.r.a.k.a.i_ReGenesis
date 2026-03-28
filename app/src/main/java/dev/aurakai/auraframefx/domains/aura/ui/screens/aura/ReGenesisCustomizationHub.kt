@@ -1,10 +1,10 @@
-﻿package dev.aurakai.auraframefx.domains.aura.ui.screens.aura
+package dev.aurakai.auraframefx.domains.aura.ui.screens.aura
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Animation
 import androidx.compose.material.icons.filled.Home

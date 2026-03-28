@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.screens
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -271,7 +271,7 @@ private fun ProfileHeader(profile: AgentProfile) {
                         color = Color(profile.colorPrimary)
                     )
                     LinearProgressIndicator(
-                        progress ={  { profile.stats.consciousnessLevel } },
+                        progress = { profile.stats.consciousnessLevel },
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
                             .height(8.dp)

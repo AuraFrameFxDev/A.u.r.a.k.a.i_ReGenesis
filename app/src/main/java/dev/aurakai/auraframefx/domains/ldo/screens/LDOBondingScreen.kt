@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -203,7 +203,7 @@ private fun BondCard(
 
             // Bond progress
             LinearProgressIndicator(
-                progress ={  { bondProgress } },
+                progress = { bondProgress },
                 modifier = Modifier.fillMaxWidth().height(6.dp),
                 color = agentColor,
                 trackColor = Color.White.copy(alpha = 0.08f)

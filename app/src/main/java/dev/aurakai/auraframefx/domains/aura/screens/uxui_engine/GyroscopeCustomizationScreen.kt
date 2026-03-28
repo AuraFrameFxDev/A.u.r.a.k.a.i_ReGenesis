@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
+package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -38,7 +38,7 @@ import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material.icons.filled.RotateRight
-import androidx.compose.material.Icons.AutoMirrored.Filled.Send
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material.icons.filled.Wifi

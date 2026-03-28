@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.kai.screens.security_shield
+package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.GppBad
 import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.PublicOff
@@ -165,7 +165,7 @@ private fun PrivacyScoreDisplay(score: Int) {
                 fontFamily = LEDFontFamily
             )
             LinearProgressIndicator(
-                progress ={  { score / 100f } },
+                progress = { score / 100f },
                 modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape),
                 color = Color(0xFFFF1111),
                 trackColor = Color.White.copy(alpha = 0.1f)

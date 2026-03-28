@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.ui.components
+package dev.aurakai.auraframefx.domains.aura.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Construction
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults

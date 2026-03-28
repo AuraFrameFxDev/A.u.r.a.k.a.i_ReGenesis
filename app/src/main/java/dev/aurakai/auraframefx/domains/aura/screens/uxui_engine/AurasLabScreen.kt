@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
+package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
@@ -306,7 +306,7 @@ private fun ChaosAnalysisTab() {
         Text("Grok Chaos Analysis", style = MaterialTheme.typography.headlineSmall, color = Color.Magenta)
         Spacer(modifier = Modifier.height(16.dp))
         Text("Stability Index: 98.4%", color = Color.White)
-        LinearProgressIndicator(progress ={  { 0.984f } }, modifier = Modifier
+        LinearProgressIndicator(progress = { 0.984f }, modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp), color = Color.Magenta)
         Text("Threat Matrix: NEGATIVE", color = Color.Green)
@@ -401,7 +401,7 @@ private fun ComponentsTab() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     LinearProgressIndicator(
-                        progress ={  { 0.7f } },
+                        progress = { 0.7f },
                         modifier = Modifier.fillMaxWidth()
                     )
                     Row(

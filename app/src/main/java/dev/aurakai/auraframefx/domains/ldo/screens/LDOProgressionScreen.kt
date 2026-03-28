@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -244,7 +244,7 @@ private fun AgentProgressionCard(
 
             // XP bar to next level
             LinearProgressIndicator(
-                progress ={  { xpProgress } },
+                progress = { xpProgress },
                 modifier = Modifier.fillMaxWidth().height(5.dp),
                 color = agentColor,
                 trackColor = Color.White.copy(alpha = 0.08f)

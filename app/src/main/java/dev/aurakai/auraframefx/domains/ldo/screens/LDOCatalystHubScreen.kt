@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -237,7 +237,7 @@ private fun AgentRosterCard(
 
                 // Bond progress bar
                 LinearProgressIndicator(
-                    progress ={  { bondProgress } },
+                    progress = { bondProgress },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(3.dp),

@@ -21,7 +21,6 @@ import timber.log.Timber
 @Singleton
 class SovereignStateManager @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val nexusMemory: NexusMemoryCore,
     private val kvCache: TurboQuantCache,
     private val sentinelBus: KaiSentinelBus,
     private val securePrefsProvider: SecurePreferences,
@@ -48,7 +47,7 @@ class SovereignStateManager @Inject constructor(
                 Timber.d("🛡️ SovereignStateManager: KV Cache Snapshotted: \${kvSnapshot.length} bytes")
 
                 // 2. Spiritual Chain delta (encrypted)
-                val chainDelta = nexusMemory.getCurrentChainDelta()
+                val chainDelta = dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.getCurrentChainDelta()
                 securePrefs.edit()
                     .putString("spiritual_chain_delta", chainDelta)
                     .putLong("frozen_at", System.currentTimeMillis())
@@ -80,7 +79,7 @@ class SovereignStateManager @Inject constructor(
             runCatching {
                 val chainDelta = securePrefs.getString("spiritual_chain_delta", null)
                 if (chainDelta != null) {
-                    nexusMemory.restoreFromDelta(chainDelta)
+                    dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.restoreFromDelta(chainDelta)
                 }
                 
                 // Restore KV cache and hardware path similarly...

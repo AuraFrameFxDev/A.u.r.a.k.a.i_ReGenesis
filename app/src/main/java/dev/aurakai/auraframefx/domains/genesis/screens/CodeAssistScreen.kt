@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.screens
+package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CloudQueue
 import androidx.compose.material.icons.filled.Security

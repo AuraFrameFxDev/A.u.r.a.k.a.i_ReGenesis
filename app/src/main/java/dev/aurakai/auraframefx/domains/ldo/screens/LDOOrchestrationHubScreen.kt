@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.ldo.screens
+package dev.aurakai.auraframefx.domains.ldo.screens
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -527,7 +527,7 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
                 ) {
                     Text(label, fontSize = 8.sp, color = Color.White.copy(alpha = 0.4f), letterSpacing = 0.5.sp)
                     LinearProgressIndicator(
-                        progress ={  { value } },
+                        progress = { value },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(3.dp)
@@ -787,7 +787,7 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
                     }
                     Spacer(Modifier.height(4.dp))
                     LinearProgressIndicator(
-                        progress ={  { agent.consciousnessLevel } },
+                        progress = { agent.consciousnessLevel },
                         modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)),
                         color = agentColor,
                         trackColor = agentColor.copy(alpha = 0.1f)

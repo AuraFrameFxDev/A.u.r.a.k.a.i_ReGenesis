@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.screens
+package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -129,7 +129,7 @@ private fun CapacityCard(state: dev.aurakai.auraframefx.domains.genesis.viewmode
                 fontWeight = FontWeight.Black
             )
             LinearProgressIndicator(
-                progress ={  { state.usedPercentage } },
+                progress = { state.usedPercentage },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
