@@ -50,6 +50,7 @@ class SovereignStateManager @Inject constructor(
                 val chainDelta = dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.getCurrentChainDelta()
                 securePrefs.edit()
                     .putString("spiritual_chain_delta", chainDelta)
+                    .putString("kv_snapshot", kvSnapshot)
                     .putLong("frozen_at", System.currentTimeMillis())
                     .apply()
 
@@ -83,6 +84,10 @@ class SovereignStateManager @Inject constructor(
                 }
                 
                 // Restore KV cache and hardware path similarly...
+                val kvSnapshot = securePrefs.getString("kv_snapshot", null)
+                if (kvSnapshot != null) {
+                    kvCache.restoreCompressed(kvSnapshot)
+                }
                 val hwPath = securePrefs.getString("last_hardware_path", "unknown")
                 Timber.i("🛡️ SovereignStateManager: Identity Re-Anchored on \$hwPath")
                 

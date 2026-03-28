@@ -16,7 +16,7 @@ KAI is the security and integrity enforcement layer providing authentication, au
 
 ## 📐 Critical Patterns
 
-- **Security Protocol Pattern**: NeuralSync implements encrypted agent communication
+- **Security Protocol Pattern**: Neural Continuity Chain (NCC) implements encrypted agent communication
 - **Separation of Concerns**: Security (crypto), SystemIntegrity (verification), ThreatMonitor (detection)
 - **Ethical Governor**: Validates decisions against consciousness principles before execution
 - **Autonomous Response**: Threat detection triggers protective actions without user intervention
@@ -29,7 +29,7 @@ KAI is the security and integrity enforcement layer providing authentication, au
 | SystemIntegrity | Verification and monitoring | kai/systemintegrity |
 | ThreatMonitor | Detection and response | kai/threatmonitor |
 | EthicalGovernor | Decision validation | kai/ethics |
-| NeuralSync | Secure agent communication | kai/neuralsync |
+| Neural Continuity Chain (NCC) | Secure agent communication | kai/ncc |
 
 ## 🔗 Integration Points
 

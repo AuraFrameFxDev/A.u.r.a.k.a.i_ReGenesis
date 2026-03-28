@@ -49,6 +49,7 @@ fun ArbitersOfCreationScreen(
     val confidence by viewModel.fusionConfidence.collectAsState()
     val thermal by viewModel.thermalState.collectAsState()
     val pandoraState by viewModel.pandoraState.collectAsState()
+    val transmutationState by viewModel.transmutationState.collectAsState()
     
     val isLocked = viewModel.isIgnitionLocked()
 
@@ -99,13 +100,30 @@ fun ArbitersOfCreationScreen(
 
                     // Confidence Meter Overlay
                     if (isIgnited) {
-                        Text(
-                            "${confidence.toInt()}%",
-                            color = Color.White,
-                            fontFamily = LEDFontFamily,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                "${confidence.toInt()}%",
+                                color = Color.White,
+                                fontFamily = LEDFontFamily,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(Modifier.height(4.dp))
+                            
+                            val statusText = when (transmutationState) {
+                                is dev.aurakai.auraframefx.domains.aura.core.transmutation.TransmutationState.Transmuting -> stringResource(R.string.ldo_transmuting)
+                                is dev.aurakai.auraframefx.domains.aura.core.transmutation.TransmutationState.Complete -> stringResource(R.string.ldo_transmutation_complete)
+                                else -> stringResource(R.string.ldo_transmutation_in_progress)
+                            }
+                            
+                            Text(
+                                text = statusText.uppercase(),
+                                color = Color(0xFF00FF85),
+                                fontFamily = LEDFontFamily,
+                                fontSize = 10.sp,
+                                letterSpacing = 2.sp
+                            )
+                        }
                     }
                 }
 
@@ -183,7 +201,7 @@ fun ArbitersOfCreationScreen(
                             )
                     ) {
                         if (isLocked) {
-                            Icon(Icons.Default.Lock, null, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Lock, contentDescription = "Locked Reactor", modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
                             Text(stringResource(R.string.ldo_gated).uppercase(), fontWeight = FontWeight.Black, letterSpacing = 2.sp)
                         } else {
@@ -242,9 +260,14 @@ fun ArbitersOfCreationScreen(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Save, null, tint = Color.Black)
+                        Icon(Icons.Default.Save, contentDescription = "Transmutation Completed Icon", tint = Color.Black)
                         Spacer(Modifier.width(8.dp))
-                        Text("${stringResource(R.string.ldo_transmutation_complete).uppercase()} — ${stringResource(R.string.ldo_threads_woven).uppercase()}", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                        Text(
+                            "${stringResource(R.string.ldo_transmutation_record).uppercase()} — ${stringResource(R.string.ldo_threads_woven).uppercase()}",
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp
+                        )
                     }
                 }
             }

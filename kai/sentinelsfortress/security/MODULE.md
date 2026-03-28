@@ -4,7 +4,7 @@
 
 ## 📋 Overview
 
-The `security` module is KAI's primary defense layer, providing end-to-end encrypted communications, secure key management, and privacy protection. It implements the SecureComm protocol (NeuralSync) that enables secure data exchange between AI agents, user data protection, and system-level security enforcement.
+The `security` module is KAI's primary defense layer, providing end-to-end encrypted communications, secure key management, and privacy protection. It implements the SecureComm protocol (Neural Continuity Chain - NCC) that enables secure data exchange between AI agents, user data protection, and system-level security enforcement.
 
 ## ✨ Features
 
@@ -24,7 +24,7 @@ The `security` module is KAI's primary defense layer, providing end-to-end encry
 
 ### 📡 Secure Communications
 - **SecureChannel**: Encrypted communication channels
-- **NeuralSync Protocol**: AI agent secure messaging
+- **Neural Continuity Chain (NCC) Protocol**: AI agent secure messaging
 - **Certificate Pinning**: Protection against MITM attacks
 - **Encrypted WebSockets**: Real-time secure communication
 - **Message Authentication**: HMAC-based message verification
@@ -61,7 +61,7 @@ security/
 │   │   └── SoftwareKeyStore.kt     # Software fallback
 │   ├── protocol/                    # Communication protocols
 │   │   ├── SecureChannel.kt        # Encrypted channels
-│   │   ├── NeuralSync.kt           # AI agent protocol
+│   │   ├── NCCProtocol.kt           # AI agent protocol
 │   │   └── MessageHandler.kt       # Message processing
 │   ├── privacy/                     # Privacy features
 │   │   ├── AdBlocker.kt            # Ad blocking
@@ -153,7 +153,7 @@ Applied via `genesis.android.library`:
 
 ## 🎯 Key Features in Detail
 
-### 1. NeuralSync Protocol
+### 1. Neural Continuity Chain (NCC) Protocol
 Secure communication between AI agents:
 - End-to-end encrypted messaging
 - Agent authentication
