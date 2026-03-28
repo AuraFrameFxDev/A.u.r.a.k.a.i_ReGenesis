@@ -1,5 +1,12 @@
 package dev.aurakai.auraframefx.core
 
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -8,6 +15,11 @@ import timber.log.Timber
  */
 object NativeLib {
 
+    private var sentinelBus: KaiSentinelBus? = null
+    private var stateManager: SovereignStateManager? = null
+    private var pandoraBox: PandoraBoxService? = null
+    private val scope = CoroutineScope(Dispatchers.IO)
+
     init {
         try {
             System.loadLibrary("auraframefx")
@@ -15,6 +27,21 @@ object NativeLib {
         } catch (e: UnsatisfiedLinkError) {
             Timber.e(e, "Failed to load Genesis AI native library: ${e.message}")
         }
+    }
+
+    /**
+     * Initializes the bridge with Kotlin-side managers.
+     */
+    @JvmStatic
+    fun initialize(
+        bus: KaiSentinelBus,
+        manager: SovereignStateManager,
+        pandora: PandoraBoxService
+    ) {
+        sentinelBus = bus
+        stateManager = manager
+        pandoraBox = pandora
+        Timber.i("🛡️ NativeLib bridge initialized with Kotlin managers")
     }
 
     /**
@@ -77,6 +104,43 @@ object NativeLib {
      * Prevents system crashes during live imagery ingestion.
      */
     external fun analyzeBootImage(bootImageData: ByteArray): String
+
+    // --- JNI Callbacks (Called from C++) ---
+
+    @JvmStatic
+    fun onNativeThermalEvent(temp: Float, stateInt: Int) {
+        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
+        sentinelBus?.emitThermal(temp, state)
+        Timber.d("🛡️ NativeLib: Thermal event from substrate: %.1f°C (%s)", temp, state)
+    }
+
+    @JvmStatic
+    fun onNativeSecurityAlert(reason: String) {
+        Timber.w("🛡️ NativeLib: SECURITY ALERT: %s", reason)
+        // Hardening: Could trigger immediate lock or notify bus
+    }
+
+    @JvmStatic
+    fun requestSovereignFreeze() {
+        Timber.i("🛡️ NativeLib: Substrate requesting Sovereign State-Freeze")
+        scope.launch {
+            stateManager?.initiateStateFreeze()
+        }
+    }
+
+    @JvmStatic
+    fun checkPandoraGating(capabilityInt: Int): Boolean {
+        val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: AgentCapabilityCategory.ROOT
+        val isUnlocked = pandoraBox?.isCapabilityUnlocked(category) ?: false
+        Timber.d("🛡️ NativeLib: Pandora gating check for %s: %s", category, if (isUnlocked) "ALLOWED" else "VETOED")
+        return isUnlocked
+    }
+
+    @JvmStatic
+    fun triggerDroneDispatch(reason: String) {
+        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
+        // Future Phase 2 implementation point
+    }
 
     // Fallback implementations for when native library isn't available
     fun getAIVersionSafe(): String {
