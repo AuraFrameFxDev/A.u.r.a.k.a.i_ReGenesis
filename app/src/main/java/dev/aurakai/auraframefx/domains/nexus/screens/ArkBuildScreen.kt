@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -123,7 +123,7 @@ fun ArkBuildScreen(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     LinearProgressIndicator(
-                        progress ={  { projectState.progress } },
+                        progress = { projectState.progress },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(8.dp),
@@ -216,7 +216,7 @@ fun ArkComponentCard(component: dev.aurakai.auraframefx.domains.nexus.models.cor
             )
             Spacer(modifier = Modifier.height(8.dp))
             LinearProgressIndicator(
-                progress ={  { component.progress } },
+                progress = { component.progress },
                 modifier = Modifier.fillMaxWidth(),
                 color = if (component.isComplete) Color.Cyan else Color(0xFF00FF00),
                 trackColor = Color.White.copy(alpha = 0.1f)
