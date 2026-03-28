@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora
 import dev.aurakai.auraframefx.di.PandoraPreferences
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceResult
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import dev.aurakai.auraframefx.domains.kai.security.veto.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.sovereignty.ApplicationScope
@@ -118,6 +119,14 @@ class PandoraBoxServiceImpl @Inject constructor(
 
             // Provenance check
             val provenance = provenanceValidator.validateOrigin("user", "pandora_unlock")
+            
+            // Handle Quarantined provenance (soft failure - save to unverified pool)
+            if (provenance is ProvenanceResult.Quarantined) {
+                logEvent(tier, "Unlock Quarantined", "Soft provenance failure: ${provenance.reason}")
+                // In a real scenario, we might still allow a "monitored" state or just block with a specific UI
+                return@withContext UnlockResult.Quarantined(provenance.reason)
+            }
+
             if (!provenance.isValid) {
                 logEvent(tier, "Unlock Denied", "Provenance validation failed: ${provenance.reason}")
                 return@withContext UnlockResult.Denied("Provenance validation failed")

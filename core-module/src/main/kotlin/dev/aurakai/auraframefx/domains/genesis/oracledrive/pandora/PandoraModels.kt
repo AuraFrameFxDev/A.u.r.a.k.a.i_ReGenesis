@@ -51,4 +51,5 @@ sealed class UnlockResult {
     object Success : UnlockResult()
     data class Denied(val reason: String) : UnlockResult()
     data class Error(val message: String) : UnlockResult()
+    data class Quarantined(val reason: String) : UnlockResult()
 }

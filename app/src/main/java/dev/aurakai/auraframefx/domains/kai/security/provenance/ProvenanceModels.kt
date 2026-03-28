@@ -14,6 +14,9 @@ sealed class ProvenanceResult {
     data class Vetoed(override val reason: String, override val chainId: String) : ProvenanceResult() {
         override val isValid: Boolean = false
     }
+    data class Quarantined(override val reason: String, override val chainId: String) : ProvenanceResult() {
+        override val isValid: Boolean = false
+    }
 }
 
 /**
