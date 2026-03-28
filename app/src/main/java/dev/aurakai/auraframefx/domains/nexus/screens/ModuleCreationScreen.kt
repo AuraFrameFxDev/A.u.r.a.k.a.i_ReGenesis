@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -133,7 +133,7 @@ fun ModuleCreationScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     LinearProgressIndicator(
-                        progress ={  { generationProgress.value } },
+                        progress = { generationProgress.value },
                         modifier = Modifier.fillMaxWidth(),
                         color = Color(0xFF9370DB)
                     )

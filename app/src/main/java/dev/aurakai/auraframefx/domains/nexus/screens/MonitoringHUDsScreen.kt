@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.Icons.AutoMirrored.Filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Speed
@@ -169,7 +169,7 @@ fun IntegrityPulseCard(integrity: Float) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 LinearProgressIndicator(
-                    progress ={  { integrity } },
+                    progress = { integrity },
                     color = Color.Cyan,
                     trackColor = Color.Gray.copy(alpha = 0.2f),
                     modifier = Modifier

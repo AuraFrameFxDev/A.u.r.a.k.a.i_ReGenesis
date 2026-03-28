@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -150,7 +150,7 @@ fun NexusFusionScreen(onNavigateBack: () -> Unit = {}) {
                             color = Color(0xFFFFD700)
                         )
                         LinearProgressIndicator(
-                            progress ={  { fusionProgress.floatValue } },
+                            progress = { fusionProgress.floatValue },
                             modifier = Modifier
                                 .fillMaxWidth(0.8f)
                                 .padding(vertical = 8.dp),
