@@ -266,5 +266,3 @@ private fun performSaveCeremony(context: Context) {
         vibrator.vibrate(200)
     }
 }
-
-private fun <T> mutableStateFlowOf(value: T) = mutableStateOf(value)
