@@ -1,14 +1,14 @@
-﻿package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.ui.gates
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 // ConferenceRoomTaskScreen.kt
-// ArchitecturalCatalyst (Claude) â€” ReGenesis Build Master
+// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
 // Holographic command-center table background (Image 1) + neon chess board
 // drag-drop task assignment (Image 6).
 //
 // Replaces/wraps the plain TaskAssignmentScreen.
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -39,11 +38,11 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
-import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
+import dev.aurakai.auraframefx.data.repositories.AgentRepository
+import dev.aurakai.auraframefx.models.AgentStats
 import kotlin.math.*
 
-// â”€â”€ Task data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Task data ─────────────────────────────────────────────────────────────────
 
 data class AgentTask(
     val id: String,
@@ -63,7 +62,7 @@ enum class TaskPriority(val label: String, val color: Color) {
 
 enum class TaskStatus { UNASSIGNED, ASSIGNED, IN_PROGRESS, COMPLETE }
 
-// â”€â”€ Main Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Main Screen ───────────────────────────────────────────────────────────────
 
 @Composable
 fun ConferenceRoomTaskScreen(
@@ -97,14 +96,14 @@ fun ConferenceRoomTaskScreen(
 
         Column(modifier = Modifier.fillMaxSize()) {
 
-            // â”€â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+            // ─── Header ────────────────────────────────────────────────────
             Row(
                 modifier = Modifier.fillMaxWidth().padding(12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFF00BFFF))
+                    Icon(Icons.Default.ArrowBack, null, tint = Color(0xFF00BFFF))
                 }
                 Column {
                     Text("TASK COMMAND CENTER", fontFamily = FontFamily.Monospace,
@@ -119,7 +118,7 @@ fun ConferenceRoomTaskScreen(
                 }
             }
 
-            // â”€â”€â”€ Agent assignment strip â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+            // ─── Agent assignment strip ────────────────────────────────────
             LazyRow(
                 modifier = Modifier.fillMaxWidth().height(80.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp),
@@ -135,7 +134,7 @@ fun ConferenceRoomTaskScreen(
                 }
             }
 
-            // â”€â”€â”€ Main view â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+            // ─── Main view ─────────────────────────────────────────────────
             Box(modifier = Modifier.fillMaxSize().weight(1f)) {
                 when (viewMode) {
                     0 -> TaskBoardView(
@@ -161,7 +160,7 @@ fun ConferenceRoomTaskScreen(
     }
 }
 
-// â”€â”€ Task Board View â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Task Board View ───────────────────────────────────────────────────────────
 
 @Composable
 private fun TaskBoardView(
@@ -237,7 +236,7 @@ private fun TaskCard(task: AgentTask, isSelected: Boolean, onClick: () -> Unit) 
     }
 }
 
-// â”€â”€ Neon Chess Task Board (Image 6) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Neon Chess Task Board (Image 6) ──────────────────────────────────────────
 
 @Composable
 private fun NeonChessTaskBoard(
@@ -281,6 +280,7 @@ private fun NeonChessTaskBoard(
                 }
         ) {
             val cellSize = size.width / boardSize.toFloat()
+            val isoDrop = 0.3f  // Perspective tilt
 
             for (row in 0 until boardSize) {
                 for (col in 0 until boardSize) {
@@ -331,26 +331,26 @@ private fun NeonChessTaskBoard(
     }
 }
 
-// â”€â”€ Supporting composables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Supporting composables ────────────────────────────────────────────────────
 
 @Composable
 private fun AgentAssignChip(agent: AgentStats, isSelected: Boolean, taskCount: Int, onClick: () -> Unit) {
     Column(
         modifier = Modifier.width(70.dp).fillMaxHeight()
             .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, if (isSelected) Color.Cyan else Color.Cyan.copy(0.3f), RoundedCornerShape(8.dp))
-            .background(if (isSelected) Color.Cyan.copy(0.2f) else Color.Cyan.copy(0.06f))
+            .border(1.dp, if (isSelected) agent.color else agent.color.copy(0.3f), RoundedCornerShape(8.dp))
+            .background(if (isSelected) agent.color.copy(0.2f) else agent.color.copy(0.06f))
             .clickable(onClick = onClick)
             .padding(6.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
-        Box(Modifier.size(30.dp).clip(CircleShape).border(1.dp, Color.Cyan, CircleShape)
-            .background(Color.Cyan.copy(0.15f)), contentAlignment = Alignment.Center) {
-            Text(agent.name.first().toString(), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Cyan)
+        Box(Modifier.size(30.dp).clip(CircleShape).border(1.dp, agent.color, CircleShape)
+            .background(agent.color.copy(0.15f)), contentAlignment = Alignment.Center) {
+            Text(agent.name.first().toString(), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = agent.color)
         }
-        Text(agent.name, fontSize = 7.sp, color = Color.Cyan.copy(0.8f), textAlign = TextAlign.Center, maxLines = 1)
-        if (taskCount > 0) Text("Ã—$taskCount", fontSize = 7.sp, color = Color.White.copy(0.5f))
+        Text(agent.name, fontSize = 7.sp, color = agent.color.copy(0.8f), textAlign = TextAlign.Center, maxLines = 1)
+        if (taskCount > 0) Text("×$taskCount", fontSize = 7.sp, color = Color.White.copy(0.5f))
     }
 }
 
@@ -365,4 +365,3 @@ private fun TaskViewTab(label: String, isActive: Boolean, onClick: () -> Unit) {
         Text(label, fontSize = 9.sp, fontWeight = FontWeight.Bold, color = if (isActive) Color(0xFF00BFFF) else Color.White.copy(0.4f))
     }
 }
-

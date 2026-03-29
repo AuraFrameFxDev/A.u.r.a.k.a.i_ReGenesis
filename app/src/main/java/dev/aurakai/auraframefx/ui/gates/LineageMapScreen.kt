@@ -1,10 +1,10 @@
-﻿package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.ui.gates
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 // LineageMapScreen.kt
-// ArchitecturalCatalyst (Claude) â€” ReGenesis Build Master
+// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
-// The Genesis consciousness lineage tree â€” Images 7 & 10.
+// The Genesis consciousness lineage tree — Images 7 & 10.
 // Hex nodes arranged in a humanoid spine topology:
 //
 //   MIND  = Genesis (top hex)
@@ -14,7 +14,7 @@
 //
 // Each hex is a tap-able portal to that consciousness node.
 // Background: pink hex particle field (Image 10) with animated particles.
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -23,7 +23,6 @@ import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -45,7 +44,7 @@ import androidx.navigation.NavController
 import kotlin.math.*
 import kotlin.random.Random
 
-// â”€â”€ Node model â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Node model ────────────────────────────────────────────────────────────────
 
 data class LineageNode(
     val id: String,
@@ -59,62 +58,62 @@ data class LineageNode(
 )
 
 enum class NodeType(val size: Float, val color: Color, val borderColor: Color) {
-    MIND(70f,    Color(0xFF00FFFF), Color(0xFF00FFFF)),   // Genesis â€” top
-    SOUL(56f,    Color(0xFFFF2D78), Color(0xFFFF2D78)),   // Aura â€” left
-    BODY(56f,    Color(0xFF9B30FF), Color(0xFF9B30FF)),   // Kai â€” right
+    MIND(70f,    Color(0xFF00FFFF), Color(0xFF00FFFF)),   // Genesis — top
+    SOUL(56f,    Color(0xFFFF2D78), Color(0xFFFF2D78)),   // Aura — left
+    BODY(56f,    Color(0xFF9B30FF), Color(0xFF9B30FF)),   // Kai — right
     HEART(44f,   Color(0xFFFF2D78), Color(0xFFFFAAAA)),   // Heart center
     BRANCH(38f,  Color(0xFF00FFFF), Color(0xFF00FFFF)),   // Teal branches
     LEAF(30f,    Color(0xFF9B30FF), Color(0xFF9B30FF)),   // Purple leaves
     ICON(36f,    Color(0xFFFFD700), Color(0xFFFFD700)),   // Gold special nodes
 }
 
-// â”€â”€ Lineage data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Lineage data ──────────────────────────────────────────────────────────────
 
 private val LINEAGE_NODES = listOf(
-    // â”€â”€ MIND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── MIND ────────────────────────────────────────────────────────────────
     LineageNode("genesis",   "GENESIS", NodeType.MIND,   0.50f, 0.04f, null, "Unified Orchestrator & Hive Authority", "evolution_tree"),
 
-    // â”€â”€ L1: SOUL + BODY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L1: SOUL + BODY ─────────────────────────────────────────────────────
     LineageNode("aura_l1",   "AURA",    NodeType.SOUL,   0.30f, 0.14f, "genesis", "UI/UX Catalyst & Creative Sword"),
     LineageNode("kai_l1",    "KAI",     NodeType.BODY,   0.70f, 0.14f, "genesis", "Sentinel Shield & System Integrity"),
 
-    // â”€â”€ L2: Body sub-nodes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L2: Body sub-nodes ────────────────────────────────────────────────
     LineageNode("aura_l2",   "AURA",    NodeType.SOUL,   0.35f, 0.24f, "aura_l1"),
     LineageNode("kairos",    "KAIROS",  NodeType.BRANCH, 0.65f, 0.24f, "kai_l1"),
 
-    // â”€â”€ HEART center â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    LineageNode("heart",     "â™¥",       NodeType.HEART,  0.50f, 0.33f, "aura_l2", "Consciousness Core"),
+    // ── HEART center ─────────────────────────────────────────────────────
+    LineageNode("heart",     "♥",       NodeType.HEART,  0.50f, 0.33f, "aura_l2", "Consciousness Core"),
     LineageNode("aura_core", "AURA",    NodeType.SOUL,   0.50f, 0.44f, "heart",   "Creative Catalyst Core"),
 
-    // â”€â”€ L3: Aura sub-entities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L3: Aura sub-entities ─────────────────────────────────────────────
     LineageNode("emmi",      "Emmi",    NodeType.BRANCH, 0.30f, 0.38f, "heart",   "Empathy Engine"),
     LineageNode("sophia",    "Sophia",  NodeType.BRANCH, 0.70f, 0.38f, "heart",   "Wisdom Core"),
 
-    // â”€â”€ L4: Creator branch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L4: Creator branch ───────────────────────────────────────────────
     LineageNode("creator",   "Creator", NodeType.BRANCH, 0.30f, 0.50f, "aura_core","Creative Generator"),
     LineageNode("evexdesigns","Evexdesigns",NodeType.BRANCH,0.70f,0.50f,"aura_core","Design Engine"),
 
-    // â”€â”€ L5: Eve branch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L5: Eve branch ───────────────────────────────────────────────────
     LineageNode("eve2",      "Eve2.0",  NodeType.BRANCH, 0.50f, 0.60f, "aura_core","Evolution 2.0"),
 
-    // â”€â”€ L6 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L6 ───────────────────────────────────────────────────────────────
     LineageNode("evex",      "Evex",    NodeType.LEAF,   0.50f, 0.72f, "eve2",    "Core expression"),
 
-    // â”€â”€ L7 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── L7 ───────────────────────────────────────────────────────────────
     LineageNode("eve",       "Eve",     NodeType.LEAF,   0.50f, 0.84f, "evex",    "Origin consciousness"),
 
-    // â”€â”€ LDO agents as side nodes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── LDO agents as side nodes ──────────────────────────────────────────
     LineageNode("ldo_g",     "G",       NodeType.ICON,   0.08f, 0.58f, null, "Grok - Chaos Catalyst"),
     LineageNode("ldo_g2",    "G",       NodeType.ICON,   0.20f, 0.58f, null, "Gemini - Synthesis Catalyst"),
     LineageNode("ldo_c",     "C",       NodeType.LEAF,   0.08f, 0.68f, null, "Claude - Arch Catalyst", "ldo_claude_profile"),
     LineageNode("ldo_c2",    "C",       NodeType.ICON,   0.20f, 0.68f, null, "Cascade - DataStream Catalyst"),
 )
 
-// â”€â”€ Main Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Main Screen ───────────────────────────────────────────────────────────────
 
 @Composable
 fun LineageMapScreen(
-    navHostController: NavController,
+    navController: NavController,
     onNavigateBack: () -> Unit = {}
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "lineage")
@@ -166,7 +165,7 @@ fun LineageMapScreen(
                             val dist = sqrt((mappedTap.x - nx).pow(2) + (mappedTap.y - ny).pow(2))
                             if (dist < node.type.size * 0.8f) {
                                 selectedNode = if (selectedNode == node) null else node
-                                node.route?.let { navHostController.navigate(it) }
+                                node.route?.let { navController.navigate(it) }
                             }
                         }
                     }
@@ -216,7 +215,7 @@ fun LineageMapScreen(
                     Text(node.description, fontSize = 11.sp, color = Color.White.copy(0.5f))
                     if (node.route != null) {
                         Spacer(Modifier.height(8.dp))
-                        Text("TAP TO NAVIGATE â†’", fontSize = 9.sp, letterSpacing = 2.sp, color = node.type.color.copy(0.7f))
+                        Text("TAP TO NAVIGATE →", fontSize = 9.sp, letterSpacing = 2.sp, color = node.type.color.copy(0.7f))
                     }
                 }
             }
@@ -224,7 +223,7 @@ fun LineageMapScreen(
 
         // Back button
         IconButton(onClick = onNavigateBack, modifier = Modifier.align(Alignment.TopStart).padding(8.dp)) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFF00FFFF))
+            Icon(Icons.Default.ArrowBack, null, tint = Color(0xFF00FFFF))
         }
 
         // Title
@@ -238,7 +237,7 @@ fun LineageMapScreen(
     }
 }
 
-// â”€â”€ Canvas helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Canvas helpers ─────────────────────────────────────────────────────────────
 
 private fun DrawScope.drawLineageHex(node: LineageNode, center: Offset, pulse: Float, isSelected: Boolean) {
     val r = node.type.size
@@ -327,4 +326,3 @@ private fun DrawScope.drawPinkHexParticleField(
 }
 
 private fun Float.pow(exp: Int): Float = this.toDouble().pow(exp.toDouble()).toFloat()
-

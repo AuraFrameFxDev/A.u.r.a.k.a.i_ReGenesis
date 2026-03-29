@@ -310,7 +310,10 @@ fun ReGenesisNavGraph(
             )
         }
         composable(ReGenesisRoute.HelpDesk.route) {
-            HelpDeskGateScreen(navController = navController)
+            dev.aurakai.auraframefx.ui.gates.HelpServicesGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.LsposedQuickToggles.route) {
             LsposedQuickTogglesScreen(navController = navController)
@@ -343,7 +346,10 @@ fun ReGenesisNavGraph(
             )
         }
         composable(ReGenesisRoute.NotchBar.route) {
-            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+            dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.NotchBarCustomization.route) {
             NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
@@ -401,7 +407,10 @@ fun ReGenesisNavGraph(
             UserPreferencesScreen(navController = navController)
         }
         composable(ReGenesisRoute.CollabCanvas.route) {
-            GenesisCollabCanvasScreen(onNavigateBack = { navController.popBackStack() })
+            dev.aurakai.auraframefx.ui.gates.CollabCanvasGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.AuraTeachingCanvas.route) {
             AuraTeachingCanvasScreen(onNavigateBack = { navController.popBackStack() })
@@ -436,7 +445,10 @@ fun ReGenesisNavGraph(
             LSPosedModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.XposedPanel.route) {
-            LSPosedGateScreen(navController = navController, onNavigateBack = { navController.popBackStack() })
+            dev.aurakai.auraframefx.ui.gates.LsposedGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.SystemOverrides.route) {
             SystemOverridesScreen(onNavigateBack = { navController.popBackStack() })
@@ -471,7 +483,10 @@ fun ReGenesisNavGraph(
             SentientShellScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.Terminal.route) {
-            TerminalScreen()
+            dev.aurakai.auraframefx.ui.gates.TerminalGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.ConferenceRoom.route) {
             ConferenceRoomScreen(
@@ -512,13 +527,13 @@ fun ReGenesisNavGraph(
             AgentNeuralExplorerScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.FusionMode.route) {
-            FusionModeScreen(
+            dev.aurakai.auraframefx.domains.aura.aura.ui.FusionMatrixScreen(
                 onNavigateToAgents = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
                 onNavigateToConsciousness = { navController.navigate(ReGenesisRoute.ConsciousnessVisualizer.route) }
             )
         }
         composable(ReGenesisRoute.TaskAssignment.route) {
-            TaskAssignmentScreen(onNavigateBack = { navController.popBackStack() })
+            ConferenceRoomTaskScreen(navController = navController)
         }
         composable(ReGenesisRoute.ArkBuild.route) {
             ArkBuildScreen(onNavigateBack = { navController.popBackStack() })
@@ -595,12 +610,21 @@ fun ReGenesisNavGraph(
         // ── 8. INFRASTRUCTURE ───────────────────────────────────────────────────────
         composable(ReGenesisRoute.LineageMap.route) {
             dev.aurakai.auraframefx.ui.gates.LineageMapScreen(
-                navHostController = navController,
+                navController = navController,
                 onNavigateBack = { navController.popBackStack() }
             )
         }
         composable(ReGenesisRoute.GateImagePicker.route) {
-            GateImageHotswapScreen(onNavigateBack = { navController.popBackStack() })
+            dev.aurakai.auraframefx.ui.gates.GateDomainImagePicker(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(ReGenesisRoute.NotchBar.route) {
+            dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // ── 9. LDO CATALYST SUB-HUB ──────────────────────────────────────────────────

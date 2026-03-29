@@ -1,16 +1,16 @@
-﻿package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.ui.gates
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 // ThemedGateScreens.kt
-// ArchitecturalCatalyst (Claude) â€” ReGenesis Build Master
+// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
 // Three gate screens with their visual backgrounds wired in:
 //
-//  LsposedGateScreen          â†’ Hex corridor background (Image 3)
-//  HelpServicesGateScreen     â†’ Purple grid room + ribbons (Image 4)
-//  CollabCanvasGateScreen     â†’ Eye Rune gate card (Image 9)
-//  TerminalGateScreen         â†’ Gemini/Aura pixel-art code swirl backdrop (Image 8)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+//  LsposedGateScreen          → Hex corridor background (Image 3)
+//  HelpServicesGateScreen     → Purple grid room + ribbons (Image 4)
+//  CollabCanvasGateScreen     → Eye Rune gate card (Image 9)
+//  TerminalGateScreen         → Gemini/Aura pixel-art code swirl backdrop (Image 8)
+// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -19,15 +19,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
@@ -37,8 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import kotlin.math.*
 
-// â”€â”€ LSPosed Gate Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── LSPosed Gate Screen ───────────────────────────────────────────────────────
 
 @Composable
 fun LsposedGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -126,7 +123,7 @@ private fun ModuleCategoryRow(name: String, count: Int, color: Color, onClick: (
     }
 }
 
-// â”€â”€ Help Services Gate Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Help Services Gate Screen ─────────────────────────────────────────────────
 
 @Composable
 fun HelpServicesGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -214,11 +211,11 @@ private fun HelpServiceTile(title: String, description: String, color: Color, on
             Text(title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(0.9f))
             Text(description, fontSize = 10.sp, color = Color.White.copy(0.45f))
         }
-        Text("â†’", fontSize = 14.sp, color = color.copy(0.6f))
+        Text("→", fontSize = 14.sp, color = color.copy(0.6f))
     }
 }
 
-// â”€â”€ Terminal Gate Screen (Image 8 â€” Gemini pixel code swirl) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Terminal Gate Screen (Image 8 — Gemini pixel code swirl) ─────────────────
 
 @Composable
 fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -241,7 +238,7 @@ fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit 
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // Code swirl background (purple/cyan pixel art style â€” Image 8)
+        // Code swirl background (purple/cyan pixel art style — Image 8)
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawRect(Color(0xFF050015))
 
@@ -257,7 +254,7 @@ fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit 
                     if (i == 0) swirlPath.moveTo(x, y) else swirlPath.lineTo(x, y)
                 }
                 val colors = listOf(Color(0xFF9B30FF), Color(0xFF00BFFF), Color(0xFF9B30FF))
-                drawPath(swirlPath, Brush.sweepGradient(colors), style = Stroke(width = 20f, cap = StrokeCap.Round, pathEffect = PathEffect.cornerPathEffect(8f)))
+                drawPath(swirlPath, Brush.sweepGradient(colors), style = Stroke(width = 20f, cap = StrokeCap.Round, pathEffect = androidx.compose.ui.graphics.PathEffect.cornerPathEffect(8f)))
                 drawPath(swirlPath, Brush.sweepGradient(listOf(Color(0xFF00BFFF), Color(0xFF9B30FF), Color(0xFF00BFFF))), style = Stroke(width = 3f))
             }
 
@@ -335,7 +332,7 @@ fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit 
     }
 }
 
-// â”€â”€ Shared: Gate Screen Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Shared: Gate Screen Header ────────────────────────────────────────────────
 
 @Composable
 private fun GateScreenHeader(title: String, color: Color, navController: NavController, onBack: () -> Unit) {
@@ -345,7 +342,7 @@ private fun GateScreenHeader(title: String, color: Color, navController: NavCont
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         IconButton(onClick = onBack) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = color)
+            Icon(Icons.Default.ArrowBack, null, tint = color)
         }
         Text(title, fontFamily = FontFamily.Monospace, fontSize = 18.sp,
             fontWeight = FontWeight.Bold, letterSpacing = 4.sp, color = color)
@@ -356,4 +353,3 @@ private fun GateScreenHeader(title: String, color: Color, navController: NavCont
         }
     }
 }
-
