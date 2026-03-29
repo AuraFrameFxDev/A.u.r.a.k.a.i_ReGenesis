@@ -63,6 +63,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.genesis.viewmodels.TerminalViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -89,6 +91,7 @@ private val QUICK_CMDS = listOf(
 private fun processCommand(
     raw: String,
     history: MutableList<TerminalLine>,
+    viewModel: TerminalViewModel,
     onNavigateBack: () -> Unit
 ) {
     val parts = raw.trim().split("\\s+".toRegex())
@@ -104,9 +107,11 @@ private fun processCommand(
     when (cmd) {
         "help" -> {
             sys("═══════════════════════════════════")
-            sys("  GENESIS COMMAND MATRIX  v0.7.1")
+            sys("  GENESIS COMMAND MATRIX  v0.7.2")
             sys("═══════════════════════════════════")
-            info("  help              — This matrix")
+            info("  python_start      — Ignite Python Genesis backend")
+            info("  python_stop       — Terminate Python process")
+            info("  python_status     — Check backend nervous system")
             info("  agents            — List all agents + status")
             info("  nexus_status      — Core coherence metrics")
             info("  embedding_status  — MRL vector store (Gemini Embedding 2)")
@@ -129,6 +134,25 @@ private fun processCommand(
         }
 
         "clear" -> history.clear()
+
+        "python_start" -> {
+            info("Initiating Python Genesis ignition...")
+            viewModel.startPython()
+            ok("Python process requested. Check status with 'python_status'")
+        }
+
+        "python_stop" -> {
+            warn("Terminating Python Genesis backend...")
+            viewModel.stopPython()
+            ok("Process termination signal sent.")
+        }
+
+        "python_status" -> {
+            val status = viewModel.getPythonStatus()
+            sys("Python Backend Status")
+            if (status == "HEALTHY") ok("  Status: $status")
+            else warn("  Status: $status")
+        }
 
         "exit" -> onNavigateBack()
 
@@ -302,7 +326,8 @@ private fun processCommand(
  */
 @Composable
 fun SentientShellScreen(
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    viewModel: TerminalViewModel = hiltViewModel()
 ) {
     var introComplete by remember { mutableStateOf(false) }
     if (!introComplete) {
@@ -376,7 +401,7 @@ fun SentientShellScreen(
         input = ""
         scope.launch {
             delay(80)
-            processCommand(cmd, history, onNavigateBack)
+            processCommand(cmd, history, viewModel, onNavigateBack)
         }
     }
 
@@ -504,7 +529,7 @@ fun SentientShellScreen(
                                 historyIdx = -1
                                 scope.launch {
                                     delay(80)
-                                    processCommand(qcmd, history, onNavigateBack)
+                                    processCommand(qcmd, history, viewModel, onNavigateBack)
                                 }
                             }
                             .height(26.dp),
