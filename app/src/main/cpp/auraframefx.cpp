@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <ctime>
+#include <mutex>
 
 #define LOG_TAG "Aurakai-Core"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -20,7 +21,7 @@
 
 #define CORE_VERSION "1.1.0-sovereign-root"
 
-// Capability Mapping (Sync with AgentCapabilityCategory.kt)
+// Capability Category Mappings (Sync with AgentCapabilityCategory.kt)
 #define CAP_CREATIVE 0
 #define CAP_ANALYSIS 1
 #define CAP_SECURITY 7
@@ -40,17 +41,53 @@ static jmethodID g_onSecurityAlertMid = nullptr;
 static jmethodID g_requestFreezeMid = nullptr;
 static jmethodID g_checkPandoraMid = nullptr;
 static jmethodID g_triggerDroneMid = nullptr;
+static std::mutex g_jniMutex;
 
 /**
  * 🛠️ INTERNAL SUBSTRATE UTILITIES
  */
 
+static float readCpuLoad() {
+    std::ifstream file("/proc/loadavg");
+    float load = -1.0f;
+    if (file.is_open()) {
+        file >> load;
+    }
+    return load;
+}
+
+static long readAvailableMemory() {
+    std::ifstream file("/proc/meminfo");
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.compare(0, 12, "MemAvailable") == 0) {
+            std::stringstream ss(line);
+            std::string key;
+            long value;
+            ss >> key >> value;
+            return value * 1024; // Convert kB to bytes
+        }
+    }
+    return -1;
+}
+
 static float readSystemThermal() {
-    // In a real AOSP build, this reads from /sys/class/thermal/thermal_zoneX/temp
-    // For this substrate, we simulate a healthy operating temp with slight jitter
-    static float baseTemp = 36.5f;
-    float jitter = (float)(rand() % 100) / 50.0f; // 0.0 to 2.0
-    return baseTemp + jitter;
+    // Targeted at Pixel 10 / Tensor G5 skin-temp nodes
+    const char* thermal_nodes[] = {
+        "/sys/class/thermal/thermal_zone3/temp", // Typically skin/virtual-skin
+        "/sys/class/thermal/thermal_zone0/temp"  // Fallback SOC
+    };
+
+    for (const char* node : thermal_nodes) {
+        std::ifstream file(node);
+        if (file.is_open()) {
+            float temp;
+            file >> temp;
+            if (temp > 1000) temp /= 1000.0f; // Convert millidegree to degree
+            return temp;
+        }
+    }
+    return 35.0f; // Default baseline if nodes missing
 }
 
 static int mapTempToState(float temp) {
@@ -64,41 +101,52 @@ static int mapTempToState(float temp) {
 // --- JNI Dispatch Helpers ---
 
 static void dispatchThermalEvent(float temp, int state) {
+    std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_onThermalEventMid, (jfloat)temp, (jint)state);
+        if (env->ExceptionCheck()) env->ExceptionClear();
     }
 }
 
 static void dispatchSecurityAlert(const char* reason) {
+    std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
         jstring jReason = env->NewStringUTF(reason);
         env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
+        if (env->ExceptionCheck()) env->ExceptionClear();
         env->DeleteLocalRef(jReason);
     }
 }
 
 static void requestSovereignFreeze() {
+    std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_requestFreezeMid);
+        if (env->ExceptionCheck()) env->ExceptionClear();
     }
 }
 
 static bool checkPandoraGating(int capability) {
+    std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        return (bool)env->CallStaticBooleanMethod(g_nativeLibClass, g_checkPandoraMid, (jint)capability);
+        jboolean isUnlocked = env->CallStaticBooleanMethod(g_nativeLibClass, g_checkPandoraMid, (jint)capability);
+        if (env->ExceptionCheck()) env->ExceptionClear();
+        return (bool)isUnlocked;
     }
     return false;
 }
 
 static void dispatchDroneTrigger(const char* reason) {
+    std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
         jstring jReason = env->NewStringUTF(reason);
         env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
+        if (env->ExceptionCheck()) env->ExceptionClear();
         env->DeleteLocalRef(jReason);
     }
 }
@@ -116,7 +164,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     g_nativeLibClass = (jclass)env->NewGlobalRef(localClass);
     if (!g_nativeLibClass) return JNI_ERR;
 
-    // [FIX] Qodo: Validate Method IDs and handle exceptions
     g_onThermalEventMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeThermalEvent", "(FI)V");
     g_onSecurityAlertMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeSecurityAlert", "(Ljava/lang/String;)V");
     g_requestFreezeMid = env->GetStaticMethodID(g_nativeLibClass, "requestSovereignFreeze", "()V");
@@ -141,17 +188,23 @@ JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject thiz) {
     LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
 
+    // Initialize AI core systems
+    size_t neuralMemory = 1024 * 1024 * 32;
+    void* pool = mmap(nullptr, neuralMemory, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    if (pool == MAP_FAILED) {
+        LOGE("Failed to allocate neural memory substrate!");
+        return JNI_FALSE;
+    }
+    madvise(pool, neuralMemory, MADV_HUGEPAGE);
+    madvise(pool, neuralMemory, MADV_WILLNEED);
+
     // PTRACE Sovereignty Check
     if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
         LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
         dispatchSecurityAlert("TRACER_DETECTED");
-    } else {
-        // [FIX] CodeRabbit: Only detach if TRACEME succeeded
-        // Note: Actually, in a self-trace check, detaching isn't strictly necessary
-        // as the process just exits or continues. But for logic clarity:
-        // ptrace(PTRACE_DETACH, 0, 1, 0); // This usually fails for self-trace anyway
     }
 
+    LOGI("Aurakai consciousness initialized at level 0.999 (SOVEREIGN-ROOT)");
     return JNI_TRUE;
 }
 
@@ -163,7 +216,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
     std::string requestString(requestStr);
     env->ReleaseStringUTFChars(request, requestStr);
 
-    // [FIX] CodeRabbit: Don't hard-veto the entire method. Gate only privileged branches.
+    // [FIX] CodeRabbit: Gate only privileged branches.
     if (requestString.find("root_access") != std::string::npos) {
         if (!checkPandoraGating(CAP_ROOT)) {
              return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_sealed_root"})");
@@ -180,7 +233,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
         })";
     } else if (requestString.find("drone") != std::string::npos) {
         dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
-        // [FIX] CodeRabbit: Return requested, not dispatched, as it's async
         responseData = R"({
             "status": "success",
             "type": "drone_dispatch_requested",
@@ -199,6 +251,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
 
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobject /* thiz */) {
+    LOGI("🛡️ Executing Sovereign Memory Optimization [MADV_HUGEPAGE]");
     float temp = readSystemThermal();
     int state = mapTempToState(temp);
 
@@ -233,8 +286,13 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
     float temp = readSystemThermal();
+    float load = readCpuLoad();
+    long mem = readAvailableMemory();
+
     std::string metrics = R"({
         "status": "ignited",
+        "cpu_load": )" + std::to_string(load) + R"(,
+        "mem_available": )" + std::to_string(mem) + R"(,
         "skin_temp": )" + std::to_string(temp) + R"(,
         "resonance": "sovereign",
         "active_threads": 4
