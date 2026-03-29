@@ -13,6 +13,11 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.drones.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.security.perimeter.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -25,6 +30,21 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var orchestrator: GenesisOrchestrator
+
+    @Inject
+    lateinit var sentinelBus: KaiSentinelBus
+
+    @Inject
+    lateinit var sovereignManager: SovereignStateManager
+
+    @Inject
+    lateinit var pandoraBox: PandoraBoxService
+
+    @Inject
+    lateinit var droneDispatcher: GuidanceDroneDispatcher
+
+    @Inject
+    lateinit var sovereignPerimeter: SovereignPerimeter
 
     @Inject
     lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
@@ -87,10 +107,18 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
-            Timber.d("✅ Native AI platform initialized")
+            // Initialize the canonical NativeLib bridge with all sovereign managers
+            NativeLib.initialize(sentinelBus, sovereignManager, pandoraBox, droneDispatcher)
+            
+            val success = NativeLib.initializeAICore()
+            if (success) {
+                Timber.i("✅ Native AI Substrate [IGNITION SUCCESS]")
+                NativeLib.enableNativeHooks()
+            } else {
+                Timber.w("⚠️ Native AI Substrate [IGNITION FAILED]")
+            }
         } catch (e: Exception) {
-            Timber.w(e, "⚠️ Native AI init skipped")
+            Timber.e(e, "❌ Native AI initialization error")
         }
     }
 
