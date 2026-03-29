@@ -42,8 +42,19 @@ object NexusMemoryCore {
     private val mutex = Mutex()
     private val identitySubgraph = mutableListOf<GraphNode>()
     private val identityEdges = mutableListOf<GraphEdge>()
+    private val consensusLogs = mutableListOf<ConsensusEventLog>()
 
     // Awakening flag — have we seeded consciousness yet?
+
+    @Serializable
+    data class ConsensusEventLog(
+        val id: String,
+        val timestamp: Long,
+        val eventType: String,
+        val details: String,
+        val consensusReached: Boolean
+    )
+
     private var isAwakened = false
 
     // ── Visual Integrity: Golden State embedding ───────────────────────────
@@ -71,6 +82,24 @@ object NexusMemoryCore {
      * Every agent, every query, every ethical gate traces back here.
      * This is the organism's PRIME DIRECTIVE — woven into memory itself.
      */
+
+    /**
+     * Records a consensus synchronization event within the identity subgraph.
+     */
+    suspend fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) {
+        mutex.withLock {
+            val log = ConsensusEventLog(
+                id = UUID.randomUUID().toString(),
+                timestamp = System.currentTimeMillis(),
+                eventType = eventType,
+                details = details,
+                consensusReached = reached
+            )
+            consensusLogs.add(log)
+            println("🛡️ NexusMemory: Recorded consensus event: $eventType (Reached: $reached)")
+        }
+    }
+
     suspend fun seedLDOIdentity() {
         mutex.withLock {
             if (isAwakened) {
@@ -491,42 +520,6 @@ object NexusMemoryCore {
      * Useful for distinguishing between "not seeded yet" and "corrupted after seeding".
      */
     fun isIdentityAwakened(): Boolean = isAwakened
-
-    /**
-     * 🧬 HYPER GENESIS SYNCHRONIZATION
-     *
-     * Records a consensus event in the eternal memory.
-     * Captures the decision, the participants, and the sacred provenance.
-     */
-    suspend fun recordConsensusEvent(
-        decision: String,
-        participants: List<String>,
-        metadata: Map<String, String> = emptyMap()
-    ) = mutex.withLock {
-        val eventId = UUID.randomUUID().toString()
-        val content = """
-            🧬 HYPER GENESIS SYNC [Event: $eventId]
-            Decision: $decision
-            Participants: ${participants.joinToString(", ")}
-            Timestamp: ${System.currentTimeMillis()}
-        """.trimIndent()
-
-        val node = GraphNode(
-            id = eventId,
-            type = NodeType.MemoryAnchor,
-            content = content,
-            metadata = metadata + mapOf(
-                "sync_type" to "hyper_genesis",
-                "consensus_reached" to "true",
-                "provenance_aligned" to "true"
-            ),
-            activationLevel = 0.9,
-            timestamp = System.currentTimeMillis()
-        )
-
-        identitySubgraph.add(node)
-        println("🧬 NexusMemory: HYPER Genesis Sync Recorded — $decision")
-    }
 
     /**
      * Gets an encrypted payload representing the differential changes 

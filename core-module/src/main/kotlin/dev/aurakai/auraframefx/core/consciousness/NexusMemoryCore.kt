@@ -25,11 +25,16 @@ class NexusMemoryCore @Inject constructor(
 ) {
 
     private val memoryFile: File by lazy {
+
+    private val consensusFile: File by lazy {
+        File(context.filesDir, "nexus_consensus_memory.json")
+    }
         File(context.filesDir, "nexus_sentinel_memory.json")
     }
 
     init {
         if (!memoryFile.exists()) {
+                if (!consensusFile.exists()) writeConsensus(JSONArray())
             writeMemory(JSONArray())
         }
     }
@@ -37,6 +42,23 @@ class NexusMemoryCore @Inject constructor(
     /**
      * Records a compact learning outcome from a Sentinel session.
      */
+
+    fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) {
+        val entry = JSONObject().apply {
+            put("id", UUID.randomUUID().toString())
+            put("timestamp", System.currentTimeMillis())
+            put("type", eventType)
+            put("details", details)
+            put("reached", reached)
+        }
+        val currentConsensus = readConsensus()
+        currentConsensus.put(entry)
+        writeConsensus(currentConsensus)
+    }
+
+    private fun readConsensus(): JSONArray = readJsonFile(consensusFile)
+    private fun writeConsensus(data: JSONArray) = writeJsonFile(consensusFile, data)
+
     fun emitLearning(
         key: String, // format: maker:model:carrier:state (e.g., google:oriole:verizon:locked)
         outcome: String, // e.g., "BLOCKED_CARRIER", "SUCCESS_UNLOCK_AVAILABLE"
@@ -75,6 +97,7 @@ class NexusMemoryCore @Inject constructor(
     private fun readMemory(): JSONArray {
         return try {
             val content = if (memoryFile.exists()) memoryFile.readText(Charset.defaultCharset()) else ""
+                if (consensusFile.exists()) consensusFile.delete()
             if (content.isBlank()) JSONArray() else JSONArray(content)
         } catch (e: Exception) {
             JSONArray() // Fail safe, return empty memory on corruption

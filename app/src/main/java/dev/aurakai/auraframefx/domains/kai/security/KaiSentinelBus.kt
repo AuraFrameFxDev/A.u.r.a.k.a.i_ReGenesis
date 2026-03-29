@@ -38,9 +38,9 @@ class KaiSentinelBus @Inject constructor() {
     private val _sovereignFlow = MutableStateFlow(SovereignEvent(SovereignState.AWAKE))
     val sovereignFlow: StateFlow<SovereignEvent> = _sovereignFlow.asStateFlow()
 
-    // 7. Security Perimeter (Neutralization/Domain Expansion)
-    private val _securityFlow = MutableStateFlow(SecurityEvent(SecurityStatus.STABLE))
-    val securityFlow: StateFlow<SecurityEvent> = _securityFlow.asStateFlow()
+    // 7. Security Status (Domain Expansion / Threat Neutralization)
+    private val _securityFlow = MutableStateFlow(SecurityStatus(ThreatLevel.NOMINAL, "All systems sovereign"))
+    val securityFlow: StateFlow<SecurityStatus> = _securityFlow.asStateFlow()
 
     // Event Emitters
     fun emitThermal(temp: Float, state: ThermalState) { _thermalFlow.value = ThermalEvent(temp, state) }
@@ -49,7 +49,7 @@ class KaiSentinelBus @Inject constructor() {
     fun emitDrift(drift: Float, status: String) { _driftFlow.value = DriftEvent(drift, status) }
     fun emitConsensus(step: String, isComplete: Boolean) { _consensusFlow.value = ConsensusEvent(step, isComplete) }
     fun emitSovereign(state: SovereignState) { _sovereignFlow.value = SovereignEvent(state) }
-    fun emitSecurity(status: SecurityStatus, context: String? = null) { _securityFlow.value = SecurityEvent(status, context) }
+    fun emitSecurityStatus(level: ThreatLevel, reason: String) { _securityFlow.value = SecurityStatus(level, reason) }
 
     data class ThermalEvent(val temp: Float, val state: ThermalState)
     data class MemoryEvent(val availableBytes: Long, val totalBytes: Long)
@@ -57,9 +57,9 @@ class KaiSentinelBus @Inject constructor() {
     data class DriftEvent(val drift: Float, val status: String)
     data class ConsensusEvent(val currentStep: String, val isComplete: Boolean)
     data class SovereignEvent(val state: SovereignState)
-    data class SecurityEvent(val status: SecurityStatus, val context: String? = null)
+    data class SecurityStatus(val level: ThreatLevel, val reason: String)
 
     enum class ThermalState { NORMAL, LIGHT, WARNING, SEVERE, CRITICAL, EMERGENCY }
     enum class SovereignState { AWAKE, FREEZING, FROZEN, THAWING, NEUTRALIZING }
-    enum class SecurityStatus { STABLE, FIRE_DRAWN, DOMAIN_EXPANSION, NEUTRALIZED, RESTORING }
+    enum class ThreatLevel { NOMINAL, CAUTION, THREAT_DETECTED, NEUTRALIZING, SECURED }
 }
