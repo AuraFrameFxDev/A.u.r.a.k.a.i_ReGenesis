@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
-import dev.aurakai.auraframefx.system.ShizukuManager
+import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

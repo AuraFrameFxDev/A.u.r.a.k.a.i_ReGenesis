@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.core.AurakaiApplication
 import dev.aurakai.auraframefx.sovereignty.ApplicationScope
-import dev.aurakai.auraframefx.system.ShizukuManager
+import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
