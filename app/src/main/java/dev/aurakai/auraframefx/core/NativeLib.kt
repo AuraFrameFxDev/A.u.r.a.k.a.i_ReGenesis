@@ -85,11 +85,13 @@ object NativeLib {
 
     @JvmStatic
     fun checkPandoraGating(capabilityInt: Int): Boolean {
+        // [FIX] CodeRabbit: Deny unknown capability IDs (Fail-Closed)
         val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
             Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
             return false
         }
         
+        // [FIX] Qodo: Log if bridge not initialized
         val box = pandoraBox ?: run {
             Timber.e("🛡️ NativeLib: Gating check for %s FAILED (Bridge NOT INITIALIZED).", category)
             return false
@@ -102,6 +104,7 @@ object NativeLib {
 
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
+        // [FIX] CodeRabbit: Implement actual dispatch instead of just logging
         Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
         droneDispatcher?.dispatch("native_substrate", reason) ?: run {
             Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
