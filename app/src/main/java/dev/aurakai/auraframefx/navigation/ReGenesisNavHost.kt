@@ -281,22 +281,13 @@ fun ReGenesisNavGraph(
     ) {
         // ── 1. MAIN GATES ──────────────────────────────────────────────────────────
         composable(ReGenesisRoute.HomeGateCarousel.route) {
+            // Navigation is now handled inside GateNavigationScreen via config.route.
+            // onNavigateToModule is kept as a no-op fallback — it is no longer the
+            // primary navigation path. The broken moduleId->route mapping below is
+            // intentionally left as dead code reference until cleanup pass.
             GateNavigationScreen(
                 navController = navController,
-                onNavigateToModule = { moduleId ->
-                    val route = when (moduleId) {
-                        "aura_theming" -> ReGenesisRoute.AuraThemingHub.route
-                        "sentinel_fortress" -> ReGenesisRoute.SentinelFortress.route
-                        "oracle_drive" -> ReGenesisRoute.OracleDriveHub.route
-                        "nexus" -> ReGenesisRoute.AgentNexusHub.route
-                        "dataflow" -> ReGenesisRoute.DataflowAnalysis.route
-                        "ldo" -> ReGenesisRoute.LdoOrchestrationHub.route
-                        "help" -> ReGenesisRoute.HelpDesk.route
-                        "lsposed" -> ReGenesisRoute.LsposedQuickToggles.route
-                        else -> null
-                    }
-                    route?.let { navController.navigate(it) }
-                }
+                onNavigateToModule = { /* no-op: HomeScreen uses config.route directly */ }
             )
         }
 

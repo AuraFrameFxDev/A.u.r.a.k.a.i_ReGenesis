@@ -200,12 +200,18 @@ fun GateNavigationScreen(
                                 .fillMaxHeight()
                                 .aspectRatio(0.68f)   // Slightly taller than wide — trading card feel
                                 .scale(cardScale)
-                                .clickable { onNavigateToModule(config.moduleId) }
+                            // NOTE: No .clickable here — ImmersiveGateCard owns all gesture
+                            // detection via pointerInput/detectTapGestures. Adding .clickable
+                            // here would consume touch events before the card's double-tap
+                            // detector sees them, breaking double-tap navigation entirely.
                         ) {
                             ImmersiveGateCard(
                                 config = config,
                                 modifier = Modifier.fillMaxSize(),
-                                onDoubleTap = { onNavigateToModule(config.moduleId) }
+                                // Both single-tap and double-tap navigate to Level 2.
+                                // config.route is authoritative — set directly in GateConfigs.kt.
+                                onTap = { navController.navigate(config.route) },
+                                onDoubleTap = { navController.navigate(config.route) }
                             )
 
                             // Selected gate gets an extra glow ring at bottom

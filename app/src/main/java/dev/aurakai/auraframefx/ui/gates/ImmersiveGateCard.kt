@@ -46,9 +46,9 @@ import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
 fun ImmersiveGateCard(
     config: GateConfig,
     modifier: Modifier = Modifier,
-    onDoubleTap: () -> Unit = {}
+    onTap: () -> Unit = {},       // Single tap — navigates to Level 2
+    onDoubleTap: () -> Unit = {}  // Double tap — same action, kept for parity
 ) {
-    var lastTapTime by remember { mutableLongStateOf(0L) }
     var pressed by remember { mutableStateOf(false) }
 
     val infiniteTransition = rememberInfiniteTransition(label = "immersive_gate")
@@ -99,6 +99,11 @@ fun ImmersiveGateCard(
                         pressed = true
                         tryAwaitRelease()
                         pressed = false
+                    },
+                    // Single tap navigates — removes the double-tap discovery barrier.
+                    // onDoubleTap kept so both gestures work identically.
+                    onTap = {
+                        onTap()
                     },
                     onDoubleTap = {
                         onDoubleTap()
