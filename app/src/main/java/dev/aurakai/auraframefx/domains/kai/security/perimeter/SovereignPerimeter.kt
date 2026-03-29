@@ -21,6 +21,17 @@ class SovereignPerimeter @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope
 ) {
 
+    init {
+        // Start monitoring security flow for "FIRE_DRAWN" events
+        scope.launch {
+            sentinelBus.securityFlow.collect { event ->
+                if (event.status == KaiSentinelBus.SecurityStatus.FIRE_DRAWN) {
+                    onFireDrawn(event.context ?: "unknown_origin", "Security Substrate Integrity Alert")
+                }
+            }
+        }
+    }
+
     /**
      * Entry point for Domain Expansion. Triggered when hostile intent detected.
      * Implements "Seize directive not take but neutralize."
