@@ -70,7 +70,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         ${jnigraphics-lib}
         -latomic
         -lm
-        pthread
 )
 
 # Android 15+ 16KB page-size compatibility:
