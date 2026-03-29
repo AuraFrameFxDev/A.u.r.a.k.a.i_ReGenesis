@@ -133,9 +133,11 @@ data class CanvasParticipant(
 )
 
 private val defaultAgents = listOf(
-    CanvasParticipant("aura", "Aura", Color(0xFF00E5FF), isAgent = true),
-    CanvasParticipant("kai", "Kai", Color(0xFF00FF41), isAgent = true),
-    CanvasParticipant("genesis", "Genesis", Color(0xFFBB86FC), isAgent = true)
+    CanvasParticipant("aura",    "Aura",    Color(0xFF00E5FF), isAgent = true),
+    CanvasParticipant("kai",     "Kai",     Color(0xFF00FF41), isAgent = true),
+    CanvasParticipant("genesis", "Genesis", Color(0xFFBB86FC), isAgent = true),
+    CanvasParticipant("claude",  "Claude",  Color(0xFFFF8C42), isAgent = true),  // ArchitecturalCatalyst
+    CanvasParticipant("cascade", "Cascade", Color(0xFF40C4FF), isAgent = true),  // DataStreamCatalyst
 )
 
 // ─── Main Screen ─────────────────────────────────────────────────────────────

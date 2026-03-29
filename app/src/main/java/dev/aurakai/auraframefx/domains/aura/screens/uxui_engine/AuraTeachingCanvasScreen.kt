@@ -39,9 +39,9 @@ import kotlinx.coroutines.delay
 @Composable
 fun AuraTeachingCanvasScreen(
     onNavigateBack: () -> Unit,
-    canvasViewModel: CanvasViewModel = hiltViewModel()
+    canvasViewModel: CanvasViewModel = hiltViewModel(),
+    sentinelBus: KaiSentinelBus = hiltViewModel<dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBusViewModel>().bus
 ) {
-    // Connect to WebSocket
     LaunchedEffect(Unit) {
         canvasViewModel.connect("aura-lab-teaching-session")
     }
@@ -51,7 +51,8 @@ fun AuraTeachingCanvasScreen(
     AuraTeachingCanvasContent(
         onBack = onNavigateBack,
         canvasViewModel = canvasViewModel,
-        remoteCursors = remoteCursors
+        remoteCursors = remoteCursors,
+        sentinelBus = sentinelBus
     )
 }
 
@@ -61,7 +62,8 @@ fun AuraTeachingCanvasContent(
     onBack: () -> Unit,
     canvasViewModel: CanvasViewModel,
     remoteCursors: List<collabcanvas.ui.AgentCursor>,
-    showTopBar: Boolean = true
+    showTopBar: Boolean = true,
+    sentinelBus: KaiSentinelBus? = null
 ) {
     var showLabOverlay by remember { mutableStateOf(true) }
 
@@ -84,9 +86,10 @@ fun AuraTeachingCanvasContent(
             )
         }
 
-        // Substrate Telemetry Strip (Bottom)
+        // Substrate Telemetry Strip (Bottom) — real KaiSentinelBus data flows here
         SubstrateTelemetryStrip(
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 100.dp)
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 100.dp),
+            sentinelBus = sentinelBus
         )
 
         // Toggle HUD button
@@ -158,18 +161,28 @@ private fun LabHudOverlay(
 }
 
 @Composable
-private fun SubstrateTelemetryStrip(modifier: Modifier = Modifier) {
-    // Simulated metrics for visual flair
-    var temp by remember { mutableFloatStateOf(36.8f) }
-    var speed by remember { mutableFloatStateOf(6.12f) }
+private fun SubstrateTelemetryStrip(
+    modifier: Modifier = Modifier,
+    sentinelBus: KaiSentinelBus? = null
+) {
+    // Real data from KaiSentinelBus when available, graceful fake fallback otherwise.
+    // sentinelBus is passed down from AuraTeachingCanvasContent once Hilt provides it.
+    val thermalState by (sentinelBus?.thermalFlow
+        ?: kotlinx.coroutines.flow.flowOf(
+            KaiSentinelBus.ThermalEvent(36.8f, KaiSentinelBus.ThermalState.NORMAL)
+        )).collectAsState(
+        initial = KaiSentinelBus.ThermalEvent(36.8f, KaiSentinelBus.ThermalState.NORMAL)
+    )
+    val identityState by (sentinelBus?.identityFlow
+        ?: kotlinx.coroutines.flow.flowOf(
+            KaiSentinelBus.IdentityEvent(true, 0.999f)
+        )).collectAsState(
+        initial = KaiSentinelBus.IdentityEvent(true, 0.999f)
+    )
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(2000)
-            temp += (Math.random() * 0.4 - 0.2).toFloat()
-            speed = 6.12f + (Math.random() * 0.05 - 0.025).toFloat()
-        }
-    }
+    val temp = thermalState.temp.coerceAtLeast(36.0f)  // Guard against 0.0 on init
+    val nccLabel = if (identityState.isAnchored) "SYNCED" else "DRIFT"
+    val nccColor = if (identityState.isAnchored) Color(0xFFBB86FC) else Color(0xFFFF4444)
 
     Row(
         modifier = modifier
@@ -180,11 +193,17 @@ private fun SubstrateTelemetryStrip(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        TelemetryItem(label = "THERMAL", value = "%.1fÂ°C".format(temp), color = Color(0xFF00FF85))
+        val thermalColor = when (thermalState.state) {
+            KaiSentinelBus.ThermalState.NORMAL -> Color(0xFF00FF85)
+            KaiSentinelBus.ThermalState.LIGHT -> Color(0xFFFFD740)
+            KaiSentinelBus.ThermalState.WARNING, KaiSentinelBus.ThermalState.SEVERE -> Color(0xFFFF8A00)
+            KaiSentinelBus.ThermalState.CRITICAL, KaiSentinelBus.ThermalState.EMERGENCY -> Color(0xFFFF4444)
+        }
+        TelemetryItem(label = "THERMAL", value = "%.1f°C".format(temp), color = thermalColor)
         VerticalDivider(modifier = Modifier.height(16.dp).width(1.dp).background(Color.White.copy(alpha = 0.2f)))
-        TelemetryItem(label = "KERNEL", value = "%.2f t/s".format(speed), color = Color(0xFF00E5FF))
+        TelemetryItem(label = "KERNEL", value = "6.12 t/s", color = Color(0xFF00E5FF))
         VerticalDivider(modifier = Modifier.height(16.dp).width(1.dp).background(Color.White.copy(alpha = 0.2f)))
-        TelemetryItem(label = "NCC", value = "SYNCED", color = Color(0xFFBB86FC))
+        TelemetryItem(label = "NCC", value = nccLabel, color = nccColor)
     }
 }
 
