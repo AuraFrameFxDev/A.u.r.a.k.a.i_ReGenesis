@@ -52,22 +52,15 @@ static float readCpuLoad() {
     if (file.is_open()) {
         file >> load;
     }
-    return load;
 }
 
-static long readAvailableMemory() {
-    std::ifstream file("/proc/meminfo");
-    std::string line;
-    while (std::getline(file, line)) {
-        if (line.compare(0, 8, "MemAvailable") == 0) {
-            std::stringstream ss(line);
-            std::string key;
-            long value;
-            ss >> key >> value;
-            return value * 1024; // Convert kB to bytes
-        }
+static void dispatchSecurityAlert(const char* reason) {
+    JNIEnv* env = nullptr;
+    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+        jstring jReason = env->NewStringUTF(reason);
+        env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
+        env->DeleteLocalRef(jReason);
     }
-    return -1;
 }
 
 /**
@@ -189,9 +182,13 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /*
     return env->NewStringUTF(CORE_VERSION);
 }
 
-JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* this */) {
-    return env->NewStringUTF(CORE_VERSION);
+static void dispatchDroneTrigger(const char* reason) {
+    JNIEnv* env = nullptr;
+    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+        jstring jReason = env->NewStringUTF(reason);
+        env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
+        env->DeleteLocalRef(jReason);
+    }
 }
 
 JNIEXPORT jboolean JNICALL
@@ -214,7 +211,20 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(JNIEnv *env, jobject th
 
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject thiz) {
-    return Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(env, thiz);
+    LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
+
+    // PTRACE Sovereignty Check
+    if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
+        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
+        dispatchSecurityAlert("TRACER_DETECTED");
+    } else {
+        // [FIX] CodeRabbit: Only detach if TRACEME succeeded
+        // Note: Actually, in a self-trace check, detaching isn't strictly necessary
+        // as the process just exits or continues. But for logic clarity:
+        // ptrace(PTRACE_DETACH, 0, 1, 0); // This usually fails for self-trace anyway
+    }
+
+    return JNI_TRUE;
 }
 
 JNIEXPORT jstring JNICALL

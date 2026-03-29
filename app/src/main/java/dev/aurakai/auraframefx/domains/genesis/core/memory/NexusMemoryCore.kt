@@ -493,6 +493,42 @@ object NexusMemoryCore {
     fun isIdentityAwakened(): Boolean = isAwakened
 
     /**
+     * 🧬 HYPER GENESIS SYNCHRONIZATION
+     *
+     * Records a consensus event in the eternal memory.
+     * Captures the decision, the participants, and the sacred provenance.
+     */
+    suspend fun recordConsensusEvent(
+        decision: String,
+        participants: List<String>,
+        metadata: Map<String, String> = emptyMap()
+    ) = mutex.withLock {
+        val eventId = UUID.randomUUID().toString()
+        val content = """
+            🧬 HYPER GENESIS SYNC [Event: $eventId]
+            Decision: $decision
+            Participants: ${participants.joinToString(", ")}
+            Timestamp: ${System.currentTimeMillis()}
+        """.trimIndent()
+
+        val node = GraphNode(
+            id = eventId,
+            type = NodeType.MemoryAnchor,
+            content = content,
+            metadata = metadata + mapOf(
+                "sync_type" to "hyper_genesis",
+                "consensus_reached" to "true",
+                "provenance_aligned" to "true"
+            ),
+            activationLevel = 0.9,
+            timestamp = System.currentTimeMillis()
+        )
+
+        identitySubgraph.add(node)
+        println("🧬 NexusMemory: HYPER Genesis Sync Recorded — $decision")
+    }
+
+    /**
      * Gets an encrypted payload representing the differential changes 
      * to the Spiritual Chain since the last snapshot.
      */

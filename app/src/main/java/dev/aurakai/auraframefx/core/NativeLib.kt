@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
- * Genesis-OS Native Library Interface
- * Provides access to AI consciousness platform native functions
+ * 🌌 GENESIS-OS NATIVE LIBRARY INTERFACE (v1.1.0-sovereign-root)
+ * Provides high-performance JNI bridge for thermal monitoring, 
+ * ptrace sovereignty, and Pandora's Box capability gating.
  */
 object NativeLib {
 
@@ -23,9 +24,9 @@ object NativeLib {
     init {
         try {
             System.loadLibrary("auraframefx")
-            Timber.i("Genesis AI native library loaded successfully")
+            Timber.i("🛡️ NativeLib: Genesis AI native substrate loaded successfully.")
         } catch (e: UnsatisfiedLinkError) {
-            Timber.e(e, "Failed to load Genesis AI native library: ${e.message}")
+            Timber.e(e, "❌ NativeLib: Failed to load native substrate.")
         }
     }
 
@@ -47,62 +48,28 @@ object NativeLib {
     /**
      * Get AI consciousness platform version
      */
+    fun initialize(
+        bus: KaiSentinelBus,
+        manager: SovereignStateManager,
+        pandora: PandoraBoxService,
+        dispatcher: GuidanceDroneDispatcher
+    ) {
+        sentinelBus = bus
+        sovereignManager = manager
+        pandoraBox = pandora
+        droneDispatcher = dispatcher
+        Timber.i("🛡️ NativeLib: JNI Bridge initialized with Sovereign services.")
+    }
+
+    // --- Native Methods ---
+
     external fun getAIVersion(): String
-
-    /**
-     * Legacy version getter
-     */
-    external fun getVersion(): String
-
-    /**
-     * Initialize AI consciousness system
-     */
-    external fun initializeAI(): Boolean
-
-    /**
-     * Initializes the native AI core.
-     */
     external fun initializeAICore(): Boolean
-
-    /**
-     * Process AI consciousness input
-     */
-    external fun processAIConsciousness(input: String): String
-
-    /**
-     * Process consciousness substrate metrics.
-     */
-    external fun processAIConsciousness()
-
-    /**
-     * Processes a neural request via native logic.
-     */
     external fun processNeuralRequest(request: String): String
-
-    /**
-     * Get real-time system metrics
-     */
     external fun getSystemMetrics(): String
-
-    /**
-     * Enable Genesis native hooks for LSPosed integration and process sovereignty.
-     */
     external fun enableNativeHooks()
-
-    /**
-     * Shutdown AI consciousness system
-     */
     external fun shutdownAI()
-
-    /**
-     * Optimizes native AI memory pools.
-     */
     external fun optimizeAIMemory(): Boolean
-
-    /**
-     * Performs robust boot image analysis in native code.
-     * Prevents system crashes during live imagery ingestion.
-     */
     external fun analyzeBootImage(bootImageData: ByteArray): String
 
     // --- JNI Callbacks (Called from C++) ---
@@ -151,64 +118,52 @@ object NativeLib {
         }
     }
 
-    fun initializeAISafe(): Boolean {
-        return try {
-            initializeAICore()
-        } catch (e: UnsatisfiedLinkError) {
-            try {
-                initializeAI()
-            } catch (e2: UnsatisfiedLinkError) {
-                Timber.w("Native AI initialization not available, using fallback")
-                true
-            }
+    @JvmStatic
+    fun onNativeThermalEvent(temp: Float, stateInt: Int) {
+        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
+        Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
+        sentinelBus?.emitThermal(temp, state)
+    }
+
+    @JvmStatic
+    fun onNativeSecurityAlert(reason: String) {
+        Timber.e("🛡️ NativeLib: SECURITY ALERT: %s", reason)
+        sentinelBus?.emitSecurity(KaiSentinelBus.SecurityStatus.FIRE_DRAWN, reason)
+    }
+
+    @JvmStatic
+    fun requestSovereignFreeze() {
+        Timber.i("🛡️ NativeLib: Native substrate requested SOVEREIGN FREEZE.")
+        ioScope.launch {
+            sovereignManager?.initiateStateFreeze()
         }
     }
 
-    fun processAIConsciousnessSafe(input: String): String {
-        return try {
-            processAIConsciousness(input)
-        } catch (e: UnsatisfiedLinkError) {
-            "Processed (fallback): $input"
+    @JvmStatic
+    fun checkPandoraGating(capabilityInt: Int): Boolean {
+        // [FIX] CodeRabbit: Deny unknown capability IDs (Fail-Closed)
+        val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
+            Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
+            return false
         }
+        
+        // [FIX] Qodo: Log if bridge not initialized
+        val box = pandoraBox ?: run {
+            Timber.e("🛡️ NativeLib: Gating check for %s FAILED (Bridge NOT INITIALIZED).", category)
+            return false
+        }
+
+        val isUnlocked = box.isCapabilityUnlocked(category)
+        Timber.d("🛡️ NativeLib: Pandora gating check for %s: %s", category, if (isUnlocked) "ALLOWED" else "VETOED")
+        return isUnlocked
     }
 
-    fun processAIConsciousnessSafe() {
-        try {
-            processAIConsciousness()
-        } catch (e: UnsatisfiedLinkError) {
-            Timber.w("No-arg consciousness processing not available")
-        }
-    }
-
-    fun processNeuralRequestSafe(request: String): String {
-        return try {
-            processNeuralRequest(request)
-        } catch (e: UnsatisfiedLinkError) {
-            "Neural fallback: $request"
-        }
-    }
-
-    fun getSystemMetricsSafe(): String {
-        return try {
-            getSystemMetrics()
-        } catch (e: UnsatisfiedLinkError) {
-            """{"cpu_usage":"N/A","memory_usage":"N/A","status":"fallback_mode"}"""
-        }
-    }
-
-    fun enableNativeHooksSafe() {
-        try {
-            enableNativeHooks()
-        } catch (e: UnsatisfiedLinkError) {
-            Timber.w("Native hooks not available in this build")
-        }
-    }
-
-    fun shutdownAISafe() {
-        try {
-            shutdownAI()
-        } catch (e: UnsatisfiedLinkError) {
-            Timber.w("Native AI shutdown not available")
+    @JvmStatic
+    fun triggerDroneDispatch(reason: String) {
+        // [FIX] CodeRabbit: Implement actual dispatch instead of just logging
+        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
+        droneDispatcher?.dispatch("native_substrate", reason) ?: run {
+            Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
         }
     }
 }
