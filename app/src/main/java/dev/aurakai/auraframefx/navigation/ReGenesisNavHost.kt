@@ -19,6 +19,7 @@ import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AuraLabScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.AuraTeachingCanvasScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
@@ -220,6 +221,7 @@ sealed class ReGenesisRoute(val route: String) {
     object OracleDriveSubmenu : ReGenesisRoute("oracle_drive_submenu")
     object XposedPanel : ReGenesisRoute("xposed_panel")
     object ChromaCoreColors : ReGenesisRoute("chroma_core_colors")
+    object AuraTeachingCanvas : ReGenesisRoute("aura_teaching_canvas")
     object AgentProfileAura : ReGenesisRoute("aura_agent_profile")
     object HookManager : ReGenesisRoute("hook_manager")
     object Sandbox : ReGenesisRoute("sandbox_screen")
@@ -407,6 +409,9 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.CollabCanvas.route) {
             GenesisCollabCanvasScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.AuraTeachingCanvas.route) {
+            AuraTeachingCanvasScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ── 4. KAI DOMAIN TOOLS ─────────────────────────────────────────────────────

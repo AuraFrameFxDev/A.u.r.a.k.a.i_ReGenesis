@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.genesis
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import dev.aurakai.auraframefx.core.NativeLib
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -32,7 +33,7 @@ class BitNetLocalService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        dev.aurakai.auraframefx.core.NativeLib.enableNativeHooksSafe()
+        NativeLib.enableNativeHooksSafe()
         findThermalZones()
         startThermalMonitoring()
     }

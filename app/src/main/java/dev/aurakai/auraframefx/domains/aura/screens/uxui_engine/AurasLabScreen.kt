@@ -89,7 +89,7 @@ fun AurasLabScreen(
     viewModel: AurasLabViewModel = hiltViewModel()
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Components", "Animations", "Aura's Forge", "Chaos Analysis")
+    val tabs = listOf("Components", "Animations", "Aura's Forge", "Teaching Canvas", "Chaos Analysis")
 
     Scaffold(
         topBar = {
@@ -158,7 +158,20 @@ fun AurasLabScreen(
                 0 -> ComponentsTab()
                 1 -> AnimationsTab()
                 2 -> ForgeTab(viewModel)
-                3 -> ChaosAnalysisTab()
+                3 -> {
+                    val canvasViewModel: collabcanvas.ui.CanvasViewModel = hiltViewModel()
+                    LaunchedEffect(Unit) {
+                        canvasViewModel.connect("aura-lab-teaching-session")
+                    }
+                    val remoteCursors by canvasViewModel.remoteCursors.collectAsState()
+                    AuraTeachingCanvasContent(
+                        onBack = onBack,
+                        canvasViewModel = canvasViewModel,
+                        remoteCursors = remoteCursors,
+                        showTopBar = false
+                    )
+                }
+                4 -> ChaosAnalysisTab()
             }
         }
     }
