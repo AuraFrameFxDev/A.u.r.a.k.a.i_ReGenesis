@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.core
 
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import dev.aurakai.auraframefx.domains.kai.security.drones.GuidanceDroneDispatcher
