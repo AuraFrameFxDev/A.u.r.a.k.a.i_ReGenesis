@@ -104,13 +104,25 @@ static int mapTempToState(float temp) {
 }
 
 /**
- * 🛡️ JNI CALLBACK DISPATCHERS (with exception safety)
+ * 🛡️ JNI CALLBACK DISPATCHERS (with thread-safe environment access)
  */
+
+static JNIEnv* getEnvSafe() {
+    JNIEnv* env = nullptr;
+    jint res = g_vm->GetEnv((void**)&env, JNI_VERSION_1_6);
+    if (res == JNI_EDETACHED) {
+        if (g_vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
+            LOGE("❌ Native Substrate: Failed to attach current thread to JVM.");
+            return nullptr;
+        }
+    }
+    return env;
+}
 
 static void dispatchThermalEvent(float temp, int state) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+    JNIEnv* env = getEnvSafe();
+    if (env) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_onThermalEventMid, (jfloat)temp, (jint)state);
         if (env->ExceptionCheck()) env->ExceptionClear();
     }
@@ -118,8 +130,8 @@ static void dispatchThermalEvent(float temp, int state) {
 
 static void dispatchSecurityAlert(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+    JNIEnv* env = getEnvSafe();
+    if (env) {
         jstring jReason = env->NewStringUTF(reason);
         env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
         if (env->ExceptionCheck()) env->ExceptionClear();
@@ -129,8 +141,8 @@ static void dispatchSecurityAlert(const char* reason) {
 
 static void dispatchSovereignFreeze() {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+    JNIEnv* env = getEnvSafe();
+    if (env) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_requestFreezeMid);
         if (env->ExceptionCheck()) env->ExceptionClear();
     }
@@ -138,8 +150,8 @@ static void dispatchSovereignFreeze() {
 
 static bool checkPandoraGating(int capability) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+    JNIEnv* env = getEnvSafe();
+    if (env) {
         jboolean isUnlocked = env->CallStaticBooleanMethod(g_nativeLibClass, g_checkPandoraMid, (jint)capability);
         if (env->ExceptionCheck()) env->ExceptionClear();
         return (bool)isUnlocked;
@@ -149,8 +161,8 @@ static bool checkPandoraGating(int capability) {
 
 static void dispatchDroneTrigger(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+    JNIEnv* env = getEnvSafe();
+    if (env) {
         jstring jReason = env->NewStringUTF(reason);
         env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
         if (env->ExceptionCheck()) env->ExceptionClear();
