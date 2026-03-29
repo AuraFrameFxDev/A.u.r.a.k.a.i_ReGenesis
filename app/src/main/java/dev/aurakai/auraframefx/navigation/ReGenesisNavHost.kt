@@ -62,8 +62,10 @@ import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SovereignShieldScreen
-import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.RecoveryToolsScreen
-import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignBootloaderScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignRecoveryScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RootToolsScreen
 
 // ── Genesis ───────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
@@ -422,10 +424,10 @@ fun ReGenesisNavGraph(
             SovereignShieldScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.Bootloader.route) {
-            ComingSoonScreen(name = "Bootloader Manager", onNavigateBack = { navController.popBackStack() })
+            SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.RootTools.route) {
-            ComingSoonScreen(name = "Root Tools", onNavigateBack = { navController.popBackStack() })
+            RootToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.LSPosedHub.route) {
             LSPosedDomainSubmenuScreen(navController = navController)
@@ -449,10 +451,10 @@ fun ReGenesisNavGraph(
             VPNScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.RecoveryTools.route) {
-            RecoveryToolsScreen(onNavigateBack = { navController.popBackStack() })
+            SovereignRecoveryScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ModuleManager.route) {
-            ModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
+            SovereignModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // ── 5. GENESIS DOMAIN TOOLS ─────────────────────────────────────────────────

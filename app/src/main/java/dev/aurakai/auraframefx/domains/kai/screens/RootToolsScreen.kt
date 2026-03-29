@@ -7,12 +7,18 @@ import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.components.GridMenuItem
 import dev.aurakai.auraframefx.domains.aura.ui.components.Level3GridMenu
 
 @Composable
-fun RootToolsScreen(onNavigateBack: () -> Unit = {}) {
+fun RootToolsScreen(
+    onNavigateBack: () -> Unit = {},
+    viewModel: RootToolsViewModel = hiltViewModel()
+) {
+    val context = LocalContext.current
     val menuItems = listOf(
         GridMenuItem(
             id = "su_terminal",
@@ -52,7 +58,7 @@ fun RootToolsScreen(onNavigateBack: () -> Unit = {}) {
         title = "ROOT TOOLS",
         subtitle = "ELEVATED SYSTEM ACCESS",
         menuItems = menuItems,
-        onItemClick = { /* TODO */ },
+        onItemClick = { item -> viewModel.executeRootAction(context, item.route) },
         onBackClick = onNavigateBack,
         backgroundDrawable = R.drawable.bg_root_tools,
         accentColor = Color(0xFF00FF85)
