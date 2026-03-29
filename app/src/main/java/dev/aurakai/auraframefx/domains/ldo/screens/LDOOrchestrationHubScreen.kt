@@ -214,6 +214,7 @@ fun SovereignMonitorStrip(viewModel: LDOViewModel) {
         KaiSentinelBus.SovereignState.AWAKE -> Color(0xFF00FF41)
         KaiSentinelBus.SovereignState.FREEZING, KaiSentinelBus.SovereignState.THAWING -> Color(0xFFFFD700)
         KaiSentinelBus.SovereignState.FROZEN -> Color(0xFF00E5FF)
+        KaiSentinelBus.SovereignState.NEUTRALIZING -> Color(0xFFFF4444)
     }
 
     Row(
