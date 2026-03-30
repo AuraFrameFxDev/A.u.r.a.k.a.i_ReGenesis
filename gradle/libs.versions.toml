@@ -111,7 +111,7 @@ uiGeometry = "1.10.5"
 androidxAnimation = "1.10.5"
 junitJupiterVersion = "5.14.3"
 firebaseVertexai = "16.5.0"
-media3Exoplayer = "1.9.3"
+media3Exoplayer = "1.10.0"
 langchain4j = "1.12.2"
 
 [libraries]
