@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.romtools.backdrop
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.aurakai.auraframefx.domains.kai.romtools.OperationProgress
+import dev.aurakai.auraframefx.romtools.OperationProgress
 
 /**
  * Minimal MegaManBackdropRenderer composable used as a fallback in this module.
