@@ -30,6 +30,7 @@ extensions.configure<ApplicationExtension> {
         val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
         buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
+        buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
 
         vectorDrawables { useSupportLibrary = true }
 
@@ -279,6 +280,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
     implementation(libs.generativeai)
+
+    // LangChain4j & Ollama
+    implementation(libs.bundles.langchain4j)
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)

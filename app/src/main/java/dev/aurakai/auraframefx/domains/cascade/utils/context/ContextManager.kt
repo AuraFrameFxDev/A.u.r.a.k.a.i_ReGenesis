@@ -198,6 +198,15 @@ class ContextManager @Inject constructor(
     }
 
     /**
+     * Retrieves the context for a specific agent type from active chains.
+     */
+    fun getAgentContext(agentType: AgentType): String? {
+        return _activeContexts.value.values.firstNotNullOfOrNull { chain ->
+            chain.agentContext[agentType]
+        }
+    }
+
+    /**
      * Enables security context monitoring.
      * Used by KaiAIService.
      */
