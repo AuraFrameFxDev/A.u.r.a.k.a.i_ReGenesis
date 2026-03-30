@@ -1,9 +1,12 @@
 package dev.aurakai.auraframefx.domains.genesis
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.ai.adapters.DefaultGrokAdapter
+import dev.aurakai.auraframefx.ai.adapters.GrokAdapter
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
@@ -15,14 +18,20 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object AgentModule {
+abstract class AgentModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideContextManager(
-        memoryManager: MemoryManager,
-        config: AIPipelineConfig
-    ): ContextManager {
-        return ContextManager(memoryManager, config)
+    abstract fun bindGrokAdapter(impl: DefaultGrokAdapter): GrokAdapter
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideContextManager(
+            memoryManager: MemoryManager,
+            config: AIPipelineConfig
+        ): ContextManager {
+            return ContextManager(memoryManager, config)
+        }
     }
 }

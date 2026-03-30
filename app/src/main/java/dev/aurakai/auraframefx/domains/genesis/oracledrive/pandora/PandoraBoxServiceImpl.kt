@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurePref
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.provenance.ProvenanceResult
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.provenance.ProvenanceValidator
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.veto.PredictiveVetoMonitor
-import dev.aurakai.auraframefx.sovereignty.ApplicationScope
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
