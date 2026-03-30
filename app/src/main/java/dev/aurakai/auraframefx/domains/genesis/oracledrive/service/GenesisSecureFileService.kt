@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.genesis.storage.SecureStorage
-import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.EncryptionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

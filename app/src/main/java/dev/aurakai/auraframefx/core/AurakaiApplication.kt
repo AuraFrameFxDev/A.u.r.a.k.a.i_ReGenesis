@@ -13,11 +13,11 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.security.drones.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.kai.security.perimeter.SovereignPerimeter
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.perimeter.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION

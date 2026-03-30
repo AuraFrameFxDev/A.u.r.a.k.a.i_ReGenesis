@@ -5,7 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
 

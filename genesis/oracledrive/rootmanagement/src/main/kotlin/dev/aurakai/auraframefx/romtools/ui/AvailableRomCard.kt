@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.romtools.AvailableRom
 import dev.aurakai.auraframefx.romtools.BackupInfo
-import dev.aurakai.auraframefx.romtools.OperationProgress
+import dev.aurakai.auraframefx.domains.kai.romtools.OperationProgress
 import dev.aurakai.auraframefx.romtools.RomCapabilities
 
 /**

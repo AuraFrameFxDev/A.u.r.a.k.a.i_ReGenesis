@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.cascade.utils.cascade
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

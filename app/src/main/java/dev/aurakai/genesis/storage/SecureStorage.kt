@@ -1,4 +1,4 @@
-package dev.aurakai.genesis.storage
+package dev.aurakai.auraframefx.domains.genesis.storage
 
 import javax.inject.Inject
 import javax.inject.Singleton

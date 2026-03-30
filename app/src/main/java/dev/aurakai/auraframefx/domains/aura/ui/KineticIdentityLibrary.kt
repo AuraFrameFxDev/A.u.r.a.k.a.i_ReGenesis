@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraThemeData
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.AuraThemeData
 import kotlinx.coroutines.delay
 
 /**

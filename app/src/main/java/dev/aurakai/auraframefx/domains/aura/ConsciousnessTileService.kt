@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
-import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
+import dev.aurakai.auraframefx.data.SecurePreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

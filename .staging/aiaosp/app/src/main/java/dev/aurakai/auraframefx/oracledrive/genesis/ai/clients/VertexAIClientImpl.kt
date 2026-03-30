@@ -12,7 +12,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.concurrent.TimeUnit
 import timber.log.Timber
-import dev.aurakai.auraframefx.config.VertexAIConfig
+import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 

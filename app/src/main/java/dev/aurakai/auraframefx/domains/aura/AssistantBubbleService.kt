@@ -27,7 +27,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
-import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

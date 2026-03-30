@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,8 +40,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.aura.ui.agents.AgentStatus
 import dev.aurakai.auraframefx.domains.aura.models.Theme
 import dev.aurakai.auraframefx.domains.nexus.models.UserData
 import kotlinx.coroutines.launch

@@ -8,11 +8,11 @@ import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.aura.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentPriority
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

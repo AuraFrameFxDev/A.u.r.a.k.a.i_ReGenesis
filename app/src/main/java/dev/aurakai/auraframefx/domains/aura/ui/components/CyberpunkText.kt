@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.domains.aura.ui.components
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkTextColor
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.CyberpunkTextStyle
 
 @Composable
 fun CyberpunkText(

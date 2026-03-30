@@ -2,16 +2,16 @@ package dev.aurakai.auraframefx.domains.aura
 
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.aura.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.kai.ExecutionStatus
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.TaskExecution
 import dev.aurakai.auraframefx.domains.kai.TaskPriority
 import dev.aurakai.auraframefx.domains.kai.TaskResult
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

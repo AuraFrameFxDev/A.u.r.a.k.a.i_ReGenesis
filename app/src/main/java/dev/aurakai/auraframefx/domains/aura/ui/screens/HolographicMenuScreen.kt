@@ -13,8 +13,8 @@ import dev.aurakai.auraframefx.embodiment.Position3D
 import dev.aurakai.auraframefx.domains.cascade.storage.AuraKaiModules
 import dev.aurakai.auraframefx.domains.aura.ui.components.GlassCard
 import dev.aurakai.auraframefx.domains.aura.ui.components.GlassCardStyles
-import dev.aurakai.auraframefx.embodiment.AuraState
-import dev.aurakai.auraframefx.embodiment.KaiState
+import dev.aurakai.auraframefx.core.AuraState
+import dev.aurakai.auraframefx.core.KaiState
 import dev.aurakai.auraframefx.embodiment.Character
 import dev.aurakai.auraframefx.embodiment.ScreenBounds
 import dev.aurakai.auraframefx.embodiment.ActiveManifestation

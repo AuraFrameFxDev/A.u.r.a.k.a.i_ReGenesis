@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.oracle
 
 import android.content.Context
-import dev.aurakai.auraframefx.utils.AuraFxLogger
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

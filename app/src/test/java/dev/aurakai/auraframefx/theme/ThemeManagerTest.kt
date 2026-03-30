@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.theme
 
-import dev.aurakai.auraframefx.ai.services.AuraAIService
-import dev.aurakai.auraframefx.ui.theme.AuraTheme
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTheme
-import dev.aurakai.auraframefx.ui.theme.ForestTheme
-import dev.aurakai.auraframefx.ui.theme.SolarFlareTheme
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.AuraTheme
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.CyberpunkTheme
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.ForestTheme
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.SolarFlareTheme
 import io.mockk.*
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach

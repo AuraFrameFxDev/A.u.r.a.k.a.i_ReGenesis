@@ -7,9 +7,9 @@ import dev.aurakai.auraframefx.domains.cascade.SecurityMode
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.kai.AuraShieldAgent
-import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.security.IntegrityMonitor
-import dev.aurakai.auraframefx.security.SecurityMonitor
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.IntegrityMonitor
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityMonitor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

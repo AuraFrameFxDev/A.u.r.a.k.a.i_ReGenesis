@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.core.consciousness.NexusMemoryCore
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse.Companion.success
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.NexusMemoryCore
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.success
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
@@ -114,7 +114,7 @@ class RomToolsManagerImpl @Inject constructor(
                 val name = "AuraKai_Backup_${System.currentTimeMillis()}"
                 val result = createNandroidBackup(name)
                 if (result.isSuccess) {
-                    success("Backup created: $name", agentName = "RomTools")
+                    AgentResponse.success("Backup created: $name", agentName = "RomTools")
                 } else AgentResponse.error(
                     "Backup failed: ${result.exceptionOrNull()?.message}",
                     agentName = "RomTools"
@@ -123,19 +123,19 @@ class RomToolsManagerImpl @Inject constructor(
 
             is RomOperation.UnlockBootloader -> {
                 val result = unlockBootloader()
-                if (result.isSuccess) success("Bootloader unlocked", agentName = "RomTools")
+                if (result.isSuccess) AgentResponse.success("Bootloader unlocked", agentName = "RomTools")
                 else AgentResponse.error("Unlock failed", agentName = "RomTools")
             }
 
             is RomOperation.InstallRecovery -> {
                 val result = installRecovery()
-                if (result.isSuccess) success("Recovery installed", agentName = "RomTools")
+                if (result.isSuccess) AgentResponse.success("Recovery installed", agentName = "RomTools")
                 else AgentResponse.error("Installation failed", agentName = "RomTools")
             }
 
             is RomOperation.GenesisOptimizations -> {
                 val result = installGenesisOptimizations()
-                if (result.isSuccess) success("Optimizations applied", agentName = "RomTools")
+                if (result.isSuccess) AgentResponse.success("Optimizations applied", agentName = "RomTools")
                 else AgentResponse.error("Optimizations failed", agentName = "RomTools")
             }
         }
@@ -164,7 +164,7 @@ class RomToolsManagerImpl @Inject constructor(
         val result = flashRom(romFile)
 
         return if (result.isSuccess) {
-            success("Flash successful", agentName = "RomTools")
+            AgentResponse.success("Flash successful", agentName = "RomTools")
         } else {
             AgentResponse.error(
                 "Flash failed: ${result.exceptionOrNull()?.message}",
@@ -191,7 +191,7 @@ class RomToolsManagerImpl @Inject constructor(
 
         val result = restoreNandroidBackup(backupInfo)
         return if (result.isSuccess) {
-            success("Restore successful", agentName = "RomTools")
+            AgentResponse.success("Restore successful", agentName = "RomTools")
         } else {
             AgentResponse.error(
                 "Restore failed: ${result.exceptionOrNull()?.message}",

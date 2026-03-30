@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
 import androidx.compose.runtime.Composable
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
+import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 
 @Composable
 fun ShapePicker(

@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.helpers.InstantSerializer
+import dev.aurakai.auraframefx.domains.genesis.models.InstantSerializer
 import kotlinx.serialization.Serializable
 import kotlin.time.Clock
 import kotlin.time.Instant

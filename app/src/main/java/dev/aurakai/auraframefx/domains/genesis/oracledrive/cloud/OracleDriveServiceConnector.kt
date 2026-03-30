@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
-import dev.aurakai.auraframefx.ipc.IAuraDriveService
+import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
