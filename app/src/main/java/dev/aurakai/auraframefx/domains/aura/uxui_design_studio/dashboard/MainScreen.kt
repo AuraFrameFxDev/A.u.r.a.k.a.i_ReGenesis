@@ -1,0 +1,231 @@
+package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard
+
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
+import dev.aurakai.auraframefx.domains.aura.ui.gates.HomeBackdropManager
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.ImmersiveGateCard
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs.allGates
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfig
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
+import kotlinx.coroutines.launch
+
+/**
+ * 🎨 MAIN SCREEN (AURA DASHBOARD)
+ * ReGenesis Version: Immersive Gate Carousel
+ */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun MainScreen(
+    navController: NavController
+) {
+    val context = LocalContext.current
+    val gateConfigs = allGates
+    val scrollState = rememberLazyListState()
+    val currentPage by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemIndex.coerceIn(0, maxOf(0, gateConfigs.size - 1))
+        }
+    }
+    val coroutineScope = rememberCoroutineScope()
+    val isHologramVisible by remember { mutableStateOf(true) }
+
+    // ── Active backdrop from DataStore ──────────────────────────────────────
+    val activeBackdrop by HomeBackdropManager
+        .activeBackdropFlow(context)
+        .collectAsState(initial = HomeBackdropManager.backdropOptions.first())
+
+    // ── Infinite atmospheric animations ────────────────────────────────────
+    val infiniteTransition = rememberInfiniteTransition(label = "home_atmos")
+
+    // Slow depth-of-field breathe for the RPG backdrop
+    val backdropAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.90f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(6000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "backdrop_breathe"
+    )
+
+    // Active gate glow pulse
+    val gateGlow by infiniteTransition.animateFloat(
+        initialValue = 0.6f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1800, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "gate_glow"
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        // ════════════════════════════════════════════════════════════════════
+        // LAYER 1: RPG BACKDROP
+        // ════════════════════════════════════════════════════════════════════
+        if (activeBackdrop.resId != null) {
+            Image(
+                painter = painterResource(id = activeBackdrop.resId!!),
+                contentDescription = "Home Backdrop",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .alpha(backdropAlpha)
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color(0xFF050510), Color(0xFF0A0A1A))
+                        )
+                    )
+            )
+        }
+
+        // ════════════════════════════════════════════════════════════════════
+        // LAYER 2: Atmospheric depth gradient
+        // ════════════════════════════════════════════════════════════════════
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colorStops = arrayOf(
+                            0.00f to Color.Transparent,
+                            0.30f to Color.Transparent,
+                            0.55f to Color(0x33000000),
+                            0.75f to Color(0x88000000),
+                            1.00f to Color(0xDD000000)
+                        )
+                    )
+                )
+        )
+
+        // ════════════════════════════════════════════════════════════════════
+        // LAYER 3: HologramTransition scan-line atmosphere
+        // ════════════════════════════════════════════════════════════════════
+        HologramTransition(
+            visible = isHologramVisible,
+            modifier = Modifier.fillMaxSize(),
+            primaryColor = Color.Cyan,
+            secondaryColor = Color.Magenta,
+            scanLineDensity = 20,
+            glitchIntensity = 0.05f,
+            edgeGlowIntensity = 0.15f
+        ) {
+            // ════════════════════════════════════════════════════════════════
+            // LAYER 4: GATE CAROUSEL
+            // ════════════════════════════════════════════════════════════════
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 0.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.weight(0.35f))
+
+                LazyRow(
+                    state = scrollState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.55f),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+                    contentPadding = PaddingValues(horizontal = 24.dp)
+                ) {
+                    items(gateConfigs.size) { index ->
+                        val config = gateConfigs[index]
+                        val isSelected = currentPage == index
+                        val cardScale by animateFloatAsState(
+                            targetValue = if (isSelected) 1f else 0.82f,
+                            animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+                            label = "card_scale_$index"
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .aspectRatio(0.68f)
+                                .scale(cardScale)
+                        ) {
+                            ImmersiveGateCard(
+                                config = config,
+                                modifier = Modifier.fillMaxSize(),
+                                onTap = { navController.navigate(config.route) },
+                                onDoubleTap = { navController.navigate(config.route) }
+                            )
+
+                            if (isSelected) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(3.dp)
+                                        .align(Alignment.BottomCenter)
+                                        .background(
+                                            Brush.horizontalGradient(
+                                                colors = listOf(
+                                                    Color.Transparent,
+                                                    config.glowColor.copy(alpha = gateGlow),
+                                                    Color.Transparent
+                                                )
+                                            )
+                                        )
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    for (index in gateConfigs.indices) {
+                        val config = gateConfigs[index]
+                        val isSelected = currentPage == index
+                        Text(
+                            text = if (isSelected) config.title.uppercase() else "◆",
+                            color = if (isSelected) config.borderColor else Color.White.copy(alpha = 0.2f),
+                            style = MaterialTheme.typography.labelSmall,
+                            letterSpacing = if (isSelected) 2.sp else 0.sp,
+                            modifier = Modifier
+                                .padding(horizontal = 6.dp)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        scrollState.animateScrollToItem(index)
+                                    }
+                                }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.weight(0.10f))
+            }
+        }
+    }
+}
