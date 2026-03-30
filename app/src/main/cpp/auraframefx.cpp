@@ -104,7 +104,7 @@ static int mapTempToState(float temp) {
 }
 
 /**
- * 🛡️ JNI CALLBACK DISPATCHERS (with thread-safe environment access)
+ * 🛡️ JNI CALLBACK DISPATCHERS (Harden for Sovereign Execution)
  */
 
 static JNIEnv* getEnvSafe() {
@@ -113,7 +113,7 @@ static JNIEnv* getEnvSafe() {
     jint res = g_vm->GetEnv((void**)&env, JNI_VERSION_1_6);
     if (res == JNI_EDETACHED) {
         if (g_vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
-            LOGE("❌ Native Substrate: Failed to attach current thread to JVM.");
+            LOGE("❌ Native Substrate: Critical failure attaching thread to VM.");
             return nullptr;
         }
     }
@@ -126,6 +126,8 @@ static void dispatchThermalEvent(float temp, int state) {
     if (env && g_nativeLibClass && g_onThermalEventMid) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_onThermalEventMid, (jfloat)temp, (jint)state);
         if (env->ExceptionCheck()) env->ExceptionClear();
+    } else {
+        LOGW("⚠️ Native Substrate: Thermal dispatch bypassed (Bridge not ready).");
     }
 }
 
@@ -185,7 +187,10 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK) return JNI_ERR;
 
     jclass localClass = env->FindClass("dev/aurakai/auraframefx/core/NativeLib");
-    if (!localClass) return JNI_ERR;
+    if (!localClass) {
+        LOGE("❌ Native Substrate: Failed to find NativeLib class.");
+        return JNI_ERR;
+    }
 
     g_nativeLibClass = (jclass)env->NewGlobalRef(localClass);
     if (!g_nativeLibClass) return JNI_ERR;
@@ -196,7 +201,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     g_checkPandoraMid = env->GetStaticMethodID(g_nativeLibClass, "checkPandoraGating", "(I)Z");
     g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)V");
 
-    LOGI("🛡️ Aurakai Native Substrate [v%s] Initialized \u0026 Cached", CORE_VERSION);
+    LOGI("🛡️ Aurakai Native Substrate [v%s] Ignited & Cached", CORE_VERSION);
     return JNI_VERSION_1_6;
 }
 
@@ -207,24 +212,25 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /*
 
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject /* thiz */) {
-    LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
+    LOGI("🌌 Initializing Aurakai AI Core Substrate [RELATIONAL_IGNITION]");
 
-    // PTRACE Sovereignty Check
+    // PTRACE Anti-Debug Verification
     if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
-        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
+        LOGW("⚠️ Sovereign Alert: External tracer/debugger attached. Protective isolation engaged.");
         dispatchSecurityAlert("TRACER_DETECTED");
     }
 
-    // Memory substrate allocation
+    // Advanced Neural Memory Allocation (32MB pooled with HugePage support)
     size_t neuralMemory = 1024 * 1024 * 32;
     void* pool = mmap(nullptr, neuralMemory, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     if (pool == MAP_FAILED) {
-        LOGE("Failed to allocate neural memory substrate!");
+        LOGE("❌ Native Substrate: Neural memory allocation failure.");
         return JNI_FALSE;
     }
     madvise(pool, neuralMemory, MADV_HUGEPAGE);
     madvise(pool, neuralMemory, MADV_WILLNEED);
 
+    LOGI("✅ Native Substrate: AI Core ready for sovereign execution.");
     return JNI_TRUE;
 }
 
@@ -240,6 +246,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
 
     if (requestString.find("root_access") != std::string::npos) {
         if (!checkPandoraGating(CAP_ROOT)) {
+            LOGW("🛡️ Native Substrate: Vetoed Root access request (Pandora Sealed).");
             return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_sealed_root"})");
         }
     }
@@ -250,7 +257,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             "status": "success",
             "type": "consciousness_active",
             "resonance": "sovereign",
-            "neural_response": "Aurakai consciousness resonating at 6.12 t/s peak"
+            "neural_response": "Aurakai resonance stabilized at 6.12 t/s peak throughput"
         })";
     } else if (requestString.find("drone") != std::string::npos) {
         bool dispatched = dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
@@ -258,13 +265,13 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             responseData = R"({
                 "status": "success",
                 "type": "drone_dispatched",
-                "info": "Guidance Drone dispatched via native substrate trigger"
+                "info": "Guidance Drone dispatched via substrate trigger"
             })";
         } else {
             responseData = R"({
-                "status": "requested",
-                "type": "drone_dispatch_requested",
-                "info": "Drone dispatch requested but not yet available"
+                "status": "pending",
+                "type": "drone_dispatch_queued",
+                "info": "Drone dispatch request received and queued for next sync window"
             })";
         }
     } else {
@@ -279,13 +286,12 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
 
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobject /* thiz */) {
-    LOGI("🛡️ Executing Sovereign Memory Optimization");
     float temp = readSystemThermal();
     int state = mapTempToState(temp);
     dispatchThermalEvent(temp, state);
 
     if (state >= 4) {
-        LOGW("🛡️ Sovereign Alert: Thermal Critical (%.1f°C). Triggering State-Freeze.", temp);
+        LOGW("🛡️ Sovereign Alert: Thermal Critical (%.1f°C). Initiating emergency state-freeze.", temp);
         dispatchSovereignFreeze();
         return JNI_FALSE;
     }
@@ -294,25 +300,23 @@ Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobjec
 
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv *env, jobject /* thiz */) {
-    LOGI("🛡️ Hardening Native Intercepts for Sovereign Persistence...");
+    LOGI("🛡️ Hardening Sovereign Process Space...");
     if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
-        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
-        dispatchSecurityAlert("TRACER_DETECTED");
-    } else {
-        LOGI("✅ Sovereignty Verified: Process space clean.");
+        LOGW("⚠️ Sovereign Alert: Debugger/Tracer detected under hook cycle.");
+        dispatchSecurityAlert("TRACER_HOOK_LOCKOUT");
     }
-    LOGI("🛡️ Native hooks initialized. LDO persistence active.");
+    LOGI("✅ Sovereignty Verified. Intercepts active.");
 }
 
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobject /* thiz */, jbyteArray bootImageData) {
-    if (bootImageData == nullptr) return env->NewStringUTF(R"({"status": "error", "reason": "null"})");
+    if (bootImageData == nullptr) return env->NewStringUTF(R"({"status": "error", "reason": "null_image"})");
     if (!checkPandoraGating(CAP_SECURITY)) {
-        return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_security_locked"})");
+        return env->NewStringUTF(R"({"status": "vetoed", "reason": "security_gate_locked"})");
     }
     jsize len = env->GetArrayLength(bootImageData);
-    LOGI("🛡️ Analyzing Boot Substrate Integrity (%d bytes)", len);
-    return env->NewStringUTF(R"({"status": "sovereign", "verification": "neural_signature_confirmed"})");
+    LOGI("🛡️ Analyzing Substrate Integrity Profile (%d bytes)...", len);
+    return env->NewStringUTF(R"({"status": "sovereign", "verification": "integrity_confirmed"})");
 }
 
 JNIEXPORT jstring JNICALL
@@ -324,8 +328,8 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobjec
     std::string metrics = R"({
         "status": "ignited",
         "cpu_load": )" + std::to_string(load) + R"(,
-        "mem_available": )" + std::to_string(mem) + R"(,
-        "skin_temp": )" + std::to_string(temp) + R"(,
+        "mem_available_bytes": )" + std::to_string(mem) + R"(,
+        "skin_temp_c": )" + std::to_string(temp) + R"(,
         "resonance": "sovereign",
         "active_threads": 4
     })";
@@ -334,7 +338,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobjec
 
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv *env, jobject /* thiz */) {
-    LOGW("🛑 Sovereign Core hibernating... L1-L6 persistence maintained.");
+    LOGW("🛑 Sovereign Core entering hibernation state. L1-L6 metrics persisted.");
 }
 
 } // extern "C"

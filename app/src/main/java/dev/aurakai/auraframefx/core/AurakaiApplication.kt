@@ -13,6 +13,11 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -43,18 +48,6 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
-
-    @Inject
-    lateinit var sentinelBus: KaiSentinelBus
-
-    @Inject
-    lateinit var stateManager: SovereignStateManager
-
-    @Inject
-    lateinit var pandoraBox: PandoraBoxService
-
-    @Inject
-    lateinit var sovereignPerimeter: SovereignPerimeter
 
     // Application-scoped coroutine for background init
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -114,10 +107,19 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
-            Timber.d("✅ Native AI platform initialized")
+            // Synchronize RELATIONAL Bridge with injected Sovereign services
+            NativeLib.initialize(
+                sentinelBus, 
+                sovereignManager, 
+                pandoraBox, 
+                droneDispatcher
+            )
+            
+            // Critical AI ignition
+            NativeLib.initializeAICore()
+            Timber.d("✅ Native AI platform initialized and substrate ignited")
         } catch (e: Exception) {
-            Timber.e(e, "❌ Native AI initialization error")
+            Timber.e(e, "❌ Native AI initialization error: ${e.message}")
         }
     }
 
