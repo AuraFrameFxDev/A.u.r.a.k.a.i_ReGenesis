@@ -59,7 +59,7 @@ static long readAvailableMemory() {
     std::ifstream file("/proc/meminfo");
     std::string line;
     while (std::getline(file, line)) {
-        if (line.compare(0, 8, "MemAvailable") == 0) {
+        if (line.compare(0, 12, "MemAvailable") == 0) {
             std::stringstream ss(line);
             std::string key;
             long value;
