@@ -240,6 +240,7 @@ generativeai = { group = "com.google.ai.client.generativeai", name = "generative
 generativeai-ktx = { group = "com.google.ai.client.generativeai", name = "generativeai-ktx", version.ref = "generativeai" }
 
 # AI & ML
+langchain4j = { group = "dev.langchain4j", name = "langchain4j", version.ref = "langchain4j" }
 langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", version.ref = "langchain4j" }
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-http-client-jdk", version.ref = "langchain4j" }
@@ -509,6 +510,7 @@ system-root = [
 ]
 
 langchain4j = [
+    "langchain4j",
     "langchain4j-core",
     "langchain4j-ollama",
     "langchain4j-http-client-jdk"
