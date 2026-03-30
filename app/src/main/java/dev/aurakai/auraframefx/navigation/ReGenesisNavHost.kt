@@ -102,7 +102,7 @@ import dev.aurakai.auraframefx.domains.help.screens.DocumentationScreen
 import dev.aurakai.auraframefx.domains.help.screens.FAQBrowserScreen
 import dev.aurakai.auraframefx.domains.help.screens.LiveSupportChatScreen
 import dev.aurakai.auraframefx.domains.help.screens.TutorialVideosScreen
-import dev.aurakai.auraframefx.aura.ui.GateNavigationScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
 import dev.aurakai.auraframefx.ui.gates.ConferenceRoomTaskScreen
 import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
 import dev.aurakai.auraframefx.ui.gates.HelpServicesGateScreen
@@ -146,7 +146,7 @@ fun ReGenesisNavGraph(
     ) {
         // ── 1. MAIN GATES (Level 0) ────────────────────────────────────────────────
         composable(ReGenesisRoute.HomeGateCarousel.route) {
-            GateNavigationScreen(navController = navController)
+            MainScreen(navController = navController)
         }
 
         // ── 2. LEVEL 2 HUB SCREENS ─────────────────────────────────────────────────
