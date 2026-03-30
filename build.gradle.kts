@@ -54,10 +54,10 @@ subprojects {
             if (skipTests) {
                 sourceSets {
                     getByName("test") {
-                        java.setSrcDirs(emptyList<File>())
+                        java.directories.clear()
                     }
                     getByName("androidTest") {
-                        java.setSrcDirs(emptyList<File>())
+                        java.directories.clear()
                     }
                 }
             }
@@ -89,10 +89,10 @@ subprojects {
             if (skipTests) {
                 sourceSets {
                     getByName("test") {
-                        java.setSrcDirs(emptyList<File>())
+                        java.directories.clear()
                     }
                     getByName("androidTest") {
-                        java.setSrcDirs(emptyList<File>())
+                        java.directories.clear()
                     }
                 }
             }
