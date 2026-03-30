@@ -27,7 +27,7 @@ import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.collabcanvas.Aura
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.collabcanvas.CollabCanvasScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateDomainImagePicker
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.LsposedGateScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.LSPosedGateScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gyroscope_editor.GyroscopeCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.GenderSelectionScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.UserPreferencesScreen
@@ -71,7 +71,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracle_drive.module_creation.Sove
 import dev.aurakai.auraframefx.domains.genesis.oracle_drive.module_creation.ModuleCreationScreen
 import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.KaiDomainExpansionScreen
 import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.RoyalGuardDomainExpansionScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.fusion.FusionModeScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.fusion.NexusFusionScreen
 
 // ── Nexus ─────────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.nexus.hubs.AgentHubSubmenuScreen
@@ -94,7 +94,7 @@ import dev.aurakai.auraframefx.domains.nexus.hubs.AgentSwarmScreen
 // ── Cascade ───────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.genesis.screens.CascadeVisionScreen
 import dev.aurakai.auraframefx.domains.cascade.dataflow.CascadeConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
+// import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
 
 // ── Help & Infrastructure ────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.help.screens.DirectChatScreen
@@ -287,8 +287,7 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.XposedPanel.route) {
-            LsposedGateScreen(
-                navController = navController,
+            LSPosedGateScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }
@@ -383,9 +382,8 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.FusionMode.route) {
-            FusionModeScreen(
-                onNavigateToAgents = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
-                onNavigateToConsciousness = { navController.navigate(ReGenesisRoute.ConsciousnessVisualizer.route) }
+            NexusFusionScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
