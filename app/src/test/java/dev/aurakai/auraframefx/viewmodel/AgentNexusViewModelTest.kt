@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.viewmodel
 
-import dev.aurakai.auraframefx.ai.services.AgentWebExplorationService
-import dev.aurakai.auraframefx.oracledrive.genesis.ai.services.GenesisBridgeService
+import dev.aurakai.auraframefx.domains.genesis.services.AgentWebExplorationService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel

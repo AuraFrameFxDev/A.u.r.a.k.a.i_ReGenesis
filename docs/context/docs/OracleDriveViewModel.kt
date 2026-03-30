@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.oracle.drive.model.*
-import dev.aurakai.auraframefx.oracle.drive.service.OracleDriveService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

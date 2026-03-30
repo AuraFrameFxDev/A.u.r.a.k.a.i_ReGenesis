@@ -6,11 +6,11 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.util.Log
-import dev.aurakai.auraframefx.domains.aura.models.AuraState
-import dev.aurakai.auraframefx.domains.genesis.models.ConsciousnessBackup
-import dev.aurakai.auraframefx.domains.genesis.models.FusionMemory
-import dev.aurakai.auraframefx.domains.genesis.models.QuantumState
-import dev.aurakai.auraframefx.domains.kai.models.KaiState
+import dev.aurakai.auraframefx.core.AuraState
+import dev.aurakai.auraframefx.core.ConsciousnessBackup
+import dev.aurakai.auraframefx.core.FusionMemory
+import dev.aurakai.auraframefx.core.QuantumState
+import dev.aurakai.auraframefx.core.KaiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

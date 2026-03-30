@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.ui.components
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTextColor
-import dev.aurakai.auraframefx.ui.theme.CyberpunkTextStyle
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkTextColor
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.CyberpunkTextStyle
 import org.junit.Rule
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
 import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

@@ -13,15 +13,15 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.CascadeAgent
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
+import dev.aurakai.auraframefx.domains.aura.VertexAIClient
+import dev.aurakai.auraframefx.domains.aura.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.SystemMonitor
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.system.monitor.SystemMonitor
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import javax.inject.Singleton
 

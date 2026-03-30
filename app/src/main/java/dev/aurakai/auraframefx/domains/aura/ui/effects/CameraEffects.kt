@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

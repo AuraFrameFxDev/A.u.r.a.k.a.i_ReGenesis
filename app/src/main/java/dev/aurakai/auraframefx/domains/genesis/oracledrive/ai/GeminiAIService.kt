@@ -7,11 +7,11 @@ import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
-import dev.aurakai.auraframefx.domains.kai.ErrorHandler
+import dev.aurakai.auraframefx.domains.cascade.utils.ErrorHandler
 import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

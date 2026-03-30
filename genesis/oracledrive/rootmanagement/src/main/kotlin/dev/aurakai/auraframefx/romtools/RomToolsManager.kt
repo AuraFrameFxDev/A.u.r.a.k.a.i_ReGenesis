@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
 import android.net.Uri
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
 import dev.aurakai.auraframefx.romtools.retention.RetentionStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow

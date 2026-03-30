@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.model
 // Test framework in use: Prefer JUnit Jupiter (JUnit 5) if present in the project; otherwise adapt to JUnit 4.
 // Assertions use kotlin.test where possible for portability; switch to AssertJ/Truth if the project standard differs.
 
-import dev.aurakai.auraframefx.domains.cascade.models.AgentMessage
-import dev.aurakai.auraframefx.domains.genesis.models.AgentHierarchy
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.model.AgentHierarchy
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import org.junit.jupiter.api.AfterEach

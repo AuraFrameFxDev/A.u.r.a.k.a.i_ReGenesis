@@ -4,7 +4,7 @@ import android.content.Intent
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import dagger.hilt.android.AndroidEntryPoint
-import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
+import dev.aurakai.auraframefx.data.SecurePreferences
 import javax.inject.Inject
 
 @AndroidEntryPoint

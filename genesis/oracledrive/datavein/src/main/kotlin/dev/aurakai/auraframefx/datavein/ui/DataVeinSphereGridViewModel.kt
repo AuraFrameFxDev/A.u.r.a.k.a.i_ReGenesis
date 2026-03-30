@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.datavein.model.DataVeinNode
 import dev.aurakai.auraframefx.datavein.model.GridData
 import dev.aurakai.auraframefx.datavein.model.NodeConnection
-import dev.aurakai.auraframefx.datavein.model.NodeType
+import dev.aurakai.auraframefx.domains.aura.ui.components.graph.NodeType
 import dev.aurakai.auraframefx.datavein.model.SphereGridConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

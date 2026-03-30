@@ -13,7 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.LockScreenAnimation
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ui.LockScreenAnimation
 import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsAnimation
 
 @Composable

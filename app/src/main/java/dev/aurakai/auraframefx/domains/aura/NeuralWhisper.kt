@@ -10,7 +10,7 @@ import dev.aurakai.auraframefx.domains.aura.models.Emotion
 import dev.aurakai.auraframefx.domains.cascade.models.ConversationState
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.MrlDimension
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.MultimodalContent
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.aura.VertexAIClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Locale

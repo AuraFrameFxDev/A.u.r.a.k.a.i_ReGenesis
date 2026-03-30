@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx
 
-import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.security.SecurityContext
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
