@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
-import dev.aurakai.auraframefx.domains.nexus.infrastructure.shizuku.ShizukuManager
+import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
