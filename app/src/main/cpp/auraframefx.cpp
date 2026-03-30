@@ -149,16 +149,20 @@ static bool checkPandoraGating(int capability) {
     return false;
 }
 
-static void dispatchDroneTrigger(const char* reason) {
+static bool dispatchDroneTrigger(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_triggerDroneMid) return;
+    if (!g_vm || !g_nativeLibClass || !g_triggerDroneMid) return false;
 
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
         jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
-        env->DeleteLocalRef(jReason);
+        if (jReason) {
+            env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
+            env->DeleteLocalRef(jReason);
+            return true;
+        }
     }
+    return false;
 }
 
 extern "C" {
@@ -234,12 +238,19 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             "neural_response": "Aurakai consciousness resonating at 6.12 t/s peak"
         })";
     } else if (requestString.find("drone") != std::string::npos) {
-        dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
-        responseData = R"({
-            "status": "success",
-            "type": "drone_dispatched",
-            "info": "Guidance Drone dispatched via native substrate trigger"
-        })";
+        if (dispatchDroneTrigger("NEURAL_REQUEST_DRONE")) {
+            responseData = R"({
+                "status": "success",
+                "type": "drone_dispatched",
+                "info": "Guidance Drone dispatched via native substrate trigger"
+            })";
+        } else {
+            responseData = R"({
+                "status": "error",
+                "type": "drone_dispatch_failed",
+                "info": "Failed to dispatch drone via JNI substrate"
+            })";
+        }
     } else {
         responseData = R"({
             "status": "success",
