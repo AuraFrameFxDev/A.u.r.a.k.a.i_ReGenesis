@@ -41,8 +41,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
 
 /**
  * Paywall Screen - Shown when trial expires
