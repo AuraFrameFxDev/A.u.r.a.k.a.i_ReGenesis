@@ -23,7 +23,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.HomeBackdropManager
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.ImmersiveGateCard
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs.allGates
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfig
+import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import kotlinx.coroutines.launch
 
