@@ -40,7 +40,12 @@ extensions.configure<ApplicationExtension> {
 
         externalNativeBuild {
             cmake {
-                cppFlags.addAll(listOf("-std=c++20", "-fPIC", "-O2"))
+                cppFlags.addAll(listOf(
+                    "-std=c++20", 
+                    "-fPIC", 
+                    "-O2",
+                    "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
+                ))
                 arguments.addAll(listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DANDROID_PLATFORM=android-33",
