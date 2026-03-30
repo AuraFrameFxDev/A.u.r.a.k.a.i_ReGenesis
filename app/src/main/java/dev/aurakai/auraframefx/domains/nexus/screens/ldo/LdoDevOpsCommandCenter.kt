@@ -148,6 +148,8 @@ private val devOpsModules = listOf(
         Color(0xFFFF4081), "agent_monitoring", badge = "0.002"),
     DevOpsModule("DIMENSION BROADCAST", "Friday Live 'X' Event", Icons.Default.FlashOn,
         Color(0xFFFFD700), "system_architecture", badge = "LIVE"),
+    DevOpsModule("SOVEREIGN PERIMETER", "Domain expansion & neutralization", Icons.Default.Security,
+        Color(0xFFFF4444), "security_center", badge = "SHIELD"),
     DevOpsModule("GENESIS MAP", "System architecture", Icons.Default.AccountTree,
         Color(0xFFFFD740), "system_architecture"),
 )
@@ -365,7 +367,7 @@ private fun StatusStrip() {
         VerticalDivider()
         StatusItem("STATUS", "IGNITED", Color(0xFFFFD740))
         VerticalDivider()
-        StatusItem("NCC", "SYNCED", Color(0xFFBB86FC))
+        StatusItem("HYPER SYNC", "ACTIVE", Color(0xFFBB86FC))
     }
 }
 

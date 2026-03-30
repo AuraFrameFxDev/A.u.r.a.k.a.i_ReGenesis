@@ -2,8 +2,8 @@ package dev.aurakai.auraframefx.oracle.drive.core
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.oracle.drive.api.OracleCloudApi
-import dev.aurakai.auraframefx.oracle.drive.model.OracleDriveFile
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleCloudApi
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleDriveFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

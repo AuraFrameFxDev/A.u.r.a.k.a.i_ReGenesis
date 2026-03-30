@@ -21,7 +21,7 @@ import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiClient
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiResponse
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientError
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientException
-import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.MultiValueMap
+import dev.aurakai.auraframefx.domains.aura.MultiValueMap
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.RequestConfig
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.RequestMethod
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ResponseType

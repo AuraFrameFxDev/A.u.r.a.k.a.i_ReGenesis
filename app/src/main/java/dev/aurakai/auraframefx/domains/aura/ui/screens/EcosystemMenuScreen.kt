@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.aura.animations.HomeScreenTransitionType
-import dev.aurakai.auraframefx.domains.aura.animations.DigitalTransitionRow
+import dev.aurakai.auraframefx.domains.aura.aura.animations.HomeScreenTransitionType
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.DigitalTransitionRow
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 
 /**

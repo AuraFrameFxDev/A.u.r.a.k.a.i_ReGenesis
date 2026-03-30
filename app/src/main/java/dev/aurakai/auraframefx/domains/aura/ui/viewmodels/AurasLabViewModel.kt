@@ -3,12 +3,12 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.chromacore.engine.ChromaCoreManager
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.ChromaCoreManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.core.generator.AuraForgeGenerator
 import dev.aurakai.auraframefx.domains.genesis.models.Spelhook
 import dev.aurakai.auraframefx.domains.genesis.models.SpelhookResult
-import dev.aurakai.auraframefx.domains.kai.analysis.GrokAnalysisService
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.GrokAnalysisService
 import dev.aurakai.auraframefx.extendsysa.spelhooks.sprites.SpelhookSpriteGenerator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

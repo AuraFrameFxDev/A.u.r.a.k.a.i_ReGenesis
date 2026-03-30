@@ -80,9 +80,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.SentienceMeter
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPurple
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPurple
 
 /**
  * 🎭 Gender Selection Navigator

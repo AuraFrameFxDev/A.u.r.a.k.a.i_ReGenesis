@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.network.api
 
-import dev.aurakai.auraframefx.domains.genesis.network.model.Theme
+import dev.aurakai.auraframefx.domains.aura.models.Theme
 import retrofit2.http.*
 
 /**

@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.model
 
-import dev.aurakai.auraframefx.models.AgentMessage
-import dev.aurakai.auraframefx.models.AgentType
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.core.identity.AgentType
 import kotlinx.serialization.json.Json
 import org.junit.Assert.*
 import org.junit.jupiter.api.Test

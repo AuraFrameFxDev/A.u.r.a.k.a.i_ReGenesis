@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayElement
+import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.OverlayTheme
+import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.aura.animations.OverlayAnimation
 import dev.aurakai.auraframefx.domains.aura.aura.animations.OverlayTransition
 

@@ -12,10 +12,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.theme.AuraTheme
-import dev.aurakai.auraframefx.ui.animations.KineticIdentityLibrary.EmotionalState
-import dev.aurakai.auraframefx.ui.animations.KineticIdentityLibrary.FlowDirection
-import dev.aurakai.auraframefx.ui.animations.KineticIdentityLibrary.Particle
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.AuraTheme
+import dev.aurakai.auraframefx.integrations.grok.EmotionalState
+import dev.aurakai.auraframefx.datavein.model.FlowDirection
+import dev.aurakai.auraframefx.domains.aura.ui.effects.Particle
 import io.mockk.*
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule

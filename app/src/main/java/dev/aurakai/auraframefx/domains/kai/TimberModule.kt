@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.genesis.core.initialization.TimberInitializer
+import dev.aurakai.auraframefx.core.logging.TimberInitializer
 import javax.inject.Singleton
 
 @Module

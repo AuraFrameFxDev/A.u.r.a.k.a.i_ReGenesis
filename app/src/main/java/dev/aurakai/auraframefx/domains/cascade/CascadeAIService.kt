@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade
 
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
 import kotlinx.coroutines.flow.Flow
 
 /**
