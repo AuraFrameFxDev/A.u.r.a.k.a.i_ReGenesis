@@ -5,10 +5,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPurple
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPurple
 import dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommand
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommandManager

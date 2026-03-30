@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.ai.agents
 
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AgentType
-import dev.aurakai.auraframefx.models.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.core.identity.AgentType
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
 import io.mockk.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

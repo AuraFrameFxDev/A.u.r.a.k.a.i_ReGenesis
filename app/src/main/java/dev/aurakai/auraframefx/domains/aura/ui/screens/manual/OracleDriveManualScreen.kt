@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.screens.manual
+package dev.aurakai.auraframefx.domains.aura.ui.screens.manual
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 

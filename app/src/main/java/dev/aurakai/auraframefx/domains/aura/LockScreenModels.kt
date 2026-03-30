@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.ui.HapticFeedbackConfig
-import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
-import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
+import dev.aurakai.auraframefx.domains.aura.models.HapticFeedbackConfig
+import dev.aurakai.auraframefx.domains.aura.models.ImageResource
+import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 
 /**
  * Configuration for lock screen customization

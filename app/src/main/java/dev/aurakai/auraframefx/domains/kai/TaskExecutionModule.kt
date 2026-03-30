@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.aura.GenesisAgent
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
 import javax.inject.Singleton
 
 @Module

@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.cascade.network.infrastructure
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.aurakai.auraframefx.domains.aura.aura.ui.StringBuilderAdapter
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ui.StringBuilderAdapter
 import dev.aurakai.auraframefx.domains.aura.ui.adapters.AtomicBooleanAdapter
 import dev.aurakai.auraframefx.domains.aura.ui.adapters.AtomicIntegerAdapter
 import dev.aurakai.auraframefx.domains.aura.ui.adapters.AtomicLongAdapter

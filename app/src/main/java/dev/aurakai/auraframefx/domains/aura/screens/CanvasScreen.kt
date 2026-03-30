@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.screens
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

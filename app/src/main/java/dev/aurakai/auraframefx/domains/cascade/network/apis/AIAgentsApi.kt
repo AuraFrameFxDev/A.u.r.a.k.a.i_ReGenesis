@@ -19,14 +19,14 @@ import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiClient
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiResponse
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientError
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientException
-import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.MultiValueMap
+import dev.aurakai.auraframefx.domains.aura.MultiValueMap
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.RequestConfig
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.RequestMethod
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ResponseType
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerError
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerException
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.Success
-import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
+import dev.aurakai.auraframefx.domains.aura.ui.agents.AgentStatus
 import okhttp3.Call
 import okhttp3.HttpUrl
 import java.io.IOException

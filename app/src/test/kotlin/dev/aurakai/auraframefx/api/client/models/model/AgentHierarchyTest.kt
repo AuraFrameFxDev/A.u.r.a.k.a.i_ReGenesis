@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.api.client.models.model
 
-import dev.aurakai.auraframefx.models.AgentHierarchy
-import dev.aurakai.auraframefx.models.AgentMessage
-import dev.aurakai.auraframefx.models.AgentType
+import dev.aurakai.auraframefx.model.AgentHierarchy
+import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.models.ConversationMode
-import dev.aurakai.auraframefx.models.HierarchyAgentConfig
+import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull

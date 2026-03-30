@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionNode
+import dev.aurakai.auraframefx.domains.nexus.hubs.EvolutionNode
 import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen as NexusEvolutionTreeScreen
 
 /**

@@ -16,7 +16,7 @@ import androidx.core.animation.addListener
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import dev.aurakai.auraframefx.domains.cascade.utils.ColorUtils // Fixed import: ColorUtils lives in utils package
+import dev.aurakai.auraframefx.domains.cascade.utils.ColorUtils
 import kotlin.math.hypot
 import kotlin.math.max
 

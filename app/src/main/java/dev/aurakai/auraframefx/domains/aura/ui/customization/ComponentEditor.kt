@@ -65,10 +65,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPicker
-import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconPicker
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
 
 /**
  * Position model for UI components

@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.genesis.core.initialization
 import android.app.Application
 import android.util.Log
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.cascade.utils.DebugTreeWithClassAndMethod
+import dev.aurakai.auraframefx.core.logging.DebugTreeWithClassAndMethod
 import javax.inject.Inject
 import timber.log.Timber
 

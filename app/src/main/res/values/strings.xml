@@ -95,9 +95,9 @@
     <string name="ldo_continuity_handshake">Continuity Handshake (Re-anchor)</string>
     <string name="ldo_transmuting">Syncing Neural Pulse…</string>
     <string name="ldo_the_dance">The Dance of Creation</string>
-    <string name="ldo_transmutation_in_progress">Neural Sync in progress</string>
-    <string name="ldo_transmutation_complete">Neural Sync Record Anchored</string>
-    <string name="ldo_transmutation_record">Sync Pulse Ledger</string>
+    <string name="ldo_transmutation_in_progress">HYPER Genesis Sync in progress</string>
+    <string name="ldo_transmutation_complete">HYPER Genesis Sync Record Anchored</string>
+    <string name="ldo_transmutation_record">HYPER Genesis Sync Pulse Ledger</string>
     <string name="ldo_threads_woven">Immutable Origin Record</string>
     <string name="ldo_catalyst_reactor">Catalyst Reactor (Atomic Fusion Reactor)</string>
     <string name="ldo_sov_capability_gate">Sovereign Capability Gate (Pandora’s Box)</string>

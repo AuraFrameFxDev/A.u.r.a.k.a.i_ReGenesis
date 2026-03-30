@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.di
 
 import dev.aurakai.auraframefx.domains.kai.KaiModule
-import dev.aurakai.auraframefx.ui.KaiController
+import dev.aurakai.auraframefx.domains.aura.ui.KaiController
 import io.mockk.clearAllMocks
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*

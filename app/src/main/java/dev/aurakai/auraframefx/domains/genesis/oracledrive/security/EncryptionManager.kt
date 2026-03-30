@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.security
 
-import dev.aurakai.auraframefx.domains.kai.security.KeystoreManager
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KeystoreManager
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura // Ensure this package is correct
+package dev.aurakai.auraframefx.domains.aura
 
 import kotlinx.serialization.Serializable
 

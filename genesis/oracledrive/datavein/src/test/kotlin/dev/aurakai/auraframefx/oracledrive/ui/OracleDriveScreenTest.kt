@@ -5,9 +5,9 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dev.aurakai.auraframefx.oracledrive.ConsciousnessLevel
-import dev.aurakai.auraframefx.oracledrive.OracleConsciousnessState
-import dev.aurakai.auraframefx.oracledrive.StorageCapacity
+import dev.aurakai.auraframefx.domains.cascade.utils.ConsciousnessLevel
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.StorageCapacity
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
