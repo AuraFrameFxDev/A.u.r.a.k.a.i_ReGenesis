@@ -30,6 +30,7 @@ extensions.configure<ApplicationExtension> {
         val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
         buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
+        buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
 
         vectorDrawables { useSupportLibrary = true }
 
@@ -39,7 +40,12 @@ extensions.configure<ApplicationExtension> {
 
         externalNativeBuild {
             cmake {
-                cppFlags.addAll(listOf("-std=c++20", "-fPIC", "-O2"))
+                cppFlags.addAll(listOf(
+                    "-std=c++20", 
+                    "-fPIC", 
+                    "-O2",
+                    "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
+                ))
                 arguments.addAll(listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DANDROID_PLATFORM=android-33",
@@ -280,11 +286,17 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.generativeai)
 
+    // LangChain4j & Ollama
+    implementation(libs.bundles.langchain4j)
+
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Testing
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

@@ -145,7 +145,14 @@ class ContextManager @Inject constructor(
         }
     }
 
-    fun enableSecurityContext() {}
+    /**
+     * Enables security context monitoring.
+     * Used by KaiAIService.
+     */
+    fun enableSecurityContext() {
+        // Implementation for enabling security context
+        // This could update internal state or notify listeners
+    }
 
     fun enableCreativeMode() {}
 

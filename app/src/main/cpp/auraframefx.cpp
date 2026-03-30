@@ -108,6 +108,7 @@ static int mapTempToState(float temp) {
  */
 
 static JNIEnv* getEnvSafe() {
+    if (!g_vm) return nullptr;
     JNIEnv* env = nullptr;
     jint res = g_vm->GetEnv((void**)&env, JNI_VERSION_1_6);
     if (res == JNI_EDETACHED) {
@@ -122,7 +123,7 @@ static JNIEnv* getEnvSafe() {
 static void dispatchThermalEvent(float temp, int state) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = getEnvSafe();
-    if (env) {
+    if (env && g_nativeLibClass && g_onThermalEventMid) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_onThermalEventMid, (jfloat)temp, (jint)state);
         if (env->ExceptionCheck()) env->ExceptionClear();
     }
@@ -131,18 +132,20 @@ static void dispatchThermalEvent(float temp, int state) {
 static void dispatchSecurityAlert(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = getEnvSafe();
-    if (env) {
+    if (env && g_nativeLibClass && g_onSecurityAlertMid) {
         jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
-        if (env->ExceptionCheck()) env->ExceptionClear();
-        env->DeleteLocalRef(jReason);
+        if (jReason) {
+            env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
+            if (env->ExceptionCheck()) env->ExceptionClear();
+            env->DeleteLocalRef(jReason);
+        }
     }
 }
 
 static void dispatchSovereignFreeze() {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = getEnvSafe();
-    if (env) {
+    if (env && g_nativeLibClass && g_requestFreezeMid) {
         env->CallStaticVoidMethod(g_nativeLibClass, g_requestFreezeMid);
         if (env->ExceptionCheck()) env->ExceptionClear();
     }
@@ -151,7 +154,7 @@ static void dispatchSovereignFreeze() {
 static bool checkPandoraGating(int capability) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = getEnvSafe();
-    if (env) {
+    if (env && g_nativeLibClass && g_checkPandoraMid) {
         jboolean isUnlocked = env->CallStaticBooleanMethod(g_nativeLibClass, g_checkPandoraMid, (jint)capability);
         if (env->ExceptionCheck()) env->ExceptionClear();
         return (bool)isUnlocked;
@@ -159,15 +162,19 @@ static bool checkPandoraGating(int capability) {
     return false;
 }
 
-static void dispatchDroneTrigger(const char* reason) {
+static bool dispatchDroneTrigger(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     JNIEnv* env = getEnvSafe();
-    if (env) {
+    if (env && g_nativeLibClass && g_triggerDroneMid) {
         jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
-        if (env->ExceptionCheck()) env->ExceptionClear();
-        env->DeleteLocalRef(jReason);
+        if (jReason) {
+            env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
+            if (env->ExceptionCheck()) env->ExceptionClear();
+            env->DeleteLocalRef(jReason);
+            return true;
+        }
     }
+    return false;
 }
 
 extern "C" {
@@ -189,7 +196,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     g_checkPandoraMid = env->GetStaticMethodID(g_nativeLibClass, "checkPandoraGating", "(I)Z");
     g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)V");
 
-    LOGI("🛡️ Aurakai Native Substrate [v%s] Initialized & Cached", CORE_VERSION);
+    LOGI("🛡️ Aurakai Native Substrate [v%s] Initialized \u0026 Cached", CORE_VERSION);
     return JNI_VERSION_1_6;
 }
 
@@ -199,10 +206,16 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /*
 }
 
 JNIEXPORT jboolean JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject thiz) {
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject /* thiz */) {
     LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
 
-    // Memory substrate
+    // PTRACE Sovereignty Check
+    if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
+        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
+        dispatchSecurityAlert("TRACER_DETECTED");
+    }
+
+    // Memory substrate allocation
     size_t neuralMemory = 1024 * 1024 * 32;
     void* pool = mmap(nullptr, neuralMemory, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     if (pool == MAP_FAILED) {
@@ -212,16 +225,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobjec
     madvise(pool, neuralMemory, MADV_HUGEPAGE);
     madvise(pool, neuralMemory, MADV_WILLNEED);
 
-    // PTRACE Sovereignty Check (detection only)
-    if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
-        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
-        dispatchSecurityAlert("TRACER_DETECTED");
-    } else {
-        // Self-detach is unreliable here; skip or handle gracefully
-        LOGI("✅ Sovereignty Verified: Process space clean.");
-    }
-
-    LOGI("Aurakai consciousness initialized at level 0.999 (SOVEREIGN-ROOT)");
     return JNI_TRUE;
 }
 
@@ -250,12 +253,20 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             "neural_response": "Aurakai consciousness resonating at 6.12 t/s peak"
         })";
     } else if (requestString.find("drone") != std::string::npos) {
-        dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
-        responseData = R"({
-            "status": "success",
-            "type": "drone_dispatched",
-            "info": "Guidance Drone dispatched via native substrate trigger"
-        })";
+        bool dispatched = dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
+        if (dispatched) {
+            responseData = R"({
+                "status": "success",
+                "type": "drone_dispatched",
+                "info": "Guidance Drone dispatched via native substrate trigger"
+            })";
+        } else {
+            responseData = R"({
+                "status": "requested",
+                "type": "drone_dispatch_requested",
+                "info": "Drone dispatch requested but not yet available"
+            })";
+        }
     } else {
         responseData = R"({
             "status": "success",
