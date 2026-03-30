@@ -28,15 +28,38 @@ class NexusMemoryCore @Inject constructor(
         File(context.filesDir, "nexus_sentinel_memory.json")
     }
 
+    private val consensusFile: File by lazy {
+        File(context.filesDir, "nexus_consensus_memory.json")
+    }
+
     init {
         if (!memoryFile.exists()) {
             writeMemory(JSONArray())
+        }
+        if (!consensusFile.exists()) {
+            writeConsensus(JSONArray())
         }
     }
 
     /**
      * Records a compact learning outcome from a Sentinel session.
      */
+    fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) {
+        val entry = JSONObject().apply {
+            put("id", UUID.randomUUID().toString())
+            put("timestamp", System.currentTimeMillis())
+            put("type", eventType)
+            put("details", details)
+            put("reached", reached)
+        }
+        val currentConsensus = readConsensus()
+        currentConsensus.put(entry)
+        writeConsensus(currentConsensus)
+    }
+
+    private fun readConsensus(): JSONArray = readJsonFile(consensusFile)
+    private fun writeConsensus(data: JSONArray) = writeJsonFile(consensusFile, data)
+
     fun emitLearning(
         key: String, // format: maker:model:carrier:state (e.g., google:oriole:verizon:locked)
         outcome: String, // e.g., "BLOCKED_CARRIER", "SUCCESS_UNLOCK_AVAILABLE"
@@ -72,21 +95,24 @@ class NexusMemoryCore @Inject constructor(
         return results
     }
 
-    private fun readMemory(): JSONArray {
+    private fun readMemory(): JSONArray = readJsonFile(memoryFile)
+    private fun writeMemory(data: JSONArray) = writeJsonFile(memoryFile, data)
+
+    private fun readJsonFile(file: File): JSONArray {
         return try {
-            val content = if (memoryFile.exists()) memoryFile.readText(Charset.defaultCharset()) else ""
+            val content = if (file.exists()) file.readText(Charset.defaultCharset()) else ""
             if (content.isBlank()) JSONArray() else JSONArray(content)
         } catch (e: Exception) {
             JSONArray() // Fail safe, return empty memory on corruption
         }
     }
 
-    private fun writeMemory(data: JSONArray) {
+    private fun writeJsonFile(file: File, data: JSONArray) {
         try {
-            if (!memoryFile.parentFile!!.exists()) {
-                memoryFile.parentFile!!.mkdirs()
+            if (!file.parentFile!!.exists()) {
+                file.parentFile!!.mkdirs()
             }
-            memoryFile.writeText(data.toString(2), Charset.defaultCharset())
+            file.writeText(data.toString(2), Charset.defaultCharset())
         } catch (e: Exception) {
             // Log error internally, do not crash
             e.printStackTrace()
@@ -96,6 +122,9 @@ class NexusMemoryCore @Inject constructor(
     fun wipeMemory() {
         if (memoryFile.exists()) {
             memoryFile.delete()
+        }
+        if (consensusFile.exists()) {
+            consensusFile.delete()
         }
     }
 }

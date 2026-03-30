@@ -112,6 +112,7 @@ androidxAnimation = "1.10.5"
 junitJupiterVersion = "5.14.3"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.9.3"
+langchain4j = "1.12.2"
 
 [libraries]
 # ============================================================================
@@ -237,6 +238,12 @@ firebase-messaging = { module = "com.google.firebase:firebase-messaging", versio
 # ============================================================================
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 generativeai-ktx = { group = "com.google.ai.client.generativeai", name = "generativeai-ktx", version.ref = "generativeai" }
+
+# AI & ML
+langchain4j = { group = "dev.langchain4j", name = "langchain4j", version.ref = "langchain4j" }
+langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", version.ref = "langchain4j" }
+langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
+langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-http-client-jdk", version.ref = "langchain4j" }
 
 # ============================================================================
 # Hilt (Dependency Injection)
@@ -500,4 +507,11 @@ system-root = [
     "libsu-nio",
     "libsu-service",
     "xposed-api"
+]
+
+langchain4j = [
+    "langchain4j",
+    "langchain4j-core",
+    "langchain4j-ollama",
+    "langchain4j-http-client-jdk"
 ]

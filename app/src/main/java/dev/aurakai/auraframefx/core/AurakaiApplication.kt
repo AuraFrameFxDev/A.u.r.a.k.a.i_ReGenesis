@@ -13,11 +13,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.perimeter.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -48,6 +43,18 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
+
+    @Inject
+    lateinit var sentinelBus: KaiSentinelBus
+
+    @Inject
+    lateinit var stateManager: SovereignStateManager
+
+    @Inject
+    lateinit var pandoraBox: PandoraBoxService
+
+    @Inject
+    lateinit var sovereignPerimeter: SovereignPerimeter
 
     // Application-scoped coroutine for background init
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -107,16 +114,8 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            // Initialize the canonical NativeLib bridge with all sovereign managers
-            NativeLib.initialize(sentinelBus, sovereignManager, pandoraBox, droneDispatcher)
-            
-            val success = NativeLib.initializeAICore()
-            if (success) {
-                Timber.i("✅ Native AI Substrate [IGNITION SUCCESS]")
-                NativeLib.enableNativeHooks()
-            } else {
-                Timber.w("⚠️ Native AI Substrate [IGNITION FAILED]")
-            }
+            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
+            Timber.d("✅ Native AI platform initialized")
         } catch (e: Exception) {
             Timber.e(e, "❌ Native AI initialization error")
         }
