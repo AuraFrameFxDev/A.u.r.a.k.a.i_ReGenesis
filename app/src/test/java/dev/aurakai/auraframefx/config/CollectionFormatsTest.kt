@@ -1,263 +1,287 @@
 package dev.aurakai.auraframefx.config
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
 /**
- * Unit tests for [CollectionFormats] and its nested format classes.
+ * Unit tests for [CollectionFormats].
  *
- * Covers: package placement, constructor requirements, toString() serialization,
- * edge cases (empty lists, single element, special characters).
+ * This PR moved CollectionFormats from `dev.aurakai.auraframefx` to
+ * `dev.aurakai.auraframefx.config` and removed the default `emptyList()` initializer
+ * from [CollectionFormats.CSVParams.params], requiring params to always be provided
+ * via a constructor argument.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CollectionFormatsTest {
 
-    // ─── CSVParams ────────────────────────────────────────────────────────────
+    // ─── CSVParams ───────────────────────────────────────────────────────────
 
-    @Test
-    fun `CSVParams list constructor stores params correctly`() {
-        val params = listOf("alpha", "beta", "gamma")
-        val csv = CollectionFormats.CSVParams(params)
-        assertEquals(params, csv.params)
+    @Nested
+    @DisplayName("CSVParams")
+    inner class CSVParamsTests {
+
+        @Test
+        @DisplayName("constructor(List) stores the supplied list")
+        fun `constructor with list stores params`() {
+            val params = listOf("alpha", "beta", "gamma")
+            val csv = CollectionFormats.CSVParams(params)
+            assertEquals(params, csv.params)
+        }
+
+        @Test
+        @DisplayName("constructor(vararg) stores each element")
+        fun `constructor with vararg stores params`() {
+            val csv = CollectionFormats.CSVParams("x", "y", "z")
+            assertEquals(listOf("x", "y", "z"), csv.params)
+        }
+
+        @Test
+        @DisplayName("toString joins elements with comma")
+        fun `toString joins with comma`() {
+            val csv = CollectionFormats.CSVParams(listOf("a", "b", "c"))
+            assertEquals("a,b,c", csv.toString())
+        }
+
+        @Test
+        @DisplayName("toString with single element has no delimiter")
+        fun `toString single element`() {
+            val csv = CollectionFormats.CSVParams("only")
+            assertEquals("only", csv.toString())
+        }
+
+        @Test
+        @DisplayName("toString with empty list returns empty string")
+        fun `toString with empty list returns empty string`() {
+            val csv = CollectionFormats.CSVParams(emptyList())
+            assertEquals("", csv.toString())
+        }
+
+        @Test
+        @DisplayName("vararg constructor with no arguments creates empty params")
+        fun `vararg constructor with no arguments creates empty params`() {
+            val csv = CollectionFormats.CSVParams()
+            assertEquals(emptyList<String>(), csv.params)
+            assertEquals("", csv.toString())
+        }
+
+        @Test
+        @DisplayName("params field is mutable and can be reassigned")
+        fun `params field is mutable`() {
+            val csv = CollectionFormats.CSVParams("old")
+            csv.params = listOf("new1", "new2")
+            assertEquals("new1,new2", csv.toString())
+        }
+
+        @Test
+        @DisplayName("constructor(List) with special characters preserves them")
+        fun `special characters are preserved`() {
+            val csv = CollectionFormats.CSVParams(listOf("a,b", "c", "d"))
+            // The comma inside the first element is embedded; joinToString adds
+            // delimiters between elements only.
+            assertEquals("a,b,c,d", csv.toString())
+        }
     }
 
-    @Test
-    fun `CSVParams vararg constructor stores params correctly`() {
-        val csv = CollectionFormats.CSVParams("a", "b", "c")
-        assertEquals(listOf("a", "b", "c"), csv.params)
+    // ─── SSVParams ───────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("SSVParams")
+    inner class SSVParamsTests {
+
+        @Test
+        @DisplayName("constructor(List) stores params from superclass")
+        fun `constructor with list stores params`() {
+            val ssv = CollectionFormats.SSVParams(listOf("one", "two"))
+            assertEquals(listOf("one", "two"), ssv.params)
+        }
+
+        @Test
+        @DisplayName("constructor(vararg) stores params from superclass")
+        fun `constructor with vararg stores params`() {
+            val ssv = CollectionFormats.SSVParams("hello", "world")
+            assertEquals(listOf("hello", "world"), ssv.params)
+        }
+
+        @Test
+        @DisplayName("toString joins elements with space")
+        fun `toString joins with space`() {
+            val ssv = CollectionFormats.SSVParams(listOf("foo", "bar", "baz"))
+            assertEquals("foo bar baz", ssv.toString())
+        }
+
+        @Test
+        @DisplayName("toString with single element has no space")
+        fun `toString single element has no trailing space`() {
+            val ssv = CollectionFormats.SSVParams("solo")
+            assertEquals("solo", ssv.toString())
+        }
+
+        @Test
+        @DisplayName("toString with empty list returns empty string")
+        fun `toString with empty list`() {
+            val ssv = CollectionFormats.SSVParams(emptyList())
+            assertEquals("", ssv.toString())
+        }
+
+        @Test
+        @DisplayName("SSVParams is a subtype of CSVParams")
+        fun `SSVParams is subtype of CSVParams`() {
+            val ssv = CollectionFormats.SSVParams("a", "b")
+            assertNotNull(ssv as CollectionFormats.CSVParams)
+        }
     }
 
-    @Test
-    fun `CSVParams toString joins with comma`() {
-        val csv = CollectionFormats.CSVParams("x", "y", "z")
-        assertEquals("x,y,z", csv.toString())
+    // ─── TSVParams ───────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("TSVParams")
+    inner class TSVParamsTests {
+
+        @Test
+        @DisplayName("constructor(List) stores params")
+        fun `constructor with list stores params`() {
+            val tsv = CollectionFormats.TSVParams(listOf("col1", "col2"))
+            assertEquals(listOf("col1", "col2"), tsv.params)
+        }
+
+        @Test
+        @DisplayName("toString joins elements with tab character")
+        fun `toString joins with tab`() {
+            val tsv = CollectionFormats.TSVParams(listOf("a", "b", "c"))
+            assertEquals("a\tb\tc", tsv.toString())
+        }
+
+        @Test
+        @DisplayName("vararg constructor joins elements with tab")
+        fun `vararg constructor produces tab-delimited string`() {
+            val tsv = CollectionFormats.TSVParams("col1", "col2", "col3")
+            assertEquals("col1\tcol2\tcol3", tsv.toString())
+        }
+
+        @Test
+        @DisplayName("toString with empty list returns empty string")
+        fun `toString with empty list`() {
+            val tsv = CollectionFormats.TSVParams(emptyList())
+            assertEquals("", tsv.toString())
+        }
     }
 
-    @Test
-    fun `CSVParams toString with single element has no separator`() {
-        val csv = CollectionFormats.CSVParams("only")
-        assertEquals("only", csv.toString())
+    // ─── PIPESParams ─────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("PIPESParams")
+    inner class PIPESParamsTests {
+
+        @Test
+        @DisplayName("constructor(List) stores params")
+        fun `constructor with list stores params`() {
+            val pipes = CollectionFormats.PIPESParams(listOf("a", "b"))
+            assertEquals(listOf("a", "b"), pipes.params)
+        }
+
+        @Test
+        @DisplayName("toString joins elements with pipe character")
+        fun `toString joins with pipe`() {
+            val pipes = CollectionFormats.PIPESParams(listOf("x", "y", "z"))
+            assertEquals("x|y|z", pipes.toString())
+        }
+
+        @Test
+        @DisplayName("vararg constructor produces pipe-delimited string")
+        fun `vararg constructor produces pipe string`() {
+            val pipes = CollectionFormats.PIPESParams("p1", "p2")
+            assertEquals("p1|p2", pipes.toString())
+        }
+
+        @Test
+        @DisplayName("toString with single element has no pipe")
+        fun `toString single element`() {
+            val pipes = CollectionFormats.PIPESParams("only")
+            assertEquals("only", pipes.toString())
+        }
+
+        @Test
+        @DisplayName("toString with empty list returns empty string")
+        fun `toString with empty list`() {
+            val pipes = CollectionFormats.PIPESParams(emptyList())
+            assertEquals("", pipes.toString())
+        }
     }
 
-    @Test
-    fun `CSVParams toString with empty list returns empty string`() {
-        val csv = CollectionFormats.CSVParams(emptyList())
-        assertEquals("", csv.toString())
+    // ─── SPACEParams ─────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("SPACEParams")
+    inner class SPACEParamsTests {
+
+        @Test
+        @DisplayName("no-arg constructor creates instance with empty params")
+        fun `no-arg constructor creates empty params`() {
+            val space = CollectionFormats.SPACEParams()
+            assertEquals(emptyList<String>(), space.params)
+        }
+
+        @Test
+        @DisplayName("toString on default SPACEParams returns empty string")
+        fun `toString on default instance returns empty string`() {
+            val space = CollectionFormats.SPACEParams()
+            assertEquals("", space.toString())
+        }
+
+        @Test
+        @DisplayName("SPACEParams is a subtype of SSVParams")
+        fun `SPACEParams is subtype of SSVParams`() {
+            val space = CollectionFormats.SPACEParams()
+            assertNotNull(space as CollectionFormats.SSVParams)
+        }
+
+        @Test
+        @DisplayName("SPACEParams params can be reassigned to produce space-delimited output")
+        fun `reassigning params produces space-delimited output`() {
+            val space = CollectionFormats.SPACEParams()
+            space.params = listOf("hello", "world")
+            assertEquals("hello world", space.toString())
+        }
     }
 
-    @Test
-    fun `CSVParams params are mutable after construction`() {
-        val csv = CollectionFormats.CSVParams("initial")
-        csv.params = listOf("replaced")
-        assertEquals("replaced", csv.toString())
-    }
+    // ─── Cross-type / regression ─────────────────────────────────────────────
 
-    @Test
-    fun `CSVParams toString with values containing commas`() {
-        val csv = CollectionFormats.CSVParams("val,1", "val,2")
-        // Each element is joined by comma; elements may themselves contain commas
-        assertEquals("val,1,val,2", csv.toString())
-    }
+    @Nested
+    @DisplayName("Cross-type and regression tests")
+    inner class CrossTypeTests {
 
-    // ─── SSVParams ────────────────────────────────────────────────────────────
+        @Test
+        @DisplayName("each subtype uses its own delimiter")
+        fun `each format type uses correct delimiter`() {
+            val items = listOf("A", "B", "C")
+            assertEquals("A,B,C", CollectionFormats.CSVParams(items).toString())
+            assertEquals("A B C", CollectionFormats.SSVParams(items).toString())
+            assertEquals("A\tB\tC", CollectionFormats.TSVParams(items).toString())
+            assertEquals("A|B|C", CollectionFormats.PIPESParams(items).toString())
+        }
 
-    @Test
-    fun `SSVParams list constructor stores params correctly`() {
-        val params = listOf("one", "two", "three")
-        val ssv = CollectionFormats.SSVParams(params)
-        assertEquals(params, ssv.params)
-    }
+        @Test
+        @DisplayName("empty-list constructor and empty-vararg produce identical results for CSV")
+        fun `empty list and empty vararg are equivalent for CSV`() {
+            val fromList = CollectionFormats.CSVParams(emptyList())
+            val fromVararg = CollectionFormats.CSVParams()
+            assertEquals(fromList.toString(), fromVararg.toString())
+            assertEquals(fromList.params, fromVararg.params)
+        }
 
-    @Test
-    fun `SSVParams vararg constructor stores params correctly`() {
-        val ssv = CollectionFormats.SSVParams("a", "b")
-        assertEquals(listOf("a", "b"), ssv.params)
-    }
-
-    @Test
-    fun `SSVParams toString joins with space`() {
-        val ssv = CollectionFormats.SSVParams("hello", "world")
-        assertEquals("hello world", ssv.toString())
-    }
-
-    @Test
-    fun `SSVParams toString with single element has no separator`() {
-        val ssv = CollectionFormats.SSVParams("alone")
-        assertEquals("alone", ssv.toString())
-    }
-
-    @Test
-    fun `SSVParams toString with empty list returns empty string`() {
-        val ssv = CollectionFormats.SSVParams(emptyList())
-        assertEquals("", ssv.toString())
-    }
-
-    @Test
-    fun `SSVParams is subclass of CSVParams`() {
-        val ssv = CollectionFormats.SSVParams("x")
-        assertTrue(ssv is CollectionFormats.CSVParams)
-    }
-
-    // ─── TSVParams ────────────────────────────────────────────────────────────
-
-    @Test
-    fun `TSVParams list constructor stores params correctly`() {
-        val params = listOf("col1", "col2", "col3")
-        val tsv = CollectionFormats.TSVParams(params)
-        assertEquals(params, tsv.params)
-    }
-
-    @Test
-    fun `TSVParams vararg constructor stores params correctly`() {
-        val tsv = CollectionFormats.TSVParams("a", "b", "c")
-        assertEquals(listOf("a", "b", "c"), tsv.params)
-    }
-
-    @Test
-    fun `TSVParams toString joins with tab`() {
-        val tsv = CollectionFormats.TSVParams("col1", "col2", "col3")
-        assertEquals("col1\tcol2\tcol3", tsv.toString())
-    }
-
-    @Test
-    fun `TSVParams toString with single element has no separator`() {
-        val tsv = CollectionFormats.TSVParams("single")
-        assertEquals("single", tsv.toString())
-    }
-
-    @Test
-    fun `TSVParams toString with empty list returns empty string`() {
-        val tsv = CollectionFormats.TSVParams(emptyList())
-        assertEquals("", tsv.toString())
-    }
-
-    @Test
-    fun `TSVParams is subclass of CSVParams`() {
-        val tsv = CollectionFormats.TSVParams("x")
-        assertTrue(tsv is CollectionFormats.CSVParams)
-    }
-
-    // ─── PIPESParams ──────────────────────────────────────────────────────────
-
-    @Test
-    fun `PIPESParams list constructor stores params correctly`() {
-        val params = listOf("a", "b", "c")
-        val pipes = CollectionFormats.PIPESParams(params)
-        assertEquals(params, pipes.params)
-    }
-
-    @Test
-    fun `PIPESParams vararg constructor stores params correctly`() {
-        val pipes = CollectionFormats.PIPESParams("x", "y")
-        assertEquals(listOf("x", "y"), pipes.params)
-    }
-
-    @Test
-    fun `PIPESParams toString joins with pipe`() {
-        val pipes = CollectionFormats.PIPESParams("alpha", "beta", "gamma")
-        assertEquals("alpha|beta|gamma", pipes.toString())
-    }
-
-    @Test
-    fun `PIPESParams toString with single element has no separator`() {
-        val pipes = CollectionFormats.PIPESParams("only")
-        assertEquals("only", pipes.toString())
-    }
-
-    @Test
-    fun `PIPESParams toString with empty list returns empty string`() {
-        val pipes = CollectionFormats.PIPESParams(emptyList())
-        assertEquals("", pipes.toString())
-    }
-
-    @Test
-    fun `PIPESParams is subclass of CSVParams`() {
-        val pipes = CollectionFormats.PIPESParams("x")
-        assertTrue(pipes is CollectionFormats.CSVParams)
-    }
-
-    // ─── SPACEParams ──────────────────────────────────────────────────────────
-
-    @Test
-    fun `SPACEParams is subclass of SSVParams`() {
-        val space = CollectionFormats.SPACEParams()
-        assertTrue(space is CollectionFormats.SSVParams)
-    }
-
-    @Test
-    fun `SPACEParams is subclass of CSVParams`() {
-        val space = CollectionFormats.SPACEParams()
-        assertTrue(space is CollectionFormats.CSVParams)
-    }
-
-    @Test
-    fun `SPACEParams default construction yields empty params`() {
-        val space = CollectionFormats.SPACEParams()
-        assertEquals(emptyList<String>(), space.params)
-    }
-
-    @Test
-    fun `SPACEParams toString with empty params returns empty string`() {
-        val space = CollectionFormats.SPACEParams()
-        assertEquals("", space.toString())
-    }
-
-    @Test
-    fun `SPACEParams params are mutable after construction`() {
-        val space = CollectionFormats.SPACEParams()
-        space.params = listOf("hello", "world")
-        assertEquals("hello world", space.toString())
-    }
-
-    // ─── Separator distinctness ───────────────────────────────────────────────
-
-    @Test
-    fun `all format classes produce distinct output for same input`() {
-        val input = listOf("a", "b", "c")
-        val csv = CollectionFormats.CSVParams(input).toString()
-        val ssv = CollectionFormats.SSVParams(input).toString()
-        val tsv = CollectionFormats.TSVParams(input).toString()
-        val pipes = CollectionFormats.PIPESParams(input).toString()
-
-        assertEquals("a,b,c", csv)
-        assertEquals("a b c", ssv)
-        assertEquals("a\tb\tc", tsv)
-        assertEquals("a|b|c", pipes)
-
-        // All four outputs must be distinct
-        val outputs = setOf(csv, ssv, tsv, pipes)
-        assertEquals(4, outputs.size)
-    }
-
-    // ─── Package placement ────────────────────────────────────────────────────
-
-    @Test
-    fun `CollectionFormats is in correct package`() {
-        val pkg = CollectionFormats::class.java.`package`.name
-        assertEquals("dev.aurakai.auraframefx.config", pkg)
-    }
-
-    // ─── Params field is required (no default) ───────────────────────────────
-
-    @Test
-    fun `CSVParams list constructor with non-empty list stores correctly`() {
-        // Regression: params field no longer has a default value; constructor is required
-        val expected = listOf("required", "param")
-        val csv = CollectionFormats.CSVParams(expected)
-        assertEquals(expected, csv.params)
-        assertEquals("required,param", csv.toString())
-    }
-
-    @Test
-    fun `TSVParams preserves whitespace within individual elements`() {
-        val tsv = CollectionFormats.TSVParams("hello world", "foo bar")
-        assertEquals("hello world\tfoo bar", tsv.toString())
-    }
-
-    @Test
-    fun `CSVParams with many elements produces correct comma-separated string`() {
-        val items = (1..10).map { "item$it" }
-        val csv = CollectionFormats.CSVParams(items)
-        assertEquals(items.joinToString(","), csv.toString())
+        @Test
+        @DisplayName("params property holds the exact list reference from the List constructor")
+        fun `params holds same elements as input list`() {
+            val input = listOf("1", "2", "3")
+            val csv = CollectionFormats.CSVParams(input)
+            // The PR removed the `= emptyList()` default; the constructor must assign correctly.
+            assertEquals(3, csv.params.size)
+            assertEquals("1", csv.params[0])
+            assertEquals("3", csv.params[2])
+        }
     }
 }

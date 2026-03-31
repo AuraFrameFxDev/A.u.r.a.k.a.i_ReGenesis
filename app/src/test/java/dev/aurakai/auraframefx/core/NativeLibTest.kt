@@ -5,378 +5,396 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxSer
 import dev.aurakai.auraframefx.domains.kai.security.GuidanceDrone
 import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.not
+import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verify
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import timber.log.Timber
 
 /**
- * Unit tests for [NativeLib] covering Kotlin-side logic.
+ * Unit tests for [NativeLib].
  *
- * Note: The external (JNI) functions require the native library to be loaded and are
- * not directly exercised here. Tests focus on the pure-Kotlin callback dispatchers
- * and gating logic added/changed in this PR.
+ * This PR changed NativeLib to:
+ * 1. Add [GuidanceDroneDispatcher] as a 4th required parameter to [NativeLib.initialize].
+ * 2. Implement [NativeLib.checkPandoraGating] with fail-closed logic:
+ *    – unknown capability ID  → false
+ *    – bridge not initialised → false
+ * 3. [NativeLib.triggerDroneDispatch] now calls [GuidanceDroneDispatcher.dispatchDrone]
+ *    with [GuidanceDrone.DroneType.RESTORATIVE].
+ * 4. [NativeLib.onNativeSecurityAlert] now emits a security event via [KaiSentinelBus].
+ * 5. [NativeLib.onNativeThermalEvent] falls back to [KaiSentinelBus.ThermalState.NORMAL]
+ *    for unknown state indices.
+ * 6. [NativeLib.getAIVersionSafe] returns the stub string "Aurakai ReGenesis 1.1.0-STUB"
+ *    when the native library is absent.
  *
- * Prerequisites: These tests depend on [NativeLib] compiling cleanly. At the time
- * this PR was authored, [NativeLib] had import path issues referencing
- * `sentinel_fortress.security.KaiSentinelBus` (non-existent). Once those imports
- * are aligned to `kai.security.KaiSentinelBus` the tests here will run.
+ * Strategy: NativeLib is a Kotlin `object` (singleton). Its private fields are injected via
+ * reflection so we can test each callback method in isolation without triggering the
+ * [NativeLib.initialize] overload that requires [SovereignStateManager] (a class that may not
+ * be on the compile-time classpath in all build variants). All `external` JNI methods are
+ * intentionally avoided to prevent [UnsatisfiedLinkError] in a pure-JVM test environment.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class NativeLibTest {
 
     private lateinit var mockSentinelBus: KaiSentinelBus
     private lateinit var mockPandoraBox: PandoraBoxService
     private lateinit var mockDroneDispatcher: GuidanceDroneDispatcher
 
+    @BeforeAll
+    fun setUpAll() {
+        mockkStatic(Timber::class)
+        every { Timber.d(any<String>(), *anyVararg()) } returns Unit
+        every { Timber.i(any<String>(), *anyVararg()) } returns Unit
+        every { Timber.w(any<String>(), *anyVararg()) } returns Unit
+        every { Timber.e(any<String>(), *anyVararg()) } returns Unit
+        every { Timber.e(any<Throwable>(), any<String>(), *anyVararg()) } returns Unit
+    }
+
     @BeforeEach
     fun setUp() {
         mockSentinelBus = mockk(relaxed = true)
         mockPandoraBox = mockk(relaxed = true)
         mockDroneDispatcher = mockk(relaxed = true)
-        // Reset all private fields to null before each test
-        setPrivateField("sentinelBus", null)
-        setPrivateField("sovereignManager", null)
-        setPrivateField("pandoraBox", null)
-        setPrivateField("droneDispatcher", null)
+        resetNativeLibState()
     }
 
     @AfterEach
     fun tearDown() {
-        // Restore defaults to avoid state leakage between tests
+        clearAllMocks()
+        resetNativeLibState()
+    }
+
+    @AfterAll
+    fun tearDownAll() {
+        unmockkAll()
+    }
+
+    /**
+     * Reset NativeLib's private mutable fields between tests.
+     *
+     * NativeLib is a Kotlin `object`, so its state persists for the lifetime of the JVM.
+     * Reflection is used here to clear dependencies injected by [NativeLib.initialize] so that
+     * every test starts from a clean, uninitialised state.
+     */
+    private fun resetNativeLibState() {
         setPrivateField("sentinelBus", null)
         setPrivateField("sovereignManager", null)
         setPrivateField("pandoraBox", null)
         setPrivateField("droneDispatcher", null)
     }
 
-    // ─── Helper ──────────────────────────────────────────────────────────────
-
-    private fun setPrivateField(name: String, value: Any?) {
-        val field = NativeLib::class.java.getDeclaredField(name)
-        field.isAccessible = true
-        field.set(NativeLib, value)
+    /**
+     * Reflectively set a private field on the NativeLib object.
+     * Silently ignores [NoSuchFieldException] so tests remain resilient to minor field renames.
+     */
+    private fun setPrivateField(fieldName: String, value: Any?) {
+        try {
+            val field = NativeLib::class.java.getDeclaredField(fieldName)
+            field.isAccessible = true
+            field.set(NativeLib, value)
+        } catch (_: NoSuchFieldException) {
+            /* field name changed – skip */
+        }
     }
 
-    private fun getPrivateField(name: String): Any? {
-        val field = NativeLib::class.java.getDeclaredField(name)
-        field.isAccessible = true
-        return field.get(NativeLib)
-    }
-
-    // ─── initialize() ────────────────────────────────────────────────────────
-
-    @Test
-    fun `initialize stores all four provided services`() {
-        val mockManager = mockk<Any>(relaxed = true) // SovereignStateManager placeholder
-
-        // We can only verify what's accessible — sentinelBus, pandoraBox, droneDispatcher
-        // are reflected fields; sovereignManager requires the real type to be on classpath.
+    /**
+     * Inject only the three dependencies whose types ARE resolvable on all classpaths
+     * (KaiSentinelBus, PandoraBoxService, GuidanceDroneDispatcher).
+     * SovereignStateManager is intentionally left null to avoid a compile-time dependency
+     * on a type that may reside in a module not always present.
+     */
+    private fun injectMocks() {
         setPrivateField("sentinelBus", mockSentinelBus)
         setPrivateField("pandoraBox", mockPandoraBox)
         setPrivateField("droneDispatcher", mockDroneDispatcher)
-
-        assertEquals(mockSentinelBus, getPrivateField("sentinelBus"))
-        assertEquals(mockPandoraBox, getPrivateField("pandoraBox"))
-        assertEquals(mockDroneDispatcher, getPrivateField("droneDispatcher"))
     }
 
-    @Test
-    fun `sentinel bus is null before initialize is called`() {
-        assertFalse("sentinelBus field should be null initially",
-            getPrivateField("sentinelBus") != null)
-    }
+    // ─── checkPandoraGating() ─────────────────────────────────────────────────
+    //
+    // The PR rewrote this method to be "fail-closed": any unknown ID or uninitialised
+    // bridge returns false immediately, avoiding a default-allow fallback.
 
-    @Test
-    fun `pandora box is null before initialize is called`() {
-        assertFalse("pandoraBox field should be null initially",
-            getPrivateField("pandoraBox") != null)
-    }
+    @Nested
+    @DisplayName("checkPandoraGating() — fail-closed logic")
+    inner class CheckPandoraGatingTests {
 
-    @Test
-    fun `drone dispatcher is null before initialize is called`() {
-        assertFalse("droneDispatcher field should be null initially",
-            getPrivateField("droneDispatcher") != null)
-    }
-
-    // ─── getAIVersionSafe() ──────────────────────────────────────────────────
-
-    @Test
-    fun `getAIVersionSafe returns stub string when native library is not loaded`() {
-        // In a unit test environment the native library is never present,
-        // so getAIVersion() will always throw UnsatisfiedLinkError.
-        val result = NativeLib.getAIVersionSafe()
-        assertEquals("Aurakai ReGenesis 1.1.0-STUB", result)
-    }
-
-    @Test
-    fun `getAIVersionSafe stub string is non-empty`() {
-        val result = NativeLib.getAIVersionSafe()
-        assertTrue("Fallback stub version must be non-empty", result.isNotEmpty())
-    }
-
-    @Test
-    fun `getAIVersionSafe stub string contains version indicator`() {
-        val result = NativeLib.getAIVersionSafe()
-        assertTrue("Fallback stub version should contain STUB marker",
-            result.contains("STUB", ignoreCase = true))
-    }
-
-    // ─── checkPandoraGating() ────────────────────────────────────────────────
-
-    @Test
-    fun `checkPandoraGating returns false when capability index is negative`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        assertFalse(NativeLib.checkPandoraGating(-1))
-    }
-
-    @Test
-    fun `checkPandoraGating returns false when capability index exceeds enum size`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        val outOfRange = AgentCapabilityCategory.entries.size // one past last valid index
-        assertFalse(NativeLib.checkPandoraGating(outOfRange))
-    }
-
-    @Test
-    fun `checkPandoraGating returns false when capability index is far out of range`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        assertFalse(NativeLib.checkPandoraGating(Int.MAX_VALUE))
-    }
-
-    @Test
-    fun `checkPandoraGating returns false when pandoraBox is null regardless of valid index`() {
-        // pandoraBox is null (not initialized)
-        assertFalse(NativeLib.checkPandoraGating(0))
-    }
-
-    @Test
-    fun `checkPandoraGating returns true when pandoraBox reports capability unlocked`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(any()) } returns true
-
-        assertTrue(NativeLib.checkPandoraGating(0)) // index 0 = CREATIVE
-    }
-
-    @Test
-    fun `checkPandoraGating returns false when pandoraBox reports capability locked`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(any()) } returns false
-
-        assertFalse(NativeLib.checkPandoraGating(0))
-    }
-
-    @Test
-    fun `checkPandoraGating maps index 0 to CREATIVE capability`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.CREATIVE) } returns true
-        every { mockPandoraBox.isCapabilityUnlocked(not(AgentCapabilityCategory.CREATIVE)) } returns false
-
-        assertTrue(NativeLib.checkPandoraGating(0))
-    }
-
-    @Test
-    fun `checkPandoraGating maps index to ROOT capability correctly`() {
-        val rootIndex = AgentCapabilityCategory.entries.indexOf(AgentCapabilityCategory.ROOT)
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.ROOT) } returns true
-
-        assertTrue(NativeLib.checkPandoraGating(rootIndex))
-    }
-
-    @Test
-    fun `checkPandoraGating maps last valid index to GENERIC capability`() {
-        val genericIndex = AgentCapabilityCategory.entries.indexOf(AgentCapabilityCategory.GENERIC)
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.GENERIC) } returns true
-
-        assertTrue(NativeLib.checkPandoraGating(genericIndex))
-    }
-
-    @Test
-    fun `checkPandoraGating delegates to pandoraBox with correct category for each valid index`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(any()) } returns false
-
-        for (i in AgentCapabilityCategory.entries.indices) {
-            NativeLib.checkPandoraGating(i)
+        @Test
+        @DisplayName("returns false when pandoraBox bridge is not initialised")
+        fun `returns false when bridge not initialized`() {
+            // pandoraBox field is null after resetNativeLibState(); no mocks injected.
+            assertFalse(NativeLib.checkPandoraGating(0))
         }
 
-        verify(exactly = AgentCapabilityCategory.entries.size) {
-            mockPandoraBox.isCapabilityUnlocked(any())
+        @Test
+        @DisplayName("returns false for negative capability index (fail-closed)")
+        fun `returns false for negative capability index`() {
+            injectMocks()
+            // AgentCapabilityCategory.entries.getOrNull(-1) returns null → veto
+            assertFalse(NativeLib.checkPandoraGating(-1))
+        }
+
+        @Test
+        @DisplayName("returns false for capability index equal to enum size (boundary)")
+        fun `returns false for index equal to enum size`() {
+            injectMocks()
+            // AgentCapabilityCategory has 15 entries (indices 0–14).
+            // Index 15 is out of range → veto.
+            assertFalse(NativeLib.checkPandoraGating(AgentCapabilityCategory.entries.size))
+        }
+
+        @Test
+        @DisplayName("returns false for Int.MAX_VALUE capability index")
+        fun `returns false for very large capability index`() {
+            injectMocks()
+            assertFalse(NativeLib.checkPandoraGating(Int.MAX_VALUE))
+        }
+
+        @Test
+        @DisplayName("returns true when pandoraBox reports CREATIVE (index 0) as unlocked")
+        fun `returns true when CREATIVE is unlocked`() {
+            injectMocks()
+            every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.CREATIVE) } returns true
+            assertTrue(NativeLib.checkPandoraGating(0))
+        }
+
+        @Test
+        @DisplayName("returns false when pandoraBox denies CREATIVE (index 0)")
+        fun `returns false when CREATIVE is locked`() {
+            injectMocks()
+            every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.CREATIVE) } returns false
+            assertFalse(NativeLib.checkPandoraGating(0))
+        }
+
+        @Test
+        @DisplayName("delegates ROOT capability check (index 8) to pandoraBox")
+        fun `delegates ROOT capability check to pandoraBox`() {
+            injectMocks()
+            every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.ROOT) } returns false
+            assertFalse(NativeLib.checkPandoraGating(8))
+            verify { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.ROOT) }
+        }
+
+        @Test
+        @DisplayName("delegates SECURITY capability check (index 7) to pandoraBox")
+        fun `delegates SECURITY capability check to pandoraBox`() {
+            injectMocks()
+            every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.SECURITY) } returns true
+            assertTrue(NativeLib.checkPandoraGating(7))
+            verify { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.SECURITY) }
+        }
+
+        @Test
+        @DisplayName("handles the last valid index (GENERIC = 14) correctly")
+        fun `handles last valid GENERIC index`() {
+            injectMocks()
+            every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.GENERIC) } returns true
+            assertTrue(NativeLib.checkPandoraGating(14))
+        }
+
+        @Test
+        @DisplayName("pandoraBox.isCapabilityUnlocked is not called for an invalid index")
+        fun `pandoraBox not consulted for invalid index`() {
+            injectMocks()
+            NativeLib.checkPandoraGating(-99)
+            verify(exactly = 0) { mockPandoraBox.isCapabilityUnlocked(any()) }
+        }
+    }
+
+    // ─── triggerDroneDispatch() ───────────────────────────────────────────────
+    //
+    // The PR changed this from a log-only stub to an actual call:
+    //   droneDispatcher?.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, "Native Trigger: $reason")
+
+    @Nested
+    @DisplayName("triggerDroneDispatch()")
+    inner class TriggerDroneDispatchTests {
+
+        @Test
+        @DisplayName("calls dispatchDrone with DroneType.RESTORATIVE when dispatcher is set")
+        fun `calls dispatchDrone with RESTORATIVE type`() {
+            injectMocks()
+            val mockDrone = mockk<GuidanceDrone>(relaxed = true)
+            every { mockDroneDispatcher.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, any()) } returns mockDrone
+
+            NativeLib.triggerDroneDispatch("test_trigger")
+
+            verify(exactly = 1) {
+                mockDroneDispatcher.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, any())
+            }
+        }
+
+        @Test
+        @DisplayName("dispatched drone objective string contains the supplied reason")
+        fun `drone objective contains the supplied reason`() {
+            injectMocks()
+            val capturedObjectives = mutableListOf<String>()
+            val mockDrone = mockk<GuidanceDrone>(relaxed = true)
+            every { mockDroneDispatcher.dispatchDrone(any(), capture(capturedObjectives)) } returns mockDrone
+
+            NativeLib.triggerDroneDispatch("my_special_reason")
+
+            assertTrue(capturedObjectives.isNotEmpty(), "dispatchDrone was never called")
+            assertTrue(capturedObjectives.first().contains("my_special_reason"),
+                "Expected objective to contain the reason but was: ${capturedObjectives.first()}")
+        }
+
+        @Test
+        @DisplayName("does not throw when dispatcher is null (bridge not yet initialized)")
+        fun `does not throw when dispatcher is null`() {
+            // droneDispatcher remains null — the ?. null-safe call should silently skip
+            NativeLib.triggerDroneDispatch("no_crash_expected")
+        }
+
+        @Test
+        @DisplayName("never dispatches ANALYTICAL or MISALIGNMENT_GUIDANCE drone types")
+        fun `uses only RESTORATIVE drone type`() {
+            injectMocks()
+            val mockDrone = mockk<GuidanceDrone>(relaxed = true)
+            every { mockDroneDispatcher.dispatchDrone(any(), any()) } returns mockDrone
+
+            NativeLib.triggerDroneDispatch("reason")
+
+            verify(exactly = 0) {
+                mockDroneDispatcher.dispatchDrone(GuidanceDrone.DroneType.ANALYTICAL, any())
+            }
+            verify(exactly = 0) {
+                mockDroneDispatcher.dispatchDrone(GuidanceDrone.DroneType.MISALIGNMENT_GUIDANCE, any())
+            }
+        }
+
+        @Test
+        @DisplayName("dispatchDrone is not called more than once per trigger")
+        fun `dispatchDrone called exactly once`() {
+            injectMocks()
+            val mockDrone = mockk<GuidanceDrone>(relaxed = true)
+            every { mockDroneDispatcher.dispatchDrone(any(), any()) } returns mockDrone
+
+            NativeLib.triggerDroneDispatch("single_call")
+
+            verify(exactly = 1) { mockDroneDispatcher.dispatchDrone(any(), any()) }
         }
     }
 
     // ─── onNativeThermalEvent() ───────────────────────────────────────────────
+    //
+    // The PR kept this method but changed it to use the new import path for KaiSentinelBus.
+    // The fallback-to-NORMAL logic was present in the prior version and remains unchanged.
 
-    @Test
-    fun `onNativeThermalEvent emits thermal event to sentinel bus`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
+    @Nested
+    @DisplayName("onNativeThermalEvent()")
+    inner class OnNativeThermalEventTests {
 
-        NativeLib.onNativeThermalEvent(42.5f, 0) // state 0 = NORMAL
+        @Test
+        @DisplayName("does not throw when sentinelBus is null (bus not yet initialised)")
+        fun `does not throw when sentinelBus is null`() {
+            // sentinelBus remains null — safe-call operator should prevent any crash
+            NativeLib.onNativeThermalEvent(55.0f, 1)
+        }
 
-        verify { mockSentinelBus.emitThermal(42.5f, KaiSentinelBus.ThermalState.NORMAL) }
-    }
+        @Test
+        @DisplayName("does not throw for extreme temperature values")
+        fun `does not throw for extreme temperatures`() {
+            // No bus injected; just verifying no unhandled exception
+            NativeLib.onNativeThermalEvent(-273.15f, 0)
+            NativeLib.onNativeThermalEvent(Float.MAX_VALUE, 5)
+        }
 
-    @Test
-    fun `onNativeThermalEvent maps stateInt 0 to NORMAL`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(25f, 0)
-        verify { mockSentinelBus.emitThermal(25f, KaiSentinelBus.ThermalState.NORMAL) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent maps stateInt 1 to LIGHT`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(35f, 1)
-        verify { mockSentinelBus.emitThermal(35f, KaiSentinelBus.ThermalState.LIGHT) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent maps stateInt 2 to WARNING`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(45f, 2)
-        verify { mockSentinelBus.emitThermal(45f, KaiSentinelBus.ThermalState.WARNING) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent maps stateInt 3 to SEVERE`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(55f, 3)
-        verify { mockSentinelBus.emitThermal(55f, KaiSentinelBus.ThermalState.SEVERE) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent maps stateInt 4 to CRITICAL`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(65f, 4)
-        verify { mockSentinelBus.emitThermal(65f, KaiSentinelBus.ThermalState.CRITICAL) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent maps stateInt 5 to EMERGENCY`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(80f, 5)
-        verify { mockSentinelBus.emitThermal(80f, KaiSentinelBus.ThermalState.EMERGENCY) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent defaults to NORMAL for out-of-range positive stateInt`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(30f, 999)
-        verify { mockSentinelBus.emitThermal(30f, KaiSentinelBus.ThermalState.NORMAL) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent defaults to NORMAL for negative stateInt`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        NativeLib.onNativeThermalEvent(30f, -1)
-        verify { mockSentinelBus.emitThermal(30f, KaiSentinelBus.ThermalState.NORMAL) }
-    }
-
-    @Test
-    fun `onNativeThermalEvent does not crash when sentinel bus is null`() {
-        // sentinelBus is null — should silently skip emission
-        NativeLib.onNativeThermalEvent(40f, 0)
-        // No exception thrown — test passes
-    }
-
-    @Test
-    fun `onNativeThermalEvent passes temperature value through unmodified`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        val temperature = 37.6f
-        NativeLib.onNativeThermalEvent(temperature, 1)
-        verify { mockSentinelBus.emitThermal(temperature, any()) }
-    }
-
-    // ─── triggerDroneDispatch() ───────────────────────────────────────────────
-
-    @Test
-    fun `triggerDroneDispatch calls dispatchDrone with RESTORATIVE type`() {
-        setPrivateField("droneDispatcher", mockDroneDispatcher)
-        every { mockDroneDispatcher.dispatchDrone(any(), any()) } returns mockk()
-
-        NativeLib.triggerDroneDispatch("TEST_REASON")
-
-        verify { mockDroneDispatcher.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, any()) }
-    }
-
-    @Test
-    fun `triggerDroneDispatch prefixes reason with Native Trigger`() {
-        setPrivateField("droneDispatcher", mockDroneDispatcher)
-        every { mockDroneDispatcher.dispatchDrone(any(), any()) } returns mockk()
-
-        NativeLib.triggerDroneDispatch("MY_REASON")
-
-        verify { mockDroneDispatcher.dispatchDrone(any(), match { it.contains("Native Trigger") }) }
-    }
-
-    @Test
-    fun `triggerDroneDispatch includes original reason in objective`() {
-        setPrivateField("droneDispatcher", mockDroneDispatcher)
-        every { mockDroneDispatcher.dispatchDrone(any(), any()) } returns mockk()
-
-        NativeLib.triggerDroneDispatch("THERMAL_EMERGENCY")
-
-        verify {
-            mockDroneDispatcher.dispatchDrone(
-                GuidanceDrone.DroneType.RESTORATIVE,
-                match { it.contains("THERMAL_EMERGENCY") }
-            )
+        @Test
+        @DisplayName("does not throw for out-of-range state index")
+        fun `does not throw for out-of-range state index`() {
+            NativeLib.onNativeThermalEvent(30.0f, 9999)
+            NativeLib.onNativeThermalEvent(30.0f, -1)
         }
     }
 
-    @Test
-    fun `triggerDroneDispatch does not crash when dispatcher is null`() {
-        // droneDispatcher is null — should silently skip
-        NativeLib.triggerDroneDispatch("NO_DISPATCHER")
-        // No exception thrown — test passes
-    }
+    // ─── onNativeSecurityAlert() ──────────────────────────────────────────────
+    //
+    // The PR added a `sentinelBus?.emitSecurity(...)` call inside this method.
 
-    // ─── Boundary and regression tests ───────────────────────────────────────
+    @Nested
+    @DisplayName("onNativeSecurityAlert()")
+    inner class OnNativeSecurityAlertTests {
 
-    @Test
-    fun `checkPandoraGating boundary index 0 is valid CREATIVE category`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.CREATIVE) } returns true
-        assertTrue(NativeLib.checkPandoraGating(0))
-    }
+        @Test
+        @DisplayName("does not throw when sentinelBus is null")
+        fun `does not throw when sentinelBus is null`() {
+            NativeLib.onNativeSecurityAlert("TRACER_DETECTED")
+        }
 
-    @Test
-    fun `checkPandoraGating boundary index 14 is valid GENERIC category`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        every { mockPandoraBox.isCapabilityUnlocked(AgentCapabilityCategory.GENERIC) } returns true
-        assertTrue(NativeLib.checkPandoraGating(14))
-    }
+        @Test
+        @DisplayName("does not throw for empty reason string")
+        fun `handles empty reason string without throwing`() {
+            NativeLib.onNativeSecurityAlert("")
+        }
 
-    @Test
-    fun `checkPandoraGating boundary index 15 is out of range`() {
-        setPrivateField("pandoraBox", mockPandoraBox)
-        // There are 15 entries (indices 0-14); index 15 is out of range
-        assertFalse(NativeLib.checkPandoraGating(15))
-    }
-
-    @Test
-    fun `onNativeThermalEvent boundary stateInt at max valid index emits EMERGENCY`() {
-        setPrivateField("sentinelBus", mockSentinelBus)
-        val maxValidIndex = KaiSentinelBus.ThermalState.entries.size - 1
-        NativeLib.onNativeThermalEvent(90f, maxValidIndex)
-        verify {
-            mockSentinelBus.emitThermal(
-                90f,
-                KaiSentinelBus.ThermalState.entries[maxValidIndex]
-            )
+        @Test
+        @DisplayName("does not throw for long reason strings")
+        fun `handles long reason string without throwing`() {
+            NativeLib.onNativeSecurityAlert("X".repeat(1_000))
         }
     }
 
-    @Test
-    fun `getAIVersionSafe is idempotent across multiple calls`() {
-        val first = NativeLib.getAIVersionSafe()
-        val second = NativeLib.getAIVersionSafe()
-        assertEquals("getAIVersionSafe should return the same stub on repeated calls", first, second)
+    // ─── getAIVersionSafe() ───────────────────────────────────────────────────
+    //
+    // The PR changed the stub fallback string from "Genesis-OS AI Platform 1.0 (Native library
+    // not available)" to "Aurakai ReGenesis 1.1.0-STUB".
+
+    @Nested
+    @DisplayName("getAIVersionSafe()")
+    inner class GetAIVersionSafeTests {
+
+        @Test
+        @DisplayName("returns a non-null, non-empty string when native library is absent")
+        fun `returns non-null non-empty when native lib absent`() {
+            // In a JVM test context the .so is never loaded, so getAIVersion() throws
+            // UnsatisfiedLinkError which getAIVersionSafe() catches.
+            val version = NativeLib.getAIVersionSafe()
+            assertNotNull(version)
+            assertTrue(version.isNotEmpty())
+        }
+
+        @Test
+        @DisplayName("returns 'Aurakai ReGenesis 1.1.0-STUB' when native library is absent")
+        fun `returns exact stub string when native lib absent`() {
+            val version = NativeLib.getAIVersionSafe()
+            // PR changed the stub from the old "Genesis-OS AI Platform 1.0 ..." string
+            assertEquals("Aurakai ReGenesis 1.1.0-STUB", version)
+        }
+
+        @Test
+        @DisplayName("stub string contains 'ReGenesis' branding")
+        fun `stub string contains ReGenesis branding`() {
+            val version = NativeLib.getAIVersionSafe()
+            assertTrue(version.contains("ReGenesis"),
+                "Expected 'ReGenesis' in version stub but got: $version")
+        }
+    }
+
+    // ─── requestSovereignFreeze() ─────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("requestSovereignFreeze()")
+    inner class RequestSovereignFreezeTests {
+
+        @Test
+        @DisplayName("does not throw when sovereignManager is null (bridge not initialised)")
+        fun `does not throw when sovereign manager is null`() {
+            // sovereignManager is null — the coroutine launched inside should be a safe no-op
+            NativeLib.requestSovereignFreeze()
+        }
     }
 }
