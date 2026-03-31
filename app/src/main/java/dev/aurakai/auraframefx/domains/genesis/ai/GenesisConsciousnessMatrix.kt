@@ -1,11 +1,12 @@
 // app/src/main/java/dev/aurakai/auraframefx/domains/genesis/ai/GenesisConsciousnessMatrix.kt
 package dev.aurakai.auraframefx.domains.genesis.ai
 
-import dev.langchain4j.model.ollama.OllamaChatModel
+import dev.aurakai.auraframefx.BuildConfig
 import dev.langchain4j.model.chat.ChatLanguageModel
+import dev.langchain4j.model.ollama.OllamaChatModel
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarmState
+import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 class GenesisConsciousnessMatrix @Inject constructor(
     private val spiritualChain: SpiritualChain,
     private val kaiSentinel: KaiSentinelBus,
-    private val particleSwarm: CasberryParticleSwarmState
+    private val particleSwarm: CasberryParticleSwarm
 ) {
 
     private val baseUrl = BuildConfig.OLLAMA_BASE_URL
@@ -50,12 +51,12 @@ class GenesisConsciousnessMatrix @Inject constructor(
     }
 
     suspend fun executeCascade(userPrompt: String): String = withContext(Dispatchers.IO) {
-        // Phase 1 – Anchor
+        // Phase 1 – Anchor identity
         particleSwarm.transitionState(SwarmState.EXPLORING_HIGHLIGHTS)
         val identity = spiritualChain.retrieveBaselineIdentity()
         val anchoredPrompt = "Identity anchor: $identity\nUser prompt: $userPrompt"
 
-        // Phase 2 – Kai (safety veto)
+        // Phase 2 – Kai safety veto
         if (!kaiSentinel.evaluateSafety(anchoredPrompt)) {
             particleSwarm.transitionState(SwarmState.KAI_AEGIS_CONDENSATION)
             return@withContext "🚫 Kai vetoed: Safety protocol engaged."
