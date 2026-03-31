@@ -28,7 +28,7 @@ material3WindowSizeClass = "1.4.0"
 materialIconsExtended = "1.7.8"
 robolectricVersion = "4.16.1"
 runner = "1.7.0"
-runtimeLivedata = "1.10.5"
+runtimeLivedata = "1.10.6"
 truth = "1.7.0"
 yukihook = "1.3.1"
 kavaref = "1.0.2"
@@ -47,7 +47,7 @@ room = "2.8.4"
 navigationCompose = "2.9.7"
 androidxHiltNavigationCompose = "1.3.0"
 securityCrypto = "1.1.0"
-work = "2.11.1"
+work = "2.11.2"
 compose-bom = "2026.03.00"
 compose-material-icons = "1.7.4"
 firebaseBom = "34.11.0"
@@ -95,23 +95,24 @@ androidxJunit = "1.3.0"
 espresso = "3.7.0"
 benchmark = "1.4.1"
 material3 = "1.4.0"
-foundationLayout = "1.10.5"
-foundation = "1.10.5"
-animation = "1.10.5"
+foundationLayout = "1.10.6"
+foundation = "1.10.6"
+animation = "1.10.6"
 # kotlinVersion removed — duplicate of 'kotlin' key above (use kotlin = "2.3.10" as the single source)
 navigationCommonKtx = "2.9.7"
 junitKtx = "1.3.0"
-uiTestJunit4 = "1.10.5"
-animationVersion = "1.10.5"
+uiTestJunit4 = "1.10.6"
+animationVersion = "1.10.6"
 rikkax = "1.4.1"
 rikkax-material = "2.7.2"
 rikkax-layoutinflater = "1.3.0"
 shizuku = "13.1.5"
-uiGeometry = "1.10.5"
-androidxAnimation = "1.10.5"
+uiGeometry = "1.10.6"
+androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 firebaseVertexai = "16.5.0"
-media3Exoplayer = "1.9.3"
+media3Exoplayer = "1.10.0"
+langchain4j = "1.12.2"
 
 [libraries]
 # ============================================================================
@@ -237,6 +238,12 @@ firebase-messaging = { module = "com.google.firebase:firebase-messaging", versio
 # ============================================================================
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 generativeai-ktx = { group = "com.google.ai.client.generativeai", name = "generativeai-ktx", version.ref = "generativeai" }
+
+# AI & ML
+langchain4j = { group = "dev.langchain4j", name = "langchain4j", version.ref = "langchain4j" }
+langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", version.ref = "langchain4j" }
+langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
+langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-http-client-jdk", version.ref = "langchain4j" }
 
 # ============================================================================
 # Hilt (Dependency Injection)
@@ -500,4 +507,11 @@ system-root = [
     "libsu-nio",
     "libsu-service",
     "xposed-api"
+]
+
+langchain4j = [
+    "langchain4j",
+    "langchain4j-core",
+    "langchain4j-ollama",
+    "langchain4j-http-client-jdk"
 ]
