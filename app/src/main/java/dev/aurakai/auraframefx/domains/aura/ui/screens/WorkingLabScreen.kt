@@ -57,6 +57,7 @@ import kotlinx.coroutines.launch
  *
  * @param onNavigate Callback invoked with the target route key (e.g., "collab_canvas", "oracle_drive", "console", "romtools", "center") when a module or menu item is clicked.
  */
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalStdlibApi::class)
 @Composable
 fun WorkingLabScreen(
     onNavigate: (String) -> Unit = {}
