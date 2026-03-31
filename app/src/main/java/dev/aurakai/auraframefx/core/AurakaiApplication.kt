@@ -12,6 +12,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import dev.aurakai.auraframefx.core.NativeLib
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.NexusMemoryCore
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
@@ -109,7 +110,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
+            NativeLib.initializeAICore()
             Timber.d("✅ Native AI platform initialized")
         } catch (e: Exception) {
             Timber.e(e, "❌ Native AI initialization error")
