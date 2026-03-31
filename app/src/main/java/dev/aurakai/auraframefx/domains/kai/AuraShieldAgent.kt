@@ -13,7 +13,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.aura.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.models.ThreatStatus
 import dev.aurakai.auraframefx.domains.kai.models.ActiveThreat

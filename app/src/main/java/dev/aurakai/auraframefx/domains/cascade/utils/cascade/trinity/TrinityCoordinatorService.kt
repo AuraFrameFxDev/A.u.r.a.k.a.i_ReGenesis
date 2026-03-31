@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.e
 import dev.aurakai.auraframefx.domains.cascade.utils.i
 import dev.aurakai.auraframefx.domains.cascade.utils.w
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
