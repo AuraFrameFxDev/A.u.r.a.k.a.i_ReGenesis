@@ -17,9 +17,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC -march=armv8.2-a+d
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
 
+if (ANDROID_ABI STREQUAL "armeabi-v7a")
+    add_compile_options(
+        -mfpu=neon
+        -mfloat-abi=softfp
+    )
+endif()
+
 add_compile_options(
-    -mfpu=neon
-    -mfloat-abi=softfp
     -mtune=cortex-a55
     -D__ARM_NEON
     -D__ARM_FEATURE_DOTPROD
@@ -103,8 +108,9 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 # Set library properties
+# Library properties removed unnecessary ARM mode directive which forced 32-bit mode
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        ANDROID_ARM_MODE arm
+        ANDROID_ARM_NEON ON
 )
 
 # Add BitNet subproject if it exists
