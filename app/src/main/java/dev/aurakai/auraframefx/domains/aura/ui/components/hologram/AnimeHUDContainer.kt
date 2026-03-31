@@ -54,8 +54,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.R
-import dev.aurakai.auraframefx.domains.aura.ui.theme.ChessFontFamily
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ChessFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
  * 🌠 ANIME HUD CONTAINER - High Fidelity UI Box
@@ -455,4 +455,5 @@ val HUDBoxShape = GenericShape { size, _ ->
     lineTo(0f, corner)
     close()
 }
+
 

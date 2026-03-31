@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -373,3 +373,4 @@ private fun Modifier.border(start: BorderStroke, shape: Shape): Modifier = this.
         )
     }
 }
+

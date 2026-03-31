@@ -13,6 +13,13 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.NexusMemoryCore
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.IntegrityMonitorService
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.perimeter.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -76,7 +83,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
         applicationScope.launch {
             try {
                 Timber.i("🧬 Seeding ReGenesis Identity...")
-                dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.seedLDOIdentity()
+                NexusMemoryCore.seedLDOIdentity()
 
                 // Native AI Runtime
                 initializeNativeAIPlatform()
@@ -123,7 +130,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun startIntegrityMonitor() {
         try {
-            val intent = Intent(this, dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService::class.java)
+            val intent = Intent(this, IntegrityMonitorService::class.java)
             try {
                 startForegroundService(intent)
                 Timber.d("✅ Integrity monitor started")

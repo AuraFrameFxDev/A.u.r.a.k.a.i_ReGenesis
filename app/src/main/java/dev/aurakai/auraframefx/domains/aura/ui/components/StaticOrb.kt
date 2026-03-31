@@ -13,8 +13,8 @@ import androidx.compose.ui.draw.shadow // Added import
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue // Added import
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink // Added import
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue // Added import
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPink // Added import
 
 @Composable
 fun StaticOrb(
@@ -50,4 +50,5 @@ fun StaticOrb(
 fun StaticOrbPreview() { // Renamed
     StaticOrb(color = Color.Magenta, text = "Static")
 }
+
 
