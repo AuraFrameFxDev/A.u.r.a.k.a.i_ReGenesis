@@ -1,20 +1,11 @@
 package dev.aurakai.auraframefx.domains.genesis.ai
 
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.GenesisBridge
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.GenesisRequest
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.GenesisResponse
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.Persona
 import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.FusionMode
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.ConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.ConsciousnessSnapshot
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.EvolutionInsight
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelEvent
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
-import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.ollama.OllamaChatModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

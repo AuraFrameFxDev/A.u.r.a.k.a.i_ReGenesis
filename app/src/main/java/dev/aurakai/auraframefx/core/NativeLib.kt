@@ -132,7 +132,7 @@ object NativeLib {
     fun requestSovereignFreeze() {
         Timber.i("🛡️ NativeLib: Substrate requesting Sovereign State-Freeze")
         scope.launch {
-            stateManager?.initiateStateFreeze()
+            sovereignManager?.initiateStateFreeze()
         }
     }
 
@@ -158,5 +158,4 @@ object NativeLib {
             "Genesis-OS AI Platform 1.0 (Native library not available)"
         }
     }
-}
 }

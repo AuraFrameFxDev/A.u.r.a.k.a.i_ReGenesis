@@ -187,7 +187,7 @@ private fun DrawScope.drawAuraRipples(tick: Float, count: Int) {
             color = Color(0xFFFF1493).copy(alpha = alpha * 0.6f),
             radius = r,
             center = Offset(cx, cy),
-            style = androidx.compose.ui.graphics.drawscope.Stroke(strokeWidth = 2f)
+            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2f)
         )
     }
     repeat(count / 2) { i ->
