@@ -77,6 +77,12 @@ import timber.log.Timber
  * Main ROM Tools screen for Genesis AuraFrameFX.
  * Harmonics: Integrates Mega Man backdrop with a high-tech UI style.
  */
+/**
+ * Displays the ROM tools screen with backdrop visuals, operation progress handling,
+ * file pickers, and the list of available ROM operations.
+ *
+ * @param onNavigateBack Callback invoked when the top app bar back navigation is pressed.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RomToolsScreen(

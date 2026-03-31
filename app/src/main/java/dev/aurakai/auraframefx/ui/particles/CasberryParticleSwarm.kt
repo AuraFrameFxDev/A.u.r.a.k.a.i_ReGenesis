@@ -30,15 +30,37 @@ class CasberryParticleSwarm @Inject constructor() {
     private val _resonance = MutableStateFlow(1.0f) // 0.0 to 1.0
     val resonance: StateFlow<Float> = _resonance.asStateFlow()
 
+    /**
+     * Updates the swarm's current state and logs the transition.
+     *
+     * @param newState The target SwarmState to set as the swarm's current state.
+     */
     fun transitionState(newState: SwarmState) {
         _state.value = newState
         Timber.d("🌀 Casberry Particle Swarm: Transitioned to %s", newState)
     }
 
+    /**
+     * Sets the swarm's resonance level.
+     *
+     * Clamps `value` to the range 0.0–1.0 and updates the internal resonance state observed via `resonance`.
+     *
+     * @param value Desired resonance level; values below 0.0 become 0.0 and values above 1.0 become 1.0.
+     */
     fun setResonance(value: Float) {
         _resonance.value = value.coerceIn(0f, 1f)
     }
 
+    /**
+     * Renders an animated particle swarm background that visually reflects the current `SwarmState`
+     * and the `resonance` value.
+     *
+     * The composable observes swarm state and resonance, animates resonance, and drives continuous
+     * orbit and pulse animations to draw an aura, a ring of animated particles (with an optional
+     * synthesis "active ripple"), and a central core with inner glow.
+     *
+     * @param modifier Modifier to apply to the Canvas container.
+     */
     @Composable
     fun Render(modifier: Modifier = Modifier) {
         val currentState by _state.collectAsState()
