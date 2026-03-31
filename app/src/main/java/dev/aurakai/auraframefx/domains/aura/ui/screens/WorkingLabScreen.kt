@@ -150,6 +150,15 @@ fun WorkingLabScreen(
                                     )
                                 }
 
+                                WorkAction.IDLE -> {
+                                    engine.manifestAura(
+                                        state = AuraState.IDLE_WALK,
+                                        config = ManifestationDefaults.DEFAULT_CONFIG.copy(
+                                            duration = step.duration
+                                        )
+                                    )
+                                }
+
                                 else -> {
                                     engine.manifestAura(
                                         state = step.sprite as? AuraState
@@ -180,6 +189,15 @@ fun WorkingLabScreen(
                                     engine.walkKaiTo(
                                         targetPosition = targetPos,
                                         state = step.sprite as? KaiState ?: KaiState.SHIELD_NEUTRAL
+                                    )
+                                }
+
+                                WorkAction.IDLE -> {
+                                    engine.manifestKai(
+                                        state = KaiState.SHIELD_NEUTRAL,
+                                        config = ManifestationDefaults.DEFAULT_CONFIG.copy(
+                                            duration = step.duration
+                                        )
                                     )
                                 }
 
