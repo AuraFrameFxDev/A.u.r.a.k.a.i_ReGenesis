@@ -106,10 +106,10 @@ class AurakaiApplication : Application(), Configuration.Provider {
     }
 
     /**
-     * Initializes the native AI platform by synchronizing the native RELATIONAL bridge with
-     * the application's injected sovereign services and then starting the AI core.
+     * Initializes the native RELATIONAL bridge with injected sovereign services and starts the native AI core.
      *
-     * On success logs a readiness message; on failure logs the encountered exception and message.
+     * Synchronizes the native layer with the application's sentinel, sovereign state manager, Pandora box service,
+     * and drone dispatcher, then performs AI-core ignition. Exceptions are caught and logged and do not propagate.
      */
     private fun initializeNativeAIPlatform() {
         try {

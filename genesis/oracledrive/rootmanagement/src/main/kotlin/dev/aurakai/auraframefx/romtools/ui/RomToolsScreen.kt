@@ -78,10 +78,13 @@ import timber.log.Timber
  * Harmonics: Integrates Mega Man backdrop with a high-tech UI style.
  */
 /**
- * Displays the ROM tools screen with backdrop visuals, operation progress handling,
- * file pickers, and the list of available ROM operations.
+ * Displays the ROM Tools screen with backdrop visuals, operation controls, and lists of available ROMs and backups.
  *
- * @param onNavigateBack Callback invoked when the top app bar back navigation is pressed.
+ * The composable renders a Mega Man–inspired backdrop that transitions through STATIC, EXPLODING, ACTIVE, COMPLETING, and VICTORY states based on operation progress, shows device capabilities, current operation progress, available actions, and launches file pickers or dispatches actions to the provided ViewModel.
+ *
+ * @param onNavigateBack Callback invoked when the app bar back navigation button is pressed.
+ * @param modifier Optional modifier applied to the root container.
+ * @param romToolsViewModel ViewModel supplying state and handling ROM operations.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -31,9 +31,11 @@ class CasberryParticleSwarm @Inject constructor() {
     val resonance: StateFlow<Float> = _resonance.asStateFlow()
 
     /**
-     * Updates the swarm's current state and logs the transition.
+     * Updates the swarm's current state to the provided value and records the transition.
      *
-     * @param newState The target SwarmState to set as the swarm's current state.
+     * Sets the internal state to [newState] and logs the transition for diagnostics.
+     *
+     * @param newState The target SwarmState to transition to.
      */
     fun transitionState(newState: SwarmState) {
         _state.value = newState
@@ -41,25 +43,22 @@ class CasberryParticleSwarm @Inject constructor() {
     }
 
     /**
-     * Sets the swarm's resonance level.
+     * Updates the swarm's resonance level, clamping the input to the range 0.0 through 1.0.
      *
-     * Clamps `value` to the range 0.0–1.0 and updates the internal resonance state observed via `resonance`.
-     *
-     * @param value Desired resonance level; values below 0.0 become 0.0 and values above 1.0 become 1.0.
+     * @param value Desired resonance value; values less than 0.0 will be set to 0.0 and values greater than 1.0 will be set to 1.0.
      */
     fun setResonance(value: Float) {
         _resonance.value = value.coerceIn(0f, 1f)
     }
 
     /**
-     * Renders an animated particle swarm background that visually reflects the current `SwarmState`
-     * and the `resonance` value.
+     * Renders the animated particle swarm visualization that reflects the current swarm state and resonance.
      *
-     * The composable observes swarm state and resonance, animates resonance, and drives continuous
-     * orbit and pulse animations to draw an aura, a ring of animated particles (with an optional
-     * synthesis "active ripple"), and a central core with inner glow.
+     * The composable draws an orbiting particle field with a background aura, per-particle ripples during synthesis,
+     * and a central relational core; animation, color palette, particle intensity, and sizing respond to `SwarmState`
+     * and the component's `resonance` state.
      *
-     * @param modifier Modifier to apply to the Canvas container.
+     * @param modifier Modifier applied to the outer composable layout.
      */
     @Composable
     fun Render(modifier: Modifier = Modifier) {

@@ -132,14 +132,13 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScre
  */
 @OptIn(ExperimentalMaterial3Api::class)
 /**
- * Hosts the ReGenesis navigation graph and registers all app destinations.
+ * Hosts the app's navigation graph and registers all ReGenesis destinations.
  *
- * Sets up a NavHost with the home gate as the start destination and wires each
- * ReGenesisRoute to its corresponding screen composable. On first composition,
- * invokes `customizationViewModel.start(context)` to initialize customization state.
+ * Sets up a NavHost using the provided NavHostController and wires each route to its corresponding
+ * screen composable; also initializes the customization view model when the composable enters composition.
  *
- * @param navController Controller used to perform navigation actions.
- * @param customizationViewModel ViewModel responsible for customization initialization and state; started once when the composable enters composition.
+ * @param navController Controller used to navigate between destinations.
+ * @param customizationViewModel ViewModel used to initialize customization state when this composable enters composition.
  */
 @Composable
 fun ReGenesisNavGraph(
@@ -553,10 +552,10 @@ fun ReGenesisNavGraph(
 }
 
 /**
- * Hosts the ReGenesis customization hub and wires its navigation callbacks to the app's customization sub-screens.
+ * Hosts the ReGenesis customization hub and wires its navigation actions to the given NavHostController.
  *
- * @param navController NavHostController used to navigate to individual customization screens.
- * @param onNavigateBack Called when the hub requests to navigate back.
+ * @param navController Controller used to navigate to the various customization screens.
+ * @param onNavigateBack Callback invoked when the hub requests to navigate back. 
  */
 @Composable
 fun UxuiDesignStudio(

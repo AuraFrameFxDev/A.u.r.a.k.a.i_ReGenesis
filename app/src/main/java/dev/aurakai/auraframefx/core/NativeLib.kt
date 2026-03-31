@@ -36,12 +36,15 @@ object NativeLib {
     }
 
     /**
-     * Links Kotlin domain services with the native C++ substrate.
+     * Registers domain service instances for the native JNI bridge.
      *
-     * @param bus Receives thermal and security events from native callbacks.
-     * @param manager Handles sovereignty freeze requests initiated from native triggers.
-     * @param pandora Checks capability gating for native-origin requests.
-     * @param dispatcher Dispatches guidance drones in response to native events.
+     * Stores the provided service references on the singleton so JNI callbacks and other Kotlin
+     * code can access the sentinel bus, sovereign manager, pandora box, and drone dispatcher.
+     *
+     * @param bus The KaiSentinelBus used to emit thermal and security events.
+     * @param manager The SovereignStateManager responsible for initiating state freeze actions.
+     * @param pandora The PandoraBoxService used to evaluate capability gating.
+     * @param dispatcher The GuidanceDroneDispatcher used to request drone support.
      */
     @JvmStatic
     fun initialize(
@@ -58,66 +61,61 @@ object NativeLib {
     }
 
     /**
- * Retrieve the AI core version string reported by the native substrate.
+ * Retrieves the AI subsystem version reported by the native substrate.
  *
- * @return The AI core version identifier reported by the native library.
+ * @return The version string reported by the native library (for example, a semantic version or build identifier).
  */
 
     external fun getAIVersion(): String
     /**
- * Initializes the native AI core subsystem in the native substrate.
+ * Initialize the native AI core and prepare it for operation.
  *
- * @return `true` if the native AI core was successfully initialized, `false` otherwise.
+ * @return `true` if the native AI core initialized successfully, `false` otherwise.
  */
 external fun initializeAICore(): Boolean
     /**
- * Processes a serialized neural request and produces a serialized response payload.
+ * Processes a neural request through the native AI core and produces a textual response.
  *
- * @param request Serialized neural request payload in the format expected by the native substrate.
- * @return The serialized response payload produced by the native neural processor.
+ * @param request The input payload or prompt to be handled by the native neural processor.
+ * @return The response string produced by the native AI core.
  */
 external fun processNeuralRequest(request: String): String
     /**
- * Retrieves current system metrics from the native substrate.
+ * Retrieves a snapshot of current system metrics from the native substrate.
  *
- * @return A string containing the current system metrics in a serialized format (implementation-defined) suitable for parsing by the caller. 
- */
+ * @return A string representation of the current system metrics. */
 external fun getSystemMetrics(): String
     /**
- * Activates the native substrate hooks used by the auraframefx library.
+ * Activates native hooks inside the native substrate to install platform integrations and callbacks.
  *
- * Invokes native code to install or enable low-level hooks required for native–Kotlin integration; call after the native library has been loaded and initialized.
+ * Triggers native-side state changes required for interoperability between the JVM and the native library.
  */
 external fun enableNativeHooks()
     /**
- * Requests the native AI subsystem to perform an orderly shutdown.
- *
- * Implemented in the native substrate; invokes native shutdown routines and releases native resources. 
+ * Initiates an orderly shutdown of the native AI subsystem and releases its native resources.
  */
 external fun shutdownAI()
     /**
  * Requests the native substrate to optimize AI-related memory usage.
  *
- * @return `true` if the native optimization completed successfully, `false` otherwise.
+ * @return `true` if the native optimizer reports success, `false` otherwise.
  */
 external fun optimizeAIMemory(): Boolean
     /**
- * Analyzes a boot image and produces a diagnostic report.
+ * Analyzes a boot image and produces a diagnostic analysis report.
  *
- * @param bootImageData Raw bytes of the boot image to be analyzed.
- * @return A textual analysis report or diagnostic summary produced from the boot image.
- */
+ * @param bootImageData The raw boot image bytes to analyze.
+ * @return A diagnostic analysis report as a String. */
 external fun analyzeBootImage(bootImageData: ByteArray): String
 
     /**
-     * Handles a thermal event reported from native code and forwards it to the sentinel bus.
+     * Handle a thermal event reported by the native layer.
      *
-     * Maps `stateInt` to a `KaiSentinelBus.ThermalState` by index; if the index is out of range,
-     * `KaiSentinelBus.ThermalState.NORMAL` is used. The resolved state and `temp` are emitted to
-     * `sentinelBus` and a debug message is logged.
+     * Resolves `stateInt` to a `KaiSentinelBus.ThermalState` (defaults to `NORMAL` if invalid)
+     * and, if configured, emits the temperature and resolved state to the sentinel bus.
      *
-     * @param temp The reported temperature in degrees Celsius.
-     * @param stateInt The ordinal index of `KaiSentinelBus.ThermalState`; out-of-range values default to `NORMAL`.
+     * @param temp Temperature in degrees Celsius.
+     * @param stateInt Ordinal index of `KaiSentinelBus.ThermalState`; out-of-range values map to `NORMAL`.
      */
 
     @JvmStatic
@@ -130,11 +128,11 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     }
 
     /**
-     * Routes a native-origin security alert into the sentinel bus as a high-severity security event.
+     * Handle a security alert originating from native code by logging it and notifying the sentinel bus.
      *
-     * Emits a `FIRE_DRAWN` security status to the configured `sentinelBus` with the message prefixed by `NATIVE_THREAT: `.
+     * Emits a security event with status `FIRE_DRAWN` and payload prefixed with `"NATIVE_THREAT: "`.
      *
-     * @param reason Human-readable description or code provided by the native substrate explaining the alert.
+     * @param reason The native-provided description or code for the detected threat.
      */
     @JvmStatic
     fun onNativeSecurityAlert(reason: String) {
@@ -143,9 +141,9 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     }
 
     /**
-     * Requests a sovereignty state freeze by invoking `initiateStateFreeze()` on the registered SovereignStateManager.
+     * Requests the sovereign manager to initiate a system state freeze.
      *
-     * If no SovereignStateManager is registered, no action is taken.
+     * The freeze request is dispatched on the object's internal IO coroutine scope and does not block the caller.
      */
     @JvmStatic
     fun requestSovereignFreeze() {
@@ -156,10 +154,10 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     }
 
     /**
-     * Determines whether the given capability index is permitted by PandoraBox gating.
+     * Checks whether a given agent capability is permitted by the PandoraBox gating service.
      *
-     * @param capabilityInt Index into AgentCapabilityCategory.entries used to select the capability; an invalid index causes the check to fail.
-     * @return `true` if the capability is unlocked in PandoraBox, `false` otherwise (also `false` when the index is invalid or PandoraBox is not initialized).
+     * @param capabilityInt Integer index corresponding to an entry in `AgentCapabilityCategory.entries`.
+     * @return `true` if the capability is unlocked; `false` if the capability is locked, if `capabilityInt` is invalid, or if the PandoraBox service is not initialized.
      */
     @JvmStatic
     fun checkPandoraGating(capabilityInt: Int): Boolean {
@@ -179,9 +177,9 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     }
 
     /**
-     * Requests a restorative drone dispatch for a native-triggered event.
+     * Requests a restorative drone dispatch from the configured dispatcher with a native-trigger reason.
      *
-     * @param reason Human-readable reason included in the dispatch payload.
+     * @param reason Human-readable cause used in the dispatch payload (prefixed with "Native Trigger: ").
      */
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
@@ -192,12 +190,9 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     }
 
     /**
-     * Obtain the AI version string, using a fallback stub if the native library is unavailable.
+     * Retrieve the AI version reported by the native substrate, with a safe fallback when the native library is not present.
      *
-     * If the native JNI call fails due to a missing native library, this returns the fallback
-     * string "Aurakai ReGenesis 1.1.0-STUB".
-     *
-     * @return The AI version string, or "Aurakai ReGenesis 1.1.0-STUB" if native retrieval fails.
+     * @return The native AI version string, or "Aurakai ReGenesis 1.1.0-STUB" if the native symbol cannot be loaded.
      */
     fun getAIVersionSafe(): String {
         return try {
