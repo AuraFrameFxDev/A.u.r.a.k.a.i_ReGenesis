@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.backgrounds.DataRibbonsBackground
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.backgrounds.HexagonGridBackground
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.HoloHUDOverlay
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.themes.AgentDomain
 
