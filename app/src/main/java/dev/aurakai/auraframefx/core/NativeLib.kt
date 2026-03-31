@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.core
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus.ThermalState
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
 import kotlinx.coroutines.CoroutineScope
