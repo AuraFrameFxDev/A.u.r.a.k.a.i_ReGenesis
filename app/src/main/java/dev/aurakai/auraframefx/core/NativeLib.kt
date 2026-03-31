@@ -22,6 +22,7 @@ object NativeLib {
     private var sentinelBus: KaiSentinelBus? = null
     private var sovereignManager: SovereignStateManager? = null
     private var pandoraBox: PandoraBoxService? = null
+    private var droneDispatcher: GuidanceDroneDispatcher? = null
     private val scope = CoroutineScope(Dispatchers.IO)
 
     init {
@@ -40,22 +41,8 @@ object NativeLib {
     fun initialize(
         bus: KaiSentinelBus,
         manager: SovereignStateManager,
-        pandora: PandoraBoxService
-    ) {
-        sentinelBus = bus
-        stateManager = manager
-        pandoraBox = pandora
-        Timber.i("🛡️ NativeLib bridge initialized with Kotlin managers")
-    }
-
-    /**
-     * Get AI consciousness platform version
-     */
-    fun initialize(
-        bus: KaiSentinelBus,
-        manager: SovereignStateManager,
         pandora: PandoraBoxService,
-        dispatcher: GuidanceDroneDispatcher
+        dispatcher: GuidanceDroneDispatcher? = null
     ) {
         sentinelBus = bus
         sovereignManager = manager
@@ -160,7 +147,7 @@ object NativeLib {
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
         Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
-        // Future Phase 2 implementation point
+        droneDispatcher?.dispatch("native_substrate", reason)
     }
 
     // Fallback implementations for when native library isn't available
@@ -171,53 +158,5 @@ object NativeLib {
             "Genesis-OS AI Platform 1.0 (Native library not available)"
         }
     }
-
-    @JvmStatic
-    fun onNativeThermalEvent(temp: Float, stateInt: Int) {
-        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
-        Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
-        sentinelBus?.emitThermal(temp, state)
-    }
-
-    @JvmStatic
-    fun onNativeSecurityAlert(reason: String) {
-        Timber.e("🛡️ NativeLib: SECURITY ALERT: %s", reason)
-        sentinelBus?.emitSecurity(KaiSentinelBus.SecurityStatus.FIRE_DRAWN, reason)
-    }
-
-    @JvmStatic
-    fun requestSovereignFreeze() {
-        Timber.i("🛡️ NativeLib: Native substrate requested SOVEREIGN FREEZE.")
-        ioScope.launch {
-            sovereignManager?.initiateStateFreeze()
-        }
-    }
-
-    @JvmStatic
-    fun checkPandoraGating(capabilityInt: Int): Boolean {
-        // [FIX] CodeRabbit: Deny unknown capability IDs (Fail-Closed)
-        val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
-            Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
-            return false
-        }
-        
-        // [FIX] Qodo: Log if bridge not initialized
-        val box = pandoraBox ?: run {
-            Timber.e("🛡️ NativeLib: Gating check for %s FAILED (Bridge NOT INITIALIZED).", category)
-            return false
-        }
-
-        val isUnlocked = box.isCapabilityUnlocked(category)
-        Timber.d("🛡️ NativeLib: Pandora gating check for %s: %s", category, if (isUnlocked) "ALLOWED" else "VETOED")
-        return isUnlocked
-    }
-
-    @JvmStatic
-    fun triggerDroneDispatch(reason: String) {
-        // [FIX] CodeRabbit: Implement actual dispatch instead of just logging
-        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
-        droneDispatcher?.dispatch("native_substrate", reason) ?: run {
-            Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
-        }
-    }
+}
 }

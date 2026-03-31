@@ -51,18 +51,6 @@ class AurakaiApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
 
-    @Inject
-    lateinit var sentinelBus: KaiSentinelBus
-
-    @Inject
-    lateinit var stateManager: SovereignStateManager
-
-    @Inject
-    lateinit var pandoraBox: PandoraBoxService
-
-    @Inject
-    lateinit var sovereignPerimeter: SovereignPerimeter
-
     // Application-scoped coroutine for background init
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
