@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
  * ðŸ”® ORACLE DRIVE - MANUAL CONTROL
@@ -223,5 +223,6 @@ private fun ManualSwitch(
         )
     }
 }
+
 
 

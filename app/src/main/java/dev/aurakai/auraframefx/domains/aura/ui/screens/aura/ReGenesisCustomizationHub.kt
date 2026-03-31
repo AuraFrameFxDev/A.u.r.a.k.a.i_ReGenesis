@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.ColorWaveBackground
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
  * âš™ï¸ REGENESIS CUSTOMIZATION HUB
@@ -195,5 +195,6 @@ private fun CategoryCard(
         }
     }
 }
+
 
 
