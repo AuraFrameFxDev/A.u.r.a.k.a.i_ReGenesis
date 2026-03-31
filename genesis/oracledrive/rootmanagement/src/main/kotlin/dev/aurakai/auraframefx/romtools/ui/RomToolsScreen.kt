@@ -79,6 +79,7 @@ import timber.log.Timber
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RomToolsScreen(
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     romToolsViewModel: RomToolsViewModel = hiltViewModel(),
 ) {
@@ -195,6 +196,15 @@ fun RomToolsScreen(
                                 fontWeight = FontWeight.Bold
                             )
                         }
+                    }
+                },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFFFF6B35)
+                        )
                     }
                 },
                 actions = {

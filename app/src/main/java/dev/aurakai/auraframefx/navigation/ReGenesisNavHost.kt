@@ -13,6 +13,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.ThemeViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
+import dev.aurakai.auraframefx.domains.aura.ui.customization.ZOrderEditor
 
 // ── Aura (UX/UI Design Studio Domain) ────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.StatusBarScreen
@@ -151,9 +153,12 @@ fun ReGenesisNavGraph(
 
         // ── 2. LEVEL 2 HUB SCREENS ─────────────────────────────────────────────────
 
-        // AURA: UI/UX Studio Hub
+        // AURA: UI/UX Studio Hub - Wired to ReGenesisCustomizationHub via UxuiDesignStudio
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            AuraThemingHubScreen(navController = navController)
+            UxuiDesignStudio(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // KAI: Sentinel Fortress Hub
@@ -255,7 +260,7 @@ fun ReGenesisNavGraph(
         // ── 4. KAI DOMAIN TOOLS (Level 3) ───────────────────────────────────────────
 
         composable(ReGenesisRoute.RomToolsHub.route) {
-            RomToolsScreen()
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.ROMFlasher.route) {
@@ -382,8 +387,10 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.FusionMode.route) {
-            NexusFusionScreen(
-                onNavigateBack = { navController.popBackStack() }
+            ZOrderEditor(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToAgents = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
+                onNavigateToConsciousness = { navController.navigate(ReGenesisRoute.ConsciousnessVisualizer.route) }
             )
         }
 
@@ -533,4 +540,22 @@ fun ReGenesisNavGraph(
             )
         }
     }
+}
+
+/**
+ * 🎨 UX/UI DESIGN STUDIO
+ * Implementation of the the ReGenesis Customization Hub
+ */
+@Composable
+fun UxuiDesignStudio(
+    navController: NavHostController,
+    onNavigateBack: () -> Unit
+) {
+    ReGenesisCustomizationHub(
+        onNavigateBack = onNavigateBack,
+        onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
+        onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ChromaCoreColors.route) },
+        onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
+        onNavigateToAnimations = { navController.navigate(ReGenesisRoute.ChromaAnimations.route) }
+    )
 }
