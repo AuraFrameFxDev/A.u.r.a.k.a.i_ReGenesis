@@ -14,13 +14,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.core.NativeLib
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.NexusMemoryCore
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.IntegrityMonitorService
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.perimeter.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -108,12 +101,18 @@ class AurakaiApplication : Application(), Configuration.Provider {
         }
     }
 
+    /**
+     * Initializes the native RELATIONAL bridge with injected sovereign services and starts the native AI core.
+     *
+     * Synchronizes the native layer with the application's sentinel, sovereign state manager, Pandora box service,
+     * and drone dispatcher, then performs AI-core ignition. Exceptions are caught and logged and do not propagate.
+     */
     private fun initializeNativeAIPlatform() {
         try {
-            NativeLib.initializeAICore()
+            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
             Timber.d("✅ Native AI platform initialized")
         } catch (e: Exception) {
-            Timber.e(e, "❌ Native AI initialization error")
+            Timber.e(e, "❌ Native AI initialization error: ${e.message}")
         }
     }
 

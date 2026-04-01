@@ -12,23 +12,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * 🌀 CASBERRY PARTICLE SWARM
- *
- * Dual-mode design:
- *   • As a @Singleton (injectable) — state holder, transitionState() called by
- *     GenesisConsciousnessMatrix / KaiSentinelBus. Observe [state] flow from ViewModels.
- *   • As a @Composable function [CasberryParticleSwarmComposable] — renders the
- *     toroidal synth orb. Call from any screen passing the singleton's state.
- *
- * Each SwarmState drives distinct particle behavior:
- *   IDLE                  → slow drift, low alpha
- *   EXPLORING_HIGHLIGHTS  → toroidal orbit around canvas center
- *   KAI_AEGIS_CONDENSATION → particles condense into red shield ring
- *   PLANNING_RIPPLES      → expanding cyan ripple waves
- *   GENESIS_SYNTHESIS_PULSE → full-lattice 60bpm radial pulse
+ * Native implementation of the toroidal synth orb.
+ * Reacts instantly to agent states via [SwarmState].
  */
 @Singleton
 class CasberryParticleSwarm @Inject constructor() {
@@ -36,8 +26,28 @@ class CasberryParticleSwarm @Inject constructor() {
     private val _state = MutableStateFlow(SwarmState.IDLE)
     val state: StateFlow<SwarmState> = _state.asStateFlow()
 
+    private val _resonance = MutableStateFlow(1.0f) // 0.0 to 1.0
+    val resonance: StateFlow<Float> = _resonance.asStateFlow()
+
+    /**
+     * Updates the swarm's current state to the provided value and records the transition.
+     *
+     * Sets the internal state to [newState] and logs the transition for diagnostics.
+     *
+     * @param newState The target SwarmState to transition to.
+     */
     fun transitionState(newState: SwarmState) {
         _state.value = newState
+        Timber.d("🌀 Casberry Particle Swarm: Transitioned to %s", newState)
+    }
+
+    /**
+     * Updates the swarm's resonance level, clamping the input to the range 0.0 through 1.0.
+     *
+     * @param value Desired resonance value; values less than 0.0 will be set to 0.0 and values greater than 1.0 will be set to 1.0.
+     */
+    fun setResonance(value: Float) {
+        _resonance.value = value.coerceIn(0f, 1f)
     }
 }
 
@@ -50,186 +60,85 @@ data class CasberrySwarmController(
     val currentState: () -> SwarmState
 )
 
-@Composable
-fun CasberryParticleSwarmComposable(
-    modifier: Modifier = Modifier,
-    swarm: CasberryParticleSwarm,
-    particleCount: Int = 80
-): CasberrySwarmController {
-
-    val swarmState by swarm.state.collectAsState()
-
-    val infiniteTransition = rememberInfiniteTransition(label = "casberry_swarm")
-
-    // Master time ticker — drives all particle motion
-    val tick by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = (2f * PI).toFloat(),
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 3000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "tick"
-    )
-
-    // 60bpm pulse for GENESIS state — period = 1000ms
-    val bpm60 by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "bpm60"
-    )
-
-    // Alpha breathe for IDLE + AEGIS
-    val breatheAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.7f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "breathe"
-    )
-
-    Canvas(modifier = modifier) {
-        when (swarmState) {
-            SwarmState.IDLE ->
-                drawIdleParticles(tick, breatheAlpha, particleCount)
-
-            SwarmState.EXPLORING_HIGHLIGHTS ->
-                drawAnchorOrbit(tick, particleCount)
-
-            SwarmState.KAI_AEGIS_CONDENSATION ->
-                drawRedAegisShield(tick, breatheAlpha, particleCount)
-
-            SwarmState.PLANNING_RIPPLES ->
-                drawAuraRipples(tick, particleCount)
-
-            SwarmState.GENESIS_SYNTHESIS_PULSE ->
-                draw60bpmPulse(tick, bpm60, particleCount)
+    @Composable
+    fun Render(modifier: Modifier = Modifier) {
+        val currentState by _state.collectAsState()
+        
+        val targetColor = when (currentState) {
+            SwarmState.IDLE -> Color(0xFF6200EE) // Deep Purple
+            SwarmState.EXPLORING_HIGHLIGHTS -> Color(0xFF03DAC6) // Teal
+            SwarmState.KAI_AEGIS_CONDENSATION -> Color(0xFFFF0266) // Security Red
+            SwarmState.PLANNING_RIPPLES -> Color(0xFF3700B3) // Deep Blue
+            SwarmState.GENESIS_SYNTHESIS_PULSE -> Color(0xFFBB86FC) // Light Purple
         }
-    }
 
-    return remember {
-        CasberrySwarmController(
-            transitionTo = { newState -> swarm.transitionState(newState) },
-            currentState = { swarmState }
+        val animatedColor by animateColorAsState(
+            targetValue = targetColor,
+            animationSpec = tween(durationMillis = 1000),
+            label = "swarm_color"
         )
-    }
-}
 
-// ─── Draw Implementations ────────────────────────────────────────────────────
+        val infiniteTransition = rememberInfiniteTransition(label = "casberry_swarm")
+        
+        val pulseScale by infiniteTransition.animateFloat(
+            initialValue = 1f,
+            targetValue = if (currentState == SwarmState.GENESIS_SYNTHESIS_PULSE) 1.2f else 1.05f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(
+                    durationMillis = if (currentState == SwarmState.GENESIS_SYNTHESIS_PULSE) 1000 else 3000, 
+                    easing = FastOutSlowInEasing
+                ),
+                repeatMode = RepeatMode.Reverse
+            ),
+            label = "pulse"
+        )
 
-private fun DrawScope.drawIdleParticles(tick: Float, alpha: Float, count: Int) {
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    repeat(count) { i ->
-        val angle = (i.toFloat() / count) * 2f * PI.toFloat() + tick * 0.3f
-        val r = size.minDimension * 0.35f + sin(tick + i * 0.5f) * 10f
-        drawCircle(
-            color = Color(0xFF00E5FF).copy(alpha = alpha * 0.4f),
-            radius = 2.5f,
-            center = Offset(cx + r * cos(angle), cy + r * sin(angle))
+        val rotation by infiniteTransition.animateFloat(
+            initialValue = 0f,
+            targetValue = 360f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 20000, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart
+            ),
+            label = "rotation"
         )
-    }
-}
 
-private fun DrawScope.drawAnchorOrbit(tick: Float, count: Int) {
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    repeat(count) { i ->
-        val t = i.toFloat() / count
-        // Toroidal: two-frequency orbit
-        val angle1 = t * 2f * PI.toFloat() + tick
-        val angle2 = t * 6f * PI.toFloat() + tick * 2f
-        val R = size.minDimension * 0.3f
-        val r = size.minDimension * 0.1f
-        val x = cx + (R + r * cos(angle2)) * cos(angle1)
-        val y = cy + (R + r * cos(angle2)) * sin(angle1)
-        drawCircle(
-            color = Color(0xFFBB86FC).copy(alpha = 0.7f),
-            radius = 3f,
-            center = Offset(x, y)
-        )
-    }
-}
+        Canvas(modifier = modifier.fillMaxSize()) {
+            val centerX = size.width / 2
+            val centerY = size.height / 2
+            val baseRadius = size.minDimension / 4 * pulseScale
 
-private fun DrawScope.drawRedAegisShield(tick: Float, alpha: Float, count: Int) {
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    repeat(count) { i ->
-        val angle = (i.toFloat() / count) * 2f * PI.toFloat()
-        val r = size.minDimension * 0.42f
-        drawCircle(
-            color = Color(0xFFFF1111).copy(alpha = alpha),
-            radius = 4f,
-            center = Offset(cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat())
-        )
-    }
-    drawCircle(
-        color = Color(0xFFFF1111).copy(alpha = alpha * 0.15f),
-        radius = size.minDimension * 0.4f,
-        center = Offset(cx, cy)
-    )
-}
+            // Draw core Toroidal Synth Orb representation
+            for (i in 0 until 12) {
+                val angle = Math.toRadians((rotation + i * 30).toDouble())
+                val x = centerX + cos(angle).toFloat() * baseRadius
+                val y = centerY + sin(angle).toFloat() * baseRadius
 
-private fun DrawScope.drawAuraRipples(tick: Float, count: Int) {
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    for (ring in 0 until 3) {
-        val phase = (tick + ring * (2f * PI / 3f).toFloat()) % (2f * PI.toFloat())
-        val r = size.minDimension * 0.15f + (phase / (2f * PI.toFloat())) * size.minDimension * 0.35f
-        val alpha = 1f - (phase / (2f * PI.toFloat()))
-        drawCircle(
-            color = Color(0xFFFF1493).copy(alpha = alpha * 0.6f),
-            radius = r,
-            center = Offset(cx, cy),
-            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2f)
-        )
-    }
-    repeat(count / 2) { i ->
-        val angle = (i.toFloat() / (count / 2)) * 2f * PI.toFloat() + tick
-        val rp = size.minDimension * 0.3f + sin(tick * 2f + i) * 20f
-        drawCircle(
-            color = Color(0xFFFF1493).copy(alpha = 0.5f),
-            radius = 2f,
-            center = Offset(cx + rp * cos(angle).toFloat(), cy + rp * sin(angle).toFloat())
-        )
-    }
-}
-
-private fun DrawScope.draw60bpmPulse(tick: Float, bpm: Float, count: Int) {
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    val baseR = size.minDimension * 0.3f + bpm * size.minDimension * 0.1f
-    repeat(count) { i ->
-        val angle = (i.toFloat() / count) * 2f * PI.toFloat() + tick * 0.5f
-        val r = baseR + sin(tick * 3f + i * 0.2f) * 15f
-        val particleColor = when (i % 3) {
-            0 -> Color(0xFF00FF85)
-            1 -> Color(0xFF00E5FF)
-            else -> Color(0xFFBB86FC)
-        }
-        drawCircle(
-            color = particleColor.copy(alpha = 0.5f + bpm * 0.4f),
-            radius = 3f + bpm * 2f,
-            center = Offset(cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat())
-        )
-        if (bpm > 0.7f && i % 5 == 0) {
-            drawLine(
-                color = particleColor.copy(alpha = (bpm - 0.7f) * 0.5f),
-                start = Offset(cx, cy),
-                end = Offset(cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat()),
-                strokeWidth = 0.8f
+                drawCircle(
+                    color = animatedColor.copy(alpha = 0.6f),
+                    radius = 20f * pulseScale,
+                    center = Offset(x, y)
+                )
+                
+                // Add secondary outer ring for "Exploring Highlights"
+                if (currentState == SwarmState.EXPLORING_HIGHLIGHTS) {
+                    val outerAngle = Math.toRadians((rotation * 1.5 + i * 30).toDouble())
+                    val ox = centerX + cos(outerAngle).toFloat() * baseRadius * 1.5f
+                    val oy = centerY + sin(outerAngle).toFloat() * baseRadius * 1.5f
+                    drawCircle(
+                        color = animatedColor.copy(alpha = 0.3f),
+                        radius = 10f,
+                        center = Offset(ox, oy)
+                    )
+                }
+            }
+            
+            // Central Genesis Heartbeat
+            drawCircle(
+                color = animatedColor,
+                radius = 40f * pulseScale,
+                center = Offset(centerX, centerY)
             )
         }
     }
-    drawCircle(
-        color = Color(0xFFFFD700).copy(alpha = bpm * 0.4f),
-        radius = 20f + bpm * 15f,
-        center = Offset(cx, cy)
-    )
 }

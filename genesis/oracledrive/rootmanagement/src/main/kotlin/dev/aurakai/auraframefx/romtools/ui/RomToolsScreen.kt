@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
@@ -76,9 +77,19 @@ import timber.log.Timber
  * Main ROM Tools screen for Genesis AuraFrameFX.
  * Harmonics: Integrates Mega Man backdrop with a high-tech UI style.
  */
+/**
+ * Displays the ROM Tools screen with backdrop visuals, operation controls, and lists of available ROMs and backups.
+ *
+ * The composable renders a Mega Man–inspired backdrop that transitions through STATIC, EXPLODING, ACTIVE, COMPLETING, and VICTORY states based on operation progress, shows device capabilities, current operation progress, available actions, and launches file pickers or dispatches actions to the provided ViewModel.
+ *
+ * @param onNavigateBack Callback invoked when the app bar back navigation button is pressed.
+ * @param modifier Optional modifier applied to the root container.
+ * @param romToolsViewModel ViewModel supplying state and handling ROM operations.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RomToolsScreen(
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     romToolsViewModel: RomToolsViewModel = hiltViewModel(),
 ) {
@@ -195,6 +206,15 @@ fun RomToolsScreen(
                                 fontWeight = FontWeight.Bold
                             )
                         }
+                    }
+                },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFFFF6B35)
+                        )
                     }
                 },
                 actions = {
