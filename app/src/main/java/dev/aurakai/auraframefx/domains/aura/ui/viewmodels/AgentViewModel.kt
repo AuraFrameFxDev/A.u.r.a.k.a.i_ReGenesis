@@ -114,7 +114,6 @@ open class AgentViewModel @Inject constructor(
                 if (!agentMsg.from.equals("User", ignoreCase = true)) {
                     val chatMsg = ChatMessage(
                         id = UUID.randomUUID().toString(),
-                        role = "assistant",
                         content = agentMsg.content,
                         sender = agentMsg.from.uppercase(),
                         isFromUser = false,

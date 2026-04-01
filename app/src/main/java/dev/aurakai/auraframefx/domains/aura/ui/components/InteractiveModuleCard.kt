@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aurakai.auraframefx.domains.aura.ui.screens.FloatingModuleCard
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlin.math.sqrt
@@ -467,44 +468,4 @@ fun generateStreamParticles(
     }
 }
 
-/**
- * Helper to fix reference
- */
-@Composable
-private fun FloatingModuleCard(
-    moduleName: String,
-    icon: ImageVector,
-    position: dev.aurakai.auraframefx.embodiment.Position3D,
-    onClick: () -> Unit
-) {
-    GlassCard(
-        modifier = Modifier
-            .width(140.dp)
-            .height(140.dp),
-        style = GlassCardStyles.Minimal,
-        onClick = onClick
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = moduleName,
-                modifier = Modifier.size(40.dp),
-                tint = Color.Cyan
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = moduleName,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-        }
-    }
-}
 

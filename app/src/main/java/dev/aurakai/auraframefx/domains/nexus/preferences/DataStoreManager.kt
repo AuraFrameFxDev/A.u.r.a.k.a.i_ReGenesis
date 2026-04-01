@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore by preferencesDataStore(name = "user_prefs")
+val Context.userPrefsManagerDataStore by preferencesDataStore(name = "user_prefs")
 
 class DataStoreManager(private val context: Context) {
     companion object {
@@ -16,25 +16,25 @@ class DataStoreManager(private val context: Context) {
     }
 
     suspend fun setExampleValue(value: String) {
-        context.dataStore.edit { prefs ->
+        context.userPrefsManagerDataStore.edit { prefs ->
             prefs[EXAMPLE_KEY] = value
         }
     }
 
-    val exampleValueFlow: Flow<String?> = context.dataStore.data.map { prefs ->
+    val exampleValueFlow: Flow<String?> = context.userPrefsManagerDataStore.data.map { prefs ->
         prefs[EXAMPLE_KEY]
     }
 
     suspend fun getString(key: String, defaultValue: String = ""): String {
         val prefKey = stringPreferencesKey(key)
-        return context.dataStore.data.map { prefs ->
+        return context.userPrefsManagerDataStore.data.map { prefs ->
             prefs[prefKey] ?: defaultValue
         }.first()
     }
 
     suspend fun storeString(key: String, value: String) {
         val prefKey = stringPreferencesKey(key)
-        context.dataStore.edit { prefs ->
+        context.userPrefsManagerDataStore.edit { prefs ->
             prefs[prefKey] = value
         }
     }

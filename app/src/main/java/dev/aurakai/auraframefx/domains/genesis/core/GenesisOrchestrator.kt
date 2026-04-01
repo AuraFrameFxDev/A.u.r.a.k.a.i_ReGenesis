@@ -24,6 +24,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import timber.log.Timber
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,7 +46,8 @@ class GenesisOrchestrator @Inject constructor(
     private val auraAgent: AuraAgent,
     private val kaiAgent: KaiAgent,
     private val cascadeAgent: CascadeAgent,
-    private val oracleDriveService: OracleDriveService
+    private val oracleDriveService: OracleDriveService,
+    private val genesisAgent: dagger.Lazy<GenesisAgent>
 ) : AgentMessageBus {
 
     // Dedicated scope for orchestration with SupervisorJob
@@ -57,6 +59,15 @@ class GenesisOrchestrator @Inject constructor(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     override val collectiveStream = _collectiveStream.asSharedFlow()
+
+    override suspend fun processRequest(request: AiRequest, name: String): AgentResponse {
+        return when (name) {
+            "Aura" -> auraAgent.processRequest(request, name)
+            "Kai" -> kaiAgent.processRequest(request, name)
+            "Cascade" -> cascadeAgent.processRequest(request, name)
+            else -> genesisAgent.get().processRequest(request, name)
+        }
+    }
 
     override suspend fun broadcast(message: AgentMessage) {
         Timber.tag("GenesisBus")

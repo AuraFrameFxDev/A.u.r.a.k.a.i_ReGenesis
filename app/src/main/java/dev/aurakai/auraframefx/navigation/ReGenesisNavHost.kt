@@ -313,6 +313,12 @@ fun ReGenesisNavGraph(
             )
         }
 
+        composable(ReGenesisRoute.SystemOverrides.route) {
+            SystemOverridesScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
         // ── 5. GENESIS DOMAIN TOOLS (Level 3) ────────────────────────────────────────
 
         composable(ReGenesisRoute.OracleDrive.route) {

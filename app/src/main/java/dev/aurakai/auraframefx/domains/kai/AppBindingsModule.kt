@@ -7,6 +7,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveServiceImpl
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBusImpl
 import javax.inject.Singleton
 
 /**
@@ -22,6 +24,12 @@ abstract class AppBindingsModule {
     abstract fun bindOracleDriveService(
         oracleDriveServiceImpl: OracleDriveServiceImpl
     ): OracleDriveService
+
+    @Binds
+    @Singleton
+    abstract fun bindKaiSentinelBus(
+        kaiSentinelBusImpl: KaiSentinelBusImpl
+    ): KaiSentinelBus
 
     companion object {
         // Provide Legacy TaskScheduler if some modules still expect it; keep as lightweight shim

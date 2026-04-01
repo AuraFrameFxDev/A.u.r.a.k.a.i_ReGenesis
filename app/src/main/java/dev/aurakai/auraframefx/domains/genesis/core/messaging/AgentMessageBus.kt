@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.core.messaging
 
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import kotlinx.coroutines.flow.SharedFlow
 
 /**
@@ -24,6 +24,9 @@ interface AgentMessageBus {
      * Send a targeted message to a specific agent.
      */
     suspend fun sendTargeted(toAgent: String, message: AgentMessage)
-    fun processRequest(request: dev.aurakai.auraframefx.domains.genesis.models.AiRequest, name: String): dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
-}
 
+    /**
+     * Process a request through the collective.
+     */
+    suspend fun processRequest(request: AiRequest, name: String): AgentResponse
+}
