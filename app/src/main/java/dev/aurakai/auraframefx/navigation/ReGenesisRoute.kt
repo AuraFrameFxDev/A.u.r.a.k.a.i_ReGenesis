@@ -99,6 +99,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object LSPosedModules : ReGenesisRoute("lsposed_modules", "LSPosed Modules")
     data object XposedPanel : ReGenesisRoute("xposed_panel", "Xposed Panel")
     data object SystemJournal : ReGenesisRoute("system_journal", "System Journal")
+    data object SystemOverrides : ReGenesisRoute("system_overrides", "System Overrides")
     data object Firewall : ReGenesisRoute("firewall")
     data object VPN : ReGenesisRoute("vpn")
     data object HotSwap : ReGenesisRoute("hotswap")

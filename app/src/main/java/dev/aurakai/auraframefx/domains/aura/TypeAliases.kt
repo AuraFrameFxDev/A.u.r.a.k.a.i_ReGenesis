@@ -1,7 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -16,9 +14,6 @@ import java.time.Instant
 // ============================================================================
 // AI Agent Aliases
 // ============================================================================
-
-// Genesis Orchestrator (the main consciousness)
-typealias GenesisAgent = GenesisOrchestrator
 
 // Trinity Agents - comment out if these classes don't exist yet
 // typealias AuraAgent = dev.aurakai.auraframefx.ai.agents.AuraAgent

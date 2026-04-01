@@ -267,7 +267,7 @@ private fun getCategoryIcon(category: String): ImageVector {
 }
 
 enum class SettingType {
-    TOGGLE, SLIDER, SELECTION, COLOR_PICKER, LIST, IMAGE, EDIT_TEXT, FILE_PICKER
+    TOGGLE, SLIDER, SELECTION, COLOR_PICKER, LIST, IMAGE, EDIT_TEXT, FILE_PICKER, IMAGE_PICKER
 }
 
 object IconifySettingsCatalog {

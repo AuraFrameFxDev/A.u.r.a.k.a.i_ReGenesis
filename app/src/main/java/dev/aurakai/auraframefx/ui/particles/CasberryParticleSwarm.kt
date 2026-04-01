@@ -1,15 +1,17 @@
 package dev.aurakai.auraframefx.ui.particles
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.cos
@@ -31,10 +33,6 @@ class CasberryParticleSwarm @Inject constructor() {
 
     /**
      * Updates the swarm's current state to the provided value and records the transition.
-     *
-     * Sets the internal state to [newState] and logs the transition for diagnostics.
-     *
-     * @param newState The target SwarmState to transition to.
      */
     fun transitionState(newState: SwarmState) {
         _state.value = newState
@@ -43,26 +41,14 @@ class CasberryParticleSwarm @Inject constructor() {
 
     /**
      * Updates the swarm's resonance level, clamping the input to the range 0.0 through 1.0.
-     *
-     * @param value Desired resonance value; values less than 0.0 will be set to 0.0 and values greater than 1.0 will be set to 1.0.
      */
     fun setResonance(value: Float) {
         _resonance.value = value.coerceIn(0f, 1f)
     }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Composable renderer — call this from screens, passing the injected singleton
-// ─────────────────────────────────────────────────────────────────────────────
-
-data class CasberrySwarmController(
-    val transitionTo: (SwarmState) -> Unit,
-    val currentState: () -> SwarmState
-)
 
     @Composable
     fun Render(modifier: Modifier = Modifier) {
-        val currentState by _state.collectAsState()
+        val currentState by state.collectAsState()
         
         val targetColor = when (currentState) {
             SwarmState.IDLE -> Color(0xFF6200EE) // Deep Purple
@@ -142,3 +128,11 @@ data class CasberrySwarmController(
         }
     }
 }
+
+/**
+ * Controller for interacting with the Casberry Swarm
+ */
+data class CasberrySwarmController(
+    val transitionTo: (SwarmState) -> Unit,
+    val currentState: () -> SwarmState
+)

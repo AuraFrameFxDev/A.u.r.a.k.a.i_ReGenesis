@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.cascade.CascadeEvent
 import dev.aurakai.auraframefx.domains.cascade.CascadeEventBus
 import dev.aurakai.auraframefx.domains.cascade.MemoryEvent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

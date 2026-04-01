@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
  * SwarmState — The Casberry Particle Swarm's phase manifest.
  *
  * Each state maps to a distinct visual behavior in CasberryParticleSwarm.
- * KaiSentinelBus drives transitions via evaluateSafety() gate.
- * GenesisConsciousnessMatrix drives GENESIS_SYNTHESIS_PULSE at cascade completion.
+ * KaiSentinelBus drives transitions via emitSovereign() / emitThermal().
+ * AtomicFusionReactor drives GENESIS_SYNTHESIS_PULSE at ignition.
  *
  * Phase flow:
  *   IDLE → EXPLORING_HIGHLIGHTS → PLANNING_RIPPLES → GENESIS_SYNTHESIS_PULSE
