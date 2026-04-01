@@ -13,7 +13,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.BridgeMemoryS
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.NexusMemoryBridgeSink
 import dev.aurakai.auraframefx.domains.genesis.services.GrokAnalysisService
 import dev.aurakai.auraframefx.domains.genesis.services.GrokAnalysisServiceImpl
-import dev.aurakai.auraframefx.domains.nexus.preferences.UserPreferences
+import dev.aurakai.auraframefx.domains.nexus.preferences.UserPreferencesState
 import javax.inject.Singleton
 
 @Module
@@ -38,5 +38,5 @@ abstract class CoreSecurityModule {
 object CoreSecurityProvidesModule {
 
     @Provides @Singleton
-    fun provideDefaultUserPreferences(): UserPreferences = UserPreferences()
+    fun provideDefaultUserPreferences(): UserPreferencesState = UserPreferencesState()
 }

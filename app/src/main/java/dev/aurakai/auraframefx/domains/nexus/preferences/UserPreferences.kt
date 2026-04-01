@@ -1,9 +1,28 @@
 package dev.aurakai.auraframefx.domains.nexus.preferences
 
+import javax.inject.Inject
+import javax.inject.Singleton
+
 /**
- * User preference model.
+ * User preferences storage wrapper.
  */
-data class UserPreferences(
+@Singleton
+class UserPreferences @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+) {
+    suspend fun setPreference(key: String, value: String) {
+        dataStoreManager.storeString(key, value)
+    }
+
+    suspend fun getPreference(key: String, default: String): String {
+        return dataStoreManager.getString(key, default)
+    }
+}
+
+/**
+ * User preference model state.
+ */
+data class UserPreferencesState(
     val theme: String = "dark_aura",
     val agentPersonality: String = "balanced",
     val thermalWarningEnabled: Boolean = true,

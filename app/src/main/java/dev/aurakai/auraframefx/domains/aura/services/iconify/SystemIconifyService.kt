@@ -47,4 +47,9 @@ class SystemIconifyService @Inject constructor(
                 )
             }
     }
+
+    override suspend fun searchIcons(query: String, limit: Int): Result<IconifyService.IconSearchResult> {
+        // Implementation
+        return Result.success(IconifyService.IconSearchResult(emptyList(), query))
+    }
 }
