@@ -24,6 +24,6 @@ interface AgentMessageBus {
      * Send a targeted message to a specific agent.
      */
     suspend fun sendTargeted(toAgent: String, message: AgentMessage)
-    fun processRequest(request: AiRequest, name: String): AgentResponse
+    fun processRequest(request: dev.aurakai.auraframefx.domains.genesis.models.AiRequest, name: String): dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
 }
 
