@@ -3,11 +3,11 @@ package dev.aurakai.auraframefx.ui.particles
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -51,18 +51,14 @@ class CasberryParticleSwarm @Inject constructor() {
 // Composable renderer — call this from screens, passing the injected singleton
 // ─────────────────────────────────────────────────────────────────────────────
 
-    /**
-     * Renders the animated particle swarm visualization that reflects the current swarm state and resonance.
-     *
-     * The composable draws an orbiting particle field with a background aura, per-particle ripples during synthesis,
-     * and a central relational core; animation, color palette, particle intensity, and sizing respond to `SwarmState`
-     * and the component's `resonance` state.
-     *
-     * @param modifier Modifier applied to the outer composable layout.
-     */
+data class CasberrySwarmController(
+    val transitionTo: (SwarmState) -> Unit,
+    val currentState: () -> SwarmState
+)
+
     @Composable
     fun Render(modifier: Modifier = Modifier) {
-        val currentState by _state.collectAsState()
+        val currentState by state.collectAsState()
         val resonanceVal by _resonance.collectAsState()
         
         val targetColor = when (currentState) {
@@ -137,7 +133,7 @@ class CasberryParticleSwarm @Inject constructor() {
                 radius = 35f * animatedResonance * pulse,
                 center = Offset(centerX, centerY)
             )
-            
+
             // Add Inner Glow
             drawCircle(
                 color = Color.White.copy(alpha = 0.2f),
@@ -151,3 +147,11 @@ class CasberryParticleSwarm @Inject constructor() {
         val shimmer = (0..100).random() / 100f
     }
 }
+
+/**
+ * Controller for interacting with the Casberry Swarm
+ */
+data class CasberrySwarmController(
+    val transitionTo: (SwarmState) -> Unit,
+    val currentState: () -> SwarmState
+)
