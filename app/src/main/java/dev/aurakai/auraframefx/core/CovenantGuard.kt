@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.core
 
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.alerts.AlertNotifier
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.alerts.AlertPriority
+import dev.aurakai.auraframefx.core.alerts.AlertNotifier
+import dev.aurakai.auraframefx.core.alerts.AlertPriority
 import javax.inject.Inject
 import javax.inject.Singleton
 

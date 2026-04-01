@@ -54,6 +54,13 @@ class SystemAlertNotifier @Inject constructor(
         Timber.tag(TAG).w("Agent anomaly — agent=$agentId, reason=$reason")
     }
 
+    override fun dispatch(priority: AlertPriority, event: String, metadata: Map<String, Any>) {
+        Timber.tag(TAG).d("Dispatch alert: $event priority=$priority metadata=$metadata")
+        if (priority == AlertPriority.SOVEREIGN) {
+            postNotification("Sovereign Alert: $event")
+        }
+    }
+
     private fun postNotification(message: String) {
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)

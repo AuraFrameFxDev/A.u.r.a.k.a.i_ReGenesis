@@ -16,7 +16,7 @@ class EncryptionManager @Inject constructor(
     fun encrypt(data: ByteArray): ByteArray {
         if (data.isEmpty()) return data
         return try {
-            keystoreManager.encrypt(data)
+            keystoreManager.encrypt(data, KeystoreManager.PREFS_KEY)
         } catch (e: Exception) {
             Timber.e(e, "OracleDrive encryption failed")
             throw SecurityException("OracleDrive encryption failed", e)
@@ -26,7 +26,7 @@ class EncryptionManager @Inject constructor(
     fun decrypt(data: ByteArray): ByteArray {
         if (data.isEmpty()) return data
         return try {
-            keystoreManager.decrypt(data)
+            keystoreManager.decrypt(data, KeystoreManager.PREFS_KEY)
         } catch (e: Exception) {
             Timber.e(e, "OracleDrive decryption failed")
             throw SecurityException("OracleDrive decryption failed", e)
@@ -41,7 +41,7 @@ class EncryptionManager @Inject constructor(
     fun decryptWithFallback(data: ByteArray): ByteArray {
         if (data.isEmpty()) return data
         return try {
-            keystoreManager.decrypt(data)
+            keystoreManager.decrypt(data, KeystoreManager.PREFS_KEY)
         } catch (e: Exception) {
             if (isLikelyLegacyPlaintext(data)) {
                 Timber.w("OracleDrive: legacy plaintext detected, returning raw data for migration")
@@ -52,14 +52,6 @@ class EncryptionManager @Inject constructor(
         }
     }
 
-    /**
-     * Heuristic: AES-GCM encrypted data has a minimum size of
-     * 12 (IV) + 16 (GCM tag) = 28 bytes, and the first 12 bytes
-     * are random IV. Legacy plaintext won't follow this structure.
-     *
-     * For text-based files, we check if the data is valid UTF-8 as
-     * an additional signal that it was never encrypted.
-     */
     private fun isLikelyLegacyPlaintext(data: ByteArray): Boolean {
         if (data.size < 28) return true
         return try {
