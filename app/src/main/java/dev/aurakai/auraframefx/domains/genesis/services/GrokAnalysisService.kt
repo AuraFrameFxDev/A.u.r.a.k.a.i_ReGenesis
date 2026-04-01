@@ -28,6 +28,12 @@ interface GrokAnalysisService {
         val severity: Float,
         val description: String
     )
+
+    sealed class ValidationResult {
+        object Approved : ValidationResult()
+        data class Flagged(val reason: String) : ValidationResult()
+        data class Rejected(val reason: String) : ValidationResult()
+    }
 }
 
 @Singleton
