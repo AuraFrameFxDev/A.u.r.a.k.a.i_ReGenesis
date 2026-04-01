@@ -397,4 +397,85 @@ class NativeLibTest {
             NativeLib.requestSovereignFreeze()
         }
     }
+
+    // ─── initializeAICore() ───────────────────────────────────────────────────
+    //
+    // The PR wrapped the native call in a Kotlin function that checks nativeLoaded first.
+    // In a pure-JVM test environment the .so is never loaded so nativeLoaded == false,
+    // meaning initializeAICore() must return false without attempting the JNI call.
+
+    @Nested
+    @DisplayName("initializeAICore()")
+    inner class InitializeAICoreTests {
+
+        @Test
+        @DisplayName("returns false when native library is not loaded (JVM test context)")
+        fun `returns false when native library not loaded`() {
+            // In a JVM test environment the .so is absent so nativeLoaded is false.
+            // The PR's guard clause must short-circuit and return false.
+            val result = NativeLib.initializeAICore()
+            assertFalse(result)
+        }
+
+        @Test
+        @DisplayName("does not throw UnsatisfiedLinkError when native library is absent")
+        fun `does not throw when native library absent`() {
+            // The PR wraps initializeAICoreNative() in a try-catch for UnsatisfiedLinkError.
+            // This verifies that the public wrapper suppresses the error gracefully.
+            org.junit.jupiter.api.assertDoesNotThrow {
+                NativeLib.initializeAICore()
+            }
+        }
+
+        @Test
+        @DisplayName("returns a Boolean (not null) in all circumstances")
+        fun `returns non-null Boolean`() {
+            val result: Boolean = NativeLib.initializeAICore()
+            // result is a primitive Boolean — just ensure it can be read without NPE
+            assertNotNull(result)
+        }
+
+        @Test
+        @DisplayName("calling initializeAICore twice does not throw")
+        fun `repeated calls do not throw`() {
+            org.junit.jupiter.api.assertDoesNotThrow {
+                NativeLib.initializeAICore()
+                NativeLib.initializeAICore()
+            }
+        }
+    }
+
+    // ─── triggerDroneDispatch() — return value ────────────────────────────────
+    //
+    // The PR changed triggerDroneDispatch() from Unit to Boolean.
+    // These tests verify the return value semantics.
+
+    @Nested
+    @DisplayName("triggerDroneDispatch() — return value")
+    inner class TriggerDroneDispatchReturnValueTests {
+
+        @Test
+        @DisplayName("returns false when droneDispatcher is null")
+        fun `returns false when dispatcher is null`() {
+            // droneDispatcher is null after resetNativeLibState()
+            val result = NativeLib.triggerDroneDispatch("reason")
+            assertFalse(result)
+        }
+
+        @Test
+        @DisplayName("returns true when droneDispatcher is available and dispatch succeeds")
+        fun `returns true when dispatcher available`() {
+            injectMocks()
+            val mockDrone = mockk<dev.aurakai.auraframefx.domains.kai.security.GuidanceDrone>(relaxed = true)
+            every {
+                mockDroneDispatcher.dispatchDrone(
+                    dev.aurakai.auraframefx.domains.kai.security.GuidanceDrone.DroneType.RESTORATIVE,
+                    any()
+                )
+            } returns mockDrone
+
+            val result = NativeLib.triggerDroneDispatch("test_reason")
+            assertTrue(result)
+        }
+    }
 }

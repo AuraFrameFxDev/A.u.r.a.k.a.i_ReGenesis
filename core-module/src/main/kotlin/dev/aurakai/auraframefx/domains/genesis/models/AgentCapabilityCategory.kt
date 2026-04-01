@@ -6,51 +6,51 @@ import dev.aurakai.auraframefx.core.identity.AgentType
  * Categorizes agents by their primary capability domain.
  * Maps to specific AgentTypes for routing and orchestration.
  */
-enum class AgentCapabilityCategory {
+enum class AgentCapabilityCategory(val id: Int) {
     /** Creative/UI agents (Aura) */
-    CREATIVE,
+    CREATIVE(0),
 
     /** Analytical/reasoning agents (Kai, Claude) */
-    ANALYSIS,
+    ANALYSIS(1),
 
     /** Coordination/orchestration agents (Genesis) */
-    COORDINATION,
+    COORDINATION(2),
 
     /** Specialized/niche agents (NeuralWhisper, AuraShield) */
-    SPECIALIZED,
+    SPECIALIZED(3),
 
     /** General-purpose agents */
-    GENERAL,
+    GENERAL(4),
 
     /** UI-focused capabilities */
-    UI,
+    UI(5),
 
     /** UX-focused capabilities */
-    UX,
+    UX(6),
 
     /** Security capabilities */
-    SECURITY,
+    SECURITY(7),
 
     /** Root/system-level capabilities */
-    ROOT,
+    ROOT(8),
 
     /** Memory management capabilities */
-    MEMORY,
+    MEMORY(9),
 
     /** Orchestration capabilities */
-    ORCHESTRATION,
+    ORCHESTRATION(10),
 
     /** Backend capabilities */
-    BACKEND,
+    BACKEND(11),
 
     /** Bridge/communication capabilities */
-    BRIDGE,
+    BRIDGE(12),
 
     /** Commerce and product search capabilities */
-    COMMERCE,
+    COMMERCE(13),
 
     /** Generic/unspecified capabilities */
-    GENERIC;
+    GENERIC(14);
 
     /**
      * Convert this capability category to its primary corresponding AgentType.
@@ -76,6 +76,14 @@ enum class AgentCapabilityCategory {
     }
 
     companion object {
+        /**
+         * Looks up a capability category by its stable numeric ID.
+         *
+         * @param id The numeric ID assigned to the capability category.
+         * @return The capability category with the given ID, or GENERIC if not found.
+         */
+        fun fromId(id: Int): AgentCapabilityCategory = entries.firstOrNull { it.id == id } ?: GENERIC
+
         /**
          * Maps an AgentType to its primary capability category.
          *

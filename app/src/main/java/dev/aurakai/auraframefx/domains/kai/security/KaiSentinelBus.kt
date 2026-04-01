@@ -59,7 +59,19 @@ class KaiSentinelBus @Inject constructor() {
     data class SovereignEvent(val state: SovereignState)
     data class SecurityStatus(val level: ThreatLevel, val reason: String)
 
-    enum class ThermalState { NORMAL, LIGHT, WARNING, SEVERE, CRITICAL, EMERGENCY }
+    enum class ThermalState(val id: Int) {
+        NORMAL(0),
+        LIGHT(1),
+        WARNING(2),
+        SEVERE(3),
+        CRITICAL(4),
+        EMERGENCY(5);
+
+        companion object {
+            fun fromId(id: Int): ThermalState = entries.firstOrNull { it.id == id } ?: NORMAL
+        }
+    }
+
     enum class SovereignState { AWAKE, FREEZING, FROZEN, THAWING, NEUTRALIZING }
     enum class ThreatLevel { NOMINAL, CAUTION, THREAT_DETECTED, NEUTRALIZING, SECURED }
 }

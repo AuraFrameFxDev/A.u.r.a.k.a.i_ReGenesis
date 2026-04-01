@@ -116,9 +116,17 @@ class AurakaiApplication : Application(), Configuration.Provider {
      */
     private fun initializeNativeAIPlatform() {
         try {
-            NativeLib.initialize(sentinelBus, sovereignManager, pandoraBox, droneDispatcher)
+            // Synchronize RELATIONAL Bridge with injected Sovereign services
+            NativeLib.initialize(
+                sentinelBus, 
+                sovereignManager, 
+                pandoraBox, 
+                droneDispatcher
+            )
+            
+            // Critical AI ignition
             NativeLib.initializeAICore()
-            Timber.d("✅ Native AI platform initialized")
+            Timber.d("✅ Native AI platform initialized and substrate ignited")
         } catch (e: Exception) {
             Timber.e(e, "❌ Native AI initialization error: ${e.message}")
         }

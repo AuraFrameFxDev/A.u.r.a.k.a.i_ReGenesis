@@ -22,13 +22,17 @@ object NativeLib {
     private var sovereignManager: SovereignStateManager? = null
     private var pandoraBox: PandoraBoxService? = null
     private var droneDispatcher: GuidanceDroneDispatcher? = null
+    
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var nativeLoaded: Boolean = false
 
     init {
         try {
             System.loadLibrary("auraframefx")
+            nativeLoaded = true
             Timber.i("🛡️ Genesis Native Substrate: Standard NDK library loaded.")
         } catch (e: UnsatisfiedLinkError) {
+            nativeLoaded = false
             Timber.e(e, "❌ Native Substrate: Critical failure — library [auraframefx] not found.")
         }
     }
@@ -53,20 +57,60 @@ object NativeLib {
     // --- Native Methods ---
 
     external fun getAIVersion(): String
-    external fun initializeAICore(): Boolean
-    external fun processNeuralRequest(request: String): String
-    external fun getSystemMetrics(): String
-    external fun enableNativeHooks()
-    external fun shutdownAI()
-    external fun optimizeAIMemory(): Boolean
-    external fun analyzeBootImage(bootImageData: ByteArray): String
+    /**
+ * Initialize the native AI core and prepare it for operation.
+ *
+ * @return `true` if the native AI core initialized successfully, `false` otherwise.
+ */
+external fun initializeAICore(): Boolean
+    /**
+ * Processes a neural request through the native AI core and produces a textual response.
+ *
+ * @param request The input payload or prompt to be handled by the native neural processor.
+ * @return The response string produced by the native AI core.
+ */
+external fun processNeuralRequest(request: String): String
+    /**
+ * Retrieves a snapshot of current system metrics from the native substrate.
+ *
+ * @return A string representation of the current system metrics. */
+external fun getSystemMetrics(): String
+    /**
+ * Activates native hooks inside the native substrate to install platform integrations and callbacks.
+ *
+ * Triggers native-side state changes required for interoperability between the JVM and the native library.
+ */
+external fun enableNativeHooks()
+    /**
+ * Initiates an orderly shutdown of the native AI subsystem and releases its native resources.
+ */
+external fun shutdownAI()
+    /**
+ * Requests the native substrate to optimize AI-related memory usage.
+ *
+ * @return `true` if the native optimizer reports success, `false` otherwise.
+ */
+external fun optimizeAIMemory(): Boolean
+    /**
+ * Analyzes a boot image and produces a diagnostic analysis report.
+ *
+ * @param bootImageData The raw boot image bytes to analyze.
+ * @return A diagnostic analysis report as a String. */
+external fun analyzeBootImage(bootImageData: ByteArray): String
 
-    // --- JNI Callbacks (Called from C++) ---
+    /**
+     * Handle a thermal event reported by the native layer.
+     *
+     * Resolves `stateInt` to a `KaiSentinelBus.ThermalState` (defaults to `NORMAL` if invalid)
+     * and, if configured, emits the temperature and resolved state to the sentinel bus.
+     *
+     * @param temp Temperature in degrees Celsius.
+     * @param stateInt Ordinal index of `KaiSentinelBus.ThermalState`; out-of-range values map to `NORMAL`.
+     */
 
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
-        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt)
-            ?: KaiSentinelBus.ThermalState.NORMAL
+        val state = KaiSentinelBus.ThermalState.fromId(stateInt)
 
         sentinelBus?.emitThermal(temp, state)
         Timber.d("🛡️ Native Status: System Thermal at %.1f°C (Zone: %s)", temp, state)
@@ -86,11 +130,16 @@ object NativeLib {
         }
     }
 
+    /**
+     * Checks whether a given agent capability is permitted by the PandoraBox gating service.
+     *
+     * @param capabilityInt Integer index corresponding to an entry in `AgentCapabilityCategory.entries`.
+     * @return `true` if the capability is unlocked; `false` if the capability is locked, if `capabilityInt` is invalid, or if the PandoraBox service is not initialized.
+     */
     @JvmStatic
     fun checkPandoraGating(capabilityInt: Int): Boolean {
-        // Fail-Closed: Deny unknown capability IDs
         val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
-            Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
+            Timber.e("🛡️ Native-Pandora: Invalid capability ID [%d]. Access VETOED.", capabilityInt)
             return false
         }
         
@@ -104,11 +153,16 @@ object NativeLib {
         return isUnlocked
     }
 
+    /**
+     * Requests a restorative drone dispatch from the configured dispatcher with a native-trigger reason.
+     *
+     * @param reason Human-readable cause used in the dispatch payload (prefixed with "Native Trigger: ").
+     */
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
-        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
-        droneDispatcher?.dispatch("native_substrate", reason) ?: run {
-            Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
+        Timber.i("🛡️ Native Substrate: Triggering drone support for: %s", reason)
+        droneDispatcher?.dispatchDrone(GuidanceDroneDispatcher.DroneType.RESTORATIVE, "Native Trigger: $reason") ?: run {
+            Timber.w("🛡️ Native Substrate: Drone dispatcher unavailable for request: %s", reason)
         }
     }
 

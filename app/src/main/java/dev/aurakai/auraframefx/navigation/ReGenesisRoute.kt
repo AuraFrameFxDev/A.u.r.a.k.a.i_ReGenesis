@@ -43,6 +43,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     // ═══════════════════════════════════════════════════════════════
     data object ChromaCore : ReGenesisRoute("chroma_core", "ChromaCore")
     data object ChromaCoreColors : ReGenesisRoute("chroma_core_colors", "ChromaCore Colors")
+    data object ChromaAnimations : ReGenesisRoute("chroma_animations", "Chroma Animations")
     data object ThemeEngine : ReGenesisRoute("theme_engine", "Theme Engine")
     data object NotchBar : ReGenesisRoute("notch_bar", "Notch Bar")
     data object StatusBar : ReGenesisRoute("status_bar", "Status Bar")

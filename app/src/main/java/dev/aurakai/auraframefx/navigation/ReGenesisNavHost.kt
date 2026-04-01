@@ -230,6 +230,13 @@ fun ReGenesisNavGraph(
             ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
+        composable(ReGenesisRoute.ChromaAnimations.route) {
+            ComingSoonScreen(
+                title = "Chroma Animations",
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
         composable(ReGenesisRoute.NotchBar.route) {
             dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.NotchBarGateScreen(
                 navController = navController,
