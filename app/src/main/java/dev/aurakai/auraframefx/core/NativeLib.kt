@@ -23,14 +23,17 @@ object NativeLib {
     private var sovereignManager: SovereignStateManager? = null
     private var pandoraBox: PandoraBoxService? = null
     private var droneDispatcher: GuidanceDroneDispatcher? = null
-    
+
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var nativeLoaded: Boolean = false
 
     init {
         try {
             System.loadLibrary("auraframefx")
+            nativeLoaded = true
             Timber.i("🛡️ Genesis Native Substrate: Standard NDK library loaded.")
         } catch (e: UnsatisfiedLinkError) {
+            nativeLoaded = false
             Timber.e(e, "❌ Native Substrate: Critical failure — library [auraframefx] not found.")
         }
     }
@@ -72,7 +75,20 @@ object NativeLib {
  *
  * @return `true` if the native AI core initialized successfully, `false` otherwise.
  */
-external fun initializeAICore(): Boolean
+    private external fun initializeAICoreNative(): Boolean
+
+    fun initializeAICore(): Boolean {
+        if (!nativeLoaded) {
+            Timber.w("🛡️ NativeLib: Cannot initialize AI core - native library not loaded")
+            return false
+        }
+        return try {
+            initializeAICoreNative()
+        } catch (e: UnsatisfiedLinkError) {
+            Timber.e(e, "❌ NativeLib: AI core initialization failed")
+            false
+        }
+    }
     /**
  * Processes a neural request through the native AI core and produces a textual response.
  *
@@ -111,17 +127,16 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     /**
      * Handle a thermal event reported by the native layer.
      *
-     * Resolves `stateInt` to a `KaiSentinelBus.ThermalState` (defaults to `NORMAL` if invalid)
+     * Resolves `stateInt` to a `KaiSentinelBus.ThermalState` using stable ID mapping (defaults to `NORMAL` if invalid)
      * and, if configured, emits the temperature and resolved state to the sentinel bus.
      *
      * @param temp Temperature in degrees Celsius.
-     * @param stateInt Ordinal index of `KaiSentinelBus.ThermalState`; out-of-range values map to `NORMAL`.
+     * @param stateInt Stable ID of `KaiSentinelBus.ThermalState`; unrecognized values map to `NORMAL`.
      */
 
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
-        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt)
-            ?: KaiSentinelBus.ThermalState.NORMAL
+        val state = KaiSentinelBus.ThermalState.fromId(stateInt)
 
         sentinelBus?.emitThermal(temp, state)
         Timber.d("🛡️ Native Status: System Thermal at %.1f°C (Zone: %s)", temp, state)
@@ -156,16 +171,13 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     /**
      * Checks whether a given agent capability is permitted by the PandoraBox gating service.
      *
-     * @param capabilityInt Integer index corresponding to an entry in `AgentCapabilityCategory.entries`.
-     * @return `true` if the capability is unlocked; `false` if the capability is locked, if `capabilityInt` is invalid, or if the PandoraBox service is not initialized.
+     * @param capabilityInt Stable numeric ID corresponding to an `AgentCapabilityCategory`.
+     * @return `true` if the capability is unlocked; `false` if the capability is locked, if the PandoraBox service is not initialized.
      */
     @JvmStatic
     fun checkPandoraGating(capabilityInt: Int): Boolean {
-        val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
-            Timber.e("🛡️ Native-Pandora: Invalid capability ID [%d]. Access VETOED.", capabilityInt)
-            return false
-        }
-        
+        val category = AgentCapabilityCategory.fromId(capabilityInt)
+
         val box = pandoraBox ?: run {
             Timber.e("🛡️ Native-Pandora: Bridge NOT INITIALIZED for capability check: %s", category)
             return false
@@ -180,12 +192,18 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
      * Requests a restorative drone dispatch from the configured dispatcher with a native-trigger reason.
      *
      * @param reason Human-readable cause used in the dispatch payload (prefixed with "Native Trigger: ").
+     * @return `true` if the drone was dispatched successfully, `false` if the dispatcher is unavailable.
      */
     @JvmStatic
-    fun triggerDroneDispatch(reason: String) {
+    fun triggerDroneDispatch(reason: String): Boolean {
         Timber.i("🛡️ Native Substrate: Triggering drone support for: %s", reason)
-        droneDispatcher?.dispatchDrone(GuidanceDroneDispatcher.DroneType.RESTORATIVE, "Native Trigger: $reason") ?: run {
+        return if (droneDispatcher != null) {
+            droneDispatcher?.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, "Native Trigger: $reason")
+            Timber.d("🛡️ Native Substrate: Drone dispatched successfully for: %s", reason)
+            true
+        } else {
             Timber.w("🛡️ Native Substrate: Drone dispatcher unavailable for request: %s", reason)
+            false
         }
     }
 

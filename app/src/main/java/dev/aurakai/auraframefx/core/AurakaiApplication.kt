@@ -115,15 +115,19 @@ class AurakaiApplication : Application(), Configuration.Provider {
         try {
             // Synchronize RELATIONAL Bridge with injected Sovereign services
             NativeLib.initialize(
-                sentinelBus, 
-                sovereignManager, 
-                pandoraBox, 
+                sentinelBus,
+                sovereignManager,
+                pandoraBox,
                 droneDispatcher
             )
-            
-            // Critical AI ignition
-            NativeLib.initializeAICore()
-            Timber.d("✅ Native AI platform initialized and substrate ignited")
+
+            // Critical AI ignition (only if native library loaded)
+            val success = NativeLib.initializeAICore()
+            if (success) {
+                Timber.d("✅ Native AI platform initialized and substrate ignited")
+            } else {
+                Timber.w("⚠️ Native AI initialization skipped or failed - running in degraded mode")
+            }
         } catch (e: Exception) {
             Timber.e(e, "❌ Native AI initialization error: ${e.message}")
         }

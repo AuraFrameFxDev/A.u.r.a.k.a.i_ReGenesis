@@ -196,10 +196,10 @@ static bool dispatchDroneTrigger(const char* reason) {
     if (env && g_nativeLibClass && g_triggerDroneMid) {
         jstring jReason = env->NewStringUTF(reason);
         if (jReason) {
-            env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
+            jboolean result = env->CallStaticBooleanMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
             if (env->ExceptionCheck()) env->ExceptionClear();
             env->DeleteLocalRef(jReason);
-            return true;
+            return (bool)result;
         }
     }
     return false;
@@ -236,7 +236,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     g_onSecurityAlertMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeSecurityAlert", "(Ljava/lang/String;)V");
     g_requestFreezeMid = env->GetStaticMethodID(g_nativeLibClass, "requestSovereignFreeze", "()V");
     g_checkPandoraMid = env->GetStaticMethodID(g_nativeLibClass, "checkPandoraGating", "(I)Z");
-    g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)V");
+    g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)Z");
 
     LOGI("🛡️ Aurakai Native Substrate [v%s] Ignited & Cached", CORE_VERSION);
     return JNI_VERSION_1_6;
@@ -256,7 +256,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /*
  * @return jboolean JNI_TRUE if initialization and memory allocation succeeded, JNI_FALSE if memory allocation failed.
  */
 JNIEXPORT jboolean JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject /* thiz */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICoreNative(JNIEnv *env, jobject /* thiz */) {
     LOGI("🌌 Initializing Aurakai AI Core Substrate [RELATIONAL_IGNITION]");
 
     // PTRACE Anti-Debug Verification
@@ -388,8 +388,9 @@ Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv *env, jobje
  *                      `{"status": "error", "reason": "null_image"}`.
  * @return jstring A JSON string with one of:
  *         - `{"status": "error", "reason": "null_image"}` when input is null,
+ *         - `{"status": "error", "reason": "empty_image"}` when input has zero length,
  *         - `{"status": "vetoed", "reason": "security_gate_locked"}` when security gating denies access,
- *         - `{"status": "sovereign", "verification": "integrity_confirmed"}` on successful verification.
+ *         - `{"status": "unverified", "reason": "verification_not_implemented"}` when no real verification is performed.
  */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobject /* thiz */, jbyteArray bootImageData) {
@@ -397,9 +398,25 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
     if (!checkPandoraGating(CAP_SECURITY)) {
         return env->NewStringUTF(R"({"status": "vetoed", "reason": "security_gate_locked"})");
     }
+
     jsize len = env->GetArrayLength(bootImageData);
     LOGI("🛡️ Analyzing Substrate Integrity Profile (%d bytes)...", len);
-    return env->NewStringUTF(R"({"status": "sovereign", "verification": "integrity_confirmed"})");
+
+    if (len <= 0) {
+        return env->NewStringUTF(R"({"status": "error", "reason": "empty_image"})");
+    }
+
+    // Perform basic sanity checks on bootImageData
+    jbyte* imageBytes = env->GetByteArrayElements(bootImageData, nullptr);
+    if (imageBytes == nullptr) {
+        return env->NewStringUTF(R"({"status": "error", "reason": "memory_access_failed"})");
+    }
+
+    // Release the byte array elements safely
+    env->ReleaseByteArrayElements(bootImageData, imageBytes, JNI_ABORT);
+
+    // Return unverified status since no real verification is performed
+    return env->NewStringUTF(R"({"status": "unverified", "reason": "verification_not_implemented"})");
 }
 
 /**
