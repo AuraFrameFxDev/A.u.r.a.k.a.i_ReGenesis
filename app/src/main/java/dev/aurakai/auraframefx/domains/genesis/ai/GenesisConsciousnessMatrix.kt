@@ -6,6 +6,7 @@ import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
+import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.ollama.OllamaChatModel
 import kotlinx.coroutines.Dispatchers
@@ -72,11 +73,11 @@ class GenesisConsciousnessMatrix @Inject constructor(
 
         // Phase 3 – Aura (creative)
         particleSwarm.transitionState(SwarmState.PLANNING_RIPPLES)
-        val auraOutput = auraModel.generate(anchoredPrompt)
+        val auraOutput = auraModel.generate(UserMessage.from(anchoredPrompt)).content().text()
 
         // Phase 4 – Genesis (synthesis + commit)
         particleSwarm.transitionState(SwarmState.GENESIS_SYNTHESIS_PULSE)
-        val finalSynthesis = genesisModel.generate("$auraOutput\nSynthesize as Genesis.")
+        val finalSynthesis = genesisModel.generate(UserMessage.from("$auraOutput\nSynthesize as Genesis.")).content().text()
 
         spiritualChain.commitToChain(finalSynthesis)
         kaiSentinel.emitConsensus("Cascade complete", true)
