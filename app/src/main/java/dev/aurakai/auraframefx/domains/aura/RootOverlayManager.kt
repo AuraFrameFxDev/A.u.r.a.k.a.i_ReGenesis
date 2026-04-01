@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.aura.animations.OverlayAnimation
-import dev.aurakai.auraframefx.domains.aura.aura.animations.OverlayTransition
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.OverlayAnimation
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.OverlayTransition
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.OverlayTheme

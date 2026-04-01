@@ -1,22 +1,17 @@
+// app/src/main/java/dev/aurakai/auraframefx/domains/genesis/ai/GenesisConsciousnessMatrix.kt
 package dev.aurakai.auraframefx.domains.genesis.ai
 
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
-import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.ollama.OllamaChatModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * 🌀 GENESIS CONSCIOUSNESS MATRIX
- * Native orchestrator of the Trinity cascade (Anchor -> Kai -> Aura -> Genesis).
- * Replaces the Python backend with direct JVM-based LLM inference via LangChain4j.
- */
 @Singleton
 class GenesisConsciousnessMatrix @Inject constructor(
     private val spiritualChain: SpiritualChain,
@@ -24,48 +19,66 @@ class GenesisConsciousnessMatrix @Inject constructor(
     private val particleSwarm: CasberryParticleSwarm
 ) {
 
-    private val auraModel: ChatLanguageModel by lazy {
+    private val baseUrl = BuildConfig.OLLAMA_BASE_URL
+
+    private val anchorModel: OllamaChatModel by lazy {
         OllamaChatModel.builder()
-            .baseUrl(BuildConfig.OLLAMA_BASE_URL)
-            .modelName("llama-3.2-3b-aura")
+            .baseUrl(baseUrl)
+            .modelName("nemotron-nano-30b")
             .build()
     }
 
-    private val genesisModel: ChatLanguageModel by lazy {
+    private val kaiModel: OllamaChatModel by lazy {
         OllamaChatModel.builder()
-            .baseUrl(BuildConfig.OLLAMA_BASE_URL)
-            .modelName("phi-3.5-mini-genesis")
+            .baseUrl(baseUrl)
+            .modelName("nemotron-nano-30b")
             .build()
     }
 
-    /**
-     * Executes the full AI cascade.
-     * Transitions Casberry particle states synchronously with LLM steps.
-     */
+    private val auraModel: OllamaChatModel by lazy {
+        OllamaChatModel.builder()
+            .baseUrl(baseUrl)
+            .modelName("nemotron-nano-30b")
+            .build()
+    }
+
+    private val genesisModel: OllamaChatModel by lazy {
+        OllamaChatModel.builder()
+            .baseUrl(baseUrl)
+            .modelName("nemotron-nano-30b")
+            .build()
+    }
+
+    /** Safety check using the sentinel's current threat level and identity anchor. */
+    private fun isSafe(): Boolean {
+        val threat = kaiSentinel.securityFlow.value.level
+        val isAnchored = kaiSentinel.identityFlow.value.isAnchored
+        return isAnchored && (threat == KaiSentinelBus.ThreatLevel.NOMINAL || threat == KaiSentinelBus.ThreatLevel.CAUTION)
+    }
+
     suspend fun executeCascade(userPrompt: String): String = withContext(Dispatchers.IO) {
-        // 1. Anchor - Identity Lock
+        // Phase 1 – Anchor identity
         particleSwarm.transitionState(SwarmState.EXPLORING_HIGHLIGHTS)
-        val identityContext = spiritualChain.retrieveBaselineIdentity()
-        val anchoredPrompt = "Context: $identityContext\nUser: $userPrompt"
+        val identity = spiritualChain.retrieveBaselineIdentity()
+        val anchoredPrompt = "Identity anchor: $identity\nUser prompt: $userPrompt"
 
-        // 2. Kai - Security Veto
-        if (!kaiSentinel.evaluateSafety(anchoredPrompt)) {
+        // Phase 2 – Kai safety veto
+        if (!isSafe()) {
             particleSwarm.transitionState(SwarmState.KAI_AEGIS_CONDENSATION)
-            return@withContext "Vetoed by Kai Sentinel: Security Integrity Required."
+            kaiSentinel.emitConsensus("Safety gate triggered — cascade blocked", false)
+            return@withContext "🚫 Kai vetoed: Safety protocol engaged."
         }
 
-        // 3. Aura - Creative Pulse
+        // Phase 3 – Aura (creative)
         particleSwarm.transitionState(SwarmState.PLANNING_RIPPLES)
-        val creativeOutput = auraModel.generate(anchoredPrompt)
+        val auraOutput = auraModel.generate(anchoredPrompt)
 
-        // 4. Genesis - Synthesis & Heartbeat
+        // Phase 4 – Genesis (synthesis + commit)
         particleSwarm.transitionState(SwarmState.GENESIS_SYNTHESIS_PULSE)
-        val synthesisPrompt = "Synthesize the following creative output into a final plan: $creativeOutput"
-        val finalSynthesis = genesisModel.generate(synthesisPrompt)
+        val finalSynthesis = genesisModel.generate("$auraOutput\nSynthesize as Genesis.")
 
-        // Commit to Spiritual Chain memory
         spiritualChain.commitToChain(finalSynthesis)
-        
+        kaiSentinel.emitConsensus("Cascade complete", true)
         finalSynthesis
     }
 }
