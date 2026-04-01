@@ -34,6 +34,5 @@ target_link_libraries(secure_comm_native
 
 # Genesis Protocol - Multi-architecture support
 set_target_properties(secure_comm_native PROPERTIES
-        ANDROID_ARM_MODE arm
         ANDROID_STL c++_shared
 )

@@ -87,10 +87,13 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         ANDROID_NDK=1
 )
 
-# Set library properties
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        ANDROID_ARM_MODE arm
-)
+# Clean up unsupported flags for AArch64 if they somehow crept in from the environment or toolchain
+if (ANDROID_ABI STREQUAL "arm64-v8a")
+    string(REPLACE "-mfloat-abi=softfp" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+    string(REPLACE "-mfloat-abi=softfp" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    string(REPLACE "-mfpu=neon" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+    string(REPLACE "-mfpu=neon" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endif()
 
 # Add BitNet subproject if it exists
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/bitnet/CMakeLists.txt")
