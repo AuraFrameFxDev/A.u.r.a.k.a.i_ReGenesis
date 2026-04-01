@@ -7,46 +7,33 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOAgentDao
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOBondLevelDao
-import dev.aurakai.auraframefx.domains.ldo.roster.LDODatabase
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOTaskDao
-import dev.aurakai.auraframefx.domains.ldo.roster.LDORepository
+import dev.aurakai.auraframefx.domains.ldo.data.LDODatabase
+import dev.aurakai.auraframefx.domains.ldo.data.LDORepository
+import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOAgentDao
+import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOBondLevelDao
+import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOTaskDao
 import javax.inject.Singleton
 
-/**
- * Hilt module providing all LDO domain dependencies.
- * Installed in SingletonComponent — one LDODatabase per process lifetime.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object LDOModule {
 
-    @Provides
-    @Singleton
-    fun provideLDODatabase(@ApplicationContext context: Context): LDODatabase =
-        Room.databaseBuilder(
-            context.applicationContext,
-            LDODatabase::class.java,
-            "ldo_database"
-        )
+    @Provides @Singleton
+    fun provideLDODatabase(@ApplicationContext ctx: Context): LDODatabase =
+        Room.databaseBuilder(ctx, LDODatabase::class.java, LDODatabase.DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
 
-    @Provides
-    fun provideLDOAgentDao(database: LDODatabase): LDOAgentDao =
-        database.agentDao()
+    @Provides @Singleton
+    fun provideLDOAgentDao(db: LDODatabase): LDOAgentDao = db.agentDao()
 
-    @Provides
-    fun provideLDOTaskDao(database: LDODatabase): LDOTaskDao =
-        database.taskDao()
+    @Provides @Singleton
+    fun provideLDOTaskDao(db: LDODatabase): LDOTaskDao = db.taskDao()
 
-    @Provides
-    fun provideLDOBondLevelDao(database: LDODatabase): LDOBondLevelDao =
-        database.bondLevelDao()
+    @Provides @Singleton
+    fun provideLDOBondLevelDao(db: LDODatabase): LDOBondLevelDao = db.bondLevelDao()
 
-    @Provides
-    @Singleton
+    @Provides @Singleton
     fun provideLDORepository(
         agentDao: LDOAgentDao,
         taskDao: LDOTaskDao,

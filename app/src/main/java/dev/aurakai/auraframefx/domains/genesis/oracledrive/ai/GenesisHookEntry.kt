@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.hooks.ChromaCoreHooker
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.quicksettings.QuickSettingsHooker
 import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.NotchBarHooker
+import dev.aurakai.auraframefx.domains.kai.security.NotchBarHooker
 
 /**
  * 🌌 GENESIS HOOK ENTRY POINT — YukiHookAPI 1.3.x

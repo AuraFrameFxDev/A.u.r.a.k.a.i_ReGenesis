@@ -6,10 +6,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.BridgeMemorySink
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.GenesisBridge
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.HttpGenesisBridge
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.bridges.NexusMemoryBridgeSink
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.BridgeMemorySink
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.GenesisBridge
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.HttpGenesisBridge
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.NexusMemoryBridgeSink
 import dev.aurakai.auraframefx.domains.genesis.network.api.GenesisBackendApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

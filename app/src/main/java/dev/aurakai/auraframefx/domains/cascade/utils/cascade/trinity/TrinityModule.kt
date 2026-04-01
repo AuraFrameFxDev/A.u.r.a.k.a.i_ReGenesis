@@ -12,8 +12,8 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBr
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityMonitor
+import dev.aurakai.auraframefx.core.security.SecurityContext
+
 import javax.inject.Singleton
 
 /**
