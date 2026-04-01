@@ -11,7 +11,7 @@ import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.TaskExecution
 import dev.aurakai.auraframefx.domains.kai.TaskPriority
 import dev.aurakai.auraframefx.domains.kai.TaskResult
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
