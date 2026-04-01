@@ -37,6 +37,5 @@ target_link_libraries(oracle_drive_integration
 
 # Genesis Protocol - Multi-architecture support
 set_target_properties(oracle_drive_integration PROPERTIES
-        ANDROID_ARM_MODE arm
         ANDROID_STL c++_shared
 )

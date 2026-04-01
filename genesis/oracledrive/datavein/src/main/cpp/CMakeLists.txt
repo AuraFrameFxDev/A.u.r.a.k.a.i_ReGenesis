@@ -33,6 +33,5 @@ target_link_libraries(datavein_oracle_native
 
 # Genesis Protocol - Multi-architecture support
 set_target_properties(datavein_oracle_native PROPERTIES
-        ANDROID_ARM_MODE arm
         ANDROID_STL c++_shared
 )
