@@ -51,25 +51,31 @@ class KeystoreManager @Inject constructor(
                 .apply { init(spec) }
                 .generateKey()
         }
-        return (keyStore.getEntry("$ALIAS_PREFIX$alias", null) as KeyStore.SecretKeyEntry).secretKey
+        return (keyStore.getEntry(fullAlias, null) as KeyStore.SecretKeyEntry).secretKey
     }
 
-    fun encrypt(plaintext: String, keyAlias: String = PREFS_KEY): ByteArray {
+    fun encrypt(data: ByteArray, keyAlias: String = PREFS_KEY): ByteArray {
         val key = getOrCreateKey(keyAlias)
         val cipher = Cipher.getInstance(TRANSFORMATION).apply { init(Cipher.ENCRYPT_MODE, key) }
         val iv = cipher.iv
-        val ciphertext = cipher.doFinal(plaintext.toByteArray(Charsets.UTF_8))
+        val ciphertext = cipher.doFinal(data)
         return iv + ciphertext
     }
 
-    fun decrypt(data: ByteArray, keyAlias: String = PREFS_KEY): String {
+    fun encrypt(plaintext: String, keyAlias: String = PREFS_KEY): ByteArray =
+        encrypt(plaintext.toByteArray(Charsets.UTF_8), keyAlias)
+
+    fun decrypt(data: ByteArray, keyAlias: String = PREFS_KEY): ByteArray {
         val key = getOrCreateKey(keyAlias)
         val iv = data.copyOfRange(0, IV_BYTES)
         val ciphertext = data.copyOfRange(IV_BYTES, data.size)
         val cipher = Cipher.getInstance(TRANSFORMATION)
             .apply { init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(TAG_BITS, iv)) }
-        return String(cipher.doFinal(ciphertext), Charsets.UTF_8)
+        return cipher.doFinal(ciphertext)
     }
+
+    fun decryptToString(data: ByteArray, keyAlias: String = PREFS_KEY): String =
+        String(decrypt(data, keyAlias), Charsets.UTF_8)
 
     fun validateToken(token: String): Boolean =
         token.isNotBlank() && token.length in 32..512

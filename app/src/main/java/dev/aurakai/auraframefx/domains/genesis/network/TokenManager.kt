@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.genesis.network
 
-import dev.aurakai.auraframefx.core.security.KeystoreManager
 import dev.aurakai.auraframefx.core.security.SecurePreferences
 import timber.log.Timber
 import javax.inject.Inject
@@ -11,35 +10,35 @@ import javax.inject.Singleton
  */
 @Singleton
 class TokenManager @Inject constructor(
-    private val securePrefs: SecurePreferences,
-    private val keystoreManager: KeystoreManager
+    private val securePrefs: SecurePreferences
 ) {
     companion object {
         private const val KEY_ACCESS_TOKEN = "access_token"
         private const val KEY_REFRESH_TOKEN = "refresh_token"
-        private const val KEY_TOKEN_EXPIRY = "token_expiry_ms"
-        private const val BEARER_PREFIX = "Bearer "
+        private const val KEY_TOKEN_EXPIRY = "token_expiry"
     }
 
-    fun saveTokens(accessToken: String, refreshToken: String, expiryMs: Long) {
+    val accessToken: String?
+        get() = securePrefs.getString(KEY_ACCESS_TOKEN)
+
+    val refreshToken: String?
+        get() = securePrefs.getString(KEY_REFRESH_TOKEN)
+
+    val isTokenExpired: Boolean
+        get() {
+            val expiry = securePrefs.getLong(KEY_TOKEN_EXPIRY, 0L)
+            return System.currentTimeMillis() >= expiry
+        }
+
+    val isAuthenticated: Boolean
+        get() = !accessToken.isNullOrBlank() && !isTokenExpired
+
+    fun updateTokens(accessToken: String, refreshToken: String, expiresInSeconds: Long) {
         securePrefs.putString(KEY_ACCESS_TOKEN, accessToken)
         securePrefs.putString(KEY_REFRESH_TOKEN, refreshToken)
-        securePrefs.putLong(KEY_TOKEN_EXPIRY, expiryMs)
-        Timber.d("TokenManager: Tokens saved (expiry=${expiryMs}ms)")
-    }
-
-    fun getAccessToken(): String? = securePrefs.getString(KEY_ACCESS_TOKEN)
-    fun getRefreshToken(): String? = securePrefs.getString(KEY_REFRESH_TOKEN)
-
-    fun isTokenValid(): Boolean {
-        val token = getAccessToken() ?: return false
-        val expiry = securePrefs.getLong(KEY_TOKEN_EXPIRY, 0L)
-        return token.isNotBlank() && (expiry == 0L || System.currentTimeMillis() < expiry)
-    }
-
-    fun getAuthHeader(): String {
-        val token = getAccessToken() ?: return ""
-        return "$BEARER_PREFIX$token"
+        val expiry = System.currentTimeMillis() + (expiresInSeconds * 1000)
+        securePrefs.putLong(KEY_TOKEN_EXPIRY, expiry)
+        Timber.d("TokenManager: Tokens updated (expires in ${expiresInSeconds}s)")
     }
 
     fun clearTokens() {

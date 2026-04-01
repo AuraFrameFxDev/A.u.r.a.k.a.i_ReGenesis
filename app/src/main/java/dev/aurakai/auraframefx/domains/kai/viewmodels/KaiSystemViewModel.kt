@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 import kotlinx.coroutines.Dispatchers

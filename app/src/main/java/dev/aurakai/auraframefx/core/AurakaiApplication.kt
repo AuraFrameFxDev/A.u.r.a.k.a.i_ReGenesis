@@ -12,8 +12,14 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import dev.aurakai.auraframefx.core.NativeLib
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.IntegrityMonitorService
+import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -101,12 +107,6 @@ class AurakaiApplication : Application(), Configuration.Provider {
         }
     }
 
-    /**
-     * Initializes the native RELATIONAL bridge with injected sovereign services and starts the native AI core.
-     *
-     * Synchronizes the native layer with the application's sentinel, sovereign state manager, Pandora box service,
-     * and drone dispatcher, then performs AI-core ignition. Exceptions are caught and logged and do not propagate.
-     */
     private fun initializeNativeAIPlatform() {
         try {
             dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()

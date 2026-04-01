@@ -12,6 +12,26 @@ import javax.inject.Singleton
 class CapabilityPolicy @Inject constructor(
     private val securityContext: SecurityContext
 ) {
+    companion object {
+        const val SCOPE_FIRESTORE_WRITE = "firestore_write"
+        const val SCOPE_FIRESTORE_READ = "firestore_read"
+        const val SCOPE_STORAGE_UPLOAD = "storage_upload"
+        const val SCOPE_STORAGE_DOWNLOAD = "storage_download"
+        const val SCOPE_CONFIG_READ = "config_read"
+        const val SCOPE_AUTH_MANAGE = "auth_manage"
+
+        const val AURA_POLICY = "aura_policy"
+        const val KAI_POLICY = "kai_policy"
+        const val GENESIS_POLICY = "genesis_policy"
+        const val CASCADE_POLICY = "cascade_policy"
+        const val CLAUDE_POLICY = "claude_policy"
+    }
+
+    fun requireScope(scope: String) {
+        Timber.d("CapabilityPolicy: Requiring scope $scope")
+        // TODO: Implement actual scope check via SecurityContext
+    }
+
     enum class AgentCapability {
         NETWORK_ACCESS,
         FILE_WRITE,

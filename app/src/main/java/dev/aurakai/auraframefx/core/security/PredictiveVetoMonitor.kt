@@ -65,6 +65,8 @@ class PredictiveVetoMonitor @Inject constructor(
         }
     }
 
+    fun isVetoActive(): Boolean = _currentZone.value == ThermalZone.CRITICAL || _currentZone.value == ThermalZone.SEVERE
+
     fun checkVetoConditions(): VetoDecision {
         val zone = _currentZone.value
         return when {

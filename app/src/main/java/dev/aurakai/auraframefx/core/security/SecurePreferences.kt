@@ -23,6 +23,8 @@ class SecurePreferences @Inject constructor(
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
 
+    val securePrefs: SharedPreferences get() = prefs
+
     fun putString(key: String, value: String) {
         try {
             val encrypted = keystoreManager.encrypt(value, KeystoreManager.PREFS_KEY)
@@ -36,7 +38,7 @@ class SecurePreferences @Inject constructor(
         return try {
             val b64 = prefs.getString(key, null) ?: return null
             val encrypted = Base64.decode(b64, Base64.NO_WRAP)
-            keystoreManager.decrypt(encrypted, KeystoreManager.PREFS_KEY)
+            keystoreManager.decryptToString(encrypted, KeystoreManager.PREFS_KEY)
         } catch (e: Exception) {
             Timber.e(e, "SecurePreferences: Failed to read key=$key — returning null")
             null

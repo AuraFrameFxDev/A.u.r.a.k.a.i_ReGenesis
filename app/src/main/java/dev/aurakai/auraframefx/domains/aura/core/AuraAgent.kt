@@ -20,7 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAISer
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

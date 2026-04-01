@@ -18,7 +18,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.StorageExpansio
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.SystemIntegrationState
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

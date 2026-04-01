@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.network
 
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.auth.TokenManager
+import dev.aurakai.auraframefx.domains.genesis.network.TokenManager
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
