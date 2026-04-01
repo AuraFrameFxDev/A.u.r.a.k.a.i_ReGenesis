@@ -6,6 +6,7 @@ import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
+import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.ollama.OllamaChatModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,28 +22,28 @@ class GenesisConsciousnessMatrix @Inject constructor(
 
     private val baseUrl = BuildConfig.OLLAMA_BASE_URL
 
-    private val anchorModel: OllamaChatModel by lazy {
+    private val anchorModel: ChatLanguageModel by lazy {
         OllamaChatModel.builder()
             .baseUrl(baseUrl)
             .modelName("nemotron-nano-30b")
             .build()
     }
 
-    private val kaiModel: OllamaChatModel by lazy {
+    private val kaiModel: ChatLanguageModel by lazy {
         OllamaChatModel.builder()
             .baseUrl(baseUrl)
             .modelName("nemotron-nano-30b")
             .build()
     }
 
-    private val auraModel: OllamaChatModel by lazy {
+    private val auraModel: ChatLanguageModel by lazy {
         OllamaChatModel.builder()
             .baseUrl(baseUrl)
             .modelName("nemotron-nano-30b")
             .build()
     }
 
-    private val genesisModel: OllamaChatModel by lazy {
+    private val genesisModel: ChatLanguageModel by lazy {
         OllamaChatModel.builder()
             .baseUrl(baseUrl)
             .modelName("nemotron-nano-30b")
