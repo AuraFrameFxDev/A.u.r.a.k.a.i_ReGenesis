@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.core
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus.ThermalState
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +23,7 @@ object NativeLib {
     private var sovereignManager: SovereignStateManager? = null
     private var pandoraBox: PandoraBoxService? = null
     private var droneDispatcher: GuidanceDroneDispatcher? = null
-    
+
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var nativeLoaded: Boolean = false
 
@@ -54,11 +55,7 @@ object NativeLib {
         Timber.i("🛡️ NativeLib: Relational Bridge synchronized with all Sovereign managers.")
     }
 
-    /**
- * Retrieves the AI subsystem version reported by the native substrate.
- *
- * @return The version string reported by the native library (for example, a semantic version or build identifier).
- */
+    // --- Native Methods ---
 
     external fun getAIVersion(): String
     /**
@@ -138,19 +135,15 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
         }
     }
 
-    /**
-     * Checks whether a given agent capability is permitted by the PandoraBox gating service.
-     *
-     * @param capabilityInt Integer index corresponding to an entry in `AgentCapabilityCategory.entries`.
-     * @return `true` if the capability is unlocked; `false` if the capability is locked, if `capabilityInt` is invalid, or if the PandoraBox service is not initialized.
-     */
     @JvmStatic
     fun checkPandoraGating(capabilityInt: Int): Boolean {
+        // [FIX] CodeRabbit: Deny unknown capability IDs (Fail-Closed)
         val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
-            Timber.e("🛡️ Native-Pandora: Invalid capability ID [%d]. Access VETOED.", capabilityInt)
+            Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
             return false
         }
         
+        // [FIX] Qodo: Log if bridge not initialized
         val box = pandoraBox ?: run {
             Timber.e("🛡️ NativeLib: Gating check for %s FAILED (Bridge NOT INITIALIZED).", category)
             return false
@@ -161,21 +154,15 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
         return isUnlocked
     }
 
-    /**
-     * Requests a restorative drone dispatch from the configured dispatcher with a native-trigger reason.
-     *
-     * @param reason Human-readable cause used in the dispatch payload (prefixed with "Native Trigger: ").
-     */
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
-        Timber.i("🛡️ Native Substrate: Triggering drone support for: %s", reason)
-        droneDispatcher?.dispatchDrone(GuidanceDroneDispatcher.DroneType.RESTORATIVE, "Native Trigger: $reason") ?: run {
-            Timber.w("🛡️ Native Substrate: Drone dispatcher unavailable for request: %s", reason)
+        // [FIX] CodeRabbit: Implement actual dispatch instead of just logging
+        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
+        droneDispatcher?.dispatch("native_substrate", reason) ?: run {
+            Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
         }
     }
 }
-
-    // --- Helper Methods ---
 
     /**
      * Retrieve the AI version reported by the native substrate, with a safe fallback when the native library is not present.

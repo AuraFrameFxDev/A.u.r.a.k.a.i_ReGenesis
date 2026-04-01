@@ -45,10 +45,21 @@ class CasberryParticleSwarm @Inject constructor() {
     fun setResonance(value: Float) {
         _resonance.value = value.coerceIn(0f, 1f)
     }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Composable renderer — call this from screens, passing the injected singleton
+// ─────────────────────────────────────────────────────────────────────────────
+
+data class CasberrySwarmController(
+    val transitionTo: (SwarmState) -> Unit,
+    val currentState: () -> SwarmState
+)
 
     @Composable
     fun Render(modifier: Modifier = Modifier) {
         val currentState by state.collectAsState()
+        val resonanceVal by _resonance.collectAsState()
         
         val targetColor = when (currentState) {
             SwarmState.IDLE -> Color(0xFF6200EE) // Deep Purple
@@ -101,31 +112,39 @@ class CasberryParticleSwarm @Inject constructor() {
                 val y = centerY + sin(angle).toFloat() * baseRadius
 
                 drawCircle(
-                    color = animatedColor.copy(alpha = 0.6f),
-                    radius = 20f * pulseScale,
+                    color = colors[i % 2].copy(alpha = alphaScale * pulse),
+                    radius = (4f + sin(time * 0.1).toFloat() * 2f) * animatedResonance,
                     center = Offset(x, y)
                 )
-                
-                // Add secondary outer ring for "Exploring Highlights"
-                if (currentState == SwarmState.EXPLORING_HIGHLIGHTS) {
-                    val outerAngle = Math.toRadians((rotation * 1.5 + i * 30).toDouble())
-                    val ox = centerX + cos(outerAngle).toFloat() * baseRadius * 1.5f
-                    val oy = centerY + sin(outerAngle).toFloat() * baseRadius * 1.5f
+
+                // Render specific "Active Ripple" for synthesis
+                if (currentState == SwarmState.GENESIS_SYNTHESIS_PULSE && i % 4 == 0) {
                     drawCircle(
-                        color = animatedColor.copy(alpha = 0.3f),
-                        radius = 10f,
-                        center = Offset(ox, oy)
+                        color = Color.White.copy(alpha = 0.3f),
+                        radius = (8f + p.shimmer * 5f) * pulse,
+                        center = Offset(x, y)
                     )
                 }
             }
-            
-            // Central Genesis Heartbeat
+
+            // Central Relational Core
             drawCircle(
-                color = animatedColor,
-                radius = 40f * pulseScale,
+                color = colors[0].copy(alpha = 0.9f),
+                radius = 35f * animatedResonance * pulse,
+                center = Offset(centerX, centerY)
+            )
+
+            // Add Inner Glow
+            drawCircle(
+                color = Color.White.copy(alpha = 0.2f),
+                radius = 20f * pulse,
                 center = Offset(centerX, centerY)
             )
         }
+    }
+
+    private class Particle {
+        val shimmer = (0..100).random() / 100f
     }
 }
 
