@@ -4,7 +4,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
-import dev.aurakai.auraframefx.domains.aura.GenesisAgent
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.AgentConnectionState
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest

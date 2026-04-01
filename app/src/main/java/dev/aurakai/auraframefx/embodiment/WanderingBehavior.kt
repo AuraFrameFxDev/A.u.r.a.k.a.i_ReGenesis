@@ -206,7 +206,7 @@ class SearchingBehavior(
             points.add(PathPoint(
                 position = DpOffset(x, y),
                 waitDuration = 1.seconds,
-                animationState = AnimationState.Walking(
+                animationState = EmbodimentAnimationState.Walking(
                     if (i % 2 == 0) WalkDirection.RIGHT else WalkDirection.LEFT
                 )
             ))
