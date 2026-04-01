@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.StarfieldBackground
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
  * 🤖 AGENT NEXUS HUB (Level 2 Hub)
@@ -159,4 +159,5 @@ fun AgentNexusHubScreen(
         }
     }
 }
+
 

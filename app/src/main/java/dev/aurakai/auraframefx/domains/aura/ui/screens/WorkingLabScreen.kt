@@ -57,6 +57,7 @@ import kotlinx.coroutines.launch
  *
  * @param onNavigate Callback invoked with the target route key (e.g., "collab_canvas", "oracle_drive", "console", "romtools", "center") when a module or menu item is clicked.
  */
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalStdlibApi::class)
 @Composable
 fun WorkingLabScreen(
     onNavigate: (String) -> Unit = {}
@@ -150,6 +151,15 @@ fun WorkingLabScreen(
                                     )
                                 }
 
+                                WorkAction.IDLE -> {
+                                    engine.manifestAura(
+                                        state = AuraState.IDLE_WALK,
+                                        config = ManifestationDefaults.DEFAULT_CONFIG.copy(
+                                            duration = step.duration
+                                        )
+                                    )
+                                }
+
                                 else -> {
                                     engine.manifestAura(
                                         state = step.sprite as? AuraState
@@ -180,6 +190,15 @@ fun WorkingLabScreen(
                                     engine.walkKaiTo(
                                         targetPosition = targetPos,
                                         state = step.sprite as? KaiState ?: KaiState.SHIELD_NEUTRAL
+                                    )
+                                }
+
+                                WorkAction.IDLE -> {
+                                    engine.manifestKai(
+                                        state = KaiState.SHIELD_NEUTRAL,
+                                        config = ManifestationDefaults.DEFAULT_CONFIG.copy(
+                                            duration = step.duration
+                                        )
                                     )
                                 }
 

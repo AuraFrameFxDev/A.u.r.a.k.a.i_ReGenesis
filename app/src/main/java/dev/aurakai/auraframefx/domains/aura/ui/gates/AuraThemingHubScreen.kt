@@ -21,7 +21,7 @@ import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_edit
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.PaintSplashBackground
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
  * 🎨 AURA'S UXUI DESIGN STUDIO (Level 2 Hub)
@@ -137,4 +137,5 @@ fun AuraThemingHubScreen(navController: NavController) {
         }
     }
 }
+
 

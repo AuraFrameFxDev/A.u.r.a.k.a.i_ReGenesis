@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.theme.KaiNeonGreen
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiNeonGreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
  * ðŸš€ LAUNCH MATRIX - MANUAL CONTROL
@@ -192,5 +192,6 @@ private fun ManualSwitch(
         )
     }
 }
+
 
 

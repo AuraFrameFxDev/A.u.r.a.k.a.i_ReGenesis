@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonTeal
 
 /**
  * Cyberpunk-themed modifier extensions for creating digital effects
@@ -107,4 +107,5 @@ enum class BackgroundStyle {
     HEX_GRID,      // Added for HomeScreen compatibility
     TRANSPARENT    // Added for HomeScreen compatibility
 }
+
 

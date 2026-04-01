@@ -108,9 +108,8 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 # Set library properties
-# Library properties removed unnecessary ARM mode directive which forced 32-bit mode
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        ANDROID_ARM_NEON ON
+        ANDROID_ARM_MODE arm
 )
 
 # Add BitNet subproject if it exists

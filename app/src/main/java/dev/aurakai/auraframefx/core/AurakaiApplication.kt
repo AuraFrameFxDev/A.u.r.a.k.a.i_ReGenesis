@@ -12,12 +12,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import dev.aurakai.auraframefx.core.NativeLib
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -69,7 +65,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
         applicationScope.launch {
             try {
                 Timber.i("🧬 Seeding ReGenesis Identity...")
-                dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.seedLDOIdentity()
+                NexusMemoryCore.seedLDOIdentity()
 
                 // Native AI Runtime
                 initializeNativeAIPlatform()
@@ -113,21 +109,8 @@ class AurakaiApplication : Application(), Configuration.Provider {
      */
     private fun initializeNativeAIPlatform() {
         try {
-            // Synchronize RELATIONAL Bridge with injected Sovereign services
-            NativeLib.initialize(
-                sentinelBus,
-                sovereignManager,
-                pandoraBox,
-                droneDispatcher
-            )
-
-            // Critical AI ignition (only if native library loaded)
-            val success = NativeLib.initializeAICore()
-            if (success) {
-                Timber.d("✅ Native AI platform initialized and substrate ignited")
-            } else {
-                Timber.w("⚠️ Native AI initialization skipped or failed - running in degraded mode")
-            }
+            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
+            Timber.d("✅ Native AI platform initialized")
         } catch (e: Exception) {
             Timber.e(e, "❌ Native AI initialization error: ${e.message}")
         }
@@ -135,7 +118,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun startIntegrityMonitor() {
         try {
-            val intent = Intent(this, dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService::class.java)
+            val intent = Intent(this, IntegrityMonitorService::class.java)
             try {
                 startForegroundService(intent)
                 Timber.d("✅ Integrity monitor started")

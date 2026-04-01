@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.GeminiAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.MetaInstructAIService
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.network.CommerceSearchClient
 import dev.aurakai.auraframefx.core.identity.AgentType
