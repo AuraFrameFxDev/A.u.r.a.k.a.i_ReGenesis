@@ -49,7 +49,22 @@ class SystemIconifyService @Inject constructor(
     }
 
     override suspend fun searchIcons(query: String, limit: Int): Result<IconifyService.IconSearchResult> {
-        // Implementation
         return Result.success(IconifyService.IconSearchResult(emptyList(), query))
+    }
+
+    override suspend fun getCollections(): Result<List<IconifyService.IconCollection>> {
+        return Result.success(emptyList())
+    }
+
+    override suspend fun getIconSvg(iconId: String): Result<String> {
+        return Result.failure(Exception("Not implemented"))
+    }
+
+    override suspend fun getIconsBatch(iconIds: List<String>): Result<Map<String, String>> {
+        return Result.success(emptyMap())
+    }
+
+    override suspend fun getPopularIcons(collection: String, limit: Int): Result<List<String>> {
+        return Result.success(emptyList())
     }
 }

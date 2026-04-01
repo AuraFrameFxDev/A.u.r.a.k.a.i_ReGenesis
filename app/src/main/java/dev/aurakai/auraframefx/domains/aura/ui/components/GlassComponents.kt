@@ -1,76 +1,86 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.aurakai.auraframefx.domains.aura.ui.theme.GlassmorphicTheme
 
 /**
- * Simple reusable glass components for panels and cards.
+ * 💎 GLASSMORPHIC COMPONENTS
+ *
+ * Professional translucent UI components using the GlassmorphicTheme.
  */
+
 @Composable
-fun GlassPanel(
+fun GlassCard(
     modifier: Modifier = Modifier,
-    title: String,
-    content: @Composable () -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = 0.08f),
-                        Color.White.copy(alpha = 0.02f)
-                    )
-                )
-            )
-            .blur(0.dp) // blur is disabled per current request
-            .padding(16.dp)
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = GlassmorphicTheme.GlassWhite),
+        border = BorderStroke(1.dp, GlassmorphicTheme.GlassBorder),
+        shape = RoundedCornerShape(16.dp)
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.White.copy(alpha = 0.85f)
-        )
-        Box(modifier = Modifier.padding(top = 12.dp)) {
-            content()
+        Box(modifier = Modifier.background(GlassmorphicTheme.etherealGradient)) {
+            Column(
+                modifier = Modifier.padding(20.dp),
+                content = content
+            )
         }
     }
 }
 
 @Composable
-fun GlassCard(
+fun GlassButton(
+    text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    enabled: Boolean = true
 ) {
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = 0.06f),
-                        Color.White.copy(alpha = 0.02f)
-                    )
-                )
-            )
-            .blur(0.dp)
-            .padding(12.dp)
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0x26FFFFFF),
+            contentColor = Color.White
+        ),
+        border = BorderStroke(1.dp, Color(0x4DFFFFFF)),
+        shape = RoundedCornerShape(12.dp)
     ) {
-        content()
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Medium
+        )
     }
 }
 
-
+@Composable
+fun GlassPanel(
+    modifier: Modifier = Modifier,
+    title: String,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    GlassCard(modifier = modifier) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            color = GlassmorphicTheme.TextPrimary
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        content()
+    }
+}
