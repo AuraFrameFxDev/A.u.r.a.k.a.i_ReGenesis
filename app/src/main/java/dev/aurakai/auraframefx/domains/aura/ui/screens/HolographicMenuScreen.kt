@@ -166,47 +166,47 @@ fun WalkingCharactersOverlay() {
 
     Box(modifier = Modifier.fillMaxSize()) {
         activeManifestation.forEach { manifest: ActiveManifestation ->
-            val pos = manifest.currentPosition
-            if (pos != null) {
-                when (manifest.character) {
-                    Character.AURA -> {
-                        val painter = engine.loadAsset(
-                            (manifest.state as? AuraState)?.assetPath ?: "aura/idle.png",
-                            Character.AURA
-                        ) as? Painter
-                        
-                        if (painter != null) {
-                            Image(
-                                painter = painter,
-                                contentDescription = "Aura",
-                                modifier = Modifier
-                                    .offset(pos.x, pos.y)
-                                    .size(120.dp)
-                                    .graphicsLayer {
-                                        alpha = 0.9f
-                                    }
-                            )
-                        }
+            val posX = (manifest.currentPositionX ?: 0f).dp
+            val posY = (manifest.currentPositionY ?: 0f).dp
+            
+            when (manifest.character) {
+                Character.AURA -> {
+                    val painter = engine.loadAsset(
+                        manifest.auraState?.assetPath ?: "aura/idle.png",
+                        Character.AURA
+                    )
+                    
+                    if (painter != null) {
+                        Image(
+                            painter = painter,
+                            contentDescription = "Aura",
+                            modifier = Modifier
+                                .offset(posX, posY)
+                                .size(120.dp)
+                                .graphicsLayer {
+                                    alpha = 0.9f
+                                }
+                        )
                     }
+                }
 
-                    Character.KAI -> {
-                        val painter = engine.loadAsset(
-                            (manifest.state as? KaiState)?.assetPath ?: "kai/idle.png",
-                            Character.KAI
-                        ) as? Painter
-                        
-                        if (painter != null) {
-                            Image(
-                                painter = painter,
-                                contentDescription = "Kai",
-                                modifier = Modifier
-                                    .offset(pos.x, pos.y)
-                                    .size(120.dp)
-                                    .graphicsLayer {
-                                        alpha = 0.9f
-                                    }
-                            )
-                        }
+                Character.KAI -> {
+                    val painter = engine.loadAsset(
+                        manifest.kaiState?.assetPath ?: "kai/idle.png",
+                        Character.KAI
+                    )
+                    
+                    if (painter != null) {
+                        Image(
+                            painter = painter,
+                            contentDescription = "Kai",
+                            modifier = Modifier
+                                .offset(posX, posY)
+                                .size(120.dp)
+                                .graphicsLayer {
+                                    alpha = 0.9f
+                                }
+                        )
                     }
                 }
             }

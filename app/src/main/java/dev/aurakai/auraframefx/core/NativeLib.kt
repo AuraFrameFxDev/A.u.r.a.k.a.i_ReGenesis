@@ -54,7 +54,11 @@ object NativeLib {
         Timber.i("🛡️ NativeLib: Relational Bridge synchronized with all Sovereign managers.")
     }
 
-    // --- Native Methods ---
+    /**
+ * Retrieves the AI subsystem version reported by the native substrate.
+ *
+ * @return The version string reported by the native library (for example, a semantic version or build identifier).
+ */
 
     external fun getAIVersion(): String
     /**
@@ -112,6 +116,10 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
         val state = KaiSentinelBus.ThermalState.fromId(stateInt)
 
+    @JvmStatic
+    fun onNativeThermalEvent(temp: Float, stateInt: Int) {
+        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
+        Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
         sentinelBus?.emitThermal(temp, state)
         Timber.d("🛡️ Native Status: System Thermal at %.1f°C (Zone: %s)", temp, state)
     }
@@ -165,6 +173,7 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
             Timber.w("🛡️ Native Substrate: Drone dispatcher unavailable for request: %s", reason)
         }
     }
+}
 
     // --- Helper Methods ---
 
