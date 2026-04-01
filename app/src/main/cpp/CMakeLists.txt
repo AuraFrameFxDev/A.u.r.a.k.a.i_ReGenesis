@@ -11,8 +11,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Genesis Protocol - AI Processing Optimizations
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC")
+# Advanced ARMv8.2-A + Neon support for Pixel 10 class devices
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
+
+if (ANDROID_ABI STREQUAL "armeabi-v7a")
+    add_compile_options(
+        -mfpu=neon
+        -mfloat-abi=softfp
+    )
+endif()
+
+add_compile_options(
+    -mtune=cortex-a55
+    -D__ARM_NEON
+    -D__ARM_FEATURE_DOTPROD
+    -D__ARM_FEATURE_I8MM
+)
+
+# Optional: Force Neon for all files
+add_definitions(-D__ARM_NEON__)
 
 # Debug/Release specific flags
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
@@ -87,13 +107,10 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         ANDROID_NDK=1
 )
 
-# Clean up unsupported flags for AArch64 if they somehow crept in from the environment or toolchain
-if (ANDROID_ABI STREQUAL "arm64-v8a")
-    string(REPLACE "-mfloat-abi=softfp" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-    string(REPLACE "-mfloat-abi=softfp" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    string(REPLACE "-mfpu=neon" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-    string(REPLACE "-mfpu=neon" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-endif()
+# Set library properties
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+        ANDROID_ARM_MODE arm
+)
 
 # Add BitNet subproject if it exists
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/bitnet/CMakeLists.txt")

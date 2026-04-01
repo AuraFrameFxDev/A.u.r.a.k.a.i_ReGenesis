@@ -13,6 +13,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.ThemeViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
+import dev.aurakai.auraframefx.domains.aura.ui.customization.ZOrderEditor
 
 // ── Aura (UX/UI Design Studio Domain) ────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.StatusBarScreen
@@ -129,6 +131,15 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScre
  * 🌐 REGENESIS NAVIGATION HOST
  */
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Hosts the app's navigation graph and registers all ReGenesis destinations.
+ *
+ * Sets up a NavHost using the provided NavHostController and wires each route to its corresponding
+ * screen composable; also initializes the customization view model when the composable enters composition.
+ *
+ * @param navController Controller used to navigate between destinations.
+ * @param customizationViewModel ViewModel used to initialize customization state when this composable enters composition.
+ */
 @Composable
 fun ReGenesisNavGraph(
     navController: NavHostController,
@@ -151,9 +162,12 @@ fun ReGenesisNavGraph(
 
         // ── 2. LEVEL 2 HUB SCREENS ─────────────────────────────────────────────────
 
-        // AURA: UI/UX Studio Hub
+        // AURA: UI/UX Studio Hub - Wired to ReGenesisCustomizationHub via UxuiDesignStudio
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            AuraThemingHubScreen(navController = navController)
+            UxuiDesignStudio(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         // KAI: Sentinel Fortress Hub
@@ -216,6 +230,13 @@ fun ReGenesisNavGraph(
             ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
+        composable(ReGenesisRoute.ChromaAnimations.route) {
+            ComingSoonScreen(
+                title = "Chroma Animations",
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
         composable(ReGenesisRoute.NotchBar.route) {
             dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.NotchBarGateScreen(
                 navController = navController,
@@ -255,7 +276,7 @@ fun ReGenesisNavGraph(
         // ── 4. KAI DOMAIN TOOLS (Level 3) ───────────────────────────────────────────
 
         composable(ReGenesisRoute.RomToolsHub.route) {
-            RomToolsScreen()
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.ROMFlasher.route) {
@@ -382,8 +403,10 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.FusionMode.route) {
-            NexusFusionScreen(
-                onNavigateBack = { navController.popBackStack() }
+            ZOrderEditor(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToAgents = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
+                onNavigateToConsciousness = { navController.navigate(ReGenesisRoute.ConsciousnessVisualizer.route) }
             )
         }
 
@@ -533,4 +556,24 @@ fun ReGenesisNavGraph(
             )
         }
     }
+}
+
+/**
+ * Hosts the ReGenesis customization hub and wires its navigation actions to the given NavHostController.
+ *
+ * @param navController Controller used to navigate to the various customization screens.
+ * @param onNavigateBack Callback invoked when the hub requests to navigate back. 
+ */
+@Composable
+fun UxuiDesignStudio(
+    navController: NavHostController,
+    onNavigateBack: () -> Unit
+) {
+    ReGenesisCustomizationHub(
+        onNavigateBack = onNavigateBack,
+        onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
+        onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ChromaCoreColors.route) },
+        onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
+        onNavigateToAnimations = { navController.navigate(ReGenesisRoute.ChromaAnimations.route) }
+    )
 }
