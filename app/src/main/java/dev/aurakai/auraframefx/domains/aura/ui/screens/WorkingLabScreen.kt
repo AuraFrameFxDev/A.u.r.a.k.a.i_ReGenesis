@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -99,9 +100,12 @@ fun WorkingLabScreen(
     val auraPosition by engine.activeManifestation.collectAsState().let { manifestations ->
         remember(manifestations.value) {
             derivedStateOf {
-                manifestations.value
-                    .find { it.character == Character.AURA }
-                    ?.currentPosition
+                val manifest = manifestations.value.find { it.character == Character.AURA }
+                if (manifest?.currentPositionX != null && manifest.currentPositionY != null) {
+                    DpOffset(manifest.currentPositionX.dp, manifest.currentPositionY.dp)
+                } else {
+                    null
+                }
             }
         }
     }
@@ -109,9 +113,12 @@ fun WorkingLabScreen(
     val kaiPosition by engine.activeManifestation.collectAsState().let { manifestations ->
         remember(manifestations.value) {
             derivedStateOf {
-                manifestations.value
-                    .find { it.character == Character.KAI }
-                    ?.currentPosition
+                val manifest = manifestations.value.find { it.character == Character.KAI }
+                if (manifest?.currentPositionX != null && manifest.currentPositionY != null) {
+                    DpOffset(manifest.currentPositionX.dp, manifest.currentPositionY.dp)
+                } else {
+                    null
+                }
             }
         }
     }
@@ -151,7 +158,7 @@ fun WorkingLabScreen(
                                     )
                                 }
 
-                                WorkAction.IDLE -> {
+                                WorkAction.MONITORING -> {
                                     engine.manifestAura(
                                         state = AuraState.IDLE_WALK,
                                         config = ManifestationDefaults.DEFAULT_CONFIG.copy(
@@ -193,7 +200,7 @@ fun WorkingLabScreen(
                                     )
                                 }
 
-                                WorkAction.IDLE -> {
+                                WorkAction.MONITORING -> {
                                     engine.manifestKai(
                                         state = KaiState.SHIELD_NEUTRAL,
                                         config = ManifestationDefaults.DEFAULT_CONFIG.copy(
@@ -309,19 +316,20 @@ fun WorkingLabScreen(
 
         activeManifestation.forEach { manifest ->
             val asset = when (manifest.character) {
-                Character.AURA -> (manifest.state as AuraState).assetPath
-                Character.KAI -> (manifest.state as KaiState).assetPath
+                Character.AURA -> manifest.auraState?.assetPath ?: "aura/idle.png"
+                Character.KAI -> manifest.kaiState?.assetPath ?: "kai/idle.png"
             }
 
             val painter = engine.loadAsset(asset, manifest.character)
-            val position = manifest.currentPosition ?: DpOffset.Zero
+            val posX = (manifest.currentPositionX ?: 0f).dp
+            val posY = (manifest.currentPositionY ?: 0f).dp
 
             if (painter != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .wrapContentSize(Alignment.TopStart)
-                        .offset(x = position.x, y = position.y)
+                        .offset(x = posX, y = posY)
                 ) {
                     Image(
                         painter = painter,
