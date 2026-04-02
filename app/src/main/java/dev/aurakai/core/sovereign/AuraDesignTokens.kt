@@ -18,6 +18,11 @@ object AuraDesignTokens {
     val GenesisGold = Color(0xFFFFD700)
     val KaiNeonGreen = Color(0xFF00FF41)
 
+    // Legacy aliases for Cyberpunk themes
+    val CyberpunkCyan = NeonCyan
+    val CyberpunkPink = NeonPink
+    val CyberpunkPurple = NeonPurple
+
     val LEDFontFamily = FontFamily(
         Font(R.font.enhanced_led_board_7, FontWeight.Normal),
         Font(R.font.enhanced_led_board_7, FontWeight.Bold)

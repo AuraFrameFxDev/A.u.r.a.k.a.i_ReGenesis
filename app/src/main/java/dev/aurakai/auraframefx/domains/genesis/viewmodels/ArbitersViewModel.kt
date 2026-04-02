@@ -7,7 +7,7 @@ import dev.aurakai.auraframefx.domains.aura.core.transmutation.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -64,7 +64,7 @@ class ArbitersViewModel @Inject constructor(
 
         // 🛡️ Sovereign Sync Pulse: Trigger state freeze to anchor the breakthrough
         viewModelScope.launch {
-            sovereignStateManager.initiateStateFreeze()
+            sovereignStateManager.requestSovereignFreeze()
         }
 
         // Reset the reactor visuals for the next sync cycle

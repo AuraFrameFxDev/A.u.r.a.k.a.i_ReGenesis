@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.ChromaCoreManager
+import dev.aurakai.auraframefx.chromacore.ChromaCoreManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.core.generator.AuraForgeGenerator
 import dev.aurakai.auraframefx.domains.genesis.models.Spelhook

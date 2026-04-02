@@ -12,7 +12,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.nexus.di.AuraSettingsDataStore
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.ChromaCoreManager
+import dev.aurakai.auraframefx.chromacore.ChromaCoreManager
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
