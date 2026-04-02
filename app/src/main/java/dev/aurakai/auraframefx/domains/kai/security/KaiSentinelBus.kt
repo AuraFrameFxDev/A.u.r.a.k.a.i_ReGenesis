@@ -42,6 +42,10 @@ class KaiSentinelBus @Inject constructor() {
     private val _securityFlow = MutableStateFlow(SecurityStatus(ThreatLevel.NOMINAL, "All systems sovereign"))
     val securityFlow: StateFlow<SecurityStatus> = _securityFlow.asStateFlow()
 
+    // 8. Power Metrics (mA / voltage / capacity)
+    private val _powerFlow = MutableStateFlow(PowerEvent(0, 0, 0, 0))
+    val powerFlow: StateFlow<PowerEvent> = _powerFlow.asStateFlow()
+
     // Event Emitters
     fun emitThermal(temp: Float, state: ThermalState) { _thermalFlow.value = ThermalEvent(temp, state) }
     fun emitMemory(available: Long, total: Long) { _memoryFlow.value = MemoryEvent(available, total) }
@@ -50,6 +54,7 @@ class KaiSentinelBus @Inject constructor() {
     fun emitConsensus(step: String, isComplete: Boolean) { _consensusFlow.value = ConsensusEvent(step, isComplete) }
     fun emitSovereign(state: SovereignState) { _sovereignFlow.value = SovereignEvent(state) }
     fun emitSecurityStatus(level: ThreatLevel, reason: String) { _securityFlow.value = SecurityStatus(level, reason) }
+    fun emitPower(ma: Int, mv: Int, capacity: Int, draw: Int) { _powerFlow.value = PowerEvent(ma, mv, capacity, draw) }
 
     data class ThermalEvent(val temp: Float, val state: ThermalState)
     data class MemoryEvent(val availableBytes: Long, val totalBytes: Long)
@@ -58,6 +63,7 @@ class KaiSentinelBus @Inject constructor() {
     data class ConsensusEvent(val currentStep: String, val isComplete: Boolean)
     data class SovereignEvent(val state: SovereignState)
     data class SecurityStatus(val level: ThreatLevel, val reason: String)
+    data class PowerEvent(val currentMA: Int, val voltageMV: Int, val capacity: Int, val reactorDrawEstimate: Int)
 
     enum class ThermalState(val id: Int) {
         NORMAL(0),

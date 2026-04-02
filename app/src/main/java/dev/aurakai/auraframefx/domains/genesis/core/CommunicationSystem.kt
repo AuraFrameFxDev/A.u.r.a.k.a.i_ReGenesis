@@ -57,4 +57,19 @@ class CommunicationSystem @Inject constructor() {
         // In a real implementation, we would return a filtered flow
         return resonanceFlow
     }
+
+    /**
+     * Records power telemetry for correlating TurboQuant impact with battery drain.
+     */
+    suspend fun recordPowerMetric(ma: Int, catalystsActive: Int) {
+        val msg = AgentMessage(
+            id = java.util.UUID.randomUUID().toString(),
+            from = "POWER_SENTINEL",
+            to = "KAI",
+            content = "POWER_METRIC: ${ma}mA | CATALYSTS: $catalystsActive",
+            type = "telemetry",
+            timestamp = System.currentTimeMillis()
+        )
+        broadcast(msg)
+    }
 }

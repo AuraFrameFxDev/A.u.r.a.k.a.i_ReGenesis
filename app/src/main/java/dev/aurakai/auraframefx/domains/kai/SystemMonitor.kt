@@ -43,6 +43,9 @@ open class SystemMonitor @Inject constructor(
     private val _networkActivity = MutableStateFlow(NetworkMetrics())
     val networkActivity: StateFlow<NetworkMetrics> = _networkActivity
 
+    private val _batteryCurrentMa = MutableStateFlow(0)
+    val batteryCurrentMa: StateFlow<Int> = _batteryCurrentMa
+
     /**
      * Starts periodic system performance monitoring if not already active.
      *
@@ -168,6 +171,7 @@ open class SystemMonitor @Inject constructor(
         updateCpuUsage()
         updateMemoryMetrics()
         updateNetworkMetrics()
+        updateBatteryMetrics()
     }
 
     /**
@@ -221,6 +225,19 @@ open class SystemMonitor @Inject constructor(
             )
         } catch (e: Exception) {
             logger.warn("SystemMonitor", "Failed to update network metrics", e)
+        }
+    }
+
+    private fun updateBatteryMetrics() {
+        try {
+            val batteryFile = java.io.File("/sys/class/power_supply/battery/current_now")
+            if (batteryFile.exists()) {
+                val currentNow = batteryFile.readText().trim().toIntOrNull() ?: 0
+                // Value is typically in microamperes (uA), convert to mA
+                _batteryCurrentMa.value = currentNow / 1000
+            }
+        } catch (e: Exception) {
+            // Fallback for non-rooted or different sysfs paths
         }
     }
 

@@ -35,6 +35,7 @@ data class SystemStatusState(
     val cpuUsage: Float = 0f,
     val memoryUsedMb: Long = 0L,
     val memoryAvailableMb: Long = 0L,
+    val batteryCurrentMa: Int = 0,
     val isLoading: Boolean = true,
     val threatLevel: ThreatLevel = ThreatLevel.NONE,
     val detectedThreats: Int = 0,
@@ -144,16 +145,17 @@ class KaiSystemViewModel @Inject constructor(
             combine(
                 systemMonitor.cpuUsage,
                 systemMonitor.memoryUsage,
-                systemMonitor.availableMemory
-            ) { cpu, mem, avail ->
-                Triple(cpu, mem, avail)
-            }.collect { (cpu, mem, avail) ->
+                systemMonitor.availableMemory,
+                systemMonitor.batteryCurrentMa
+            ) { cpu, mem, avail, battery ->
+                java.util.UUID.randomUUID() // dummy to trigger collect
                 _systemStatus.value = _systemStatus.value.copy(
                     cpuUsage = cpu,
                     memoryUsedMb = mem / 1_048_576L,
-                    memoryAvailableMb = avail / 1_048_576L
+                    memoryAvailableMb = avail / 1_048_576L,
+                    batteryCurrentMa = battery
                 )
-            }
+            }.collect { }
         }
     }
 
