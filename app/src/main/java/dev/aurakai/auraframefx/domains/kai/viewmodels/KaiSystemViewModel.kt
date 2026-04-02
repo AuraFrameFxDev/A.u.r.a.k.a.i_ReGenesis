@@ -8,6 +8,8 @@ import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.core.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +69,8 @@ data class SystemLogsState(
  */
 @HiltViewModel
 class KaiSystemViewModel @Inject constructor(
+    val sentinelBus: KaiSentinelBus,
+    private val sovereignStateManager: SovereignStateManager,
     private val kaiAgent: KaiAgent,
     private val securityContext: SecurityContext,
     private val systemMonitor: SystemMonitor,
@@ -226,6 +230,10 @@ class KaiSystemViewModel @Inject constructor(
                 _error.value = "Security scan failed: ${e.message}"
             }
         }
+    }
+
+    fun triggerFreeze() {
+        sovereignStateManager.requestSovereignFreeze()
     }
 
     fun softReboot() {
