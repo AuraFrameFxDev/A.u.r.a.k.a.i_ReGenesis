@@ -26,6 +26,14 @@ interface AuraAIService {
     suspend fun generateText(prompt: String, options: Map<String, String>): String
 
     /**
+     * Generates a full theme configuration based on user preferences.
+     */
+    suspend fun generateTheme(
+        preferences: ThemePreferences,
+        context: String = ""
+    ): ThemeConfiguration
+
+    /**
      * Higher-level request processing using the Resonance AiRequest model.
      * Complies with Dochkhina's Endogenous Coordination principle.
      */
