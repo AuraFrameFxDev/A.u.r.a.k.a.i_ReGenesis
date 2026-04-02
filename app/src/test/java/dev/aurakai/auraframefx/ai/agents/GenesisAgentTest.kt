@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.ai.agents
 import dev.aurakai.auraframefx.domains.aura.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
 import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.AiRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.verify

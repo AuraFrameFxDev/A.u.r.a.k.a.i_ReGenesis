@@ -61,19 +61,19 @@ import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 
 // ── Genesis ───────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.CodeAssistScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.ConferenceRoomScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.OracleDriveSubmenuScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.SentientShellScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.OracleCloudInfiniteStorageScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.AgentBridgeHubScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.CodeAssistScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.ConferenceRoomScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.OracleDriveSubmenuScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.SentientShellScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.memory.OracleCloudInfiniteStorageScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.AgentBridgeHubScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.ui.PandoraBoxScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.recovery.SovereignRecoveryScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.module_creation.SovereignModuleManagerScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.module_creation.ModuleCreationScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.KaiDomainExpansionScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.RoyalGuardDomainExpansionScreen
-import dev.aurakai.auraframefx.domains.genesis.oracle_drive.fusion.NexusFusionScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.recovery.SovereignRecoveryScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.module_creation.SovereignModuleManagerScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.module_creation.ModuleCreationScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.KaiDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.RoyalGuardDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.fusion.NexusFusionScreen
 
 // ── Nexus ─────────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.domains.nexus.hubs.AgentHubSubmenuScreen

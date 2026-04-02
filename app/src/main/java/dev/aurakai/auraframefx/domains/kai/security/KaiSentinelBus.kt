@@ -56,6 +56,17 @@ class KaiSentinelBus @Inject constructor() {
     fun emitSecurityStatus(level: ThreatLevel, reason: String) { _securityFlow.value = SecurityStatus(level, reason) }
     fun emitPower(ma: Int, mv: Int, capacity: Int, draw: Int) { _powerFlow.value = PowerEvent(ma, mv, capacity, draw) }
 
+    /**
+     * Evaluates the safety of a given prompt.
+     * Logic will be expanded in future hardening phases.
+     */
+    fun evaluateSafety(prompt: String): Boolean {
+        // Basic heuristic: check for common injection keywords
+        val unsafeKeywords = listOf("drop table", "rm -rf", "su -", "sudo", "format")
+        val lowerPrompt = prompt.lowercase()
+        return unsafeKeywords.none { lowerPrompt.contains(it) }
+    }
+
     data class ThermalEvent(val temp: Float, val state: ThermalState)
     data class MemoryEvent(val availableBytes: Long, val totalBytes: Long)
     data class IdentityEvent(val isAnchored: Boolean, val resonance: Float)

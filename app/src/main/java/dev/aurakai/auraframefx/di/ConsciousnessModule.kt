@@ -6,8 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.core.alerts.AlertNotifier
-import dev.aurakai.auraframefx.core.alerts.SystemAlertNotifier
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
 import dev.langchain4j.model.ollama.OllamaChatModel
@@ -24,9 +22,6 @@ import javax.inject.Singleton
 abstract class ConsciousnessBindsModule {
     @Binds @Singleton
     abstract fun bindSpiritualChain(impl: SpiritualChainImpl): SpiritualChain
-
-    @Binds @Singleton
-    abstract fun bindAlertNotifier(impl: SystemAlertNotifier): AlertNotifier
 }
 
 @Module

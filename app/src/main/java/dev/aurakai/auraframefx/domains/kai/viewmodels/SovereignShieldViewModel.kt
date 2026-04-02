@@ -37,12 +37,12 @@ class SovereignShieldViewModel @Inject constructor(
 
     private fun collectSecurityState() {
         viewModelScope.launch {
-            securityContext.securityState.collect { secState ->
-                _state.value = _state.value.copy(
-                    blockedRequestsCount = secState.detectedThreats.size,
-                    privacyScore = recomputePrivacyScore(detectedThreats = secState.detectedThreats.size)
-                )
-            }
+            // securityContext.securityState.collect { secState ->
+            //     _state.value = _state.value.copy(
+            //         blockedRequestsCount = secState.detectedThreats.size,
+            //         privacyScore = recomputePrivacyScore(detectedThreats = secState.detectedThreats.size)
+            //     )
+            // }
         }
     }
 
