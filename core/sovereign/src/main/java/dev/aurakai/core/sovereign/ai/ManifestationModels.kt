@@ -1,18 +1,22 @@
 package dev.aurakai.core.sovereign.ai
 
+import dev.aurakai.core.sovereign.SovereignState
+import dev.aurakai.core.sovereign.ThermalState
 import kotlinx.serialization.Serializable
 
 /**
  * 🎨 MANIFESTATION RESULT
  * The atomic output of a creative or analytical pulse.
  * Watermarked with Sacred Provenance.
+ * Blueprint Alignment: L2 Emotional Valence integration.
  */
 @Serializable
 data class ManifestationResult(
-    val id: String,
-    val content: String,
-    val provenance: String, // "Aura via Interface-Forge", etc.
-    val confidence: Float,
+    val output: String,
+    val provenance: String, 
+    val state: SovereignState,
+    val driftScore: Float,
+    val thermalContext: ThermalState,
     val timestamp: Long = System.currentTimeMillis(),
     val metadata: Map<String, String> = emptyMap()
 )
