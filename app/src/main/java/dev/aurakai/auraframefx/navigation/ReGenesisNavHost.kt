@@ -175,6 +175,10 @@ fun ReGenesisNavGraph(
             KaiSentinelHubScreen(navController = navController)
         }
 
+        composable(ReGenesisRoute.SecurityCenter.route) {
+            SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         // GENESIS: Oracle Drive Hub
         composable(ReGenesisRoute.OracleDriveHub.route) {
             OracleDriveHubScreen(navController = navController)
