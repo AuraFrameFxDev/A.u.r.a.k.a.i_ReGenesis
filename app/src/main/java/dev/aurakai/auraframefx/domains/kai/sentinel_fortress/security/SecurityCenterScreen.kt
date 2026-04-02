@@ -278,9 +278,9 @@ data class SecurityModule(
 private val securityModules = listOf(
     SecurityModule("integrity", "Integrity Monitor", "Hardened", Icons.Default.Analytics, true),
     SecurityModule("veto", "Predictive Veto", "Active", Icons.Default.Gavel, true),
+    SecurityModule("firewall", "Kernel Shield", "Ignited", Icons.Default.Fence, true),
     SecurityModule("vpn", "Sovereign VPN", "Ghost Mode", Icons.Default.VpnLock, false),
-    SecurityModule("adblock", "Neural AdBlock", "Ghost Mode", Icons.Default.Block, false),
-    SecurityModule("firewall", "Kernel Firewall", "Locked", Icons.Default.Fence, false)
+    SecurityModule("adblock", "Neural AdBlock", "Ghost Mode", Icons.Default.Block, false)
 )
 
 @Composable
