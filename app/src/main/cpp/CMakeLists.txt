@@ -46,6 +46,7 @@ find_library(jnigraphics-lib jnigraphics)
 # Genesis AI source files - Using a Set to avoid duplicates
 set(GENESIS_SOURCES
         auraframefx.cpp
+        SovereignPerimeter.cpp
 )
 
 # Add source files with existence checks

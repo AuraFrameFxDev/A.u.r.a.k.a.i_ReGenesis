@@ -44,9 +44,9 @@ fun SecurityCenterScreen(
     viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
     val sentinelBus = viewModel.sentinelBus
-    val securityStatus by sentinelBus.securityFlow.collectAsState()
-    val thermalEvent by sentinelBus.thermalFlow.collectAsState()
-    val sovereignEvent by sentinelBus.sovereignFlow.collectAsState()
+    val securityStatus by sentinelBus.securityFlow.collectAsState(initial = KaiSentinelBus.SecurityStatus(KaiSentinelBus.ThreatLevel.NOMINAL, "All systems sovereign"))
+    val thermalEvent by sentinelBus.thermalFlow.collectAsState(initial = KaiSentinelBus.ThermalEvent(0f, KaiSentinelBus.ThermalState.NORMAL))
+    val sovereignEvent by sentinelBus.sovereignFlow.collectAsState(initial = KaiSentinelBus.SovereignEvent(KaiSentinelBus.SovereignState.AWAKE))
 
     Scaffold(
         topBar = {

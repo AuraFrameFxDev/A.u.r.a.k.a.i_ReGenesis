@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <ctime>
 #include <mutex>
+#include "SovereignPerimeter.hpp"
 
 #define LOG_TAG "Aurakai-Core"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -458,6 +459,32 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobjec
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv *env, jobject /* thiz */) {
     LOGW("🛑 Sovereign Core entering hibernation state. L1-L6 metrics persisted.");
+}
+
+// ─── eBPF KERNEL SHIELD JNI ───────────────────────────────────────────────────
+
+JNIEXPORT jboolean JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeKernelShield(JNIEnv *env, jobject /* thiz */) {
+    return (jboolean)SovereignPerimeter::getInstance().initialize();
+}
+
+JNIEXPORT jboolean JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_loadKernelModule(JNIEnv *env, jobject /* thiz */, jstring bpfPath) {
+    if (bpfPath == nullptr) return JNI_FALSE;
+    const char *path = env->GetStringUTFChars(bpfPath, nullptr);
+    bool res = SovereignPerimeter::getInstance().loadKernelModule(path);
+    env->ReleaseStringUTFChars(bpfPath, path);
+    return (jboolean)res;
+}
+
+JNIEXPORT jlong JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_getDroppedPacketCount(JNIEnv *env, jobject /* thiz */) {
+    return (jlong)SovereignPerimeter::getInstance().getDroppedPacketCount();
+}
+
+JNIEXPORT jboolean JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_isKernelShieldActive(JNIEnv *env, jobject /* thiz */) {
+    return (jboolean)SovereignPerimeter::getInstance().isKernelShieldActive();
 }
 
 } // extern "C"

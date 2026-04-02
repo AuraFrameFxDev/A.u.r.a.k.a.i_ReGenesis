@@ -66,6 +66,12 @@ object NativeLib {
     external fun optimizeAIMemory(): Boolean
     external fun analyzeBootImage(bootImageData: ByteArray): String
 
+    // --- eBPF Kernel Shield ---
+    external fun initializeKernelShield(): Boolean
+    external fun loadKernelModule(bpfPath: String): Boolean
+    external fun getDroppedPacketCount(): Long
+    external fun isKernelShieldActive(): Boolean
+
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
         val state = KaiSentinelBus.ThermalState.fromId(stateInt)
