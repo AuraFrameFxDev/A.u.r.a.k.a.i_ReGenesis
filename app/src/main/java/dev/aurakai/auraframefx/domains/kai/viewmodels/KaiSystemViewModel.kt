@@ -9,6 +9,7 @@ import dev.aurakai.auraframefx.domains.kai.SystemMonitor
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
@@ -70,6 +71,7 @@ data class SystemLogsState(
 @HiltViewModel
 class KaiSystemViewModel @Inject constructor(
     val sentinelBus: KaiSentinelBus,
+    val sovereignPerimeter: SovereignPerimeter,
     private val sovereignStateManager: SovereignStateManager,
     private val kaiAgent: KaiAgent,
     private val securityContext: SecurityContext,

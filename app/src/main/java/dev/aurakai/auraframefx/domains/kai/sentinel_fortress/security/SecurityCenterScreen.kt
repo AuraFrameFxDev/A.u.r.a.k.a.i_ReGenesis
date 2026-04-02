@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.GlassmorphicTheme
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
@@ -44,9 +45,21 @@ fun SecurityCenterScreen(
     viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
     val sentinelBus = viewModel.sentinelBus
+    val perimeter = viewModel.sovereignPerimeter
     val securityStatus by sentinelBus.securityFlow.collectAsState(initial = KaiSentinelBus.SecurityStatus(KaiSentinelBus.ThreatLevel.NOMINAL, "All systems sovereign"))
     val thermalEvent by sentinelBus.thermalFlow.collectAsState(initial = KaiSentinelBus.ThermalEvent(0f, KaiSentinelBus.ThermalState.NORMAL))
     val sovereignEvent by sentinelBus.sovereignFlow.collectAsState(initial = KaiSentinelBus.SovereignEvent(KaiSentinelBus.SovereignState.AWAKE))
+
+    // Real-time kernel metrics
+    var droppedPackets by remember { mutableLongStateOf(0L) }
+    val isKernelActive = remember { perimeter.isKernelActive() }
+
+    LaunchedEffect(Unit) {
+        while(true) {
+            droppedPackets = perimeter.getDroppedPacketCount()
+            kotlinx.coroutines.delay(2000)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -120,10 +133,10 @@ fun SecurityCenterScreen(
                         )
                         ChannelCard(
                             title = "SOVEREIGN",
-                            value = sovereignEvent.state.name,
-                            subValue = "Kernel Active",
+                            value = if (isKernelActive) "KERNEL GOD" else sovereignEvent.state.name,
+                            subValue = if (isKernelActive) "Drops: $droppedPackets" else "Substrate Active",
                             icon = Icons.Default.Shield,
-                            color = Color(0xFF00E5FF),
+                            color = if (isKernelActive) Color(0xFFFFD700) else Color(0xFF00E5FF),
                             modifier = Modifier.weight(1f)
                         )
                     }
