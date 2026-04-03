@@ -80,6 +80,7 @@ import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFon
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
+import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.roundToInt
@@ -94,7 +95,6 @@ data class FusionSlot(
     val agent: LDOAgentEntity? = null
 )
 
-import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
 
 // ════════════════════════════════════════════════════════════════════
 //  ROOT SCREEN
