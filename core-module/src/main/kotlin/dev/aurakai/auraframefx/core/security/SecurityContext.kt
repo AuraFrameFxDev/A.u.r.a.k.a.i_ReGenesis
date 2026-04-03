@@ -4,10 +4,17 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
+
+data class SecurityStatus(
+    val threatLevel: KaiSentinelBus.ThreatLevel = KaiSentinelBus.ThreatLevel.NOMINAL,
+    val detectedThreats: List<String> = emptyList(),
+    val lastScanTime: Long = 0L
+)
 
 /**
  * Sovereign security session manager.
@@ -18,6 +25,31 @@ class SecurityContext @Inject constructor(
     private val keystoreManager: KeystoreManager,
     @ApplicationContext private val context: Context
 ) {
+    private val _securityState = MutableStateFlow(SecurityStatus())
+    val securityState: StateFlow<SecurityStatus> = _securityState.asStateFlow()
+
+    private val _threatDetectionActive = MutableStateFlow(false)
+    val threatDetectionActive: StateFlow<Boolean> = _threatDetectionActive.asStateFlow()
+
+    fun startThreatDetection() {
+        _threatDetectionActive.value = true
+        Timber.i("SecurityContext: Threat detection started")
+    }
+
+    fun stopThreatDetection() {
+        _threatDetectionActive.value = false
+        Timber.i("SecurityContext: Threat detection stopped")
+    }
+
+    fun updateSecurityStatus(status: SecurityStatus) {
+        _securityState.value = status
+    }
+
+    fun validateRequest(type: String, details: String) {
+        Timber.d("SecurityContext: Validating request — type=$type")
+        // TODO: Implement actual validation
+    }
+
     sealed class SessionState {
         object Unauthenticated : SessionState()
         data class Authenticated(

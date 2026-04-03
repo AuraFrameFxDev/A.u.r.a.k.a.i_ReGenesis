@@ -40,9 +40,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
+import dev.aurakai.auraframefx.core.theme.*
 
 /**
  * Paywall Screen - Shown when trial expires
@@ -95,7 +93,7 @@ fun PaywallDialog(
                         imageVector = Icons.Default.Schedule,
                         contentDescription = null,
                         modifier = Modifier.size(80.dp),
-                        tint = NeonCyan
+                        tint = Color.NeonCyan
                     )
 
                     Spacer(Modifier.height(24.dp))
@@ -126,7 +124,7 @@ fun PaywallDialog(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = NeonBlue.copy(alpha = 0.2f)
+                            containerColor = Color.NeonBlue.copy(alpha = 0.2f)
                         )
                     ) {
                         Column(
@@ -168,7 +166,7 @@ fun PaywallDialog(
                         text = "VS",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        color = NeonCyan
+                        color = Color.NeonCyan
                     )
 
                     Spacer(Modifier.height(16.dp))
@@ -178,7 +176,7 @@ fun PaywallDialog(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = NeonCyan.copy(alpha = 0.2f)
+                            containerColor = Color.NeonCyan.copy(alpha = 0.2f)
                         )
                     ) {
                         Column(
@@ -188,7 +186,7 @@ fun PaywallDialog(
                             Text(
                                 text = "Genesis Protocol",
                                 style = MaterialTheme.typography.titleLarge,
-                                color = NeonCyan
+                                color = Color.NeonCyan
                             )
                             Spacer(Modifier.height(8.dp))
                             Row(
@@ -199,7 +197,7 @@ fun PaywallDialog(
                                     text = "$1",
                                     style = MaterialTheme.typography.displayLarge,
                                     fontWeight = FontWeight.Bold,
-                                    color = NeonBlue
+                                    color = Color.NeonBlue
                                 )
                                 Text(
                                     text = "/month",
@@ -210,14 +208,14 @@ fun PaywallDialog(
                             }
                             Spacer(Modifier.height(8.dp))
                             Surface(
-                                color = NeonPurple.copy(alpha = 0.3f),
+                                color = Color.NeonPurple.copy(alpha = 0.3f),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Text(
                                     text = "95% SAVINGS",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = NeonPurple,
+                                    color = Color.NeonPurple,
                                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                                 )
                             }
@@ -249,7 +247,7 @@ fun PaywallDialog(
                             .fillMaxWidth()
                             .height(64.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = NeonBlue
+                            containerColor = Color.NeonBlue
                         ),
                         shape = RoundedCornerShape(16.dp)
                     ) {
@@ -298,7 +296,7 @@ fun FeatureLockedBanner(
             .padding(16.dp),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = NeonPurple.copy(alpha = 0.2f)
+            containerColor = Color.NeonPurple.copy(alpha = 0.2f)
         )
     ) {
         Column(
@@ -308,7 +306,7 @@ fun FeatureLockedBanner(
             Icon(
                 Icons.Default.Lock,
                 contentDescription = null,
-                tint = NeonPurple,
+                tint = Color.NeonPurple,
                 modifier = Modifier.size(48.dp)
             )
             Spacer(Modifier.height(12.dp))
@@ -340,7 +338,7 @@ fun FeatureLockedBanner(
                     onClick = onSubscribe,
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = NeonBlue
+                        containerColor = Color.NeonBlue
                     )
                 ) {
                     Text("View Plans")

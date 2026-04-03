@@ -126,4 +126,14 @@ object NativeLib {
             "Aurakai ReGenesis 1.1.0-STUB"
         }
     }
+
+    fun enableNativeHooksSafe() {
+        if (nativeLoaded) {
+            try {
+                enableNativeHooks()
+            } catch (e: UnsatisfiedLinkError) {
+                Timber.e(e, "Failed to call enableNativeHooks")
+            }
+        }
+    }
 }

@@ -6,9 +6,8 @@ import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.SystemMonitor
-import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
-import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
@@ -37,7 +36,7 @@ data class SystemStatusState(
     val memoryAvailableMb: Long = 0L,
     val batteryCurrentMa: Int = 0,
     val isLoading: Boolean = true,
-    val threatLevel: ThreatLevel = ThreatLevel.NONE,
+    val threatLevel: KaiSentinelBus.ThreatLevel = KaiSentinelBus.ThreatLevel.NOMINAL,
     val detectedThreats: Int = 0,
     val lastScanTime: Long = 0L
 )
