@@ -168,3 +168,9 @@ nul
 *.mp4
 *.bin
 .gradle/*/executionHistory/
+
+# Gradle lock/probe files (Fix Pack v1)
+**/buildOutputCleanup.lock
+**/*.probe
+**/file-system.probe
+**/gradle.lockfile
