@@ -109,7 +109,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
+            dev.aurakai.auraframefx.core.NativeLib.initializeAICore()
             Timber.d("✅ Native AI platform initialized")
         } catch (e: Exception) {
             Timber.e(e, "❌ Native AI initialization error: ${e.message}")

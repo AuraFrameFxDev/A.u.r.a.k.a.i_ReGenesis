@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.core
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.GuidanceDrone
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus.ThermalState
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
@@ -113,7 +114,7 @@ object NativeLib {
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
         Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
-        droneDispatcher?.dispatch("native_substrate", reason) ?: run {
+        droneDispatcher?.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, reason) ?: run {
             Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
         }
     }
