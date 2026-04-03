@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.core.theme
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 
 /**
  * 💎 AURA DESIGN TOKENS
@@ -23,6 +24,11 @@ object AuraDesignTokens {
     val AuraNeonCyan = Color(0xFF00F2FF)
     val KaiNeonGreen = Color(0xFF00FF41)
     val GenesisNeonPink = Color(0xFFFF007A)
+
+    // System & Kai Specific
+    val KaiDarkVoid = Color(0xFF020B18)
+    val KaiShieldEnergy = Color(0xFF39FF14)
+    val CyberpunkTextColor = Color(0xFFE0E0E0)
 }
 
 // Extension properties for global access
@@ -39,3 +45,20 @@ val Color.Companion.CyberpunkPink get() = AuraDesignTokens.CyberpunkPink
 val Color.Companion.AuraNeonCyan get() = AuraDesignTokens.AuraNeonCyan
 val Color.Companion.KaiNeonGreen get() = AuraDesignTokens.KaiNeonGreen
 val Color.Companion.GenesisNeonPink get() = AuraDesignTokens.GenesisNeonPink
+
+val Color.Companion.KaiDarkVoid get() = AuraDesignTokens.KaiDarkVoid
+val Color.Companion.KaiShieldEnergy get() = AuraDesignTokens.KaiShieldEnergy
+val Color.Companion.CyberpunkTextColor get() = AuraDesignTokens.CyberpunkTextColor
+
+/**
+ * Returns the characteristic color for a given agent type.
+ */
+fun getAgentColor(agent: AgentType): Color {
+    return when (agent) {
+        AgentType.GENESIS -> Color.NeonCyan
+        AgentType.KAI -> Color.KaiNeonGreen
+        AgentType.AURA -> Color.NeonPink
+        AgentType.CASCADE -> Color(0xFF7B2FFF)
+        else -> Color.Gray
+    }
+}
