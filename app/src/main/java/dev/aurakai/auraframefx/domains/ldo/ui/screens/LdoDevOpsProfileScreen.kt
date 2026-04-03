@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.nexus.screens.ldo
+package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
