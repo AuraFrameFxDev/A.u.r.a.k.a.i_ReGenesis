@@ -170,7 +170,6 @@ nul
 .gradle/*/executionHistory/
 
 # Gradle lock/probe files (Fix Pack v1)
-**/.gradle/
 **/buildOutputCleanup.lock
 **/*.probe
 **/file-system.probe
