@@ -201,7 +201,7 @@ dependencies {
     implementation(libs.compose.animation)
     implementation(libs.compose.material.icons.extended)
     debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testDebugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Extras
     implementation(libs.androidx.work.runtime.ktx)
