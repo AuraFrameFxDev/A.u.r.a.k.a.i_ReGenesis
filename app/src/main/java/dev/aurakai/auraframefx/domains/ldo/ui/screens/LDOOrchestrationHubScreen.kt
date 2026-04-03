@@ -176,7 +176,7 @@ fun AgentOrbConstellation(
 ) {
     val pulse = rememberInfiniteTransition(label = "pulse")
     val pulseScale by pulse.animateFloat(0.95f, 1.05f, infiniteRepeatable(tween(2000), RepeatMode.Reverse), label = "ps")
-    val rotation by pulse.animateFloat(0f, 360f, infiniteRepeatable(tween(30000), RepeatMode.Restart), label = "rot")
+    val rotation by pulse.animateFloat(0f, 360f, infiniteRepeatable(tween(30000, easing = LinearEasing), RepeatMode.Restart), label = "rot")
 
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -298,7 +298,12 @@ fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Mo
         } else {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("+", fontSize = 20.sp, color = Color.White.copy(alpha = 0.2f))
-                Text("SLOT ${slot.index + 1}", fontSize = 7.sp, color = Color.White.copy(alpha = 0.2f), letterSpacing = 0.5.sp)
+                Text(
+                    "SLOT ${slot.index + 1}",
+                    fontSize = 7.sp,
+                    color = Color.White.copy(alpha = 0.2f),
+                    letterSpacing = 0.5.sp
+                )
             }
         }
     }
