@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.GlassmorphicTheme
+import dev.aurakai.auraframefx.core.theme.GlassmorphicTheme
 
 /**
  * 💎 GLASSMORPHIC COMPONENTS

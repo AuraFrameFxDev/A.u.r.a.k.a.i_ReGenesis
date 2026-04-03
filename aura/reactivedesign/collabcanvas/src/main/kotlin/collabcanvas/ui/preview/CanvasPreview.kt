@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import collabcanvas.ui.CanvasScreen
-import collabcanvas.ui.theme.AuraFrameFXTheme
+import collabcanvas.ui.theme.CollabCanvasTheme
 
 @Preview(
     name = "Light Mode",
@@ -19,7 +19,7 @@ import collabcanvas.ui.theme.AuraFrameFXTheme
 )
 @Composable
 fun PreviewCanvasScreen() {
-    AuraFrameFXTheme {
+    CollabCanvasTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {

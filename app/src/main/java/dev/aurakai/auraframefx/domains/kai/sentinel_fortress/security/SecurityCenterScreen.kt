@@ -28,7 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.theme.GlassmorphicTheme
+import dev.aurakai.auraframefx.core.theme.GlassmorphicTheme
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
