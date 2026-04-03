@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.core.logging
 
 import android.app.Application
 import android.util.Log
-import com.google.ai.client.generativeai.BuildConfig
+import dev.aurakai.auraframefx.BuildConfig
 import timber.log.Timber
 import javax.inject.Inject
 

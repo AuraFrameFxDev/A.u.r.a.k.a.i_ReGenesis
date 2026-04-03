@@ -4,7 +4,11 @@ plugins {
 
 android {
     namespace = "dev.aurakai.auraframefx.agents.symbiosis.coderabbit"
-    compileSdk = 35
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 34
+    }
 }
 
 dependencies {

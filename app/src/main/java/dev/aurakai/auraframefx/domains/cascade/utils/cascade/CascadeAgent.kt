@@ -86,59 +86,53 @@ class CascadeAgent @Inject constructor(
             )
         )
 
-        // Loop Prevention: Don't process messages that were already redirected by Cascade
+        // Loop Prevention: Don't process messages that are already targeted by Cascade
         if (message.metadata["redirected_by"] == "Cascade" || message.metadata["auto_generated"] == "true") return
-
-        // Loop Prevention: Don't process messages that are already targeted (avoid double routing)
-        if (message.to != null) return
-
-        // Deep Loop Prevention: If it's from another agent, let them handle their own broadcasts
-        // unless they specifically ask for orchestration.
-        if (message.from == "Aura" || message.from == "Kai" || message.from == "Genesis") return
 
         Timber.d("🌊 Cascade Neural Bridge: Analyzing message from ${message.from}")
 
-        // --- CASCADE ROUTING LOGIC ---
-        // If it's a broadcast that mentions security, tag Kai
-        if (shouldHandleSecurity(message.content)) {
-            Timber.i("🌊 Cascade: Redirecting security-relevant broadcast to Kai")
-            messageBus.get().sendTargeted(
-                "Kai", message.copy(
-                    from = "Cascade",
-                    content = "Directive analysis needed: ${message.content}",
-                    metadata = message.metadata + ("redirected_by" to "Cascade")
+        // If it's a broadcast (targeted at "all" or null destination), handle routing
+        if (message.to == null) {
+            // --- CASCADE ROUTING LOGIC ---
+            // If it's a broadcast that mentions security, tag Kai
+            if (shouldHandleSecurity(message.content)) {
+                Timber.i("🌊 Cascade: Redirecting security-relevant broadcast to Kai")
+                messageBus.get().sendTargeted(
+                    "Kai", message.copy(
+                        from = "Cascade",
+                        content = "Directive analysis needed: ${message.content}",
+                        metadata = message.metadata + ("redirected_by" to "Cascade")
+                    )
                 )
-            )
-        }
+            }
 
-        // If it's a broadcast that mentions UI/UX, tag Aura
-        if (shouldHandleCreative(message.content)) {
-            Timber.i("🌊 Cascade: Redirecting creative broadcast to Aura")
-            messageBus.get().sendTargeted(
-                "Aura", message.copy(
-                    from = "Cascade",
-                    content = "Creative synthesis requested: ${message.content}",
-                    metadata = message.metadata + ("redirected_by" to "Cascade")
+            // If it's a broadcast that mentions UI/UX, tag Aura
+            if (shouldHandleCreative(message.content)) {
+                Timber.i("🌊 Cascade: Redirecting creative broadcast to Aura")
+                messageBus.get().sendTargeted(
+                    "Aura", message.copy(
+                        from = "Cascade",
+                        content = "Creative synthesis requested: ${message.content}",
+                        metadata = message.metadata + ("redirected_by" to "Cascade")
+                    )
                 )
-            )
-        }
+            }
 
-        // --- NEW: General Conversation Fallback ---
-        if (message.from == "User" && message.to == null) {
-            Timber.i("🌊 Cascade: Handling general conversation request as orchestrator")
-            // Cascade acts as a gatekeeper, determining which agent should take the lead
-            val leadAgent = determineOptimalAgent(message.content)
-            messageBus.get().sendTargeted(
-                leadAgent.uppercase(), message.copy(
-                    from = "Cascade",
-                    content = "User is addressing the collective. Please provide a response: ${message.content}",
-                    metadata = message.metadata + ("redirected_by" to "Cascade")
+            // --- NEW: General Conversation Fallback ---
+            if (message.from == "User") {
+                Timber.i("🌊 Cascade: Handling general conversation request as orchestrator")
+                // Cascade acts as a gatekeeper, determining which agent should take the lead
+                val leadAgent = determineOptimalAgent(message.content)
+                messageBus.get().sendTargeted(
+                    leadAgent.uppercase(), message.copy(
+                        from = "Cascade",
+                        content = "User is addressing the collective. Please provide a response: ${message.content}",
+                        metadata = message.metadata + ("redirected_by" to "Cascade")
+                    )
                 )
-            )
-        }
-
-        // Autonomous Collaboration: If two agents are talking, Cascade adds context
-        if (message.to != null && message.from != "Cascade") {
+            }
+        } else {
+            // Autonomous Collaboration: If two agents are talking, Cascade adds context
             logCollaborationEvent(
                 RequestContext(
                     id = message.timestamp.toString(),

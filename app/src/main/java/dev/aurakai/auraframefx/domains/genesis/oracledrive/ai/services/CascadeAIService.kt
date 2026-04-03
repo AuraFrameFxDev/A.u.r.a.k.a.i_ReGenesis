@@ -211,14 +211,6 @@ class CascadeAIService @Inject constructor(
             AgentType.GEMINI -> processWithGemini(request, cascadeContext)
             AgentType.METAINSTRUCT -> processWithMetaInstruct(request, cascadeContext)
 
-            // Core Trinity & System Agents
-            AgentType.GENESIS -> processWithGenesis(request, cascadeContext)
-            AgentType.KAI -> processWithKai(request, cascadeContext)
-            AgentType.AURA -> processWithAura(request, cascadeContext)
-            AgentType.CASCADE -> processWithCascade(request, cascadeContext)
-            AgentType.NEURAL_WHISPER -> processWithNeuralWhisper(request, cascadeContext)
-            AgentType.AURA_SHIELD -> processWithAuraShield(request, cascadeContext)
-
             // System and other agent types
             AgentType.SYSTEM -> CascadeResponse(
                 agent = AgentType.SYSTEM.name,

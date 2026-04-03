@@ -117,48 +117,50 @@ fun CameraEffectOverlay(
             .fillMaxSize()
             .onSizeChanged { size = it }
     ) {
-        when (effect) {
-            CameraEffect.NONE -> { /* No effect */
-            }
+        if (size != IntSize.Zero) {
+            when (effect) {
+                CameraEffect.NONE -> { /* No effect */
+                }
 
-            CameraEffect.FISH_EYE -> {
-                FishEyeEffect(
-                    intensity = intensity,
-                    gyroscopeX = gyroscopeX,
-                    gyroscopeY = gyroscopeY,
-                    size = size
-                )
-            }
+                CameraEffect.FISH_EYE -> {
+                    FishEyeEffect(
+                        intensity = intensity,
+                        gyroscopeX = gyroscopeX,
+                        gyroscopeY = gyroscopeY,
+                        size = size
+                    )
+                }
 
-            CameraEffect.DISSIPATE -> {
-                DissipateEffect(
-                    intensity = intensity,
-                    animTime = if (animated) animTime else 0f,
-                    size = size
-                )
-            }
+                CameraEffect.DISSIPATE -> {
+                    DissipateEffect(
+                        intensity = intensity,
+                        animTime = if (animated) animTime else 0f,
+                        size = size
+                    )
+                }
 
-            CameraEffect.WARP -> {
-                WarpEffect(
-                    intensity = intensity,
-                    gyroscopeX = gyroscopeX,
-                    gyroscopeY = gyroscopeY,
-                    animTime = if (animated) animTime else 0f,
-                    size = size
-                )
-            }
+                CameraEffect.WARP -> {
+                    WarpEffect(
+                        intensity = intensity,
+                        gyroscopeX = gyroscopeX,
+                        gyroscopeY = gyroscopeY,
+                        animTime = if (animated) animTime else 0f,
+                        size = size
+                    )
+                }
 
-            CameraEffect.CONTOUR -> {
-                ContourEffect(
-                    intensity = intensity,
-                    size = size
-                )
-            }
+                CameraEffect.CONTOUR -> {
+                    ContourEffect(
+                        intensity = intensity,
+                        size = size
+                    )
+                }
 
-            CameraEffect.DECONSTRUCT -> {
-                // Integrates with HomeScreenTransitionType.DIGITAL_DECONSTRUCT
-                // Uses fragment-based deconstruction matching the system transition
-                DeconstructEffectPlaceholder(intensity, animTime, size)
+                CameraEffect.DECONSTRUCT -> {
+                    // Integrates with HomeScreenTransitionType.DIGITAL_DECONSTRUCT
+                    // Uses fragment-based deconstruction matching the system transition
+                    DeconstructEffectPlaceholder(intensity, animTime, size)
+                }
             }
         }
     }
@@ -283,9 +285,10 @@ fun DissipateEffect(
     animTime: Float,
     size: IntSize
 ) {
-    // Generate particles
-    val particles = remember {
-        List(200) {
+    // Generate particles only when size becomes valid
+    val particles = remember(size.width, size.height) {
+        if (size == IntSize.Zero) emptyList()
+        else List(200) {
             Particle(
                 initialX = Random.nextFloat() * size.width,
                 initialY = Random.nextFloat() * size.height,

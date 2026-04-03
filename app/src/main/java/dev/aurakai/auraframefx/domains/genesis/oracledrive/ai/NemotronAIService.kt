@@ -237,7 +237,7 @@ class NemotronAIService @Inject constructor(
         return MemoryRecall(
             summary = "Retrieved $simulatedCount relevant memory fragments",
             count = simulatedCount,
-            relevance = if (simulatedCount > 0) 0.85f else 0.5f
+            relevance = 0.85f // simulatedCount is always > 0 (either 5 or 2)
         )
     }
 
