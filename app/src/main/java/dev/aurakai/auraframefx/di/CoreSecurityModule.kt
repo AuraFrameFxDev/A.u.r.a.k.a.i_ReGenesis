@@ -18,6 +18,8 @@ import dev.aurakai.auraframefx.domains.aura.services.iconify.IconifyService
 import dev.aurakai.auraframefx.domains.aura.services.iconify.SystemIconifyService
 import dev.aurakai.auraframefx.domains.aura.ui.ark.ArkFusionBuildEngine
 import dev.aurakai.auraframefx.domains.aura.ui.ark.FusionBuildEngine
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.DefaultVertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.BridgeMemorySink
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.NexusMemoryBridgeSink
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
@@ -25,6 +27,10 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxSer
 import dev.aurakai.auraframefx.domains.genesis.services.GrokAnalysisService
 import dev.aurakai.auraframefx.domains.genesis.services.GrokAnalysisServiceImpl
 import dev.aurakai.auraframefx.domains.nexus.preferences.UserPreferencesState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -48,6 +54,9 @@ abstract class CoreSecurityModule {
 
     @Binds @Singleton
     abstract fun bindPandoraBoxService(impl: PandoraBoxServiceImpl): PandoraBoxService
+
+    @Binds @Singleton
+    abstract fun bindVertexAIClient(impl: DefaultVertexAIClient): VertexAIClient
 }
 
 @Module
@@ -56,6 +65,14 @@ object CoreSecurityProvidesModule {
 
     @Provides @Singleton
     fun provideDefaultUserPreferences(): UserPreferencesState = UserPreferencesState()
+
+    @Provides @Singleton @Named("GEMINI_API_KEY")
+    fun provideGeminiApiKey(): String = dev.aurakai.auraframefx.BuildConfig.GEMINI_API_KEY
+
+    @Provides
+    @Singleton
+    @ApplicationScope
+    fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     @Provides
     @Singleton
