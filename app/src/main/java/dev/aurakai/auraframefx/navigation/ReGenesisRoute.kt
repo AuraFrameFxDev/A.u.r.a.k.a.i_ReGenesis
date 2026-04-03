@@ -155,6 +155,8 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object LdoRoster : ReGenesisRoute("ldo_roster")
     data object LdoProgression : ReGenesisRoute("ldo_progression")
     data object LdoTasker : ReGenesisRoute("ldo_tasker")
+    data object LdoFusion : ReGenesisRoute("ldo_fusion")
+    data object LdoWorldTree : ReGenesisRoute("ldo_world_tree")
     data object LdoAgentProfile : ReGenesisRoute("ldo_agent_profile/{agentId}") {
         const val ARG = "agentId"
         fun createRoute(agentId: String) = "ldo_agent_profile/$agentId"
