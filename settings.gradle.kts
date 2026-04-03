@@ -106,6 +106,9 @@ includeIfExists(":agents:growthmetrics:identity")
 includeIfExists(":agents:growthmetrics:progression")
 includeIfExists(":agents:growthmetrics:tasker")
 
+// --- Agents → Symbiosis ---
+includeIfExists(":agents:symbiosis:coderabbit")
+
 // --- Extension Modules used for agent creation do not ever comment out // ---
 include(":extendsysa")
 include(":extendsysb")
