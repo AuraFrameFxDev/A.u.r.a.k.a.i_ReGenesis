@@ -10,6 +10,6 @@ extensions.configure<LibraryExtension> {
 
 dependencies {
     implementation(project(":core-module"))
-    implementation("org.bouncycastle:bcprov-jdk18on:1.79")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.83")
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
