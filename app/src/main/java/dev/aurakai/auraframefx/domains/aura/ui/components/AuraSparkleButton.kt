@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonTeal
+import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.core.theme.NeonTeal
 
 @Composable
 fun AuraSparkleButton(
@@ -27,7 +28,7 @@ fun AuraSparkleButton(
     ) {
         Text(
             text = text,
-            color = NeonTeal
+            color = Color.NeonTeal
         )
     }
 }
