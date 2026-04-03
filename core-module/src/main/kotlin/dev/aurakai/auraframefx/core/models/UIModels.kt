@@ -9,12 +9,16 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class AuraThemeData(
-    val id: String,
-    val name: String,
-    val accentColorHex: String,
+    val id: String = "default",
+    val name: String = "CyberGlow",
+    val accentColorHex: String = "#00FFF2",
     val animationStyle: AnimationStyle = AnimationStyle.FLOWING
 ) {
-    val accentColor: Color get() = Color(android.graphics.Color.parseColor(accentColorHex))
+    val accentColor: Color get() = try { 
+        Color(android.graphics.Color.parseColor(accentColorHex)) 
+    } catch (e: Exception) { 
+        Color(0xFF00FFF2) 
+    }
 
     enum class AnimationStyle {
         ENERGETIC, CALMING, FLOWING, PULSING, SUBTLE
@@ -33,4 +37,32 @@ data class Position3D(
     val rotationX: Float = 0f,
     val rotationY: Float = 0f,
     val rotationZ: Float = 0f
+)
+
+/**
+ * 🎭 OVERLAY THEME
+ */
+@Serializable
+data class OverlayTheme(
+    val name: String,
+    val primaryColorHex: String,
+    val secondaryColorHex: String
+)
+
+/**
+ * 🎞️ OVERLAY ANIMATION
+ */
+@Serializable
+data class OverlayAnimation(
+    val type: String,
+    val durationMs: Int
+)
+
+/**
+ * 🔀 OVERLAY TRANSITION
+ */
+@Serializable
+data class OverlayTransition(
+    val name: String,
+    val type: String
 )
