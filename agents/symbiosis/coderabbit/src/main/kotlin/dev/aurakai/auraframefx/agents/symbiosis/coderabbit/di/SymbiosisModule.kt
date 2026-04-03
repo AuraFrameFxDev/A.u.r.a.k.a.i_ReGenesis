@@ -13,6 +13,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object SymbiosisModule {
 
+    /**
+     * Creates a CodeRabbitAgent wired with the provided services.
+     *
+     * @param pandora The PandoraBoxService used by the agent.
+     * @param provenance The ProvenanceValidator used to validate provenance data consumed by the agent.
+     * @return A CodeRabbitAgent instance configured with the given dependencies.
+     */
     @Provides
     @Singleton
     fun provideCodeRabbitAgent(

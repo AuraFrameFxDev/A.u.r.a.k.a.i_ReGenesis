@@ -36,6 +36,12 @@ object GlassmorphicTheme {
     )
 }
 
+/**
+ * Applies the AuraFrameFX color scheme to its content, selecting a dark or light palette according to `darkTheme`.
+ *
+ * @param darkTheme If `true`, the dark color scheme is applied; otherwise the light color scheme is applied.
+ * @param content Composable UI content to be rendered within the themed Material surface.
+ */
 @Composable
 fun AuraFrameFXTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
