@@ -248,3 +248,16 @@ data class ActiveManifestation(
 enum class Character {
     AURA, KAI
 }
+
+/**
+ * 📍 Position 3D
+ */
+@Serializable
+data class Position3D(
+    val x: Float = 0f,
+    val y: Float = 0f,
+    val z: Float = 0f,
+    val rotationX: Float = 0f,
+    val rotationY: Float = 0f,
+    val rotationZ: Float = 0f
+)

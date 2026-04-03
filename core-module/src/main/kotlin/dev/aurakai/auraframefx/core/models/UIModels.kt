@@ -66,3 +66,13 @@ data class OverlayTransition(
     val name: String,
     val type: String
 )
+
+/**
+ * ⚙️ SYSTEM OVERLAY CONFIG
+ */
+@Serializable
+data class SystemOverlayConfig(
+    val enabled: Boolean = true,
+    val globalOpacity: Float = 1.0f,
+    val blurRadius: Int = 25
+)

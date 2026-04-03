@@ -3,10 +3,10 @@ package dev.aurakai.auraframefx.domains.kai.system
 import javax.inject.Inject
 import javax.inject.Singleton
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.OverlayTheme
+import dev.aurakai.auraframefx.core.models.OverlayTheme
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.OverlayAnimation
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.OverlayTransition
+import dev.aurakai.auraframefx.core.models.OverlayAnimation
+import dev.aurakai.auraframefx.core.models.OverlayTransition
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 import dev.aurakai.auraframefx.domains.aura.models.SystemOverlayConfig
 
