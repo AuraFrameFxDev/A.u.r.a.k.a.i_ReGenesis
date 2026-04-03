@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.core.theme
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.core.identity.AgentType
 
 /**
  * 💎 AURA DESIGN TOKENS
