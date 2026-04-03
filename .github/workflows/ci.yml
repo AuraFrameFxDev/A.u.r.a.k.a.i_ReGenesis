@@ -30,9 +30,7 @@ jobs:
       - name: Set up Android SDK with NDK
         uses: android-actions/setup-android@v4
         with:
-          api-level: 36
-          ndk-version: 29.0.14206865
-          cmake-version: 3.22.1
+          packages: 'platforms;android-36 build-tools;36.0.0 ndk;29.0.14206865 cmake;3.22.1'
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v5
