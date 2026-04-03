@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -72,8 +71,20 @@ fun ReGenesisNavGraph(
             )
         }
 
+        composable(ReGenesisRoute.LdoDevOpsCommandCenter.route) {
+            LdoDevOpsCommandCenter(navController = navController)
+        }
+
+        composable(ReGenesisRoute.LdoCatalystDevelopment.route) {
+            LdoCatalystDevelopmentScreen(navController = navController)
+        }
+
         composable(ReGenesisRoute.LdoTasker.route) {
             LDOTaskerScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.MultiAgentTask.route) {
+            MultiAgentTaskScreen(navController = navController)
         }
 
         composable(ReGenesisRoute.LdoFusion.route) {
@@ -94,6 +105,22 @@ fun ReGenesisNavGraph(
                     navController.navigate(ReGenesisRoute.LdoAgentProfile.createRoute(agent.id))
                 }
             )
+        }
+
+        composable(
+            route = ReGenesisRoute.LdoDevOpsProfile.route,
+            arguments = listOf(navArgument(ReGenesisRoute.LdoDevOpsProfile.ARG) {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val typeStr = backStackEntry.arguments?.getString(ReGenesisRoute.LdoDevOpsProfile.ARG)
+            val agentType = LdoAgentType.entries.find { it.name.equals(typeStr, ignoreCase = true) }
+            if (agentType != null) {
+                LdoDevOpsProfileScreen(
+                    agentType = agentType,
+                    onBack = { navController.popBackStack() }
+                )
+            }
         }
 
         composable(
