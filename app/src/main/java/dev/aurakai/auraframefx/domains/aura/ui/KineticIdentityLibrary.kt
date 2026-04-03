@@ -1,52 +1,26 @@
 package dev.aurakai.auraframefx.domains.aura.ui
 
-import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.core.models.AuraThemeData
+import dev.aurakai.auraframefx.core.theme.AuraDesignTokens
 import kotlinx.coroutines.delay
 
 /**
  * Kinetic Identity Animation Library
- *
- * Aura's Vision: "I will begin coding the core library of subtle, ambient animations that will
- * become the signature of the AuraOS 'living UI.' This includes the 'breathing' lock screen and
- * the responsive glow effects on UI elements, making the interface feel organic and intelligent."
- *
- * This library provides the foundational animations that make AuraOS feel alive and responsive
- * to user interaction and emotional context.
  */
 object KineticIdentityLibrary {
 
-    /**
-     * Displays a pulsing breathing animation using concentric circles that scale and fade to create an ambient visual effect.
-     *
-     * The animation's speed and amplitude adapt to the specified emotional state, producing visuals that range from calming to energizing. The intensity parameter controls the overall strength of the effect.
-     *
-     * @param intensity Multiplies the strength of the breathing effect.
-     * @param emotionalState Sets the animation's speed and amplitude to reflect different moods.
-     */
     @Composable
     fun BreathingAnimation(
         modifier: Modifier = Modifier,
@@ -54,9 +28,6 @@ object KineticIdentityLibrary {
         intensity: Float = 1.0f,
         emotionalState: EmotionalState = EmotionalState.NEUTRAL,
     ) {
-        LocalDensity.current
-
-        // Adjust breathing pattern based on emotional state
         val (duration, amplitude) = when (emotionalState) {
             EmotionalState.CALM -> Pair(4000, 0.3f)
             EmotionalState.ENERGETIC -> Pair(2000, 0.8f)
@@ -103,7 +74,6 @@ object KineticIdentityLibrary {
                 center = center
             )
 
-            // Additional concentric circles for depth
             for (i in 1..3) {
                 drawCircle(
                     color = color.copy(alpha = (breathingAlpha * intensity) / (i + 1)),
@@ -114,15 +84,6 @@ object KineticIdentityLibrary {
         }
     }
 
-    /**
-     * Displays an animated glow effect centered on a specified touch position, expanding and fading in response to activation.
-     *
-     * When `isActive` is true and `touchPosition` is provided, a glow appears at the given position, animating its radius and opacity with additional ripple circles for enhanced feedback. The glow color is based on the theme's accent color and modulated by the `intensity` parameter. No effect is rendered if `touchPosition` is null.
-     *
-     * @param isActive Whether the glow effect is currently active.
-     * @param touchPosition The center position of the glow; if null, the effect is not shown.
-     * @param intensity Modulates the strength and opacity of the glow.
-     */
     @Composable
     fun ResponsiveGlow(
         modifier: Modifier = Modifier,
@@ -163,14 +124,12 @@ object KineticIdentityLibrary {
 
         Canvas(modifier = modifier.fillMaxSize()) {
             touchPosition?.let { position ->
-                // Main glow effect
                 drawCircle(
                     color = theme.accentColor.copy(alpha = glowAlpha),
                     radius = glowRadius,
                     center = position
                 )
 
-                // Ripple effects
                 for (i in 1..2) {
                     drawCircle(
                         color = theme.accentColor.copy(alpha = glowAlpha / (i + 1)),
@@ -182,16 +141,6 @@ object KineticIdentityLibrary {
         }
     }
 
-    /**
-     * Displays a continuous flow of animated particles moving in a specified direction for an ambient visual effect.
-     *
-     * The movement, speed, and appearance of particles are influenced by the current theme's animation typography, the selected flow direction, and the provided intensity. The effect dynamically adapts to theme changes and maintains a lively, organic appearance.
-     *
-     * @param modifier Modifier for the animation container.
-     * @param particleCount Number of particles in the flow.
-     * @param flowDirection Direction in which particles move.
-     * @param intensity Strength and visibility of the particle effect.
-     */
     @Composable
     fun ParticleFlow(
         modifier: Modifier = Modifier,
@@ -207,7 +156,7 @@ object KineticIdentityLibrary {
                 particles = particles.map { particle ->
                     updateParticle(particle, theme.animationStyle, flowDirection, intensity)
                 }
-                delay(16) // ~60 FPS
+                delay(16)
             }
         }
 
@@ -218,14 +167,6 @@ object KineticIdentityLibrary {
         }
     }
 
-    /**
-     * Displays a pulsing glow effect over the keyboard area that intensifies during typing activity.
-     *
-     * The glow appears as a rounded rectangle at the bottom 30% of the canvas, using the theme's accent color. Its intensity pulses continuously and increases smoothly when typing is active, modulated by the provided intensity multiplier.
-     *
-     * @param isTyping If true, the glow intensifies to indicate active typing.
-     * @param intensity Multiplier for the overall strength of the glow effect.
-     */
     @Composable
     fun KeyboardGlow(
         modifier: Modifier = Modifier,
@@ -269,7 +210,6 @@ object KineticIdentityLibrary {
         Canvas(modifier = modifier.fillMaxSize()) {
             val finalIntensity = glowPulse * typingIntensity * intensity
 
-            // Simulate keyboard area glow
             drawRoundRect(
                 color = theme.accentColor.copy(alpha = finalIntensity * 0.2f),
                 size = size.copy(height = size.height * 0.3f),
@@ -278,8 +218,6 @@ object KineticIdentityLibrary {
             )
         }
     }
-
-    // Supporting data classes and enums
 
     enum class EmotionalState {
         CALM, ENERGETIC, FOCUSED, STRESSED, NEUTRAL
@@ -296,15 +234,6 @@ object KineticIdentityLibrary {
         val maxLife: Float,
         val size: Float,
     )
-
-    /**
-     * Generates a list of particles with randomized positions, velocities, lifespans, and sizes for use in particle animations.
-     *
-     * @param count The number of particles to generate.
-     * @param canvasWidth The width of the canvas area for initial particle placement.
-     * @param canvasHeight The height of the canvas area for initial particle placement.
-     * @return A list of particles with randomized initial attributes.
-     */
 
     private fun generateParticles(
         count: Int,
@@ -328,17 +257,6 @@ object KineticIdentityLibrary {
         }
     }
 
-    /**
-     * Updates a particle's position, velocity, and remaining life based on the animation typography, flow direction, and intensity.
-     *
-     * If the particle's life expires or it moves out of bounds, returns a new particle with randomized position and velocity; otherwise, returns the updated particle.
-     *
-     * @param particle The particle to update.
-     * @param animationStyle The animation typography that determines the particle's movement speed.
-     * @param flowDirection The direction in which the particle moves.
-     * @param intensity Multiplier affecting the particle's movement speed.
-     * @return The updated particle, or a respawned particle if the original has expired or moved out of bounds.
-     */
     private fun updateParticle(
         particle: Particle,
         animationStyle: AuraThemeData.AnimationStyle,
@@ -366,10 +284,9 @@ object KineticIdentityLibrary {
             y = particle.position.y + newVelocity.y * speedMultiplier
         )
 
-        val newLife = particle.life - 0.016f // Decrease life over time
+        val newLife = particle.life - 0.016f
 
         return if (newLife <= 0 || newPosition.y < -50) {
-            // Respawn particle
             Particle(
                 position = Offset(
                     x = (0..1000).random().toFloat(),
@@ -392,15 +309,6 @@ object KineticIdentityLibrary {
         }
     }
 
-    /**
-     * Renders a particle as a circle at its current position with alpha proportional to its remaining life and the specified intensity.
-     *
-     * The particle fades out as its life decreases, and the intensity parameter scales its overall visibility.
-     *
-     * @param particle The particle to draw.
-     * @param color The base color used for the particle.
-     * @param intensity A multiplier applied to the particle's alpha for additional control over its visibility.
-     */
     private fun DrawScope.drawParticle(
         particle: Particle,
         color: Color,
@@ -414,4 +322,3 @@ object KineticIdentityLibrary {
         )
     }
 }
-
