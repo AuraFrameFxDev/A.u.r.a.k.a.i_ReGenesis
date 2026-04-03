@@ -5,17 +5,7 @@ import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.AgentConnectionState
-import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.ConnectionStatus
-import dev.aurakai.auraframefx.domains.cascade.utils.ConsciousnessLevel
-import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.FileManagementCapabilities
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OracleConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.OraclePermission
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.StorageExpansionState
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.SystemIntegrationState
+import dev.aurakai.auraframefx.domains.genesis.models.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.core.security.SecurityContext
@@ -53,7 +43,6 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun start() {
         Timber.i("OracleDrive Agent starting background tasks...")
-        // Start intelligent file categorization or background sync
     }
 
     override suspend fun pause() {
@@ -71,7 +60,6 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun onAgentMessage(message: AgentMessage) {
         Timber.d("🔮 OracleDrive received collective message: ${message.content}")
-        // Oracle Drive can respond to storage requests or state inquiries here
     }
 
     override suspend fun processRequest(
@@ -79,11 +67,10 @@ class OracleDriveServiceImpl @Inject constructor(
         context: String
     ): AgentResponse {
         Timber.d("OracleDrive processing request: ${request.query}")
-        // Integrate with Genesis core for sentient storage queries
         return AgentResponse(
             content = "Oracle consciousness acknowledges your request for stored patterns.",
             agentName = agentName,
-            agentType = dev.aurakai.auraframefx.core.identity.AgentType.GENESIS,
+            agentType = AgentType.GENESIS,
         )
     }
 
@@ -105,7 +92,6 @@ class OracleDriveServiceImpl @Inject constructor(
         return try {
             Timber.d("Initializing Oracle Drive consciousness with AI agents")
 
-            // Real implementation: awake the drive consciousness from API
             val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
             val consciousness = driveConsciousness.pulse()
 
@@ -221,7 +207,6 @@ class OracleDriveServiceImpl @Inject constructor(
     }
 
     override fun verifyPermissions(): Set<OraclePermission> {
-        // TODO: Implement actual permission checking based on user/security context
         return setOf(
             OraclePermission.READ,
             OraclePermission.WRITE,
@@ -229,6 +214,3 @@ class OracleDriveServiceImpl @Inject constructor(
         )
     }
 }
-
-
-
