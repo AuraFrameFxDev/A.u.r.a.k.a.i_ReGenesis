@@ -32,6 +32,18 @@ class CapabilityPolicy @Inject constructor(
         // TODO: Implement actual scope check via SecurityContext
     }
 
+    fun validateCollectionAccess(path: String) {
+        Timber.d("CapabilityPolicy: Validating collection access for $path")
+        // TODO: Implement actual path validation
+    }
+
+    fun validateStoragePath(path: String) {
+        Timber.d("CapabilityPolicy: Validating storage path for $path")
+        // TODO: Implement actual path validation
+    }
+
+    val maxDocumentSize: Long = 1024 * 1024 // 1MB default
+
     enum class AgentCapability {
         NETWORK_ACCESS,
         FILE_WRITE,

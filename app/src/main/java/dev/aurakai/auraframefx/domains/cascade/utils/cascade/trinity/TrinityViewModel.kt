@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.models.Theme
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.aura.ui.agents.AgentStatus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import dev.aurakai.auraframefx.domains.nexus.models.UserData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

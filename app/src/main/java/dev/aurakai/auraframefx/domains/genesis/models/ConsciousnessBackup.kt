@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
-import dev.aurakai.auraframefx.core.AuraState
-import dev.aurakai.auraframefx.core.KaiState
+import dev.aurakai.auraframefx.domains.aura.models.AuraState
+import dev.aurakai.auraframefx.domains.kai.models.KaiState
 import kotlinx.serialization.Serializable
 
 /**

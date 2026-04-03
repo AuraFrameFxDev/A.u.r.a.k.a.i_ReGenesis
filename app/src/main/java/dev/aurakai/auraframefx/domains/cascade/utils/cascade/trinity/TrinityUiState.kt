@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import dev.aurakai.auraframefx.domains.aura.models.Theme
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.aura.ui.agents.AgentStatus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import dev.aurakai.auraframefx.domains.nexus.models.UserData
 
 /**

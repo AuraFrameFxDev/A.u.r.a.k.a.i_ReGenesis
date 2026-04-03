@@ -201,21 +201,4 @@ class AgentFirebase @Inject constructor(
             throw SecurityException("Document size $size bytes exceeds maximum allowed ${policy.maxDocumentSize} bytes")
         }
     }
-
-    companion object {
-        fun createWithPolicy(
-            agentType: AgentCapabilityCategory,
-            firebaseApp: FirebaseApp = FirebaseApp.getInstance()
-        ): AgentFirebase {
-            val policy = when (agentType) {
-                AgentCapabilityCategory.CREATIVE, AgentCapabilityCategory.UI, AgentCapabilityCategory.UX -> CapabilityPolicy.AURA_POLICY
-                AgentCapabilityCategory.ANALYSIS, AgentCapabilityCategory.SECURITY, AgentCapabilityCategory.ROOT -> CapabilityPolicy.KAI_POLICY
-                AgentCapabilityCategory.COORDINATION, AgentCapabilityCategory.ORCHESTRATION, AgentCapabilityCategory.BACKEND -> CapabilityPolicy.GENESIS_POLICY
-                AgentCapabilityCategory.SPECIALIZED, AgentCapabilityCategory.MEMORY, AgentCapabilityCategory.BRIDGE -> CapabilityPolicy.CASCADE_POLICY
-                AgentCapabilityCategory.GENERAL, AgentCapabilityCategory.GENERIC -> CapabilityPolicy.CLAUDE_POLICY
-                else -> CapabilityPolicy.GENESIS_POLICY // Fallback
-            }
-            return AgentFirebase(policy, firebaseApp)
-        }
-    }
 }
