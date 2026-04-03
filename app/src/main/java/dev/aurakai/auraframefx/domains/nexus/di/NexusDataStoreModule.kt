@@ -24,4 +24,13 @@ object NexusDataStoreModule {
     ): DataStore<Preferences> = PreferenceDataStoreFactory.create {
         ctx.preferencesDataStoreFile("app_state.preferences_pb")
     }
+
+    @Provides
+    @Singleton
+    @AuraSettingsDataStore
+    fun provideAuraSettingsDataStore(
+        @ApplicationContext ctx: Context
+    ): DataStore<Preferences> = PreferenceDataStoreFactory.create {
+        ctx.preferencesDataStoreFile("aura_settings.preferences_pb")
+    }
 }

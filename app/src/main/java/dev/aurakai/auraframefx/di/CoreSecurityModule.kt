@@ -54,4 +54,12 @@ object CoreSecurityProvidesModule {
 
     @Provides @Singleton
     fun provideDefaultUserPreferences(): UserPreferencesState = UserPreferencesState()
+
+    @Provides
+    @Singleton
+    @PandoraPreferences
+    fun providePandoraSecurePreferences(
+        @ApplicationContext context: Context,
+        keystoreManager: KeystoreManager
+    ): SecurePreferences = SecurePreferences(context, keystoreManager)
 }

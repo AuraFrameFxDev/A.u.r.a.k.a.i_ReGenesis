@@ -8,3 +8,10 @@ import javax.inject.Qualifier
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class AppStateDataStoreAnnotation
+
+/**
+ * Qualifier for the Aura UI settings DataStore instance.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AuraSettingsDataStore
