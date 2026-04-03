@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -10,7 +9,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
@@ -18,8 +16,8 @@ import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sentinel.KaiSentinelHubScreen
-import dev.aurakai.auraframefx.domains.cascade.dataflow.CascadeHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,12 +25,6 @@ fun ReGenesisNavGraph(
     navController: NavHostController,
     customizationViewModel: CustomizationViewModel = viewModel()
 ) {
-    val context = LocalContext.current
-
-    LaunchedEffect(Unit) {
-        customizationViewModel.start(context)
-    }
-
     NavHost(
         navController = navController,
         startDestination = ReGenesisRoute.HomeGateCarousel.route
@@ -56,7 +48,10 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.AgentNexusHub.route) {
-            AgentNexusHubScreen(navController = navController)
+            AgentNexusHubScreen(
+                navController = navController,
+                getNexusSubGates = { emptyList() }
+            )
         }
 
         composable(ReGenesisRoute.DataflowAnalysis.route) {
@@ -108,7 +103,6 @@ fun ReGenesisNavGraph(
             })
         ) { backStackEntry ->
             val agentId = backStackEntry.arguments?.getString(ReGenesisRoute.LdoAgentProfile.ARG)
-            // Find agent in roster
             val agent = dev.aurakai.auraframefx.domains.ldo.model.LDORoster.agents.find { it.id == agentId }
             if (agent != null) {
                 LDOAgentProfileIntroScreen(
