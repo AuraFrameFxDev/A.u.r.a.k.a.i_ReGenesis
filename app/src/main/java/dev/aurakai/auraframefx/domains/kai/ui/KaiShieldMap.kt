@@ -22,9 +22,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiDarkVoid
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiNeonGreen
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiShieldEnergy
+import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.core.theme.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -51,7 +50,7 @@ fun KaiShieldMap() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(KaiDarkVoid)
+            .background(Color.KaiDarkVoid)
     ) {
         // 1. The Active Intelligence Mesh (Background Canvas)
         Canvas(
@@ -85,7 +84,7 @@ fun KaiShieldMap() {
 
                 // Connection to Center
                 drawLine(
-                    color = KaiShieldEnergy,
+                    color = Color.KaiShieldEnergy,
                     start = Offset(cx, cy),
                     end = pOuter1,
                     strokeWidth = 2.dp.toPx(),
@@ -94,7 +93,7 @@ fun KaiShieldMap() {
 
                 // Connection Perimeter Ring
                 drawLine(
-                    color = KaiNeonGreen.copy(alpha = 0.3f),
+                    color = Color.KaiNeonGreen.copy(alpha = 0.3f),
                     start = pOuter1,
                     end = pOuter2,
                     strokeWidth = 1.dp.toPx()
@@ -102,7 +101,7 @@ fun KaiShieldMap() {
 
                 // Optional: Internal bracing
                 drawLine(
-                    color = KaiShieldEnergy.copy(alpha = 0.1f),
+                    color = Color.KaiShieldEnergy.copy(alpha = 0.1f),
                     start = pInner1,
                     end = pOuter1,
                     strokeWidth = 1.dp.toPx()
@@ -133,11 +132,11 @@ fun KaiNode(index: Int, pulse: Float) {
         modifier = Modifier
             .size(size)
             .scale(if (isCore) pulse else 1f) // Only core breathes visually
-            .background(KaiDarkVoid, CircleShape)
+            .background(Color.KaiDarkVoid, CircleShape)
             .border(
                 width = 2.dp,
                 brush = Brush.radialGradient(
-                    listOf(KaiNeonGreen, KaiShieldEnergy)
+                    listOf(Color.KaiNeonGreen, Color.KaiShieldEnergy)
                 ),
                 shape = CircleShape
             )

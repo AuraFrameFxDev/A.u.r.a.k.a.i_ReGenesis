@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.core.models.OverlayAnimation
 import dev.aurakai.auraframefx.core.models.OverlayTransition
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.models.SystemOverlayConfig
+import dev.aurakai.auraframefx.domains.aura.SystemOverlayConfig
 
 /**
  * 🛰️ SYSTEM OVERLAY MANAGER IMPLEMENTATION
