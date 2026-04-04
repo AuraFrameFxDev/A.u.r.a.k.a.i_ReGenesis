@@ -412,4 +412,6 @@ private fun categoryColor(c: TaskCategory) = when (c) {
     TaskCategory.MEMORY       -> Color(0xFF4FC3F7)
     TaskCategory.SYNC         -> Color(0xFF00FFD1)
     TaskCategory.EXPLORATION  -> Color(0xFFFF6B35)
+    TaskCategory.TEMPORAL     -> Color(0xFF00D6FF)
+    TaskCategory.EFFICIENCY   -> Color(0xFFAA00FF)
 }

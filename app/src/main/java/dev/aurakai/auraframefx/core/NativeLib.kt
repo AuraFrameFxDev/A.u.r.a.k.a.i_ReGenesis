@@ -15,8 +15,6 @@ import timber.log.Timber
 
 /**
  * 🌌 GENESIS-OS NATIVE LIBRARY INTERFACE (v1.1.0-sovereign-root)
- * Provides high-performance JNI bridge for thermal monitoring, 
- * ptrace sovereignty, and Pandora's Box capability gating.
  */
 object NativeLib {
 
@@ -39,9 +37,6 @@ object NativeLib {
         }
     }
 
-    /**
-     * Registers domain service instances for the native JNI bridge.
-     */
     @JvmStatic
     fun initialize(
         bus: KaiSentinelBus,
@@ -56,8 +51,6 @@ object NativeLib {
         Timber.i("🛡️ NativeLib: Relational Bridge synchronized with all Sovereign managers.")
     }
 
-    // --- Native Methods ---
-
     external fun getAIVersion(): String
     external fun initializeAICore(): Boolean
     external fun processNeuralRequest(request: String): String
@@ -67,7 +60,6 @@ object NativeLib {
     external fun optimizeAIMemory(): Boolean
     external fun analyzeBootImage(bootImageData: ByteArray): String
 
-    // --- eBPF Kernel Shield ---
     external fun initializeKernelShield(): Boolean
     external fun loadKernelModule(bpfPath: String): Boolean
     external fun getDroppedPacketCount(): Long
@@ -90,7 +82,7 @@ object NativeLib {
     fun requestSovereignFreeze() {
         Timber.w("🛡️ Native Substrate: CRITICAL THERMAL/INTEGRITY DETECTED - Requesting state-freeze.")
         scope.launch {
-            sovereignManager?.requestSovereignFreeze()
+            sovereignManager?.requestSovereignFreeze("NATIVE_EMERGENCY", null)
         }
     }
 
@@ -102,21 +94,16 @@ object NativeLib {
         }
         
         val box = pandoraBox ?: run {
-            Timber.e("🛡️ NativeLib: Gating check for %s FAILED (Bridge NOT INITIALIZED).", category)
             return false
         }
 
         val isUnlocked = box.isCapabilityUnlocked(category)
-        Timber.d("🛡️ NativeLib: Pandora gating check for %s: %s", category, if (isUnlocked) "ALLOWED" else "VETOED")
         return isUnlocked
     }
 
     @JvmStatic
     fun triggerDroneDispatch(reason: String) {
-        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
-        droneDispatcher?.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, reason) ?: run {
-            Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
-        }
+        droneDispatcher?.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, reason)
     }
 
     fun getAIVersionSafe(): String {

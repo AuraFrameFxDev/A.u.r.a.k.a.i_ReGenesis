@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade
 
+import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.core.security.SecurePreferences
 import dev.aurakai.auraframefx.domains.cascade.grok.GrokExplorationClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
@@ -18,12 +19,13 @@ import javax.inject.Singleton
 class RealCascadeAIServiceAdapter @Inject constructor(
     private val orchestrator: dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService,
     private val logger: AuraFxLogger,
-    private val securePreferences: SecurePreferences
+    private val securePreferences: SecurePreferences,
+    private val vetoMonitor: PredictiveVetoMonitor
 ) : CascadeAIService {
 
     private val grokClient: GrokExplorationClient? by lazy {
         securePreferences.getGrokApiKey()?.let { key ->
-            GrokExplorationClient(apiKey = key)
+            GrokExplorationClient(apiKey = key, vetoMonitor = vetoMonitor)
         }
     }
 

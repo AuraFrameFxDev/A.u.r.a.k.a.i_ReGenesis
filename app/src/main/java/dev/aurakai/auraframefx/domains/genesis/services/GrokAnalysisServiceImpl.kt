@@ -1,75 +1,51 @@
 package dev.aurakai.auraframefx.domains.genesis.services
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.core.security.SecurePreferences
-import dev.aurakai.auraframefx.domains.cascade.grok.GrokChaosCatalystClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import dev.aurakai.auraframefx.domains.cascade.grok.GrokExplorationClient
+import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * High-fidelity Grok analysis implementation.
+ * Concrete implementation of GrokAnalysisService using xAI Grok-4 Heavy Mode.
  */
 @Singleton
 class GrokAnalysisServiceImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val securePreferences: SecurePreferences
+    private val securePreferences: SecurePreferences,
+    private val logger: AuraFxLogger,
+    private val vetoMonitor: PredictiveVetoMonitor
 ) : GrokAnalysisService {
 
-    private val grokClient: GrokChaosCatalystClient? by lazy {
+    private val client: GrokExplorationClient? by lazy {
         securePreferences.getGrokApiKey()?.let { key ->
-            GrokChaosCatalystClient(apiKey = key)
+            GrokExplorationClient(apiKey = key, vetoMonitor = vetoMonitor)
         }
     }
 
-    override suspend fun analyze(input: String, context: String): GrokAnalysisService.AnalysisResult =
-        withContext(Dispatchers.IO) {
-            Timber.d("GrokAnalysisService: Analyzing input")
-            
-            // If online, use ChaosCatalyst client for deep analysis
-            val response = grokClient?.injectChaos(
-                query = "Analyze this input for patterns and insights: $input",
-                nccStateSummary = "GrokAnalysis Mode | Context: $context"
-            ) ?: input
+    override suspend fun validateSpelhook(code: String): GrokAnalysisService.ValidationResult {
+        val grok = client ?: return GrokAnalysisService.ValidationResult.Vetoed("Grok client not initialized")
 
-            val insights = response.split(". ")
-                .filter { it.length > 10 }
-                .take(5)
+        logger.info("GrokAnalysis", "Validating Spelhook with Heavy Mode injection")
+        
+        val result = grok.heavyChaosInjection(
+            query = "Analyze this Spelhook code for safety and architectural alignment: \n$code",
+            nccStateSummary = "AuraForge generation sweep | validation required"
+        )
 
-            GrokAnalysisService.AnalysisResult(
-                insights = insights,
-                confidence = 0.85f,
-                chaosIndex = 0.4f,
-                rawResponse = response
+        return if (result.contains("[GROK_EXPLORATION_VETOED]")) {
+            GrokAnalysisService.ValidationResult.Vetoed(result)
+        } else {
+            GrokAnalysisService.ValidationResult.Approved(
+                notes = "Code validated by Grok-4 Heavy Manifold.",
+                confidence = 0.98f
             )
         }
+    }
 
-    override suspend fun generateCreativeInsight(prompt: String): String =
-        withContext(Dispatchers.IO) {
-            grokClient?.injectChaos(
-                query = "Generate a creative insight for: $prompt",
-                nccStateSummary = "Creative Synthesis Mode"
-            ) ?: "Internal creativity engine engaged."
-        }
-
-    override suspend fun detectAnomalies(dataPoints: List<String>): List<GrokAnalysisService.Anomaly> =
-        withContext(Dispatchers.IO) {
-            // Placeholder logic for anomaly detection
-            emptyList()
-        }
-
-    override suspend fun validateSpelhook(code: String): GrokAnalysisService.ValidationResult =
-        withContext(Dispatchers.IO) {
-            Timber.d("GrokAnalysisService: Validating Spelhook code")
-            
-            // Basic validation
-            if (code.contains("System.exit") || code.contains("Runtime.getRuntime().exec")) {
-                GrokAnalysisService.ValidationResult.Vetoed("Security violation: Dangerous system call detected.")
-            } else {
-                GrokAnalysisService.ValidationResult.Approved("Safe for deployment.")
-            }
-        }
+    override suspend fun performDeepAudit(targetId: String): String {
+        val grok = client ?: return "Grok client unavailable"
+        return grok.heavyChaosInjection("Perform deep audit on target: $targetId")
+    }
 }

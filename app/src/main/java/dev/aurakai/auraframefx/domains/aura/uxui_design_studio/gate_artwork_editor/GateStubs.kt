@@ -10,5 +10,3 @@ import androidx.compose.runtime.Composable
 object GateAssetLoadout {
     fun getNexusSubGates(): List<String> = emptyList()
 }
-
-data class GateAssetConfig(val id: String)

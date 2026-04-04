@@ -53,6 +53,12 @@ class AurasLabViewModel @Inject constructor(
                     is GrokAnalysisService.ValidationResult.Vetoed -> {
                         _forgeState.value = ForgeState.Error("Kai Vetoed: ${validation.reason}")
                     }
+                    is GrokAnalysisService.ValidationResult.Flagged -> {
+                        _forgeState.value = ForgeState.Error("Flagged: ${validation.reason}")
+                    }
+                    is GrokAnalysisService.ValidationResult.Rejected -> {
+                        _forgeState.value = ForgeState.Error("Rejected: ${validation.reason}")
+                    }
                 }
             } else if (result is SpelhookResult.Error) {
                 _forgeState.value = ForgeState.Error(result.message)

@@ -43,7 +43,6 @@ class ArbitersViewModel @Inject constructor(
         viewModelScope.launch {
             _isIgnited.value = true
             _transmutationState.value = TransmutationState.Transmuting
-            // Simulate fusion confidence climb
             for (i in 1..100) {
                 kotlinx.coroutines.delay(30)
                 _fusionConfidence.value = i.toFloat()
@@ -55,19 +54,17 @@ class ArbitersViewModel @Inject constructor(
         val record = TransmutationRecord(
             id = UUID.randomUUID().toString(),
             blueprintId = "NS-RECORD-OVR",
-            provenanceChain = emptyList(), // Origin locked by SCG later
+            provenanceChain = emptyList(),
             timestamp = System.currentTimeMillis(),
             confidence = _fusionConfidence.value
         )
         
         _transmutationState.value = TransmutationState.Complete(record)
 
-        // 🛡️ Sovereign Sync Pulse: Trigger state freeze to anchor the breakthrough
         viewModelScope.launch {
-            sovereignStateManager.requestSovereignFreeze()
+            sovereignStateManager.requestSovereignFreeze("NEURAL_SYNC_BREAKTHROUGH", null)
         }
 
-        // Reset the reactor visuals for the next sync cycle
         _isIgnited.value = false
         _fusionConfidence.value = 0f
     }
