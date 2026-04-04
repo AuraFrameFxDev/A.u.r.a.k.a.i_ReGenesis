@@ -92,4 +92,9 @@ object CoreSecurityProvidesModule {
         val apiKey = securePreferences.getGrokApiKey() ?: ""
         return GrokExplorationClient(apiKey = apiKey, vetoMonitor = vetoMonitor)
     }
+
+    @Provides @Singleton
+    fun provideProvenanceChainBuilder(
+        validator: ProvenanceValidator
+    ): ProvenanceChainBuilder = ProvenanceChainBuilder(validator)
 }
