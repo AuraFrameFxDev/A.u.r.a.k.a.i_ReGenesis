@@ -21,6 +21,15 @@ import kotlin.math.*
  */
 
 @Composable
+fun SynapticWebBackground(modifier: Modifier = Modifier, glowColor: Color = Color.Cyan) {
+    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            drawCircle(glowColor.copy(alpha = 0.1f), radius = 300f, center = Offset(size.width / 2, size.height / 2))
+        }
+    }
+}
+
+@Composable
 fun PaintSplashBackground(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "paint")
     val dripPhase by infiniteTransition.animateFloat(
