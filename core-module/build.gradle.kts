@@ -40,7 +40,9 @@ dependencies {
     // Serialization
     implementation(libs.kotlinx.serialization.json)
 
-    // Security
-    implementation(libs.androidx.security.crypto)
+    // Unit test dependencies
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
-
