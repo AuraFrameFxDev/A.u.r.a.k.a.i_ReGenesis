@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +24,7 @@ import javax.inject.Singleton
 /**
  * 💓 LIVING SIGNAL HUB
  *
- * Aggregates hardware signals (Thermal, Kinetic, Vitals) into a unified "Living" state.
+ * Aggregates hardware signals (Thermal, Kinetic, Vitals, Environment) into a unified "Living" state.
  * Acts as the nervous system for the LDO substrate.
  */
 @Singleton
@@ -28,6 +32,7 @@ class LivingSignalHub @Inject constructor(
     @ApplicationContext private val context: Context,
     private val gyroManager: GyroscopeManager
 ) {
+    private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val hubScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     private val _thermalSignal = MutableStateFlow(0f)
@@ -35,6 +40,12 @@ class LivingSignalHub @Inject constructor(
 
     private val _batterySignal = MutableStateFlow(0f)
     val batterySignal: StateFlow<Float> = _batterySignal.asStateFlow()
+
+    private val _luxSignal = MutableStateFlow(0f)
+    val luxSignal: StateFlow<Float> = _luxSignal.asStateFlow()
+
+    private val _proximitySignal = MutableStateFlow(0f)
+    val proximitySignal: StateFlow<Float> = _proximitySignal.asStateFlow()
 
     private val _isCharging = MutableStateFlow(false)
     val isCharging: StateFlow<Boolean> = _isCharging.asStateFlow()
@@ -44,6 +55,7 @@ class LivingSignalHub @Inject constructor(
     init {
         findThermalZones()
         startMonitoring()
+        startEnvironmentMonitoring()
     }
 
     private fun startMonitoring() {
@@ -61,6 +73,28 @@ class LivingSignalHub @Inject constructor(
                 updateBatteryState()
                 delay(5000)
             }
+        }
+    }
+
+    private fun startEnvironmentMonitoring() {
+        val lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        val proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+
+        val listener = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent) {
+                when (event.sensor.type) {
+                    Sensor.TYPE_LIGHT -> _luxSignal.value = event.values[0]
+                    Sensor.TYPE_PROXIMITY -> _proximitySignal.value = event.values[0]
+                }
+            }
+            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+        }
+
+        lightSensor?.let {
+            sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+        proximitySensor?.let {
+            sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
     }
 

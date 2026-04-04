@@ -12,9 +12,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BreathingEvent(
     val timestamp: Long = System.currentTimeMillis(),
-    val thermalTemp: Float,
-    val batteryLevel: Float,
-    val kineticVector: KineticVector,
+    val lux: Float = 0f,
+    val proximity: Float = 0f,
+    val motionConfidence: Float = 0f,
+    val thermalTemp: Float = 0f,
+    val batteryLevel: Float = 0f,
+    val kineticVector: KineticVector = KineticVector(0f, 0f, 0f),
     val provenanceStamp: SacredProvenanceStamp? = null
 )
 
