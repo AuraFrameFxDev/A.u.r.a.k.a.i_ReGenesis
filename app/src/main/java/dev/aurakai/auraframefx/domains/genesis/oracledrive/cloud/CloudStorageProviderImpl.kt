@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
 import dev.aurakai.auraframefx.domains.genesis.models.DriveFile
 import dev.aurakai.auraframefx.domains.genesis.storage.FileMetadata
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.FileOperationResult
+import dev.aurakai.auraframefx.domains.genesis.models.FileOperationResult
 import dev.aurakai.auraframefx.domains.genesis.models.StorageOptimizationResult
 import dev.aurakai.auraframefx.domains.genesis.models.SyncConfiguration
 import java.io.File
@@ -25,7 +25,6 @@ class CloudStorageProviderImpl @Inject constructor() : CloudStorageProvider {
     }
 
     override suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileOperationResult {
-        // Implementation for the legacy File upload
         return FileOperationResult.Success(message = "Uploaded file: ${file.name}")
     }
 
