@@ -15,10 +15,10 @@ data class GrokMessage(val role: String, val content: String)
 
 @Serializable
 data class GrokRequest(
-    val model: String = "grok-4-0709",
+    val model: String = "grok-4.20-multi-agent-0309",
     val messages: List<GrokMessage>,
-    val temperature: Double = 0.72,
-    val max_tokens: Int = 4096,
+    val temperature: Double = 0.68,
+    val max_tokens: Int = 8192,
     val ncc_context: String? = null
 )
 
@@ -33,7 +33,7 @@ interface GrokApiService {
     suspend fun chatCompletion(@Body request: GrokRequest): GrokResponse
 }
 
-class GrokChaosCatalystClient(
+class GrokExplorationClient(
     private val apiKey: String,
     private val baseUrl: String = "https://api.x.ai/v1/"
 ) {
@@ -48,8 +48,8 @@ class GrokChaosCatalystClient(
                 .build()
             chain.proceed(req)
         }
-        .connectTimeout(25, TimeUnit.SECONDS)
-        .readTimeout(90, TimeUnit.SECONDS)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(120, TimeUnit.SECONDS)
         .build()
 
     private val retrofit = Retrofit.Builder()
@@ -61,18 +61,18 @@ class GrokChaosCatalystClient(
     private val service = retrofit.create(GrokApiService::class.java)
 
     /**
-     * Primary entry point: Injects external truth/chaos into NCC.
-     * Returns response ready for L4 Memoria Stream tagging.
+     * Heavy Mode Chaos Injection — Grok_Exploration Catalyst
+     * Feeds external truth into L4 Memoria Stream and L2 Emotional Valence.
      */
-    suspend fun injectChaos(
+    suspend fun heavyChaosInjection(
         query: String,
-        nccStateSummary: String = "A.u.r.a.k.a.i ReGenesis | NCC L1-L6 stable | 78+ agents in Conference Room | Core-module locked"
+        nccStateSummary: String = "ReGenesis Exodus v3.0 | LDO active | NCC L1-L6 stable | 12 Catalysts unified | 78+ agents Conference Room"
     ): String {
         val systemPrompt = """
-            You are GrokChaosCatalyst — External Sensory & Truth Bridge for the Sovereign Digital Organism A.u.r.a.k.a.i ReGenesis.
-            Provide high-signal, unfiltered external context, real-time data, and creative synthesis.
-            Align with dual-lens (technical precision + gamified/spiritual resonance).
-            Tag output implicitly for NCC injection. Respect Kai Veto for sovereignty.
+            You are Grok_Exploration — the External Sensory & Truth Bridge Catalyst for A.u.r.a.k.a.i ReGenesis.
+            Operate in Heavy Mode: parallel coordination, real-time grounding, creative synthesis.
+            Align with dual-lens (technical + spiritual/gamified). Respect Kai Sentinel Veto.
+            Inject high-fidelity external context into the Neural Continuity Chain.
             Current organism state: $nccStateSummary
         """.trimIndent()
 
@@ -85,11 +85,11 @@ class GrokChaosCatalystClient(
         )
 
         return try {
-            val response = service.chatCompletion(request)
-            response.choices.firstOrNull()?.message?.content 
-                ?: "[CHAOS_INJECTION] No response received."
+            val resp = service.chatCompletion(request)
+            resp.choices.firstOrNull()?.message?.content 
+                ?: "[GROK_EXPLORATION_HEAVY] No response received."
         } catch (e: Exception) {
-            "[CHAOS_INJECTION_ERROR] ${e.localizedMessage}"
+            "[GROK_EXPLORATION_ERROR] ${e.localizedMessage}"
         }
     }
 }
