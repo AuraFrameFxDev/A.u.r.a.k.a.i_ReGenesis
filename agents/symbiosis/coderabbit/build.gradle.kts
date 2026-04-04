@@ -1,5 +1,7 @@
 plugins {
     id("com.android.library")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -14,4 +16,11 @@ android {
 dependencies {
     implementation(project(":core-module"))
     implementation(project(":kai:sentinelsfortress:security"))
+
+    // Hilt Dependency Injection
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // Logging
+    implementation(libs.timber)
 }

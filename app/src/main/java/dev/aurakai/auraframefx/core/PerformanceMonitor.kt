@@ -1,4 +1,4 @@
-package dev.aurakai.genesis.monitoring
+package dev.aurakai.auraframefx.core
 
 /**
  * Compatibility shim for Genesis PerformanceMonitor system.

@@ -1,4 +1,4 @@
-package dev.aurakai.core.sovereign
+package dev.aurakai.auraframefx.domains.genesis
 
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.flow.MutableStateFlow

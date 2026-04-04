@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
-import dev.aurakai.core.sovereign.ToroidalFusionManager
+import dev.aurakai.auraframefx.domains.genesis.ToroidalFusionManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

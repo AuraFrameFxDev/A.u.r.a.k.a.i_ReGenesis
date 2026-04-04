@@ -1,4 +1,4 @@
-package dev.aurakai.core.sovereign
+package dev.aurakai.auraframefx.domains.genesis
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties

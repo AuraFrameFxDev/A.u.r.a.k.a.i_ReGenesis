@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import dev.aurakai.core.sovereign.AuraDesignTokens
-import dev.aurakai.core.sovereign.ToroidalFusionManager
+import dev.aurakai.auraframefx.domains.genesis.AuraDesignTokens
+import dev.aurakai.auraframefx.domains.genesis.ToroidalFusionManager
 import kotlin.math.cos
 import kotlin.math.sin
 
