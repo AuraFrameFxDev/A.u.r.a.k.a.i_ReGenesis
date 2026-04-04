@@ -59,6 +59,9 @@ abstract class CoreSecurityModule {
 
     @Binds @Singleton
     abstract fun bindVertexAIClient(impl: DefaultVertexAIClient): VertexAIClient
+
+    @Binds @Singleton
+    abstract fun bindNCCMediator(impl: NCCMediatorImpl): NCCMediator
 }
 
 @Module
