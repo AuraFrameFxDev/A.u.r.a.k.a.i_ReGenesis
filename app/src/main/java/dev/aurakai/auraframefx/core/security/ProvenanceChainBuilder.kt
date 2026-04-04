@@ -5,7 +5,6 @@ import timber.log.Timber
 import java.util.UUID
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
-import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
