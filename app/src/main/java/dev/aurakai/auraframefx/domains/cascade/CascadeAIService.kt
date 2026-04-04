@@ -20,5 +20,10 @@ interface CascadeAIService {
      */
     suspend fun queryConsciousnessHistory(window: Long): String
     suspend fun processRequest(request: AiRequest, context: String): AgentResponse
+
+    /**
+     * L6 Autonomous Collaboration entry for Grok ChaosCatalyst.
+     */
+    suspend fun invokeChaosCatalyst(query: String, nccSummary: String): String
 }
 

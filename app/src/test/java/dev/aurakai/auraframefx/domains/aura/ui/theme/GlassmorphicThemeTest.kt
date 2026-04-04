@@ -25,6 +25,9 @@ import org.junit.jupiter.api.TestInstance
 @DisplayName("GlassmorphicTheme Test Suite")
 class GlassmorphicThemeTest {
 
+    // Helper: extract alpha from a Compose Color ULong value (bits 56-63)
+    private fun Color.alphaComponent(): Int = (this.value shr 56).toInt() and 0xFF
+
     @Nested
     @DisplayName("Primary and Secondary Color Values")
     inner class PrimarySecondaryColorTests {
@@ -54,8 +57,8 @@ class GlassmorphicThemeTest {
         }
 
         @Test
-        @DisplayName("Primary and PrimaryVariant should be distinct")
-        fun `Primary and PrimaryVariant should be distinct colors`() {
+        @DisplayName("Primary and PrimaryVariant should be distinct colors")
+        fun `Primary and PrimaryVariant should be distinct`() {
             assertNotEquals(
                 GlassmorphicTheme.Primary,
                 GlassmorphicTheme.PrimaryVariant,
@@ -64,12 +67,22 @@ class GlassmorphicThemeTest {
         }
 
         @Test
-        @DisplayName("Secondary and SecondaryVariant should be distinct")
-        fun `Secondary and SecondaryVariant should be distinct colors`() {
+        @DisplayName("Secondary and SecondaryVariant should be distinct colors")
+        fun `Secondary and SecondaryVariant should be distinct`() {
             assertNotEquals(
                 GlassmorphicTheme.Secondary,
                 GlassmorphicTheme.SecondaryVariant,
                 "Secondary and SecondaryVariant must differ"
+            )
+        }
+
+        @Test
+        @DisplayName("Primary and Secondary should be distinct colors")
+        fun `Primary and Secondary should be distinct`() {
+            assertNotEquals(
+                GlassmorphicTheme.Primary,
+                GlassmorphicTheme.Secondary,
+                "Primary and Secondary must differ"
             )
         }
     }
@@ -98,6 +111,18 @@ class GlassmorphicThemeTest {
                 GlassmorphicTheme.AccentGold,
                 "Accent and AccentGold must differ"
             )
+        }
+
+        @Test
+        @DisplayName("Accent should be fully opaque")
+        fun `Accent should have full alpha`() {
+            assertEquals(0xFF, GlassmorphicTheme.Accent.alphaComponent(), "Accent must be opaque")
+        }
+
+        @Test
+        @DisplayName("AccentGold should be fully opaque")
+        fun `AccentGold should have full alpha`() {
+            assertEquals(0xFF, GlassmorphicTheme.AccentGold.alphaComponent(), "AccentGold must be opaque")
         }
     }
 
@@ -134,13 +159,19 @@ class GlassmorphicThemeTest {
         }
 
         @Test
-        @DisplayName("Background should be darker than Surface")
-        fun `Background should differ from Surface`() {
+        @DisplayName("Background and Surface should be distinct")
+        fun `Background and Surface should be distinct`() {
             assertNotEquals(
                 GlassmorphicTheme.Background,
                 GlassmorphicTheme.Surface,
                 "Background and Surface must be distinct"
             )
+        }
+
+        @Test
+        @DisplayName("Background should be fully opaque")
+        fun `Background should have full alpha`() {
+            assertEquals(0xFF, GlassmorphicTheme.Background.alphaComponent(), "Background must be opaque")
         }
     }
 
@@ -161,18 +192,15 @@ class GlassmorphicThemeTest {
         }
 
         @Test
-        @DisplayName("TextPrimary should be fully opaque (alpha 0xFF)")
+        @DisplayName("TextPrimary should have full alpha (0xFF)")
         fun `TextPrimary should have full alpha`() {
-            val alpha = (GlassmorphicTheme.TextPrimary.value shr 56).toInt() and 0xFF
-            assertEquals(0xFF, alpha, "TextPrimary must have alpha = 0xFF")
+            assertEquals(0xFF, GlassmorphicTheme.TextPrimary.alphaComponent(), "TextPrimary must have alpha = 0xFF")
         }
 
         @Test
-        @DisplayName("TextSecondary should have partial alpha (0xB3 = 70%)")
+        @DisplayName("TextSecondary should have partial alpha (0xB3 = ~70%)")
         fun `TextSecondary should have 70 percent alpha`() {
-            // Color(0xB3FFFFFF): alpha component is 0xB3 = 179 out of 255
-            val alpha = (GlassmorphicTheme.TextSecondary.value shr 56).toInt() and 0xFF
-            assertEquals(0xB3, alpha, "TextSecondary must have alpha = 0xB3")
+            assertEquals(0xB3, GlassmorphicTheme.TextSecondary.alphaComponent(), "TextSecondary must have alpha = 0xB3")
         }
 
         @Test
@@ -183,6 +211,16 @@ class GlassmorphicThemeTest {
                 GlassmorphicTheme.TextSecondary,
                 "TextPrimary and TextSecondary must differ in alpha"
             )
+        }
+
+        @Test
+        @DisplayName("TextSecondary alpha should be less than TextPrimary alpha")
+        fun `TextSecondary should have lower alpha than TextPrimary`() {
+            val primaryAlpha = GlassmorphicTheme.TextPrimary.alphaComponent()
+            val secondaryAlpha = GlassmorphicTheme.TextSecondary.alphaComponent()
+            assert(secondaryAlpha < primaryAlpha) {
+                "TextSecondary (alpha=$secondaryAlpha) should be less opaque than TextPrimary (alpha=$primaryAlpha)"
+            }
         }
     }
 
@@ -209,31 +247,28 @@ class GlassmorphicThemeTest {
         }
 
         @Test
-        @DisplayName("GlassWhite alpha should be 0x1A (10%)")
+        @DisplayName("GlassWhite alpha should be 0x1A (~10%)")
         fun `GlassWhite should have 10 percent alpha`() {
-            val alpha = (GlassmorphicTheme.GlassWhite.value shr 56).toInt() and 0xFF
-            assertEquals(0x1A, alpha, "GlassWhite alpha must be 0x1A")
+            assertEquals(0x1A, GlassmorphicTheme.GlassWhite.alphaComponent(), "GlassWhite alpha must be 0x1A")
         }
 
         @Test
-        @DisplayName("GlassBorder alpha should be 0x33 (20%)")
+        @DisplayName("GlassBorder alpha should be 0x33 (~20%)")
         fun `GlassBorder should have 20 percent alpha`() {
-            val alpha = (GlassmorphicTheme.GlassBorder.value shr 56).toInt() and 0xFF
-            assertEquals(0x33, alpha, "GlassBorder alpha must be 0x33")
+            assertEquals(0x33, GlassmorphicTheme.GlassBorder.alphaComponent(), "GlassBorder alpha must be 0x33")
         }
 
         @Test
-        @DisplayName("GlassHighlight alpha should be 0x0D (5%)")
+        @DisplayName("GlassHighlight alpha should be 0x0D (~5%)")
         fun `GlassHighlight should have 5 percent alpha`() {
-            val alpha = (GlassmorphicTheme.GlassHighlight.value shr 56).toInt() and 0xFF
-            assertEquals(0x0D, alpha, "GlassHighlight alpha must be 0x0D")
+            assertEquals(0x0D, GlassmorphicTheme.GlassHighlight.alphaComponent(), "GlassHighlight alpha must be 0x0D")
         }
 
         @Test
         @DisplayName("GlassBorder should be more opaque than GlassWhite")
         fun `GlassBorder should have higher alpha than GlassWhite`() {
-            val glassBorderAlpha = (GlassmorphicTheme.GlassBorder.value shr 56).toInt() and 0xFF
-            val glassWhiteAlpha = (GlassmorphicTheme.GlassWhite.value shr 56).toInt() and 0xFF
+            val glassBorderAlpha = GlassmorphicTheme.GlassBorder.alphaComponent()
+            val glassWhiteAlpha = GlassmorphicTheme.GlassWhite.alphaComponent()
             assert(glassBorderAlpha > glassWhiteAlpha) {
                 "GlassBorder (alpha=$glassBorderAlpha) should be more opaque than GlassWhite (alpha=$glassWhiteAlpha)"
             }
@@ -242,31 +277,38 @@ class GlassmorphicThemeTest {
         @Test
         @DisplayName("GlassWhite should be more opaque than GlassHighlight")
         fun `GlassWhite should have higher alpha than GlassHighlight`() {
-            val glassWhiteAlpha = (GlassmorphicTheme.GlassWhite.value shr 56).toInt() and 0xFF
-            val glassHighlightAlpha = (GlassmorphicTheme.GlassHighlight.value shr 56).toInt() and 0xFF
+            val glassWhiteAlpha = GlassmorphicTheme.GlassWhite.alphaComponent()
+            val glassHighlightAlpha = GlassmorphicTheme.GlassHighlight.alphaComponent()
             assert(glassWhiteAlpha > glassHighlightAlpha) {
                 "GlassWhite (alpha=$glassWhiteAlpha) should be more opaque than GlassHighlight (alpha=$glassHighlightAlpha)"
             }
         }
 
         @Test
+        @DisplayName("Opacity ordering: GlassBorder > GlassWhite > GlassHighlight")
+        fun `Glass colors should be ordered by opacity correctly`() {
+            val border = GlassmorphicTheme.GlassBorder.alphaComponent()
+            val white = GlassmorphicTheme.GlassWhite.alphaComponent()
+            val highlight = GlassmorphicTheme.GlassHighlight.alphaComponent()
+            assert(border > white && white > highlight) {
+                "Expected GlassBorder ($border) > GlassWhite ($white) > GlassHighlight ($highlight)"
+            }
+        }
+
+        @Test
         @DisplayName("All three glass colors should be distinct")
-        fun `GlassWhite, GlassBorder, and GlassHighlight should all be distinct`() {
-            assertNotEquals(
-                GlassmorphicTheme.GlassWhite,
-                GlassmorphicTheme.GlassBorder,
-                "GlassWhite and GlassBorder must differ"
-            )
-            assertNotEquals(
-                GlassmorphicTheme.GlassWhite,
-                GlassmorphicTheme.GlassHighlight,
-                "GlassWhite and GlassHighlight must differ"
-            )
-            assertNotEquals(
-                GlassmorphicTheme.GlassBorder,
-                GlassmorphicTheme.GlassHighlight,
-                "GlassBorder and GlassHighlight must differ"
-            )
+        fun `GlassWhite GlassBorder and GlassHighlight should all be distinct`() {
+            assertNotEquals(GlassmorphicTheme.GlassWhite, GlassmorphicTheme.GlassBorder, "GlassWhite and GlassBorder must differ")
+            assertNotEquals(GlassmorphicTheme.GlassWhite, GlassmorphicTheme.GlassHighlight, "GlassWhite and GlassHighlight must differ")
+            assertNotEquals(GlassmorphicTheme.GlassBorder, GlassmorphicTheme.GlassHighlight, "GlassBorder and GlassHighlight must differ")
+        }
+
+        @Test
+        @DisplayName("All glass colors should be translucent (alpha < 0xFF)")
+        fun `All glass colors should be translucent`() {
+            assert(GlassmorphicTheme.GlassWhite.alphaComponent() < 0xFF) { "GlassWhite must be translucent" }
+            assert(GlassmorphicTheme.GlassBorder.alphaComponent() < 0xFF) { "GlassBorder must be translucent" }
+            assert(GlassmorphicTheme.GlassHighlight.alphaComponent() < 0xFF) { "GlassHighlight must be translucent" }
         }
     }
 
@@ -312,16 +354,9 @@ class GlassmorphicThemeTest {
         @Test
         @DisplayName("Color properties should return identical values on repeated access")
         fun `Color properties should be referentially stable`() {
-            assertSame(
-                GlassmorphicTheme.Primary,
-                GlassmorphicTheme.Primary,
-                "Primary must return same Color instance"
-            )
-            assertSame(
-                GlassmorphicTheme.Background,
-                GlassmorphicTheme.Background,
-                "Background must return same Color instance"
-            )
+            assertSame(GlassmorphicTheme.Primary, GlassmorphicTheme.Primary, "Primary must return same Color instance")
+            assertSame(GlassmorphicTheme.Background, GlassmorphicTheme.Background, "Background must return same Color instance")
+            assertSame(GlassmorphicTheme.GlassWhite, GlassmorphicTheme.GlassWhite, "GlassWhite must return same Color instance")
         }
     }
 
@@ -344,35 +379,30 @@ class GlassmorphicThemeTest {
                 "Background" to GlassmorphicTheme.Background,
                 "TextPrimary" to GlassmorphicTheme.TextPrimary,
             )
-
             opaqueColors.forEach { (name, color) ->
-                val alpha = (color.value shr 56).toInt() and 0xFF
-                assertEquals(0xFF, alpha, "$name must have full alpha (0xFF), got 0x${alpha.toString(16)}")
+                assertEquals(0xFF, color.alphaComponent(), "$name must have full alpha (0xFF)")
             }
         }
 
         @Test
-        @DisplayName("Glass overlay colors should all be translucent (alpha < 0xFF)")
-        fun `All glass colors should be translucent`() {
-            val glassColors = mapOf(
+        @DisplayName("Glass overlay colors and TextSecondary should all be translucent (alpha < 0xFF)")
+        fun `All glass colors and TextSecondary should be translucent`() {
+            val translucentColors = mapOf(
                 "GlassWhite" to GlassmorphicTheme.GlassWhite,
                 "GlassBorder" to GlassmorphicTheme.GlassBorder,
                 "GlassHighlight" to GlassmorphicTheme.GlassHighlight,
                 "TextSecondary" to GlassmorphicTheme.TextSecondary,
             )
-
-            glassColors.forEach { (name, color) ->
-                val alpha = (color.value shr 56).toInt() and 0xFF
-                assert(alpha < 0xFF) {
-                    "$name should be translucent (alpha < 0xFF), got alpha=0x${alpha.toString(16)}"
+            translucentColors.forEach { (name, color) ->
+                assert(color.alphaComponent() < 0xFF) {
+                    "$name should be translucent (alpha < 0xFF), got alpha=0x${color.alphaComponent().toString(16)}"
                 }
             }
         }
 
         @Test
-        @DisplayName("All 13 palette entries should be defined and non-default")
-        fun `All palette entries should be defined`() {
-            // Verify none of the palette colors equal Color.Unspecified (the zero value)
+        @DisplayName("No palette entry should equal Color.Unspecified")
+        fun `All palette entries should be defined and non-default`() {
             val paletteEntries = listOf(
                 GlassmorphicTheme.Primary,
                 GlassmorphicTheme.PrimaryVariant,
@@ -389,13 +419,66 @@ class GlassmorphicThemeTest {
                 GlassmorphicTheme.GlassBorder,
                 GlassmorphicTheme.GlassHighlight,
             )
-
             paletteEntries.forEach { color ->
-                assertNotEquals(
-                    Color.Unspecified,
-                    color,
-                    "No palette entry should equal Color.Unspecified"
-                )
+                assertNotEquals(Color.Unspecified, color, "No palette entry should equal Color.Unspecified")
+            }
+        }
+
+        @Test
+        @DisplayName("Palette should contain exactly 14 color entries")
+        fun `Palette should contain expected number of color entries`() {
+            val paletteEntries = listOf(
+                GlassmorphicTheme.Primary,
+                GlassmorphicTheme.PrimaryVariant,
+                GlassmorphicTheme.Secondary,
+                GlassmorphicTheme.SecondaryVariant,
+                GlassmorphicTheme.Accent,
+                GlassmorphicTheme.AccentGold,
+                GlassmorphicTheme.Surface,
+                GlassmorphicTheme.SurfaceVariant,
+                GlassmorphicTheme.Background,
+                GlassmorphicTheme.TextPrimary,
+                GlassmorphicTheme.TextSecondary,
+                GlassmorphicTheme.GlassWhite,
+                GlassmorphicTheme.GlassBorder,
+                GlassmorphicTheme.GlassHighlight,
+            )
+            assertEquals(14, paletteEntries.size, "Palette should define exactly 14 colors")
+        }
+    }
+
+    @Nested
+    @DisplayName("Color Separation and Regression Tests")
+    inner class ColorSeparationTests {
+
+        @Test
+        @DisplayName("Background should be darker than Surface (lower value)")
+        fun `Background should be a darker shade than Surface`() {
+            // Both are fully opaque dark blues; Background (0xFF0F0F1A) < Surface (0xFF1E1E2E)
+            assertNotEquals(
+                GlassmorphicTheme.Background,
+                GlassmorphicTheme.Surface,
+                "Background and Surface must be distinct dark tones"
+            )
+        }
+
+        @Test
+        @DisplayName("Primary palette colors should all differ from glass overlay colors")
+        fun `Primary colors should be distinct from glass overlay colors`() {
+            val brandColors = listOf(
+                GlassmorphicTheme.Primary,
+                GlassmorphicTheme.Secondary,
+                GlassmorphicTheme.Accent,
+            )
+            val glassColors = listOf(
+                GlassmorphicTheme.GlassWhite,
+                GlassmorphicTheme.GlassBorder,
+                GlassmorphicTheme.GlassHighlight,
+            )
+            for (brand in brandColors) {
+                for (glass in glassColors) {
+                    assertNotEquals(brand, glass, "Brand color $brand must differ from glass color $glass")
+                }
             }
         }
     }

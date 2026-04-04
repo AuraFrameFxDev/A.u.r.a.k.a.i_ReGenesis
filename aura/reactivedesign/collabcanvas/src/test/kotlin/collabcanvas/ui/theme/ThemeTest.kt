@@ -20,6 +20,9 @@ import org.junit.Test
  */
 class ThemeTest {
 
+    // Helper: extract alpha from a Compose Color ULong value (bits 56-63)
+    private fun Color.alphaComponent(): Int = (this.value shr 56).toInt() and 0xFF
+
     // -------------------------------------------------------------------------
     // Expected dark-scheme colors (mirror of DarkColorScheme in Theme.kt)
     // -------------------------------------------------------------------------
@@ -194,7 +197,6 @@ class ThemeTest {
 
     @Test
     fun darkAndLightPrimaryColorsShouldBeDifferent() {
-        // The two schemes intentionally use different primary colors
         assertNotEquals(
             "Dark primary (0xFFBB86FC purple) and light primary (0xFF6200EE deep purple) must differ",
             darkPrimary,
@@ -204,7 +206,6 @@ class ThemeTest {
 
     @Test
     fun darkAndLightSecondaryColorsShouldBeEqual() {
-        // Both dark and light schemes share the same teal secondary
         assertEquals(
             "Dark and light secondary (teal 0xFF03DAC6) should match",
             darkSecondary,
@@ -214,7 +215,6 @@ class ThemeTest {
 
     @Test
     fun darkAndLightTertiaryColorsShouldBeEqual() {
-        // Both dark and light schemes share the same tertiary
         assertEquals(
             "Dark and light tertiary (0xFF3700B3) should match",
             darkTertiary,
@@ -262,38 +262,66 @@ class ThemeTest {
         )
     }
 
+    @Test
+    fun darkOnSurfaceAndDarkSurfaceMustDiffer() {
+        assertNotEquals(
+            "darkOnSurface and darkSurface must differ",
+            darkOnSurface,
+            darkSurface
+        )
+    }
+
+    @Test
+    fun lightOnSurfaceAndLightSurfaceMustDiffer() {
+        assertNotEquals(
+            "lightOnSurface and lightSurface must differ",
+            lightOnSurface,
+            lightSurface
+        )
+    }
+
     // -------------------------------------------------------------------------
     // Alpha channel verification (all opaque in this scheme)
     // -------------------------------------------------------------------------
 
     @Test
     fun darkPrimaryMustBeFullyOpaque() {
-        val alpha = (darkPrimary.value shr 56).toInt() and 0xFF
-        assertEquals("Dark primary must be fully opaque", 0xFF, alpha)
+        assertEquals("Dark primary must be fully opaque", 0xFF, darkPrimary.alphaComponent())
     }
 
     @Test
     fun lightPrimaryMustBeFullyOpaque() {
-        val alpha = (lightPrimary.value shr 56).toInt() and 0xFF
-        assertEquals("Light primary must be fully opaque", 0xFF, alpha)
+        assertEquals("Light primary must be fully opaque", 0xFF, lightPrimary.alphaComponent())
     }
 
     @Test
     fun darkBackgroundMustBeFullyOpaque() {
-        val alpha = (darkBackground.value shr 56).toInt() and 0xFF
-        assertEquals("Dark background must be fully opaque", 0xFF, alpha)
+        assertEquals("Dark background must be fully opaque", 0xFF, darkBackground.alphaComponent())
+    }
+
+    @Test
+    fun lightBackgroundMustBeFullyOpaque() {
+        assertEquals("Light background must be fully opaque", 0xFF, lightBackground.alphaComponent())
     }
 
     @Test
     fun darkErrorMustBeFullyOpaque() {
-        val alpha = (darkError.value shr 56).toInt() and 0xFF
-        assertEquals("Dark error must be fully opaque", 0xFF, alpha)
+        assertEquals("Dark error must be fully opaque", 0xFF, darkError.alphaComponent())
     }
 
     @Test
     fun lightErrorMustBeFullyOpaque() {
-        val alpha = (lightError.value shr 56).toInt() and 0xFF
-        assertEquals("Light error must be fully opaque", 0xFF, alpha)
+        assertEquals("Light error must be fully opaque", 0xFF, lightError.alphaComponent())
+    }
+
+    @Test
+    fun darkSurfaceMustBeFullyOpaque() {
+        assertEquals("Dark surface must be fully opaque", 0xFF, darkSurface.alphaComponent())
+    }
+
+    @Test
+    fun lightSurfaceMustBeFullyOpaque() {
+        assertEquals("Light surface must be fully opaque", 0xFF, lightSurface.alphaComponent())
     }
 
     // -------------------------------------------------------------------------
@@ -310,17 +338,48 @@ class ThemeTest {
     }
 
     // -------------------------------------------------------------------------
-    // Boundary: ensure dark background is darker than light background
-    // (luminance proxy: compare red-channel value as rough brightness indicator)
+    // Boundary: dark scheme background should be darker than light background
     // -------------------------------------------------------------------------
 
     @Test
     fun darkBackgroundShouldHaveLowerRedChannelThanLightBackground() {
-        val darkRed = (darkBackground.value shr 40).toInt() and 0xFF   // 0x12
-        val lightRed = (lightBackground.value shr 40).toInt() and 0xFF  // 0xFF (white)
+        // Dark background 0xFF121212: red channel = 0x12
+        // Light background 0xFFFFFFFF (white): red channel = 0xFF
+        val darkRed = (darkBackground.value shr 40).toInt() and 0xFF
+        val lightRed = (lightBackground.value shr 40).toInt() and 0xFF
         assertTrue(
             "Dark background red ($darkRed) should be less than light background red ($lightRed)",
             darkRed < lightRed
         )
+    }
+
+    @Test
+    fun darkSurfaceShouldDifferFromLightSurface() {
+        // Dark surface 0xFF1E1E1E vs light surface 0xFFF5F5F5
+        assertNotEquals(
+            "Dark surface and light surface must be distinct",
+            darkSurface,
+            lightSurface
+        )
+    }
+
+    // -------------------------------------------------------------------------
+    // On-color scheme-specific direction
+    // The dark scheme uses Black as onPrimary/onSecondary (light-on-dark primary)
+    // while light scheme uses White as onPrimary (dark-on-light primary).
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun darkOnPrimaryIsBlackWhileLightOnPrimaryIsWhite() {
+        assertEquals("Dark scheme onPrimary must be Black", Color.Black, darkOnPrimary)
+        assertEquals("Light scheme onPrimary must be White", Color.White, lightOnPrimary)
+        assertNotEquals("Dark and light onPrimary must differ", darkOnPrimary, lightOnPrimary)
+    }
+
+    @Test
+    fun darkOnBackgroundIsWhiteWhileLightOnBackgroundIsBlack() {
+        assertEquals("Dark scheme onBackground must be White", Color.White, darkOnBackground)
+        assertEquals("Light scheme onBackground must be Black", Color.Black, lightOnBackground)
+        assertNotEquals("Dark and light onBackground must differ", darkOnBackground, lightOnBackground)
     }
 }
