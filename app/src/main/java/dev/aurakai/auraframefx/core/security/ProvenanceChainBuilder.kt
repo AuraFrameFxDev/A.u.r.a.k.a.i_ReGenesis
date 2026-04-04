@@ -108,6 +108,29 @@ class ProvenanceChainBuilder(
         }
     }
 
+    /**
+     * Signs a payload and appends it to the chain.
+     */
+    fun signAndAppend(chainId: String, payload: String, resonance: Float = 1.0f): SacredProvenanceStamp? {
+        val chain = chains[chainId] ?: return null
+        val prev = chain.last()
+        val now = System.currentTimeMillis()
+        
+        // Format: ID|Timestamp|Watermark (acting as intent)
+        val msgPayload = "${prev.id}|$now|$payload"
+        val signature = computeHmac(msgPayload)
+        
+        val stamp = SacredProvenanceStamp(
+            timestamp = now,
+            agentSignature = signature,
+            chainDeltaHash = prev.agentSignature, // Carry forward the previous signature as the delta
+            substrateResonance = resonance,
+            watermark = payload
+        )
+        
+        return if (appendLink(chainId, stamp)) stamp else null
+    }
+
     private fun computeHmac(payload: String): String {
         val mac = Mac.getInstance("HmacSHA256")
         val secretKey = SecretKeySpec(hmacKey, "HmacSHA256")
