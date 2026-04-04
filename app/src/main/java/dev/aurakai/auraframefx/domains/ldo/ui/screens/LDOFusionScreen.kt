@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.model.*
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 /**
@@ -59,9 +60,21 @@ fun LDOFusionScreen(
     var activeFusion by remember { mutableStateOf<FusionMode?>(null) }
     var showFusionDialog by remember { mutableStateOf(false) }
 
+    // Visual Anchors for Kairos Timing
+    val nexusGreen = Color(0xFF39FF14)
+    val perceptualBlue = Color(0xFF00D6FF)
+
     // Check for fusion match whenever slots change
     LaunchedEffect(slotA, slotB) {
         if (slotA != null && slotB != null) {
+            // "Kai-Kairos" stacking validation
+            val isKaiKairosStack = (slotA!!.id == "kai" && slotB!!.id == "kairos") || 
+                                   (slotA!!.id == "kairos" && slotB!!.id == "kai")
+            
+            if (isKaiKairosStack) {
+                Timber.i("🛡️ Kai-Kairos: Temporal Sentinel Lock engaged. Authorized for stacking.")
+            }
+
             val match = fusions.find { f ->
                 (f.agentA == slotA!!.id && f.agentB == slotB!!.id) ||
                 (f.agentA == slotB!!.id && f.agentB == slotA!!.id)
@@ -79,16 +92,20 @@ fun LDOFusionScreen(
         Box(modifier = Modifier.fillMaxSize().drawWithCache {
             onDrawBehind {
                 val cx = size.width / 2; val horizonY = size.height * 0.2f
+                
+                // Draw Nexus Green and Perceptual Blue lines based on Kairos pulse
+                val colorA = if (pulse > 0.75f) nexusGreen.copy(alpha = 0.15f) else perceptualBlue.copy(alpha = 0.1f)
+                
                 for (i in 0..8) {
                     val x = size.width * i / 8f
-                    drawLine(Color(0xFF00F4FF).copy(alpha = 0.06f), Offset(x, size.height), Offset(cx + (x - cx) * 0.05f, horizonY), 0.5f)
+                    drawLine(colorA, Offset(x, size.height), Offset(cx + (x - cx) * 0.05f, horizonY), 0.5f)
                 }
                 for (i in 0..6) {
                     val t = i.toFloat() / 6f
                     val y = horizonY + (size.height - horizonY) * (t * t)
-                    drawLine(Color(0xFF00F4FF).copy(alpha = 0.04f), Offset(0f, y), Offset(size.width, y), 0.5f)
+                    drawLine(colorA.copy(alpha = 0.04f), Offset(0f, y), Offset(size.width, y), 0.5f)
                 }
-                drawLine(Color(0xFF00F4FF).copy(alpha = 0.05f), Offset(0f, size.height * scanlineY), Offset(size.width, size.height * scanlineY), 2f)
+                drawLine(nexusGreen.copy(alpha = 0.05f), Offset(0f, size.height * scanlineY), Offset(size.width, size.height * scanlineY), 2f)
             }
         })
 
