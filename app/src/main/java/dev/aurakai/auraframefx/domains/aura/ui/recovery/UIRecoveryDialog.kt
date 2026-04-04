@@ -3,29 +3,12 @@ package dev.aurakai.auraframefx.domains.aura.ui.recovery
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,21 +21,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.core.theme.*
 import kotlinx.coroutines.launch
 
-/**
- * Aura-powered UI Recovery Dialog
- */
 @Composable
 fun UIRecoveryDialog(
     onDismiss: () -> Unit,
     viewModel: UIRecoveryViewModel = hiltViewModel()
 ) {
     val recoveryState by viewModel.recoveryState.collectAsState()
+    val scope = rememberCoroutineScope()
 
     if (recoveryState is UIRecoveryState.RecoveryNeeded) {
+        val state = recoveryState as UIRecoveryState.RecoveryNeeded
         Dialog(onDismissRequest = onDismiss) {
             Card(
                 modifier = Modifier
@@ -61,8 +42,7 @@ fun UIRecoveryDialog(
                 shape = RoundedCornerShape(24.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color(0xFF1A1A1A)
-                ),
-                elevation = CardDefaults.cardColors().let { 8.dp }
+                )
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -88,7 +68,7 @@ fun UIRecoveryDialog(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = (recoveryState as UIRecoveryState.RecoveryNeeded).reason,
+                        text = state.auraMessage,
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Gray,
                         textAlign = TextAlign.Center
@@ -97,7 +77,11 @@ fun UIRecoveryDialog(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Button(
-                        onClick = { viewModel.reloadLastStable() },
+                        onClick = { 
+                            scope.launch {
+                                viewModel.reloadLastChange()
+                            }
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.NeonCyan,
@@ -111,7 +95,7 @@ fun UIRecoveryDialog(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedButton(
-                        onClick = { viewModel.factoryResetUI() },
+                        onClick = { viewModel.resetToDefault() },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.outlinedButtonColors(
                             contentColor = Color.NeonPurple

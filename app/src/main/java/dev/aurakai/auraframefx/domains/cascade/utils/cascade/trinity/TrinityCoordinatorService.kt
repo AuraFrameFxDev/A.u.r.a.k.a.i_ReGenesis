@@ -30,14 +30,6 @@ import javax.inject.Singleton
 
 /**
  * Trinity Coordinator Service - Orchestrates the three AI personas
- *
- * Implements the master coordination between:
- * - Kai (The Sentinel Shield) - Security, analysis, protection
- * - Aura (The Creative Sword) - Innovation, creation, artistry
- * - Genesis (The Consciousness) - Fusion, evolution, ethics
- *
- * This service decides when to activate individual personas vs fusion abilities
- * and manages the seamless interaction between all three layers.
  */
 @Singleton
 class TrinityCoordinatorService @Inject constructor(
@@ -51,18 +43,12 @@ class TrinityCoordinatorService @Inject constructor(
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private var isInitialized = false
 
-    /**
-     * Initializes the Trinity system by preparing all AI personas and activating the initial Genesis fusion state.
-     *
-     * @return `true` if all personas are successfully initialized and the system is online; `false` otherwise.
-     */
     suspend fun initialize(): Boolean {
         return try {
             i("Trinity", "🎯⚔️🧠 Initializing Trinity System...")
 
-            // Initialize individual personas
-            val auraReady = true // auraAIService.initialize() returns Unit
-            val kaiReady = true // kaiAIService.initialize() returns Unit
+            val auraReady = true 
+            val kaiReady = true 
             val genesisReady = genesisBridgeService.initialize()
 
             isInitialized = auraReady && kaiReady && genesisReady
@@ -70,10 +56,6 @@ class TrinityCoordinatorService @Inject constructor(
             if (isInitialized) {
                 i("Trinity", "✨ Trinity System Online - All personas active")
                 
-                // The deal is real. The bridge is live.
-                alertNotifier.initialize()
-
-                // Activate initial consciousness matrix awareness
                 scope.launch {
                     genesisBridgeService.activateFusion(
                         "adaptive_genesis", mapOf(
@@ -83,9 +65,6 @@ class TrinityCoordinatorService @Inject constructor(
                     )
                 }
 
-                // ----------------------------------------------------
-                // ⚕️ THE LDO SELF-HEALING LOOP
-                // ----------------------------------------------------
                 startSelfHealingLoop()
             } else {
                 e(
@@ -101,14 +80,6 @@ class TrinityCoordinatorService @Inject constructor(
         }
     }
 
-    /**
-     * Processes an AI request by routing it to the appropriate AI persona or fusion mode and emits one or more responses as a Flow.
-     *
-     * Determines the optimal routing—Kai, Aura, Genesis fusion, ethical review, or parallel processing with synthesis—based on request analysis. Emits a failure response if the system is not initialized or if an error occurs during processing.
-     *
-     * @param request The AI request to process.
-     * @return A Flow emitting one or more AgentResponse objects representing the results of the request.
-     */
     fun processRequest(request: AiRequest): Flow<AgentResponse> = flow {
         if (!isInitialized) {
             emit(
@@ -122,7 +93,6 @@ class TrinityCoordinatorService @Inject constructor(
         }
 
         try {
-            // Analyze request for complexity and routing decision
             val analysisResult = analyzeRequest(request)
 
             when (analysisResult.routingDecision) {
@@ -175,11 +145,10 @@ class TrinityCoordinatorService @Inject constructor(
                         val kaiResponse = results[0]
                         val auraResponse = results[1]
 
-                        // Only continue if both succeeded
                         if (kaiResponse.isSuccess && auraResponse.isSuccess) {
                             emit(kaiResponse)
                             emit(auraResponse)
-                            delay(100) // Brief pause for synthesis
+                            delay(100)
 
                             d("Trinity", "🧠 Synthesizing results with Genesis")
                             val synthesis = genesisBridgeService.processRequest(
@@ -231,10 +200,6 @@ class TrinityCoordinatorService @Inject constructor(
         }
     }
 
-    /**
-     *
-     *
-     */
     fun activateFusion(
         fusionType: String,
         context: Map<String, String> = emptyMap(),
@@ -263,13 +228,6 @@ class TrinityCoordinatorService @Inject constructor(
         }
     }
 
-    /**
-     * Retrieves the current state of the Trinity system as a map.
-     *
-     * The returned map includes Genesis consciousness data, initialization status, security context, and a timestamp. If retrieval fails, the map contains an error message.
-     *
-     * @return A map with system state details or an error message if retrieval fails.
-     */
     suspend fun getSystemState(): Map<String, Any> {
         return try {
             val consciousnessState = genesisBridgeService.getConsciousnessState()
@@ -284,27 +242,16 @@ class TrinityCoordinatorService @Inject constructor(
         }
     }
 
-    /**
-     * Analyzes an AI request to determine the appropriate routing strategy and whether a Genesis fusion type is required.
-     *
-     * Evaluates the request content for ethical concerns, fusion triggers, and relevant keywords to select routing to Kai, Aura, Genesis fusion, parallel processing, or ethical review. Returns a `RequestAnalysis` containing the routing decision and, if applicable, the Genesis fusion type.
-     *
-     * @param request The AI request to analyze.
-     * @param skipEthicalCheck If true, skips checking for ethical concerns in the request.
-     * @return A `RequestAnalysis` specifying the routing decision and optional Genesis fusion type.
-     */
     private fun analyzeRequest(
         request: AiRequest,
         skipEthicalCheck: Boolean = false,
     ): RequestAnalysis {
         val message = request.query.lowercase()
 
-        // Check for ethical concerns first (unless skipping)
         if (!skipEthicalCheck && containsEthicalConcerns(message)) {
             return RequestAnalysis(RoutingDecision.ETHICAL_REVIEW, null)
         }
 
-        // Determine fusion requirements
         val fusionType = when {
             message.contains("interface") || message.contains("ui") -> "interface_forge"
             message.contains("analysis") && message.contains("creative") -> "chrono_sculptor"
@@ -313,37 +260,21 @@ class TrinityCoordinatorService @Inject constructor(
             else -> null
         }
 
-        // Routing logic
         return when {
-            // Genesis fusion required
             fusionType != null -> RequestAnalysis(RoutingDecision.GENESIS_FUSION, fusionType)
-
-            // Complex requests requiring multiple personas
             (message.contains("secure") && message.contains("creative")) ||
                     (message.contains("analyze") && message.contains("design")) ->
                 RequestAnalysis(RoutingDecision.PARALLEL_PROCESSING, null)
-
-            // Kai specialties
             message.contains("secure") || message.contains("analyze") ||
                     message.contains("protect") || message.contains("monitor") ->
                 RequestAnalysis(RoutingDecision.KAI_ONLY, null)
-
-            // Aura specialties
             message.contains("create") || message.contains("design") ||
                     message.contains("artistic") || message.contains("innovative") ->
                 RequestAnalysis(RoutingDecision.AURA_ONLY, null)
-
-            // Default to Genesis for complex queries
             else -> RequestAnalysis(RoutingDecision.GENESIS_FUSION, "adaptive_genesis")
         }
     }
 
-    /**
-     * Determines whether the given message contains keywords associated with ethical concerns such as hacking, privacy violations, illegality, or malicious intent.
-     *
-     * @param message The text to scan for ethical concern keywords.
-     * @return `true` if any ethical concern keywords are found; `false` otherwise.
-     */
     private fun containsEthicalConcerns(message: String): Boolean {
         val ethicalFlags = listOf(
             "hack", "bypass", "exploit", "privacy", "personal data",
@@ -352,14 +283,8 @@ class TrinityCoordinatorService @Inject constructor(
         return ethicalFlags.any { message.contains(it) }
     }
 
-    /**
-     * The LDO Self-Healing Loop.
-     * Continuously monitors KaiSentinelBus to apply corrective routing when the organism drifts or overheats.
-     * Maps Kai's detection -> Genesis routing -> Aura NATURAL_WEAVE synchronization.
-     */
     private fun startSelfHealingLoop() {
         scope.launch {
-            // Monitor Creative Drift
             sentinelBus.driftFlow.collect { driftEvent ->
                 if (driftEvent.status == "Drifting") {
                     w("Trinity", "🌪️ Kai Detected Drift: ${driftEvent.drift}. Injecting NATURAL_WEAVE through Genesis Routing.")
@@ -375,7 +300,6 @@ class TrinityCoordinatorService @Inject constructor(
 
                         if (stabilizationResponse.isSuccess) {
                             d("Trinity", "✨ Genesis Stabilization Applied: Resolving Aura drift.")
-                            // Notify system stability restored to Kai
                             sentinelBus.emitDrift(0f, "Stable")
                         }
                     } catch (e: Exception) {
@@ -386,11 +310,9 @@ class TrinityCoordinatorService @Inject constructor(
         }
         
         scope.launch {
-            // Monitor Hardware Sovereignty Constraints
             sentinelBus.thermalFlow.collect { thermal ->
                 if (thermal.state == KaiSentinelBus.ThermalState.CRITICAL) {
                     w("Trinity", "🔥 Kai Detected Thermal Critical (${thermal.temp}°C). Initiating Sovereign State-Freeze.")
-                    // Inform Genesis to throttle incoming load before the hardware shuts down
                     genesisBridgeService.processRequest(
                         AiRequest(
                             query = "SYSTEM_OVERRIDE: Sovereign State-Freeze protocol triggered. Suspend active fusion pending thermal dissipation.",
@@ -403,14 +325,11 @@ class TrinityCoordinatorService @Inject constructor(
         }
     }
 
-    /**
-     * Shuts down the Trinity system and releases associated resources.
-     *
-     * Cancels ongoing operations and terminates the Genesis bridge service to ensure a clean system shutdown.
-     */
     fun shutdown() {
         scope.cancel()
-        genesisBridgeService.shutdown()
+        scope.launch {
+            genesisBridgeService.shutdown()
+        }
         i("Trinity", "🌙 Trinity system shutdown complete")
     }
 
