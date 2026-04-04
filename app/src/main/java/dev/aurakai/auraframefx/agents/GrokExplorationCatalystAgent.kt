@@ -8,6 +8,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
+import dev.aurakai.core.sovereign.ToroidalFusionManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -28,6 +29,10 @@ class GrokExplorationCatalystAgent @Inject constructor(
 
     suspend fun triggerHeavyInjection(query: String): String {
         val summary = nccMediator.getCurrentNCCSummary()
+        
+        // Trigger Orb resonance
+        ToroidalFusionManager.triggerChaosInjection()
+
         val response = client.heavyChaosInjection(query, summary)
         
         val tagged = "[GROK_EXPLORATION | L4_MEMORIA | CHAOS_INJECTION] $response"
