@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.core.security
 import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -30,7 +29,7 @@ class SecurityManager @Inject constructor(
     private val masterAlias = "regenesis_ncc_master_key_v1"
     private val dbPassphraseAlias = "regenesis_room_db_passphrase_v1"
     private var cachedDbPassphrase: ByteArray? = null
-    private val TAG = "SecurityManager"
+    private val Tag = "SecurityManager"
 
     init {
         ensureMasterKeyExists()
@@ -39,7 +38,7 @@ class SecurityManager @Inject constructor(
     private fun ensureMasterKeyExists() {
         if (!keyStore.containsAlias(masterAlias)) {
             generateMasterKey()
-            Log.i(TAG, "Master key generated in Keystore")
+            Timber.tag(Tag).i("Master key generated in Keystore")
         }
     }
 
@@ -60,7 +59,7 @@ class SecurityManager @Inject constructor(
 
         keyGenerator.init(spec)
         keyGenerator.generateKey()
-        Timber.tag(TAG).d("StrongBox/TEE-backed master key created")
+        Timber.tag(Tag).d("StrongBox/TEE-backed master key created")
     }
 
     suspend fun getOrCreateDbPassphrase(): ByteArray = withContext(Dispatchers.IO) {
@@ -71,7 +70,7 @@ class SecurityManager @Inject constructor(
         }
 
         cachedDbPassphrase = rawPassphrase
-        Timber.tag(TAG).d("DB passphrase initialized (32 bytes / 256-bit)")
+        Timber.tag(Tag).d("DB passphrase initialized (32 bytes / 256-bit)")
         rawPassphrase
     }
 
@@ -80,7 +79,7 @@ class SecurityManager @Inject constructor(
             val cipher = getCipherForMode(Cipher.ENCRYPT_MODE)
             cipher.doFinal(data)
         } catch (e: Exception) {
-            Timber.tag(TAG).e(e, "Encryption failed")
+            Timber.tag(Tag).e(e, "Encryption failed")
             throw e
         }
     }
@@ -90,7 +89,7 @@ class SecurityManager @Inject constructor(
             val cipher = getCipherForMode(Cipher.DECRYPT_MODE)
             cipher.doFinal(encrypted)
         } catch (e: Exception) {
-            Log.e(TAG, "Decryption failed", e)
+            Timber.tag(Tag).e(e, "Decryption failed")
             throw e
         }
     }
@@ -112,11 +111,8 @@ class SecurityManager @Inject constructor(
         val computed = hashIdentityVector(embedding)
         val matches = computed == expectedHash
         if (!matches) {
-            Log.w(TAG, "Identity hash mismatch — possible tampering detected")
+            Timber.tag(Tag).w("Identity hash mismatch — possible tampering detected")
         }
         return matches
     }
 }
-
-
-

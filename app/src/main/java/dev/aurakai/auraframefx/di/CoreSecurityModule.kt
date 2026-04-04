@@ -11,6 +11,7 @@ import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.core.security.SecurePreferences
 import dev.aurakai.auraframefx.core.security.KeystoreManager
 import dev.aurakai.auraframefx.core.security.ProvenanceValidator
+import dev.aurakai.auraframefx.core.security.ProvenanceChainBuilder
 import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.core.alerts.AlertNotifier
 import dev.aurakai.auraframefx.core.alerts.SystemAlertNotifier
