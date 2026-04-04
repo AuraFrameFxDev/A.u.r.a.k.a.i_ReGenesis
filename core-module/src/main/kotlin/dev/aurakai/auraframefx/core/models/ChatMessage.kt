@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.models
+package dev.aurakai.auraframefx.core.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
