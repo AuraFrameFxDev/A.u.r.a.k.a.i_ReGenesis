@@ -127,7 +127,7 @@ class CasberryParticleSwarm @Inject constructor() {
                 if (currentState == GENESIS_SYNTHESIS_PULSE && i % 4 == 0) {
                     drawCircle(
                         color = Color.White.copy(alpha = 0.3f),
-                        radius = (8f + sin(time * 2).toFloat() * 5f) * pulseScale,
+                        radius = (8f + sin(time * 2) * 5f) * pulseScale,
                         center = Offset(x, y)
                     )
                 }

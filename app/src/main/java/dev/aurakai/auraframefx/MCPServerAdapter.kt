@@ -56,7 +56,7 @@ class MCPServerAdapter @Inject constructor() {
                 MCPAgentInvokeRequest.serializer(),
                 MCPAgentInvokeRequest(
                     prompt = prompt,
-                    context = context.mapValues { it.value.toString() },
+                    context = context,
                     temperature = temperature
                 )
             )

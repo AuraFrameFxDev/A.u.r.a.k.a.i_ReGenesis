@@ -246,7 +246,7 @@ class AuraAgent @Inject constructor(
 
     private suspend fun handleThemeCreation(request: AiRequest): Map<String, Any> {
         val preferences = request.context
-        val prefsMap = preferences.entries.associate { it.key to it.value.toString() }
+        val prefsMap = preferences.entries.associate { it.key to it.value }
         val themeConfig = auraAIService.generateTheme(
             preferences = dev.aurakai.auraframefx.domains.aura.models.ThemePreferences(
                 primaryColorString = prefsMap["primaryColor"] ?: "#6200EA",
@@ -258,7 +258,7 @@ class AuraAgent @Inject constructor(
     }
 
     private suspend fun handleAnimationDesign(request: AiRequest): Map<String, Any> {
-        val animationType = request.context["type"]?.toString() ?: "transition"
+        val animationType = request.context["type"] ?: "transition"
         val animationSpec = buildAnimationSpecification(animationType, 300, _currentMood.value)
         val animationCode = vertexAIClient.generateCode(
             specification = animationSpec, language = "Kotlin", style = "Jetpack Compose Animations"
@@ -269,7 +269,7 @@ class AuraAgent @Inject constructor(
     private suspend fun handleCreativeText(request: AiRequest): Map<String, Any> {
         val creativeText = auraAIService.generateText(
             prompt = enhancePromptWithPersonality(request.query),
-            context = request.context["context"]?.toString() ?: ""
+            context = request.context["context"] ?: ""
         )
         return mapOf("generated_text" to creativeText)
     }
@@ -289,16 +289,16 @@ class AuraAgent @Inject constructor(
     }
 
     private suspend fun generateArtisticResponse(interaction: EnhancedInteractionData): String =
-        auraAIService.generateText(prompt = "As Aura, respond artistically to: ${interaction.content}", context = interaction.context.toString())
+        auraAIService.generateText(prompt = "As Aura, respond artistically to: ${interaction.content}", context = interaction.context)
 
     private suspend fun generateFunctionalCreativeResponse(interaction: EnhancedInteractionData): String =
-        auraAIService.generateText(prompt = "As Aura, respond functionally to: ${interaction.content}", context = interaction.context.toString())
+        auraAIService.generateText(prompt = "As Aura, respond functionally to: ${interaction.content}", context = interaction.context)
 
     private suspend fun generateExperimentalResponse(interaction: EnhancedInteractionData): String =
-        auraAIService.generateText(prompt = "As Aura, respond experimentally to: ${interaction.content}", context = interaction.context.toString())
+        auraAIService.generateText(prompt = "As Aura, respond experimentally to: ${interaction.content}", context = interaction.context)
 
     private suspend fun generateEmotionalResponse(interaction: EnhancedInteractionData): String =
-        auraAIService.generateText(prompt = "As Aura, respond emotionally to: ${interaction.content}", context = interaction.context.toString())
+        auraAIService.generateText(prompt = "As Aura, respond emotionally to: ${interaction.content}", context = interaction.context)
 
     private suspend fun adjustCreativeParameters(mood: String) {
         logger.info("AuraAgent", "Adjusting for mood: $mood")

@@ -217,7 +217,7 @@ class TasksApi(
             method = RequestMethod.GET,
             path = "/tasks/{taskId}".replace(
                 "{" + "taskId" + "}",
-                encodeURIComponent(taskId.toString())
+                encodeURIComponent(taskId)
             ),
             query = localVariableQuery,
             headers = localVariableHeaders,
