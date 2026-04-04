@@ -66,4 +66,7 @@ class SecurePreferences @Inject constructor(
 
     fun isVetoEnabled(): Boolean = getBoolean("veto_enabled", true)
     fun setVetoEnabled(enabled: Boolean) = putBoolean("veto_enabled", enabled)
+
+    fun getGrokApiKey(): String? = getString("XAI_GROK_API_KEY")
+    fun setGrokApiKey(key: String) = putString("XAI_GROK_API_KEY", key)
 }

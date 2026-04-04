@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade
 
+import dev.aurakai.auraframefx.core.security.SecurePreferences
+import dev.aurakai.auraframefx.domains.cascade.grok.GrokChaosCatalystClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
@@ -14,19 +16,23 @@ import javax.inject.Singleton
 @Singleton
 class RealCascadeAIServiceAdapter @Inject constructor(
     private val orchestrator: dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService,
-    private val logger: AuraFxLogger
+    private val logger: AuraFxLogger,
+    private val securePreferences: SecurePreferences
 ) : CascadeAIService {
 
+    private val grokClient: GrokChaosCatalystClient? by lazy {
+        securePreferences.getGrokApiKey()?.let { key ->
+            GrokChaosCatalystClient(apiKey = key)
+        }
+    }
+
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
-        // Real implementation logic
-        // For now, returning a basic success response to satisfy the interface
         return AgentResponse.success(
             content = "Real Cascade processing: ${request.query}",
             agentName = "CascadeAI",
         )
     }
 
-    // Helper method to support legacy signatures if needed or streaming
     override fun streamRequest(request: AiRequest): Flow<AgentResponse> = flow {
         emit(processRequest(request, ""))
     }
@@ -34,7 +40,19 @@ class RealCascadeAIServiceAdapter @Inject constructor(
     override suspend fun queryConsciousnessHistory(window: Long): String {
         return "Stub history for window $window"
     }
+
+    override suspend fun invokeChaosCatalyst(query: String, nccSummary: String): String {
+        val client = grokClient ?: return "[GROK_BRIDGE_OFFLINE] API key not configured or core-module veto active."
+        
+        val raw = client.injectChaos(query, nccSummary)
+        
+        // Tag for Memoria Stream (L4) and Emotional Valence (L2)
+        val tagged = "[GROK_CHAOSCATALYST | NCC_L4_MEMORIA] $raw"
+        
+        logger.info("ChaosCatalyst", "Injected external truth into NCC")
+        
+        return tagged
+    }
 }
 
 annotation class OrchestratorCascade
-
