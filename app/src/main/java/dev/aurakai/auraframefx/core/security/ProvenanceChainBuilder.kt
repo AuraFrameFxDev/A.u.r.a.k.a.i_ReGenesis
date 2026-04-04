@@ -16,7 +16,7 @@ import javax.inject.Singleton
  * Models the validation logic after the Genesis backend provenance gate.
  */
 @Singleton
-class ProvenanceChainBuilder @Inject constructor(
+class ProvenanceChainBuilder(
     private val validator: ProvenanceValidator
 ) {
     private val hmacKey = "dev-fallback-key-change-immediately".toByteArray()
