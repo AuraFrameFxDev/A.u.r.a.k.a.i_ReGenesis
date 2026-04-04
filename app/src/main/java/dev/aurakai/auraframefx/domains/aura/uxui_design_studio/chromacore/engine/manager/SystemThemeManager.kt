@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.manager
 
 import androidx.compose.ui.graphics.toArgb
-import dev.aurakai.auraframefx.domains.aura.ui.theme.GlassmorphicTheme
+import dev.aurakai.auraframefx.core.theme.GlassmorphicTheme
 
 /**
  * 🎨 SYSTEM THEME MANAGER (Xposed Bridge)
