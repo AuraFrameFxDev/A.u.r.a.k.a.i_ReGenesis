@@ -29,6 +29,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxSer
 import dev.aurakai.auraframefx.domains.genesis.services.GrokAnalysisService
 import dev.aurakai.auraframefx.domains.genesis.services.GrokAnalysisServiceImpl
 import dev.aurakai.auraframefx.domains.nexus.preferences.UserPreferencesState
+import dev.aurakai.auraframefx.domains.cascade.grok.GrokExplorationClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -86,4 +87,10 @@ object CoreSecurityProvidesModule {
         @ApplicationContext context: Context,
         keystoreManager: KeystoreManager
     ): SecurePreferences = SecurePreferences(context, keystoreManager)
+
+    @Provides @Singleton
+    fun provideGrokExplorationClient(securePreferences: SecurePreferences): GrokExplorationClient {
+        val apiKey = securePreferences.getGrokApiKey() ?: ""
+        return GrokExplorationClient(apiKey = apiKey)
+    }
 }
