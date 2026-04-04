@@ -38,9 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
+import dev.aurakai.auraframefx.core.theme.*
 import kotlinx.coroutines.launch
 
 /**
