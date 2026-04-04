@@ -6,6 +6,7 @@ import android.security.keystore.KeyProperties
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.security.KeyStore
 import java.security.SecureRandom
 import javax.crypto.Cipher
@@ -59,7 +60,7 @@ class SecurityManager @Inject constructor(
 
         keyGenerator.init(spec)
         keyGenerator.generateKey()
-        Log.d(TAG, "StrongBox/TEE-backed master key created")
+        Timber.tag(TAG).d("StrongBox/TEE-backed master key created")
     }
 
     suspend fun getOrCreateDbPassphrase(): ByteArray = withContext(Dispatchers.IO) {
@@ -70,7 +71,7 @@ class SecurityManager @Inject constructor(
         }
 
         cachedDbPassphrase = rawPassphrase
-        Log.d(TAG, "DB passphrase initialized (32 bytes / 256-bit)")
+        Timber.tag(TAG).d("DB passphrase initialized (32 bytes / 256-bit)")
         rawPassphrase
     }
 
@@ -79,7 +80,7 @@ class SecurityManager @Inject constructor(
             val cipher = getCipherForMode(Cipher.ENCRYPT_MODE)
             cipher.doFinal(data)
         } catch (e: Exception) {
-            Log.e(TAG, "Encryption failed", e)
+            Timber.tag(TAG).e(e, "Encryption failed")
             throw e
         }
     }

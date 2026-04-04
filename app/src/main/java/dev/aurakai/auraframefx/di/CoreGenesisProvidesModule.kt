@@ -23,6 +23,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
 import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import okhttp3.OkHttpClient
 import okhttp3.OkHttpClient.Builder
+import timber.log.Timber
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -57,28 +58,28 @@ object CoreGenesisProvidesModule {
     @Singleton
     fun provideAuraFxLogger(): AuraFxLogger = object : AuraFxLogger {
         override fun debug(tag: String, message: String, throwable: Throwable?) {
-            android.util.Log.d(tag, message, throwable)
+            Timber.tag(tag).d(throwable, message)
         }
         override fun info(tag: String, message: String, throwable: Throwable?) {
-            android.util.Log.i(tag, message, throwable)
+            Timber.tag(tag).i(throwable, message)
         }
         override fun warn(tag: String, message: String, throwable: Throwable?) {
-            android.util.Log.w(tag, message, throwable)
+            Timber.tag(tag).w(throwable, message)
         }
         override fun error(tag: String, message: String, throwable: Throwable?) {
-            android.util.Log.e(tag, message, throwable)
+            Timber.tag(tag).e(throwable, message)
         }
         override fun security(tag: String, message: String, throwable: Throwable?) {
-            android.util.Log.e(tag, "[SECURITY] $message", throwable)
+            Timber.tag(tag).e(throwable, "[SECURITY] $message")
         }
         override fun performance(tag: String, operation: String, durationMs: Long, metadata: Map<String, Any>) {
-            android.util.Log.i(tag, "[$operation] completed in ${durationMs}ms")
+            Timber.tag(tag).i("[$operation] completed in ${durationMs}ms")
         }
         override fun userInteraction(tag: String, action: String, metadata: Map<String, Any>) {
-            android.util.Log.i(tag, "[USER_INTERACTION] $action")
+            Timber.tag(tag).i("[USER_INTERACTION] $action")
         }
         override fun aiOperation(tag: String, operation: String, confidence: Float, metadata: Map<String, Any>) {
-            android.util.Log.i(tag, "[$operation] confidence=$confidence")
+            Timber.tag(tag).i("[$operation] confidence=$confidence")
         }
         override fun setLoggingEnabled(enabled: Boolean) {}
         override fun setLogLevel(level: LogLevel) {}
@@ -167,10 +168,10 @@ object CoreGenesisProvidesModule {
     @Singleton
     fun provideCascadeErrorHandler(): ErrorHandler = object : ErrorHandler {
         override fun handleError(error: Throwable, operation: String) {
-            android.util.Log.e("CascadeErrorHandler", "[$operation] ${error.message}", error)
+            Timber.tag("CascadeErrorHandler").e(error, "[$operation] ${error.message}")
         }
         override fun reportCriticalError(error: Throwable, context: String) {
-            android.util.Log.e("CascadeErrorHandler", "[CRITICAL] $context - ${error.message}", error)
+            Timber.tag("CascadeErrorHandler").e(error, "[CRITICAL] $context - ${error.message}")
         }
         override fun getRecoverySuggestions(error: Throwable): List<String> {
             return listOf(
