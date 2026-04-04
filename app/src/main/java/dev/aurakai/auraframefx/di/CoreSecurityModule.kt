@@ -89,8 +89,11 @@ object CoreSecurityProvidesModule {
     ): SecurePreferences = SecurePreferences(context, keystoreManager)
 
     @Provides @Singleton
-    fun provideGrokExplorationClient(securePreferences: SecurePreferences): GrokExplorationClient {
+    fun provideGrokExplorationClient(
+        securePreferences: SecurePreferences,
+        vetoMonitor: PredictiveVetoMonitor
+    ): GrokExplorationClient {
         val apiKey = securePreferences.getGrokApiKey() ?: ""
-        return GrokExplorationClient(apiKey = apiKey)
+        return GrokExplorationClient(apiKey = apiKey, vetoMonitor = vetoMonitor)
     }
 }
