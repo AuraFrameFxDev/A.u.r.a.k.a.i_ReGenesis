@@ -39,5 +39,8 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Security
+    implementation(libs.androidx.security.crypto)
 }
 

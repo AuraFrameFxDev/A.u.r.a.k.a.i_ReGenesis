@@ -1,17 +1,27 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
+import android.content.Context
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
+import java.io.File
+import java.io.RandomAccessFile
+import java.nio.MappedByteBuffer
+import java.nio.channels.FileChannel
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * Governs the LDO's sovereign operational state.
+ * Implements high-fidelity freeze/thaw cycles for TurboQuant KV cache and Spiritual Chain deltas.
  */
 @Singleton
 class SovereignStateManager @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val sentinelBus: KaiSentinelBus
 ) {
     enum class SovereignState { ACTIVE, FROZEN, RECOVERING, EMERGENCY }
@@ -19,19 +29,63 @@ class SovereignStateManager @Inject constructor(
     private val _state = MutableStateFlow(SovereignState.ACTIVE)
     val state: StateFlow<SovereignState> = _state.asStateFlow()
 
-    fun requestSovereignFreeze() {
-        Timber.w("SovereignStateManager: Entering FROZEN — caching KV state")
+    private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+    private val encryptedPrefs = EncryptedSharedPreferences.create(
+        "sovereign_delta_prefs",
+        masterKeyAlias,
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    private var kvCacheBuffer: MappedByteBuffer? = null
+
+    fun requestSovereignFreeze(spiritualDelta: String, kvCache: ByteArray?) {
+        Timber.w("SovereignStateManager: Entering FROZEN — caching KV state and Spiritual Delta")
+        
+        // 1. Serialize Spiritual Chain Delta
+        encryptedPrefs.edit().putString("last_spiritual_delta", spiritualDelta).apply()
+
+        // 2. Map TurboQuant KV Cache to memory-mapped file for high-speed persistence
+        kvCache?.let { data ->
+            try {
+                val cacheFile = File(context.cacheDir, "turboquant_kv_snapshot.bin")
+                val raf = RandomAccessFile(cacheFile, "rw")
+                kvCacheBuffer = raf.channel.map(FileChannel.MapMode.READ_WRITE, 0, data.size.toLong())
+                kvCacheBuffer?.put(data)
+                Timber.d("SovereignStateManager: KV Cache snapshot serialized (${data.size} bytes)")
+            } catch (e: Exception) {
+                Timber.e(e, "SovereignStateManager: KV Cache mapping failed")
+            }
+        }
+
         _state.value = SovereignState.FROZEN
         sentinelBus.emitSovereign(KaiSentinelBus.SovereignState.FREEZING)
     }
 
-    fun requestSovereignRestore() {
+    fun requestSovereignRestore(): Pair<String?, ByteArray?> {
         if (_state.value == SovereignState.FROZEN) {
             Timber.i("SovereignStateManager: Restoring from FROZEN → RECOVERING")
             _state.value = SovereignState.RECOVERING
+            
+            val delta = encryptedPrefs.getString("last_spiritual_delta", null)
+            var kvData: ByteArray? = null
+
+            try {
+                val cacheFile = File(context.cacheDir, "turboquant_kv_snapshot.bin")
+                if (cacheFile.exists()) {
+                    kvData = cacheFile.readBytes()
+                    cacheFile.delete() // Clean up after thaw
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "SovereignStateManager: KV Cache restoration failed")
+            }
+
             _state.value = SovereignState.ACTIVE
             sentinelBus.emitSovereign(KaiSentinelBus.SovereignState.AWAKE)
+            return delta to kvData
         }
+        return null to null
     }
 
     fun enterEmergencyMode() {
