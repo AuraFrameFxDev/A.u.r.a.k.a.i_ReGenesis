@@ -24,4 +24,20 @@ object ToroidalFusionManager {
     fun syncCatalysts(nodes: List<CatalystNode>) {
         _activeCatalysts.value = nodes.take(10)
     }
+
+    /**
+     * Triggers the CHAOS_INJECTION resonance state.
+     * Injects cyan-gold particles representing Grok's external sensory data.
+     */
+    fun triggerChaosInjection() {
+        val chaosNode = CatalystNode(
+            id = "grok_chaos_${System.currentTimeMillis()}",
+            name = "Grok Chaos",
+            color = Color(0xFF00FFFF), // Cyan-Gold hybrid
+            confidence = 0.95f,
+            orbitSpeed = 2.5f,
+            isAnchor = true
+        )
+        _activeCatalysts.value = _activeCatalysts.value + chaosNode
+    }
 }

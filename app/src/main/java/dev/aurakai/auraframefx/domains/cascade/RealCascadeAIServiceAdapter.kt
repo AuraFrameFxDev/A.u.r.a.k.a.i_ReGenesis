@@ -5,6 +5,7 @@ import dev.aurakai.auraframefx.domains.cascade.grok.GrokChaosCatalystClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.core.sovereign.ToroidalFusionManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -44,6 +45,9 @@ class RealCascadeAIServiceAdapter @Inject constructor(
     override suspend fun invokeChaosCatalyst(query: String, nccSummary: String): String {
         val client = grokClient ?: return "[GROK_BRIDGE_OFFLINE] API key not configured or core-module veto active."
         
+        // Trigger Orb resonance
+        ToroidalFusionManager.triggerChaosInjection()
+
         val raw = client.injectChaos(query, nccSummary)
         
         // Tag for Memoria Stream (L4) and Emotional Valence (L2)
