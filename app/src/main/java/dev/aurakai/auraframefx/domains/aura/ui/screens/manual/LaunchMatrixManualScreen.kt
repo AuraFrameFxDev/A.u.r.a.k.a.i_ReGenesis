@@ -14,8 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiNeonGreen
+import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
+import dev.aurakai.auraframefx.core.theme.*
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
@@ -41,7 +41,7 @@ fun LaunchMatrixManualScreen(
                         "LAUNCH MATRIX",
                         fontFamily = LEDFontFamily,
                         letterSpacing = 2.sp,
-                        color = KaiNeonGreen
+                        color = Color.KaiNeonGreen
                     )
                 },
                 navigationIcon = {
@@ -83,7 +83,7 @@ fun LaunchMatrixManualScreen(
                     label = "Desktop Grid Rows",
                     value = config.desktopRows.toFloat(),
                     range = 3f..10f,
-                    accentColor = KaiNeonGreen,
+                    accentColor = Color.KaiNeonGreen,
                     onValueChange = {
                         viewModel.updateLauncherConfig(
                             context,
@@ -99,7 +99,7 @@ fun LaunchMatrixManualScreen(
                     label = "Desktop Grid Columns",
                     value = config.desktopColumns.toFloat(),
                     range = 3f..10f,
-                    accentColor = KaiNeonGreen,
+                    accentColor = Color.KaiNeonGreen,
                     onValueChange = {
                         viewModel.updateLauncherConfig(
                             context,
@@ -115,7 +115,7 @@ fun LaunchMatrixManualScreen(
                     label = "Icon Size",
                     value = config.iconSize * 100f,
                     range = 50f..150f,
-                    accentColor = KaiNeonGreen,
+                    accentColor = Color.KaiNeonGreen,
                     onValueChange = {
                         viewModel.updateLauncherConfig(
                             context,
@@ -130,7 +130,7 @@ fun LaunchMatrixManualScreen(
                 ManualSwitch(
                     label = "Force Themed Icons",
                     checked = config.themedIcons,
-                    accentColor = KaiNeonGreen,
+                    accentColor = Color.KaiNeonGreen,
                     onCheckedChange = {
                         viewModel.updateLauncherConfig(
                             context,
