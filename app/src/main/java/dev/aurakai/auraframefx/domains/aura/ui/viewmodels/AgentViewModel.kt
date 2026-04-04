@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
-import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
+import dev.aurakai.auraframefx.core.models.ChatMessage
 import dev.aurakai.auraframefx.domains.cascade.models.EnhancedInteractionData
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
 import dev.aurakai.auraframefx.domains.cascade.utils.error
@@ -114,6 +114,7 @@ open class AgentViewModel @Inject constructor(
                 if (!agentMsg.from.equals("User", ignoreCase = true)) {
                     val chatMsg = ChatMessage(
                         id = UUID.randomUUID().toString(),
+                        role = "assistant",
                         content = agentMsg.content,
                         sender = agentMsg.from.uppercase(),
                         isFromUser = false,
@@ -306,8 +307,8 @@ open class AgentViewModel @Inject constructor(
     private fun addSystemMessage(agentName: String, content: String) {
         val message = ChatMessage(
             id = UUID.randomUUID().toString(),
-            content = content,
             role = "system",
+            content = content,
             sender = "System",
             isFromUser = false,
             timestamp = System.currentTimeMillis()

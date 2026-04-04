@@ -1,78 +1,36 @@
 package dev.aurakai.auraframefx.core.models
 
-import androidx.compose.ui.graphics.Color
 import kotlinx.serialization.Serializable
 
 /**
- * 🎨 AURA THEME DATA
- * Core model for theme state across ReGenesis.
+ * 🗣️ CONVERSATION STATE
  */
 @Serializable
-data class AuraThemeData(
-    val id: String = "default",
-    val name: String = "CyberGlow",
-    val accentColorHex: String = "#00FFF2",
-    val animationStyle: AnimationStyle = AnimationStyle.FLOWING
-) {
-    val accentColor: Color get() = try { 
-        Color(android.graphics.Color.parseColor(accentColorHex)) 
-    } catch (e: Exception) { 
-        Color(0xFF00FFF2) 
-    }
-
-    enum class AnimationStyle {
-        ENERGETIC, CALMING, FLOWING, PULSING, SUBTLE
-    }
+sealed class ConversationState {
+    @Serializable
+    data object Idle : ConversationState()
+    @Serializable
+    data object Listening : ConversationState()
+    @Serializable
+    data object Speaking : ConversationState()
+    @Serializable
+    data object Recording : ConversationState()
+    
+    @Serializable
+    data class Processing(val partialTranscript: String? = null) : ConversationState()
+    @Serializable
+    data class Responding(val responseText: String? = null) : ConversationState()
+    @Serializable
+    data class Error(val errorMessage: String) : ConversationState()
 }
 
 /**
- * 📍 POSITION 3D
- * Standardized coordinate system for spatial UI elements.
+ * 🌀 HOME SCREEN TRANSITION TYPE
  */
 @Serializable
-data class Position3D(
-    val x: Float = 0f,
-    val y: Float = 0f,
-    val z: Float = 0f,
-    val rotationX: Float = 0f,
-    val rotationY: Float = 0f,
-    val rotationZ: Float = 0f
-)
-
-/**
- * 🎭 OVERLAY THEME
- */
-@Serializable
-data class OverlayTheme(
-    val name: String,
-    val primaryColorHex: String,
-    val secondaryColorHex: String
-)
-
-/**
- * 🎞️ OVERLAY ANIMATION
- */
-@Serializable
-data class OverlayAnimation(
-    val type: String,
-    val durationMs: Int
-)
-
-/**
- * 🔀 OVERLAY TRANSITION
- */
-@Serializable
-data class OverlayTransition(
-    val name: String,
-    val type: String
-)
-
-/**
- * ⚙️ SYSTEM OVERLAY CONFIG
- */
-@Serializable
-data class SystemOverlayConfig(
-    val enabled: Boolean = true,
-    val globalOpacity: Float = 1.0f,
-    val blurRadius: Int = 25
-)
+enum class HomeScreenTransitionType {
+    GLOBE_ROTATE,
+    DIGITAL_DECONSTRUCT,
+    HOLOGRAM,
+    PIXELATE
+}

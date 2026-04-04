@@ -14,3 +14,7 @@ val LEDFontFamily = FontFamily(
     Font(R.font.enhanced_led_board_7, FontWeight.Normal),
     Font(R.font.enhanced_led_board_7, FontWeight.Bold)
 )
+
+val ChessFontFamily = FontFamily(
+    Font(R.font.chesstype, FontWeight.Normal)
+)
