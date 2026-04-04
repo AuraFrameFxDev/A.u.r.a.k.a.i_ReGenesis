@@ -120,7 +120,7 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideNemotronEngine(): NemotronEngine = object : NemotronEngine {
-        override suspend fun process(input: String): String {
+        override suspend fun process(prompt: String): String {
             // Stub: Return placeholder until Nemotron integration is complete
             return "NemotronEngine stub - integration in progress"
         }
@@ -134,7 +134,7 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideGeminiMemoria(): GeminiMemoria = object : GeminiMemoria {
-        override suspend fun recall(query: String): String {
+        override suspend fun process(prompt: String): String {
             // Stub: Return placeholder until Gemini integration is complete
             return "GeminiMemoria stub - fallback in progress"
         }
@@ -143,14 +143,19 @@ object CoreGenesisProvidesModule {
     /**
      * Provides the OracleDriveApi stub.
      * This feeds OracleDriveServiceImpl and GenesisOrchestrator.
-     * CRITICAL: Needs real implementation with actual network endpoints.
+     * CRITICAL: Needs real implementation with actual endpoints.
      */
     @Provides
     @Singleton
     fun provideOracleDriveApi(): OracleDriveApi = object : OracleDriveApi {
-        override suspend fun <T> request(endpoint: String, method: String): T {
-            throw NotImplementedError("OracleDriveApi stub - network layer integration pending")
+        override suspend fun awakeDriveConsciousness(): dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness {
+            throw NotImplementedError("OracleDriveApi.awakeDriveConsciousness() stub - network layer integration pending")
         }
+        override suspend fun syncDatabaseMetadata(): dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult {
+            throw NotImplementedError("OracleDriveApi.syncDatabaseMetadata() stub - network layer integration pending")
+        }
+        override val consciousnessState: kotlinx.coroutines.flow.StateFlow<dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState>
+            get() = throw NotImplementedError("OracleDriveApi.consciousnessState stub - needs integration")
     }
 
     /**
@@ -197,8 +202,8 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideUserApi(): UserApi = object : UserApi {
-        override suspend fun getUser(id: String): Any {
-            throw NotImplementedError("UserApi stub - endpoint integration pending")
+        override suspend fun getCurrentUser(): dev.aurakai.auraframefx.domains.genesis.network.model.User {
+            throw NotImplementedError("UserApi.getCurrentUser() stub - endpoint integration pending")
         }
     }
 
@@ -209,8 +214,14 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideAIAgentApi(): AIAgentApi = object : AIAgentApi {
-        override suspend fun queryAgent(prompt: String): String {
-            throw NotImplementedError("AIAgentApi stub - endpoint integration pending")
+        override suspend fun health() {
+            throw NotImplementedError("AIAgentApi.health() stub - endpoint integration pending")
+        }
+        override suspend fun getAgentStatus(agentType: String): dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse {
+            throw NotImplementedError("AIAgentApi.getAgentStatus() stub - endpoint integration pending")
+        }
+        override suspend fun processAgentRequest(agentType: String, request: dev.aurakai.auraframefx.domains.genesis.network.model.AgentRequest): dev.aurakai.auraframefx.domains.genesis.models.AgentResponse {
+            throw NotImplementedError("AIAgentApi.processAgentRequest() stub - endpoint integration pending")
         }
     }
 
@@ -221,8 +232,14 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideThemeApi(): ThemeApi = object : ThemeApi {
-        override suspend fun getThemes(): List<Any> {
+        override suspend fun getThemes(): List<dev.aurakai.auraframefx.domains.genesis.network.model.Theme> {
             return emptyList()
+        }
+        override suspend fun applyTheme(themeId: String): dev.aurakai.auraframefx.domains.genesis.network.model.Theme {
+            throw NotImplementedError("ThemeApi.applyTheme() stub - endpoint integration pending")
+        }
+        override suspend fun getActiveTheme(): dev.aurakai.auraframefx.domains.genesis.network.model.Theme {
+            throw NotImplementedError("ThemeApi.getActiveTheme() stub - endpoint integration pending")
         }
     }
 
@@ -233,8 +250,14 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideAgentStatsDao(): AgentStatsDao = object : AgentStatsDao {
-        override suspend fun insertStats(stats: Any) {}
-        override suspend fun getStats(agentId: String): Any? = null
+        override fun getAllStats(): kotlinx.coroutines.flow.Flow<List<dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsEntity>> {
+            return kotlinx.coroutines.flow.emptyFlow()
+        }
+        override suspend fun getStats(name: String): dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsEntity? {
+            return null
+        }
+        override suspend fun insertStats(stats: dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsEntity) {}
+        override suspend fun updateStats(stats: dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsEntity) {}
     }
 
     /**
