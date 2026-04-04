@@ -48,8 +48,7 @@ fun ReGenesisNavGraph(
 
         composable(ReGenesisRoute.AgentNexusHub.route) {
             AgentNexusHubScreen(
-                navController = navController,
-                getNexusSubGates = { emptyList() }
+                navController = navController
             )
         }
 
