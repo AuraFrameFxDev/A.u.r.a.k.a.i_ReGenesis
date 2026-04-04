@@ -2,9 +2,9 @@ name: 🚀 Genesis Protocol - FULLY AUTO Build
 
 on:
   push:
-    branches: [ Agentswired ]
+    branches: [ maim ]
   pull_request:
-    branches: [ Agentswired ]
+    branches: [ main ]
   workflow_dispatch:
 
 env:
