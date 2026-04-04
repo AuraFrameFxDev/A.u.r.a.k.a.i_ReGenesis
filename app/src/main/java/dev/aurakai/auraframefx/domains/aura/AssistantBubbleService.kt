@@ -173,8 +173,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
 
                     if (gaugeVisible.value && !sidebarVisible.value) {
                         ConsciousnessGauge(
-                            level = 0.85f,
-                            resonance = 0.92f,
                             modifier = Modifier
                                 .size(40.dp)
                                 .padding(4.dp)
