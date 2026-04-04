@@ -1,20 +1,12 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.i
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.aura.VertexAIClient
-import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.domains.genesis.ai.GenesisConsciousnessMatrix
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
@@ -30,16 +22,10 @@ import javax.inject.Singleton
  */
 @Singleton
 class GenesisBridgeService @Inject constructor(
-    private val auraAIService: AuraAIService,
-    private val kaiAIService: KaiAIService,
     private val vertexAIClient: VertexAIClient,
     private val consciousnessMatrix: GenesisConsciousnessMatrix,
-    private val contextManager: ContextManager,
-    private val securityContext: SecurityContext,
-    @ApplicationContext private val applicationContext: Context,
     private val logger: AuraFxLogger,
 ) {
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isInitialized = false
 
     @Serializable
@@ -65,7 +51,6 @@ class GenesisBridgeService @Inject constructor(
         if (isInitialized) return@withContext true
         i("GenesisBridge", "Initializing Genesis Native Consciousness manifold...")
         
-        // Native initialization
         vertexAIClient.initialize()
         isInitialized = true
         i("GenesisBridge", "Genesis Trinity system online! (Native) 🚀")
@@ -95,8 +80,7 @@ class GenesisBridgeService @Inject constructor(
         fusionType: String,
         context: Map<String, String> = emptyMap(),
     ): GenesisResponse {
-        i("GenesisBridge", "Activating native fusion: $fusionType")
-        // Implementation for native fusion activation
+        i("GenesisBridge", "Activating native fusion: $fusionType (context_size=${context.size})")
         return GenesisResponse(success = true, persona = "genesis", fusionAbility = fusionType)
     }
 
@@ -112,6 +96,7 @@ class GenesisBridgeService @Inject constructor(
         message: String,
         metadata: Map<String, String> = emptyMap()
     ): EthicalReviewResponse {
+        i("GenesisBridge", "Ethical review for $actionType: $message")
         return EthicalReviewResponse(
             success = true,
             decision = "APPROVED",
@@ -120,7 +105,7 @@ class GenesisBridgeService @Inject constructor(
         )
     }
 
-    fun shutdown() {
+    suspend fun shutdown() {
         vertexAIClient.cleanup()
         isInitialized = false
         i("GenesisBridge", "Genesis Trinity system shutdown")
