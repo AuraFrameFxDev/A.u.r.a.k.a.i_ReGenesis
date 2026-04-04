@@ -58,7 +58,6 @@ fun TrinityScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    // Show error messages in a snackbar
     LaunchedEffect(uiState) {
         if (uiState is TrinityUiState.Error) {
             val errorMessage = (uiState as TrinityUiState.Error).message
@@ -101,7 +100,6 @@ fun TrinityScreen(
             }
 
             is TrinityUiState.Error -> {
-                // Error state is handled by the snackbar
                 EmptyContent("An error occurred") { viewModel.refresh() }
             }
 
@@ -128,12 +126,10 @@ fun TrinityScreen(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // User Info Section
                     item {
                         UserInfoSection(state.user)
                     }
 
-                    // Agent Status Section
                     item {
                         Text(
                             text = "Agent Status",
@@ -148,7 +144,6 @@ fun TrinityScreen(
                         }
                     }
 
-                    // Themes Section
                     item {
                         Text(
                             text = "Available Themes",
@@ -166,7 +161,6 @@ fun TrinityScreen(
                         }
                     }
 
-                    // Last Agent Response
                     state.lastAgentResponse?.let { response ->
                         item {
                             LastAgentResponse(
@@ -255,9 +249,9 @@ private fun AgentStatusCard(agentType: String, status: AgentStatus) {
                 )
             }
 
-            if (status.error != null) {
+            status.error?.let { errorMsg ->
                 Text(
-                    text = status.error,
+                    text = errorMsg,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error
                 )
@@ -283,10 +277,9 @@ private fun ThemeItem(theme: Theme, onThemeSelected: () -> Unit) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                // Removed description as it's not in DomainTheme
             }
 
-            if (theme.isDark) { // Using isDark instead of isActive
+            if (theme.isDark) { 
                 Text("Dark", style = MaterialTheme.typography.labelSmall)
             }
         }
@@ -313,7 +306,7 @@ private fun LastAgentResponse(agentType: String, response: AgentResponse) {
             )
 
             Text(
-                text = response.content, // Changed from message to content
+                text = response.content, 
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
             )
@@ -351,5 +344,3 @@ private fun EmptyContent(message: String, onRetry: () -> Unit) {
         }
     }
 }
-
-
