@@ -332,7 +332,7 @@ fun constructFromResponse(
     payload = DataPayload.Response(
         content = response.content,
         confidence = response.confidence.toDouble(),
-        metadata = response.metadata.mapValues { it.value.toString() }
+        metadata = response.metadata
     ),
     priority = priority
 )
