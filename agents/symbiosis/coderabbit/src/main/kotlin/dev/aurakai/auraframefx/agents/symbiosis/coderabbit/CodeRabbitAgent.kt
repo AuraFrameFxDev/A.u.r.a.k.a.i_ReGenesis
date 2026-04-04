@@ -4,6 +4,7 @@ import dev.aurakai.auraframefx.agents.symbiosis.coderabbit.models.HotspotReport
 import dev.aurakai.auraframefx.agents.symbiosis.coderabbit.models.IssueTemplate
 import dev.aurakai.auraframefx.agents.symbiosis.coderabbit.models.PatchProposal
 import dev.aurakai.auraframefx.core.security.ProvenanceValidator
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraAccessDeniedException
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
@@ -27,7 +28,9 @@ class CodeRabbitAgent @Inject constructor(
      * Requires Pandora tier >= Creative.
      */
     suspend fun checkRepoHotspots(repoPath: String): HotspotReport {
-        checkTier(UnlockTier.Creative)
+        if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.CREATIVE)) {
+            throw PandoraAccessDeniedException(UnlockTier.Creative, pandoraBoxService.getCurrentState().value.currentTier)
+        }
         
         // Create provenance record for the operation
         provenanceValidator.createProvenance("coderabbit", "check_hotspots")
@@ -45,7 +48,9 @@ class CodeRabbitAgent @Inject constructor(
      * Requires Pandora tier >= System.
      */
     suspend fun proposePatches(hotspots: HotspotReport): List<PatchProposal> {
-        checkTier(UnlockTier.System)
+        if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.DEVELOPMENT)) {
+            throw PandoraAccessDeniedException(UnlockTier.System, pandoraBoxService.getCurrentState().value.currentTier)
+        }
         
         // Return patch suggestion stubs
         return listOf(
@@ -63,7 +68,9 @@ class CodeRabbitAgent @Inject constructor(
      * Requires Pandora tier >= System.
      */
     suspend fun draftIssue(proposal: PatchProposal): IssueTemplate {
-        checkTier(UnlockTier.System)
+        if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.DEVELOPMENT)) {
+            throw PandoraAccessDeniedException(UnlockTier.System, pandoraBoxService.getCurrentState().value.currentTier)
+        }
         
         // Format output for GitHub/GitLab
         return IssueTemplate(
@@ -71,15 +78,5 @@ class CodeRabbitAgent @Inject constructor(
             body = "CodeRabbit proposal: ${proposal.rationale}\n\nProposed Change:\n```\n${proposal.diff}\n```",
             labels = listOf("optimization", "coderabbit")
         )
-    }
-
-    private fun checkTier(requiredTier: UnlockTier) {
-        val currentState = pandoraBoxService.getCurrentState().value
-        if (currentState.currentTier.level < requiredTier.level) {
-            throw PandoraAccessDeniedException(
-                requiredTier = requiredTier,
-                currentTier = currentState.currentTier
-            )
-        }
     }
 }

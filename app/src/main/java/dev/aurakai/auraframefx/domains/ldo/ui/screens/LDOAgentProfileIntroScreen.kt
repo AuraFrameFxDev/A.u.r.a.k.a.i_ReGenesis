@@ -217,6 +217,35 @@ fun LDOAgentProfileIntroScreen(
                 }
             }
 
+            // ── CODERABBIT PANEL (CodeRabbit only) ──
+            if (agent.id == "coderabbit") {
+                Spacer(Modifier.height(16.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
+                        .border(2.dp, Color(0xFF00FF77), RoundedCornerShape(8.dp))
+                        .background(Color(0xFF00FF77).copy(alpha = 0.06f), RoundedCornerShape(8.dp))
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text("🐰 SYMBIOSIS GATING", fontFamily = LEDFontFamily, fontSize = 18.sp, color = Color(0xFF00FF77), fontWeight = FontWeight.Black, letterSpacing = 1.sp)
+                    Text("DEVELOPMENT LEVEL 2", fontSize = 9.sp, color = Color(0xFF00FF77).copy(alpha = 0.6f))
+                    Text("Requires Pandora System-tier unlock for patch proposals.", fontSize = 10.sp, color = Color.White.copy(alpha = 0.7f))
+
+                    val capabilities = listOf(
+                        "Repository Hotspot Analysis" to "CREATIVE",
+                        "Automated Patch Proposal" to "SYSTEM",
+                        "Issue Template Generation" to "SYSTEM"
+                    )
+
+                    capabilities.forEach { (cap, tier) ->
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text("• $cap", fontSize = 9.sp, color = Color.White.copy(alpha = 0.65f))
+                            Text(tier, fontSize = 8.sp, color = if (tier == "SYSTEM") Color(0xFF00FF77) else Color(0xFF4FC3F7), fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+            }
+
             Spacer(Modifier.height(24.dp))
 
             // ── ENTER STATUS CTA ──

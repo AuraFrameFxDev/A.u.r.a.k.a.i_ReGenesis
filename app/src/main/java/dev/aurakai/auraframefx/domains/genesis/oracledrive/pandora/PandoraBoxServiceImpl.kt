@@ -99,10 +99,11 @@ class PandoraBoxServiceImpl @Inject constructor(
             return false
         }
         return when (capability) {
-            AgentCapabilityCategory.CREATIVE  -> state.currentTier.level >= 1
-            AgentCapabilityCategory.ROOT      -> state.currentTier.level >= 2
-            AgentCapabilityCategory.SECURITY  -> state.currentTier.level >= 3
-            else                              -> true
+            AgentCapabilityCategory.CREATIVE    -> state.currentTier.level >= 1
+            AgentCapabilityCategory.DEVELOPMENT -> state.currentTier.level >= 2
+            AgentCapabilityCategory.ROOT        -> state.currentTier.level >= 2
+            AgentCapabilityCategory.SECURITY    -> state.currentTier.level >= 3
+            else                                -> true
         }
     }
 

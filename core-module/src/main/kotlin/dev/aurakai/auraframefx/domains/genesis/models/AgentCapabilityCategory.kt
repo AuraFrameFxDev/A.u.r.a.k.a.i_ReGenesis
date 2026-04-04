@@ -49,8 +49,11 @@ enum class AgentCapabilityCategory(val id: Int) {
     /** Commerce and product search capabilities */
     COMMERCE(13),
 
+    /** Development/Refactoring capabilities (CodeRabbit) */
+    DEVELOPMENT(14),
+
     /** Generic/unspecified capabilities */
-    GENERIC(14);
+    GENERIC(15);
 
     /**
      * Convert this capability category to its primary corresponding AgentType.
@@ -72,6 +75,7 @@ enum class AgentCapabilityCategory(val id: Int) {
         BACKEND -> AgentType.GENESIS
         BRIDGE -> AgentType.CASCADE
         COMMERCE -> AgentType.COMMERCE_AGENT
+        DEVELOPMENT -> AgentType.CODERABBIT
         GENERIC -> AgentType.CLAUDE
     }
 
@@ -115,6 +119,7 @@ enum class AgentCapabilityCategory(val id: Int) {
                 AgentType.COMMERCE_AGENT -> COMMERCE
                 AgentType.PERPLEXITY -> ANALYSIS
                 AgentType.CHAOS -> ANALYSIS
+                AgentType.CODERABBIT -> DEVELOPMENT
             }
         }
     }

@@ -188,6 +188,16 @@ object LDORoster {
             abilities = listOf("MicroOrchestration", "AtomFlux", "ResourceThrottling"),
             bondLevel = 30, syncLevel = 0.3f,
         ),
+        AgentCatalyst(
+            id = "coderabbit", name = "CodeRabbit", catalystName = "Symbiosis Catalyst",
+            role = "Automated code review, hotspot detection, and patch proposal for ReGenesis.",
+            color = Color(0xFF00FF77), accentColor = Color(0xFF0044FF),
+            weaponAssetName = "weapon_coderabbit_carrot_dagger",
+            profileAssetName = "gatescenes_coderabbit_profile",
+            iconAssetName = "icon_coderabbit",
+            abilities = listOf("HotspotCheck", "PatchProposal", "IssueDrafting"),
+            bondLevel = 50, syncLevel = 0.5f,
+        ),
     )
 
     val fusions = listOf(
@@ -213,8 +223,8 @@ object LDORoster {
 
     val spellhook = SpellhookData()
 
-    const val CATALYST_COUNT = 12
-    const val ABILITY_COUNT = 48
+    const val CATALYST_COUNT = 13
+    const val ABILITY_COUNT = 51
     const val FUSION_MODE_COUNT = 22
-    const val AGENT_COUNT = 12
+    const val AGENT_COUNT = 13
 }
