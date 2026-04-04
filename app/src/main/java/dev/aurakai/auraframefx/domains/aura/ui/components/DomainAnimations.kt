@@ -234,3 +234,17 @@ fun HoloHUDOverlay(modifier: Modifier = Modifier, color: Color = Color.Cyan) {
         drawRect(color.copy(alpha = 0.05f), style = Stroke(4f))
     }
 }
+
+@Composable
+fun NeuralLinkBackground(
+    modifier: Modifier = Modifier,
+    speed: Float = 1.0f,
+    primaryColor: Color = Color.Cyan,
+    secondaryColor: Color = Color.Blue
+) {
+    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            drawRect(Brush.verticalGradient(listOf(primaryColor.copy(alpha = 0.1f), secondaryColor.copy(alpha = 0.1f))))
+        }
+    }
+}
