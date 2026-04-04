@@ -52,7 +52,7 @@ class SecurityManager @Inject constructor(
             .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
             .setKeySize(256)
             .setUserAuthenticationRequired(true)
-            .setUserAuthenticationValidityDurationSeconds(-1)
+            .setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC_STRONG or KeyProperties.AUTH_DEVICE_CREDENTIAL)
             .setInvalidatedByBiometricEnrollment(true)
             .setIsStrongBoxBacked(true)
             .build()
