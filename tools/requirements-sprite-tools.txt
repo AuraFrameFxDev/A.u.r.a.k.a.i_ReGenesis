@@ -19,4 +19,4 @@ numpy==1.26.4
 onnxruntime==1.17.1
 
 # Progress bars (optional but nice)
-tqdm==4.66.2
+tqdm==4.66.3
