@@ -11,12 +11,11 @@ import androidx.navigation.navArgument
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.*
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.*
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.memory.*
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.fusion.*
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
-import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +43,30 @@ fun ReGenesisNavGraph(
 
         composable(ReGenesisRoute.OracleDriveHub.route) {
             OracleDriveHubScreen(navController = navController)
+        }
+
+        composable(ReGenesisRoute.OracleDriveSubmenu.route) {
+            OracleDriveSubmenuScreen()
+        }
+
+        composable(ReGenesisRoute.CodeAssist.route) {
+            CodeAssistScreen()
+        }
+
+        composable(ReGenesisRoute.ConferenceRoom.route) {
+            ConferenceRoomScreen()
+        }
+
+        composable(ReGenesisRoute.SentientShell.route) {
+            SentientShellScreen()
+        }
+
+        composable(ReGenesisRoute.OracleCloudStorage.route) {
+            OracleCloudInfiniteStorageScreen()
+        }
+
+        composable(ReGenesisRoute.FusionMode.route) {
+            NexusFusionScreen()
         }
 
         composable(ReGenesisRoute.AgentNexusHub.route) {
