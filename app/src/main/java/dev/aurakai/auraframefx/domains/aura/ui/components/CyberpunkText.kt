@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.domains.aura.ui.components
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkTextColor
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.CyberpunkTextStyle
+import dev.aurakai.auraframefx.core.theme.CyberpunkTextColor
+import dev.aurakai.auraframefx.core.theme.CyberpunkTextStyle
 
 @Composable
 fun CyberpunkText(
@@ -12,16 +12,12 @@ fun CyberpunkText(
     color: CyberpunkTextColor,
     style: CyberpunkTextStyle,
     modifier: Modifier = Modifier,
-    enableGlitch: Boolean = false, // Parameter based on usage, actual glitch effect not implemented in stub
+    enableGlitch: Boolean = false,
 ) {
-    // TODO: Implement actual glitch effect if enableGlitch is true
-    // For now, it just applies color and style
-
     Text(
         text = text,
-        color = color.color, // Access the actual Color from the sealed class
-        style = style.textStyle, // Access the actual TextStyle from the sealed class
+        color = color.color,
+        style = style.textStyle,
         modifier = modifier
     )
 }
-

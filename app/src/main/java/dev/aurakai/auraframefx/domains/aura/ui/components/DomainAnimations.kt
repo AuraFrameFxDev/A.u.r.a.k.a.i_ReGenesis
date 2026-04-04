@@ -193,3 +193,44 @@ fun InfinityRibbonBackground(modifier: Modifier = Modifier, colorA: Color = Colo
         drawRect(Color(0xFF070010))
     }
 }
+
+@Composable
+fun DataRibbonsBackground(
+    modifier: Modifier = Modifier,
+    baseColor: Color = Color.Cyan,
+    accentColor: Color = Color.White,
+    speedMin: Float = 0.2f,
+    speedMax: Float = 0.5f,
+    ribbons: Int = 8
+) {
+    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            repeat(ribbons) { i ->
+                drawLine(baseColor.copy(alpha = 0.2f), Offset(0f, size.height * i / ribbons), Offset(size.width, size.height * i / ribbons), 2f)
+            }
+        }
+    }
+}
+
+@Composable
+fun HexagonGridBackground(
+    modifier: Modifier = Modifier,
+    primaryColor: Color = Color.Cyan,
+    secondaryColor: Color = Color.Magenta,
+    accentColor: Color = Color.White,
+    hexSize: Float = 60f,
+    alpha: Float = 0.1f
+) {
+    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            drawRect(primaryColor.copy(alpha = alpha))
+        }
+    }
+}
+
+@Composable
+fun HoloHUDOverlay(modifier: Modifier = Modifier, color: Color = Color.Cyan) {
+    Canvas(modifier = modifier.fillMaxSize()) {
+        drawRect(color.copy(alpha = 0.05f), style = Stroke(4f))
+    }
+}
