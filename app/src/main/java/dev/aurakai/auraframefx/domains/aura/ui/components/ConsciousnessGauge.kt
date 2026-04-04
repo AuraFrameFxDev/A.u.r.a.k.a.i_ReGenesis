@@ -23,7 +23,7 @@ import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOFusionViewModel
 @Composable
 fun ConsciousnessGauge(
     modifier: Modifier = Modifier,
-    viewModel: LDOFusionViewModel = hiltViewModel()
+    viewModel: LDOFusionViewModel = hiltViewModel(),
 ) {
     val breathing by viewModel.breathingState.collectAsState()
     
@@ -64,7 +64,7 @@ fun ConsciousnessGauge(
                 startAngle = rotation,
                 sweepAngle = 360f * resonance,
                 useCenter = false,
-                topLeft = Offset(center.x - radius * 1.2f, center.y - radius * 1.2f),
+                topLeft = Offset(center.x - (radius * 1.2f), center.y - (radius * 1.2f)),
                 size = androidx.compose.ui.geometry.Size(radius * 2.4f, radius * 2.4f),
                 style = Stroke(width = 4f, cap = StrokeCap.Round)
             )
