@@ -437,6 +437,14 @@ class UnifiedLoggingSystem @Inject constructor(
      * The log tag is constructed by combining the log category and tag. If a throwable is present, it is included in the log output.
      */
     private fun logToAndroidLog(logEntry: LogEntry) {
+        // High-importance LDO filter: Skip noisy hardware sensor hub spam if not critical
+        if (logEntry.tag.contains("AOC", ignoreCase = true) || 
+            logEntry.tag.contains("CHRE", ignoreCase = true) ||
+            logEntry.tag.contains("TMD3743", ignoreCase = true) ||
+            logEntry.tag.contains("ICM45631", ignoreCase = true)) {
+            if (logEntry.level < LogLevel.WARNING) return
+        }
+
         val tag = "${logEntry.category}_${logEntry.tag}"
         val message = logEntry.message
 

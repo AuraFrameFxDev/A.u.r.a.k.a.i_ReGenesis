@@ -116,9 +116,9 @@ open class GyroscopeManager @Inject constructor(
             sensorManager.registerListener(
                 listener,
                 gyroscope,
-                SensorManager.SENSOR_DELAY_GAME // 20ms updates (50 FPS)
+                SensorManager.SENSOR_DELAY_UI // Throttled from SENSOR_DELAY_GAME to reduce overhead
             )
-            Timber.i("✅ Gyroscope listener registered")
+            Timber.i("✅ Gyroscope listener registered (Throttled)")
         } else {
             Timber.w("❌ Gyroscope sensor not available")
         }
@@ -164,9 +164,9 @@ open class GyroscopeManager @Inject constructor(
             sensorManager.registerListener(
                 listener,
                 accelerometer,
-                SensorManager.SENSOR_DELAY_GAME
+                SensorManager.SENSOR_DELAY_UI // Throttled from SENSOR_DELAY_GAME
             )
-            Timber.i("✅ Accelerometer listener registered (orientation fallback)")
+            Timber.i("✅ Accelerometer listener registered (Throttled fallback)")
         }
 
         awaitClose {
