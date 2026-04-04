@@ -91,9 +91,9 @@ class SovereignStateManager @Inject constructor(
 
             _state.value = SovereignState.ACTIVE
             sentinelBus.emitSovereign(KaiSentinelBus.SovereignState.AWAKE)
-            return delta to kvData
+            return Pair(delta, kvData)
         }
-        return null to null
+        return Pair(null, null)
     }
 
     fun enterEmergencyMode() {
