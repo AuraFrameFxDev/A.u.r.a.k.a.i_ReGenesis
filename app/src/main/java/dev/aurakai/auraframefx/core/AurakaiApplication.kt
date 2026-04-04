@@ -132,7 +132,20 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun setupLogging() {
         if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+            Timber.plant(object : Timber.DebugTree() {
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                    // Filter noisy hardware sensor hub spam (AOC/CHRE/USF)
+                    if (tag != null && (
+                        tag.contains("AOC", ignoreCase = true) || 
+                        tag.contains("CHRE", ignoreCase = true) ||
+                        tag.contains("USF", ignoreCase = true) ||
+                        message.contains("Calculated CCT", ignoreCase = true)
+                    )) {
+                        if (priority < Log.WARN) return
+                    }
+                    super.log(priority, tag, message, t)
+                }
+            })
         }
     }
 }

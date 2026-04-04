@@ -189,6 +189,39 @@ class KaiSystemViewModel @Inject constructor(
     }
 
     private fun parseLogLine(line: String): LogEntry? {
-        return null // Simplified for now
+        if (line.isBlank()) return null
+        
+        // High-importance filter for the Monitoring HUD
+        if (line.contains("AOC", ignoreCase = true) || 
+            line.contains("CHRE", ignoreCase = true) ||
+            line.contains("USF", ignoreCase = true) ||
+            line.contains("Calculated CCT", ignoreCase = true)) {
+            return null // Quiet the sensor spam
+        }
+
+        return try {
+            // Simplified parsing for 04-04 15:04:00.599 format
+            val parts = line.split(" ").filter { it.isNotBlank() }
+            if (parts.size < 5) return null
+            
+            val level = parts[4]
+            val tag = if (parts.size > 5) parts[5] else "Unknown"
+            val message = parts.drop(6).joinToString(" ")
+
+            LogEntry(
+                level = level,
+                tag = tag,
+                message = message,
+                timestamp = parts[1],
+                color = when(level) {
+                    "E", "F" -> 0xFFFF4444
+                    "W" -> 0xFFFFD700
+                    "I" -> 0xFF00FF41
+                    else -> 0xFF00E5FF
+                }
+            )
+        } catch (e: Exception) {
+            null
+        }
     }
 }
