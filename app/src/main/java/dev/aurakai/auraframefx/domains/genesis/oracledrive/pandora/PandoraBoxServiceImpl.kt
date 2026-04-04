@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora
 
 import dev.aurakai.auraframefx.di.PandoraPreferences
-import dev.aurakai.auraframefx.di.ApplicationScope
+import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.core.security.SecurePreferences
 import dev.aurakai.auraframefx.core.security.ProvenanceValidator

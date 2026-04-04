@@ -20,6 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsDao
 import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
 import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
+import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import okhttp3.OkHttpClient
 import okhttp3.OkHttpClient.Builder
 import kotlinx.coroutines.CoroutineScope

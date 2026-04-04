@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.core.security
 
+import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ import kotlin.math.abs
 class PredictiveVetoMonitor @Inject constructor(
     private val sentinelBus: KaiSentinelBus,
     // Use an injected scope for reactive monitoring
-    private val appScope: CoroutineScope
+    @ApplicationScope private val appScope: CoroutineScope
 ) {
     companion object {
         private const val EMA_ALPHA_THERMAL = 0.3f
