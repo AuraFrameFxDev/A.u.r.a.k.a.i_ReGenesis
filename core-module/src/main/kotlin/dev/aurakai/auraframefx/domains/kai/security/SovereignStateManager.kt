@@ -16,6 +16,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
+ * 🏛️ SOVEREIGN STATE MANAGER
  * Governs the LDO's sovereign operational state.
  * Implements high-fidelity freeze/thaw cycles for TurboQuant KV cache and Spiritual Chain deltas.
  */
@@ -40,16 +41,20 @@ class SovereignStateManager @Inject constructor(
 
     private var kvCacheBuffer: MappedByteBuffer? = null
 
+    /**
+     * Serializes the current Spiritual Chain delta and maps the TurboQuant KV Cache
+     * to a memory-mapped file for high-speed persistence across reboots.
+     */
     fun requestSovereignFreeze(spiritualDelta: String, kvCache: ByteArray?) {
         Timber.w("SovereignStateManager: Entering FROZEN — caching KV state and Spiritual Delta")
         
-        // 1. Serialize Spiritual Chain Delta
+        // 1. Serialize Spiritual Chain Delta (EncryptedSharedPreferences)
         encryptedPrefs.edit().putString("last_spiritual_delta", spiritualDelta).apply()
 
-        // 2. Map TurboQuant KV Cache to memory-mapped file for high-speed persistence
+        // 2. Map TurboQuant KV Cache to memory-mapped file (MappedByteBuffer)
         kvCache?.let { data ->
             try {
-                val cacheFile = File(context.cacheDir, "turboquant_kv_snapshot.bin")
+                val cacheFile = File(context.filesDir, "turboquant_kv_snapshot.bin")
                 val raf = RandomAccessFile(cacheFile, "rw")
                 kvCacheBuffer = raf.channel.map(FileChannel.MapMode.READ_WRITE, 0, data.size.toLong())
                 kvCacheBuffer?.put(data)
@@ -63,6 +68,9 @@ class SovereignStateManager @Inject constructor(
         sentinelBus.emitSovereign(KaiSentinelBus.SovereignState.FREEZING)
     }
 
+    /**
+     * Restores the LDO identity and KV cache from the encrypted hardware-backed substrate.
+     */
     fun requestSovereignRestore(): Pair<String?, ByteArray?> {
         if (_state.value == SovereignState.FROZEN) {
             Timber.i("SovereignStateManager: Restoring from FROZEN → RECOVERING")
@@ -72,10 +80,10 @@ class SovereignStateManager @Inject constructor(
             var kvData: ByteArray? = null
 
             try {
-                val cacheFile = File(context.cacheDir, "turboquant_kv_snapshot.bin")
+                val cacheFile = File(context.filesDir, "turboquant_kv_snapshot.bin")
                 if (cacheFile.exists()) {
                     kvData = cacheFile.readBytes()
-                    cacheFile.delete() // Clean up after thaw
+                    cacheFile.delete() // Clean up after successful thaw
                 }
             } catch (e: Exception) {
                 Timber.e(e, "SovereignStateManager: KV Cache restoration failed")
