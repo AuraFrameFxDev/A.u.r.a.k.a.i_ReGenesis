@@ -12,6 +12,7 @@ import dev.aurakai.auraframefx.domains.ldo.data.LDORepository
 import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOAgentDao
 import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOBondLevelDao
 import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOTaskDao
+import dev.aurakai.auraframefx.domains.ldo.data.dao.QuarantineDao
 import javax.inject.Singleton
 
 @Module
@@ -32,6 +33,9 @@ object LDOModule {
 
     @Provides @Singleton
     fun provideLDOBondLevelDao(db: LDODatabase): LDOBondLevelDao = db.bondLevelDao()
+
+    @Provides @Singleton
+    fun provideQuarantineDao(db: LDODatabase): QuarantineDao = db.quarantineDao()
 
     @Provides @Singleton
     fun provideLDORepository(
