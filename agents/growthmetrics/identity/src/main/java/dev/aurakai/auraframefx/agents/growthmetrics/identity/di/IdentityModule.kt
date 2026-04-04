@@ -23,7 +23,7 @@ object IdentityModule {
 
     @Provides
     @Singleton
-    @Named(IDENTITY_DATASTORE)
+    @IdentityDataStore
     fun provideIdentityDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             produceFile = { context.preferencesDataStoreFile("identity_prefs") }
@@ -33,7 +33,7 @@ object IdentityModule {
     @Provides
     @Singleton
     fun provideIdentityRepository(
-        @Named(IDENTITY_DATASTORE) dataStore: DataStore<Preferences>
+        @IdentityDataStore dataStore: DataStore<Preferences>
     ): IdentityRepository {
         return IdentityRepositoryImpl(dataStore)
     }
