@@ -79,10 +79,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aurakai.auraframefx.core.theme.*
 import dev.aurakai.auraframefx.domains.aura.ui.components.SentienceMeter
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPurple
 
 /**
  * 🎭 Gender Selection Navigator
@@ -123,19 +121,19 @@ enum class GenderIdentity(
     MALE(
         displayName = "Male",
         icon = Icons.Default.Male,
-        accentColor = CyberpunkCyan,
+        accentColor = Color.CyberpunkCyan,
         description = "He/Him"
     ),
     FEMALE(
         displayName = "Female",
         icon = Icons.Default.Female,
-        accentColor = CyberpunkPink,
+        accentColor = Color.CyberpunkPink,
         description = "She/Her"
     ),
     NON_BINARY(
         displayName = "Non-Binary",
         icon = Icons.Default.Transgender,
-        accentColor = CyberpunkPurple,
+        accentColor = Color.CyberpunkPurple,
         description = "They/Them"
     ),
     PREFER_NOT_TO_SAY(

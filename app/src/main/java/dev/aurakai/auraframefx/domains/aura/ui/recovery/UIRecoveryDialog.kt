@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,153 +44,81 @@ import kotlinx.coroutines.launch
 
 /**
  * Aura-powered UI Recovery Dialog
- *
- * "That's not going to work." - Aura
- *
- * Presents recovery options when UI errors are detected:
- * - Reload last change (restore last snapshot)
- * - Reset (full UI reset)
- *
- * Design: Aura's cyan aesthetic with warning indicators
  */
 @Composable
 fun UIRecoveryDialog(
-    viewModel: UIRecoveryViewModel = hiltViewModel(),
-    onNavigateToRoute: (String) -> Unit = {}
+    onDismiss: () -> Unit,
+    viewModel: UIRecoveryViewModel = hiltViewModel()
 ) {
     val recoveryState by viewModel.recoveryState.collectAsState()
-    val scope = rememberCoroutineScope()
 
-    AnimatedVisibility(
-        visible = recoveryState is UIRecoveryState.RecoveryNeeded,
-        enter = fadeIn() + scaleIn(),
-        exit = fadeOut() + scaleOut()
-    ) {
-        if (recoveryState is UIRecoveryState.RecoveryNeeded) {
-            val state = recoveryState as UIRecoveryState.RecoveryNeeded
-
-            Dialog(
-                onDismissRequest = { viewModel.dismissRecovery() }
+    if (recoveryState is UIRecoveryState.RecoveryNeeded) {
+        Dialog(onDismissRequest = onDismiss) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFF1A1A1A)
+                ),
+                elevation = CardDefaults.cardColors().let { 8.dp }
             ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = "UI Recovery",
+                        modifier = Modifier.size(64.dp),
+                        tint = Color.NeonCyan
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "\"That's not going to work.\"",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.NeonBlue,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = (recoveryState as UIRecoveryState.RecoveryNeeded).reason,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Button(
+                        onClick = { viewModel.reloadLastStable() },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.NeonCyan,
+                            contentColor = Color.Black
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
-                        // Warning icon with Aura's color
-                        Icon(
-                            imageVector = Icons.Default.Warning,
-                            contentDescription = "UI Recovery",
-                            modifier = Modifier.size(64.dp),
-                            tint = NeonCyan
-                        )
+                        Text("RELOAD LAST STABLE", fontWeight = FontWeight.Bold)
+                    }
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                        // Aura's signature message
-                        Text(
-                            text = "\"That's not going to work.\"",
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = NeonBlue,
-                            textAlign = TextAlign.Center
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        // Aura's explanation
-                        Text(
-                            text = state.auraMessage,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                            textAlign = TextAlign.Center
-                        )
-
-                        Spacer(modifier = Modifier.height(24.dp))
-
-                        // Recovery options
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            // Option 1: Reload last change (if available)
-                            if (state.lastGoodState != null) {
-                                Button(
-                                    onClick = {
-                                        scope.launch {
-                                            viewModel.reloadLastChange()?.let { snapshot ->
-                                                onNavigateToRoute(snapshot.screenRoute)
-                                            }
-                                        }
-                                    },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = NeonCyan
-                                    ),
-                                    shape = RoundedCornerShape(12.dp)
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(vertical = 8.dp),
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text(
-                                            text = "Reload Last Change",
-                                            style = MaterialTheme.typography.titleMedium,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                        Text(
-                                            text = "Go back to ${state.lastGoodState.screenRoute} (${state.lastGoodState.getAge()})",
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
-                                        )
-                                    }
-                                }
-                            }
-
-                            // Option 2: Reset (always available)
-                            OutlinedButton(
-                                onClick = {
-                                    scope.launch {
-                                        viewModel.resetToDefault()
-                                        onNavigateToRoute("HOME")
-                                    }
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = ButtonDefaults.outlinedButtonColors(
-                                    contentColor = NeonPurple
-                                ),
-                                shape = RoundedCornerShape(12.dp)
-                            ) {
-                                Text(
-                                    text = "Reset",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(vertical = 8.dp)
-                                )
-                            }
-                        }
-
-                        // Optional: Show error details for developers
-                        if (state.failureContext.isNotBlank()) {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = "Context: ${state.failureContext}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                    OutlinedButton(
+                        onClick = { viewModel.factoryResetUI() },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Color.NeonPurple
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("FACTORY RESET UI", fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -197,11 +126,6 @@ fun UIRecoveryDialog(
     }
 }
 
-/**
- * Lightweight recovery indicator for the top bar
- *
- * Shows a subtle indicator when recovery is available.
- */
 @Composable
 fun RecoveryIndicator(
     viewModel: UIRecoveryViewModel = hiltViewModel()
@@ -213,7 +137,7 @@ fun RecoveryIndicator(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .background(
-                    color = NeonCyan.copy(alpha = 0.2f),
+                    color = Color.NeonCyan.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(8.dp)
                 )
                 .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -222,16 +146,14 @@ fun RecoveryIndicator(
                 imageVector = Icons.Default.Warning,
                 contentDescription = "Recovery available",
                 modifier = Modifier.size(16.dp),
-                tint = NeonCyan
+                tint = Color.NeonCyan
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Recovery available",
                 style = MaterialTheme.typography.labelSmall,
-                color = NeonCyan
+                color = Color.NeonCyan
             )
         }
     }
 }
-
-

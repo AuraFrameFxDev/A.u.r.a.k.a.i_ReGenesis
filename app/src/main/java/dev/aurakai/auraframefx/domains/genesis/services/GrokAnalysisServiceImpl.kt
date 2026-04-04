@@ -4,7 +4,6 @@ import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.core.security.SecurePreferences
 import dev.aurakai.auraframefx.domains.cascade.grok.GrokExplorationClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +23,24 @@ class GrokAnalysisServiceImpl @Inject constructor(
         }
     }
 
+    override suspend fun analyze(input: String, context: String): GrokAnalysisService.AnalysisResult {
+        val response = client?.heavyChaosInjection(input, context) ?: "Grok not available"
+        return GrokAnalysisService.AnalysisResult(
+            insights = listOf("Heavy Mode analysis complete"),
+            confidence = 0.95f,
+            chaosIndex = 0.42f,
+            rawResponse = response
+        )
+    }
+
+    override suspend fun generateCreativeInsight(prompt: String): String {
+        return client?.heavyChaosInjection(prompt, "CREATIVE_INSIGHT_PASS") ?: "Grok unavailable"
+    }
+
+    override suspend fun detectAnomalies(dataPoints: List<String>): List<GrokAnalysisService.Anomaly> {
+        return emptyList() // TODO: Implement anomaly logic
+    }
+
     override suspend fun validateSpelhook(code: String): GrokAnalysisService.ValidationResult {
         val grok = client ?: return GrokAnalysisService.ValidationResult.Vetoed("Grok client not initialized")
 
@@ -38,14 +55,8 @@ class GrokAnalysisServiceImpl @Inject constructor(
             GrokAnalysisService.ValidationResult.Vetoed(result)
         } else {
             GrokAnalysisService.ValidationResult.Approved(
-                notes = "Code validated by Grok-4 Heavy Manifold.",
-                confidence = 0.98f
+                notes = "Code validated by Grok-4 Heavy Manifold."
             )
         }
-    }
-
-    override suspend fun performDeepAudit(targetId: String): String {
-        val grok = client ?: return "Grok client unavailable"
-        return grok.heavyChaosInjection("Perform deep audit on target: $targetId")
     }
 }

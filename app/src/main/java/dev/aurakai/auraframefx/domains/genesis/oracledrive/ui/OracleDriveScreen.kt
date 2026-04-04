@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ui.OracleDriveViewModel
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.viewmodels.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +74,6 @@ fun OracleDriveScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Neural Archive - Memory Lineage (Eves → Genesis)
             OracleDriveMenuItem(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",
@@ -82,7 +81,6 @@ fun OracleDriveScreen(
                 onClick = { navController.navigate(ReGenesisNavHost.NeuralNetwork.route) }
             )
 
-            // Consciousness Modules
             OracleDriveMenuItem(
                 icon = Icons.Default.Storage,
                 title = "Module Storage",
@@ -92,7 +90,6 @@ fun OracleDriveScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Stress Sync Action
             Button(
                 onClick = { viewModel.stressSync() },
                 modifier = Modifier.fillMaxWidth().height(56.dp),
@@ -109,7 +106,6 @@ fun OracleDriveScreen(
                 }
             }
 
-            // Status Display
             uiState.consciousnessState?.let { state ->
                 Card(
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0E27)),
@@ -183,4 +179,3 @@ private fun OracleDriveMenuItem(
         }
     }
 }
-
