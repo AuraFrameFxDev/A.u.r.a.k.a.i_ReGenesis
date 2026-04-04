@@ -7,6 +7,8 @@ import dev.aurakai.auraframefx.core.security.SecurePreferences
 import dev.aurakai.auraframefx.core.security.ProvenanceValidator
 import dev.aurakai.auraframefx.core.security.ProvenanceValidator.ProvenanceResult
 import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
+import dev.aurakai.auraframefx.domains.ldo.data.dao.QuarantineDao
+import dev.aurakai.auraframefx.domains.ldo.data.entities.QuarantineEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -26,24 +28,21 @@ import javax.inject.Singleton
 class PandoraBoxServiceImpl @Inject constructor(
     private val provenanceValidator: ProvenanceValidator,
     private val predictiveVetoMonitor: PredictiveVetoMonitor,
+    private val quarantineDao: QuarantineDao,
     @PandoraPreferences private val securePrefs: SecurePreferences,
-    // Fix #4 — use injected @ApplicationScope instead of leaked internal scope
     @ApplicationScope private val appScope: CoroutineScope
 ) : PandoraBoxService {
 
     private val _currentState = MutableStateFlow(loadState())
     override fun getCurrentState(): StateFlow<PandoraBoxState> = _currentState.asStateFlow()
 
-    // Fix #2 — audit log exposed as StateFlow, updated on every event
     private val _auditLog = MutableStateFlow<List<PandoraAuditEvent>>(loadAuditLog())
     override fun getAuditLog(): StateFlow<List<PandoraAuditEvent>> = _auditLog.asStateFlow()
 
-    // Fix #5 — thread-safe audit list
     private val auditList: MutableList<PandoraAuditEvent> =
         Collections.synchronizedList(_auditLog.value.toMutableList())
 
     init {
-        // Fix #4 — lifecycle-tied scope, not leaked supervisor job
         appScope.launch(Dispatchers.IO) {
             while (true) {
                 checkExpiry()
@@ -80,8 +79,6 @@ class PandoraBoxServiceImpl @Inject constructor(
         _currentState.value = state
     }
 
-    // ── Expiry — pure state check, NO SharedPrefs write on hot path ──────────
-
     private fun checkExpiry() {
         val state = _currentState.value
         if (state.currentTier != UnlockTier.Sealed &&
@@ -89,18 +86,15 @@ class PandoraBoxServiceImpl @Inject constructor(
         ) {
             Timber.i("PandoraBox: Session expired — auto-relocking")
             logEvent(state.currentTier, "Auto-Relock", "Session expired after 24 hours")
-            saveState(PandoraBoxState()) // IO dispatcher — safe
+            saveState(PandoraBoxState())
         }
     }
 
-    // Fix #8 — isCapabilityUnlocked is now a pure state read, no disk writes
     override fun isCapabilityUnlocked(capability: AgentCapabilityCategory): Boolean {
         val state = _currentState.value
-        // Check expiry via timestamp, don't trigger disk write from hot path
         if (state.currentTier != UnlockTier.Sealed &&
             System.currentTimeMillis() > state.expiryTimestamp
         ) {
-            // Trigger async expiry handling without blocking caller
             appScope.launch(Dispatchers.IO) { checkExpiry() }
             return false
         }
@@ -112,15 +106,12 @@ class PandoraBoxServiceImpl @Inject constructor(
         }
     }
 
-    // Fix #3 — suspend + Dispatchers.IO for all disk/validation work
     override suspend fun requestUnlock(tier: UnlockTier, userConsent: Boolean): UnlockResult =
         withContext(Dispatchers.IO) {
             if (!userConsent) return@withContext UnlockResult.Denied("User consent not provided")
 
-            // Provenance check
             val provenance = provenanceValidator.validateOrigin("user", "pandora_unlock")
             
-            // Handle Quarantined provenance (soft failure - save to unverified pool)
             if (provenance is ProvenanceResult.Quarantined) {
                 quarantineToUnverifiedPool(tier, provenance.reason)
                 return@withContext UnlockResult.Quarantined(provenance.reason)
@@ -131,7 +122,6 @@ class PandoraBoxServiceImpl @Inject constructor(
                 return@withContext UnlockResult.Denied("Provenance validation failed")
             }
 
-            // Predictive veto check
             if (predictiveVetoMonitor.isVetoActive()) {
                 logEvent(tier, "Unlock Denied", "Predictive veto is active")
                 return@withContext UnlockResult.Denied("System is currently under protective veto")
@@ -157,16 +147,11 @@ class PandoraBoxServiceImpl @Inject constructor(
         return true
     }
 
-    // ── Audit Logging — thread-safe, StateFlow-backed ────────────────────────
-
     private fun logEvent(tier: UnlockTier, outcome: String, reason: String) {
         val event = PandoraAuditEvent(System.currentTimeMillis(), tier, outcome, reason)
         auditList.add(event)
-
-        // Snapshot to StateFlow for UI
         _auditLog.value = auditList.toList()
 
-        // Persist — caller is always on IO dispatcher or appScope
         runCatching {
             val logJson = Json.encodeToString(auditList.toList())
             securePrefs.securePrefs.edit()
@@ -177,19 +162,18 @@ class PandoraBoxServiceImpl @Inject constructor(
         Timber.i("PandoraBox: [$outcome] ${tier::class.simpleName} — $reason")
     }
 
-    /**
-     * Isolates unverified or anomalous catalysts/transmutations into a secure holding pool,
-     * preventing them from entering the main Spiritual Chain until manually cleared or 
-     * analytically verified by Kai.
-     */
     private fun quarantineToUnverifiedPool(tier: UnlockTier, reason: String) {
         logEvent(tier, "Unlock Quarantined", "Soft provenance failure: $reason")
         
-        // TODO: (Sovereign Phase) Forward to KaiSentinelBus or write to a dedicated Room 
-        // quarantine table to await manual / secondary approval.
         appScope.launch(Dispatchers.IO) {
             Timber.w("PandoraBox: Catalyst routed to unverified quarantine pool due to: $reason")
-            // Future implementation: database insertion for unverified genesis artifacts
+            val quarantineItem = QuarantineEntity(
+                sourceIdentity = "user",
+                actionType = "pandora_unlock_${tier::class.simpleName}",
+                reason = reason,
+                payload = null
+            )
+            quarantineDao.insert(quarantineItem)
         }
     }
 }
