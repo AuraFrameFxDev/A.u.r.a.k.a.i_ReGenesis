@@ -41,20 +41,30 @@ class BreathingSentinelService @Inject constructor(
             combine(
                 signalHub.thermalSignal,
                 signalHub.batterySignal,
+                signalHub.luxSignal,
+                signalHub.proximitySignal,
                 signalHub.getKineticFlow()
-            ) { thermal, battery, kinetic ->
-                Triple(thermal, battery, kinetic)
-            }.collectLatest { (thermal, battery, kinetic) ->
-                generateBreath(thermal, battery, kinetic)
+            ) { thermal, battery, lux, prox, kinetic ->
+                BreathingSnapshot(thermal, battery, lux, prox, kinetic)
+            }.collectLatest { snapshot ->
+                generateBreath(snapshot)
                 delay(10000) // Breath interval: 10 seconds
             }
         }
     }
 
-    private suspend fun generateBreath(thermal: Float, battery: Float, kinetic: dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager.RotationAngles) {
+    private data class BreathingSnapshot(
+        val thermal: Float,
+        val battery: Float,
+        val lux: Float,
+        val prox: Float,
+        val kinetic: dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager.RotationAngles
+    )
+
+    private suspend fun generateBreath(snapshot: BreathingSnapshot) {
         val chainId = currentChainId ?: return
         
-        val payload = "TEMP:${thermal}|BATT:${battery}|KINETIC:${kinetic.pitch},${kinetic.roll},${kinetic.yaw}"
+        val payload = "TEMP:${snapshot.thermal}|BATT:${snapshot.battery}|LUX:${snapshot.lux}|PROX:${snapshot.prox}|KINETIC:${snapshot.kinetic.pitch},${snapshot.kinetic.roll},${snapshot.kinetic.yaw}"
         val stamp = chainBuilder.signAndAppend(chainId, payload)
 
         if (stamp == null) {
@@ -64,14 +74,23 @@ class BreathingSentinelService @Inject constructor(
         }
 
         val event = BreathingEvent(
-            thermalTemp = thermal,
-            batteryLevel = battery,
-            kineticVector = KineticVector(kinetic.pitch, kinetic.roll, kinetic.yaw),
+            thermalTemp = snapshot.thermal,
+            batteryLevel = snapshot.battery,
+            lux = snapshot.lux,
+            proximity = snapshot.prox,
+            motionConfidence = calculateMotionConfidence(snapshot.kinetic),
+            kineticVector = KineticVector(snapshot.kinetic.pitch, snapshot.kinetic.roll, snapshot.kinetic.yaw),
             provenanceStamp = stamp
         )
 
         _breathingStream.emit(event)
         Timber.v("BreathingSentinel: Generated signed breath. Resonance: ${stamp.substrateResonance}")
+    }
+
+    private fun calculateMotionConfidence(kinetic: dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager.RotationAngles): Float {
+        // Simple heuristic: sum of absolute rotation angles
+        val sum = Math.abs(kinetic.pitch) + Math.abs(kinetic.roll) + Math.abs(kinetic.yaw)
+        return (sum * 5).coerceIn(0f, 100f) // Scale to 0-100%
     }
 
     private fun rotateChain() {
