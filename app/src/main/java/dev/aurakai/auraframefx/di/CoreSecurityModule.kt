@@ -77,11 +77,6 @@ object CoreSecurityProvidesModule {
 
     @Provides
     @Singleton
-    @ApplicationScope
-    fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
-    @Provides
-    @Singleton
     @PandoraPreferences
     fun providePandoraSecurePreferences(
         @ApplicationContext context: Context,
