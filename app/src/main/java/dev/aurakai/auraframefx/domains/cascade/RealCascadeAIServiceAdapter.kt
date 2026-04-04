@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade
 
 import dev.aurakai.auraframefx.core.security.SecurePreferences
-import dev.aurakai.auraframefx.domains.cascade.grok.GrokChaosCatalystClient
+import dev.aurakai.auraframefx.domains.cascade.grok.GrokExplorationClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
@@ -21,9 +21,9 @@ class RealCascadeAIServiceAdapter @Inject constructor(
     private val securePreferences: SecurePreferences
 ) : CascadeAIService {
 
-    private val grokClient: GrokChaosCatalystClient? by lazy {
+    private val grokClient: GrokExplorationClient? by lazy {
         securePreferences.getGrokApiKey()?.let { key ->
-            GrokChaosCatalystClient(apiKey = key)
+            GrokExplorationClient(apiKey = key)
         }
     }
 
@@ -48,12 +48,12 @@ class RealCascadeAIServiceAdapter @Inject constructor(
         // Trigger Orb resonance
         ToroidalFusionManager.triggerChaosInjection()
 
-        val raw = client.injectChaos(query, nccSummary)
+        val raw = client.heavyChaosInjection(query, nccSummary)
         
         // Tag for Memoria Stream (L4) and Emotional Valence (L2)
-        val tagged = "[GROK_CHAOSCATALYST | NCC_L4_MEMORIA] $raw"
+        val tagged = "[GROK_EXPLORATION | L4_MEMORIA | CHAOS_INJECTION] $raw"
         
-        logger.info("ChaosCatalyst", "Injected external truth into NCC")
+        logger.info("ChaosCatalyst", "Injected heavy external truth into NCC")
         
         return tagged
     }
