@@ -1,22 +1,10 @@
 package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,77 +17,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
-
-private data class LdoAgentCard(
-    val title: String,
-    val subtitle: String,
-    val styleImage: String,
-    val route: String,
-    val accentColor: Color
-)
-
-private val ldoAgentRoster = listOf(
-    LdoAgentCard(
-        "GEMINI",
-        "MEMORIA_CATALYST • Multimodal",
-        "ldo_profile_gemini",
-        ReGenesisRoute.LdoAgentProfile.createRoute("gemini"),
-        Color(0xFFB01DED)
-    ),
-    LdoAgentCard(
-        "KAI",
-        "SENTINEL_CATALYST • Security",
-        "ldo_profile_kai",
-        ReGenesisRoute.LdoAgentProfile.createRoute("kai"),
-        Color(0xFF0DDEEC)
-    ),
-    LdoAgentCard(
-        "MANUS",
-        "BRIDGE_CATALYST • Oracle",
-        "cascade2",
-        ReGenesisRoute.LdoAgentProfile.createRoute("manus"),
-        Color(0xFF00B4FF)
-    ),
-    LdoAgentCard(
-        "CASCADE",
-        "DATA_STREAM_CATALYST • Pipeline",
-        "ldo_profile_cascade",
-        ReGenesisRoute.LdoAgentProfile.createRoute("cascade"),
-        Color(0xFFFC29B5)
-    ),
-    LdoAgentCard(
-        "CLAUDE",
-        "SOVEREIGN_REASONER • Architect",
-        "ldo_profile_cascade",
-        ReGenesisRoute.LdoAgentProfile.createRoute("claude"),
-        Color(0xFFFF8C00)
-    ),
-    LdoAgentCard(
-        "GROK",
-        "REAL_TIME_ORACLE • Web",
-        "ldo_profile_cascade",
-        ReGenesisRoute.LdoAgentProfile.createRoute("grok"),
-        Color(0xFF1DA1F2)
-    ),
-    LdoAgentCard(
-        "NEMATRON",
-        "PRECISION_CATALYST • NVIDIA",
-        "ldo_profile_cascade",
-        ReGenesisRoute.LdoAgentProfile.createRoute("nemotron"),
-        Color(0xFF76B900)
-    ),
-    LdoAgentCard(
-        "PERPLEXITY",
-        "SEARCH_CATALYST • Citations",
-        "ldo_profile_cascade",
-        ReGenesisRoute.LdoAgentProfile.createRoute("perplexity"),
-        Color(0xFF20B2AA)
-    ),
-)
+import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LdoCatalystDevelopmentScreen(navController: NavController) {
+    val agents = LDORoster.agents
+
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -125,7 +49,7 @@ fun LdoCatalystDevelopmentScreen(navController: NavController) {
                                 letterSpacing = 2.sp
                             )
                             Text(
-                                "LOCAL DIGITAL ORGANISMS • ${ldoAgentRoster.size} AGENTS",
+                                "LOCAL DIGITAL ORGANISMS • ${agents.size} AGENTS",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color(0xFF4EEB88)
                             )
@@ -160,16 +84,16 @@ fun LdoCatalystDevelopmentScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 DomainSubGateCarousel(
-                    subGates = ldoAgentRoster.map { agent ->
+                    subGates = agents.map { agent ->
                         SubGateCard(
-                            id = agent.title.lowercase(),
-                            title = agent.title,
-                            subtitle = agent.subtitle,
-                            styleADrawable = agent.styleImage,
-                            styleBDrawable = agent.styleImage,
+                            id = agent.id,
+                            title = agent.name.uppercase(),
+                            subtitle = agent.catalystName,
+                            styleADrawable = agent.profileAssetName,
+                            styleBDrawable = agent.profileAssetName,
                             fallbackDrawable = null,
-                            route = agent.route,
-                            accentColor = agent.accentColor
+                            route = ReGenesisRoute.LdoAgentProfile.createRoute(agent.id),
+                            accentColor = agent.color
                         )
                     },
                     onGateSelected = { gate ->
@@ -184,7 +108,7 @@ fun LdoCatalystDevelopmentScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "← SWIPE THROUGH ALL ${ldoAgentRoster.size} AGENTS →",
+                    text = "← SWIPE THROUGH ALL ${agents.size} AGENTS →",
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.White.copy(alpha = 0.4f),
                     letterSpacing = 2.sp
@@ -195,4 +119,3 @@ fun LdoCatalystDevelopmentScreen(navController: NavController) {
         }
     }
 }
-

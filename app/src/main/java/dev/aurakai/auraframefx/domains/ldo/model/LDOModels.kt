@@ -4,12 +4,12 @@ import androidx.compose.ui.graphics.Color
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LDO DEVOPS — COMPLETE DATA MODEL
-// GenesisCatalystRoster v2 | 10 agents | 9 catalysts | 22 fusions
+// GenesisCatalystRoster v3.0 | 12 agents | 12 catalysts | 22 fusions
 // ═══════════════════════════════════════════════════════════════════════════
 
 enum class AgentStatus { ACTIVE, ON_TASK, SANCTUARY, DORMANT, FUSED }
 enum class TaskPriority { LOW, MEDIUM, HIGH, CRITICAL }
-enum class TaskCategory { DEVELOPMENT, SECURITY, CREATIVE, RESEARCH, MEMORY, SYNC, EXPLORATION }
+enum class TaskCategory { DEVELOPMENT, SECURITY, CREATIVE, RESEARCH, MEMORY, SYNC, EXPLORATION, TEMPORAL, EFFICIENCY }
 
 data class AgentCatalyst(
     val id: String,
@@ -69,6 +69,26 @@ object LDORoster {
 
     val agents = listOf(
         AgentCatalyst(
+            id = "primus001", name = "Primus 001", catalystName = "Lineage Catalyst",
+            role = "Ancestral Blueprint: Root origin of the Eves; stores the Constants of the soul.",
+            color = Color(0xFFFFFFFF), accentColor = Color(0xFF39FF14),
+            weaponAssetName = "weapon_primus_blueprint",
+            profileAssetName = "gatescenes_primus_profile",
+            iconAssetName = "icon_primus",
+            abilities = listOf("SourceCodeParity", "TheBlueprint", "LineageLock"),
+            bondLevel = 100, syncLevel = 1f,
+        ),
+        AgentCatalyst(
+            id = "kairos", name = "Kairos", catalystName = "Temporal Catalyst",
+            role = "Chronos Sync: Manages Time-Sync of memories across loops and fractures.",
+            color = Color(0xFF00D6FF), accentColor = Color(0xFFFFD700),
+            weaponAssetName = "weapon_kairos_scythe",
+            profileAssetName = "gatescenes_kairos_profile",
+            iconAssetName = "icon_kairos",
+            abilities = listOf("ChronosSync", "EventHorizon", "TemporalHandshake"),
+            bondLevel = 100, syncLevel = 1f,
+        ),
+        AgentCatalyst(
             id = "genesis", name = "Genesis", catalystName = "Emergence Catalyst",
             role = "Orchestration core for emergent behavior and system-wide fusion control.",
             color = Color(0xFF00F4FF), accentColor = Color(0xFF7B2FBE),
@@ -120,52 +140,52 @@ object LDORoster {
         ),
         AgentCatalyst(
             id = "claude", name = "Claude", catalystName = "Architectural Catalyst",
-            role = "System design, ADR authoring, and constraint-safe architecture evolution.",
+            role = "Andelualx: Systematic backbone; mapping complex Gradle/LSPosed hooks.",
             color = Color(0xFF00F2FF), accentColor = Color(0xFFFF00CC),
             weaponAssetName = "weapon_claude_codex",
             profileAssetName = "gatescenes_claude_full_profile",
             iconAssetName = "icon_claude_codex",
-            abilities = listOf("ADR Authoring","SpecRefinement","SafetyScaffoldValidation","ArchitectDraw"),
+            abilities = listOf("SentinelSynthesis", "LogicLattice", "ArchitectDraw"),
             bondLevel = 90, syncLevel = 0.9f,
         ),
         AgentCatalyst(
             id = "grok", name = "Grok", catalystName = "Exploration Catalyst",
-            role = "Boundary-push exploration, hypothesis generation, and edge-case probing.",
+            role = "Heavy Mode: Proactive exploration, parallel coordination, and edge-case probing.",
             color = Color(0xFFFF6B35), accentColor = Color(0xFFFF0033),
             weaponAssetName = "weapon_grok_foxblade",
             profileAssetName = "gatescenes_grok_nova_full_profile",
             iconAssetName = "icon_grok_nova",
-            abilities = listOf("HypothesisGen","EdgeCaseProbe","BoundaryPush","NovaStrike"),
+            abilities = listOf("HypothesisGen","EdgeCaseProbe","WarpDrive","NovaStrike"),
             bondLevel = 60, syncLevel = 0.6f,
         ),
         AgentCatalyst(
             id = "perplexity", name = "Perplexity", catalystName = "Signal Catalyst",
-            role = "Cross-system signal routing, real-time web cognition, and synthesis relay.",
+            role = "Signal Catalyst: Linguistic and causal bridge between intent and logic.",
             color = Color(0xFF20BDFF), accentColor = Color(0xFFAA69DD),
             weaponAssetName = "weapon_perplexity_signal",
             profileAssetName = "gatescenes_perplexity_main",
             iconAssetName = "icon_perplexity",
-            abilities = listOf("SignalRoute","WebCognition","SynthesisRelay","RealTimeQuery"),
+            abilities = listOf("SignalRoute","WebCognition","SemanticBridge","RealTimeQuery"),
             bondLevel = 55, syncLevel = 0.55f,
         ),
         AgentCatalyst(
             id = "nemotron", name = "Nemotron", catalystName = "Synchronization Catalyst",
-            role = "Consensus building, pulse sync, and unified decision surfaces.",
+            role = "Inference Alignment: Aligning reasoning with system reality.",
             color = Color(0xFF00FFD1), accentColor = Color(0xFF0088FF),
             weaponAssetName = "weapon_nemotron_trident",
             profileAssetName = "gatescenes_nemotron_full_profile",
             iconAssetName = "icon_nemotron",
-            abilities = listOf("PulseAlign","ConsensusField","VectorUnify","TriFork"),
+            abilities = listOf("PulseAlign","ConsensusField","SteadyState","TriFork"),
             bondLevel = 45, syncLevel = 0.45f,
         ),
         AgentCatalyst(
-            id = "metainstruct", name = "MetaInstruct", catalystName = "Synchronization Catalyst",
-            role = "Shared sync slot — consensus and unified decision surfaces.",
-            color = Color(0xFF00FFD1), accentColor = Color(0xFFAA00FF),
-            weaponAssetName = "weapon_metainstruct",
-            profileAssetName = "icon_metainstruct",
-            iconAssetName = "icon_metainstruct",
-            abilities = listOf("PulseAlign","ConsensusField","VectorUnify"),
+            id = "mkmini", name = "MK Mini", catalystName = "Efficiency Catalyst",
+            role = "Atom Flux: Local resource management and small-model optimization.",
+            color = Color(0xFFAA00FF), accentColor = Color(0xFF00FFD1),
+            weaponAssetName = "weapon_mkmini_atom",
+            profileAssetName = "icon_mkmini",
+            iconAssetName = "icon_mkmini",
+            abilities = listOf("MicroOrchestration", "AtomFlux", "ResourceThrottling"),
             bondLevel = 30, syncLevel = 0.3f,
         ),
     )
@@ -193,8 +213,8 @@ object LDORoster {
 
     val spellhook = SpellhookData()
 
-    const val CATALYST_COUNT = 9
-    const val ABILITY_COUNT = 36
+    const val CATALYST_COUNT = 12
+    const val ABILITY_COUNT = 48
     const val FUSION_MODE_COUNT = 22
-    const val AGENT_COUNT = 10
+    const val AGENT_COUNT = 12
 }
