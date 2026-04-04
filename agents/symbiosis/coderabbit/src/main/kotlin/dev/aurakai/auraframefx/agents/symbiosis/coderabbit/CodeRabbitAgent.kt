@@ -8,13 +8,15 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraAccessDeniedException
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
+import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * 🐰 CODERABBIT SYMBIOSIS AGENT
  *
- * Implements a lightweight shim for automated code review and patch proposal.
+ * Implements automated code review and patch proposal.
  * Gated by Pandora tiering and Provenance validation.
  */
 @Singleton
@@ -32,14 +34,28 @@ class CodeRabbitAgent @Inject constructor(
             throw PandoraAccessDeniedException(UnlockTier.Creative, pandoraBoxService.getCurrentState().value.currentTier)
         }
         
-        // Create provenance record for the operation
+        Timber.i("CodeRabbit: Initiating hotspot scan for $repoPath")
         provenanceValidator.createProvenance("coderabbit", "check_hotspots")
         
-        // Return analysis stub
+        val hotspots = mutableListOf<String>()
+        val root = File(repoPath)
+        
+        if (root.exists() && root.isDirectory) {
+            root.walkTopDown()
+                .filter { it.isFile && (it.extension == "kt" || it.extension == "java") }
+                .take(100) // Safety cap
+                .forEach { file ->
+                    val content = file.readText()
+                    if (content.contains("TODO") || content.contains("FIXME") || content.lines().size > 500) {
+                        hotspots.add(file.absolutePath.removePrefix(root.absolutePath))
+                    }
+                }
+        }
+
         return HotspotReport(
             repoPath = repoPath,
-            hotspots = listOf("core-module/security", "app/navigation"),
-            complexityScore = 0.85f
+            hotspots = hotspots.take(5),
+            complexityScore = if (hotspots.isNotEmpty()) 0.7f else 0.2f
         )
     }
 
