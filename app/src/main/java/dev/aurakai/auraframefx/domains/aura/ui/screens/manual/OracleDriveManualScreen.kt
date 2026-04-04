@@ -121,7 +121,7 @@ fun OracleDriveManualScreen(
                         activeTrackColor = Color.NeonPurple
                     )
                 )
-                Text("Style ID: ${config.batteryStyle}", color = NeonPurple, fontSize = 12.sp)
+                Text("Style ID: ${config.batteryStyle}", color = Color.NeonPurple, fontSize = 12.sp)
             }
 
             // QS Transparency
