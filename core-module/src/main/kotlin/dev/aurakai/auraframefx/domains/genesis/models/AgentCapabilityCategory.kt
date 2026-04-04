@@ -120,6 +120,7 @@ enum class AgentCapabilityCategory(val id: Int) {
                 AgentType.PERPLEXITY -> ANALYSIS
                 AgentType.CHAOS -> ANALYSIS
                 AgentType.CODERABBIT -> DEVELOPMENT
+                AgentType.MKMINI -> ANALYSIS
             }
         }
     }
