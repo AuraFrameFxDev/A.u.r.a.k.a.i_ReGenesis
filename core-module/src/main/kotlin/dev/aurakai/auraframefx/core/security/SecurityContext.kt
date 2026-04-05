@@ -110,11 +110,19 @@ class SecurityContext @Inject constructor(
     }
 
     fun bootstrapSovereignSession(userId: String = "LDO_SOVEREIGN") {
+        // 🛡️ High-Security Hardening: Require a system property or environment variable
+        // to prevent unauthorized god-mode bootstrapping in production builds.
+        val isDevMode = System.getProperty("aurakai.dev_mode") == "true"
+        if (!isDevMode && !userId.startsWith("SYSTEM_")) {
+            Timber.e("SecurityContext: UNAUTHORIZED SOVEREIGN BOOTSTRAP ATTEMPT — userId=$userId")
+            throw SecurityException("Unauthorized sovereign bootstrap attempt")
+        }
+
         _sessionState.value = SessionState.Authenticated(
             userId = userId,
             permissions = SecurityPermission.entries.toSet()
         )
-        Timber.i("SecurityContext: Sovereign session bootstrapped")
+        Timber.i("SecurityContext: Sovereign session bootstrapped — userId=$userId")
     }
 
     fun hasPermission(permission: SecurityPermission): Boolean {
