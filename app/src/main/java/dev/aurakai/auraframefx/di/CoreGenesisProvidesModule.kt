@@ -263,28 +263,6 @@ object CoreGenesisProvidesModule {
     }
 
     /**
-     * Provides the named OkHttpClient for BasicOkHttpClient.
-     * This is specifically injected by CanvasWebSocketService.
-     */
-    @Provides
-    @Singleton
-    @Named("BasicOkHttpClient")
-    fun provideBasicOkHttpClient(): OkHttpClient = Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .build()
-
-    /**
-     * Provides the CollabCanvas WebSocket URL.
-     * This is used by CanvasWebSocketService for collaborative canvas operations.
-     */
-    @Provides
-    @Singleton
-    @collabcanvas.di.CollabCanvasUrl
-    fun provideCollabCanvasUrl(): String = "ws://localhost:8080"
-
-    /**
      * Provides the Application-level CoroutineScope.
      * This is injected by PredictiveVetoMonitor and other long-lived services.
      * Uses SupervisorJob to isolate failures across child coroutines.

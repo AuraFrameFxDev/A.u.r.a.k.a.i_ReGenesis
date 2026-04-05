@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura
 
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -7,6 +8,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.cascade.network.apis.AIContentApi
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -32,6 +34,33 @@ object AuraFxAiApiModule {
         isLenient = true
         encodeDefaults = true
     }
+
+    /**
+     * Provides the Gson instance.
+     */
+    @Provides
+    @Singleton
+    fun provideGson(): Gson = Gson()
+
+    /**
+     * Provides the named OkHttpClient for BasicOkHttpClient.
+     */
+    @Provides
+    @Singleton
+    @Named("BasicOkHttpClient")
+    fun provideBasicOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .build()
+
+    /**
+     * Provides the CollabCanvas WebSocket URL.
+     */
+    @Provides
+    @Singleton
+    @collabcanvas.di.CollabCanvasUrl
+    fun provideCollabCanvasUrl(): String = "ws://localhost:8080"
 
     /**
      * Supplies a singleton AIContentApi instance configured for communication with the AuraFrameFx AI API.

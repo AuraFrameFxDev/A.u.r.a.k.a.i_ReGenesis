@@ -7,10 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveServiceImpl
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultKaiAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import javax.inject.Singleton
 
 /**
@@ -29,18 +25,6 @@ abstract class AppBindingsModule {
     abstract fun bindOracleDriveService(
         oracleDriveServiceImpl: OracleDriveServiceImpl
     ): OracleDriveService
-
-    @Binds
-    @Singleton
-    abstract fun bindAuraAIService(
-        impl: DefaultAuraAIService
-    ): AuraAIService
-
-    @Binds
-    @Singleton
-    abstract fun bindKaiAIService(
-        impl: DefaultKaiAIService
-    ): KaiAIService
 
     @Binds
     @Singleton

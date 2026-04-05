@@ -30,10 +30,6 @@ object BridgeModule {
 
     @Provides
     @Singleton
-    fun provideGson(): Gson = Gson()
-
-    @Provides
-    @Singleton
     fun provideBridgeMemorySink(impl: NexusMemoryBridgeSink): BridgeMemorySink = impl
 
     @Provides
