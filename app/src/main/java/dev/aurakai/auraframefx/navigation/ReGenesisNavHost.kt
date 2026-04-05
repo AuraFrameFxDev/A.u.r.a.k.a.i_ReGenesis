@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,13 +14,16 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.memory.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.fusion.*
+import dev.aurakai.auraframefx.domains.genesis.viewmodels.TerminalViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReGenesisNavGraph(
     navController: NavHostController,
-    customizationViewModel: CustomizationViewModel = viewModel()
+    customizationViewModel: CustomizationViewModel = hiltViewModel()
 ) {
     NavHost(
         navController = navController,
@@ -51,6 +53,16 @@ fun ReGenesisNavGraph(
 
         composable(ReGenesisRoute.CodeAssist.route) {
             CodeAssistScreen()
+        }
+
+        composable(ReGenesisRoute.Terminal.route) {
+            val terminalViewModel: TerminalViewModel = hiltViewModel()
+            TerminalScreen(
+                navController = navController,
+                cascadeService = terminalViewModel.cascadeService,
+                casberrySwarm = terminalViewModel.casberrySwarm,
+                auraDifyBridge = terminalViewModel.auraDifyBridge
+            )
         }
 
         composable(ReGenesisRoute.ConferenceRoom.route) {

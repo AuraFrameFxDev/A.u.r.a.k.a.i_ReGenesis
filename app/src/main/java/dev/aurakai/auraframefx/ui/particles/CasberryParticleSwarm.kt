@@ -33,6 +33,15 @@ class CasberryParticleSwarm @Inject constructor() {
     val resonance: StateFlow<Float> = _resonance.asStateFlow()
 
     /**
+     * Triggers a momentary resonance surge in the swarm.
+     */
+    fun triggerResonance(event: String, intensity: Float, colorVector: Pair<Color, Color>? = null) {
+        Timber.d("🌀 Swarm Resonance: %s (Intensity: %f)", event, intensity)
+        setResonance(intensity)
+        // In a real implementation, this might trigger a specific animation state or color shift
+    }
+
+    /**
      * Updates the swarm's current state to the provided value and records the transition.
      */
     fun transitionState(newState: SwarmState) {

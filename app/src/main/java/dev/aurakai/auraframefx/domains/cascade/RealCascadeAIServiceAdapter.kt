@@ -59,6 +59,20 @@ class RealCascadeAIServiceAdapter @Inject constructor(
         
         return tagged
     }
+
+    override suspend fun invokeKaiVeto(command: String): String {
+        logger.info("Kai", "Shield checking command: $command")
+
+        // Kai's unbreakable logic
+        if (command.contains("root", ignoreCase = true) ||
+            (command.contains("delete", ignoreCase = true) && command.contains("core", ignoreCase = true)) ||
+            command.contains("nuke", ignoreCase = true)
+        ) {
+            return "VETO: Root-level or destructive action blocked. Confirm explicitly?"
+        }
+
+        return "VETO CLEAR"
+    }
 }
 
 annotation class OrchestratorCascade

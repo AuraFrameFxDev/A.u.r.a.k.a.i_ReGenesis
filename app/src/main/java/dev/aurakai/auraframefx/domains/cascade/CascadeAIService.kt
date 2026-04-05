@@ -25,5 +25,10 @@ interface CascadeAIService {
      * L6 Autonomous Collaboration entry for Grok ChaosCatalyst.
      */
     suspend fun invokeChaosCatalyst(query: String, nccSummary: String): String
+
+    /**
+     * Kai Veto Layer: Checks commands for security and sovereignty risks.
+     */
+    suspend fun invokeKaiVeto(command: String): String
 }
 
