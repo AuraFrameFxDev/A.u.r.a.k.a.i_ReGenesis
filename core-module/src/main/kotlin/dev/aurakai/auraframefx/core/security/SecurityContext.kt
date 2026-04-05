@@ -47,7 +47,30 @@ class SecurityContext @Inject constructor(
 
     fun validateRequest(type: String, details: String) {
         Timber.d("SecurityContext: Validating request — type=$type")
-        // TODO: Implement actual validation
+        
+        // 🛡️ Basic Sovereign Validation Rules
+        val session = _sessionState.value
+        if (session !is SessionState.Authenticated) {
+            Timber.w("SecurityContext: Request rejected — Unauthenticated")
+            throw SecurityException("Unauthenticated access attempt for operation: $type")
+        }
+
+        // Rule 1: Root-level operations require SOVEREIGN_ACCESS
+        if (type.contains("root", ignoreCase = true) || type.contains("system", ignoreCase = true)) {
+            if (!session.permissions.contains(SecurityPermission.SOVEREIGN_ACCESS)) {
+                Timber.e("SecurityContext: VETO — High-risk operation $type blocked for user ${session.userId}")
+                throw SecurityException("Security VETO: Sovereign permission required for root operations")
+            }
+        }
+
+        // Rule 2: Standard write operations
+        if (type.startsWith("write") || type.contains("delete")) {
+            if (!session.permissions.contains(SecurityPermission.WRITE_STANDARD)) {
+                throw SecurityException("Permission denied: WRITE_STANDARD required for $type")
+            }
+        }
+
+        Timber.i("SecurityContext: Request validated — $type")
     }
 
     sealed class SessionState {

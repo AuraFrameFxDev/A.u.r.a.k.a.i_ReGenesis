@@ -23,8 +23,6 @@ gradle_output_ascii.txt
 ksp_log.txt
 fix_manifest.txt
 *.json
-!google-services.json
-!*-firebase-adminsdk-*.json
 !package.json
 !*.schema.json
 !claude.json

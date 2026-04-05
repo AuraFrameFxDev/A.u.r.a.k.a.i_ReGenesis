@@ -1,17 +1,30 @@
 package dev.aurakai.genesis.storage
 
 import android.content.Context
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Provides secure storage operations for Genesis module
+ * Provides secure storage operations for Genesis module using EncryptedSharedPreferences.
  */
 @Singleton
 class SecureStorage @Inject constructor(
     private val context: Context
 ) {
-    
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private val sharedPreferences = EncryptedSharedPreferences.create(
+        context,
+        "genesis_secure_prefs",
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
     /**
      * Stores a plaintext value securely under the given key.
      *
@@ -20,10 +33,14 @@ class SecureStorage @Inject constructor(
      * @return `true` if the value was stored successfully, `false` otherwise.
      */
     fun store(key: String, value: String): Boolean {
-        // Stub - implement actual secure storage
-        return true
+        return try {
+            sharedPreferences.edit().putString(key, value).apply()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
-    
+
     /**
      * Retrieves the value stored for the given key from secure storage.
      *
@@ -31,10 +48,13 @@ class SecureStorage @Inject constructor(
      * @return The stored string value for `key`, or `null` if no value exists.
      */
     fun retrieve(key: String): String? {
-        // Stub - implement actual retrieval
-        return null
+        return try {
+            sharedPreferences.getString(key, null)
+        } catch (e: Exception) {
+            null
+        }
     }
-    
+
     /**
      * Deletes the stored value associated with the given key from secure storage.
      *
@@ -42,17 +62,25 @@ class SecureStorage @Inject constructor(
      * @return `true` if the value was deleted, `false` otherwise.
      */
     fun delete(key: String): Boolean {
-        // Stub - implement actual deletion
-        return true
+        return try {
+            sharedPreferences.edit().remove(key).apply()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
-    
+
     /**
      * Removes all entries from the secure storage.
      *
      * @return `true` if all stored items were removed successfully, `false` otherwise.
      */
     fun clear(): Boolean {
-        // Stub - implement clearing all secure storage
-        return true
+        return try {
+            sharedPreferences.edit().clear().apply()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }
