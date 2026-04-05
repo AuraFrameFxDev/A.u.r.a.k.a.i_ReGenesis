@@ -10,6 +10,10 @@ import dev.aurakai.auraframefx.ai.adapters.GrokAdapter
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultKaiAIService
 import javax.inject.Singleton
 
 /**
@@ -23,6 +27,14 @@ abstract class AgentModule {
     @Binds
     @Singleton
     abstract fun bindGrokAdapter(impl: DefaultGrokAdapter): GrokAdapter
+
+    @Binds
+    @Singleton
+    abstract fun bindAuraAIService(impl: DefaultAuraAIService): AuraAIService
+
+    @Binds
+    @Singleton
+    abstract fun bindKaiAIService(impl: DefaultKaiAIService): KaiAIService
 
     companion object {
         @Provides
