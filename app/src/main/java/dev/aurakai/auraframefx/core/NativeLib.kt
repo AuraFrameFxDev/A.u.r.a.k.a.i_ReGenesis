@@ -102,8 +102,11 @@ object NativeLib {
     }
 
     @JvmStatic
-    fun triggerDroneDispatch(reason: String) {
-        droneDispatcher?.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, reason)
+    fun triggerDroneDispatch(reason: String): Boolean {
+        return droneDispatcher?.let {
+            it.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, reason)
+            true
+        } ?: false
     }
 
     fun getAIVersionSafe(): String {

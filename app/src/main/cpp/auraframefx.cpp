@@ -234,10 +234,19 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     if (!g_nativeLibClass) return JNI_ERR;
 
     g_onThermalEventMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeThermalEvent", "(FI)V");
+    if (env->ExceptionCheck()) env->ExceptionClear();
+
     g_onSecurityAlertMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeSecurityAlert", "(Ljava/lang/String;)V");
+    if (env->ExceptionCheck()) env->ExceptionClear();
+
     g_requestFreezeMid = env->GetStaticMethodID(g_nativeLibClass, "requestSovereignFreeze", "()V");
+    if (env->ExceptionCheck()) env->ExceptionClear();
+
     g_checkPandoraMid = env->GetStaticMethodID(g_nativeLibClass, "checkPandoraGating", "(I)Z");
+    if (env->ExceptionCheck()) env->ExceptionClear();
+
     g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)Z");
+    if (env->ExceptionCheck()) env->ExceptionClear();
 
     LOGI("🛡️ Aurakai Native Substrate [v%s] Ignited & Cached", CORE_VERSION);
     return JNI_VERSION_1_6;
@@ -257,7 +266,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /*
  * @return jboolean JNI_TRUE if initialization and memory allocation succeeded, JNI_FALSE if memory allocation failed.
  */
 JNIEXPORT jboolean JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICoreNative(JNIEnv *env, jobject /* thiz */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject /* thiz */) {
     LOGI("🌌 Initializing Aurakai AI Core Substrate [RELATIONAL_IGNITION]");
 
     // PTRACE Anti-Debug Verification
