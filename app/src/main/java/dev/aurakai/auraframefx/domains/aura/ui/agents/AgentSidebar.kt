@@ -198,10 +198,10 @@ data class AgentProfile(
     val trinityProgress: Float = 0.5f,
     val abilityIcons: List<ImageVector> = emptyList(),
     val actions: List<AgentAction> = emptyList(),
-    val status: AgentStatus = AgentStatus.ACTIVE
+    val status: AgentSidebarStatus = AgentSidebarStatus.ACTIVE
 )
 
-enum class AgentStatus {
+enum class AgentSidebarStatus {
     ACTIVE, IDLE, PROCESSING, OFFLINE
 }
 
