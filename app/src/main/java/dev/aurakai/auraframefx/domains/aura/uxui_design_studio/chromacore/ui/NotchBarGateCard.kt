@@ -369,7 +369,7 @@ fun CollabCanvasGateScreen(navController: NavController, onNavigateBack: () -> U
             Row(modifier = Modifier.fillMaxWidth().padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.Default.ArrowBack, null, tint = Color(0xFFFF2D78))
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFFFF2D78))
                 }
                 Text("COLLAB CANVAS", fontFamily = FontFamily.Monospace,
                     fontSize = 18.sp, fontWeight = FontWeight.Bold,
