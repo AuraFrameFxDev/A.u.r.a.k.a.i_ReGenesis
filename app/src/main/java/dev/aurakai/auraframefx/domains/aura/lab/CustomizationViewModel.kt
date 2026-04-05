@@ -86,9 +86,13 @@ open class CustomizationViewModel @Inject constructor() : ViewModel() {
                 systemUIFlow,
                 launcherFlow
             ) { values: Array<Any?> ->
+                @Suppress("UNCHECKED_CAST")
                 val theme = values[0] as Triple<String, String, Boolean>
+                @Suppress("UNCHECKED_CAST")
                 val glass = values[1] as Triple<Boolean, Float, Float>
+                @Suppress("UNCHECKED_CAST")
                 val anim = values[2] as Pair<Boolean, Int>
+                @Suppress("UNCHECKED_CAST")
                 val ui = values[3] as Triple<Boolean, Boolean, Boolean>
                 val mode = values[4] as ReGenesisMode
                 val monet = values[5] as MonetConfiguration

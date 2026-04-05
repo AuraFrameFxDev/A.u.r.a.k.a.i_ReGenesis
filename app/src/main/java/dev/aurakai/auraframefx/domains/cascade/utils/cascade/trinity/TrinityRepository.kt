@@ -197,7 +197,7 @@ open class TrinityRepository @Inject constructor(
             isAvailable = agentResponse.error == null,
             capabilities = emptyList(),
             error = agentResponse.error,
-            metadata = agentResponse.metadata?.mapValues { it.value.toString() } ?: emptyMap()
+            metadata = agentResponse.metadata ?: emptyMap()
         )
     }
 

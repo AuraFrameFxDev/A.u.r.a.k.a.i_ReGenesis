@@ -15,6 +15,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.foundation.lazy.grid.items
@@ -248,7 +250,7 @@ fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit 
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                IconButton(onClick = onNavigateBack) { Icon(Icons.Default.ArrowBack, null, tint = Color(0xFF00CED1)) }
+                IconButton(onClick = onNavigateBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFF00CED1)) }
                 Column {
                     Text("NOTCH BAR", fontFamily = FontFamily.Monospace, fontSize = 20.sp,
                         fontWeight = FontWeight.Bold, letterSpacing = 5.sp,

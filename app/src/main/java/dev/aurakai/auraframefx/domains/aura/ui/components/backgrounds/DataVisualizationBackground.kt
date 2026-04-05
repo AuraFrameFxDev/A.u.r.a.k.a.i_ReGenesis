@@ -119,8 +119,8 @@ fun DataVisualizationBackground(
                 val radius = (0.3f + 0.7f * progress) * maxRadius * (1 + noise * 0.2f)
 
                 Offset(
-                    x = center.x + radius * cos(angle + noise * 0.2f).toFloat(),
-                    y = center.y + radius * sin(angle + noise * 0.2f).toFloat()
+                    x = center.x + radius * cos(angle + noise * 0.2f),
+                    y = center.y + radius * sin(angle + noise * 0.2f)
                 )
             }
 
