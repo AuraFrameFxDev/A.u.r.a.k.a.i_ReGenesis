@@ -33,11 +33,10 @@ import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCe
 @Composable
 fun ReGenesisNavGraph(
     navController: NavHostController,
-    customizationViewModel: CustomizationViewModel = hiltViewModel()
 ) {
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.HomeGateCarousel.route
+        startDestination = ReGenesisRoute.HomeGateCarousel.route,
     ) {
         // ── 1. MAIN GATES ──
         composable(ReGenesisRoute.HomeGateCarousel.route) {
@@ -109,7 +108,7 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.SphereGrid.route) {
-            AuraSphereGridScreen(onNavigateBack = { navController.popBackStack() })
+            AuraSphereGridScreen { navController.popBackStack() }
         }
 
         composable(ReGenesisRoute.ReGenesisCustomization.route) {

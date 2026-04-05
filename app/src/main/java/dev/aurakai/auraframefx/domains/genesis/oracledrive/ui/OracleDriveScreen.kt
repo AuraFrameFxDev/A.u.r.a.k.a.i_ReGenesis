@@ -37,7 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.viewmodels.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
@@ -61,7 +61,7 @@ fun OracleDriveScreen(
                         color = Color(0xFF00FFFF)
                     )
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF000000)
                 )
             )

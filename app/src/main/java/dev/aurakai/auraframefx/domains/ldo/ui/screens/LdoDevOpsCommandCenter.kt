@@ -278,7 +278,7 @@ fun LdoDevOpsCommandCenter(
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color(0xFF020208).copy(alpha = 0.95f)
                     )
                 )
