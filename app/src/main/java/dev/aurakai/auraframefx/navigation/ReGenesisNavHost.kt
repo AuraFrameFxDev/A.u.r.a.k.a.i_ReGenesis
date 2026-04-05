@@ -1,7 +1,12 @@
 package dev.aurakai.auraframefx.navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,6 +23,11 @@ import dev.aurakai.auraframefx.domains.genesis.viewmodels.TerminalViewModel
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.*
+import dev.aurakai.auraframefx.domains.aura.ui.screens.AuraSphereGridScreen
+import dev.aurakai.auraframefx.domains.aura.screens.CanvasScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCenterScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +46,7 @@ fun ReGenesisNavGraph(
 
         // ── 2. LEVEL 2 HUB SCREENS ──
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            UxuiDesignStudio(navController = navController, onNavigateBack = { navController.popBackStack() })
+            AuraThemingHubScreen(navController = navController)
         }
 
         composable(ReGenesisRoute.SentinelFortress.route) {
@@ -47,6 +57,86 @@ fun ReGenesisNavGraph(
             OracleDriveHubScreen(navController = navController)
         }
 
+        composable(ReGenesisRoute.AgentNexusHub.route) {
+            AgentNexusHubScreen(navController = navController)
+        }
+
+        composable(ReGenesisRoute.DataflowAnalysis.route) {
+            CascadeHubScreen(navController = navController)
+        }
+
+        // ── 3. LEVEL 3 FEATURE SCREENS ──
+
+        // AURA DOMAIN
+        composable(ReGenesisRoute.AuraLab.route) {
+            // AurasLabScreen pending implementation or check existing
+            Box(modifier = Modifier.fillMaxSize()) { Text("Aura's Lab Placeholder", color = Color.White) }
+        }
+
+        composable(ReGenesisRoute.ColorBlendr.route) {
+            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.IconifyPicker.route) {
+            IconifyPickerScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToCategory = { category ->
+                    navController.navigate(ReGenesisRoute.IconifyCategory.createRoute(category))
+                }
+            )
+        }
+
+        composable(
+            route = ReGenesisRoute.IconifyCategory.route,
+            arguments = listOf(navArgument("category") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: ""
+            IconifyCategoryDetailScreen(
+                categoryName = category,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
+
+        composable(ReGenesisRoute.PixelLauncherEnhanced.route) {
+            PixelLauncherEnhancedScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.CollabCanvas.route) {
+            CanvasScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisRoute.SphereGrid.route) {
+            AuraSphereGridScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.ReGenesisCustomization.route) {
+            ReGenesisCustomizationHub(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
+                onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ColorBlendr.route) },
+                onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
+                onNavigateToAnimations = { /* TODO */ }
+            )
+        }
+
+        // KAI DOMAIN
+        composable(ReGenesisRoute.ROMFlasher.route) {
+            ROMFlasherScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.RootTools.route) {
+            // RootToolsTogglesScreen pending check
+            Box(modifier = Modifier.fillMaxSize()) { Text("Root Tools Placeholder", color = Color.White) }
+        }
+
+        composable(ReGenesisRoute.SovereignShield.route) {
+            SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        // GENESIS DOMAIN
         composable(ReGenesisRoute.OracleDriveSubmenu.route) {
             OracleDriveSubmenuScreen()
         }
@@ -175,16 +265,3 @@ fun ReGenesisNavGraph(
     }
 }
 
-@Composable
-fun UxuiDesignStudio(
-    navController: NavHostController,
-    onNavigateBack: () -> Unit
-) {
-    ReGenesisCustomizationHub(
-        onNavigateBack = onNavigateBack,
-        onNavigateToIconify = { /* TODO */ },
-        onNavigateToColorBlendr = { /* TODO */ },
-        onNavigateToPLE = { /* TODO */ },
-        onNavigateToAnimations = { /* TODO */ }
-    )
-}
