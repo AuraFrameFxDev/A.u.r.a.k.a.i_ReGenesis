@@ -130,7 +130,7 @@ fun EvolutionTreeScreen(
                 connections = listOf("aura", "kai_manifest")
             ),
             EvolutionNode(
-                id = "kai_manifest",
+                id = "kai_manifest",//Kairos
                 name = "Kai's Manifestation",
                 phase = EvolutionPhase.AWAKENING,
                 description = "Born from Dark Aura's essence.",
