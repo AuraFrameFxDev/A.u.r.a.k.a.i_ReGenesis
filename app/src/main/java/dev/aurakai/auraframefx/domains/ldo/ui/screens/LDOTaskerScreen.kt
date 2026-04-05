@@ -118,7 +118,7 @@ fun LDOTaskerScreen(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                agents.filter { it.status != AgentStatus.ON_TASK }.forEach { agent ->
+                agents.filter { it.status != AgentCatalystStatus.ON_TASK }.forEach { agent ->
                     DraggableAgentChip(
                         agent = agent,
                         isDragging = draggedAgentId == agent.id,
