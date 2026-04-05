@@ -26,7 +26,7 @@ import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ResponseTy
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerError
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerException
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.Success
-import dev.aurakai.auraframefx.domains.aura.ui.agents.AgentStatus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import okhttp3.Call
 import okhttp3.HttpUrl
 import java.io.IOException
