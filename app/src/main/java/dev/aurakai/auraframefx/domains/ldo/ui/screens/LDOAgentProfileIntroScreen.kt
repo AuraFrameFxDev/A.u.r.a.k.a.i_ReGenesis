@@ -159,9 +159,9 @@ fun LDOAgentProfileIntroScreen(
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("STATUS:", fontSize = 9.sp, color = Color.White.copy(alpha = 0.7f))
                     val statusColor = when (agent.status) {
-                        AgentStatus.ACTIVE  -> Color(0xFF00FF85)
-                        AgentStatus.ON_TASK -> Color(0xFFFF007A)
-                        AgentStatus.FUSED   -> agent.accentColor
+                        AgentCatalystStatus.ACTIVE  -> Color(0xFF00FF85)
+                        AgentCatalystStatus.ON_TASK -> Color(0xFFFF007A)
+                        AgentCatalystStatus.FUSED   -> agent.accentColor
                         else -> Color.Gray
                     }
                     Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(statusColor).graphicsLayer { alpha = pulse })

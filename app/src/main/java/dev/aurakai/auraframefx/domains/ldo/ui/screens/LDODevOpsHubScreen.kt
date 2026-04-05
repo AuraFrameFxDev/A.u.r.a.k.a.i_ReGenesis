@@ -59,7 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
-import dev.aurakai.auraframefx.domains.ldo.model.AgentStatus
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalystStatus
 import dev.aurakai.auraframefx.domains.ldo.model.FusionMode
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 import kotlin.math.cos
@@ -422,9 +422,9 @@ private fun AgentProfileCard(
             // Status dot
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(3.dp)) {
                 val statusColor = when (agent.status) {
-                    AgentStatus.ACTIVE  -> Color(0xFF00FF85)
-                    AgentStatus.ON_TASK -> HubPink
-                    AgentStatus.FUSED   -> agent.accentColor
+                    AgentCatalystStatus.ACTIVE  -> Color(0xFF00FF85)
+                    AgentCatalystStatus.ON_TASK -> HubPink
+                    AgentCatalystStatus.FUSED   -> agent.accentColor
                     else                -> Color.Gray
                 }
                 Box(modifier = Modifier.size(5.dp).clip(CircleShape).background(statusColor).graphicsLayer { alpha = pulse })

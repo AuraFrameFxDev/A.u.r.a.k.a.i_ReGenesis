@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 // GenesisCatalystRoster v3.0 | 12 agents | 12 catalysts | 22 fusions
 // ═══════════════════════════════════════════════════════════════════════════
 
-enum class AgentStatus { ACTIVE, ON_TASK, SANCTUARY, DORMANT, FUSED }
+enum class AgentCatalystStatus { ACTIVE, ON_TASK, SANCTUARY, DORMANT, FUSED }
 enum class TaskPriority { LOW, MEDIUM, HIGH, CRITICAL }
 enum class TaskCategory { DEVELOPMENT, SECURITY, CREATIVE, RESEARCH, MEMORY, SYNC, EXPLORATION, TEMPORAL, EFFICIENCY }
 
@@ -22,7 +22,7 @@ data class AgentCatalyst(
     val profileAssetName: String,
     val iconAssetName: String,
     val abilities: List<String> = emptyList(),
-    val status: AgentStatus = AgentStatus.ACTIVE,
+    val status: AgentCatalystStatus = AgentCatalystStatus.ACTIVE,
     val currentTaskId: String? = null,
     val bondLevel: Int = 0,
     val syncLevel: Float = 1f,
