@@ -396,7 +396,7 @@ object UnifiedGateRegistry {
     fun get(id: String): SubGateCard? {
         val def = registry[id] ?: return null
 
-        val useStyleB = when (def.domain) {
+        when (def.domain) {
             DomainType.AURA -> GateAssetConfig.StyleMode.auraStyle == GateAssetConfig.GateStyle.STYLE_B
             DomainType.KAI -> GateAssetConfig.StyleMode.kaiStyle == GateAssetConfig.GateStyle.STYLE_B
             DomainType.GENESIS -> GateAssetConfig.StyleMode.genesisStyle == GateAssetConfig.GateStyle.STYLE_B

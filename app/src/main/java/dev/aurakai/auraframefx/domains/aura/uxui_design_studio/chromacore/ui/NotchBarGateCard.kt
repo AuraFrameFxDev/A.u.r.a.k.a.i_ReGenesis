@@ -68,7 +68,6 @@ fun NotchBarGateCard(
     ) {
         val w = size.width; val h = size.height
         val cr = 24f                           // corner radius
-        val border = 10f                       // frame thickness
 
         // ── Black void background ─────────────────────────────────────────
         drawRect(Color(0xFF000000))

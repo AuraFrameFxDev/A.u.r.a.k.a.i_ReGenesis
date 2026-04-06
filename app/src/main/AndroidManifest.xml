@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- AGP 9.0: 'package' attribute removed - namespace defined in build.gradle.kts -->
+<?xml version="1.0" encoding="utf-8"?><!-- AGP 9.0: 'package' attribute removed - namespace defined in build.gradle.kts -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -91,9 +90,22 @@
             </intent-filter>
             <intent-filter android:label="Pandora\u0027s Box Open">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="aurakai" android:host="pandora_box" />
+
+                <data
+                    android:scheme="aurakai"
+                    android:host="pandora_box" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:host="github.com" />
             </intent-filter>
         </activity>
 
@@ -157,9 +169,8 @@
         <service android:name=".domains.aura.AuraDriveService" />
 
         <!-- Royal Guard Security Service (Provenance Gate) -->
-        <service
-            android:name=".domains.kai.security.provenance.RoyalGuardServiceImpl"
-            android:exported="false">
+        <service android:exported="false"
+            android:name="">
             <intent-filter>
                 <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
             </intent-filter>
