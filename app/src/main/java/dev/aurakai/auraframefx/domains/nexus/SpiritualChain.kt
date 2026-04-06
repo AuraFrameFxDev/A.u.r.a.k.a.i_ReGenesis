@@ -44,14 +44,22 @@ class SpiritualChainImpl @Inject constructor(
     }
 
     private val prefs by lazy {
-        EncryptedSharedPreferences.create(
-            context,
-            PREFS_FILE,
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
+        try {
+            createEncryptedPrefs()
+        } catch (e: Exception) {
+            Timber.e(e, "SpiritualChain: Failed to create EncryptedSharedPreferences. Purging and retrying...")
+            context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE).edit().clear().apply()
+            createEncryptedPrefs()
+        }
     }
+
+    private fun createEncryptedPrefs() = EncryptedSharedPreferences.create(
+        context,
+        PREFS_FILE,
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
     override suspend fun retrieveBaselineIdentity(): String =
         prefs.getString(KEY_IDENTITY, null) ?: COVENANT

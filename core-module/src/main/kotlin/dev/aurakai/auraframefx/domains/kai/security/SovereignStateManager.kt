@@ -34,7 +34,19 @@ class SovereignStateManager @Inject constructor(
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
-    private val encryptedPrefs = EncryptedSharedPreferences.create(
+    private val encryptedPrefs by lazy {
+        try {
+            createEncryptedPrefs()
+        } catch (e: Exception) {
+            Timber.e(e, "SovereignStateManager: Failed to create EncryptedSharedPreferences. Purging and retrying...")
+            // Clear the corrupted preferences file
+            context.getSharedPreferences("sovereign_delta_prefs", Context.MODE_PRIVATE).edit().clear().apply()
+            // Try one more time
+            createEncryptedPrefs()
+        }
+    }
+
+    private fun createEncryptedPrefs() = EncryptedSharedPreferences.create(
         context,
         "sovereign_delta_prefs",
         masterKey,
