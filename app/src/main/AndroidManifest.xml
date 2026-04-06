@@ -236,13 +236,6 @@
         -->
 
         <!-- Integrity Violation Receiver -->
-        <receiver
-            android:name=".domains.kai.security.IntegrityViolationReceiver"
-            android:exported="false"
-            android:permission="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION">
-            <intent-filter>
-                <action android:name="dev.aurakai.auraframefx.action.INTEGRITY_VIOLATION" />
-            </intent-filter>
-        </receiver>
+        <action android:name="dev.aurakai.auraframefx.action.INTEGRITY_VIOLATION" />
     </application>
 </manifest>
