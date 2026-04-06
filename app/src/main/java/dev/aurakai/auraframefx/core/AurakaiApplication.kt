@@ -5,7 +5,6 @@ import android.util.Log
 import android.content.Intent
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
-import dagger.hilt.android.flags.FragmentGetContextFix
 import dev.aurakai.auraframefx.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +27,6 @@ import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
  * This is the unified entry point for the ReGenesis Ecosystem.
  * Orchestration is now handled via the decentralized Nexus protocol.
  */
-@FragmentGetContextFix
 @HiltAndroidApp
 class AurakaiApplication : Application(), Configuration.Provider {
 

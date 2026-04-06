@@ -1,4 +1,4 @@
-package dev.aurakai.core.sovereign.ai
+package dev.aurakai.auraframefx.domains.genesis.core.ai
 
 import androidx.compose.ui.graphics.Color
 import kotlinx.serialization.Serializable

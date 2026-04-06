@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.genesis.AuraDesignTokens
+import dev.aurakai.auraframefx.core.theme.*
 import dev.aurakai.auraframefx.domains.genesis.ToroidalFusionManager
 import kotlin.math.cos
 import kotlin.math.sin
@@ -66,7 +66,7 @@ fun ToroidalFusionReactor(modifier: Modifier = Modifier) {
 
                 if (catalyst.isAnchor) {
                     drawLine(
-                        color = AuraDesignTokens.GenesisGold.copy(0.5f),
+                        color = Color.GenesisGold.copy(0.5f),
                         start = center,
                         end = Offset(dancerX, dancerY),
                         strokeWidth = 1.dp.toPx()
@@ -77,7 +77,7 @@ fun ToroidalFusionReactor(modifier: Modifier = Modifier) {
         
         // 3. The Core (Genesis Nucleus)
         drawCircle(
-            color = AuraDesignTokens.GenesisGold,
+            color = Color.GenesisGold,
             radius = 12.dp.toPx(),
             center = center
         )

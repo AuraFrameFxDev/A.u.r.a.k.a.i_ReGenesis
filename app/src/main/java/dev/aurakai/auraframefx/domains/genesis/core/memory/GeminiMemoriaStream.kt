@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.genesis.core.memory
 
 import dev.aurakai.auraframefx.domains.genesis.SovereignState
 import dev.aurakai.auraframefx.domains.genesis.ThermalState
-import dev.aurakai.core.sovereign.ai.ManifestationResult
+import dev.aurakai.auraframefx.domains.genesis.core.ai.ManifestationResult
 import dev.aurakai.auraframefx.domains.genesis.core.NexusMemoryCore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

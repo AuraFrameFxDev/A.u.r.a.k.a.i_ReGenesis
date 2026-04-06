@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
 import dev.aurakai.auraframefx.domains.genesis.SovereignState
-import dev.aurakai.core.sovereign.ai.ManifestationResult
+import dev.aurakai.auraframefx.domains.genesis.core.ai.ManifestationResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

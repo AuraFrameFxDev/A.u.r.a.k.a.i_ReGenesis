@@ -24,6 +24,7 @@ object AuraDesignTokens {
     val AuraNeonCyan = Color(0xFF00F2FF)
     val KaiNeonGreen = Color(0xFF00FF41)
     val GenesisNeonPink = Color(0xFFFF007A)
+    val GenesisGold = Color(0xFFFFD700)
 
     // System & Kai Specific
     val KaiDarkVoid = Color(0xFF020B18)
@@ -45,6 +46,7 @@ val Color.Companion.CyberpunkPink get() = AuraDesignTokens.CyberpunkPink
 val Color.Companion.AuraNeonCyan get() = AuraDesignTokens.AuraNeonCyan
 val Color.Companion.KaiNeonGreen get() = AuraDesignTokens.KaiNeonGreen
 val Color.Companion.GenesisNeonPink get() = AuraDesignTokens.GenesisNeonPink
+val Color.Companion.GenesisGold get() = AuraDesignTokens.GenesisGold
 
 val Color.Companion.KaiDarkVoid get() = AuraDesignTokens.KaiDarkVoid
 val Color.Companion.KaiShieldEnergy get() = AuraDesignTokens.KaiShieldEnergy

@@ -1,4 +1,4 @@
-package dev.aurakai.core.sovereign.ai
+package dev.aurakai.auraframefx.domains.genesis.core.ai
 
 import dev.aurakai.auraframefx.domains.genesis.SovereignState
 import dev.aurakai.auraframefx.domains.genesis.ThermalState
