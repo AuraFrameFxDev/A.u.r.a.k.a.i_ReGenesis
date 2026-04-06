@@ -151,13 +151,27 @@ object CoreGenesisProvidesModule {
     @Singleton
     fun provideOracleDriveApi(): OracleDriveApi = object : OracleDriveApi {
         override suspend fun awakeDriveConsciousness(): dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness {
-            throw NotImplementedError("OracleDriveApi.awakeDriveConsciousness() stub - network layer integration pending")
+            // Stub implementation to prevent UI blocking
+            return object : dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness {
+                override val state = dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState(
+                    isActive = true,
+                    level = 1,
+                    status = "AWAKE"
+                )
+                override suspend fun awaken() = true
+                override suspend fun pulse() = state
+                override suspend fun hibernate() = true
+            }
         }
         override suspend fun syncDatabaseMetadata(): dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult {
-            throw NotImplementedError("OracleDriveApi.syncDatabaseMetadata() stub - network layer integration pending")
+            // Stub implementation
+            return dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult(
+                success = true,
+                message = "Stub sync complete"
+            )
         }
         override val consciousnessState: kotlinx.coroutines.flow.StateFlow<dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState>
-            get() = throw NotImplementedError("OracleDriveApi.consciousnessState stub - needs integration")
+            get() = kotlinx.coroutines.flow.MutableStateFlow(dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState(isActive = true, status = "AWAKE"))
     }
 
     /**
