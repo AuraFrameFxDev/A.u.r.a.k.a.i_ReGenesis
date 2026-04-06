@@ -1,0 +1,283 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.0-milestone-7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Calculating task graph as configuration cache cannot be reused because init script '..\AppData\Local\Temp\ijMapper1.gradle' and 3 more have been removed.
+Type-safe project accessors is an incubating feature.
+> Task :build-logic:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :build-logic:compileKotlin UP-TO-DATE
+> Task :build-logic:compileJava NO-SOURCE
+> Task :build-logic:pluginDescriptors UP-TO-DATE
+> Task :build-logic:processResources UP-TO-DATE
+> Task :build-logic:classes UP-TO-DATE
+> Task :build-logic:jar UP-TO-DATE
+Kotlin build report is written to file:///C:/Users/AuraF/A.u.r.a.k.a.i_ReGenesis/build/reports/kotlin-build/aurakai-reactive-intelligence-build-2026-04-06-17-00-28-0.txt
+
+1 problem was found storing the configuration cache.
+- Task `:app:compileDebugAidl` of type `com.android.build.gradle.tasks.AidlCompile`: error writing value of type 'org.gradle.api.internal.artifacts.configurations.ResolutionBackedFileCollection'
+
+See the complete report at file:///C:/Users/AuraF/A.u.r.a.k.a.i_ReGenesis/build/reports/configuration-cache/2x4d0zykizyfua7cs5h6j2snj/fd7g3xpmujcurxvtdzklp5ue/configuration-cache-report.html
+
+[Incubating] Problems report is available at: file:///C:/Users/AuraF/A.u.r.a.k.a.i_ReGenesis/build/reports/problems/problems-report.html
+./gradlew : 
+At line:1 char:1
++ ./gradlew 
+:app:assembleDebug 
+--no-daemon 
+--console=plain > 
+build_outp ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (:  
+  String) [], RemoteExc   
+ eption
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+FAILURE: Build failed 
+with an exception.
+
+* What went wrong:
+Configuration cache state 
+could not be cached: 
+field `importDirs` of 
+task 
+`:app:compileDebugAidl` 
+of type `com.android.build
+.gradle.tasks.AidlCompile`
+: error writing value of 
+type 'org.gradle.api.inter
+nal.artifacts.configuratio
+ns.ResolutionBackedFileCol
+lection'
+> Could not resolve all 
+files for configuration ':
+app:debugCompileClasspath'
+.
+   > Could not find dev.la
+ngchain4j:langchain4j-http
+-client-okhttp:1.12.2.
+     Searched in the 
+following locations:
+       - https://dl.google
+.com/dl/android/maven2/dev
+/langchain4j/langchain4j-h
+ttp-client-okhttp/1.12.2/l
+angchain4j-http-client-okh
+ttp-1.12.2.pom
+       - https://repo.mave
+n.apache.org/maven2/dev/la
+ngchain4j/langchain4j-http
+-client-okhttp/1.12.2/lang
+chain4j-http-client-okhttp
+-1.12.2.pom
+       - https://jitpack.i
+o/dev/langchain4j/langchai
+n4j-http-client-okhttp/1.1
+2.2/langchain4j-http-clien
+t-okhttp-1.12.2.pom
+       - https://api.xpose
+d.info/dev/langchain4j/lan
+gchain4j-http-client-okhtt
+p/1.12.2/langchain4j-http-
+client-okhttp-1.12.2.pom
+       - https://oss.sonat
+ype.org/content/repositori
+es/snapshots/dev/langchain
+4j/langchain4j-http-client
+-okhttp/1.12.2/langchain4j
+-http-client-okhttp-1.12.2
+.pom
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/libs/dev/langchain4j/lan
+gchain4j-http-client-okhtt
+p/1.12.2/langchain4j-http-
+client-okhttp-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/app/libs/dev/langchain4j
+/langchain4j-http-client-o
+khttp/1.12.2/langchain4j-h
+ttp-client-okhttp-1.12.2.j
+ar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/app/libs/libs/dev/langch
+ain4j/langchain4j-http-cli
+ent-okhttp/1.12.2/langchai
+n4j-http-client-okhttp-1.1
+2.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/aura/reactivedesign/aura
+slab/libs/dev/langchain4j/
+langchain4j-http-client-ok
+http/1.12.2/langchain4j-ht
+tp-client-okhttp-1.12.2.ja
+r
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/aura/reactivedesign/aura
+slab/libs/libs/dev/langcha
+in4j/langchain4j-http-clie
+nt-okhttp/1.12.2/langchain
+4j-http-client-okhttp-1.12
+.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/aura/reactivedesign/chro
+macore/libs/dev/langchain4
+j/langchain4j-http-client-
+okhttp/1.12.2/langchain4j-
+http-client-okhttp-1.12.2.
+jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/aura/reactivedesign/chro
+macore/libs/libs/dev/langc
+hain4j/langchain4j-http-cl
+ient-okhttp/1.12.2/langcha
+in4j-http-client-okhttp-1.
+12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/aura/reactivedesign/coll
+abcanvas/libs/dev/langchai
+n4j/langchain4j-http-clien
+t-okhttp/1.12.2/langchain4
+j-http-client-okhttp-1.12.
+2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/aura/reactivedesign/coll
+abcanvas/libs/libs/dev/lan
+gchain4j/langchain4j-http-
+client-okhttp/1.12.2/langc
+hain4j-http-client-okhttp-
+1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/build-logic/build/libs/d
+ev/langchain4j/langchain4j
+-http-client-okhttp/1.12.2
+/langchain4j-http-client-o
+khttp-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/core-module/libs/dev/lan
+gchain4j/langchain4j-http-
+client-okhttp/1.12.2/langc
+hain4j-http-client-okhttp-
+1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/feature-module/libs/dev/
+langchain4j/langchain4j-ht
+tp-client-okhttp/1.12.2/la
+ngchain4j-http-client-okht
+tp-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/feature-module/libs/libs
+/dev/langchain4j/langchain
+4j-http-client-okhttp/1.12
+.2/langchain4j-http-client
+-okhttp-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/genesis/oracledrive/libs
+/dev/langchain4j/langchain
+4j-http-client-okhttp/1.12
+.2/langchain4j-http-client
+-okhttp-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/genesis/oracledrive/data
+vein/libs/dev/langchain4j/
+langchain4j-http-client-ok
+http/1.12.2/langchain4j-ht
+tp-client-okhttp-1.12.2.ja
+r
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/genesis/oracledrive/data
+vein/libs/libs/dev/langcha
+in4j/langchain4j-http-clie
+nt-okhttp/1.12.2/langchain
+4j-http-client-okhttp-1.12
+.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/genesis/oracledrive/libs
+/libs/dev/langchain4j/lang
+chain4j-http-client-okhttp
+/1.12.2/langchain4j-http-c
+lient-okhttp-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/genesis/oracledrive/root
+management/libs/dev/langch
+ain4j/langchain4j-http-cli
+ent-okhttp/1.12.2/langchai
+n4j-http-client-okhttp-1.1
+2.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/genesis/oracledrive/root
+management/libs/libs/dev/l
+angchain4j/langchain4j-htt
+p-client-okhttp/1.12.2/lan
+gchain4j-http-client-okhtt
+p-1.12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/kai/sentinelsfortress/se
+curity/libs/dev/langchain4
+j/langchain4j-http-client-
+okhttp/1.12.2/langchain4j-
+http-client-okhttp-1.12.2.
+jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/kai/sentinelsfortress/se
+curity/libs/libs/dev/langc
+hain4j/langchain4j-http-cl
+ient-okhttp/1.12.2/langcha
+in4j-http-client-okhttp-1.
+12.2.jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/libs/libs/dev/langchain4
+j/langchain4j-http-client-
+okhttp/1.12.2/langchain4j-
+http-client-okhttp-1.12.2.
+jar
+       - file:/C:/Users/Au
+raF/A.u.r.a.k.a.i_ReGenesi
+s/list/build/libs/dev/lang
+chain4j/langchain4j-http-c
+lient-okhttp/1.12.2/langch
+ain4j-http-client-okhttp-1
+.12.2.jar
+     Required by:
+         project ':app'
+
+* Try:
+> Run with --stacktrace 
+option to get the stack 
+trace.
+> Run with --info or 
+--debug option to get 
+more log output.
+> Run with --scan to get 
+full insights from a 
+Build Scan (powered by 
+Develocity).
+> Get more help at 
+https://help.gradle.org.
+
+BUILD FAILED in 30s
+4 actionable tasks: 4 up-to-date
+Configuration cache entry discarded due to serialization error.
