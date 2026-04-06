@@ -42,10 +42,11 @@ class ArbitersViewModel @Inject constructor(
     fun ignite() {
         viewModelScope.launch {
             _isIgnited.value = true
-            _transmutationState.value = TransmutationState.Transmuting
+            _transmutationState.value = TransmutationState.Transmuting(0f, "Ignition Sequence Initiated...")
             for (i in 1..100) {
                 kotlinx.coroutines.delay(30)
                 _fusionConfidence.value = i.toFloat()
+                _transmutationState.value = TransmutationState.Transmuting(i / 100f, "Synchronizing nodes...")
             }
         }
     }
