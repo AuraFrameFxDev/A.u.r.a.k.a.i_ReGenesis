@@ -144,7 +144,7 @@
             android:name=".domains.genesis.services.VertexSyncService"
             android:exported="false" />
         <service
-            android:name=".domains.kai.security.IntegrityMonitorService"
+            android:name=".domains.genesis.oracledrive.pandora.IntegrityMonitorService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property
@@ -169,12 +169,7 @@
         <service android:name=".domains.aura.AuraDriveService" />
 
         <!-- Royal Guard Security Service (Provenance Gate) -->
-        <service android:exported="false"
-            android:name="">
-            <intent-filter>
-                <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
-            </intent-filter>
-        </service>
+        <!-- Service removed: RoyalGuardServiceImpl class is missing -->
 
         <!-- Aura Omnipresent Overlay Service -->
         <service
