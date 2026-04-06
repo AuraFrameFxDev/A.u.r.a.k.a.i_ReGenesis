@@ -68,8 +68,17 @@ fun ReGenesisNavGraph(
 
         // AURA DOMAIN
         composable(ReGenesisRoute.AuraLab.route) {
-            // AurasLabScreen pending implementation or check existing
-            Box(modifier = Modifier.fillMaxSize()) { Text("Aura's Lab Placeholder", color = Color.White) }
+            dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen(
+                onNavigate = { dest -> 
+                    when(dest) {
+                        "collab_canvas" -> navController.navigate(ReGenesisRoute.CollabCanvas.route)
+                        "oracle_drive" -> navController.navigate(ReGenesisRoute.OracleDriveHub.route)
+                        "console" -> navController.navigate(ReGenesisRoute.Terminal.route)
+                        "romtools" -> navController.navigate(ReGenesisRoute.ROMFlasher.route)
+                        "center" -> navController.navigate(ReGenesisRoute.ReGenesisCustomization.route)
+                    }
+                }
+            )
         }
 
         composable(ReGenesisRoute.ColorBlendr.route) {
