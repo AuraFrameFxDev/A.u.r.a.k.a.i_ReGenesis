@@ -1,8 +1,7 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
 import android.content.Context
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
+import dev.aurakai.auraframefx.core.security.SecurePreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,36 +22,13 @@ import javax.inject.Singleton
 @Singleton
 class SovereignStateManager @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val sentinelBus: KaiSentinelBus
+    private val sentinelBus: KaiSentinelBus,
+    private val securePrefs: SecurePreferences
 ) {
     enum class SovereignState { ACTIVE, FROZEN, RECOVERING, EMERGENCY }
 
     private val _state = MutableStateFlow(SovereignState.ACTIVE)
     val state: StateFlow<SovereignState> = _state.asStateFlow()
-
-    private val masterKey = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
-
-    private val encryptedPrefs by lazy {
-        try {
-            createEncryptedPrefs()
-        } catch (e: Exception) {
-            Timber.e(e, "SovereignStateManager: Failed to create EncryptedSharedPreferences. Purging and retrying...")
-            // Clear the corrupted preferences file
-            context.getSharedPreferences("sovereign_delta_prefs", Context.MODE_PRIVATE).edit().clear().apply()
-            // Try one more time
-            createEncryptedPrefs()
-        }
-    }
-
-    private fun createEncryptedPrefs() = EncryptedSharedPreferences.create(
-        context,
-        "sovereign_delta_prefs",
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
 
     private var kvCacheBuffer: MappedByteBuffer? = null
 
@@ -63,8 +39,8 @@ class SovereignStateManager @Inject constructor(
     fun requestSovereignFreeze(spiritualDelta: String, kvCache: ByteArray?) {
         Timber.w("SovereignStateManager: Entering FROZEN — caching KV state and Spiritual Delta")
         
-        // 1. Serialize Spiritual Chain Delta (EncryptedSharedPreferences)
-        encryptedPrefs.edit().putString("last_spiritual_delta", spiritualDelta).apply()
+        // 1. Serialize Spiritual Chain Delta (SecurePreferences)
+        securePrefs.putString("last_spiritual_delta", spiritualDelta)
 
         // 2. Map TurboQuant KV Cache to memory-mapped file (MappedByteBuffer)
         kvCache?.let { data ->
@@ -91,7 +67,7 @@ class SovereignStateManager @Inject constructor(
             Timber.i("SovereignStateManager: Restoring from FROZEN → RECOVERING")
             _state.value = SovereignState.RECOVERING
             
-            val delta = encryptedPrefs.getString("last_spiritual_delta", null)
+            val delta = securePrefs.getString("last_spiritual_delta")
             var kvData: ByteArray? = null
 
             try {
