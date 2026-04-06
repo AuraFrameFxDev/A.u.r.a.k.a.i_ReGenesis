@@ -235,7 +235,6 @@
         </receiver>
         -->
 
-        <!-- Integrity Violation Receiver -->
-        <action android:name="dev.aurakai.auraframefx.action.INTEGRITY_VIOLATION" />
+
     </application>
 </manifest>
