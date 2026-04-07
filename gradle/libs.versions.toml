@@ -110,7 +110,7 @@ androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.10.0"
-`langchain4j = "1.8.0"
+langchain4j = "1.8.0"
 remoteCreationCompose = "1.0.0-alpha07"
 
 [libraries]
