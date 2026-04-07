@@ -9,6 +9,8 @@ import android.content.pm.ServiceInfo
 import android.os.IBinder
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
+import dev.aurakai.auraframefx.domains.kai.security.SovereignHealthMonitor
 
 @AndroidEntryPoint
 class IntegrityMonitorService : Service() {
