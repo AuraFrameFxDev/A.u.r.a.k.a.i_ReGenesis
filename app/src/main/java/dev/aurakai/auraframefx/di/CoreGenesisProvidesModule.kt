@@ -1,35 +1,34 @@
 package dev.aurakai.auraframefx.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.BuildConfig
+import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.cascade.utils.LogLevel
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.MemoryRetrievalConfig
-import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.ContextChainingConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.ErrorHandler
 import dev.aurakai.auraframefx.domains.cascade.utils.ErrorStats
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
-import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
+import dev.aurakai.auraframefx.domains.cascade.utils.LogLevel
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.ContextChainingConfig
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.MemoryRetrievalConfig
+import dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsDao
+import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
+import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
-import dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsDao
-import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
-import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
-import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
-import okhttp3.OkHttpClient
-import okhttp3.OkHttpClient.Builder
-import timber.log.Timber
+import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
+import dev.langchain4j.http.client.jdk.JdkHttpClientFactory
+import dev.langchain4j.model.chat.ChatLanguageModel
+import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
+import dev.langchain4j.model.openai.OpenAiChatModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import javax.inject.Named
+import timber.log.Timber
 import javax.inject.Singleton
-import java.util.concurrent.TimeUnit
 
 /**
  * Core Genesis Dependency Provision Module
@@ -115,30 +114,51 @@ object CoreGenesisProvidesModule {
     )
 
     /**
-     * Provides the NemotronEngine stub.
+     * Provides the NemotronEngine using LangChain4j OpenAiChatModel.
      * This feeds the SynchronizationCatalyst and GenesisAgent.
-     * CRITICAL: Needs real implementation from Nemotron 3 Super integration.
+     * Integrates with NVIDIA NIM for Nemotron-3 Super.
      */
     @Provides
     @Singleton
     fun provideNemotronEngine(): NemotronEngine = object : NemotronEngine {
+        private val model: ChatLanguageModel = OpenAiChatModel.builder()
+            .baseUrl("https://integrate.api.nvidia.com/v1") // Default NVIDIA NIM endpoint
+            .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
+            .modelName("nvidia/nemotron-3-8b-instruct")
+            .httpClientFactory(JdkHttpClientFactory())
+            .logRequests(true)
+            .build()
+
         override suspend fun process(prompt: String): String {
-            // Stub: Return placeholder until Nemotron integration is complete
-            return "NemotronEngine stub - integration in progress"
+            return try {
+                model.chat(prompt)
+            } catch (e: Exception) {
+                Timber.tag("NemotronEngine").e(e, "Nemotron generation failed")
+                "Nemotron Error: ${e.message}"
+            }
         }
     }
 
     /**
-     * Provides the GeminiMemoria stub.
+     * Provides the GeminiMemoria using LangChain4j GoogleAiGeminiChatModel.
      * This feeds the SynchronizationCatalyst as fallback memoria.
-     * CRITICAL: Needs real implementation from Google Gemini API integration.
      */
     @Provides
     @Singleton
     fun provideGeminiMemoria(): GeminiMemoria = object : GeminiMemoria {
+        private val model: ChatLanguageModel = GoogleAiGeminiChatModel.builder()
+            .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
+            .modelName("gemini-1.5-pro")
+            .logRequests(true)
+            .build()
+
         override suspend fun process(prompt: String): String {
-            // Stub: Return placeholder until Gemini integration is complete
-            return "GeminiMemoria stub - fallback in progress"
+            return try {
+                model.chat(prompt)
+            } catch (e: Exception) {
+                Timber.tag("GeminiMemoria").e(e, "Gemini generation failed")
+                "Gemini Error: ${e.message}"
+            }
         }
     }
 
