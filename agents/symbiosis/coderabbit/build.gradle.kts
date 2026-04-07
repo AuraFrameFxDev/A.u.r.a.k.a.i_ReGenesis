@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     id("genesis.android.library")
 }
@@ -9,4 +11,5 @@ android {
 dependencies {
     implementation(project(":core-module"))
     implementation(project(":app"))
+    implementation(libs.langchain4j)
 }
