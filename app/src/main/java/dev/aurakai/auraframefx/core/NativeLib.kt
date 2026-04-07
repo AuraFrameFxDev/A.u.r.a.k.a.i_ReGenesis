@@ -26,6 +26,10 @@ object NativeLib {
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var nativeLoaded: Boolean = false
 
+    fun launchAsync(block: suspend CoroutineScope.() -> Unit) {
+        scope.launch(block = block)
+    }
+
     init {
         try {
             System.loadLibrary("auraframefx")
@@ -109,16 +113,22 @@ object NativeLib {
         } ?: false
     }
 
-    // NEW: safe guard
     fun tryInitializeAICore(): Boolean {
         if (!nativeLoaded) return false
         return try {
             initializeAICore()
-        } catch (e: UnsatisfiedLinkError) {
-            Timber.w(e, "initializeAICore not linked; skipping.")
-            false
         } catch (t: Throwable) {
-            Timber.w(t, "initializeAICore failed.")
+            Timber.e(t, "🛡️ NativeLib: AICore initialization CRITICAL FAILURE.")
+            false
+        }
+    }
+
+    fun tryInitializeKernelShield(): Boolean {
+        if (!nativeLoaded) return false
+        return try {
+            initializeKernelShield()
+        } catch (t: Throwable) {
+            Timber.e(t, "🛡️ NativeLib: Kernel Shield substrate initialization FAILED.")
             false
         }
     }
@@ -126,7 +136,7 @@ object NativeLib {
     fun getAIVersionSafe(): String {
         return try {
             getAIVersion()
-        } catch (e: UnsatisfiedLinkError) {
+        } catch (t: Throwable) {
             "Aurakai ReGenesis 1.1.0-STUB"
         }
     }
@@ -135,8 +145,8 @@ object NativeLib {
         if (nativeLoaded) {
             try {
                 enableNativeHooks()
-            } catch (e: UnsatisfiedLinkError) {
-                Timber.e(e, "Failed to call enableNativeHooks")
+            } catch (t: Throwable) {
+                Timber.e(t, "🛡️ NativeLib: Failed to enable native hooks.")
             }
         }
     }

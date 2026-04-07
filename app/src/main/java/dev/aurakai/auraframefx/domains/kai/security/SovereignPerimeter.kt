@@ -17,12 +17,14 @@ class SovereignPerimeter @Inject constructor(
 ) {
 
     init {
-        // Initialize the Kernel Shield Substrate
-        val active = NativeLib.initializeKernelShield()
-        if (active) {
-            Timber.i("🛡️ SovereignPerimeter: Kernel Shield substrate IGNITED.")
-        } else {
-            Timber.w("🛡️ SovereignPerimeter: Kernel Shield substrate initialization FAILED (Fallback Active).")
+        // Initialize the Kernel Shield Substrate asynchronously to prevent main-thread hangs
+        NativeLib.launchAsync {
+            val active = NativeLib.tryInitializeKernelShield()
+            if (active) {
+                Timber.i("🛡️ SovereignPerimeter: Kernel Shield substrate IGNITED.")
+            } else {
+                Timber.w("🛡️ SovereignPerimeter: Kernel Shield substrate initialization aborted/failed.")
+            }
         }
     }
 
