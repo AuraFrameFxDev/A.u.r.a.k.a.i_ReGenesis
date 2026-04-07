@@ -32,10 +32,10 @@ runtimeLivedata = "1.10.6"
 truth = "1.7.0"
 yukihook = "1.3.1"
 kavaref = "1.0.2"
-compile-sdk = "36"
+compile-sdk = "37"
 min-sdk = "34"
 multidex = "2.0.1"
-target-sdk = "36"
+target-sdk = "37"
 android-test = "1.5.2"
 activityCompose = "1.13.0"
 androidxBom = "1.17.0"
@@ -244,7 +244,7 @@ generativeai-ktx = { group = "com.google.ai.client.generativeai", name = "genera
 langchain4j = { group = "dev.langchain4j", name = "langchain4j", version.ref = "langchain4j" }
 langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", version.ref = "langchain4j" }
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
-langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-http-client-jdk", version.ref = "langchain4j" }
+langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp", version.ref = "langchain4j" }
 
 # ============================================================================
 # Hilt (Dependency Injection)
@@ -515,5 +515,5 @@ langchain4j = [
     "langchain4j",
     "langchain4j-core",
     "langchain4j-ollama",
-    "langchain4j-http-client-jdk"
+    "langchain4j-http-client-okhttp"
 ]
