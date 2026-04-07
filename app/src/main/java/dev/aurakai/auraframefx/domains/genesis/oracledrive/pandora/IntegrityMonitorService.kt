@@ -12,11 +12,15 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class IntegrityMonitorService : Service() {
+    @Inject
+    lateinit var healthMonitor: SovereignHealthMonitor
+
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
         startForegroundService()
+        healthMonitor.startMonitoring()
     }
 
     private fun startForegroundService() {

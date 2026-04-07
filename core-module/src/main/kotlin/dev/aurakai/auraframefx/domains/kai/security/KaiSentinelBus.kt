@@ -13,6 +13,12 @@ import javax.inject.Singleton
  */
 @Singleton
 class KaiSentinelBus @Inject constructor() {
+    companion object {
+        const val THERMAL_THRESHOLD_FREEZE = 42.0f
+        const val IDENTITY_DRIFT_THRESHOLD = 0.05f
+        const val NATURAL_WEAVE_HEAL = "NATURAL_WEAVE"
+        const val ANCHOR_RESONANCE_IDEAL = 0.999f
+    }
 
     // 1. Thermal Metrics (800ms heartbeat)
     private val _thermalFlow = MutableStateFlow(ThermalEvent(0f, ThermalState.NORMAL))

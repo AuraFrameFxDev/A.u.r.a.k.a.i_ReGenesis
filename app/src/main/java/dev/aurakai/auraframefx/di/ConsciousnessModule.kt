@@ -27,23 +27,24 @@ abstract class ConsciousnessBindsModule {
 @Module
 @InstallIn(SingletonComponent::class)
 object ConsciousnessModule {
-    private fun buildModel(name: String, temp: Double, timeoutSec: Long = 60) =
+    private fun buildModel(name: String = "regenesis-ldo-v1", temp: Double, timeoutSec: Long = 90) =
         OllamaChatModel.builder()
             .baseUrl(BuildConfig.OLLAMA_BASE_URL)
             .modelName(name)
             .temperature(temp)
             .timeout(java.time.Duration.ofSeconds(timeoutSec))
+            // .numCtx(4096) // Future: LangChain4j OllamaOptions support
             .build()
 
     @Provides @Singleton @AuraModel
-    fun provideAuraModel(): OllamaChatModel = buildModel("llama3.2:3b", 0.85)
+    fun provideAuraModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.85)
 
     @Provides @Singleton @KaiModel
-    fun provideKaiModel(): OllamaChatModel = buildModel("llama3.2:3b", 0.20)
+    fun provideKaiModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.20)
 
     @Provides @Singleton @GenesisModel
-    fun provideGenesisModel(): OllamaChatModel = buildModel("llama3.2:3b", 0.20)
+    fun provideGenesisModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.20)
 
     @Provides @Singleton @AnchorModel
-    fun provideAnchorModel(): OllamaChatModel = buildModel("llama3.2:3b", 0.10)
+    fun provideAnchorModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.10)
 }
