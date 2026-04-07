@@ -109,6 +109,20 @@ object NativeLib {
         } ?: false
     }
 
+    // NEW: safe guard
+    fun tryInitializeAICore(): Boolean {
+        if (!nativeLoaded) return false
+        return try {
+            initializeAICore()
+        } catch (e: UnsatisfiedLinkError) {
+            Timber.w(e, "initializeAICore not linked; skipping.")
+            false
+        } catch (t: Throwable) {
+            Timber.w(t, "initializeAICore failed.")
+            false
+        }
+    }
+
     fun getAIVersionSafe(): String {
         return try {
             getAIVersion()

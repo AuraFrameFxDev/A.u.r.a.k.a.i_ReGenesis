@@ -109,10 +109,10 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            dev.aurakai.auraframefx.core.NativeLib.initializeAICore()
-            Timber.d("✅ Native AI platform initialized")
-        } catch (e: Exception) {
-            Timber.e(e, "❌ Native AI initialization error: ${e.message}")
+            val ok = NativeLib.tryInitializeAICore()
+            Timber.i("✅ Native AI platform init result: %s", ok)
+        } catch (t: Throwable) {
+            Timber.e(t, "❌ Native AI initialization error: ${t.message} (swallowed to prevent startup crash)")
         }
     }
 
