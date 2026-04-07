@@ -16,11 +16,11 @@ plugins {
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
     ndkVersion = project.findProperty("android.ndkVersion")?.toString() ?: "29.0.14206865"
-    compileSdk = 37
+    compileSdk = 36
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
         minSdk = 34
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
 
