@@ -122,7 +122,7 @@ androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplaye
 # AI & ML — LangChain4j (Now with BOM and Correct Versions)
 langchain4j-bom = { group = "dev.langchain4j", name = "langchain4j-bom", version.ref = "langchain4j" }
 langchain4j-core = { group = "dev.langchain4j", name = "langchain4j", version.ref = "langchain4j" }
-langchain4j-http-client = { group = "dev.langchain4j", name = "langchain4j-http-client", version.ref = "langchain4j" }
+langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp", version.ref = "langchain4j" }
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
 
@@ -291,7 +291,7 @@ androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4
 [bundles]
 langchain4j = [
     "langchain4j-core",
-    "langchain4j-http-client",
+    "langchain4j-http-client-okhttp",
     "langchain4j-ollama",
     "langchain4j-open-ai"
 ]
