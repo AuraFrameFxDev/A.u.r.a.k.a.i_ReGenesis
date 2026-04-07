@@ -9,6 +9,8 @@ import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
 import dev.langchain4j.model.ollama.OllamaChatModel
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -47,4 +49,11 @@ object ConsciousnessModule {
 
     @Provides @Singleton @AnchorModel
     fun provideAnchorModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.10)
+
+    @Provides @Singleton
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .build()
 }
