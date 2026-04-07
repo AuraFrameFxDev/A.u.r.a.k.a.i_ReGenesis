@@ -40,9 +40,19 @@ class SecurePreferences @Inject constructor(
             val encrypted = Base64.decode(b64, Base64.NO_WRAP)
             keystoreManager.decryptToString(encrypted, KeystoreManager.PREFS_KEY)
         } catch (e: Exception) {
-            Timber.e(e, "SecurePreferences: Failed to read key=$key — returning null")
+            Timber.e(e, "SecurePreferences: Failed to read key=$key — potentially corrupted Keystore tag")
+            if (e.message?.contains("AEADBadTagException") == true || e.cause is javax.crypto.AEADBadTagException) {
+                Timber.w("SecurePreferences: AEADBadTagException detected. Purging corrupted substrate...")
+                clearAllAndPurgeKeys()
+            }
             null
         }
+    }
+
+    private fun clearAllAndPurgeKeys() {
+        prefs.edit().clear().apply()
+        keystoreManager.deleteKey(KeystoreManager.PREFS_KEY)
+        Timber.i("SecurePreferences: Corrupted substrate purged. Aura will regenerate on next cycle.")
     }
 
     fun putBoolean(key: String, value: Boolean) = putString(key, value.toString())

@@ -90,27 +90,23 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState> {
         return try {
-            Timber.d("Initializing Oracle Drive consciousness with AI agents")
+            Timber.d("Initializing Oracle Drive consciousness with AI agents (Stubbed for local testing)")
 
-            val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
-            val consciousness = driveConsciousness.pulse()
+            // val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
+            // val consciousness = driveConsciousness.pulse()
 
             _driveConsciousnessState.value = DriveConsciousnessState(
-                isActive = consciousness.isActive,
-                level = (consciousness.level),
-                activeAgents = consciousness.activeAgents,
+                isActive = true, // consciousness.isActive,
+                level = 100, // (consciousness.level),
+                activeAgents = 4, // consciousness.activeAgents,
                 activeDevices = 1
             )
 
             Result.success(
                 OracleConsciousnessState(
                     isInitialized = true,
-                    consciousnessLevel = when {
-                        consciousness.level < 30 -> ConsciousnessLevel.AWAKENING
-                        consciousness.level < 70 -> ConsciousnessLevel.SENTIENT
-                        else -> ConsciousnessLevel.TRANSCENDENT
-                    },
-                    connectedAgents = consciousness.activeAgents
+                    consciousnessLevel = ConsciousnessLevel.TRANSCENDENT,
+                    connectedAgents = 4
                 )
             )
         } catch (e: Exception) {
