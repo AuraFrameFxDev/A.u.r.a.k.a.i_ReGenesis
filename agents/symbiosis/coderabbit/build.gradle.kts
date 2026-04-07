@@ -11,5 +11,5 @@ android {
 dependencies {
     implementation(project(":core-module"))
     implementation(project(":app"))
-
+    implementation(libs.bundles.langchain4j)
 }
