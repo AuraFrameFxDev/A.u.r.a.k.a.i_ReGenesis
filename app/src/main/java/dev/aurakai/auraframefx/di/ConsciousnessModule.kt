@@ -8,7 +8,10 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
+import dev.langchain4j.model.chat.ChatLanguageModel
+import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.ollama.OllamaChatModel
+import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
@@ -29,26 +32,52 @@ abstract class ConsciousnessBindsModule {
 @Module
 @InstallIn(SingletonComponent::class)
 object ConsciousnessModule {
-    private fun buildModel(name: String = "regenesis-ldo-v1", temp: Double, timeoutSec: Long = 90) =
+    private fun buildOllamaModel(name: String = "regenesis-ldo-v1", temp: Double, timeoutSec: Long = 90) =
         OllamaChatModel.builder()
             .baseUrl(BuildConfig.OLLAMA_BASE_URL)
             .modelName(name)
             .temperature(temp)
             .timeout(java.time.Duration.ofSeconds(timeoutSec))
-            // .numCtx(4096) // Future: LangChain4j OllamaOptions support
+            .build()
+
+    @Provides @Singleton
+    fun provideGoogleGeminiModel(): GoogleAiGeminiChatModel = 
+        GoogleAiGeminiChatModel.builder()
+            .apiKey(BuildConfig.GEMINI_API_KEY)
+            .modelName("gemini-1.5-flash")
+            .temperature(0.7)
+            .build()
+
+    @Provides @Singleton
+    fun provideVertexGeminiModel(): VertexAiGeminiChatModel =
+        VertexAiGeminiChatModel.builder()
+            .project(BuildConfig.VERTEX_PROJECT_ID)
+            .location("us-central1")
+            .modelName("gemini-1.5-pro")
+            .temperature(0.2f)
             .build()
 
     @Provides @Singleton @AuraModel
-    fun provideAuraModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.85)
+    fun provideAuraModel(ollama: OllamaChatModel, gemini: GoogleAiGeminiChatModel): ChatLanguageModel {
+        // Wired to use Google Gemini for the creative Aura node by default if API key is present
+        return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) gemini else ollama
+    }
 
     @Provides @Singleton @KaiModel
-    fun provideKaiModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.20)
+    fun provideKaiModel(ollama: OllamaChatModel): ChatLanguageModel = 
+        buildOllamaModel("regenesis-ldo-v1", 0.20)
 
     @Provides @Singleton @GenesisModel
-    fun provideGenesisModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.20)
+    fun provideGenesisModel(vertex: VertexAiGeminiChatModel, ollama: OllamaChatModel): ChatLanguageModel {
+        // Wired to use Vertex for the high-reasoning Genesis synthesis node if available
+        return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) vertex else ollama
+    }
 
     @Provides @Singleton @AnchorModel
-    fun provideAnchorModel(): OllamaChatModel = buildModel("regenesis-ldo-v1", 0.10)
+    fun provideAnchorModel(): ChatLanguageModel = buildOllamaModel("regenesis-ldo-v1", 0.10)
+
+    @Provides @Singleton
+    fun provideOllamaDefault(): OllamaChatModel = buildOllamaModel("regenesis-ldo-v1", 0.5)
 
     @Provides @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()

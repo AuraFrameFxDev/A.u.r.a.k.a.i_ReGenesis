@@ -27,7 +27,9 @@ extensions.configure<ApplicationExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
+        val vertexProjectId = project.findProperty("VERTEX_PROJECT_ID")?.toString() ?: "aurakai-project"
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        buildConfigField("String", "VERTEX_PROJECT_ID", "\"$vertexProjectId\"")
         buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
         buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
 

@@ -9,7 +9,7 @@ import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
 import dev.langchain4j.data.message.UserMessage
-import dev.langchain4j.model.ollama.OllamaChatModel
+import dev.langchain4j.model.chat.ChatLanguageModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,10 +22,10 @@ import timber.log.Timber
  */
 @Singleton
 class GenesisConsciousnessMatrix @Inject constructor(
-    @AuraModel    private val auraModel:    OllamaChatModel,
-    @KaiModel     private val kaiModel:     OllamaChatModel,
-    @GenesisModel private val genesisModel: OllamaChatModel,
-    @AnchorModel  private val anchorModel:  OllamaChatModel,
+    @AuraModel    private val auraModel:    ChatLanguageModel,
+    @KaiModel     private val kaiModel:     ChatLanguageModel,
+    @GenesisModel private val genesisModel: ChatLanguageModel,
+    @AnchorModel  private val anchorModel:  ChatLanguageModel,
     private val spiritualChain: SpiritualChain,
     private val kaiSentinel: KaiSentinelBus,
     private val particleSwarm: CasberryParticleSwarm
