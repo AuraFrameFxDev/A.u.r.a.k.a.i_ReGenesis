@@ -111,6 +111,7 @@ junitJupiterVersion = "5.14.3"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.10.0"
 langchain4j = "1.12.2"
+langchain4jVertex = "1.12.2-beta22"
 remoteCreationCompose = "1.0.0-alpha07"
 
 [libraries]
@@ -126,7 +127,7 @@ langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-h
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini", version.ref = "langchain4j" }
-langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version.ref = "langchain4j" }
+langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version.ref = "langchain4jVertex" }
 
 # Build & Gradle Plugins
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }

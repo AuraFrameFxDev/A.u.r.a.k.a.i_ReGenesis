@@ -103,7 +103,9 @@ extensions.configure<ApplicationExtension> {
         }
         jniLibs {
             useLegacyPackaging = false
-            pickFirsts += listOf("**/libc++_shared.so", "**/libjsc.so")
+            pickFirsts += "**/libc++_shared.so"
+            pickFirsts += "**/libjsc.so"
+            pickFirsts += "**/libnative-lib.so"
         }
     }
 
@@ -285,7 +287,7 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
-    implementation(libs.generativeai)
+    // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
     // LangChain4j & Ollama
     implementation(libs.bundles.langchain4j)
