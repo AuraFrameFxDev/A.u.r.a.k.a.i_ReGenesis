@@ -53,4 +53,21 @@ class TurboQuantCache @Inject constructor() {
     fun getAllActiveKeys(): Set<String> = cache.keys
 
     fun size(): Int = cache.size
+
+    /**
+     * Entry #16: Inject harvested tokens for analysis and fueling.
+     */
+    fun injectForAnalysis(tokens: List<String>) {
+        val total = tokens.size
+        // In a real build, we'd log via Timber, but keeping it simple here
+        currentTokens += total
+    }
+
+    var currentTokens: Int = 0
+        private set
+
+    /**
+     * Mock tokenization for the Sovereign layer.
+     */
+    fun tokenize(raw: Any): List<String> = raw.toString().split(" ").filter { it.length > 2 }
 }
