@@ -318,6 +318,11 @@ configurations.all {
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
+    
+    // Resolve Protobuf and Google Common Protos conflicts
+    exclude(group = "com.google.protobuf", module = "protobuf-java")
+    exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
+
     resolutionStrategy {
         force("org.jetbrains:annotations:26.1.0")
         force("androidx.appcompat:appcompat:1.7.1")
@@ -326,5 +331,6 @@ configurations.all {
         force("com.google.dagger:hilt-android-compiler:2.59.2")
         force("androidx.test.espresso:espresso-core:3.7.0")
         force("com.google.protobuf:protolite-well-known-types:18.4.0")
+        force("com.google.protobuf:protobuf-javalite:3.25.5")
     }
 }
