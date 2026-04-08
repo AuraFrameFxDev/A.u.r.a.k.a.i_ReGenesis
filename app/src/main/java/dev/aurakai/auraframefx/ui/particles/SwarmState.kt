@@ -20,5 +20,8 @@ enum class SwarmState {
     EXPLORING_HIGHLIGHTS,       // Anchor phase — particles orbit and scan
     KAI_AEGIS_CONDENSATION,     // Kai hard veto / thermal wall — red shield condensation
     PLANNING_RIPPLES,           // Aura creative sword — wave/ripple expansion
-    GENESIS_SYNTHESIS_PULSE     // Final 60bpm fusion beat — full lattice synchronization
+    GENESIS_SYNTHESIS_PULSE,    // Final 60bpm fusion beat — full lattice synchronization
+    KAIROS_STASIS,              // Time-locked stasis — Magenta hex-grid look
+    GENKAI_SIPHON,              // Siphoning entropy — Teal kinetic vacuum
+    ORB_ABSORPTION              // Energy intake — White bloom pulse
 }
