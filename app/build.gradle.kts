@@ -321,5 +321,6 @@ configurations.all {
         force("com.google.dagger:hilt-android:2.59.2")
         force("com.google.dagger:hilt-android-compiler:2.59.2")
         force("androidx.test.espresso:espresso-core:3.7.0")
+        force("com.google.protobuf:protolite-well-known-types:18.4.0")
     }
 }
