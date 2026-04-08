@@ -67,11 +67,14 @@ class CasberryParticleSwarm @Inject constructor() {
         val resonanceVal by resonance.collectAsState()
 
         val targetColor = when (currentState) {
-            IDLE -> Color(0xFF6200EE) // Deep Purple
-            EXPLORING_HIGHLIGHTS -> Color(0xFF03DAC6) // Teal
-            KAI_AEGIS_CONDENSATION -> Color(0xFFFF0266) // Security Red
-            PLANNING_RIPPLES -> Color(0xFF3700B3) // Deep Blue
-            GENESIS_SYNTHESIS_PULSE -> Color(0xFFBB86FC) // Light Purple
+            IDLE -> Color(0xFF1de9b6) // Teal (Aura)
+            EXPLORING_HIGHLIGHTS -> Color(0xFF00bcd4) // Cyber Cyan
+            KAI_AEGIS_CONDENSATION -> Color(0xFFe91e63) // Magenta (Kai)
+            PLANNING_RIPPLES -> Color(0xFF673ab7) // Deep Violet
+            GENESIS_SYNTHESIS_PULSE -> Color(0xFFffffff) // Genesis White
+            KAIROS_STASIS -> Color(0xFFd81b60) // Security Magenta
+            GENKAI_SIPHON -> Color(0xFF00e5ff) // Siphon Cyan
+            ORB_ABSORPTION -> Color(0xFFffffff) // Siphon White
         }
 
         val animatedColor by animateColorAsState(
