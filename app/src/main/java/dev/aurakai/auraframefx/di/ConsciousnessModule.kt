@@ -8,6 +8,8 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
+import dev.aurakai.auraframefx.domains.aura.ui.components.RealityMorphBridge
+import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.ollama.OllamaChatModel
@@ -85,4 +87,10 @@ object ConsciousnessModule {
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
         .build()
+
+    @Provides @Singleton
+    fun provideRealityMorphBridge(): RealityMorphBridge = RealityMorphBridge()
+
+    @Provides @Singleton
+    fun provideTurboQuantCache(): TurboQuantCache = TurboQuantCache()
 }
