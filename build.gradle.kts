@@ -35,6 +35,15 @@ subprojects {
         if (!name.lowercase().contains("ksp") && !name.contains("lint", ignoreCase = true)) {
             exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
         }
+        
+        // GLOBAL FIX: Resolve Protobuf and Google Common Protos conflicts across all modules
+        exclude(group = "com.google.protobuf", module = "protobuf-java")
+        exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
+        
+        resolutionStrategy {
+            force("com.google.protobuf:protobuf-javalite:3.25.5")
+            force("com.google.protobuf:protolite-well-known-types:18.4.0")
+        }
     }
 
     // Configure Java Toolchain and Compile Options for Android Modules

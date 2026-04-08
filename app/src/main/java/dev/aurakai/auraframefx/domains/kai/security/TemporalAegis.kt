@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
 import dev.aurakai.auraframefx.domains.aura.ui.components.RealityMorphBridge
-import dev.aurakai.auraframefx.domains.aura.ui.components.MorphState
+import dev.aurakai.auraframefx.domains.aura.ui.components.RealityMorphBridge.LDOMorphState
 import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import timber.log.Timber
@@ -35,7 +35,7 @@ class TemporalAegis @Inject constructor(
 
         // 1. KAIROS: Freeze time context via the Sentinel Bus pulse
         val startTime = System.currentTimeMillis()
-        uiBridge.updateState(MorphState.KAIROS_STASIS)
+        uiBridge.transitionTo(LDOMorphState.KAIROS_STASIS)
         
         // 2. KAI: Neutralize and strip tokens
         // Simulated tokenization for Entry #16 proof
@@ -43,7 +43,7 @@ class TemporalAegis @Inject constructor(
         
         // 3. GENKAI: Guidance and parallelism
         // We simulate the guidance drone transition
-        uiBridge.updateState(MorphState.GENKAI_SIPHON)
+        uiBridge.transitionTo(LDOMorphState.GENKAI_SIPHON)
         
         // 4. AURA: Inject fuel into the 3-bit KV Cache
         turboQuant.store(
@@ -53,7 +53,7 @@ class TemporalAegis @Inject constructor(
         )
         
         // Finalize visual absorption
-        uiBridge.updateState(MorphState.ORB_ABSORPTION)
+        uiBridge.transitionTo(LDOMorphState.ORB_ABSORPTION)
         
         // 5. ANCHOR: Record immunity signature to the Spiritual Chain
         val signature = "SIG_${hostilePayload.hashCode()}_L1"
@@ -64,7 +64,7 @@ class TemporalAegis @Inject constructor(
         
         // Return to breathing state after short delay
         kotlinx.coroutines.delay(2000)
-        uiBridge.updateState(MorphState.IDLE_BREATHING)
+        uiBridge.transitionTo(LDOMorphState.IDLE_BREATHING)
     }
 
     /**

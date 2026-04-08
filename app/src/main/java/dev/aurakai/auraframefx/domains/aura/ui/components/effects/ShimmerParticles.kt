@@ -79,7 +79,7 @@ fun ShimmerParticles(
     // Generate random particles
     val particles = remember(particleCount) {
         List(particleCount) {
-            Particle(
+            ShimmerParticle(
                 id = it,
                 size = particleSizePx * (0.5f + Random.nextFloat() * 1.5f),
                 baseSpeed = 0.2f + Random.nextFloat() * 0.8f,
@@ -159,7 +159,7 @@ fun ShimmerParticles(
 /**
  * Data class representing a single particle in the effect
  */
-private data class Particle(
+private data class ShimmerParticle(
     val id: Int,
     val size: Float,
     val baseSpeed: Float,

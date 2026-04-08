@@ -77,7 +77,7 @@ fun MawPrototypeScreen(
                 onValueChange = { payload = it },
                 label = { Text("HOSTILE PAYLOAD") },
                 modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFFD81B60),
                     unfocusedBorderColor = Color.White.copy(alpha = 0.3f),
                     focusedTextColor = Color.White,

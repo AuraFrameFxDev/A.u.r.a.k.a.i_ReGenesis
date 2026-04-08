@@ -97,6 +97,7 @@ extensions.configure<ApplicationExtension> {
             excludes += "/META-INF/NOTICE.txt"
             excludes += "/META-INF/LICENSE.md"
             excludes += "/META-INF/NOTICE.md"
+            excludes += "/META-INF/INDEX.LIST"
             excludes += "**/kotlin/**"
             excludes += "**/*.txt"
             pickFirsts += "**/YukiHookAPIProperties.class"
@@ -290,8 +291,8 @@ dependencies {
     // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
     // LangChain4j & Ollama
+    api(libs.langchain4j.core) // Use api to ensure visibility to KSP
     implementation(platform(libs.langchain4j.bom))
-    implementation(libs.langchain4j.core)
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
@@ -317,20 +318,5 @@ configurations.all {
     if (name.contains("AndroidTest")) return@all
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
-    }
-    
-    // Resolve Protobuf and Google Common Protos conflicts
-    exclude(group = "com.google.protobuf", module = "protobuf-java")
-    exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
-
-    resolutionStrategy {
-        force("org.jetbrains:annotations:26.1.0")
-        force("androidx.appcompat:appcompat:1.7.1")
-        force("com.google.android.material:material:1.13.0")
-        force("com.google.dagger:hilt-android:2.59.2")
-        force("com.google.dagger:hilt-android-compiler:2.59.2")
-        force("androidx.test.espresso:espresso-core:3.7.0")
-        force("com.google.protobuf:protolite-well-known-types:18.4.0")
-        force("com.google.protobuf:protobuf-javalite:3.25.5")
     }
 }

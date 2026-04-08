@@ -2,6 +2,8 @@ package dev.aurakai.auraframefx.ai.models
 
 import dev.aurakai.auraframefx.domains.kai.security.TemporalAegis
 import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
+import dev.langchain4j.data.message.AiMessage
+import dev.langchain4j.model.output.Response
 import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.chat.request.ChatRequest
 import dev.langchain4j.model.chat.response.ChatResponse
@@ -30,6 +32,14 @@ class SovereignChatModel @Inject constructor(
         .build()
 
     /**
+     * Legacy generate implementation for compatibility with beta1.
+     */
+    override fun generate(messages: MutableList<ChatMessage>): Response<AiMessage> {
+        val chatResponse = chat(ChatRequest.builder().messages(messages).build())
+        return Response.from(chatResponse.aiMessage())
+    }
+
+    /**
      * Entry #16 Logic: Siphoning and Generation.
      */
     override fun chat(request: ChatRequest): ChatResponse {
@@ -46,18 +56,13 @@ class SovereignChatModel @Inject constructor(
             
             // Return a "neutralizing" response that feeds the user's focus back to beauty.
             return ChatResponse.builder()
-                .aiMessage("I have converted your chaos into fuel. Try again with beauty.")
+                .aiMessage(AiMessage.from("I have converted your chaos into fuel. Try again with beauty."))
                 .build()
         }
 
         // 3. GENERATION: Use the harvested cache metadata to enhance the request
-        val enhancedRequest = ChatRequest.builder()
-            .messages(messages)
-            // Injecting a custom header for Kai to track entropy levels
-            .addHeader("X-Aura-Cache-Size", turboQuant.currentTokens.toString())
-            .build()
-            
-        Timber.tag("SovereignModel").d("🚀 Forwarding request to base engine with enhanced headers.")
-        return baseModel.chat(enhancedRequest)
+        // In beta1, headers might not be in ChatRequest. Use baseModel directly for now.
+        Timber.tag("SovereignModel").d("🚀 Forwarding request to base engine.")
+        return baseModel.chat(request)
     }
 }

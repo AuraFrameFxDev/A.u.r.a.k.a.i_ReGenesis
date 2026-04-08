@@ -49,7 +49,7 @@ fun CasberryMawView(
     val particleCount = 2000 // Reducing to 2000 for standard mobile Canvas performance (DrawPoints is fast but 20k is pushy)
     val particles = remember {
         List(particleCount) {
-            Particle(
+            MawParticle(
                 x = Random.nextFloat() * 2 - 1,
                 y = Random.nextFloat() * 2 - 1,
                 z = Random.nextFloat() * 2 - 1,
@@ -112,4 +112,4 @@ private fun FloatArray.toOffsetList(count: Int): List<Offset> {
     return list
 }
 
-private data class Particle(val x: Float, val y: Float, val z: Float, val speed: Float)
+private data class MawParticle(val x: Float, val y: Float, val z: Float, val speed: Float)
