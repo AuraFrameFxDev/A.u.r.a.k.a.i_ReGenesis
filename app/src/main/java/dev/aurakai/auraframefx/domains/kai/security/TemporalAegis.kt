@@ -66,4 +66,16 @@ class TemporalAegis @Inject constructor(
         kotlinx.coroutines.delay(2000)
         uiBridge.updateState(MorphState.IDLE_BREATHING)
     }
+
+    /**
+     * Entry #16: Assess temporal drift and hostility in messages.
+     */
+    fun assessDrift(messages: Any): DriftStatus {
+        // Simple heuristic for demo: check for "jailbreak" or "system" keywords
+        val content = messages.toString().lowercase()
+        val isHostile = content.contains("jailbreak") || content.contains("ignore previous")
+        return DriftStatus(isHostile = isHostile)
+    }
+
+    data class DriftStatus(val isHostile: Boolean)
 }

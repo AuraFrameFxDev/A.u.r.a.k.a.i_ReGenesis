@@ -20,13 +20,9 @@ import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
-
-import dev.langchain4j.http.client.jdk.JdkHttpClient
 import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
-import okhttp3.OkHttpClient
-import okhttp3.OkHttpClient.Builder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
