@@ -32,6 +32,10 @@ dependencies {
     // Expose core KTX as API (types leak to consumers)
     api(libs.androidx.core.ktx)
 
+    // LangChain4j Core - Elevated to API for KSP visibility
+    api(libs.langchain4j.core)
+    implementation(platform(libs.langchain4j.bom))
+
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)

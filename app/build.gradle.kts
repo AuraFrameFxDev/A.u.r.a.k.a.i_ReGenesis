@@ -300,20 +300,16 @@ dependencies {
     // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
     // LangChain4j & Ollama
-    api(libs.langchain4j.core)
+    // CRITICAL: BOM must be declared FIRST to govern all langchain4j version resolution
     implementation(platform(libs.langchain4j.bom))
+    // api() so ChatLanguageModel interface leaks to all consuming modules (required by Hilt/KSP)
+    api(libs.langchain4j.core)
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
     implementation(libs.langchain4j.http.client.jdk)
     implementation(libs.langchain4j.vertex.ai.gemini)
     implementation("dev.langchain4j:langchain4j:${libs.versions.langchain4j.get()}")
-
-    // KSP Classpath for Hilt Symbol Processing
-    ksp(libs.langchain4j.core)
-    ksp(libs.langchain4j.vertex.ai.gemini)
-    ksp(libs.langchain4j.google.ai.gemini)
-    ksp(libs.langchain4j.ollama)
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
