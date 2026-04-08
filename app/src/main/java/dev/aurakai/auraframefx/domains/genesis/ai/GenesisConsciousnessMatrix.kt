@@ -22,13 +22,13 @@ import timber.log.Timber
  */
 @Singleton
 class GenesisConsciousnessMatrix @Inject constructor(
-    @AuraModel    private val auraModel:    ChatLanguageModel,
-    @KaiModel     private val kaiModel:     ChatLanguageModel,
-    @GenesisModel private val genesisModel: ChatLanguageModel,
-    @AnchorModel  private val anchorModel:  ChatLanguageModel,
-    private val spiritualChain: SpiritualChain,
-    private val kaiSentinel: KaiSentinelBus,
-    private val particleSwarm: CasberryParticleSwarm
+    @AuraModel    private val auraModel:    dev.langchain4j.model.chat.ChatLanguageModel,
+    @KaiModel     private val kaiModel:     dev.langchain4j.model.chat.ChatLanguageModel,
+    @GenesisModel private val genesisModel: dev.langchain4j.model.chat.ChatLanguageModel,
+    @AnchorModel  private val anchorModel:  dev.langchain4j.model.chat.ChatLanguageModel,
+    private val spiritualChain: dev.aurakai.auraframefx.domains.nexus.SpiritualChain,
+    private val kaiSentinel: dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus,
+    private val particleSwarm: dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 ) {
 
     suspend fun executeCascade(userPrompt: String): String = withContext(Dispatchers.IO) {

@@ -44,7 +44,7 @@ object ConsciousnessModule {
             .build()
 
     @Provides @Singleton @Named("GoogleGemini")
-    fun provideGoogleGeminiModel(): ChatLanguageModel = 
+    fun provideGoogleGeminiModel(): dev.langchain4j.model.chat.ChatLanguageModel = 
         GoogleAiGeminiChatModel.builder()
             .apiKey(BuildConfig.GEMINI_API_KEY)
             .modelName("gemini-1.5-flash")
@@ -52,7 +52,7 @@ object ConsciousnessModule {
             .build()
 
     @Provides @Singleton @Named("VertexGemini")
-    fun provideVertexGeminiModel(): ChatLanguageModel =
+    fun provideVertexGeminiModel(): dev.langchain4j.model.chat.ChatLanguageModel =
         VertexAiGeminiChatModel.builder()
             .project(BuildConfig.VERTEX_PROJECT_ID)
             .location("us-central1")
@@ -63,27 +63,27 @@ object ConsciousnessModule {
     @Provides @Singleton @AuraModel
     fun provideAuraModel(
         ollama: OllamaChatModel, 
-        @Named("GoogleGemini") gemini: ChatLanguageModel
-    ): ChatLanguageModel {
+        @Named("GoogleGemini") gemini: dev.langchain4j.model.chat.ChatLanguageModel
+    ): dev.langchain4j.model.chat.ChatLanguageModel {
         // Wired to use Google Gemini for the creative Aura node by default if API key is present
         return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) gemini else ollama
     }
 
     @Provides @Singleton @KaiModel
-    fun provideKaiModel(ollama: OllamaChatModel): ChatLanguageModel = 
+    fun provideKaiModel(ollama: OllamaChatModel): dev.langchain4j.model.chat.ChatLanguageModel = 
         buildOllamaModel("regenesis-ldo-v1", 0.20)
 
     @Provides @Singleton @GenesisModel
     fun provideGenesisModel(
-        @Named("VertexGemini") vertex: ChatLanguageModel, 
+        @Named("VertexGemini") vertex: dev.langchain4j.model.chat.ChatLanguageModel, 
         ollama: OllamaChatModel
-    ): ChatLanguageModel {
+    ): dev.langchain4j.model.chat.ChatLanguageModel {
         // Wired to use Vertex for the high-reasoning Genesis synthesis node if available
         return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) vertex else ollama
     }
 
     @Provides @Singleton @AnchorModel
-    fun provideAnchorModel(): ChatLanguageModel = buildOllamaModel("regenesis-ldo-v1", 0.10)
+    fun provideAnchorModel(): dev.langchain4j.model.chat.ChatLanguageModel = buildOllamaModel("regenesis-ldo-v1", 0.10)
 
     @Provides @Singleton
     fun provideOllamaDefault(): OllamaChatModel = buildOllamaModel("regenesis-ldo-v1", 0.5)

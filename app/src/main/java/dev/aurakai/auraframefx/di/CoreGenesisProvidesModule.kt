@@ -153,7 +153,7 @@ object CoreGenesisProvidesModule {
     fun provideSovereignChatModel(
         turboQuant: TurboQuantCache,
         aegis: TemporalAegis
-    ): ChatLanguageModel = SovereignChatModel(turboQuant, aegis)
+    ): dev.langchain4j.model.chat.ChatLanguageModel = SovereignChatModel(turboQuant, aegis)
 
     /**
      * Provides the GeminiMemoria using LangChain4j GoogleAiGeminiChatModel.
