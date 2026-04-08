@@ -138,11 +138,11 @@ ksp {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
-                // Bypass the enum limitation by using the String factory
-                // This targets JVM 26 even if JvmTarget.JVM_26 isn't in your current KGP classpath
+        // Bypass the enum limitation by using the String factory
+        // This targets JVM 26 even if JvmTarget.JVM_26 isn't in your current KGP classpath
         jvmTarget.set(JvmTarget.fromTarget("25"))
 
-                // Set experimental language version to 2.4+ to support -Xcontext-parameters
+        // Set experimental language version to 2.4+ to support -Xcontext-parameters
         languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_4)
 
         freeCompilerArgs.addAll(
@@ -150,9 +150,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
             "-Xannotation-default-target=param-property",
             "-Xlambdas=indy",        // Optimizes performance for modern JVMs
             "-Xjvm-enable-preview"   // Necessary if JVM 26 features are still in preview
-                )
-            }
-        }
+        )
+    }
+}
 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
@@ -309,7 +309,6 @@ dependencies {
     implementation(libs.langchain4j.ollama)
     implementation(libs.langchain4j.http.client.jdk)
     implementation(libs.langchain4j.vertex.ai.gemini)
-    implementation("dev.langchain4j:langchain4j:${libs.versions.langchain4j.get()}")
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
@@ -331,7 +330,7 @@ configurations.all {
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-    
+
     // Nuke the Moshi Kapt warning by ensuring it's never on annotationProcessor paths
     if (name.lowercase().contains("annotationprocessor")) {
         exclude(group = "com.squareup.moshi", module = "moshi-kotlin-codegen")
