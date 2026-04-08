@@ -69,6 +69,14 @@ gradlePlugin {
             id = "genesis.android.library.hilt"
             implementationClass = "GenesisLibraryHiltPlugin"
         }
+        register("genesisRoom") {
+            id = "genesis.android.room"
+            implementationClass = "GenesisRoomPlugin"
+        }
+        register("genesisYukiHook") {
+            id = "genesis.android.yukihook"
+            implementationClass = "GenesisYukiHookPlugin"
+        }
     }
 }
 
