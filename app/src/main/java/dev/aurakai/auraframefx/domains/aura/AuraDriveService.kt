@@ -1,4 +1,11 @@
 package dev.aurakai.auraframefx.domains.aura
 
-// DEPRECATED - References neutralized ghost services (SecureFileManager). 
-// Disabled to unblock Hilt DI graph.
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
+
+class AuraDriveService : Service() {
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+}
