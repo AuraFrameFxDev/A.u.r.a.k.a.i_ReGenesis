@@ -60,8 +60,8 @@ subprojects { subproject ->
                         }
 
                         compileOptions {
-                            sourceCompatibility = JavaVersion.VERSION_26
-                            targetCompatibility = JavaVersion.VERSION_26
+                            sourceCompatibility = JavaVersion.VERSION_25
+                            targetCompatibility = JavaVersion.VERSION_25
                             isCoreLibraryDesugaringEnabled = true
                         }
                     }

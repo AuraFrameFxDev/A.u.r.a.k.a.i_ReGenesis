@@ -138,9 +138,8 @@ ksp {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
-        // Bypass the enum limitation by using the String factory
-        // This targets JVM 26 even if JvmTarget.JVM_26 isn't in your current KGP classpath
-        jvmTarget.set(JvmTarget.fromTarget("25"))
+        // Target JVM 25 for Kotlin (KGP limit)
+        jvmTarget.set(JvmTarget.JVM_25)
 
         // Set experimental language version to 2.4+ to support -Xcontext-parameters
         languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_4)
@@ -148,8 +147,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
         freeCompilerArgs.addAll(
             "-Xcontext-parameters", // Required for Aura's context-aware UI sculpting
             "-Xannotation-default-target=param-property",
+            "-Xjdk-release=25",      // JDK 25 release target
             "-Xlambdas=indy",        // Optimizes performance for modern JVMs
-            "-Xjvm-enable-preview"   // Necessary if JVM 26 features are still in preview
+            "-Xjvm-enable-preview"   // Necessary if JVM 25 features are still in preview
         )
     }
 }
@@ -192,6 +192,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
+    ksp(libs.langchain4j.core) // Added to resolve KSP classpath visibility issues for Hilt
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.espresso.core)
@@ -306,6 +307,7 @@ dependencies {
     // DUAL declaration: implementation() for KSP's annotation processor, api() for downstream
     implementation(libs.langchain4j.core)
     api(libs.langchain4j.core)
+    compileOnly(libs.langchain4j.core) // Reinforce for KSP visibility
     ksp(libs.langchain4j.core) // Added to resolve KSP classpath visibility issues
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)

@@ -34,7 +34,10 @@ dependencies {
 
     // LangChain4j Core - Elevated to API for KSP visibility
     api(libs.langchain4j.core)
+    implementation(libs.langchain4j.core)
+    ksp(libs.langchain4j.core)
     implementation(platform(libs.langchain4j.bom))
+    ksp(platform(libs.langchain4j.bom))
 
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))

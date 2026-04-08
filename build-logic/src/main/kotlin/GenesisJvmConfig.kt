@@ -27,7 +27,7 @@ object GenesisJvmConfig {
      *
      * Java 25 bytecode is:
      * - Firebase compatible
-     * - Maximum target supported by Kotlin 2.2.x/2.3.x
+     * - Maximum target supported by Kotlin 2.3.x/2.4.x
      * - Enables modern Java features with backward compatibility via desugaring
      */
     const val JVM_VERSION = 25
@@ -45,15 +45,14 @@ object GenesisJvmConfig {
      */
     fun configureKotlinJvm(project: Project) {
         with(project) {
-            // Configure Kotlin compilation to match Java toolchain
-            // MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
+            // Configure Kotlin compilation - TARGET 25 (KGP limit)
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(JvmTarget.JVM_25)
                     freeCompilerArgs.addAll(
                         "-Xcontext-parameters",
                         "-Xannotation-default-target=param-property",
-                        "-Xjdk-release=25",
+                        "-Xjdk-release=$JVM_VERSION",
                         "-opt-in=kotlin.RequiresOptIn",
                         "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
@@ -63,8 +62,8 @@ object GenesisJvmConfig {
 
             // Explicitly configure Java compilation tasks to target JVM 25
             tasks.withType<JavaCompile>().configureEach {
-                sourceCompatibility = JavaVersion.VERSION_25.toString()
-                targetCompatibility = JavaVersion.VERSION_25.toString()
+                sourceCompatibility = JVM_VERSION.toString()
+                targetCompatibility = JVM_VERSION.toString()
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready

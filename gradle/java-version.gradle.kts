@@ -27,8 +27,8 @@ allprojects {
     // Configure Java compilation for all modules
     plugins.withType<JavaPlugin> {
         tasks.withType<JavaCompile>().configureEach {
-            sourceCompatibility = "26"
-            targetCompatibility = "26"
+            sourceCompatibility = "25"
+            targetCompatibility = "25"
             options.encoding = "UTF-8"
             options.isIncremental = true
             options.isFork = true
@@ -60,8 +60,8 @@ allprojects {
         - Java Version: $jreVersion
         - Java Home: $jreHome
         - Active Java Toolchain: ${JavaVersion.current()}
-        - Target Java Toolchain: 26
-        - Java Bytecode Target: 26 (sourceCompatibility/targetCompatibility)
+        - Target Java Toolchain: 25
+        - Java Bytecode Target: 25 (sourceCompatibility/targetCompatibility)
         - Kotlin Compiler Target: 25
         - Project: ${project.name} (${project.path})
         ===================================================================""".trimIndent()
