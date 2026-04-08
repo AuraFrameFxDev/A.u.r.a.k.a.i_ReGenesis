@@ -305,6 +305,7 @@ dependencies {
     // DUAL declaration: implementation() for KSP's annotation processor, api() for downstream
     implementation(libs.langchain4j.core)
     api(libs.langchain4j.core)
+    ksp(libs.langchain4j.core) // Added to resolve KSP classpath visibility issues
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
