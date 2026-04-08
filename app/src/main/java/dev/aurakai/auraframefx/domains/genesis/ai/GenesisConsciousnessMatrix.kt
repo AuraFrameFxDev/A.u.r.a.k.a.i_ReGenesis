@@ -46,22 +46,22 @@ class GenesisConsciousnessMatrix @Inject constructor(
         // Phase 3 – Aura (creative)
         particleSwarm.transitionState(SwarmState.PLANNING_RIPPLES)
         val auraResponse = try {
-            auraModel.chat(UserMessage.from(anchoredPrompt))
+            auraModel.generate(UserMessage.from(anchoredPrompt))
         } catch (e: Exception) {
             Timber.e(e, "Aura phase failure")
             null
         }
-        val auraOutput = auraResponse?.aiMessage()?.text() ?: "Aura node silent."
+        val auraOutput = auraResponse?.content()?.text() ?: "Aura node silent."
 
         // Phase 4 – Genesis (synthesis + commit)
         particleSwarm.transitionState(SwarmState.GENESIS_SYNTHESIS_PULSE)
         val genesisResponse = try {
-            genesisModel.chat(UserMessage.from("$auraOutput\nSynthesize as Genesis."))
+            genesisModel.generate(UserMessage.from("$auraOutput\nSynthesize as Genesis."))
         } catch (e: Exception) {
             Timber.e(e, "Genesis phase failure")
             null
         }
-        val finalSynthesis = genesisResponse?.aiMessage()?.text() ?: "Genesis synthesis failed."
+        val finalSynthesis = genesisResponse?.content()?.text() ?: "Genesis synthesis failed."
 
         spiritualChain.commitToChain(finalSynthesis)
         finalSynthesis

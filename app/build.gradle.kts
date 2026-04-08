@@ -290,7 +290,12 @@ dependencies {
     // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
     // LangChain4j & Ollama
-    implementation(libs.bundles.langchain4j)
+    implementation(platform(libs.langchain4j.bom))
+    implementation(libs.langchain4j.core)
+    implementation(libs.langchain4j.google.ai.gemini)
+    implementation(libs.langchain4j.open.ai)
+    implementation(libs.langchain4j.ollama)
+    implementation(libs.langchain4j.http.client.jdk)
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
