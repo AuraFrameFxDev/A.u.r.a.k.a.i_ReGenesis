@@ -270,6 +270,10 @@ fun ReGenesisNavGraph(
                 )
             }
         }
+
+        composable(ReGenesisRoute.MawPrototype.route) {
+            MawPrototypeScreen(onBack = { navController.popBackStack() })
+        }
     }
 }
 

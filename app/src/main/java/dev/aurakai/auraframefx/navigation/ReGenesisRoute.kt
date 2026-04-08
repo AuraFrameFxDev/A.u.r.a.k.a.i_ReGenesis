@@ -167,6 +167,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
         fun createRoute(agentType: String) = "ldo_devops_profile/$agentType"
     }
     data object ArbitersOfCreation : ReGenesisRoute("arbiters_of_creation")
+    data object MawPrototype : ReGenesisRoute("maw_prototype", "The Maw")
 
     // ═══════════════════════════════════════════════════════════════
     // HELP & INFRASTRUCTURE
