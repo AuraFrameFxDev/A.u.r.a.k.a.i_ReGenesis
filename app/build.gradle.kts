@@ -302,8 +302,8 @@ dependencies {
     // LangChain4j & Ollama
     // CRITICAL: BOM must be declared FIRST to govern all langchain4j version resolution
     implementation(platform(libs.langchain4j.bom))
-    // DUAL declaration: implementation() for KSP's annotation processor, api() for downstream
-    implementation(libs.langchain4j.core)
+    ksp(platform(libs.langchain4j.bom))
+    // api() so ChatLanguageModel interface leaks to all consuming modules (required by Hilt/KSP)
     api(libs.langchain4j.core)
     ksp(libs.langchain4j.core) // Added to resolve KSP classpath visibility issues
     implementation(libs.langchain4j.google.ai.gemini)
@@ -325,6 +325,10 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.leakcanary.android)
+}
+
+tasks.register("prepareKotlinBuildScriptModel") {
+    description = "Dummy task to aid with IDE/Gradle sync issues"
 }
 
 configurations.all {
