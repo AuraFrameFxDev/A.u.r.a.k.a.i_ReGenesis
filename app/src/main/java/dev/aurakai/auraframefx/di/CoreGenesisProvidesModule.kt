@@ -20,12 +20,18 @@ import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
+import dev.aurakai.auraframefx.ai.models.SovereignChatModel
+import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
+import dev.aurakai.auraframefx.domains.kai.security.TemporalAegis
 import dev.langchain4j.model.chat.ChatLanguageModel
+import dev.langchain4j.model.chat.request.ChatRequest
+import dev.langchain4j.http.client.jdk.JdkHttpClientFactory
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import okhttp3.OkHttpClient
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -47,13 +53,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CoreGenesisProvidesModule {
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): okhttp3.OkHttpClient = okhttp3.OkHttpClient.Builder()
-        .followRedirects(true)
-        .connectTimeout(java.time.Duration.ofSeconds(30))
-        .build()
 
     /**
      * Provides the AuraFxLogger implementation.
@@ -150,13 +149,14 @@ object CoreGenesisProvidesModule {
 
     /**
      * Entry #16: Provide the Sovereign Chat Model (The Predator)
+     * Using interface ChatLanguageModel as suggested to satisfy KSP.
      */
     @Provides
     @Singleton
     fun provideSovereignChatModel(
         turboQuant: TurboQuantCache,
         aegis: TemporalAegis
-    ): SovereignChatModel = SovereignChatModel(turboQuant, aegis)
+    ): ChatLanguageModel = SovereignChatModel(turboQuant, aegis)
 
     /**
      * Provides the GeminiMemoria using LangChain4j GoogleAiGeminiChatModel.
@@ -173,7 +173,8 @@ object CoreGenesisProvidesModule {
 
         override suspend fun process(prompt: String): String {
             return try {
-                model.chat(prompt)
+                val response = model.chat(prompt)
+                response
             } catch (e: Exception) {
                 Timber.tag("GeminiMemoria").e(e, "Gemini generation failed")
                 "Gemini Error: ${e.message}"

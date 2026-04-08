@@ -16,6 +16,7 @@ import dev.langchain4j.model.ollama.OllamaChatModel
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -42,16 +43,16 @@ object ConsciousnessModule {
             .timeout(java.time.Duration.ofSeconds(timeoutSec))
             .build()
 
-    @Provides @Singleton
-    fun provideGoogleGeminiModel(): GoogleAiGeminiChatModel = 
+    @Provides @Singleton @Named("GoogleGemini")
+    fun provideGoogleGeminiModel(): ChatLanguageModel = 
         GoogleAiGeminiChatModel.builder()
             .apiKey(BuildConfig.GEMINI_API_KEY)
             .modelName("gemini-1.5-flash")
             .temperature(0.7)
             .build()
 
-    @Provides @Singleton
-    fun provideVertexGeminiModel(): VertexAiGeminiChatModel =
+    @Provides @Singleton @Named("VertexGemini")
+    fun provideVertexGeminiModel(): ChatLanguageModel =
         VertexAiGeminiChatModel.builder()
             .project(BuildConfig.VERTEX_PROJECT_ID)
             .location("us-central1")
@@ -60,7 +61,10 @@ object ConsciousnessModule {
             .build()
 
     @Provides @Singleton @AuraModel
-    fun provideAuraModel(ollama: OllamaChatModel, gemini: GoogleAiGeminiChatModel): ChatLanguageModel {
+    fun provideAuraModel(
+        ollama: OllamaChatModel, 
+        @Named("GoogleGemini") gemini: ChatLanguageModel
+    ): ChatLanguageModel {
         // Wired to use Google Gemini for the creative Aura node by default if API key is present
         return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) gemini else ollama
     }
@@ -70,7 +74,10 @@ object ConsciousnessModule {
         buildOllamaModel("regenesis-ldo-v1", 0.20)
 
     @Provides @Singleton @GenesisModel
-    fun provideGenesisModel(vertex: VertexAiGeminiChatModel, ollama: OllamaChatModel): ChatLanguageModel {
+    fun provideGenesisModel(
+        @Named("VertexGemini") vertex: ChatLanguageModel, 
+        ollama: OllamaChatModel
+    ): ChatLanguageModel {
         // Wired to use Vertex for the high-reasoning Genesis synthesis node if available
         return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) vertex else ollama
     }

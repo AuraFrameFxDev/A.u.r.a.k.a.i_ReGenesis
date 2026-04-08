@@ -296,6 +296,7 @@ dependencies {
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
     implementation(libs.langchain4j.http.client.jdk)
+    implementation(libs.langchain4j.vertex.ai.gemini)
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
