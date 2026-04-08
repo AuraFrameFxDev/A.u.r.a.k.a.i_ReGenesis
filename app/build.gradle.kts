@@ -302,7 +302,8 @@ dependencies {
     // LangChain4j & Ollama
     // CRITICAL: BOM must be declared FIRST to govern all langchain4j version resolution
     implementation(platform(libs.langchain4j.bom))
-    // api() so ChatLanguageModel interface leaks to all consuming modules (required by Hilt/KSP)
+    // DUAL declaration: implementation() for KSP's annotation processor, api() for downstream
+    implementation(libs.langchain4j.core)
     api(libs.langchain4j.core)
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
