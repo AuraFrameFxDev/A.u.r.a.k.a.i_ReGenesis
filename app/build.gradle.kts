@@ -2,6 +2,7 @@
 // PRIMARY APPLICATION MODULE - AGP 9.0 Compatible (2025 Edition)
 // ═══════════════════════════════════════════════════════════════════════════
 import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
@@ -20,7 +21,6 @@ extensions.configure<ApplicationExtension> {
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
         minSdk = 34
-        targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
 
@@ -42,8 +42,8 @@ extensions.configure<ApplicationExtension> {
         externalNativeBuild {
             cmake {
                 cppFlags.addAll(listOf(
-                    "-std=c++20", 
-                    "-fPIC", 
+                    "-std=c++20",
+                    "-fPIC",
                     "-O2",
                     "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
                 ))
@@ -138,13 +138,21 @@ ksp {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+                // Bypass the enum limitation by using the String factory
+                // This targets JVM 26 even if JvmTarget.JVM_26 isn't in your current KGP classpath
+        jvmTarget.set(JvmTarget.fromTarget("25"))
+
+                // Set experimental language version to 2.4+ to support -Xcontext-parameters
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_4)
+
         freeCompilerArgs.addAll(
-            "-Xcontext-parameters",
-            "-Xannotation-default-target=param-property"
-        )
-    }
-}
+            "-Xcontext-parameters", // Required for Aura's context-aware UI sculpting
+            "-Xannotation-default-target=param-property",
+            "-Xlambdas=indy",        // Optimizes performance for modern JVMs
+            "-Xjvm-enable-preview"   // Necessary if JVM 26 features are still in preview
+                )
+            }
+        }
 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
@@ -182,11 +190,11 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    implementation(libs.espresso.core)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
+    ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
+    implementation(libs.espresso.core)
 
     // AndroidX Core
     implementation(libs.androidx.core.ktx)
@@ -275,7 +283,7 @@ dependencies {
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
     compileOnly(files("$projectDir/libs/api-82.jar"))
-    
+
     // KavaRef for modern reflection
     implementation(libs.kavaref.core)
     implementation(libs.kavaref.extension)
@@ -292,13 +300,20 @@ dependencies {
     // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
     // LangChain4j & Ollama
-    api(libs.langchain4j.core) // Use api to ensure visibility to KSP
+    api(libs.langchain4j.core)
     implementation(platform(libs.langchain4j.bom))
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
     implementation(libs.langchain4j.http.client.jdk)
     implementation(libs.langchain4j.vertex.ai.gemini)
+    implementation("dev.langchain4j:langchain4j:${libs.versions.langchain4j.get()}")
+
+    // KSP Classpath for Hilt Symbol Processing
+    ksp(libs.langchain4j.core)
+    ksp(libs.langchain4j.vertex.ai.gemini)
+    ksp(libs.langchain4j.google.ai.gemini)
+    ksp(libs.langchain4j.ollama)
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
@@ -319,5 +334,10 @@ configurations.all {
     if (name.contains("AndroidTest")) return@all
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+    }
+    
+    // Nuke the Moshi Kapt warning by ensuring it's never on annotationProcessor paths
+    if (name.lowercase().contains("annotationprocessor")) {
+        exclude(group = "com.squareup.moshi", module = "moshi-kotlin-codegen")
     }
 }

@@ -43,7 +43,7 @@ subprojects { subproject ->
                 compileSdk = 36
 
                         defaultConfig {
-                            minSdk = 33
+                            minSdk = 34
                             targetSdk = 36
 
                             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -60,8 +60,8 @@ subprojects { subproject ->
                         }
 
                         compileOptions {
-                            sourceCompatibility = JavaVersion.VERSION_25
-                            targetCompatibility = JavaVersion.VERSION_25
+                            sourceCompatibility = JavaVersion.VERSION_26
+                            targetCompatibility = JavaVersion.VERSION_26
                             isCoreLibraryDesugaringEnabled = true
                         }
                     }

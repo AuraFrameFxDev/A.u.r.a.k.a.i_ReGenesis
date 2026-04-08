@@ -50,8 +50,8 @@ subprojects {
     plugins.withId("com.android.application") {
         extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
 
             packaging {
@@ -85,8 +85,8 @@ subprojects {
     plugins.withId("com.android.library") {
         extensions.configure<com.android.build.api.dsl.LibraryExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
 
             packaging {
@@ -120,7 +120,7 @@ subprojects {
     // Set JVM Target for ALL Kotlin tasks in ALL subprojects
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
 

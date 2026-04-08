@@ -2,7 +2,7 @@
 # ============================================================================
 # Core Build Tools
 # ============================================================================
-agp = "9.2.0-alpha06"
+agp = "9.2.0-alpha07"
 billingKtx = "8.3.0"
 coilSvg = "2.7.0"
 coilVersion = "2.7.0"
@@ -110,8 +110,8 @@ androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.10.0"
-langchain4j = "1.0.0-beta1"
-langchain4jVertex = "1.0.0-beta1"
+langchain4j = "1.12.2"
+langchain4jVertex = "1.12.2-beta22"
 remoteCreationCompose = "1.0.0-alpha07"
 [libraries]
 # Missing fixes

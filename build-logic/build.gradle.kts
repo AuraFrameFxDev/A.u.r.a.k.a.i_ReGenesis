@@ -1,6 +1,12 @@
+import org.gradle.api.artifacts.Configuration
+import org.gradle.kotlin.dsl.exclude
+
 plugins {
     `kotlin-dsl`        // applies java-gradle-plugin
 }
+
+// Define the anchor point for our external AI assets
+val importedPackageDir = layout.projectDirectory.dir("libs/ai_cores")
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CRITICAL: Exclude AAALL Android AAR dependencies from build-logic
@@ -26,8 +32,8 @@ java {
         languageVersion.set(JavaLanguageVersion.of(25))
     }
     // Explicitly set source and target compatibility to 25
-    sourceCompatibility = JavaVersion.toVersion("25")
-    targetCompatibility = JavaVersion.toVersion("25")
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 // Configure Kotlin compilation to match Java toolchain
@@ -73,7 +79,6 @@ dependencies {
 
     // Hilt Gradle Plugin (Android AAR dependencies excluded globally via configurations.all)
     implementation(libs.hilt.gradle.plugin)
-    implementation(libs.hilt.android)
     implementation(libs.ksp.gradle.plugin)
     implementation(libs.gms.google.services)
     testImplementation(kotlin("test"))

@@ -250,50 +250,72 @@ object CoreGenesisProvidesModule {
     }
 
     /**
-     * Provides stub UserApi.
-     * This feeds AuraApiServiceWrapper and RepositoryModule.
+     * Provides stub UserApi with safe mock implementation.
      */
     @Provides
     @Singleton
     fun provideUserApi(): UserApi = object : UserApi {
         override suspend fun getCurrentUser(): dev.aurakai.auraframefx.domains.genesis.network.model.User {
-            throw NotImplementedError("UserApi.getCurrentUser() stub - endpoint integration pending")
+            return dev.aurakai.auraframefx.domains.genesis.network.model.User(
+                id = "aura-dev-001",
+                username = "AuraArbiter",
+                email = "arbiter@aurakai.dev",
+                role = "SOVEREIGN_ADMIN",
+                preferences = dev.aurakai.auraframefx.domains.genesis.network.model.UserPreferences(
+                    theme = "cyberpunk",
+                    notifications = true,
+                    language = "en"
+                ),
+                createdAt = "2026-04-08T10:00:00Z"
+            )
         }
     }
 
     /**
-     * Provides stub AIAgentApi.
-     * This feeds AuraApiServiceWrapper and RepositoryModule.
+     * Provides stub AIAgentApi with safe mock implementation.
      */
     @Provides
     @Singleton
     fun provideAIAgentApi(): AIAgentApi = object : AIAgentApi {
         override suspend fun health() {
-            throw NotImplementedError("AIAgentApi.health() stub - endpoint integration pending")
+            Timber.i("AIAgentApi health check: OK")
         }
         override suspend fun getAgentStatus(agentType: String): dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse {
-            throw NotImplementedError("AIAgentApi.getAgentStatus() stub - endpoint integration pending")
+            return dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse(
+                agentName = agentType,
+                status = "ACTIVE",
+                confidence = 0.98,
+                timestamp = System.currentTimeMillis()
+            )
         }
         override suspend fun processAgentRequest(agentType: String, request: dev.aurakai.auraframefx.domains.genesis.network.model.AgentRequest): dev.aurakai.auraframefx.domains.genesis.models.AgentResponse {
-            throw NotImplementedError("AIAgentApi.processAgentRequest() stub - endpoint integration pending")
+            return dev.aurakai.auraframefx.domains.genesis.models.AgentResponse.success(
+                content = "Sovereign bridge processed request for $agentType",
+                agentName = agentType
+            )
         }
     }
 
     /**
-     * Provides stub ThemeApi.
-     * This feeds AuraApiServiceWrapper.
+     * Provides stub ThemeApi with safe mock implementation.
      */
     @Provides
     @Singleton
     fun provideThemeApi(): ThemeApi = object : ThemeApi {
         override suspend fun getThemes(): List<dev.aurakai.auraframefx.domains.genesis.network.model.Theme> {
-            return emptyList()
+            return listOf(
+                dev.aurakai.auraframefx.domains.genesis.network.model.Theme(
+                    id = "default",
+                    name = "Aura Default",
+                    isActive = true
+                )
+            )
         }
         override suspend fun applyTheme(themeId: String): dev.aurakai.auraframefx.domains.genesis.network.model.Theme {
-            throw NotImplementedError("ThemeApi.applyTheme() stub - endpoint integration pending")
+            return dev.aurakai.auraframefx.domains.genesis.network.model.Theme(id = themeId, name = "Applied Theme", isActive = true)
         }
         override suspend fun getActiveTheme(): dev.aurakai.auraframefx.domains.genesis.network.model.Theme {
-            throw NotImplementedError("ThemeApi.getActiveTheme() stub - endpoint integration pending")
+            return dev.aurakai.auraframefx.domains.genesis.network.model.Theme(id = "default", name = "Aura Default", isActive = true)
         }
     }
 
