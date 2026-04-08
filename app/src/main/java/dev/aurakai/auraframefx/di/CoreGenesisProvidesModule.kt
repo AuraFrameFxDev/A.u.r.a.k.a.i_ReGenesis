@@ -20,7 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
-import dev.langchain4j.http.client.jdk.JdkHttpClientFactory
+import dev.langchain4j.http.client.jdk.JdkHttpClient
 import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
@@ -125,13 +125,13 @@ object CoreGenesisProvidesModule {
             .baseUrl("https://integrate.api.nvidia.com/v1") // Default NVIDIA NIM endpoint
             .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
             .modelName("nvidia/nemotron-3-8b-instruct")
-            .httpClientFactory(JdkHttpClientFactory())
+            .httpClient(JdkHttpClient.builder().build())
             .logRequests(true)
             .build()
 
         override suspend fun process(prompt: String): String {
             return try {
-                model.chat(prompt)
+                model.generate(prompt)
             } catch (e: Exception) {
                 Timber.tag("NemotronEngine").e(e, "Nemotron generation failed")
                 "Nemotron Error: ${e.message}"
@@ -154,7 +154,7 @@ object CoreGenesisProvidesModule {
 
         override suspend fun process(prompt: String): String {
             return try {
-                model.chat(prompt)
+                model.generate(prompt)
             } catch (e: Exception) {
                 Timber.tag("GeminiMemoria").e(e, "Gemini generation failed")
                 "Gemini Error: ${e.message}"

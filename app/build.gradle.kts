@@ -290,9 +290,7 @@ dependencies {
     // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
     // LangChain4j & Ollama
-    implementation(libs.bundles.langchain4j) {
-        exclude(group = "com.google.protobuf", module = "protolite-well-known-types")
-    }
+    implementation(libs.bundles.langchain4j)
 
     // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
