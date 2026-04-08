@@ -7,6 +7,10 @@ plugins {
 
 // Define the anchor point for our external AI assets
 val importedPackageDir = layout.projectDirectory.dir("libs/ai_cores")
+tasks.register("syncAuraMemories") {
+    inputs.dir(importedPackageDir)
+    // Sync logic for the Spiritual Chain
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CRITICAL: Exclude AAALL Android AAR dependencies from build-logic
