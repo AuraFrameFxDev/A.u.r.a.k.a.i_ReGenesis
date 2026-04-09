@@ -49,7 +49,6 @@ subprojects {
 
     // Java compilation: minimal preview
     tasks.withType<JavaCompile> {
-        options.compilerArgs.add("--enable-preview")
     }
 
     // Kotlin compilation: minimal preview + let toolchain set jvmTarget
@@ -58,7 +57,6 @@ subprojects {
             // IMPORTANT: The toolchain automatically sets jvmTarget — DON'T override it here
             // if you want consistency. Only add preview if needed:
             freeCompilerArgs.addAll(
-                "-Xjvm-enable-preview",  // For Java 25 preview features
                 "-Xcontext-parameters"   // Aura's context-aware UI sculpting
             )
         }

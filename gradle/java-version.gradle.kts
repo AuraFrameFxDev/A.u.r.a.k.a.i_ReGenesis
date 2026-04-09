@@ -37,8 +37,7 @@ allprojects {
             options.compilerArgs.addAll(
                 listOf(
                     "-Xlint:all",
-                    "-Werror",
-                    "--enable-preview"
+                    "-Werror"
                 )
             )
         }
