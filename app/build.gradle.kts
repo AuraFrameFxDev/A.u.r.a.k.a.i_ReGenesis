@@ -70,8 +70,9 @@ android {
     }
 }
 
-tasks.withType<JavaCompile> {
-    options.compilerArgs
+// Explicitly enable preview features for Java compilation to match Kotlin's use of Java 25 preview
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.add("--enable-preview")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {

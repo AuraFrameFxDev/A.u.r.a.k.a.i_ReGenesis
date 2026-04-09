@@ -32,6 +32,11 @@ subprojects {
         }
     }
 
+    // Ensure Java compiler also supports preview features for Java 25
+    tasks.withType<JavaCompile>().configureEach {
+        options.compilerArgs.add("--enable-preview")
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════
     // Dependency & YukiHook exclusions (unchanged from original)
     // ═══════════════════════════════════════════════════════════════════════════
