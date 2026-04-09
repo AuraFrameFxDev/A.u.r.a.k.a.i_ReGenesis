@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.CommonExtension
+
 // app/build.gradle.kts — CLEAN VERSION (no scattered compileOptions/jvmTarget hacks)
 // ═══════════════════════════════════════════════════════════════════════════
 // Inherits JVM Toolchain (Java 25) from root build.gradle.kts
@@ -19,12 +21,10 @@ plugins {
 
 android {
     namespace = "dev.aurakai.auraframefx"
-    compileSdk = 36
-
+    compileSdk  = 37
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
         minSdk = 34
-        targetSdk = 36
         versionCode = 1
         versionName = "0.1.0-beta"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
