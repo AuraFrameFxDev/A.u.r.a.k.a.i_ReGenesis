@@ -312,7 +312,7 @@ dependencies {
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
-    implementation(libs.langchain4j.http.client.okhttp)
+    implementation(libs.langchain4j.http.client.jdk)
     implementation(libs.langchain4j.vertex.ai.gemini)
 
     // Desugaring
