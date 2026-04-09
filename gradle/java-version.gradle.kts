@@ -38,7 +38,6 @@ allprojects {
                 listOf(
                     "-Xlint:all",
                     "-Werror",
-                    "--release", "25",
                     "--enable-preview"
                 )
             )
