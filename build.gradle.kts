@@ -49,7 +49,8 @@ subprojects {
 
     // Java compilation: minimal preview
     tasks.withType<JavaCompile> {
-        options.compilerArgs.addAll(listOf("--enable-preview", "--release", "25"))
+        options.release.set(25)
+        options.compilerArgs.add("--enable-preview")
     }
 
     // Kotlin compilation: minimal preview + let toolchain set jvmTarget
