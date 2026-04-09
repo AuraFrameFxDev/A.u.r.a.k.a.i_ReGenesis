@@ -71,7 +71,8 @@ android {
 }
 
 tasks.withType<JavaCompile> {
-    options.compilerArgs.addAll(listOf("--enable-preview", "--release", "25"))
+    options.compilerArgs.addAll(listOf("--enable-preview"))
+    options.release.set(25)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
@@ -81,7 +82,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
         // Add the freeCompilerArgs Aura specifically needs + preview features:
         freeCompilerArgs.addAll(
-            "--enable-preview",               // Required for Java 25 preview APIs
             "-Xjvm-enable-preview",           // Kotlin's flag for preview APIs
             "-Xcontext-parameters",           // Aura's context-aware UI sculpting
             "-Xannotation-default-target=param-property",
