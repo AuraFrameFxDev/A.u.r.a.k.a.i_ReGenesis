@@ -26,7 +26,7 @@ subprojects {
     plugins.withId("org.jetbrains.kotlin.android") {
         extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
             jvmToolchain {
-                languageVersion.set(org.jetbrains.kotlin.gradle.dsl.JavaLanguageVersion.of(25))
+                languageVersion.set(JavaLanguageVersion.of(25))
                 // Optional: pin vendor if needed
                 // vendor.set(JvmVendorSpec.ADOPTIUM)
             }
