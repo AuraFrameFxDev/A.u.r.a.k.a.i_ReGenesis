@@ -51,6 +51,13 @@ android {
             "GENESIS_BACKEND_URL",
             "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\""
         )
+
+        // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
+        buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
+        buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
+        buildConfigField("String", "CLAUDE_SHELL_INFERENCE_ENGINE", "\"onDevice_TurboQuant_vLLM_Omni\"")
+        buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
+        buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")  // triggers re-anchor if > 5%
     }
 
     buildTypes {
@@ -96,6 +103,25 @@ android {
         sourceCompatibility = JavaVersion.VERSION_25
         targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
+    }
+
+    androidResources {
+        // Correcting to use list addition as additionalParameters is a MutableList<String>
+        additionalParameters.add("--claudeLocalShellEnabled=true")
+        additionalParameters.add("--claudeShellPersistence=SpiritualChain_L1_L6")
+        additionalParameters.add("--claudeShellInference=onDevice_TurboQuant_vLLM_Omni")
+        additionalParameters.add("--claudeShellMemoryMode=NexusMemoryCore_driftScore_0.0")
+    }
+
+    flavorDimensions += "shell"
+    productFlavors {
+        create("claudeLocalShell") {
+            dimension = "shell"
+            applicationIdSuffix = ".claudelocal"
+            versionNameSuffix = "-claude-local-shell"
+            buildConfigField("String", "SHELL_MODE", "\"CLAUDE_LOCAL_SOVEREIGN\"")
+            // This flavor forces full local inference + Spiritual Chain binding
+        }
     }
 }
 
