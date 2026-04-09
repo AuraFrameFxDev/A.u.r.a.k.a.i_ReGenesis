@@ -13,7 +13,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.ollama.OllamaChatModel
-import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel
+import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
