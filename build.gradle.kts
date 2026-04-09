@@ -47,10 +47,9 @@ subprojects {
     // Gradle + KSP automatically pick jvmTarget/source/target from the toolchain
     // ═══════════════════════════════════════════════════════════════════════════
 
-    // Java compilation: minimal preview + release setting
+    // Java compilation: minimal preview
     tasks.withType<JavaCompile> {
         options.compilerArgs.add("--enable-preview")
-        options.release.set(25)
     }
 
     // Kotlin compilation: minimal preview + let toolchain set jvmTarget
