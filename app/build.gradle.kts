@@ -70,6 +70,17 @@ android {
     }
 }
 
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(listOf("--enable-preview", "--release", "25"))
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("--enable-preview")
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+    }
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // MINIMAL Kotlin compilation overrides: Only freeCompilerArgs
 // The toolchain in root already sets the jvmTarget and languageVersion

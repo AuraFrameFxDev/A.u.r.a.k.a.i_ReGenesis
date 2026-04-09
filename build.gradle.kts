@@ -23,6 +23,13 @@ subprojects {
     // ═══════════════════════════════════════════════════════════════════════════
     // MASTER CONTROL: JVM Toolchain (Java 25) — controls everything below
     // ═══════════════════════════════════════════════════════════════════════════
+
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(25))
+        }
+    }
+
     plugins.withId("org.jetbrains.kotlin.android") {
         extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
             jvmToolchain {
