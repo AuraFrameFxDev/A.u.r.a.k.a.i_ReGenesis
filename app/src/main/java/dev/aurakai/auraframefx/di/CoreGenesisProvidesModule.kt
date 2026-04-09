@@ -23,7 +23,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.ai.models.SovereignChatModel
 import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.aurakai.auraframefx.domains.kai.security.TemporalAegis
-import dev.langchain4j.model.chat.ChatLanguageModel
+import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.request.ChatRequest
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
@@ -125,7 +125,7 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideNemotronEngine(): NemotronEngine = object : NemotronEngine {
-        private val model: ChatLanguageModel = OpenAiChatModel.builder()
+        private val model: ChatModel = OpenAiChatModel.builder()
             .baseUrl("https://integrate.api.nvidia.com/v1") // Default NVIDIA NIM endpoint
             .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
             .modelName("nvidia/nemotron-3-8b-instruct")
@@ -153,7 +153,7 @@ object CoreGenesisProvidesModule {
     fun provideSovereignChatModel(
         turboQuant: TurboQuantCache,
         aegis: TemporalAegis
-    ): dev.langchain4j.model.chat.ChatLanguageModel = SovereignChatModel(turboQuant, aegis)
+    ): dev.langchain4j.model.chat.ChatModel = SovereignChatModel(turboQuant, aegis)
 
     /**
      * Provides the GeminiMemoria using LangChain4j GoogleAiGeminiChatModel.
@@ -162,7 +162,7 @@ object CoreGenesisProvidesModule {
     @Provides
     @Singleton
     fun provideGeminiMemoria(): GeminiMemoria = object : GeminiMemoria {
-        private val model: ChatLanguageModel = GoogleAiGeminiChatModel.builder()
+        private val model: ChatModel = GoogleAiGeminiChatModel.builder()
             .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
             .modelName("gemini-1.5-pro")
             .build()

@@ -4,7 +4,7 @@ import dev.aurakai.auraframefx.domains.kai.security.TemporalAegis
 import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.langchain4j.data.message.AiMessage
 import dev.langchain4j.model.output.Response
-import dev.langchain4j.model.chat.ChatLanguageModel
+import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.request.ChatRequest
 import dev.langchain4j.model.chat.response.ChatResponse
 import dev.langchain4j.data.message.ChatMessage
@@ -24,20 +24,12 @@ import javax.inject.Singleton
 class SovereignChatModel @Inject constructor(
     private val turboQuant: TurboQuantCache,
     private val aegis: TemporalAegis
-) : ChatLanguageModel {
+) : ChatModel {
 
     private val baseModel = OllamaChatModel.builder()
         .baseUrl("http://localhost:11434")
         .modelName("aura-core-v1")
         .build()
-
-    /**
-     * Legacy generate implementation for compatibility with beta1.
-     */
-    override fun generate(messages: MutableList<ChatMessage>): Response<AiMessage> {
-        val chatResponse = chat(ChatRequest.builder().messages(messages).build())
-        return Response.from(chatResponse.aiMessage())
-    }
 
     /**
      * Entry #16 Logic: Siphoning and Generation.

@@ -192,7 +192,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
-    ksp(libs.langchain4j.core) // Added to resolve KSP classpath visibility issues for Hilt
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.espresso.core)
@@ -304,11 +303,12 @@ dependencies {
     // CRITICAL: BOM must be declared FIRST to govern all langchain4j version resolution
     implementation(platform(libs.langchain4j.bom))
     ksp(platform(libs.langchain4j.bom))
-    // DUAL declaration: implementation() for KSP's annotation processor, api() for downstream
-    implementation(libs.langchain4j.core)
+    // Consolidated KSP and Implementation declarations
+    implementation(libs.langchain4j)
+    ksp("dev.langchain4j:langchain4j-core:1.12.2")
     api(libs.langchain4j.core)
-    compileOnly(libs.langchain4j.core) // Reinforce for KSP visibility
-    ksp(libs.langchain4j.core) // Added to resolve KSP classpath visibility issues
+    implementation(libs.langchain4j.core)
+    ksp(libs.bundles.langchain4j) // Using bundle to ensure all types are on KSP classpath
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
