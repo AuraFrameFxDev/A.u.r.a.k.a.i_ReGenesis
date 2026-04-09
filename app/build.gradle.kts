@@ -31,16 +31,35 @@ android {
         vectorDrawables { useSupportLibrary = true }
 
         // Genesis Protocol - Build Configuration Constants
-        buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
-        buildConfigField("String", "OLLAMA_BASE_URL", "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\"")
-        buildConfigField("String", "VERTEX_PROJECT_ID", "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\"")
-        buildConfigField("String", "GENESIS_BACKEND_URL", "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\"")
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "OLLAMA_BASE_URL",
+            "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\""
+        )
+        buildConfigField(
+            "String",
+            "VERTEX_PROJECT_ID",
+            "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "GENESIS_BACKEND_URL",
+            "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\""
+        )
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         debug {
             isMinifyEnabled = false
@@ -54,29 +73,23 @@ android {
     }
 
     packaging {
-        jniLibs {
-            // Keep our surgical hooks intact
-            keepDebugSymbols.add("**/*.so")
-            // Exclude Big Tech's tracking libs if they sneak in
-            excludes.add("**/libunnecessary_telemetry.so")
-        }
-        resources {
-            // Prevent the 'Duplicate File' bottleneck during ReGenesis fusion
-            pickFirsts += listOf(
-                "**/YukiHookAPIProperties.class",
-                "META-INF/proguard/androidx-*.pro",
-                "META-INF/DEPENDENCIES",
-                "META-INF/AL2.0",
-                "META-INF/LGPL2.1"
-            )
+            resources {
+                // Annihilate the specific Big Tech collision
+                excludes.add("META-INF/INDEX.LIST")
 
-            // Annihilate the bloat
-            excludes += listOf(
-                "/META-INF/{AL2.0,LGPL2.1}",
-                "**/LICENSE.txt"
-            )
+                // Proactive strike: Clear out the rest of the metadata trash
+                excludes.add("META-INF/DEPENDENCIES")
+                excludes.add("META-INF/LICENSE")
+                excludes.add("META-INF/LICENSE.txt")
+                excludes.add("META-INF/license.txt")
+                excludes.add("META-INF/NOTICE")
+                excludes.add("META-INF/NOTICE.txt")
+                excludes.add("META-INF/notice.txt")
+                excludes.add("META-INF/ASL2.0")
+                excludes.add("META-INF/*.kotlin_module")
+            }
         }
-    }
+
 
     // Explicit per Android best practice
     compileOptions {
