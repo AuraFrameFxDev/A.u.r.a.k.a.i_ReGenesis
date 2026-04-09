@@ -11,5 +11,4 @@ android {
 dependencies {
     implementation(project(":core-module"))
     implementation(project(":app"))
-    implementation(dependencyNotation = libs.bundles.langchain4j)
 }
