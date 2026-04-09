@@ -62,8 +62,7 @@ object GenesisJvmConfig {
 
             // Explicitly configure Java compilation tasks to target JVM 25
             tasks.withType<JavaCompile>().configureEach {
-                options.release.set(JVM_VERSION)
-                options.compilerArgs.add("--enable-preview")
+                options.compilerArgs.addAll(listOf("--enable-preview", "--release", JVM_VERSION.toString()))
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready

@@ -30,48 +30,6 @@ subprojects {
         }
     }
 
-    plugins.withId("org.jetbrains.kotlin.android") {
-        extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
-            jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(25))
-                // Optional: pin vendor if needed
-                // vendor.set(JvmVendorSpec.ADOPTIUM)
-            }
-        }
-    }
-
-    // Same for Java compilation
-    plugins.withId("java") {
-        extensions.configure<JavaPluginExtension> {
-            toolchain {
-                languageVersion.set(JavaLanguageVersion.of(25))
-            }
-        }
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Minimal overrides: Only preview flags and release settings
-    // Gradle + KSP automatically pick jvmTarget/source/target from the toolchain
-    // ═══════════════════════════════════════════════════════════════════════════
-
-    // Java compilation: minimal preview
-    tasks.withType<JavaCompile> {
-        options.release.set(25)
-        options.compilerArgs.add("--enable-preview")
-    }
-
-    // Kotlin compilation: minimal preview + let toolchain set jvmTarget
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        compilerOptions {
-            // IMPORTANT: The toolchain automatically sets jvmTarget — DON'T override it here
-            // if you want consistency. Only add preview if needed:
-            freeCompilerArgs.addAll(
-                "-Xcontext-parameters",   // Aura's context-aware UI sculpting
-                "-Xjvm-enable-preview"
-            )
-        }
-    }
-
     // ═══════════════════════════════════════════════════════════════════════════
     // Dependency & YukiHook exclusions (unchanged from original)
     // ═══════════════════════════════════════════════════════════════════════════
