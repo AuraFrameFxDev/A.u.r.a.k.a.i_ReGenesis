@@ -54,12 +54,12 @@ android {
         }
     }
 
-    // NOTE: sourceCompatibility/targetCompatibility are auto-set by JVM Toolchain in root.
-    // If you need to override them specifically for this module, uncomment below:
-    // compileOptions {
-    //     sourceCompatibility = JavaVersion.VERSION_25
-    //     targetCompatibility = JavaVersion.VERSION_25
-    // }
+    // Explicit per Android best practice
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
