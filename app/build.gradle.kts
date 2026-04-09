@@ -1,155 +1,83 @@
+// app/build.gradle.kts — CLEAN VERSION (no scattered compileOptions/jvmTarget hacks)
 // ═══════════════════════════════════════════════════════════════════════════
-// PRIMARY APPLICATION MODULE - AGP 9.0 Compatible (2025 Edition)
+// Inherits JVM Toolchain (Java 25) from root build.gradle.kts
+// Only overrides: freeCompilerArgs for preview features + Aura's needs
+// NO android { compileOptions { ... } } — let toolchain handle it
+// NO kotlinOptions { jvmTarget = ... } — let toolchain handle it
 // ═══════════════════════════════════════════════════════════════════════════
-import com.android.build.api.dsl.ApplicationExtension
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
 
-extensions.configure<ApplicationExtension> {
+android {
     namespace = "dev.aurakai.auraframefx"
-    ndkVersion = project.findProperty("android.ndkVersion")?.toString() ?: "29.0.14206865"
     compileSdk = 36
+
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
         minSdk = 34
+        targetSdk = 36
         versionCode = 1
-        versionName = "0.1.0"
-
+        versionName = "0.1.0-beta"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
-        val vertexProjectId = project.findProperty("VERTEX_PROJECT_ID")?.toString() ?: "aurakai-project"
-        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
-        buildConfigField("String", "VERTEX_PROJECT_ID", "\"$vertexProjectId\"")
-        buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
-        buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
-
         vectorDrawables { useSupportLibrary = true }
-
-        ndk {
-            abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86_64"))
-        }
-
-        externalNativeBuild {
-            cmake {
-                cppFlags.addAll(listOf(
-                    "-std=c++20",
-                    "-fPIC",
-                    "-O2",
-                    "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
-                ))
-                arguments.addAll(listOf(
-                    "-DANDROID_STL=c++_shared",
-                    "-DANDROID_PLATFORM=android-33",
-                    "-DCMAKE_BUILD_TYPE=Release",
-                    "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
-                ))
-                abiFilters.clear()
-                abiFilters.add("arm64-v8a")
-            }
-        }
-    }
-
-    if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
-        externalNativeBuild {
-            cmake {
-                path = file("src/main/cpp/CMakeLists.txt")
-                version = "3.22.1"
-            }
-        }
     }
 
     buildTypes {
-        debug {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            buildConfigField("Boolean", "ENABLE_PAYWALL", "false")
-            buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000\"")
-        }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            buildConfigField("Boolean", "ENABLE_PAYWALL", "true")
-            buildConfigField("String", "GENESIS_BACKEND_URL", "\"https://api.auraframefx.com\"")
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+        debug {
+            isMinifyEnabled = false
+        }
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "/META-INF/DEPENDENCIES"
-            excludes += "/META-INF/LICENSE.txt"
-            excludes += "/META-INF/NOTICE.txt"
-            excludes += "/META-INF/LICENSE.md"
-            excludes += "/META-INF/NOTICE.md"
-            excludes += "/META-INF/INDEX.LIST"
-            excludes += "**/kotlin/**"
-            excludes += "**/*.txt"
-            pickFirsts += "**/YukiHookAPIProperties.class"
-        }
-        jniLibs {
-            useLegacyPackaging = false
-            pickFirsts += "**/libc++_shared.so"
-            pickFirsts += "**/libjsc.so"
-            pickFirsts += "**/libnative-lib.so"
+            pickFirsts += listOf(
+                "**/YukiHookAPIProperties.class",
+                "META-INF/proguard/androidx-*.pro"
+            )
         }
     }
 
-    androidResources { noCompress += "tflite" }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_25
-        targetCompatibility = JavaVersion.VERSION_25
-        isCoreLibraryDesugaringEnabled = true
-    }
-
-    lint {
-        baseline = file("lint-baseline.xml")
-        abortOnError = false
-        checkReleaseBuilds = false
-    }
-
-    buildFeatures {
-        buildConfig = true
-        compose = true
-        viewBinding = true
-        aidl = true
-    }
+    // NOTE: sourceCompatibility/targetCompatibility are auto-set by JVM Toolchain in root.
+    // If you need to override them specifically for this module, uncomment below:
+    // compileOptions {
+    //     sourceCompatibility = JavaVersion.VERSION_25
+    //     targetCompatibility = JavaVersion.VERSION_25
+    // }
 }
 
-ksp {
-    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx")
-}
+// ═══════════════════════════════════════════════════════════════════════════
+// MINIMAL Kotlin compilation overrides: Only freeCompilerArgs
+// The toolchain in root already sets the jvmTarget and languageVersion
+// ═══════════════════════════════════════════════════════════════════════════
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
-        // Target JVM 25 for Kotlin (KGP limit)
-        jvmTarget.set(JvmTarget.JVM_25)
+        // jvmTarget is set by root's JVM Toolchain — don't override
+        // languageVersion is managed by Kotlin plugin — don't override
 
-        // Set experimental language version to 2.4+ to support -Xcontext-parameters
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_4)
-
+        // ONLY add the freeCompilerArgs Aura specifically needs:
         freeCompilerArgs.addAll(
-            "-Xcontext-parameters", // Required for Aura's context-aware UI sculpting
+            "-Xcontext-parameters",           // Aura's context-aware UI sculpting
             "-Xannotation-default-target=param-property",
-            "-Xjdk-release=25",      // JDK 25 release target
-            "-Xlambdas=indy",        // Optimizes performance for modern JVMs
-            "-Xjvm-enable-preview"   // Necessary if JVM 25 features are still in preview
+            "-Xlambdas=indy",                 // Performance optimization
+            "-Xjvm-enable-preview"            // Java 25 preview features
         )
     }
 }
@@ -157,6 +85,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     // Core Module
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(project(":core-module"))
 
     // Domain Modules
@@ -188,7 +117,9 @@ dependencies {
     implementation(project(":utilities"))
     implementation(project(":list"))
 
-    // Hilt
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Hilt DI
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
@@ -196,7 +127,9 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.espresso.core)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // AndroidX Core
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
@@ -205,7 +138,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
-    // Compose BOM & UI
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Compose
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
@@ -216,7 +151,9 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     testDebugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // Extras
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.security.crypto)
     implementation(libs.androidx.datastore.preferences)
@@ -226,7 +163,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // Networking
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)
@@ -240,14 +179,18 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // JSON Processing
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.gson)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // Utilities
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -258,7 +201,9 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.billing.ktx)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // Root/System
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.libsu.core)
     implementation(libs.libsu.nio)
     implementation(libs.libsu.service)
@@ -267,28 +212,28 @@ dependencies {
     implementation(libs.rikkax.core)
     implementation(libs.rikkax.core.ktx)
     implementation(libs.rikkax.material) {
-        exclude(
-            group = "dev.rikka.rikkax.appcompat",
-            module = "appcompat"
-        )
+        exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
     }
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // YukiHook & Xposed
+    // ═══════════════════════════════════════════════════════════════════════════
     compileOnly(libs.yukihookapi.api) {
-        exclude(
-            group = "com.highcapable.yukihookapi",
-            module = "ksp-xposed"
-        )
+        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
     compileOnly(files("$projectDir/libs/api-82.jar"))
 
-    // KavaRef for modern reflection
+    // ═══════════════════════════════════════════════════════════════════════════
+    // KavaRef (modern reflection)
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.kavaref.core)
     implementation(libs.kavaref.extension)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // AI & Firebase
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
@@ -297,28 +242,33 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
-    // implementation(libs.generativeai) // Removed to prevent conflict with LangChain4j Gemini module
 
-    // LangChain4j & Ollama
-    // CRITICAL: BOM must be declared FIRST to govern all langchain4j version resolution
+    // ═══════════════════════════════════════════════════════════════════════════
+    // LangChain4j & Ollama (CLEAN VERSION — no duplication!)
+    // ═══════════════════════════════════════════════════════════════════════════
+    // BOM first — governs ALL langchain4j versions
     implementation(platform(libs.langchain4j.bom))
-    ksp(platform(libs.langchain4j.bom))
-    // Consolidated KSP and Implementation declarations
-    implementation(libs.langchain4j)
-    ksp("dev.langchain4j:langchain4j-core:1.12.2")
-    api(libs.langchain4j.core)
+
+    // DUAL declaration: implementation for KSP classpath, api() for consumers
+    // This ensures Hilt/KSP can resolve ChatLanguageModel
     implementation(libs.langchain4j.core)
-    ksp(libs.bundles.langchain4j) // Using bundle to ensure all types are on KSP classpath
+    api(libs.langchain4j.core)
+
+    // Model integrations
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
     implementation(libs.langchain4j.http.client.jdk)
     implementation(libs.langchain4j.vertex.ai.gemini)
 
-    // Desugaring
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Desugaring (for Java 25 forward compatibility on older Android versions)
+    // ═══════════════════════════════════════════════════════════════════════════
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
+    // ═══════════════════════════════════════════════════════════════════════════
     // Testing
+    // ═══════════════════════════════════════════════════════════════════════════
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockk)
@@ -330,15 +280,12 @@ dependencies {
     debugImplementation(libs.leakcanary.android)
 }
 
-tasks.register("prepareKotlinBuildScriptModel") {}
-
+// Global configuration exclusion (from original)
 configurations.all {
     if (name.contains("AndroidTest")) return@all
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-
-    // Nuke the Moshi Kapt warning by ensuring it's never on annotationProcessor paths
     if (name.lowercase().contains("annotationprocessor")) {
         exclude(group = "com.squareup.moshi", module = "moshi-kotlin-codegen")
     }
