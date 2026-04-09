@@ -71,8 +71,7 @@ android {
 }
 
 tasks.withType<JavaCompile> {
-    options.compilerArgs.addAll(listOf("--enable-preview"))
-    options.release.set(25)
+    options.compilerArgs
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
