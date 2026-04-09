@@ -11,5 +11,5 @@ android {
 dependencies {
     implementation(project(":core-module"))
     implementation(project(":app"))
-    implementation(libs.langchain4j.http.client.jdk)
+    implementation(libs.langchain4j.http.client.okhttp)
 }

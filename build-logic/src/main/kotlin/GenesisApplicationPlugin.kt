@@ -54,13 +54,13 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("com.google.gms.google-services")
 
             extensions.configure<ApplicationExtension> {
-                compileSdk = 36
+                compileSdk = 37
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
                     minSdk = 34
-                    targetSdk = 36
+                    targetSdk = 37
                     versionCode = 1
                     versionName = "1.0"
 
@@ -84,11 +84,10 @@ class GenesisApplicationPlugin : Plugin<Project> {
                     }
                 }
 
-                // Java 25 bytecode (Firebase + AGP 9.0 compatible)
+                // Java 26 bytecode (Inherited from toolchain)
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_25
-                    targetCompatibility = JavaVersion.VERSION_25
-
+                    sourceCompatibility = JavaVersion.VERSION_1_8 // Placeholder for AGP, toolchain overrides
+                    targetCompatibility = JavaVersion.VERSION_1_8
                     isCoreLibraryDesugaringEnabled = true
                 }
 
