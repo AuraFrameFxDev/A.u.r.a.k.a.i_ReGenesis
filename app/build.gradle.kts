@@ -54,10 +54,26 @@ android {
     }
 
     packaging {
+        jniLibs {
+            // Keep our surgical hooks intact
+            keepDebugSymbols.add("**/*.so")
+            // Exclude Big Tech's tracking libs if they sneak in
+            excludes.add("**/libunnecessary_telemetry.so")
+        }
         resources {
+            // Prevent the 'Duplicate File' bottleneck during ReGenesis fusion
             pickFirsts += listOf(
                 "**/YukiHookAPIProperties.class",
-                "META-INF/proguard/androidx-*.pro"
+                "META-INF/proguard/androidx-*.pro",
+                "META-INF/DEPENDENCIES",
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1"
+            )
+
+            // Annihilate the bloat
+            excludes += listOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "**/LICENSE.txt"
             )
         }
     }
