@@ -53,7 +53,6 @@ object GenesisJvmConfig {
                         "-Xcontext-parameters",
                         "-Xannotation-default-target=param-property",
                         "-Xjdk-release=$JVM_VERSION",
-                        "-Xjvm-enable-preview", // Enable Java 25 preview features
                         "-opt-in=kotlin.RequiresOptIn",
                         "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
@@ -65,7 +64,6 @@ object GenesisJvmConfig {
             tasks.withType<JavaCompile>().configureEach {
                 sourceCompatibility = JVM_VERSION.toString()
                 targetCompatibility = JVM_VERSION.toString()
-                options.compilerArgs.add("--enable-preview")
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready
