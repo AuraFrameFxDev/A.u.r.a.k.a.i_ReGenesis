@@ -62,17 +62,12 @@ static float readCpuLoad() {
     return load;
 }
 
-static long readAvailableMemory() {
-    std::ifstream file("/proc/meminfo");
-    std::string line;
-    while (std::getline(file, line)) {
-        if (line.compare(0, 12, "MemAvailable") == 0) {
-            std::stringstream ss(line);
-            std::string key;
-            long value;
-            ss >> key >> value;
-            return value * 1024; // kB to bytes
-        }
+static long readAvailableMemoryKb() {
+    std::ifstream f("/proc/meminfo");
+    std::string key, unit;
+    long value = -1;
+    while (f >> key >> value >> unit) {
+        if (key == "MemAvailable:") return value; // kB
     }
     return -1;
 }
@@ -445,13 +440,13 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
     float load = readCpuLoad();
-    long mem = readAvailableMemory();
+    long mem = readAvailableMemoryKb();
     float temp = readSystemThermal();
 
     std::string metrics = R"({
         "status": "ignited",
         "cpu_load": )" + std::to_string(load) + R"(,
-        "mem_available_bytes": )" + std::to_string(mem) + R"(,
+        "mem_available_kb": )" + std::to_string(mem) + R"(,
         "skin_temp_c": )" + std::to_string(temp) + R"(,
         "resonance": "sovereign",
         "active_threads": 4
