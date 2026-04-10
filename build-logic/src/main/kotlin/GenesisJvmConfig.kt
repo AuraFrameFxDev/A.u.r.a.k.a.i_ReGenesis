@@ -58,11 +58,14 @@ object GenesisJvmConfig {
                 }
             }
 
-            // Explicitly configure Java compilation tasks to target JVM 21
+            // Explicitly configure Java compilation tasks to target JVM 21 with toolchain
             tasks.withType<JavaCompile>().configureEach {
-                sourceCompatibility = "21"
-                targetCompatibility = "21"
-                options.compilerArgs.add("--enable-preview")
+                val javaToolchains = project.extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService::class.java)
+                javaCompiler.set(javaToolchains.compilerFor {
+                    languageVersion.set(org.gradle.jvm.toolchain.JavaLanguageVersion.of(JVM_VERSION))
+                })
+                sourceCompatibility = JVM_VERSION.toString()
+                targetCompatibility = JVM_VERSION.toString()
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready

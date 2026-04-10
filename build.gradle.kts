@@ -1,4 +1,4 @@
-// Root build.gradle.kts — CLEAN JVM TOOLCHAIN VERSION (Java 25)
+// Root build.gradle.kts — JVM TOOLCHAIN VERSION (Java 21)
 // ═══════════════════════════════════════════════════════════════════════════
 // Single source of truth: JVM Toolchain controls ALL Java/Kotlin versions
 // NO scattered compileOptions or kotlinOptions per-module
@@ -21,7 +21,7 @@ val skipTests = providers.gradleProperty("aurafx.skip.tests").orElse("false").ma
 
 subprojects {
     // ═══════════════════════════════════════════════════════════════════════════
-    // MASTER CONTROL: JVM Toolchain (Java 25) — controls everything below
+    // MASTER CONTROL: JVM Toolchain (Java 21) — controls everything below
     // ═══════════════════════════════════════════════════════════════════════════
 
     plugins.withType<org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper> {
@@ -32,23 +32,19 @@ subprojects {
         }
     }
 
-    // Force Kotlin to target the correct JVM version based on project type
+    // Force Kotlin and Java to target the correct JVM version based on project type
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
-            val isAndroid = plugins.hasPlugin("com.android.application") ||
-                    plugins.hasPlugin("com.android.library")
-            if (isAndroid) {
-                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-            } else {
-                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-            }
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
 
-    // Ensure Java compiler also supports preview features for Java 26
+    // Ensure Java compiler also targets JVM 21 correctly via toolchain
     tasks.withType<JavaCompile>().configureEach {
-        options.compilerArgs.add("--enable-preview")
-        options.compilerArgs.addAll(listOf("--release", "21"))
+        val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+        javaCompiler.set(javaToolchains.compilerFor {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        })
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
