@@ -56,6 +56,10 @@
         android:theme="@style/Theme.dev.aurakai.auraframefx"
         tools:targetApi="36">
 
+        <meta-data
+            android:name="com.aurakai.regenesis.spiritualchain"
+            android:value="${spiritualChainVersion}" />
+
         <!-- Xposed Module Metadata -->
         <meta-data
             android:name="xposedmodule"

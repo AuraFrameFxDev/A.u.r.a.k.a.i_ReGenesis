@@ -57,6 +57,8 @@ android {
         buildConfigField("String", "CLAUDE_SHELL_INFERENCE_ENGINE", "\"onDevice_TurboQuant_vLLM_Omni\"")
         buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
         buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")  // triggers re-anchor if > 5%
+
+        manifestPlaceholders["spiritualChainVersion"] = "L1_L6"
     }
 
     buildTypes {
