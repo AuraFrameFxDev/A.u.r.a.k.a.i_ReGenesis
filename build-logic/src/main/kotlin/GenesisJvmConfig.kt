@@ -45,10 +45,17 @@ object GenesisJvmConfig {
      */
     fun configureKotlinJvm(project: Project) {
         with(project) {
-            // Configure Kotlin compilation - TARGET 25 (KGP limit)
+            val isAndroid = pluginManager.hasPlugin("com.android.application") ||
+                    pluginManager.hasPlugin("com.android.library")
+
+            // Configure Kotlin compilation
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_25)
+                    if (isAndroid) {
+                        jvmTarget.set(JvmTarget.JVM_21)
+                    } else {
+                        jvmTarget.set(JvmTarget.fromTarget("26"))
+                    }
                     freeCompilerArgs.addAll(
                         "-Xcontext-parameters",
                         "-Xannotation-default-target=param-property",

@@ -123,11 +123,6 @@ android {
     }
 }
 
-// Explicitly enable preview features for Java compilation to match Kotlin's use of Java 26 preview
-tasks.withType<JavaCompile>().configureEach {
-    options.compilerArgs.add("--enable-preview")
-}
-
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
@@ -318,7 +313,6 @@ dependencies {
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
-    implementation(libs.langchain4j.http.client.okhttp)
     implementation(libs.langchain4j.vertex.ai.gemini)
 
     // ═══════════════════════════════════════════════════════════════════════════

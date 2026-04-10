@@ -72,10 +72,10 @@ class GenesisLibraryPlugin : Plugin<Project> {
                     }
                 }
 
-                // Java 26 bytecode (Inherited from toolchain)
+                // Java 21 bytecode (Centralized for Android modules)
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_1_8 // Placeholder for AGP, toolchain overrides
-                    targetCompatibility = JavaVersion.VERSION_1_8
+                    sourceCompatibility = JavaVersion.VERSION_21
+                    targetCompatibility = JavaVersion.VERSION_21
                     isCoreLibraryDesugaringEnabled = true
                 }
 

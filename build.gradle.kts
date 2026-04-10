@@ -32,13 +32,16 @@ subprojects {
         }
     }
 
-    // Force Kotlin to target JVM 25 (max supported by Kotlin 2.3.20)
-    // while the toolchain is 26 for SDK 37 / AGP 9.2 compatibility.
-    // Explicitly disabling preview for Kotlin since JVM 26 preview is only for 26 target.
+    // Force Kotlin to target the correct JVM version based on project type
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
-            // No preview flags here to avoid release 25 vs 26 preview conflict
+            val isAndroid = plugins.hasPlugin("com.android.application") ||
+                    plugins.hasPlugin("com.android.library")
+            if (isAndroid) {
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+            } else {
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("26"))
+            }
         }
     }
 
