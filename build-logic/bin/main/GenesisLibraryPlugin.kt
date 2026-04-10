@@ -158,8 +158,8 @@ class GenesisLibraryPlugin : Plugin<Project> {
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
             // KavaRef for modern reflection
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.2")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.2")
         }
     }
 }

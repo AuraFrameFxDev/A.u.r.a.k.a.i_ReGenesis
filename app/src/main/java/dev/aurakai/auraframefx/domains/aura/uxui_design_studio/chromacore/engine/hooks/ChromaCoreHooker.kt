@@ -1,13 +1,15 @@
 package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.hooks
 
+import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 
 /**
  * 🛰️ CHROMA CORE HOOKER
  * Unified Xposed hooker for Iconify, PLE, and ColorBlendr features.
  * Connects preferences to SystemUI and Launcher.
+ *
+ * MIGRATED: Now using KavaRef for stable runtime reflection (2026 stack).
  */
 class ChromaCoreHooker : YukiBaseHooker() {
 
@@ -26,7 +28,7 @@ class ChromaCoreHooker : YukiBaseHooker() {
     }
 
     private fun hookStatusbarLogo() {
-        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.method {
+        "com.android.systemui.statusbar.phone.PhoneStatusBarView".toClassOrNull()?.resolve()?.firstMethod {
             name = "onFinishInflate"
         }?.hook {
             after {
@@ -41,7 +43,7 @@ class ChromaCoreHooker : YukiBaseHooker() {
     }
 
     private fun hookLauncherGrid() {
-        "com.android.launcher3.InvariantDeviceProfile".toClassOrNull()?.method {
+        "com.android.launcher3.InvariantDeviceProfile".toClassOrNull()?.resolve()?.firstMethod {
             name = "init"
         }?.hook {
             after {
@@ -54,7 +56,7 @@ class ChromaCoreHooker : YukiBaseHooker() {
 
     private fun hookDynamicColors() {
         // Hooks for Monet / Material You logic in android core
-        "com.android.systemui.monet.ColorScheme".toClassOrNull()?.method {
+        "com.android.systemui.monet.ColorScheme".toClassOrNull()?.resolve()?.firstMethod {
             name = "getSeedColors"
         }?.hook {
             after {

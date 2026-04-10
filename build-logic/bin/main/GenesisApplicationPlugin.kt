@@ -192,8 +192,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
             )
 
             // KavaRef for modern reflection
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.2")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.2")
         }
     }
 }
