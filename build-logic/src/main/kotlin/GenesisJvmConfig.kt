@@ -30,7 +30,7 @@ object GenesisJvmConfig {
      * - Maximum target supported by Kotlin 2.3.x/2.4.x
      * - Enables modern Java features with backward compatibility via desugaring
      */
-    const val JVM_VERSION = 26
+    const val JVM_VERSION = 21
 
     /**
      * Apply consistent Kotlin and Java compilation settings and attempt to configure the JVM toolchain for the given Gradle project.
@@ -53,7 +53,7 @@ object GenesisJvmConfig {
                     if (isAndroid) {
                         jvmTarget.set(JvmTarget.JVM_21)
                     } else {
-                        jvmTarget.set(JvmTarget.fromTarget("26"))
+                        jvmTarget.set(JvmTarget.JVM_21)
                     }
                     freeCompilerArgs.addAll(
                         "-Xcontext-parameters",

@@ -27,7 +27,7 @@ subprojects {
     plugins.withType<org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper> {
         extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
             jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(26))
+                languageVersion.set(JavaLanguageVersion.of(21))
             }
         }
     }
@@ -40,7 +40,7 @@ subprojects {
             if (isAndroid) {
                 jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
             } else {
-                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("26"))
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
             }
         }
     }
@@ -48,7 +48,7 @@ subprojects {
     // Ensure Java compiler also supports preview features for Java 26
     tasks.withType<JavaCompile>().configureEach {
         options.compilerArgs.add("--enable-preview")
-        options.compilerArgs.addAll(listOf("--release", "26"))
+        options.compilerArgs.addAll(listOf("--release", "21"))
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
