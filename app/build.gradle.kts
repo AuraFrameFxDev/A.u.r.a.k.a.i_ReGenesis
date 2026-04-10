@@ -104,14 +104,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    androidResources {
-        // Correcting to use list addition as additionalParameters is a MutableList<String>
-        // additionalParameters.add("--claudeLocalShellEnabled=true")
-        additionalParameters.add("--claudeShellPersistence=SpiritualChain_L1_L6")
-        additionalParameters.add("--claudeShellInference=onDevice_TurboQuant_vLLM_Omni")
-        additionalParameters.add("--claudeShellMemoryMode=NexusMemoryCore_driftScore_0.0")
-    }
-
     flavorDimensions += "shell"
     productFlavors {
         create("claudeLocalShell") {
