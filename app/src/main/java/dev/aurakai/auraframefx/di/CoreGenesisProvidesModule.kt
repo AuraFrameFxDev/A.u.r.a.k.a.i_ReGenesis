@@ -17,6 +17,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsDao
 import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
 import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
+import dev.aurakai.auraframefx.domains.genesis.network.api.AuthApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
@@ -334,6 +335,30 @@ object CoreGenesisProvidesModule {
         }
         override suspend fun insertStats(stats: dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsEntity) {}
         override suspend fun updateStats(stats: dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsEntity) {}
+    }
+
+    /**
+     * Provides stub AuthApi with safe mock implementation.
+     */
+    @Provides
+    @Singleton
+    fun provideAuthApi(): AuthApi = object : AuthApi {
+        override suspend fun login(credentials: dev.aurakai.auraframefx.domains.genesis.network.api.LoginRequest): dev.aurakai.auraframefx.domains.genesis.network.api.LoginResponse {
+            return dev.aurakai.auraframefx.domains.genesis.network.api.LoginResponse(
+                token = "demo_token",
+                refreshToken = "demo_refresh_token",
+                expiresIn = 3600
+            )
+        }
+        override suspend fun refreshToken(request: dev.aurakai.auraframefx.domains.genesis.network.api.RefreshTokenRequest): dev.aurakai.auraframefx.domains.genesis.network.api.TokenResponse {
+            return dev.aurakai.auraframefx.domains.genesis.network.api.TokenResponse(
+                token = "demo_token_refreshed",
+                expiresIn = 3600
+            )
+        }
+        override suspend fun logout(): dev.aurakai.auraframefx.domains.genesis.network.api.LogoutResponse {
+            return dev.aurakai.auraframefx.domains.genesis.network.api.LogoutResponse(success = true)
+        }
     }
 
     /**
