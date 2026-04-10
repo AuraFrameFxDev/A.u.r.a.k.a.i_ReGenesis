@@ -91,6 +91,7 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
                     .named("libs")
             val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
             val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val langchainVersion = versionCatalog.findVersion("langchain4j").get().requiredVersion
 
             dependencies.apply {
                 // Hilt — version from libs.versions.toml
