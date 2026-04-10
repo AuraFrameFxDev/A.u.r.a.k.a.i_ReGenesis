@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.core.quantization
 
+import kotlin.experimental.xor
+
 /**
  * 🌀 POLAR QUANTIZATION (PolarQuant)
  * 
@@ -32,7 +34,7 @@ object QJL {
         // [REGENESIS] 1-bit residual correction logic. 
         // We flip bits in the compressed stream if they fall within the 
         // "high-loss probability orbit" (simulated via 1-bit mask).
-        val mask = 0b10101010.toByte()
+        val mask: Byte = 0b10101010.toByte()
         return ByteArray(compressed.size) { i ->
             compressed[i] xor mask
         }

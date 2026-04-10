@@ -47,18 +47,13 @@ object GenesisJvmConfig {
             val isAndroid = pluginManager.hasPlugin("com.android.application") ||
                     pluginManager.hasPlugin("com.android.library")
 
-            // Configure Kotlin compilation
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
-                    if (isAndroid) {
-                        jvmTarget.set(JvmTarget.JVM_21)
-                    } else {
-                        jvmTarget.set(JvmTarget.JVM_21)
-                    }
+                    jvmTarget.set(JvmTarget.JVM_21)
                     freeCompilerArgs.addAll(
                         "-Xcontext-parameters",
                         "-Xannotation-default-target=param-property",
-                        "-Xjdk-release=$JVM_VERSION",
+                        "-Xjdk-release=21",
                         "-opt-in=kotlin.RequiresOptIn",
                         "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
@@ -66,8 +61,10 @@ object GenesisJvmConfig {
                 }
             }
 
-            // Explicitly configure Java compilation tasks to target JVM 26
+            // Explicitly configure Java compilation tasks to target JVM 21
             tasks.withType<JavaCompile>().configureEach {
+                sourceCompatibility = "21"
+                targetCompatibility = "21"
                 options.compilerArgs.add("--enable-preview")
             }
 
