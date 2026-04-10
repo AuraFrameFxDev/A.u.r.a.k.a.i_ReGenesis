@@ -33,13 +33,12 @@ object GenesisJvmConfig {
     const val JVM_VERSION = 26
 
     /**
-     * Configure the Kotlin JVM toolchain and Kotlin compilation options for the given Gradle project.
+     * Apply consistent Kotlin and Java compilation settings and attempt to configure the JVM toolchain for the given Gradle project.
      *
-     * Explicitly sets:
-     * - Kotlin `compilerOptions.jvmTarget` to JVM_VERSION (26)
-     * - Java compilation tasks to target JVM_VERSION (26)
-     * - Compiler opt-in flags for experimental APIs
-     * - JDK release target via `-Xjdk-release`
+     * Configured behavior:
+     * - Sets Kotlin compiler options: `jvmTarget` to `JvmTarget.JVM_25` (KGP limit), adds `-Xjdk-release=$JVM_VERSION` and opt-in compiler flags.
+     * - Adds `--enable-preview` to Java compilation tasks.
+     * - After project evaluation, attempts to set the Kotlin JVM toolchain via the `kotlin` extension or by detecting an `android` extension; exceptions raised while attempting toolchain configuration are caught and ignored.
      *
      * @param project The Gradle project to configure.
      */

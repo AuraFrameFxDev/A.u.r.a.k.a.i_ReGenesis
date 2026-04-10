@@ -33,14 +33,13 @@ import org.gradle.kotlin.dsl.configure
  */
 class GenesisApplicationPlugin : Plugin<Project> {
     /**
-     * Configure a Gradle Project as an Android application module using Genesis conventions.
+     * Configure the given Gradle Project as an Android application module using Genesis conventions.
      *
-     * Applies required plugins; configures the Android ApplicationExtension (compile and target SDKs,
-     * NDK, defaultConfig, build types, Java compatibility, Compose and other build features, packaging,
-     * lint, and optional CMake external native build); adjusts Kotlin compiler options; and adds the
-     * standard set of dependencies used by Genesis application modules.
+     * Applies required plugins, configures the Android ApplicationExtension (SDKs, NDK, defaultConfig,
+     * build types, compile options, build features, packaging, lint, and optional CMake), sets up the
+     * Kotlin JVM toolchain, and adds the standard dependency set for Genesis application modules.
      *
-     * @param project The Gradle Project to configure as an Android application module.
+     * @param project The Gradle Project to configure.
      */
     override fun apply(project: Project) {
         with(project) {
