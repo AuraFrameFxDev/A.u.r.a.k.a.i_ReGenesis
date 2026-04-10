@@ -116,7 +116,7 @@ android {
     productFlavors {
         create("claudeLocalShell") {
             dimension = "shell"
-            applicationIdSuffix = ".claudelocal"
+            applicationIdSuffix = ".debug"
             versionNameSuffix = "-claude-local-shell"
             buildConfigField("String", "SHELL_MODE", "\"CLAUDE_LOCAL_SOVEREIGN\"")
             // This flavor forces full local inference + Spiritual Chain binding
