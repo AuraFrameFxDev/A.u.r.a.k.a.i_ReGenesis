@@ -52,14 +52,29 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
             pluginManager.apply("com.google.gms.google-services")
 
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+
+            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
+            val targetSdkVersion = versionCatalog.findVersion("target-sdk").get().requiredVersion.toInt()
+            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
+
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
+
             extensions.configure<ApplicationExtension> {
-                compileSdk = 37
+                compileSdk = compileSdkVersion
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
-                    minSdk = 34
-                    targetSdk = 37
+                    minSdk = minSdkVersion
+                    targetSdk = targetSdkVersion
                     versionCode = 1
                     versionName = "1.0"
 
@@ -132,16 +147,6 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
-
-            // ═══════════════════════════════════════════════════════════════════════
-            // Versions read from libs.versions.toml — single source of truth
-            // ═══════════════════════════════════════════════════════════════════════
-            val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
 
             // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
