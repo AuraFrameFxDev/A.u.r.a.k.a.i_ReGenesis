@@ -60,6 +60,8 @@ gradle-app.setting
 # ───────────────────────────────────────────────────────────────
 google-services.json
 *-firebase-adminsdk-*.json
+*.env
+Claude.env
 *.jks
 *.keystore
 keystore.properties
