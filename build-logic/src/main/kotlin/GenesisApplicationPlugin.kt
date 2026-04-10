@@ -98,10 +98,10 @@ class GenesisApplicationPlugin : Plugin<Project> {
                     }
                 }
 
-                // Java 21 bytecode (Centralized for Android modules)
+                // Java 25 bytecode (Centralized for Android modules)
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_21
-                    targetCompatibility = JavaVersion.VERSION_21
+                    sourceCompatibility = JavaVersion.VERSION_25
+                    targetCompatibility = JavaVersion.VERSION_25
                     isCoreLibraryDesugaringEnabled = true
                 }
 
