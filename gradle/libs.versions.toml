@@ -109,8 +109,8 @@ uiGeometry = "1.10.6"
 androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 media3Exoplayer = "1.10.0"
-langchain4j = "1.13.0"
-langchain4jVertex = "1.13.0-beta23"
+langchain4j = "1.12.2"
+langchain4jVertex = "1.12.2-beta22"
 remoteCreationCompose = "1.0.0-alpha07"
 [libraries]
 # Missing fixes
@@ -122,6 +122,7 @@ androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplaye
 langchain4j = { group = "dev.langchain4j", name = "langchain4j", version.ref = "langchain4j" }
 langchain4j-bom = { group = "dev.langchain4j", name = "langchain4j-bom", version.ref = "langchain4j" }
 langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", version.ref = "langchain4j" }
+langchain4j-http-client = { group = "dev.langchain4j", name = "langchain4j-http-client", version.ref = "langchain4j" }
 langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-http-client-jdk", version.ref = "langchain4j" }
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
@@ -293,6 +294,7 @@ androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4
 [bundles]
 langchain4j = [
     "langchain4j-core",
+    "langchain4j-http-client",
     "langchain4j-ollama",
     "langchain4j-open-ai",
     "langchain4j-google-ai-gemini",
