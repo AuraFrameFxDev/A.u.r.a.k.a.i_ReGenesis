@@ -74,7 +74,6 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
                     minSdk = minSdkVersion
-                    "android-37".also { com.android.build.api.dsl.ApplicationBaseFlavor.targetSdk =37 }
                     versionCode = 1
                     versionName = "1.0"
 
