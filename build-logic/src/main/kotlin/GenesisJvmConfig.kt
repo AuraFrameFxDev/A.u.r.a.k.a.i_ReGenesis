@@ -44,9 +44,6 @@ object GenesisJvmConfig {
      */
     fun configureKotlinJvm(project: Project) {
         with(project) {
-            val isAndroid = pluginManager.hasPlugin("com.android.application") ||
-                    pluginManager.hasPlugin("com.android.library")
-
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(JvmTarget.JVM_21)
