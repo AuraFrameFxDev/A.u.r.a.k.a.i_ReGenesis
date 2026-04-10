@@ -66,6 +66,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
             val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
             val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
             val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
+            val langchainVersion = versionCatalog.findVersion("langchain4j").get().requiredVersion
 
             extensions.configure<ApplicationExtension> {
                 compileSdk = compileSdkVersion
@@ -192,6 +193,14 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 "implementation",
                 dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
             )
+
+            // AI — LangChain4j (using BOM and bundle)
+            dependencies.add(
+                "implementation",
+                dependencies.platform("dev.langchain4j:langchain4j-bom:$langchainVersion")
+            )
+            val langchainBundle = versionCatalog.findBundle("langchain4j").get()
+            dependencies.add("implementation", langchainBundle)
 
             // KavaRef for modern reflection
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")

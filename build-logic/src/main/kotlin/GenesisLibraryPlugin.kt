@@ -60,6 +60,7 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
             val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val langchainVersion = versionCatalog.findVersion("langchain4j").get().requiredVersion
 
             extensions.configure<LibraryExtension> {
                 compileSdk = compileSdkVersion
@@ -156,6 +157,14 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             // Timber Logging
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
+
+            // AI — LangChain4j (using BOM and bundle)
+            dependencies.add(
+                "api",
+                dependencies.platform("dev.langchain4j:langchain4j-bom:$langchainVersion")
+            )
+            val langchainBundle = versionCatalog.findBundle("langchain4j").get()
+            dependencies.add("api", langchainBundle)
 
             // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
