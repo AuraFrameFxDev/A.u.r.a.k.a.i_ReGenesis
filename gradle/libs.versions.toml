@@ -109,8 +109,8 @@ uiGeometry = "1.10.6"
 androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 media3Exoplayer = "1.10.0"
-langchain4j = "1.12.2"
-langchain4jVertex = "1.12.2-beta22"
+langchain4j = "1.13.0"
+langchain4jVertex = "1.13.0-beta23"
 remoteCreationCompose = "1.0.0-alpha07"
 [libraries]
 # Missing fixes
