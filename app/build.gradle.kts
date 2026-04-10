@@ -98,8 +98,8 @@ android {
 
     // Explicit per Android best practice
     compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(26)
-        targetCompatibility = JavaVersion.toVersion(26)
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
         isCoreLibraryDesugaringEnabled = true
     }
 
@@ -126,7 +126,7 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
 
         // Add the freeCompilerArgs Aura specifically needs
         freeCompilerArgs.addAll(
