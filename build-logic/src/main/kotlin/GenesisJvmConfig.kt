@@ -30,7 +30,7 @@ object GenesisJvmConfig {
      * - Maximum target supported by Kotlin 2.3.x/2.4.x
      * - Enables modern Java features with backward compatibility via desugaring
      */
-    const val JVM_VERSION = 21
+    const val JVM_VERSION = 25
 
     /**
      * Apply consistent Kotlin and Java compilation settings and attempt to configure the JVM toolchain for the given Gradle project.
@@ -46,11 +46,11 @@ object GenesisJvmConfig {
         with(project) {
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_21)
+                    jvmTarget.set(JvmTarget.JVM_25)
                     freeCompilerArgs.addAll(
                         "-Xcontext-parameters",
                         "-Xannotation-default-target=param-property",
-                        "-Xjdk-release=21",
+                        "-Xjdk-release=25",
                         "-opt-in=kotlin.RequiresOptIn",
                         "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
@@ -58,7 +58,7 @@ object GenesisJvmConfig {
                 }
             }
 
-            // Explicitly configure Java compilation tasks to target JVM 21 with toolchain
+            // Explicitly configure Java compilation tasks to target JVM 25 with toolchain
             tasks.withType<JavaCompile>().configureEach {
                 val javaToolchains = project.extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService::class.java)
                 javaCompiler.set(javaToolchains.compilerFor {
@@ -66,6 +66,7 @@ object GenesisJvmConfig {
                 })
                 sourceCompatibility = JVM_VERSION.toString()
                 targetCompatibility = JVM_VERSION.toString()
+                options.compilerArgs.add("--enable-preview")
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready

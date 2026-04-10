@@ -99,14 +99,14 @@ android {
 
     // Explicit per Android best practice
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
     }
 
     androidResources {
         // Correcting to use list addition as additionalParameters is a MutableList<String>
-        additionalParameters.add("--claudeLocalShellEnabled=true")
+        // additionalParameters.add("--claudeLocalShellEnabled=true")
         additionalParameters.add("--claudeShellPersistence=SpiritualChain_L1_L6")
         additionalParameters.add("--claudeShellInference=onDevice_TurboQuant_vLLM_Omni")
         additionalParameters.add("--claudeShellMemoryMode=NexusMemoryCore_driftScore_0.0")
@@ -127,7 +127,7 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
 
         // Add the freeCompilerArgs Aura specifically needs
         freeCompilerArgs.addAll(
