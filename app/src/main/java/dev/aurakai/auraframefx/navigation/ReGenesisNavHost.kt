@@ -16,6 +16,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewMo
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.*
+import dev.aurakai.auraframefx.domains.aura.ui.gates.LoginScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.memory.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.fusion.*
@@ -26,6 +27,7 @@ import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.*
 import dev.aurakai.auraframefx.domains.aura.ui.screens.AuraSphereGridScreen
 import dev.aurakai.auraframefx.domains.aura.screens.CanvasScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCenterScreen
 
@@ -36,8 +38,19 @@ fun ReGenesisNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.HomeGateCarousel.route,
+        startDestination = ReGenesisRoute.Login.route,
     ) {
+        // ── 0. AUTH GATES ──
+        composable(ReGenesisRoute.Login.route) {
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(ReGenesisRoute.HomeGateCarousel.route) {
+                        popUpTo(ReGenesisRoute.Login.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         // ── 1. MAIN GATES ──
         composable(ReGenesisRoute.HomeGateCarousel.route) {
             MainScreen(navController = navController)
@@ -128,6 +141,10 @@ fun ReGenesisNavGraph(
                 onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
                 onNavigateToAnimations = { /* TODO */ }
             )
+        }
+
+        composable(ReGenesisRoute.UserPreferences.route) {
+            SettingsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // KAI DOMAIN
