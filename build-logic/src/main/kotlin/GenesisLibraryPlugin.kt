@@ -48,12 +48,25 @@ class GenesisLibraryPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+
+            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
+            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
+
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+
             extensions.configure<LibraryExtension> {
-                compileSdk = 37
+                compileSdk = compileSdkVersion
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
-                    minSdk = 34
+                    minSdk = minSdkVersion
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
                     ndk {
@@ -109,15 +122,6 @@ class GenesisLibraryPlugin : Plugin<Project> {
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
-
-            // ═══════════════════════════════════════════════════════════════════════
-            // Versions read from libs.versions.toml — single source of truth
-            // ═══════════════════════════════════════════════════════════════════════
-            val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
 
             // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
