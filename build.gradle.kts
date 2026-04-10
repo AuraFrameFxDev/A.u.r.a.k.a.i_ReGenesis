@@ -27,14 +27,25 @@ subprojects {
     plugins.withType<org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper> {
         extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
             jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(25))
+                languageVersion.set(JavaLanguageVersion.of(26))
             }
         }
     }
 
-    // Ensure Java compiler also supports preview features for Java 25
+    // Force Kotlin to target JVM 25 (max supported by Kotlin 2.3.20)
+    // while the toolchain is 26 for SDK 37 / AGP 9.2 compatibility.
+    // Explicitly disabling preview for Kotlin since JVM 26 preview is only for 26 target.
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+            // No preview flags here to avoid release 25 vs 26 preview conflict
+        }
+    }
+
+    // Ensure Java compiler also supports preview features for Java 26
     tasks.withType<JavaCompile>().configureEach {
         options.compilerArgs.add("--enable-preview")
+        options.compilerArgs.addAll(listOf("--release", "26"))
     }
 
     // ═══════════════════════════════════════════════════════════════════════════

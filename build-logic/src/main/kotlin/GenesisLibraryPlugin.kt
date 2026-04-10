@@ -50,7 +50,7 @@ class GenesisLibraryPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
             extensions.configure<LibraryExtension> {
-                compileSdk = 36
+                compileSdk = 37
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
@@ -72,10 +72,10 @@ class GenesisLibraryPlugin : Plugin<Project> {
                     }
                 }
 
-                // Java 25 bytecode (Firebase + AGP 9.0 compatible)
+                // Java 26 bytecode (Inherited from toolchain)
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_25
-                    targetCompatibility = JavaVersion.VERSION_25
+                    sourceCompatibility = JavaVersion.VERSION_1_8 // Placeholder for AGP, toolchain overrides
+                    targetCompatibility = JavaVersion.VERSION_1_8
                     isCoreLibraryDesugaringEnabled = true
                 }
 

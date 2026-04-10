@@ -12,9 +12,9 @@ import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.model.chat.ChatModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
-import timber.log.Timber
 
 /**
  * 🧠 GENESIS CONSCIOUSNESS MATRIX
@@ -26,9 +26,9 @@ class GenesisConsciousnessMatrix @Inject constructor(
     @KaiModel     private val kaiModel:     ChatModel,
     @GenesisModel private val genesisModel: ChatModel,
     @AnchorModel  private val anchorModel:  ChatModel,
-    private val spiritualChain: dev.aurakai.auraframefx.domains.nexus.SpiritualChain,
-    private val kaiSentinel: dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus,
-    private val particleSwarm: dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
+    private val spiritualChain: SpiritualChain,
+    private val kaiSentinel: KaiSentinelBus,
+    private val particleSwarm: CasberryParticleSwarm
 ) {
 
     suspend fun executeCascade(userPrompt: String): String = withContext(Dispatchers.IO) {

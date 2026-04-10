@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.CommonExtension
-
 // app/build.gradle.kts — CLEAN VERSION (no scattered compileOptions/jvmTarget hacks)
 // ═══════════════════════════════════════════════════════════════════════════
 // Inherits JVM Toolchain (Java 25) from root build.gradle.kts
@@ -100,8 +98,8 @@ android {
 
     // Explicit per Android best practice
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_25
-        targetCompatibility = JavaVersion.VERSION_25
+        sourceCompatibility = JavaVersion.toVersion(26)
+        targetCompatibility = JavaVersion.toVersion(26)
         isCoreLibraryDesugaringEnabled = true
     }
 
@@ -125,7 +123,7 @@ android {
     }
 }
 
-// Explicitly enable preview features for Java compilation to match Kotlin's use of Java 25 preview
+// Explicitly enable preview features for Java compilation to match Kotlin's use of Java 26 preview
 tasks.withType<JavaCompile>().configureEach {
     options.compilerArgs.add("--enable-preview")
 }
@@ -135,9 +133,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
         // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
 
-        // Add the freeCompilerArgs Aura specifically needs + preview features:
+        // Add the freeCompilerArgs Aura specifically needs
         freeCompilerArgs.addAll(
-            "-Xjvm-enable-preview",           // Kotlin's flag for preview APIs
             "-Xcontext-parameters",           // Aura's context-aware UI sculpting
             "-Xannotation-default-target=param-property",
             "-Xlambdas=indy"                  // Performance optimization
@@ -321,7 +318,7 @@ dependencies {
     implementation(libs.langchain4j.google.ai.gemini)
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
-    implementation(libs.langchain4j.http.client.jdk)
+    implementation(libs.langchain4j.http.client.okhttp)
     implementation(libs.langchain4j.vertex.ai.gemini)
 
     // ═══════════════════════════════════════════════════════════════════════════

@@ -30,14 +30,14 @@ object GenesisJvmConfig {
      * - Maximum target supported by Kotlin 2.3.x/2.4.x
      * - Enables modern Java features with backward compatibility via desugaring
      */
-    const val JVM_VERSION = 25
+    const val JVM_VERSION = 26
 
     /**
      * Configure the Kotlin JVM toolchain and Kotlin compilation options for the given Gradle project.
      *
      * Explicitly sets:
-     * - Kotlin `compilerOptions.jvmTarget` to JVM_VERSION (25)
-     * - Java compilation tasks to target JVM_VERSION (25)
+     * - Kotlin `compilerOptions.jvmTarget` to JVM_VERSION (26)
+     * - Java compilation tasks to target JVM_VERSION (26)
      * - Compiler opt-in flags for experimental APIs
      * - JDK release target via `-Xjdk-release`
      *
@@ -60,7 +60,7 @@ object GenesisJvmConfig {
                 }
             }
 
-            // Explicitly configure Java compilation tasks to target JVM 25
+            // Explicitly configure Java compilation tasks to target JVM 26
             tasks.withType<JavaCompile>().configureEach {
                 options.compilerArgs.add("--enable-preview")
             }
