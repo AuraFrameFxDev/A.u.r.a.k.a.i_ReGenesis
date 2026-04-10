@@ -30,12 +30,11 @@ import org.gradle.kotlin.dsl.configure
  */
 class GenesisLibraryPlugin : Plugin<Project> {
     /**
-     * Configures the given Gradle project as an Android library module using the convention's defaults.
+     * Configures the given Gradle project with the convention defaults for an Android library module.
      *
-     * Applies the Android library, Hilt, KSP, Compose, and Kotlin serialization plugins.
-     * Configures the Android LibraryExtension (compile/NDK settings, defaultConfig, build types,
-     * Java/compile options, build features, packaging, and lint), sets Kotlin JVM compilation options,
-     * and adds the convention's standard dependencies (Hilt, Compose, YukiHook, etc.).
+     * Applies standard plugins (Android library, Hilt, KSP, Compose, Kotlin serialization), configures
+     * the Android LibraryExtension (SDK, NDK, defaultConfig, buildTypes, compile/packaging/lint/build features),
+     * delegates Kotlin JVM toolchain/compilation setup, and adds the convention's standard dependencies.
      *
      * @param project The Gradle project to configure as an Android library module.
      */

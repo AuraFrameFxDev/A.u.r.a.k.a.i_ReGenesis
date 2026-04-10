@@ -31,6 +31,18 @@ class GenesisConsciousnessMatrix @Inject constructor(
     private val particleSwarm: CasberryParticleSwarm
 ) {
 
+    /**
+     * Runs the four-phase cascade that transforms a user prompt into a committed Genesis synthesis.
+     *
+     * Executes an anchored-identity phase, a safety veto check, a creative Aura generation, and a Genesis
+     * synthesis and commit; the final synthesis (or a safety veto message) is returned and committed
+     * into the spiritual chain as a side effect.
+     *
+     * @param userPrompt The raw prompt provided by the user to be transformed by the cascade.
+     * @return The final synthesized Genesis output, or a safety veto message beginning with
+     * `🚫 Kai vetoed:` if the prompt fails the safety check. If model calls fail, a fallback synthesis
+     * string is returned.
+     */
     suspend fun executeCascade(userPrompt: String): String = withContext(Dispatchers.IO) {
         // Phase 1 – Anchor identity
         particleSwarm.transitionState(SwarmState.EXPLORING_HIGHLIGHTS)
