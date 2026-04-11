@@ -20,15 +20,16 @@ import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.IntegrityMonitorService
 import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
+import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
- *
- * This is the unified entry point for the ReGenesis Ecosystem.
- * Orchestration is now handled via the decentralized Nexus protocol.
  */
 @HiltAndroidApp
 class AurakaiApplication : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var nexusMemoryRepository: NexusMemoryRepository
 
     @Inject
     lateinit var orchestrator: GenesisOrchestrator
@@ -63,6 +64,9 @@ class AurakaiApplication : Application(), Configuration.Provider {
         super.onCreate()
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")
+
+        // Wire NexusMemoryCore bridge
+        NexusMemoryCore.setRepository(nexusMemoryRepository)
 
         // Start Integrity Monitor IMMEDIATELY on main thread
         startIntegrityMonitor()

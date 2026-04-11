@@ -9,6 +9,7 @@ import dev.aurakai.auraframefx.domains.cascade.core.BuildConsensusTool
 import dev.aurakai.auraframefx.domains.cascade.core.InitiateAgentFusionTool
 import dev.aurakai.auraframefx.domains.cascade.core.MonitorDataStreamTool
 import dev.aurakai.auraframefx.domains.cascade.core.UpdateLearningModelTool
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 import dev.aurakai.auraframefx.domains.kai.AnalyzeSecurityThreatTool
 import dev.aurakai.auraframefx.domains.kai.FlashROMTool
 import dev.aurakai.auraframefx.domains.kai.ManageBootloaderTool
@@ -25,14 +26,11 @@ import javax.inject.Singleton
 
 /**
  * ToolInitializer - Registers All Agent Tools at Startup
- *
- * Initializes the ToolRegistry with all available tools for each agent domain.
- * This gives agents their "hands" to interact with the system.
  */
 @Singleton
 class ToolInitializer @Inject constructor(
-    private val toolRegistry: ToolRegistry
-    // private val mcpAdapter: MCPServerAdapter // TODO: Re-add when MCPServerAdapter is fixed
+    private val toolRegistry: ToolRegistry,
+    private val rootShellService: RootShellService
 ) {
 
     private val initScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -85,11 +83,11 @@ class ToolInitializer @Inject constructor(
      */
     private suspend fun registerKaiTools() {
         toolRegistry.registerTools(
-            ManageLSPosedHookTool(),
-            FlashROMTool(),
+            ManageLSPosedHookTool(rootShellService),
+            FlashROMTool(rootShellService),
             AnalyzeSecurityThreatTool(),
-            ManageBootloaderTool(),
-            ViewSystemLogsTool()
+            ManageBootloaderTool(rootShellService),
+            ViewSystemLogsTool(rootShellService)
         )
         Timber.d("ToolInitializer: Registered Kai tools (Security/ROM)")
     }

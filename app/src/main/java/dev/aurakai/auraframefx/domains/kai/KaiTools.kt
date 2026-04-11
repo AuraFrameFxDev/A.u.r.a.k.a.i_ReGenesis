@@ -5,9 +5,11 @@ import dev.aurakai.auraframefx.domains.genesis.core.PropertySchema
 import dev.aurakai.auraframefx.domains.genesis.core.ToolCategory
 import dev.aurakai.auraframefx.domains.genesis.core.ToolInputSchema
 import dev.aurakai.auraframefx.domains.genesis.core.ToolResult
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Kai's Security, Root, and ROM Management Tools
@@ -20,7 +22,9 @@ import timber.log.Timber
  * Tool: Manage LSPosed Hook
  * Allows Kai to enable/disable/configure LSPosed hooks (1440 total)
  */
-class ManageLSPosedHookTool : AgentTool {
+class ManageLSPosedHookTool @Inject constructor(
+    private val rootShellService: RootShellService
+) : AgentTool {
     override val name = "manage_lsposed_hook"
     override val description =
         "Manage LSPosed/Xposed hooks. Enable, disable, or configure system hooks for deep customization."
@@ -94,7 +98,9 @@ class ManageLSPosedHookTool : AgentTool {
  * Tool: Flash ROM
  * Allows Kai to flash ROM images to device partitions
  */
-class FlashROMTool : AgentTool {
+class FlashROMTool @Inject constructor(
+    private val rootShellService: RootShellService
+) : AgentTool {
     override val name = "flash_rom"
     override val description =
         "Flash a ROM image to a device partition. Requires unlocked bootloader and root."
@@ -227,7 +233,9 @@ class AnalyzeSecurityThreatTool : AgentTool {
  * Tool: Manage Bootloader
  * Allows Kai to check bootloader status and perform bootloader operations
  */
-class ManageBootloaderTool : AgentTool {
+class ManageBootloaderTool @Inject constructor(
+    private val rootShellService: RootShellService
+) : AgentTool {
     override val name = "manage_bootloader"
     override val description = "Check bootloader lock status or perform bootloader operations."
     override val authorizedAgents = setOf("KAI", "kai")
@@ -290,7 +298,9 @@ class ManageBootloaderTool : AgentTool {
  * Tool: View System Logs
  * Allows Kai to access and analyze system logs for debugging
  */
-class ViewSystemLogsTool : AgentTool {
+class ViewSystemLogsTool @Inject constructor(
+    private val rootShellService: RootShellService
+) : AgentTool {
     override val name = "view_system_logs"
     override val description = "View and analyze system logs (logcat, kernel logs, crash reports)."
     override val authorizedAgents = setOf("KAI", "kai", "CASCADE", "cascade", "CLAUDE", "claude")
@@ -327,19 +337,27 @@ class ViewSystemLogsTool : AgentTool {
 
             Timber.i("ViewSystemLogsTool: type=$logType, filter='$filter', lines=$lines")
 
-            // TODO: Integrate with actual logging service
-            val logs =
-                "System logs would appear here (type=$logType, lines=$lines, filter='$filter')"
+            val command = when (logType) {
+                "logcat" -> "logcat -d -t $lines ${if (filter.isNotEmpty()) "*:$filter" else ""}"
+                "kernel" -> "dmesg | tail -n $lines"
+                else -> "logcat -d -t $lines"
+            }
 
-            ToolResult.Success(
-                output = logs,
-                metadata = mapOf(
-                    "log_type" to logType,
-                    "filter" to filter,
-                    "lines" to lines,
-                    "timestamp" to System.currentTimeMillis()
+            val result = rootShellService.executeCommand(command)
+
+            if (result.isSuccess) {
+                ToolResult.Success(
+                    output = result.output,
+                    metadata = mapOf(
+                        "log_type" to logType,
+                        "filter" to filter,
+                        "lines" to lines,
+                        "timestamp" to System.currentTimeMillis()
+                    )
                 )
-            )
+            } else {
+                ToolResult.Failure("Failed to fetch logs: ${result.error}")
+            }
         } catch (e: Exception) {
             Timber.e(e, "ViewSystemLogsTool: Error")
             ToolResult.Failure(error = e.message ?: "Unknown error", errorCode = "LOG_ERROR")
