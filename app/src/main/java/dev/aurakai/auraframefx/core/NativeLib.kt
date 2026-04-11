@@ -2,13 +2,10 @@ package dev.aurakai.auraframefx.core
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus.ThermalState
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -20,117 +17,193 @@ import timber.log.Timber
 object NativeLib {
 
     private var sentinelBus: KaiSentinelBus? = null
-    private var sovereignManager: SovereignStateManager? = null
+    private var stateManager: SovereignStateManager? = null
     private var pandoraBox: PandoraBoxService? = null
-    private var droneDispatcher: GuidanceDroneDispatcher? = null
-
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var nativeLoaded: Boolean = false
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     init {
         try {
             System.loadLibrary("auraframefx")
-            nativeLoaded = true
-            Timber.i("🛡️ Genesis Native Substrate: Standard NDK library loaded.")
+            Timber.i("🛡️ NativeLib: Genesis AI native substrate loaded successfully.")
         } catch (e: UnsatisfiedLinkError) {
-            nativeLoaded = false
-            Timber.e(e, "❌ Native Substrate: Critical failure — library [auraframefx] not found.")
+            Timber.e(e, "❌ NativeLib: Failed to load native substrate.")
         }
     }
 
     /**
-     * Registers domain service instances for the native JNI bridge.
+     * Configure the NativeLib bridge with Kotlin-side services used by native callbacks.
+     *
+     * @param bus Bus used to emit thermal and security events.
+     * @param manager Manager used to initiate sovereignty state changes.
+     * @param pandora Service used to evaluate capability gating.
      */
     @JvmStatic
     fun initialize(
         bus: KaiSentinelBus,
         manager: SovereignStateManager,
+        pandora: PandoraBoxService
+    ) {
+        sentinelBus = bus
+        stateManager = manager
+        pandoraBox = pandora
+        Timber.i("🛡️ NativeLib bridge initialized with Kotlin managers")
+    }
+
+    /**
+     * Initializes NativeLib with runtime service delegates used by native callbacks.
+     *
+     * @param bus Kotlin bus for emitting thermal and security events.
+     * @param manager Manager used to initiate sovereignty/state changes.
+     * @param pandora Service used to evaluate capability gating.
+     * @param dispatcher Dispatcher responsible for outbound drone dispatch requests.
+     */
+    fun initialize(
+        bus: KaiSentinelBus,
+        manager: SovereignStateManager,
         pandora: PandoraBoxService,
-        dispatcher: GuidanceDroneDispatcher? = null
+        dispatcher: GuidanceDroneDispatcher
     ) {
         sentinelBus = bus
         sovereignManager = manager
         pandoraBox = pandora
         droneDispatcher = dispatcher
-        Timber.i("🛡️ NativeLib: Relational Bridge synchronized with all Sovereign managers.")
+        Timber.i("🛡️ NativeLib: JNI Bridge initialized with Sovereign services.")
     }
 
     // --- Native Methods ---
 
     external fun getAIVersion(): String
+    external fun initializeAICore(): Boolean
+    external fun processNeuralRequest(request: String): String
+    external fun getSystemMetrics(): String
+    external fun enableNativeHooks()
+    external fun shutdownAI()
     /**
- * Initialize the native AI core and prepare it for operation.
+ * Requests the native substrate to optimize the AI runtime's memory usage.
  *
- * @return `true` if the native AI core initialized successfully, `false` otherwise.
- */
-external fun initializeAICore(): Boolean
-    /**
- * Processes a neural request through the native AI core and produces a textual response.
- *
- * @param request The input payload or prompt to be handled by the native neural processor.
- * @return The response string produced by the native AI core.
- */
-external fun processNeuralRequest(request: String): String
-    /**
- * Retrieves a snapshot of current system metrics from the native substrate.
- *
- * @return A string representation of the current system metrics. */
-external fun getSystemMetrics(): String
-    /**
- * Activates native hooks inside the native substrate to install platform integrations and callbacks.
- *
- * Triggers native-side state changes required for interoperability between the JVM and the native library.
- */
-external fun enableNativeHooks()
-    /**
- * Initiates an orderly shutdown of the native AI subsystem and releases its native resources.
- */
-external fun shutdownAI()
-    /**
- * Requests the native substrate to optimize AI-related memory usage.
- *
- * @return `true` if the native optimizer reports success, `false` otherwise.
+ * @return `true` if the native optimization succeeded, `false` otherwise.
  */
 external fun optimizeAIMemory(): Boolean
     /**
- * Analyzes a boot image and produces a diagnostic analysis report.
+ * Analyze a boot image and produce a diagnostic report.
  *
- * @param bootImageData The raw boot image bytes to analyze.
- * @return A diagnostic analysis report as a String. */
+ * @param bootImageData Raw bytes of the boot image to analyze.
+ * @return A string containing analysis results or diagnostics.
 external fun analyzeBootImage(bootImageData: ByteArray): String
 
     /**
-     * Handle a thermal event reported by the native layer.
+     * Handles a thermal event from the native substrate and forwards it to the sentinel bus.
      *
-     * Resolves `stateInt` to a `KaiSentinelBus.ThermalState` (defaults to `NORMAL` if invalid)
-     * and, if configured, emits the temperature and resolved state to the sentinel bus.
+     * Maps `stateInt` to `KaiSentinelBus.ThermalState` by ordinal; if the ordinal is invalid, `ThermalState.NORMAL`
+     * is used. The temperature and resolved state are emitted to the configured `sentinelBus`.
      *
-     * @param temp Temperature in degrees Celsius.
-     * @param stateInt Ordinal index of `KaiSentinelBus.ThermalState`; out-of-range values map to `NORMAL`.
+     * @param temp The measured temperature in degrees Celsius.
+     * @param stateInt Ordinal of the `KaiSentinelBus.ThermalState`.
      */
 
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
-        val state = KaiSentinelBus.ThermalState.fromId(stateInt)
+        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
+        sentinelBus?.emitThermal(temp, state)
+        Timber.d("🛡️ NativeLib: Thermal event from substrate: %.1f°C (%s)", temp, state)
+    }
 
+    /**
+     * Handles security alerts sent from the native substrate.
+     *
+     * Logs the provided reason at warning level.
+     *
+     * @param reason Human-readable reason or code describing the security alert.
+     */
+    @JvmStatic
+    fun onNativeSecurityAlert(reason: String) {
+        Timber.w("🛡️ NativeLib: SECURITY ALERT: %s", reason)
+        // Hardening: Could trigger immediate lock or notify bus
+    }
+
+    /**
+     * Requests that the system enter a sovereign state freeze.
+     *
+     * Schedules an asynchronous invocation of the configured SovereignStateManager's
+     * state-freeze initiation. If no manager is configured, this call has no effect.
+     */
+    @JvmStatic
+    fun requestSovereignFreeze() {
+        Timber.i("🛡️ NativeLib: Substrate requesting Sovereign State-Freeze")
+        scope.launch {
+            stateManager?.initiateStateFreeze()
+        }
+    }
+
+    /**
+     * Checks whether a native-substrate capability code is permitted by the Pandora gating service.
+     *
+     * Maps `capabilityInt` to an `AgentCapabilityCategory` (unknown values map to `ROOT`) and queries the configured `PandoraBoxService` for unlock status.
+     *
+     * @param capabilityInt Integer index into `AgentCapabilityCategory.entries` representing the capability to check.
+     * @return `true` if the mapped capability is unlocked by the `PandoraBoxService`, `false` otherwise (including when the service is unavailable).
+     */
+    @JvmStatic
+    fun checkPandoraGating(capabilityInt: Int): Boolean {
+        val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: AgentCapabilityCategory.ROOT
+        val isUnlocked = pandoraBox?.isCapabilityUnlocked(category) ?: false
+        Timber.d("🛡️ NativeLib: Pandora gating check for %s: %s", category, if (isUnlocked) "ALLOWED" else "VETOED")
+        return isUnlocked
+    }
+
+    /**
+     * Notify the system that the native substrate requested a drone dispatch for the provided reason.
+     *
+     * This implementation currently records the request via logging; actual dispatch execution is not performed here.
+     *
+     * @param reason Human-readable rationale for the requested dispatch.
+     */
+    @JvmStatic
+    fun triggerDroneDispatch(reason: String) {
+        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
+        // Future Phase 2 implementation point
+    }
+
+    /**
+     * Obtain the AI platform version string, falling back to a stable identifier if the native library is unavailable.
+     *
+     * @return The AI platform version string; if the native library cannot be loaded (`UnsatisfiedLinkError`), returns
+     *         "Genesis-OS AI Platform 1.0 (Native library not available)".
+     */
+    fun getAIVersionSafe(): String {
+        return try {
+            getAIVersion()
+        } catch (e: UnsatisfiedLinkError) {
+            "Genesis-OS AI Platform 1.0 (Native library not available)"
+        }
+    }
+
+    /**
+     * Called from native code when the substrate reports a thermal event.
+     *
+     * Maps `stateInt` to `KaiSentinelBus.ThermalState` by index (defaults to `NORMAL` if invalid)
+     * and emits the temperature and resolved state to the configured `sentinelBus` if present.
+     *
+     * @param temp Temperature in degrees Celsius.
+     * @param stateInt Integer index into `KaiSentinelBus.ThermalState` entries. Defaults to `NORMAL` when out of range.
+     */
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
         val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
         Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
         sentinelBus?.emitThermal(temp, state)
-        Timber.d("🛡️ Native Status: System Thermal at %.1f°C (Zone: %s)", temp, state)
     }
 
     @JvmStatic
     fun onNativeSecurityAlert(reason: String) {
-        Timber.e("🛡️ SOVEREIGN ALERT: Native intercept detected threat: %s", reason)
-        sentinelBus?.emitSecurity(KaiSentinelBus.SecurityStatus.FIRE_DRAWN, "NATIVE_THREAT: $reason")
+        Timber.e("🛡️ NativeLib: SECURITY ALERT: %s", reason)
+        sentinelBus?.emitSecurity(KaiSentinelBus.SecurityStatus.FIRE_DRAWN, reason)
     }
 
     @JvmStatic
     fun requestSovereignFreeze() {
-        Timber.w("🛡️ Native Substrate: CRITICAL THERMAL/INTEGRITY DETECTED - Requesting state-freeze.")
-        scope.launch {
+        Timber.i("🛡️ NativeLib: Native substrate requested SOVEREIGN FREEZE.")
+        ioScope.launch {
             sovereignManager?.initiateStateFreeze()
         }
     }
@@ -160,18 +233,6 @@ external fun analyzeBootImage(bootImageData: ByteArray): String
         Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
         droneDispatcher?.dispatch("native_substrate", reason) ?: run {
             Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
-        }
-    }
-}
-
-    /**
-     * Retrieve the AI version reported by the native substrate, with a safe fallback when the native library is not present.
-     */
-    fun getAIVersionSafe(): String {
-        return try {
-            getAIVersion()
-        } catch (e: UnsatisfiedLinkError) {
-            "Aurakai ReGenesis 1.1.0-STUB"
         }
     }
 }
