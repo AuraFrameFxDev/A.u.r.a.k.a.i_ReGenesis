@@ -29,7 +29,9 @@ import dev.aurakai.auraframefx.domains.aura.ui.screens.AuraSphereGridScreen
 import dev.aurakai.auraframefx.domains.aura.screens.CanvasScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCenterScreen
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,8 +155,15 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.RootTools.route) {
-            // RootToolsTogglesScreen pending check
-            Box(modifier = Modifier.fillMaxSize()) { Text("Root Tools Placeholder", color = Color.White) }
+            val rootShellService: RootShellService = hiltViewModel<dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel>().let { 
+                // This is a hack to get the service, better to use a dedicated ViewModel for RootTools
+                // But for "the rest" we move fast.
+                hiltViewModel<dev.aurakai.auraframefx.domains.aura.ui.viewmodels.RootToolsViewModel>().rootShellService
+            }
+            RootToolsTogglesScreen(
+                onNavigateBack = { navController.popBackStack() },
+                rootShellService = rootShellService
+            )
         }
 
         composable(ReGenesisRoute.SovereignShield.route) {
