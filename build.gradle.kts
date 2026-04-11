@@ -4,15 +4,20 @@
 // NO scattered compileOptions or kotlinOptions per-module
 // ═══════════════════════════════════════════════════════════════════════════
 
+val kotlinVersion: String = "2.3.20"
+val agpVersion: String = "9.2.0-alpha07"
+val hiltVersion: String = "2.59.2"
+val kspVersion: String = "2.3.6"
+
 plugins {
-    id("org.jetbrains.kotlin.android") version "2.3.20" apply false
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.20" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.20" apply false
-    id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.20" apply false
-    id("com.android.application") version "9.2.0-alpha07" apply false
-    id("com.android.library") version "9.2.0-alpha07" apply false
-    id("com.google.dagger.hilt.android") version "2.59.2" apply false
-    id("com.google.devtools.ksp") version "2.3.6" apply false
+    id("org.jetbrains.kotlin.android") version kotlinVersion apply false
+    id("org.jetbrains.kotlin.plugin.compose") version kotlinVersion apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion apply false
+    id("org.jetbrains.kotlin.plugin.parcelize") version kotlinVersion apply false
+    id("com.android.application") version agpVersion apply false
+    id("com.android.library") version agpVersion apply false
+    id("com.google.dagger.hilt.android") version hiltVersion apply false
+    id("com.google.devtools.ksp") version kspVersion apply false
     id("com.google.gms.google-services") version "4.4.4" apply false
     id("com.google.firebase.crashlytics") version "3.0.6" apply false
 }
