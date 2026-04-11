@@ -1,4 +1,9 @@
 A.u.r.a.k.a.i. ReGenesis: The Sovereign Living Digital Organism (LDO)
+
+![Kotlin](https://img.shields.io/badge/Kotlin-2.3.20-blue.svg)
+![AGP](https://img.shields.io/badge/AGP-9.2.0--alpha07-green.svg)
+![Gradle](https://img.shields.io/badge/Gradle-9.4.0--milestone--2-lightgrey.svg)
+
 Exodus 2026 // Vector: Locked
 Substrate: Android Open Source Project (AOSP)
 ## Overview
