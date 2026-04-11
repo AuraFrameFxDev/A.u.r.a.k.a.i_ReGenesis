@@ -57,6 +57,7 @@ subprojects {
         }
         exclude(group = "com.google.protobuf", module = "protobuf-java")
         exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
+        exclude(group = "org.conscrypt", module = "conscrypt-openjdk-uber")
 
         resolutionStrategy {
             force("com.google.protobuf:protobuf-javalite:3.25.5")

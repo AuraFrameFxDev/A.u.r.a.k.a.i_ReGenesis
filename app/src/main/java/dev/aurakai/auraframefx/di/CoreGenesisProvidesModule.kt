@@ -28,7 +28,7 @@ import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.request.ChatRequest
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
-import dev.langchain4j.http.client.okhttp.OkHttpClientFactory
+import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
 import java.time.Duration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -130,9 +130,9 @@ object CoreGenesisProvidesModule {
     fun provideNemotronEngine(): NemotronEngine = object : NemotronEngine {
         private val model: ChatModel = OpenAiChatModel.builder()
             .baseUrl("https://integrate.api.nvidia.com/v1") // Default NVIDIA NIM endpoint
-            .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
+            .apiKey(if (BuildConfig.GEMINI_API_KEY.isEmpty()) "demo" else BuildConfig.GEMINI_API_KEY)
             .modelName("nvidia/nemotron-3-8b-instruct")
-            .httpClientBuilder(OkHttpClientFactory.create())
+            .httpClientBuilder(OkHttpClientBuilder())
             .timeout(Duration.ofSeconds(90))
             .build()
 
@@ -159,7 +159,7 @@ object CoreGenesisProvidesModule {
         turboQuant: TurboQuantCache,
         aegis: TemporalAegis,
         vertexAIClient: dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
-    ): dev.langchain4j.model.chat.ChatModel = SovereignChatModel(turboQuant, aegis, vertexAIClient)
+    ): ChatModel = SovereignChatModel(turboQuant, aegis, vertexAIClient)
 
     /**
      * Provides the GeminiMemoria using LangChain4j GoogleAiGeminiChatModel.
@@ -169,9 +169,8 @@ object CoreGenesisProvidesModule {
     @Singleton
     fun provideGeminiMemoria(): GeminiMemoria = object : GeminiMemoria {
         private val model: ChatModel = GoogleAiGeminiChatModel.builder()
-            .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
+            .apiKey(if (BuildConfig.GEMINI_API_KEY.isEmpty()) "demo" else BuildConfig.GEMINI_API_KEY)
             .modelName("gemini-1.5-pro")
-            .httpClientBuilder(OkHttpClientFactory.create())
             .timeout(Duration.ofSeconds(90))
             .build()
 
