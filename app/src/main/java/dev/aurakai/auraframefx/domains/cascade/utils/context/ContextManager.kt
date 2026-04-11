@@ -1,5 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.context
 
+// import kotlinx.serialization.Contextual // No longer needed for Instant here
+
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.AIPipelineConfig
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.core.identity.AgentType
@@ -26,6 +28,17 @@ class ContextManager @Inject constructor(
     private val _contextStats = MutableStateFlow(ContextStats())
     fun getContextStats() = _contextStats
 
+    /**
+     * Creates and registers a new context chain with an initial context node and optional metadata.
+     *
+     * Initializes a context chain using the provided root context, initial content, and agent. The chain starts with a single context node containing the initial content and metadata, and is added to the set of active context chains.
+     *
+     * @param rootContext The identifier for the root context of the chain.
+     * @param initialContext The content of the initial context node.
+     * @param agent The agent associated with the initial context.
+     * @param metadata Optional metadata for the context; all values must be strings.
+     * @return The unique identifier of the newly created context chain.
+     */
     fun createContextChain(
         rootContext: String,
         initialContext: String,
@@ -57,6 +70,16 @@ class ContextManager @Inject constructor(
         return chain.id
     }
 
+    /**
+     * Appends a new context node to an existing context chain, updating its current context, agent mapping, and metadata.
+     *
+     * @param chainId The unique identifier of the context chain to update.
+     * @param newContext The context string to add to the chain.
+     * @param agent The agent associated with the new context.
+     * @param metadata Optional metadata for the context node; all values must be strings.
+     * @return The updated ContextChain.
+     * @throws IllegalStateException if the specified context chain does not exist.
+     */
     fun updateContextChain(
         chainId: String,
         newContext: String,
@@ -85,10 +108,24 @@ class ContextManager @Inject constructor(
         return updatedChain
     }
 
+    /**
+     * Retrieves the context chain associated with the specified chain ID.
+     *
+     * @param chainId The unique identifier of the context chain.
+     * @return The corresponding ContextChain if found, or null if no chain exists with the given ID.
+     */
     fun getContextChain(chainId: String): ContextChain? {
         return _activeContexts.value[chainId]
     }
 
+    /**
+     * Returns the most relevant context chain and related chains matching the given query criteria.
+     *
+     * Filters active context chains by agent (if specified), sorts by most recent update, and applies relevance and length constraints. If no matching chains are found, returns a new chain initialized with the query string.
+     *
+     * @param query Criteria for filtering, sorting, and limiting context chains.
+     * @return A [ContextChainResult] containing the selected chain, related chains, and the original query.
+     */
     fun queryContext(query: ContextQuery): ContextChainResult {
         val chains = _activeContexts.value.values
             .filter { chain ->
@@ -103,6 +140,7 @@ class ContextManager @Inject constructor(
 
         val relatedChains = chains
             .filter { chain ->
+                // Simple relevance calculation based on content similarity
                 chain.currentContext.contains(query.query, ignoreCase = true)
             }
             .take(query.maxChainLength)
@@ -122,6 +160,16 @@ class ContextManager @Inject constructor(
         )
     }
 
+    /**
+     * Recalculates and updates statistics for all active context chains.
+     *
+     * Updates the total number of chains, the count of chains updated within a configurable recent time window, the length of the longest chain, and the timestamp of the last statistics update.
+     */
+    /**
+     * Recalculates and updates statistics for all active context chains.
+     *
+     * Updates the total number of chains, the count of chains updated within a configurable recent time window, the length of the longest chain, and the timestamp of the last statistics update.
+     */
     private fun updateStats() {
         val chains = _activeContexts.value.values
         _contextStats.update { current ->
@@ -139,6 +187,10 @@ class ContextManager @Inject constructor(
         }
     }
 
+    /**
+     * Retrieves a summary of the current context state across all chains.
+     * Returns a simple string representation for use by agents.
+     */
     fun getCurrentContext(): String {
         return _activeContexts.value.values.joinToString("\n") { chain ->
             "Chain ${chain.id}: ${chain.currentContext}"
@@ -154,13 +206,22 @@ class ContextManager @Inject constructor(
         // This could update internal state or notify listeners
     }
 
-    fun enableCreativeMode() {}
+    /**
+     * Enables creative mode for agents.
+     */
+    fun enableCreativeMode() {
+        // Implementation for enabling creative mode
+    }
 
+    // Placeholder for enhanceContext to satisfy BaseAgent usage if needed
     fun enhanceContext(context: Any): Any {
         return context
     }
 
-    fun recordInsight(request: String, response: String, complexity: String) {}
+    // Placeholder for recordInsight to satisfy BaseAgent usage if needed
+    fun recordInsight(request: String, response: String, complexity: String) {
+        // TODO: Implement insight recording
+    }
 }
 
 @Serializable

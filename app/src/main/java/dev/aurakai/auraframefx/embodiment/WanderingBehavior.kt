@@ -159,7 +159,7 @@ class WanderingAI(
      */
     fun generateExitPath(currentPosition: DpOffset): MovementPath {
         val edge = when {
-            currentPosition.x.value < screenBounds.width.value / 2 -> ScreenEdge.LEFT
+            currentPosition.x < screenBounds.width / 2 -> ScreenEdge.LEFT
             else -> ScreenEdge.RIGHT
         }
         return pathGenerator.generateExitPath(currentPosition, edge)
@@ -206,7 +206,7 @@ class SearchingBehavior(
             points.add(PathPoint(
                 position = DpOffset(x, y),
                 waitDuration = 1.seconds,
-                animationState = EmbodimentAnimationState.Walking(
+                animationState = AnimationState.Walking(
                     if (i % 2 == 0) WalkDirection.RIGHT else WalkDirection.LEFT
                 )
             ))
@@ -225,7 +225,7 @@ class SearchingBehavior(
  * @return A `State<Float>` representing the current scale factor, which alternates between `inhaleScale` and `exhaleScale`.
  */
 @Composable
-fun rememberBreathingAnimation(
+internal fun rememberBreathingAnimation(
     pattern: BreathingPattern = BreathingPattern()
 ): State<Float> {
     var scale by remember { mutableFloatStateOf(pattern.exhaleScale) }

@@ -94,8 +94,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconPickerViewModel
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPickerViewModel
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🎨 ICONIFY HUB - 500+ System Customizations
@@ -1016,5 +1016,4 @@ private val xposedCategories = listOf(
         requiresXposed = true
     )
 )
-
 

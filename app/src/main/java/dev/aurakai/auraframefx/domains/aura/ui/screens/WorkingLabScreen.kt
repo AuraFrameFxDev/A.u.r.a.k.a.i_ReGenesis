@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,7 +57,6 @@ import kotlinx.coroutines.launch
  *
  * @param onNavigate Callback invoked with the target route key (e.g., "collab_canvas", "oracle_drive", "console", "romtools", "center") when a module or menu item is clicked.
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalStdlibApi::class)
 @Composable
 fun WorkingLabScreen(
     onNavigate: (String) -> Unit = {}
@@ -100,12 +98,9 @@ fun WorkingLabScreen(
     val auraPosition by engine.activeManifestation.collectAsState().let { manifestations ->
         remember(manifestations.value) {
             derivedStateOf {
-                val manifest = manifestations.value.find { it.character == Character.AURA }
-                if (manifest?.currentPositionX != null && manifest.currentPositionY != null) {
-                    DpOffset(manifest.currentPositionX.dp, manifest.currentPositionY.dp)
-                } else {
-                    null
-                }
+                manifestations.value
+                    .find { it.character == Character.AURA }
+                    ?.currentPosition
             }
         }
     }
@@ -113,12 +108,9 @@ fun WorkingLabScreen(
     val kaiPosition by engine.activeManifestation.collectAsState().let { manifestations ->
         remember(manifestations.value) {
             derivedStateOf {
-                val manifest = manifestations.value.find { it.character == Character.KAI }
-                if (manifest?.currentPositionX != null && manifest.currentPositionY != null) {
-                    DpOffset(manifest.currentPositionX.dp, manifest.currentPositionY.dp)
-                } else {
-                    null
-                }
+                manifestations.value
+                    .find { it.character == Character.KAI }
+                    ?.currentPosition
             }
         }
     }
@@ -158,15 +150,6 @@ fun WorkingLabScreen(
                                     )
                                 }
 
-                                WorkAction.MONITORING -> {
-                                    engine.manifestAura(
-                                        state = AuraState.IDLE_WALK,
-                                        config = ManifestationDefaults.DEFAULT_CONFIG.copy(
-                                            duration = step.duration
-                                        )
-                                    )
-                                }
-
                                 else -> {
                                     engine.manifestAura(
                                         state = step.sprite as? AuraState
@@ -197,15 +180,6 @@ fun WorkingLabScreen(
                                     engine.walkKaiTo(
                                         targetPosition = targetPos,
                                         state = step.sprite as? KaiState ?: KaiState.SHIELD_NEUTRAL
-                                    )
-                                }
-
-                                WorkAction.MONITORING -> {
-                                    engine.manifestKai(
-                                        state = KaiState.SHIELD_NEUTRAL,
-                                        config = ManifestationDefaults.DEFAULT_CONFIG.copy(
-                                            duration = step.duration
-                                        )
                                     )
                                 }
 
@@ -316,20 +290,19 @@ fun WorkingLabScreen(
 
         activeManifestation.forEach { manifest ->
             val asset = when (manifest.character) {
-                Character.AURA -> manifest.auraState?.assetPath ?: "aura/idle.png"
-                Character.KAI -> manifest.kaiState?.assetPath ?: "kai/idle.png"
+                Character.AURA -> (manifest.state as AuraState).assetPath
+                Character.KAI -> (manifest.state as KaiState).assetPath
             }
 
             val painter = engine.loadAsset(asset, manifest.character)
-            val posX = (manifest.currentPositionX ?: 0f).dp
-            val posY = (manifest.currentPositionY ?: 0f).dp
+            val position = manifest.currentPosition ?: DpOffset.Zero
 
             if (painter != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .wrapContentSize(Alignment.TopStart)
-                        .offset(x = posX, y = posY)
+                        .offset(x = position.x, y = position.y)
                 ) {
                     Image(
                         painter = painter,

@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.ai.clients
 
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 // ============================================================================
@@ -57,9 +56,7 @@ interface VertexAIClient {
  * Default implementation of VertexAIClient
  */
 @Singleton
-class DefaultVertexAIClient @Inject constructor(
-    @Named("GEMINI_API_KEY") private val apiKey: String
-) : VertexAIClient {
+class DefaultVertexAIClient @Inject constructor() : VertexAIClient {
 
     override suspend fun generateCode(
         specification: String,

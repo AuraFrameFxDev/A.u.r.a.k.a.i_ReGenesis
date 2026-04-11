@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens.manual
+package dev.aurakai.auraframefx.ui.screens.manual
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.AuraNeonCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraNeonCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * ðŸŽ¨ CHROMA SPHERE - MANUAL CONTROL
@@ -248,6 +248,5 @@ fun StyleButton(style: String, isSelected: Boolean, onClick: () -> Unit) {
         Text(style, fontSize = 10.sp)
     }
 }
-
 
 

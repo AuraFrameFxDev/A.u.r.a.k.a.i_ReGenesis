@@ -10,7 +10,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AppConstants.STATUS_PROCESS
 import dev.aurakai.auraframefx.domains.genesis.models.AgentAuthority
 import dev.aurakai.auraframefx.domains.genesis.models.AgentRole
 import dev.aurakai.auraframefx.domains.genesis.models.HierarchyAgentConfig
-import dev.aurakai.auraframefx.domains.aura.ui.HistoricalTask
+import dev.aurakai.auraframefx.domains.genesis.models.HistoricalTask
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

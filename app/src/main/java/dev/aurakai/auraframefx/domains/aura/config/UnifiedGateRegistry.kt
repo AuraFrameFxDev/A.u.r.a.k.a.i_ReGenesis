@@ -1,7 +1,7 @@
-package dev.aurakai.auraframefx.domains.aura.config
+package dev.aurakai.auraframefx.domains.aura.config//package dev.aurakai.auraframefx.config
 //
 //import androidx.compose.ui.graphics.Color
-//import dev.aurakai.auraframefx.navigation.ReGenesisRoute
+//import dev.aurakai.auraframefx.navigation.NavDestination
 //import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 //
 ///**
@@ -44,7 +44,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.AURA_LAB.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.AURA_LAB.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.AURA_LAB.fallback,
-//                route = ReGenesisRoute.AuraLab.route,
+//                route = NavDestination.AuraLab.route,
 //                accentColor = Color(0xFFBB86FC),
 //                domain = DomainType.AURA
 //            )
@@ -57,7 +57,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.CHROMA_CORE.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.CHROMA_CORE.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.CHROMA_CORE.fallback,
-//                route = ReGenesisRoute.ColorBlendr.route,
+//                route = NavDestination.ColorBlendr.route,
 //                accentColor = Color(0xFFB026FF),
 //                domain = DomainType.AURA
 //            )
@@ -70,7 +70,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.THEME_ENGINE.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.THEME_ENGINE.fallback,
-//                route = ReGenesisRoute.IconifyPicker.route,
+//                route = NavDestination.IconifyPicker.route,
 //                accentColor = Color(0xFFFF00FF),
 //                domain = DomainType.AURA
 //            )
@@ -83,7 +83,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.UXUI_ENGINE.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.UXUI_ENGINE.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.UXUI_ENGINE.fallback,
-//                route = ReGenesisRoute.ReGenesisCustomization.route,
+//                route = NavDestination.ReGenesisCustomization.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.AURA
 //            )
@@ -96,7 +96,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.ICONIFY.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.ICONIFY.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.ICONIFY.fallback,
-//                route = ReGenesisRoute.IconifyIconPacks.route,
+//                route = NavDestination.IconifyIconPacks.route,
 //                accentColor = Color(0xFFFFCC00),
 //                domain = DomainType.AURA
 //            )
@@ -109,7 +109,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.PIXEL_LAUNCHER.fallback,
-//                route = ReGenesisRoute.PixelLauncherEnhanced.route,
+//                route = NavDestination.PixelLauncherEnhanced.route,
 //                accentColor = Color(0xFF00FF85),
 //                domain = DomainType.AURA
 //            )
@@ -122,7 +122,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleA,
 //                styleB = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.styleB,
 //                fallback = GateAssetConfig.AuraSubGates.COLLAB_CANVAS.fallback,
-//                route = ReGenesisRoute.CollabCanvas.route,
+//                route = NavDestination.CollabCanvas.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.AURA
 //            )
@@ -137,7 +137,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.ROM_FLASHER.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
-//                route = ReGenesisRoute.ROMFlasher.route,
+//                route = NavDestination.ROMFlasher.route,
 //                accentColor = Color(0xFFFF3366),
 //                domain = DomainType.KAI
 //            )
@@ -150,7 +150,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.BOOTLOADER.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.BOOTLOADER.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.BOOTLOADER.fallback,
-//                route = ReGenesisRoute.Bootloader.route,
+//                route = NavDestination.Bootloader.route,
 //                accentColor = Color(0xFFFF1111),
 //                domain = DomainType.KAI
 //            )
@@ -163,7 +163,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.MODULE_MANAGER.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.MODULE_MANAGER.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.MODULE_MANAGER.fallback,
-//                route = ReGenesisRoute.ModuleManager.route,
+//                route = NavDestination.ModuleManager.route,
 //                accentColor = Color(0xFF00FF85),
 //                domain = DomainType.KAI
 //            )
@@ -176,7 +176,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.ROOT_TOOLS.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.ROOT_TOOLS.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.ROOT_TOOLS.fallback,
-//                route = ReGenesisRoute.RootTools.route,
+//                route = NavDestination.RootTools.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.KAI
 //            )
@@ -189,7 +189,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.SECURITY.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.SECURITY.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.SECURITY.fallback,
-//                route = ReGenesisRoute.SovereignShield.route,
+//                route = NavDestination.SovereignShield.route,
 //                accentColor = Color(0xFFFF1111),
 //                domain = DomainType.KAI
 //            )
@@ -202,7 +202,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.VPN.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.VPN.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.VPN.fallback,
-//                route = ReGenesisRoute.VPN.route,
+//                route = NavDestination.VPN.route,
 //                accentColor = Color(0xFF00FF85),
 //                domain = DomainType.KAI
 //            )
@@ -215,7 +215,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.LSPOSED.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.LSPOSED.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.LSPOSED.fallback,
-//                route = ReGenesisRoute.LSPosedHub.route,
+//                route = NavDestination.LSPosedHub.route,
 //                accentColor = Color(0xFFFFCC00),
 //                domain = DomainType.KAI
 //            )
@@ -228,7 +228,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.KaiSubGates.RECOVERY.styleA,
 //                styleB = GateAssetConfig.KaiSubGates.RECOVERY.styleB,
 //                fallback = GateAssetConfig.KaiSubGates.RECOVERY.fallback,
-//                route = ReGenesisRoute.RecoveryTools.route,
+//                route = NavDestination.RecoveryTools.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.KAI
 //            )
@@ -243,7 +243,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleA,
 //                styleB = GateAssetConfig.GenesisSubGates.CODE_ASSIST.styleB,
 //                fallback = GateAssetConfig.GenesisSubGates.CODE_ASSIST.fallback,
-//                route = ReGenesisRoute.CodeAssist.route,
+//                route = NavDestination.CodeAssist.route,
 //                accentColor = Color(0xFF00FF85),
 //                domain = DomainType.GENESIS
 //            )
@@ -256,7 +256,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
 //                styleB = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
 //                fallback = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-//                route = ReGenesisRoute.NeuralNetwork.route,
+//                route = NavDestination.NeuralNetwork.route,
 //                accentColor = Color(0xFF00FFD4),
 //                domain = DomainType.GENESIS
 //            )
@@ -269,7 +269,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleA,
 //                styleB = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.styleB,
 //                fallback = GateAssetConfig.GenesisSubGates.AGENT_BRIDGE.fallback,
-//                route = ReGenesisRoute.AgentBridgeHub.route,
+//                route = NavDestination.AgentBridgeHub.route,
 //                accentColor = Color(0xFFAA00FF),
 //                domain = DomainType.GENESIS
 //            )
@@ -282,7 +282,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.GenesisSubGates.CLOUD_STORAGE.styleA,
 //                styleB = GateAssetConfig.GenesisSubGates.CLOUD_STORAGE.styleB,
 //                fallback = GateAssetConfig.GenesisSubGates.CLOUD_STORAGE.fallback,
-//                route = ReGenesisRoute.OracleCloudStorage.route,
+//                route = NavDestination.OracleCloudStorage.route,
 //                accentColor = Color(0xFF00FF85),
 //                domain = DomainType.GENESIS
 //            )
@@ -295,7 +295,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.GenesisSubGates.TERMINAL.styleA,
 //                styleB = GateAssetConfig.GenesisSubGates.TERMINAL.styleB,
 //                fallback = GateAssetConfig.GenesisSubGates.TERMINAL.fallback,
-//                route = ReGenesisRoute.Terminal.route,
+//                route = NavDestination.Terminal.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.GENESIS
 //            )
@@ -308,7 +308,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.GenesisSubGates.CONFERENCE_ROOM.styleA,
 //                styleB = GateAssetConfig.GenesisSubGates.CONFERENCE_ROOM.styleB,
 //                fallback = GateAssetConfig.GenesisSubGates.CONFERENCE_ROOM.fallback,
-//                route = ReGenesisRoute.ConferenceRoom.route,
+//                route = NavDestination.ConferenceRoom.route,
 //                accentColor = Color(0xFFB026FF),
 //                domain = DomainType.GENESIS
 //            )
@@ -323,7 +323,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.NexusSubGates.CONSTELLATION.styleA,
 //                styleB = GateAssetConfig.NexusSubGates.CONSTELLATION.styleB,
 //                fallback = GateAssetConfig.NexusSubGates.CONSTELLATION.fallback,
-//                route = ReGenesisRoute.EvolutionTree.route,
+//                route = NavDestination.EvolutionTree.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.NEXUS
 //            )
@@ -336,7 +336,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.NexusSubGates.MONITORING.styleA,
 //                styleB = GateAssetConfig.NexusSubGates.MONITORING.styleB,
 //                fallback = GateAssetConfig.NexusSubGates.MONITORING.fallback,
-//                route = ReGenesisRoute.AgentMonitoring.route,
+//                route = NavDestination.AgentMonitoring.route,
 //                accentColor = Color(0xFF00FFD4),
 //                domain = DomainType.NEXUS
 //            )
@@ -349,7 +349,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleA,
 //                styleB = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleB,
 //                fallback = GateAssetConfig.NexusSubGates.SPHERE_GRID.fallback,
-//                route = ReGenesisRoute.LdoCatalystDevelopment.route,
+//                route = NavDestination.LdoCatalystDevelopment.route,
 //                accentColor = Color(0xFFFFD700),
 //                domain = DomainType.NEXUS
 //            )
@@ -362,7 +362,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.NexusSubGates.FUSION_MODE.styleA,
 //                styleB = GateAssetConfig.NexusSubGates.FUSION_MODE.styleB,
 //                fallback = GateAssetConfig.NexusSubGates.FUSION_MODE.fallback,
-//                route = ReGenesisRoute.FusionMode.route,
+//                route = NavDestination.FusionMode.route,
 //                accentColor = Color(0xFF00E5FF),
 //                domain = DomainType.NEXUS
 //            )
@@ -375,7 +375,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleA,
 //                styleB = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleB,
 //                fallback = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.fallback,
-//                route = ReGenesisRoute.TaskAssignment.route,
+//                route = NavDestination.TaskAssignment.route,
 //                accentColor = Color(0xFFB026FF),
 //                domain = DomainType.NEXUS
 //            )
@@ -388,7 +388,7 @@ package dev.aurakai.auraframefx.domains.aura.config
 //                styleA = GateAssetConfig.NexusSubGates.META_INSTRUCT.styleA,
 //                styleB = GateAssetConfig.NexusSubGates.META_INSTRUCT.styleB,
 //                fallback = GateAssetConfig.NexusSubGates.META_INSTRUCT.fallback,
-//                route = ReGenesisRoute.MetaInstruct.route,
+//                route = NavDestination.MetaInstruct.route,
 //                accentColor = Color(0xFF00FFD4),
 //                domain = DomainType.NEXUS
 //            )

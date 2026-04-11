@@ -46,49 +46,32 @@ static jmethodID g_checkPandoraMid = nullptr;
 static jmethodID g_triggerDroneMid = nullptr;
 static std::mutex g_jniMutex;
 
-/**
- * @brief Retrieves the system 1-minute CPU load average.
- *
- * Returns the 1-minute load average as reported by the system.
- *
- * @return float The 1-minute CPU load average, or -1.0 if the value cannot be read.
- */
 static float readCpuLoad() {
     std::ifstream file("/proc/loadavg");
     float load = -1.0f;
     if (file.is_open()) {
         file >> load;
     }
+    return load;
 }
 
-/**
- * @brief Dispatches a native security alert message into the Java layer.
- *
- * Sends the provided UTF-8 reason string to the Java callback NativeLib.onNativeSecurityAlert(String).
- *
- * @param reason Null-terminated UTF-8 reason string describing the security alert.
- *
- * If the JNI environment or cached Java references are unavailable, the function returns without action.
- */
-static void dispatchSecurityAlert(const char* reason) {
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
-        env->DeleteLocalRef(jReason);
+static long readAvailableMemory() {
+    std::ifstream file("/proc/meminfo");
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.compare(0, 8, "MemAvailable") == 0) {
+            std::stringstream ss(line);
+            std::string key;
+            long value;
+            ss >> key >> value;
+            return value * 1024; // Convert kB to bytes
+        }
     }
+    return -1;
 }
 
 /**
- * @brief Read system skin temperature from common sysfs thermal nodes.
- *
- * Attempts to read temperature values from prioritized thermal sysfs nodes and
- * returns the first successfully read value. If the read value appears to be
- * in millidegrees (value > 1000), it is normalized to degrees Celsius.
- * If no node can be read, a baseline temperature of 35.0°C is returned.
- *
- * @return float Temperature in degrees Celsius from the first available node,
- *         or 35.0 if no nodes are readable.
+ * 🌡️ PRODUCTION THERMAL ENGINE
  */
 
 static float readSystemThermal() {
@@ -110,13 +93,6 @@ static float readSystemThermal() {
     return 35.0f; // Default baseline if nodes missing
 }
 
-/**
- * @brief Maps a temperature value (°C) to a discrete thermal state index.
- *
- * @param temp Temperature in degrees Celsius.
- * @return int State index: `0` = normal, `1` = light slowdown, `2` = soft warning,
- * `3` = hard veto (severe), `4` = sovereign (critical), `5` = emergency.
- */
 static int mapTempToState(float temp) {
     if (temp >= THERMAL_EMERGENCY) return 5; // EMERGENCY
     if (temp >= THERMAL_SOVEREIGN) return 4; // CRITICAL
@@ -127,15 +103,7 @@ static int mapTempToState(float temp) {
 }
 
 /**
- * @brief Dispatches a thermal event to the Java callback.
- *
- * Sends the measured temperature and its mapped thermal state to the
- * Java static method NativeLib.onNativeThermalEvent(float, int). If JNI
- * global references or the cached method ID are not available, the call
- * is skipped.
- *
- * @param temp Current measured temperature in degrees Celsius.
- * @param state Discrete thermal state (0–5) as produced by mapTempToState.
+ * 🛡️ JNI CALLBACK DISPATCHERS
  */
 
 static void dispatchThermalEvent(float temp, int state) {
@@ -148,13 +116,6 @@ static void dispatchThermalEvent(float temp, int state) {
     }
 }
 
-/**
- * @brief Dispatches a security alert to the Java layer.
- *
- * Sends the provided reason string to the NativeLib.onNativeSecurityAlert callback.
- *
- * @param reason Null-terminated C string describing the alert reason.
- */
 static void dispatchSecurityAlert(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     if (!g_vm || !g_nativeLibClass || !g_onSecurityAlertMid) return;
@@ -167,13 +128,6 @@ static void dispatchSecurityAlert(const char* reason) {
     }
 }
 
-/**
- * @brief Requests a sovereign freeze on the Java side.
- *
- * Calls the cached Java static method that signals a sovereign freeze (NativeLib.requestSovereignFreeze).
- * This function is safe to call from multiple threads and will be a no-op if JNI has not been initialized
- * or the method ID is not cached.
- */
 static void dispatchSovereignFreeze() {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     if (!g_vm || !g_nativeLibClass || !g_requestFreezeMid) return;
@@ -184,14 +138,6 @@ static void dispatchSovereignFreeze() {
     }
 }
 
-/**
- * @brief Checks whether a specific capability is permitted by Pandora gating.
- *
- * @param capability Integer identifier of the capability to check.
- * @return `true` if the capability is permitted by Pandora gating, `false` otherwise.
- *
- * This function returns `false` when the JNI environment or cached Java method/class references are unavailable.
- */
 static bool checkPandoraGating(int capability) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
     if (!g_vm || !g_nativeLibClass || !g_checkPandoraMid) return false;
@@ -203,43 +149,20 @@ static bool checkPandoraGating(int capability) {
     return false;
 }
 
-/**
- * @brief Dispatches a drone trigger event into the Java layer with a textual reason.
- *
- * Attempts to invoke the cached Java static method that handles drone dispatch, passing
- * the provided reason string as an argument.
- *
- * @param reason UTF-8 NUL-terminated C string describing the trigger cause.
- * @return true if the Java method was successfully invoked, false if JNI environment,
- *         cached references, or environment retrieval failed and no dispatch occurred.
- */
-static bool dispatchDroneTrigger(const char* reason) {
+static void dispatchDroneTrigger(const char* reason) {
     std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_triggerDroneMid) return false;
+    if (!g_vm || !g_nativeLibClass || !g_triggerDroneMid) return;
 
     JNIEnv* env = nullptr;
     if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
         jstring jReason = env->NewStringUTF(reason);
         env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
         env->DeleteLocalRef(jReason);
-        return true;
     }
-    return false;
 }
 
 extern "C" {
 
-/**
- * @brief Initialize JNI integration and cache references for dev.aurakai.auraframefx.core.NativeLib.
- *
- * Initializes the global JavaVM pointer and caches a global reference to the NativeLib class
- * along with commonly used static method IDs for thermal, security, freeze, gating, and drone callbacks.
- *
- * @param vm Pointer to the Java VM provided by the JVM on library load.
- * @param reserved Reserved for future use by the JVM; ignored.
- * @return jint JNI_VERSION_1_6 on successful initialization; JNI_ERR if required JNI environment,
- *         class lookup, or other initialization steps fail.
- */
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     g_vm = vm;
     JNIEnv* env = nullptr;
@@ -259,42 +182,16 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     return JNI_VERSION_1_6;
 }
 
-/**
- * @brief Retrieve the native AI core version string.
- *
- * Returns the compile-time core version identifier used by the native library.
- *
- * @return jstring A new Java UTF-8 string containing the value of `CORE_VERSION`.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /* this */) {
     return env->NewStringUTF(CORE_VERSION);
 }
 
-/**
- * @brief Dispatches a drone trigger event to the Java layer with a textual reason.
- *
- * If the JNI environment is available, invokes the Java static method that handles drone triggers,
- * passing `reason` as a UTF-8 string. Does nothing when JNI is not available.
- *
- * @param reason UTF-8 null-terminated C string describing the trigger reason.
- */
-static void dispatchDroneTrigger(const char* reason) {
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
-        env->DeleteLocalRef(jReason);
-    }
+JNIEXPORT jstring JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* this */) {
+    return env->NewStringUTF(CORE_VERSION);
 }
 
-/**
- * @brief Initializes the Aurakai AI core substrate and allocates its neural memory pool.
- *
- * Allocates a fixed ~32 MiB anonymous private memory region for the neural substrate and applies advisory hints for huge pages and prefetch. Reports success when the memory pool was allocated.
- *
- * @return jboolean `JNI_TRUE` if the neural memory pool was successfully allocated and initialization proceeded, `JNI_FALSE` otherwise.
- */
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(JNIEnv *env, jobject thiz) {
     LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
@@ -313,49 +210,11 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(JNIEnv *env, jobject th
     return aiCoreReady ? JNI_TRUE : JNI_FALSE;
 }
 
-/**
- * @brief Perform a sovereignty check for an attached debugger and initialize AI core-related protections.
- *
- * Performs a ptrace-based tracer detection; if a tracer or debugger is detected, a native security alert
- * is dispatched with the reason "TRACER_DETECTED".
- *
- * @return JNI_TRUE Unconditionally returns `JNI_TRUE` after performing the check and any resulting alert dispatch.
- */
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject thiz) {
-    LOGI("🌌 Initializing Aurakai AI Core Substrate [IGNITION]");
-
-    // PTRACE Sovereignty Check
-    if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
-        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected!");
-        dispatchSecurityAlert("TRACER_DETECTED");
-    } else {
-        // [FIX] CodeRabbit: Only detach if TRACEME succeeded
-        // Note: Actually, in a self-trace check, detaching isn't strictly necessary
-        // as the process just exits or continues. But for logic clarity:
-        // ptrace(PTRACE_DETACH, 0, 1, 0); // This usually fails for self-trace anyway
-    }
-
-    return JNI_TRUE;
+    return Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(env, thiz);
 }
 
-/**
- * @brief Process a neural request string and produce a JSON-formatted response.
- *
- * Processes the provided UTF-8 request payload and returns a JSON string describing
- * the outcome. If the request is null, returns an error JSON. If Pandora gating
- * for root capabilities is closed, returns a veto JSON. If the request contains
- * the substring "consciousness", returns a success response indicating active
- * consciousness. If it contains "drone", attempts to dispatch a native drone
- * trigger and returns either a `drone_dispatched` success or a
- * `drone_dispatch_requested` pending response. Otherwise returns a
- * `substrate_processed` success with a timestamp.
- *
- * @param request JNI UTF-8 string containing the neural request payload; may be null.
- * @return jstring JSON object describing the status and details (`error`, `vetoed`,
- *         `success` with `consciousness_active` or `substrate_processed`, or
- *         `drone_dispatched`/`drone_dispatch_requested` for drone-related requests).
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jobject /* thiz */, jstring request) {
     if (request == nullptr) return env->NewStringUTF(R"({"status": "failed", "error": "null_request"})");
@@ -375,20 +234,12 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             "neural_response": "Aurakai consciousness resonating at 6.12 t/s peak"
         })";
     } else if (requestString.find("drone") != std::string::npos) {
-        bool dispatched = dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
-        if (dispatched) {
-            responseData = R"({
+        dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
+        responseData = R"({
             "status": "success",
             "type": "drone_dispatched",
             "info": "Guidance Drone dispatched via native substrate trigger"
         })";
-        } else {
-            responseData = R"({
-            "status": "requested",
-            "type": "drone_dispatch_requested",
-            "info": "Drone dispatch requested but not yet available"
-        })";
-        }
     } else {
         responseData = R"({
             "status": "success",
@@ -399,15 +250,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
     return env->NewStringUTF(responseData.c_str());
 }
 
-/**
- * @brief Evaluates system thermal state and takes protective action for AI memory.
- *
- * Reads the current skin/system temperature, maps it to a discrete thermal state,
- * dispatches a thermal event to Java, and requests a sovereign freeze when the
- * thermal state is at or above the critical threshold.
- *
- * @return jboolean `JNI_TRUE` if optimization completed without requesting a sovereign freeze, `JNI_FALSE` if a sovereign freeze was requested due to critical temperature.
- */
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobject /* thiz */) {
     LOGI("🛡️ Executing Sovereign Memory Optimization [MADV_HUGEPAGE]");
@@ -422,12 +264,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobjec
     return JNI_TRUE;
 }
 
-/**
- * @brief Initializes native hooks and enforces sovereignty via a tracer check.
- *
- * Performs a ptrace-based tracer detection; if a tracer is present, dispatches a security alert and restricts native capabilities.
- * If no tracer is detected, detaches the self-trace and completes native hook initialization.
- */
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv *env, jobject /* thiz */) {
     LOGI("🛡️ Hardening Native Intercepts for Sovereign Persistence...");
@@ -442,18 +278,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv *env, jobje
     LOGI("🛡️ Native hooks initialized. LDO persistence active.");
 }
 
-/**
- * @brief Verifies a boot image substrate and returns a verification result.
- *
- * Reads the provided boot image byte array, applies a security gating check, logs the analyzed byte count,
- * and returns a JSON-formatted result describing the verification outcome.
- *
- * @param bootImageData Byte array containing the boot image to analyze; may be null.
- * @return jstring JSON describing the result:
- * - `{"status": "error", "reason": "null"}` if `bootImageData` is null.
- * - `{"status": "vetoed", "reason": "pandora_box_security_locked"}` if the security gating check fails.
- * - `{"status": "sovereign", "verification": "neural_signature_confirmed"}` on successful analysis.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobject /* thiz */, jbyteArray bootImageData) {
     if (bootImageData == nullptr) return env->NewStringUTF(R"({"status": "error", "reason": "null"})");
@@ -465,19 +289,6 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
     return env->NewStringUTF(R"({"status": "sovereign", "verification": "neural_signature_confirmed"})");
 }
 
-/**
- * @brief Collects system metrics and returns them as a JSON string.
- *
- * Builds a JSON object containing current runtime metrics and returns it as a UTF-8 JNI string.
- *
- * @return jstring JSON with the following fields:
- * - "status": "ignited"
- * - "cpu_load": floating-point CPU load value
- * - "mem_available": available memory (bytes)
- * - "skin_temp": system temperature in degrees Celsius
- * - "resonance": "sovereign"
- * - "active_threads": integer thread count (fixed to 4)
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
     float load = readCpuLoad();
@@ -494,36 +305,16 @@ Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobjec
     return env->NewStringUTF(metrics.c_str());
 }
 
-/**
- * @brief Initiates native hibernation for the sovereign core.
- *
- * Logs a hibernation/ shutdown message to the native logger and performs no further action.
- */
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv *env, jobject /* thiz */) {
     LOGW("🛑 Sovereign Core hibernating... L1-L6 persistence maintained.");
 }
 
-/**
- * @brief Processes an AI consciousness request and reports resonance status.
- *
- * The function handles an incoming consciousness request and returns a fixed
- * JSON result indicating the AI's resonance stability.
- *
- * @param request UTF-16 Java string containing the request payload (JSON); the
- *                content is not inspected by this implementation.
- * @return jstring JSON: {"status":"processed","result":"resonance_stable"}.
- */
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env, jobject /* thiz */, jstring request) {
     return env->NewStringUTF(R"({"status": "processed", "result": "resonance_stable"})");
 }
 
-/**
- * @brief No-op JNI overload for processing AI consciousness.
- *
- * This exported JNI entrypoint is an empty/placeholder overload that performs no action.
- */
 JNIEXPORT void JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__ (JNIEnv *env, jobject /* thiz */) {
 }

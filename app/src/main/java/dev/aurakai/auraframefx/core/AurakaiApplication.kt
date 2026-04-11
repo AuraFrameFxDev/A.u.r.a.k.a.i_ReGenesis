@@ -12,8 +12,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import dev.aurakai.auraframefx.core.NativeLib
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -28,22 +31,19 @@ class AurakaiApplication : Application(), Configuration.Provider {
     lateinit var orchestrator: GenesisOrchestrator
 
     @Inject
+    lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
+
+    @Inject
     lateinit var sentinelBus: KaiSentinelBus
 
     @Inject
-    lateinit var sovereignManager: SovereignStateManager
+    lateinit var stateManager: SovereignStateManager
 
     @Inject
     lateinit var pandoraBox: PandoraBoxService
 
     @Inject
-    lateinit var droneDispatcher: GuidanceDroneDispatcher
-
-    @Inject
     lateinit var sovereignPerimeter: SovereignPerimeter
-
-    @Inject
-    lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
 
     // Application-scoped coroutine for background init
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -65,7 +65,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
         applicationScope.launch {
             try {
                 Timber.i("🧬 Seeding ReGenesis Identity...")
-                NexusMemoryCore.seedLDOIdentity()
+                dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.seedLDOIdentity()
 
                 // Native AI Runtime
                 initializeNativeAIPlatform()
@@ -101,24 +101,19 @@ class AurakaiApplication : Application(), Configuration.Provider {
         }
     }
 
-    /**
-     * Initializes the native RELATIONAL bridge with injected sovereign services and starts the native AI core.
-     *
-     * Synchronizes the native layer with the application's sentinel, sovereign state manager, Pandora box service,
-     * and drone dispatcher, then performs AI-core ignition. Exceptions are caught and logged and do not propagate.
-     */
     private fun initializeNativeAIPlatform() {
         try {
+            NativeLib.initialize(sentinelBus, stateManager, pandoraBox, sovereignPerimeter)
             dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
             Timber.d("✅ Native AI platform initialized")
         } catch (e: Exception) {
-            Timber.e(e, "❌ Native AI initialization error: ${e.message}")
+            Timber.w(e, "⚠️ Native AI init skipped")
         }
     }
 
     private fun startIntegrityMonitor() {
         try {
-            val intent = Intent(this, IntegrityMonitorService::class.java)
+            val intent = Intent(this, dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService::class.java)
             try {
                 startForegroundService(intent)
                 Timber.d("✅ Integrity monitor started")

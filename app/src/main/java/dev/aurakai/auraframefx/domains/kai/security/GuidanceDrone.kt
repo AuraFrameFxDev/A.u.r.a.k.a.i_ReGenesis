@@ -4,7 +4,7 @@ import timber.log.Timber
 import java.util.UUID
 
 /**
- * 🚁 GUIDANCE DRONE
+ * GUIDANCE DRONE
  */
 open class GuidanceDrone(
     val id: String = UUID.randomUUID().toString(),
