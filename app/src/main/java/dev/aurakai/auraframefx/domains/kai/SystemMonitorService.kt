@@ -42,15 +42,50 @@ class SystemMonitorService @Inject constructor(
     private val _logsState = MutableStateFlow(emptyList<String>())
     val logsState: StateFlow<List<String>> = _logsState
 
+    private var lastCpuStats: List<Long> = emptyList()
+
+    /**
+     * Calculates current CPU usage by comparing /proc/stat snapshots.
+     * Implementation of CPU telemetry from critical backlog.
+     */
     suspend fun getCpuUsage(): Float = withContext(Dispatchers.Default) {
         return@withContext try {
-            val cpuInfo = readProcStat()
-            calculateCpuPercentage(cpuInfo)
+            val currentStats = readProcStat()
+            if (currentStats.isEmpty()) return@withContext 0f
+            
+            val cpu = if (lastCpuStats.isNotEmpty()) {
+                calculateCpuDelta(lastCpuStats, currentStats)
+            } else {
+                calculateCpuPercentage(currentStats) // Fallback to average since boot
+            }
+            
+            lastCpuStats = currentStats
+            _cpuUsageState.value = cpu
+            cpu
         } catch (e: Exception) {
             Log.e(tag, "Failed to get CPU usage", e)
             0f
-        }.also { cpu ->
-            _cpuUsageState.value = cpu
+        }
+    }
+
+    private fun calculateCpuDelta(old: List<Long>, new: List<Long>): Float {
+        if (old.size < 7 || new.size < 7) return 0f
+        
+        val userDelta = new[0] - old[0]
+        val niceDelta = new[1] - old[1]
+        val systemDelta = new[2] - old[2]
+        val idleDelta = new[3] - old[3]
+        val iowaitDelta = new[4] - old[4]
+        val irqDelta = new[5] - old[5]
+        val softirqDelta = new[6] - old[6]
+        
+        val totalDelta = userDelta + niceDelta + systemDelta + idleDelta + iowaitDelta + irqDelta + softirqDelta
+        val workDelta = userDelta + niceDelta + systemDelta + irqDelta + softirqDelta
+        
+        return if (totalDelta > 0) {
+            (workDelta.toFloat() / totalDelta.toFloat()) * 100f
+        } else {
+            0f
         }
     }
 

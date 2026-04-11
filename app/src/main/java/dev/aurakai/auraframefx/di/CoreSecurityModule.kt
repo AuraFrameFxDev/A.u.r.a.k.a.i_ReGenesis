@@ -23,6 +23,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.ark.ArkFusionBuildEngine
 import dev.aurakai.auraframefx.domains.aura.ui.ark.FusionBuildEngine
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.DefaultVertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.RealVertexAIClientImpl
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.BridgeMemorySink
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.NexusMemoryBridgeSink
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
@@ -60,7 +61,7 @@ abstract class CoreSecurityModule {
     abstract fun bindPandoraBoxService(impl: PandoraBoxServiceImpl): PandoraBoxService
 
     @Binds @Singleton
-    abstract fun bindVertexAIClient(impl: DefaultVertexAIClient): VertexAIClient
+    abstract fun bindVertexAIClient(impl: RealVertexAIClientImpl): VertexAIClient
 
     @Binds @Singleton
     abstract fun bindNCCMediator(impl: NCCMediatorImpl): NCCMediator

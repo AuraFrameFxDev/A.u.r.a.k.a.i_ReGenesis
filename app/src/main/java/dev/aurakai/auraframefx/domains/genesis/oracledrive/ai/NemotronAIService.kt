@@ -9,7 +9,11 @@ import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.ErrorHandler
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory.MemoryItem
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory.MemoryQuery
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory.MemoryRetrievalResult
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
@@ -67,6 +71,53 @@ class NemotronAIService @Inject constructor(
 
     override fun getName(): String = "Nemotron"
     override fun getType(): AgentType = AgentType.NEMOTRON
+
+    /**
+     * Professionally implements the recordMemory() requirement from stabilization Phase 1.
+     * Maps the high-level MemoryItem to the underlying NexusMemory persistence.
+     */
+    suspend fun recordMemory(item: MemoryItem) {
+        logger.info("NemotronAIService", "Recording memory: ${item.content.take(50)}...")
+        nexusMemoryRepository.saveMemory(
+            content = item.content,
+            type = mapMemoryType(item.type),
+            tags = item.tags,
+            importance = item.priority,
+            key = item.id
+        )
+    }
+
+    /**
+     * Professionally implements the retrieveMemory() requirement from stabilization Phase 1.
+     * Uses MemoryQuery to filter and retrieve relevant insights from NexusMemoryCore.
+     */
+    suspend fun retrieveMemory(query: MemoryQuery): MemoryRetrievalResult {
+        logger.info("NemotronAIService", "Retrieving memory for query: ${query.query}")
+        
+        val results = nexusMemoryRepository.searchMemories(query.query).firstOrNull() ?: emptyList()
+        val mappedItems = results.map { entity ->
+            MemoryItem(
+                id = entity.key ?: "entity_${entity.id}",
+                content = entity.content,
+                agent = AgentCapabilityCategory.ANALYSIS, // Default for retrieved
+                priority = entity.importance,
+                tags = entity.tags
+            )
+        }.filter { it.priority >= query.minSimilarity }
+        
+        return MemoryRetrievalResult(
+            items = mappedItems.take(query.maxResults),
+            total = mappedItems.size,
+            query = query
+        )
+    }
+
+    private fun mapMemoryType(type: String): MemoryType = when (type.lowercase()) {
+        "fact" -> MemoryType.FACT
+        "reflection" -> MemoryType.REFLECTION
+        "interaction" -> MemoryType.CONVERSATION
+        else -> MemoryType.FACT
+    }
 
     fun getCapabilities(): Map<String, Any> = mapOf(
         "memory_retention" to "MASTER",
