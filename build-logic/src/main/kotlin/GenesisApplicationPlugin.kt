@@ -184,7 +184,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
 
             // Timber and Logging
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-            dependencies.add("implementation", "org.slf4j:slf4j-android:2.0.16")
+            dependencies.add("implementation", "org.slf4j:slf4j-android:1.7.36")
             dependencies.add("implementation", "org.conscrypt:conscrypt-android:2.5.2")
 
             // Core Library Desugaring (for Java 25 APIs on older Android)
