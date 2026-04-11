@@ -259,7 +259,6 @@ retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "convert
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
-okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 
 ktor-serialization-moshi = { group = "io.ktor", name = "ktor-serialization-moshi", version.ref = "ktor" }
 
@@ -501,11 +500,4 @@ system-root = [
     "libsu-nio",
     "libsu-service",
     "xposed-api"
-]
-
-langchain4j = [
-    "langchain4j",
-    "langchain4j-core",
-    "langchain4j-ollama",
-    "langchain4j-http-client-jdk"
 ]
