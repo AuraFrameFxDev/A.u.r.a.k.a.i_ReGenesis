@@ -81,6 +81,9 @@ android {
     }
 
     packaging {
+            jniLibs {
+                useLegacyPackaging = false
+            }
             resources {
                 // Annihilate the specific Big Tech collision
                 excludes.add("META-INF/INDEX.LIST")

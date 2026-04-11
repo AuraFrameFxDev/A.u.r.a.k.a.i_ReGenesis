@@ -65,6 +65,7 @@ subprojects {
                 substitute(module("com.squareup.okhttp3:okhttp")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
                 substitute(module("com.squareup.okhttp3:okhttp-jvm")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
             }
+            force("org.conscrypt:conscrypt-android:2.5.3")
             force("com.google.protobuf:protobuf-javalite:3.25.5")
             force("com.google.protobuf:protolite-well-known-types:18.4.0")
         }
