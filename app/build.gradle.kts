@@ -299,23 +299,10 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // LangChain4j & Ollama (CLEAN VERSION — no duplication!)
-    // ═══════════════════════════════════════════════════════════════════════════
-    // BOM first — governs ALL langchain4j versions
+    // LangChain4j & Ollama (CLEAN VERSION — using BOM and Bundles!)
     implementation(platform(libs.langchain4j.bom))
-
-    // DUAL declaration: implementation for KSP classpath, api() for consumers
-    // This ensures Hilt/KSP can resolve ChatLanguageModel
-    implementation(libs.langchain4j.core)
-    api(libs.langchain4j.core)
-
-    // Model integrations
-    implementation(libs.langchain4j.google.ai.gemini)
-    implementation(libs.langchain4j.open.ai)
-    implementation(libs.langchain4j.ollama)
-    implementation(libs.langchain4j.vertex.ai.gemini)
-    implementation(libs.langchain4j.http.client.okhttp)
+    implementation(libs.bundles.langchain4j)
+    // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
 
     // ═══════════════════════════════════════════════════════════════════════════
     // Desugaring (for Java 25 forward compatibility on older Android versions)
