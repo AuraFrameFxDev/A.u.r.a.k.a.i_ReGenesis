@@ -1,7 +1,7 @@
 # Sprite Processing Tools Dependencies
 
 # Core background removal
-rembg==2.0.57
+rembg==2.0.75
 
 # Image processing
 Pillow==12.1.1
