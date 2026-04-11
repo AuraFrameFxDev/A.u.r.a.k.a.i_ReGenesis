@@ -109,7 +109,7 @@ uiGeometry = "1.10.6"
 androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 media3Exoplayer = "1.10.0"
-langchain4j = "1.12.2"
+langchain4j = "1.13.0"
 langchain4jVertex = "1.12.2-beta22"
 remoteCreationCompose = "1.0.0-alpha07"
 [libraries]
@@ -179,7 +179,7 @@ moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.re
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiKotlin" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 slf4j-android = { group = "org.slf4j", name = "slf4j-android", version = "1.7.36" }
-conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.2" }
+conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.3" }
 
 # AndroidX & Jetpack
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
