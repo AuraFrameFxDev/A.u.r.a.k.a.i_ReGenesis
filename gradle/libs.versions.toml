@@ -127,6 +127,7 @@ langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", v
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini", version.ref = "langchain4j" }
 langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version.ref = "langchain4jVertex" }
+langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp", version.ref = "langchain4j" }
 
 # Build & Gradle Plugins
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
@@ -177,6 +178,8 @@ moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiKotlin" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiKotlin" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+slf4j-android = { group = "org.slf4j", name = "slf4j-android", version = "2.0.16" }
+conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.2" }
 
 # AndroidX & Jetpack
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -300,7 +303,8 @@ langchain4j = [
     "langchain4j-ollama",
     "langchain4j-open-ai",
     "langchain4j-google-ai-gemini",
-    "langchain4j-vertex-ai-gemini"
+    "langchain4j-vertex-ai-gemini",
+    "langchain4j-http-client-okhttp"
 ]
 
 [plugins]

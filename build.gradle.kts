@@ -3,7 +3,6 @@
 // Single source of truth: JVM Toolchain controls ALL Java/Kotlin versions
 // NO scattered compileOptions or kotlinOptions per-module
 // ═══════════════════════════════════════════════════════════════════════════
-
 plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false

@@ -13,8 +13,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    // id("com.google.gms.google-services")
-    // id("com.google.firebase.crashlytics")
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -248,6 +248,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.timber)
+    implementation(libs.slf4j.android)
+    implementation(libs.conscrypt.android)
     implementation(platform(libs.coil.bom))
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
@@ -313,6 +315,7 @@ dependencies {
     implementation(libs.langchain4j.open.ai)
     implementation(libs.langchain4j.ollama)
     implementation(libs.langchain4j.vertex.ai.gemini)
+    implementation(libs.langchain4j.http.client.okhttp)
 
     // ═══════════════════════════════════════════════════════════════════════════
     // Desugaring (for Java 25 forward compatibility on older Android versions)
