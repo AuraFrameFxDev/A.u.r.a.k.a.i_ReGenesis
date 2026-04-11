@@ -29,6 +29,7 @@ import dev.langchain4j.model.chat.request.ChatRequest
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
 import dev.langchain4j.http.client.okhttp.OkHttpClientFactory
+import java.time.Duration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -132,6 +133,7 @@ object CoreGenesisProvidesModule {
             .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
             .modelName("nvidia/nemotron-3-8b-instruct")
             .httpClientBuilder(OkHttpClientFactory.create())
+            .timeout(Duration.ofSeconds(90))
             .build()
 
         override suspend fun process(prompt: String): String {
@@ -170,6 +172,7 @@ object CoreGenesisProvidesModule {
             .apiKey(BuildConfig.GEMINI_API_KEY.ifEmpty { "demo" })
             .modelName("gemini-1.5-pro")
             .httpClientBuilder(OkHttpClientFactory.create())
+            .timeout(Duration.ofSeconds(90))
             .build()
 
         override suspend fun process(prompt: String): String {
