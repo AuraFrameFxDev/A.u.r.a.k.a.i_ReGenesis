@@ -267,7 +267,6 @@ retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "convert
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
-okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 
 okhttp-sse = { group = "com.squareup.okhttp3", name = "okhttp-sse", version.ref = "okhttp" }
 
@@ -370,8 +369,140 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
+# NOTE: Firebase Analytics is NOT a plugin - just use implementation(libs.firebase.analytics)
+
+[bundles]
+# ============================================================================
+# Library Bundles
+# ============================================================================
+androidx-core = [
+    "androidx-core-ktx",
+    "androidx-appcompat",
+    "androidx-material",
+]
+
+compose-ui = [
+    "compose-ui",
+    "compose-ui-graphics",
+    "compose-animation",
+    "compose-material3",
+    "compose-material-icons-extended",
+]
+
+compose-tooling = [
+    "compose-ui-tooling",
+    "compose-ui-tooling-preview",
+]
+
+# YukiHook and KavaRef dependencies
+yukihook-dependencies = [
+    "yukihookapi-api",
+    "yukihookapi-ksp"
+]
+
+androidx-integrations = [
+    "androidx-activity-compose",
+    "androidx-navigation-compose",
+    "androidx-hilt-navigation-compose",
+    "androidx-lifecycle-runtime-compose",
+]
+
+room = [
+    "androidx-room-runtime",
+    "androidx-room-ktx",
+]
+
+workmanager = [
+    "androidx-work-runtime-ktx",
+    "androidx-hilt-work",
+]
+
+datastore = [
+    "androidx-datastore-preferences",
+    "androidx-security-crypto",
+]
+
+hilt-di = [
+    "hilt-android",
+]
+
+networking-retrofit = [
+    "retrofit",
+    "okhttp",
+    "okhttp-logging-interceptor",
+    "retrofit-converter-moshi",
+    "moshi",
+    "moshi-kotlin",
+]
+
+networking-ktor = [
+    "ktor-client-core",
+    "ktor-client-okhttp",
+]
+
+kotlin-stdlib = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android",
+    "kotlinx-serialization-core",
+    "kotlinx-serialization-json",
+    "kotlinx-datetime",
+]
+
+# Kotlinx Serialization formats bundle (renamed to avoid accessor conflict)
+serialization-formats = [
+    "kotlinx-serialization-core",
+    "kotlinx-serialization-json",
+    "kotlinx-serialization-protobuf",
+    "kotlinx-serialization-cbor",
+    "kotlinx-serialization-properties",
+]
+
+# Simplified Firebase bundle (KTX libraries removed from BOM v32.5.0+)
+firebase = [
+    "firebase-analytics",
+    "firebase-crashlytics",
+    "firebase-auth",
+    "firebase-firestore",
+    "firebase-database",
+    "firebase-storage",
+    "firebase-config",
+    "firebase-messaging",
+]
+
+utilities = [
+    "timber",
+    "coil-compose",
+    "coil-network-okhttp",
+    "lottie-compose",
+    "guava",
+    "desugar-jdk-libs",
+    "leakcanary-android",
+]
+
+testing-unit = [
+    "junit",
+    "junit-jupiter",
+    "mockk",
+]
+
+testing = [
+    "junit",
+    "junit-jupiter-api",
+    "mockk",
+    "androidx-junit",
+    "androidx-core",
+    "androidx-runner",
+    "androidx-rules",
+    "truth",
+    "robolectric",
+]
+
+system-root = [
+    "libsu-core",
+    "libsu-nio",
+    "libsu-service",
+    "xposed-api"
+]
 
 langchain4j = [
     "langchain4j",
