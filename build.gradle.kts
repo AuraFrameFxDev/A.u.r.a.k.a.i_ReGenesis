@@ -4,22 +4,17 @@
 // NO scattered compileOptions or kotlinOptions per-module
 // ═══════════════════════════════════════════════════════════════════════════
 
-val kotlinVersion: String = "2.3.20"
-val agpVersion: String = "9.2.0-alpha07"
-val hiltVersion: String = "2.59.2"
-val kspVersion: String = "2.3.6"
-
 plugins {
-    id("org.jetbrains.kotlin.android") version kotlinVersion apply false
-    id("org.jetbrains.kotlin.plugin.compose") version kotlinVersion apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version kotlinVersion apply false
-    id("org.jetbrains.kotlin.plugin.parcelize") version kotlinVersion apply false
-    id("com.android.application") version agpVersion apply false
-    id("com.android.library") version agpVersion apply false
-    id("com.google.dagger.hilt.android") version hiltVersion apply false
-    id("com.google.devtools.ksp") version kspVersion apply false
-    id("com.google.gms.google-services") version "4.4.4" apply false
-    id("com.google.firebase.crashlytics") version "3.0.6" apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 }
 
 val skipTests = providers.gradleProperty("aurafx.skip.tests").orElse("false").map { it.toBoolean() }.getOrElse(false)
