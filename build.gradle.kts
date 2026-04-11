@@ -58,10 +58,13 @@ subprojects {
         exclude(group = "com.google.protobuf", module = "protobuf-java")
         exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
         exclude(group = "org.conscrypt", module = "conscrypt-openjdk-uber")
-        exclude(group = "com.squareup.okhttp3", module = "okhttp-jvm")
-        exclude(group = "com.squareup.okhttp3", module = "okhttp")
 
         resolutionStrategy {
+            val okhttpVersion = libs.versions.okhttp.get()
+            dependencySubstitution {
+                substitute(module("com.squareup.okhttp3:okhttp")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
+                substitute(module("com.squareup.okhttp3:okhttp-jvm")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
+            }
             force("com.google.protobuf:protobuf-javalite:3.25.5")
             force("com.google.protobuf:protolite-well-known-types:18.4.0")
         }
