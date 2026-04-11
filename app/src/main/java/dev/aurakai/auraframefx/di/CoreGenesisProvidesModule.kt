@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
+import dev.aurakai.auraframefx.ai.models.SovereignChatModel
 import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.ErrorHandler
@@ -16,13 +17,12 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.pipeline.MemoryRetr
 import dev.aurakai.auraframefx.domains.cascade.utils.room.AgentStatsDao
 import dev.aurakai.auraframefx.domains.genesis.core.GeminiMemoria
 import dev.aurakai.auraframefx.domains.genesis.core.NemotronEngine
+import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.aurakai.auraframefx.domains.genesis.network.api.AIAgentApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.AuthApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.ThemeApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.UserApi
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
-import dev.aurakai.auraframefx.ai.models.SovereignChatModel
-import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
 import dev.aurakai.auraframefx.domains.kai.security.TemporalAegis
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.request.ChatRequest
@@ -153,8 +153,9 @@ object CoreGenesisProvidesModule {
     @Singleton
     fun provideSovereignChatModel(
         turboQuant: TurboQuantCache,
-        aegis: TemporalAegis
-    ): dev.langchain4j.model.chat.ChatModel = SovereignChatModel(turboQuant, aegis)
+        aegis: TemporalAegis,
+        vertexAIClient: dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+    ): dev.langchain4j.model.chat.ChatModel = SovereignChatModel(turboQuant, aegis, vertexAIClient)
 
     /**
      * Provides the GeminiMemoria using LangChain4j GoogleAiGeminiChatModel.
