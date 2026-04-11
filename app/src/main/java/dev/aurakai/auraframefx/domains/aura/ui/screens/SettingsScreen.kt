@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.verticalScrollbar
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 import dev.aurakai.auraframefx.domains.kai.SystemMonitorService
 import dev.aurakai.auraframefx.domains.kai.security.auth.OAuthService
 
@@ -52,6 +53,7 @@ fun SettingsScreen(
     val memoryUsage by viewModel.memoryUsage.collectAsState()
     val batteryMetrics by viewModel.batteryMetrics.collectAsState()
     val authState by viewModel.authState.collectAsState()
+    val shellStatus by viewModel.shellStatus.collectAsState()
 
     val bgGradient = Brush.verticalGradient(
         colors = listOf(
@@ -189,6 +191,14 @@ fun SettingsScreen(
                 }
 
                 item {
+                    ShellStatusCard(
+                        status = shellStatus,
+                        onRequestRoot = { viewModel.requestRoot() },
+                        onRefresh = { viewModel.refreshShellStatus() }
+                    )
+                }
+
+                item {
                     val authTitle = when (val state = authState) {
                         is OAuthService.AuthState.Authenticated -> "Identity: ${state.userId}"
                         is OAuthService.AuthState.Error -> "Auth Error"
@@ -248,6 +258,57 @@ fun SettingsScreen(
                         color = Color.White.copy(alpha = 0.3f),
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ShellStatusCard(
+    status: RootShellService.ShellStatus,
+    onRequestRoot: () -> Unit,
+    onRefresh: () -> Unit
+) {
+    val (title, icon, color) = when (status) {
+        RootShellService.ShellStatus.RootAccess -> Triple("ROOT ACCESS GRANTED", Icons.Default.Terminal, Color.Red)
+        RootShellService.ShellStatus.ShizukuAccess -> Triple("SHIZUKU BRIDGE ACTIVE", Icons.Default.Usb, Color.Green)
+        RootShellService.ShellStatus.UserAccess -> Triple("USER MODE (LIMITED)", Icons.Default.Lock, Color.Yellow)
+        else -> Triple("DIAGNOSING SHELL...", Icons.Default.Sync, Color.Gray)
+    }
+
+    BrutalistCard(accentColor = color) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(icon, null, tint = color, modifier = Modifier.size(24.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(title, color = Color.White, fontWeight = FontWeight.Black, fontSize = 14.sp)
+                Text(
+                    text = "Authority level for system operations",
+                    color = Color.Gray,
+                    fontSize = 10.sp
+                )
+            }
+            
+            if (status == RootShellService.ShellStatus.UserAccess) {
+                Button(
+                    onClick = onRequestRoot,
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                    shape = RoundedCornerShape(4.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                    modifier = Modifier.height(32.dp)
+                ) {
+                    Text("ROOT", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                }
+            } else {
+                IconButton(onClick = onRefresh) {
+                    Icon(Icons.Default.Refresh, null, tint = color, modifier = Modifier.size(20.dp))
                 }
             }
         }

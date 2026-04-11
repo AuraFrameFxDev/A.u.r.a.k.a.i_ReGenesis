@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.aura.OverlayManager
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 import dev.aurakai.auraframefx.domains.kai.SystemMonitorService
 import dev.aurakai.auraframefx.domains.kai.security.auth.OAuthService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +27,8 @@ class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val overlayManager: OverlayManager,
     private val systemMonitorService: SystemMonitorService,
-    private val oauthService: OAuthService
+    private val oauthService: OAuthService,
+    private val rootShellService: RootShellService
 ) : ViewModel() {
 
     private val prefs: SharedPreferences = context.getSharedPreferences("genesis_settings", Context.MODE_PRIVATE)
@@ -56,6 +58,9 @@ class SettingsViewModel @Inject constructor(
     
     // ── Auth Flow ─────────────────────────────────────────────────────────────
     val authState = oauthService.authState
+
+    // ── Shell Flow ────────────────────────────────────────────────────────────
+    val shellStatus = rootShellService.shellStatus
 
     init {
         // Start background monitoring
@@ -102,6 +107,16 @@ class SettingsViewModel @Inject constructor(
     fun signOut() {
         viewModelScope.launch {
             oauthService.signOut()
+        }
+    }
+
+    fun refreshShellStatus() {
+        rootShellService.refreshStatus()
+    }
+
+    fun requestRoot() {
+        viewModelScope.launch {
+            rootShellService.requestRoot()
         }
     }
 
