@@ -246,7 +246,7 @@ class ManageBootloaderTool @Inject constructor(
             "action" to PropertySchema(
                 type = "string",
                 description = "Bootloader action to perform",
-                enum = listOf("check_status", "unlock", "lock", "get_info")
+                enum = listOf("check_status", "unlock", "lock", "get_info", "reboot")
             ),
             "force" to PropertySchema(
                 type = "boolean",
@@ -265,16 +265,24 @@ class ManageBootloaderTool @Inject constructor(
 
             Timber.i("ManageBootloaderTool: action=$action, force=$force")
 
-            // TODO: Integrate with actual bootloader management
             val result = when (action) {
-                "check_status" -> "Bootloader Status: UNLOCKED"
-                "get_info" -> "Bootloader Version: 1.0, Status: UNLOCKED, Verified Boot: Disabled"
+                "check_status" -> {
+                    val res = rootShellService.executeCommand("getprop ro.boot.flash.locked")
+                    if (res.output.trim() == "1") "Bootloader Status: LOCKED" else "Bootloader Status: UNLOCKED"
+                }
+                "reboot" -> {
+                    rootShellService.executeCommand("reboot bootloader")
+                    "Rebooting to bootloader..."
+                }
+                "get_info" -> {
+                    val ver = rootShellService.executeCommand("getprop ro.bootloader")
+                    "Bootloader Version: ${ver.output.trim()}, Status: ${if(rootShellService.executeCommand("getprop ro.boot.flash.locked").output.trim()=="1") "LOCKED" else "UNLOCKED"}"
+                }
                 "unlock", "lock" -> {
-                    // These are CRITICAL operations
-                    return ToolResult.Pending(
-                        taskId = "bootloader_${action}_${System.currentTimeMillis()}",
-                        estimatedDuration = 60000L // 1 minute
-                    )
+                    // These are CRITICAL operations - usually requires manual action in fastboot
+                    // We can only trigger the reboot here.
+                    rootShellService.executeCommand("reboot bootloader")
+                    "Device rebooted to bootloader. Manual action required: fastboot flashing $action"
                 }
 
                 else -> return ToolResult.Failure("Invalid action: $action")
@@ -290,6 +298,65 @@ class ManageBootloaderTool @Inject constructor(
         } catch (e: Exception) {
             Timber.e(e, "ManageBootloaderTool: Error")
             ToolResult.Failure(error = e.message ?: "Unknown error", errorCode = "BOOTLOADER_ERROR")
+        }
+    }
+}
+
+/**
+ * Tool: Manage Partitions
+ * Allows Kai to mount/unmount and inspect system partitions
+ */
+class ManagePartitionTool @Inject constructor(
+    private val rootShellService: RootShellService
+) : AgentTool {
+    override val name = "manage_partition"
+    override val description = "Mount, unmount, or inspect device partitions (system, data, vendor)."
+    override val authorizedAgents = setOf("KAI", "kai")
+    override val category = ToolCategory.ROM_TOOLS
+
+    override val inputSchema = ToolInputSchema(
+        properties = mapOf(
+            "partition" to PropertySchema(
+                type = "string",
+                description = "Target partition",
+                enum = listOf("system", "vendor", "data", "cache", "product")
+            ),
+            "action" to PropertySchema(
+                type = "string",
+                description = "Action to perform",
+                enum = listOf("mount_rw", "mount_ro", "inspect", "wipe_cache")
+            )
+        ),
+        required = listOf("partition", "action")
+    )
+
+    override suspend fun execute(params: JsonObject, agentId: String): ToolResult {
+        return try {
+            val partition = params["partition"]?.jsonPrimitive?.content ?: "system"
+            val action = params["action"]?.jsonPrimitive?.content ?: "inspect"
+
+            Timber.i("ManagePartitionTool: partition=$partition, action=$action")
+
+            val command = when (action) {
+                "mount_rw" -> "mount -o rw,remount /$partition"
+                "mount_ro" -> "mount -o ro,remount /$partition"
+                "inspect" -> "df -h /$partition"
+                "wipe_cache" -> if (partition == "cache") "rm -rf /cache/*" else "echo 'Only cache can be wiped via this tool'"
+                else -> ""
+            }
+
+            val result = rootShellService.executeCommand(command)
+            
+            if (result.isSuccess) {
+                ToolResult.Success(
+                    output = "Action '$action' on /$partition completed: ${result.output}",
+                    metadata = mapOf("partition" to partition, "action" to action)
+                )
+            } else {
+                ToolResult.Failure("Partition action failed: ${result.error}")
+            }
+        } catch (e: Exception) {
+            ToolResult.Failure(e.message ?: "Unknown error")
         }
     }
 }

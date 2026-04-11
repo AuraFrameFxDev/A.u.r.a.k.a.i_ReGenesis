@@ -14,6 +14,7 @@ import dev.aurakai.auraframefx.domains.kai.AnalyzeSecurityThreatTool
 import dev.aurakai.auraframefx.domains.kai.FlashROMTool
 import dev.aurakai.auraframefx.domains.kai.ManageBootloaderTool
 import dev.aurakai.auraframefx.domains.kai.ManageLSPosedHookTool
+import dev.aurakai.auraframefx.domains.kai.ManagePartitionTool
 import dev.aurakai.auraframefx.domains.kai.ViewSystemLogsTool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -87,7 +88,8 @@ class ToolInitializer @Inject constructor(
             FlashROMTool(rootShellService),
             AnalyzeSecurityThreatTool(),
             ManageBootloaderTool(rootShellService),
-            ViewSystemLogsTool(rootShellService)
+            ViewSystemLogsTool(rootShellService),
+            ManagePartitionTool(rootShellService)
         )
         Timber.d("ToolInitializer: Registered Kai tools (Security/ROM)")
     }

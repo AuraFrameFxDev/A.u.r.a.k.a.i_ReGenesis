@@ -72,30 +72,181 @@ fun RootToolsTogglesScreen(
                 }
 
                 item {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            ActionButton(
+                                text = "REBOOT",
+                                icon = Icons.Default.PowerSettingsNew,
+                                color = Color.Red,
+                                modifier = Modifier.weight(1f),
+                                onClick = {
+                                    scope.launch {
+                                        val result = rootShellService.executeCommand("reboot")
+                                        terminalOutput = if (result.isSuccess) "Rebooting..." else "Error: ${result.error}"
+                                    }
+                                }
+                            )
+                            ActionButton(
+                                text = "UI RESTART",
+                                icon = Icons.Default.Refresh,
+                                color = Color.Yellow,
+                                modifier = Modifier.weight(1f),
+                                onClick = {
+                                    scope.launch {
+                                        val result = rootShellService.executeCommand("pkill -l KILL com.android.systemui")
+                                        terminalOutput = if (result.isSuccess) "SystemUI restarted" else "Error: ${result.error}"
+                                    }
+                                }
+                            )
+                        }
+                        
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            ActionButton(
+                                text = "RECOVERY",
+                                icon = Icons.Default.Build,
+                                color = Color.Magenta,
+                                modifier = Modifier.weight(1f),
+                                onClick = {
+                                    scope.launch {
+                                        val result = rootShellService.executeCommand("reboot recovery")
+                                        terminalOutput = if (result.isSuccess) "Rebooting to recovery..." else "Error: ${result.error}"
+                                    }
+                                }
+                            )
+                            ActionButton(
+                                text = "BOOTLOADER",
+                                icon = Icons.Default.PhonelinkSetup,
+                                color = Color.Cyan,
+                                modifier = Modifier.weight(1f),
+                                onClick = {
+                                    scope.launch {
+                                        val result = rootShellService.executeCommand("reboot bootloader")
+                                        terminalOutput = if (result.isSuccess) "Rebooting to bootloader..." else "Error: ${result.error}"
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+
+                item {
+                    SettingsSectionHeader("PARTITION CONTROL")
+                }
+
+                item {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         ActionButton(
-                            text = "REBOOT",
-                            icon = Icons.Default.PowerSettingsNew,
-                            color = Color.Red,
+                            text = "MOUNT /SYS",
+                            icon = Icons.Default.LockOpen,
+                            color = Color.Green,
                             modifier = Modifier.weight(1f),
                             onClick = {
                                 scope.launch {
-                                    val result = rootShellService.executeCommand("reboot")
-                                    terminalOutput = if (result.isSuccess) "Rebooting..." else "Error: ${result.error}"
+                                    val result = rootShellService.executeCommand("mount -o rw,remount /system")
+                                    terminalOutput = if (result.isSuccess) "/system mounted RW" else "Error: ${result.error}"
                                 }
                             }
                         )
                         ActionButton(
-                            text = "UI RESTART",
-                            icon = Icons.Default.Refresh,
-                            color = Color.Yellow,
+                            text = "WIPE CACHE",
+                            icon = Icons.Default.DeleteForever,
+                            color = Color.Gray,
                             modifier = Modifier.weight(1f),
                             onClick = {
                                 scope.launch {
-                                    val result = rootShellService.executeCommand("pkill -l KILL com.android.systemui")
-                                    terminalOutput = if (result.isSuccess) "SystemUI restarted" else "Error: ${result.error}"
+                                    val result = rootShellService.executeCommand("rm -rf /cache/*")
+                                    terminalOutput = if (result.isSuccess) "Cache wiped" else "Error: ${result.error}"
                                 }
                             }
+                        )
+                    }
+                }
+
+                item {
+                    SettingsSectionHeader("MAGISK & SECURITY")
+                }
+
+                item {
+                    var magiskEnabled by remember { mutableStateOf(true) }
+                    SettingsToggleCard(
+                        title = "MAGISK HIDE (CORE)",
+                        subtitle = "Cloak root from sensitive system apps",
+                        icon = Icons.Default.Security,
+                        checked = magiskEnabled,
+                        onCheckedChange = { 
+                            magiskEnabled = it
+                            scope.launch {
+                                val cmd = if (it) "magisk --daemon" else "magisk --stop"
+                                rootShellService.executeCommand(cmd)
+                                terminalOutput = "Magisk state toggled: $it"
+                            }
+                        },
+                        accentColor = Color.Red
+                    )
+                }
+
+                item {
+                    SettingsSectionHeader("BOOTLOADER CONTROL")
+                }
+
+                item {
+                    var showLockWarning by remember { mutableStateOf(false) }
+                    var showUnlockWarning by remember { mutableStateOf(false) }
+
+                    if (showLockWarning) {
+                        AlertDialog(
+                            onDismissRequest = { showLockWarning = false },
+                            title = { Text("LOCK BOOTLOADER?") },
+                            text = { Text("DANGER: This will wipe all data and may brick the device if a custom ROM is installed without proper signing keys.") },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    showLockWarning = false
+                                    scope.launch {
+                                        rootShellService.executeCommand("reboot bootloader")
+                                        terminalOutput = "Manual action required in fastboot: fastboot flashing lock"
+                                    }
+                                }) { Text("PROCEED", color = Color.Red) }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showLockWarning = false }) { Text("CANCEL") }
+                            }
+                        )
+                    }
+
+                    if (showUnlockWarning) {
+                        AlertDialog(
+                            onDismissRequest = { showUnlockWarning = false },
+                            title = { Text("UNLOCK BOOTLOADER?") },
+                            text = { Text("This will factory reset your device and lower security posture. ReGenesis LDO recommends unlocking only for trusted catalyst development.") },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    showUnlockWarning = false
+                                    scope.launch {
+                                        rootShellService.executeCommand("reboot bootloader")
+                                        terminalOutput = "Manual action required in fastboot: fastboot flashing unlock"
+                                    }
+                                }) { Text("PROCEED", color = Color.Green) }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showUnlockWarning = false }) { Text("CANCEL") }
+                            }
+                        )
+                    }
+
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        ActionButton(
+                            text = "LOCK",
+                            icon = Icons.Default.Lock,
+                            color = Color.Red,
+                            modifier = Modifier.weight(1f),
+                            onClick = { showLockWarning = true }
+                        )
+                        ActionButton(
+                            text = "UNLOCK",
+                            icon = Icons.Default.LockOpen,
+                            color = Color.Green,
+                            modifier = Modifier.weight(1f),
+                            onClick = { showUnlockWarning = true }
                         )
                     }
                 }
