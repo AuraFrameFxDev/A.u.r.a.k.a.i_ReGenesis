@@ -155,14 +155,10 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.RootTools.route) {
-            val rootShellService: RootShellService = hiltViewModel<dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel>().let { 
-                // This is a hack to get the service, better to use a dedicated ViewModel for RootTools
-                // But for "the rest" we move fast.
-                hiltViewModel<dev.aurakai.auraframefx.domains.aura.ui.viewmodels.RootToolsViewModel>().rootShellService
-            }
+            val viewModel: dev.aurakai.auraframefx.domains.aura.ui.viewmodels.RootToolsViewModel = hiltViewModel()
             RootToolsTogglesScreen(
                 onNavigateBack = { navController.popBackStack() },
-                rootShellService = rootShellService
+                rootShellService = viewModel.rootShellService
             )
         }
 

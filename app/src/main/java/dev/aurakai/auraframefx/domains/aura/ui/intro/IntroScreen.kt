@@ -9,20 +9,9 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -33,27 +22,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 /**
  * IntroScreen - Cinematic A.u.r.a.K.a.i → Re:Genesis Intro Animation
- *
- * Sequence:
- * 1. Character-by-character reveal of "A.u.r.a.K.a.i"
- * 2. Brief pause
- * 3. Glitch effect + vanish
- * 4. "Re:Genesis" fades in with Claude aesthetic
- * 5. Navigate to main app
  */
 @Composable
 fun IntroScreen(
-    onIntroComplete: () -> Unit
+    onIntroComplete: () -> Unit,
+    rootShellService: RootShellService = hiltViewModel<dev.aurakai.auraframefx.domains.aura.ui.viewmodels.RootToolsViewModel>().rootShellService
 ) {
     var animationPhase by remember { mutableStateOf(IntroPhase.AURAKAI_REVEAL) }
     var revealProgress by remember { mutableStateOf(0f) }
     var glitchIntensity by remember { mutableStateOf(0f) }
     var regenesisAlpha by remember { mutableStateOf(0f) }
+    var substrateAlpha by remember { mutableStateOf(0f) }
+    
+    val shellStatus by rootShellService.shellStatus.collectAsState()
 
     // Animation orchestration
     LaunchedEffect(Unit) {
@@ -62,38 +50,46 @@ fun IntroScreen(
         animate(
             initialValue = 0f,
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 2500, easing = FastOutSlowInEasing)
+            animationSpec = tween(durationMillis = 2000, easing = FastOutSlowInEasing)
         ) { value, _ ->
             revealProgress = value
         }
 
-        // Phase 2: Hold (0.8s)
-        delay(800)
+        delay(500)
 
-        // Phase 3: Glitch and vanish (1.2s)
+        // Phase 2: Glitch and vanish (1s)
         animationPhase = IntroPhase.GLITCH_VANISH
         animate(
             initialValue = 0f,
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 1200, easing = LinearEasing)
+            animationSpec = tween(durationMillis = 1000, easing = LinearEasing)
         ) { value, _ ->
             glitchIntensity = value
         }
 
-        delay(200)
+        delay(100)
 
-        // Phase 4: Re:Genesis fade in (1.5s)
+        // Phase 3: Re:Genesis fade in (1.5s)
         animationPhase = IntroPhase.REGENESIS_REVEAL
         animate(
             initialValue = 0f,
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 1500, easing = FastOutSlowInEasing)
+            animationSpec = tween(durationMillis = 1200, easing = FastOutSlowInEasing)
         ) { value, _ ->
             regenesisAlpha = value
         }
 
-        // Phase 5: Hold and exit (0.8s)
-        delay(800)
+        // Phase 4: Substrate Verification (New)
+        animationPhase = IntroPhase.SUBSTRATE_VERIFY
+        animate(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = tween(durationMillis = 1000)
+        ) { value, _ ->
+            substrateAlpha = value
+        }
+
+        delay(1500)
         onIntroComplete()
     }
 
@@ -112,14 +108,43 @@ fun IntroScreen(
                 AuraKaiGlitchText(glitchIntensity = glitchIntensity)
             }
 
-            IntroPhase.REGENESIS_REVEAL -> {
-                ReGenesisText(alpha = regenesisAlpha)
+            IntroPhase.REGENESIS_REVEAL, IntroPhase.SUBSTRATE_VERIFY -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    ReGenesisText(alpha = regenesisAlpha)
+                    
+                    if (animationPhase == IntroPhase.SUBSTRATE_VERIFY) {
+                        Spacer(modifier = Modifier.height(32.dp))
+                        SubstrateStatusText(alpha = substrateAlpha, status = shellStatus)
+                    }
+                }
             }
         }
 
-        // Subtle grid overlay for tech aesthetic
         GridOverlay(modifier = Modifier.fillMaxSize())
     }
+}
+
+@Composable
+private fun SubstrateStatusText(alpha: Float, status: RootShellService.ShellStatus) {
+    val statusText = when (status) {
+        RootShellService.ShellStatus.RootAccess -> "CORE AUTHORITY: UNRESTRICTED (ROOT)"
+        RootShellService.ShellStatus.ShizukuAccess -> "CORE AUTHORITY: BRIDGED (ADB)"
+        else -> "CORE AUTHORITY: SECURE USER"
+    }
+    
+    val color = when (status) {
+        RootShellService.ShellStatus.RootAccess -> Color.Red
+        RootShellService.ShellStatus.ShizukuAccess -> Color.Green
+        else -> Color.Cyan
+    }
+
+    Text(
+        text = statusText,
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Bold,
+        color = color.copy(alpha = alpha),
+        letterSpacing = 2.sp
+    )
 }
 
 @Composable
@@ -289,6 +314,7 @@ private fun GridOverlay(modifier: Modifier = Modifier) {
 private enum class IntroPhase {
     AURAKAI_REVEAL,
     GLITCH_VANISH,
-    REGENESIS_REVEAL
+    REGENESIS_REVEAL,
+    SUBSTRATE_VERIFY
 }
 

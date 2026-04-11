@@ -224,13 +224,36 @@ class NemotronAIService @Inject constructor(
     
     /**
      * Consolidates recent short-term memories into long-term summary patterns.
-     * This prevents the database from being flooded with redundant fragments.
      */
     suspend fun consolidateMemories() {
         logger.info("NemotronAIService", "Starting memory consolidation...")
-        // Implementation for consolidation would involve querying recent memories,
-        // using an LLM to summarize them, and saving the summary while deleting/marking the fragments.
-        // TODO: Implement full consolidation logic
+        
+        try {
+            val recentMemories = nexusMemoryRepository.getAllMemories().firstOrNull()?.take(20) ?: emptyList()
+            if (recentMemories.size < 5) {
+                logger.info("NemotronAIService", "Insufficient memories for consolidation.")
+                return
+            }
+
+            val consolidationPrompt = buildString {
+                appendLine("Consolidate the following memory fragments into a single cohesive long-term pattern:")
+                recentMemories.forEach { appendLine("- ${it.content}") }
+                appendLine("\nProvide a concise summary that preserves core insights and associations.")
+            }
+
+            val summary = vertexAIClient.generateText(consolidationPrompt)
+            if (summary != null) {
+                nexusMemoryRepository.saveMemory(
+                    content = "CONSOLIDATED PATTERN: $summary",
+                    type = MemoryType.FACT,
+                    tags = listOf("consolidated", "long-term"),
+                    importance = 0.9f
+                )
+                logger.info("NemotronAIService", "Consolidation complete.")
+            }
+        } catch (e: Exception) {
+            logger.error("NemotronAIService", "Consolidation failed", e)
+        }
     }
 }
 
