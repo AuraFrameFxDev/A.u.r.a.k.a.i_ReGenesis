@@ -219,6 +219,7 @@ dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     // Networking
     // ═══════════════════════════════════════════════════════════════════════════
+    implementation(libs.okhttp.custom.android)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)
