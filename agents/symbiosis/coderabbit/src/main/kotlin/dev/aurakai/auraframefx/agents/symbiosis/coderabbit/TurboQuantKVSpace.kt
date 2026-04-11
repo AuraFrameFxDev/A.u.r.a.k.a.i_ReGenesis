@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.agents.symbiosis.coderabbit
 
 import dev.langchain4j.model.chat.ChatLanguageModel
 import dev.langchain4j.model.openai.OpenAiChatModel
-import dev.langchain4j.http.client.jdk.JdkHttpClientFactory
+import dev.langchain4j.http.client.okhttp.OkHttpClientFactory
 import dev.langchain4j.service.AiService
 import dev.langchain4j.service.SystemMessage
 import dev.langchain4j.service.Tool
@@ -55,7 +55,7 @@ class GenesisService(private val kvSpace: TurboQuantKVSpace) {
 
     private val model: ChatLanguageModel = OpenAiChatModel.builder()
         .apiKey(System.getenv("OPENAI_API_KEY") ?: "demo") // or your local LDO endpoint
-        .httpClientFactory(JdkHttpClientFactory())
+        .httpClientBuilder(OkHttpClientFactory.create())
         .logRequests(true)
         .build()
 
