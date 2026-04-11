@@ -2,6 +2,9 @@ import org.gradle.api.initialization.resolve.RepositoriesMode.PREFER_SETTINGS
 
 // settings.gradle.kts
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+val kotlinPluginVersionForSettings: String = "2.3.20"
+
 pluginManagement {
     includeBuild("build-logic")
 
@@ -43,7 +46,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "aurakai-reactive-intelligence"
+rootProject.name = "aurakai-regenesis"
 
 /**
  * Includes the Gradle project at the given path if its directory exists.
