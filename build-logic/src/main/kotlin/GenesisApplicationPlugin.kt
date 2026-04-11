@@ -182,8 +182,10 @@ class GenesisApplicationPlugin : Plugin<Project> {
             // Kotlin Serialization
             dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
-            // Timber Logging
+            // Timber and Logging
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
+            dependencies.add("implementation", "org.slf4j:slf4j-android:2.0.16")
+            dependencies.add("implementation", "org.conscrypt:conscrypt-android:2.5.2")
 
             // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")

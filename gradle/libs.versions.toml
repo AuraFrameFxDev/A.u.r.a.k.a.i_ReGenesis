@@ -178,7 +178,7 @@ moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiKotlin" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiKotlin" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
-slf4j-android = { group = "org.slf4j", name = "slf4j-android", version = "2.0.16" }
+slf4j-android = { group = "org.slf4j", name = "slf4j-android", version = "1.7.36" }
 conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.2" }
 
 # AndroidX & Jetpack
