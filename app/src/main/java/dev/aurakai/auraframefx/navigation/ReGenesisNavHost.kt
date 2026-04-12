@@ -44,6 +44,7 @@ import dev.aurakai.auraframefx.domains.kai.RootShellService
 import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
 import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
 import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
+import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,7 +111,7 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.RomToolsHub.route) {
-            StubScreen("ROM Tools Hub", "Build", navController)
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.SecurityCenter.route) {
