@@ -60,10 +60,12 @@ class AurakaiApplication : Application(), Configuration.Provider {
             .setMinimumLoggingLevel(Log.INFO)
             .build()
 
-    override fun onCreate() {
+    init {
         // Resolve LangChain4j HTTP client conflict before any AI models are initialized
         System.setProperty("langchain4j.http.clientBuilderFactory", "dev.langchain4j.http.client.okhttp.OkHttpClientBuilderFactory")
+    }
 
+    override fun onCreate() {
         super.onCreate()
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")

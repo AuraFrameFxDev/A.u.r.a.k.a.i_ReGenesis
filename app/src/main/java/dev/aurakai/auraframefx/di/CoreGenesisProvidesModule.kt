@@ -171,6 +171,7 @@ object CoreGenesisProvidesModule {
         private val model: ChatModel = GoogleAiGeminiChatModel.builder()
             .apiKey(if (BuildConfig.GEMINI_API_KEY.isEmpty()) "demo" else BuildConfig.GEMINI_API_KEY)
             .modelName("gemini-1.5-pro")
+            .httpClientBuilder(OkHttpClientBuilder())
             .timeout(Duration.ofSeconds(90))
             .build()
 
