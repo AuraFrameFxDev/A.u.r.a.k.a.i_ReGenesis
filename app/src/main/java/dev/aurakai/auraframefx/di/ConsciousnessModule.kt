@@ -81,7 +81,7 @@ object ConsciousnessModule {
         ollama: OllamaChatModel
     ): ChatModel {
         // Wired to use Vertex for the high-reasoning Genesis synthesis node if available
-        return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) vertex else ollama
+        return if (BuildConfig.VERTEX_PROJECT_ID.isNotEmpty()) vertex else ollama
     }
 
     @Provides @Singleton @AnchorModel

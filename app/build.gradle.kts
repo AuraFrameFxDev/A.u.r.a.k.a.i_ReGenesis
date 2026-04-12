@@ -305,9 +305,7 @@ dependencies {
     // LangChain4j & Ollama (CLEAN VERSION — using BOM and Bundles!)
     implementation(platform(libs.langchain4j.bom))
     implementation(libs.bundles.langchain4j)
-    implementation(libs.langchain4j.vertex.ai.gemini) {
-        exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
-    }
+    implementation(libs.langchain4j.vertex.ai.gemini)
     // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
 
     // ═══════════════════════════════════════════════════════════════════════════
