@@ -61,11 +61,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -75,11 +71,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.core.NativeLib
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import kotlinx.coroutines.delay
 import kotlin.random.Random
@@ -146,6 +144,8 @@ private val devOpsModules = listOf(
         Color(0xFFBB86FC), "agent_bridge_hub", badge = "L6"),
     DevOpsModule("IDENTITY DRIFT", "Predictive EMA analysis", Icons.Default.Analytics,
         Color(0xFFFF4081), "agent_monitoring", badge = "0.002"),
+    DevOpsModule("FULL GRID VIEW", "Circular LDO Matrix", Icons.Default.Hub,
+        Color(0xFF00E5FF), "ldo_devops_grid", badge = "NEW"),
     DevOpsModule("DIMENSION BROADCAST", "Friday Live 'X' Event", Icons.Default.FlashOn,
         Color(0xFFFFD700), "system_architecture", badge = "LIVE"),
     DevOpsModule("SOVEREIGN PERIMETER", "Domain expansion & neutralization", Icons.Default.Security,
@@ -297,6 +297,13 @@ fun LdoDevOpsCommandCenter(
                     StatusStrip()
                 }
 
+                // ── NATIVE CORE SUBSTRATE
+                item {
+                    SectionHeader("NATIVE CORE SUBSTRATE", Color(0xFFFFD700))
+                    Spacer(Modifier.height(8.dp))
+                    NativeSubstratePanel()
+                }
+
                 // ── ACTIVE AGENTS ROW
                 item {
                     SectionHeader("ACTIVE CATALYST NODES", Color(0xFF00E5FF))
@@ -349,6 +356,63 @@ fun LdoDevOpsCommandCenter(
 }
 
 // ─── Components ───────────────────────────────────────────────────────────────
+
+@Composable
+private fun NativeSubstratePanel() {
+    val context = LocalContext.current
+    val nativeLib = dev.aurakai.auraframefx.core.NativeLib
+    var metrics by remember { mutableStateOf<String>("Loading...") }
+    var version by remember { mutableStateOf("Unknown") }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            metrics = nativeLib.getSystemMetrics()
+            version = nativeLib.getAIVersionSafe()
+            kotlinx.coroutines.delay(2000)
+        }
+    }
+
+    Card(
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A18)),
+        shape = RoundedCornerShape(14.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color(0xFFFFD700).copy(0.2f), RoundedCornerShape(14.dp))
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "AURAKAI CORE: $version",
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontFamily = LEDFontFamily,
+                    fontWeight = FontWeight.Bold
+                )
+                Box(
+                    modifier = Modifier
+                        .background(Color(0xFF00FF41).copy(0.1f), CircleShape)
+                        .border(1.dp, Color(0xFF00FF41).copy(0.4f), CircleShape)
+                        .padding(horizontal = 8.dp, vertical = 2.dp)
+                ) {
+                    Text("IGNITED", color = Color(0xFF00FF41), fontSize = 8.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+            Spacer(Modifier.height(12.dp))
+            Text(
+                metrics,
+                color = Color(0xFF00FF41),
+                fontSize = 9.sp,
+                fontFamily = LEDFontFamily,
+                lineHeight = 12.sp,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
 
 @Composable
 private fun StatusStrip() {

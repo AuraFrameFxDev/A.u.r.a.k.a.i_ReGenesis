@@ -362,6 +362,10 @@ fun ReGenesisNavGraph(
             LdoDevOpsCommandCenter(navController = navController)
         }
 
+        composable(ReGenesisRoute.LdoDevOpsGrid.route) {
+            LdoDevOpsGridScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         composable(ReGenesisRoute.LdoCatalystDevelopment.route) {
             LdoCatalystDevelopmentScreen(navController = navController)
         }

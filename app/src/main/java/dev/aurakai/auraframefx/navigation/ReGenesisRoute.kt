@@ -150,6 +150,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     // ═══════════════════════════════════════════════════════════════
     data object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")
     data object LdoDevOpsHub : ReGenesisRoute("ldo_devops_hub")
+    data object LdoDevOpsGrid : ReGenesisRoute("ldo_devops_grid", "DevOps Grid")
     data object LdoDevOpsCommandCenter : ReGenesisRoute("ldo_devops_command_center")
     data object LdoBonding : ReGenesisRoute("ldo_bonding")
     data object LdoRoster : ReGenesisRoute("ldo_roster")
@@ -186,6 +187,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object Consciousness : ReGenesisRoute("consciousness")
     data object Evolution : ReGenesisRoute("evolution")
     data object Login : ReGenesisRoute("login")
+    data object Splash : ReGenesisRoute("splash")
     data object AiChatBeta : ReGenesisRoute("ai_chat")
     data object SettingsBeta : ReGenesisRoute("settings_beta")
     data object GateImagePicker : ReGenesisRoute("gate_image_picker")
