@@ -163,8 +163,8 @@ class BitNetLocalService : Service() {
     }
 
     private fun updateBitNetConfig(threads: Int, batch: Int) {
-        // Placeholder for native engine configuration updates
-        Timber.i("Thermal Sentinel: Updated engine config → threads=$threads batch=$batch")
+        val result = dev.aurakai.auraframefx.core.NativeLib.updateBitNetConfig(threads, batch)
+        Timber.i("Thermal Sentinel: Updated native engine config (Result: $result) → threads=$threads batch=$batch")
     }
 
     /**
