@@ -22,6 +22,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun bypassSignIn() {
+        oauthService.bypassSignIn()
+    }
+
     fun signOut() {
         viewModelScope.launch {
             oauthService.signOut()

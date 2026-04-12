@@ -36,8 +36,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Brush
@@ -56,7 +57,6 @@ import androidx.compose.material.icons.filled.SignalCellular4Bar
 import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.filled.SwipeDown
 import androidx.compose.material.icons.filled.ToggleOn
-import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.Card
@@ -253,7 +253,7 @@ private fun getCategoryIcon(category: String): ImageVector {
         "Brightness Bars" -> Icons.Default.WbSunny
         "QS Panel" -> Icons.Default.Dashboard
         "Notifications" -> Icons.Default.Notifications
-        "Volume Panel" -> Icons.Default.VolumeUp
+        "Volume Panel" -> Icons.AutoMirrored.Filled.VolumeUp
         "Navigation Bar" -> Icons.Default.SwipeDown
         "UI Roundness" -> Icons.Default.RoundedCorner
         "Icon Shape" -> Icons.Default.Category

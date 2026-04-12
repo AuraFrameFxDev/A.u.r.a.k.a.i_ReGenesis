@@ -189,6 +189,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object Evolution : ReGenesisRoute("evolution")
     data object Login : ReGenesisRoute("login")
     data object Splash : ReGenesisRoute("splash")
+    data object VideoIntro : ReGenesisRoute("video_intro")
     data object AiChatBeta : ReGenesisRoute("ai_chat")
     data object SettingsBeta : ReGenesisRoute("settings_beta")
     data object GateImagePicker : ReGenesisRoute("gate_image_picker")

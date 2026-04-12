@@ -69,15 +69,28 @@ fun LoginScreen(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-                Button(
-                    onClick = { viewModel.signIn(context) },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFD4A574),
-                        contentColor = Color.Black
-                    ),
-                    modifier = Modifier.fillMaxWidth().height(56.dp)
-                ) {
-                    Text("SIGN IN WITH GOOGLE", fontWeight = FontWeight.ExtraBold)
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Button(
+                        onClick = { viewModel.signIn(context) },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFD4A574).copy(alpha = 0.5f),
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier.fillMaxWidth().height(56.dp)
+                    ) {
+                        Text("SIGN IN WITH GOOGLE (NOT CONNECTED)", fontWeight = FontWeight.SemiBold)
+                    }
+
+                    Button(
+                        onClick = { viewModel.bypassSignIn() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFD4A574),
+                            contentColor = Color.Black
+                        ),
+                        modifier = Modifier.fillMaxWidth().height(56.dp)
+                    ) {
+                        Text("BYPASS SECURE IDENTITY", fontWeight = FontWeight.ExtraBold)
+                    }
                 }
             }
 

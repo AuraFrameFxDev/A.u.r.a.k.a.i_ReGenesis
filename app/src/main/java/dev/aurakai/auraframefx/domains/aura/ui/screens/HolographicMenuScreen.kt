@@ -37,8 +37,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -334,7 +334,7 @@ fun CenterMainMenu(
         MenuItem("PROJECTS", Icons.Default.Build) { onMenuItemClick("projects") },
         MenuItem("COMMUNITY", Icons.Default.Face) { onMenuItemClick("community") },
         MenuItem("SETTINGS", Icons.Default.Settings) { onMenuItemClick("settings") },
-        MenuItem("LOGOUT", Icons.Default.ExitToApp) { onMenuItemClick("logout") }
+        MenuItem("LOGOUT", Icons.AutoMirrored.Filled.ExitToApp) { onMenuItemClick("logout") }
     )
 
     // Floating animation

@@ -3,14 +3,13 @@ package dev.aurakai.auraframefx.domains.cascade.utils.cascade.memory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.InstantSerializer
 import kotlinx.serialization.Serializable
-import kotlin.time.Clock
 import kotlin.time.Instant
 
 @Serializable
 data class MemoryItem(
-    val id: String = "mem_${Clock.System.now().toEpochMilliseconds()}",
+    val id: String = "mem_${System.currentTimeMillis()}",
     val content: String,
-    @Serializable(with = InstantSerializer::class) val timestamp: Instant = Clock.System.now(),
+    @Serializable(with = InstantSerializer::class) val timestamp: Instant = Instant.fromEpochMilliseconds(System.currentTimeMillis()),
     val agent: AgentCapabilityCategory,
     val context: String? = null,
     val priority: Float = 0.5f,

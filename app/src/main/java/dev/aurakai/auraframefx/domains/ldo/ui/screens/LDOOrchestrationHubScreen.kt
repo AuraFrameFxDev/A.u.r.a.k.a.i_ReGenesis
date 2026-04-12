@@ -136,11 +136,12 @@ fun LDOOrchestrationHubScreen(
             )
 
             val tabs = listOf("TASKS", "BONDS", "MEMORY")
-            ScrollableTabRow(
+            SecondaryScrollableTabRow(
                 selectedTabIndex = activeTab,
                 containerColor = Color.Transparent,
                 contentColor = Color(0xFF00E5FF),
-                edgePadding = 16.dp
+                edgePadding = 16.dp,
+                divider = {}
             ) {
                 tabs.forEachIndexed { idx, label ->
                     Tab(

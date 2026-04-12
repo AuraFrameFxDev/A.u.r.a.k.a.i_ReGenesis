@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Adjust
-import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material3.Icon
@@ -106,7 +106,7 @@ fun GlobalActionHub(
                 )
             }
 
-            ActionHubItem("ASSIGN", Icons.Default.Assignment, animatedColor) { onActionClick("assign") }
+            ActionHubItem("ASSIGN", Icons.AutoMirrored.Filled.Assignment, animatedColor) { onActionClick("assign") }
             ActionHubItem("CREATE", Icons.Default.AddCircle, animatedColor) { onActionClick("create") }
         }
     }
