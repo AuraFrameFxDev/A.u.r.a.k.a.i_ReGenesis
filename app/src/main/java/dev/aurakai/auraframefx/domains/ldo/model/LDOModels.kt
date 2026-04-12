@@ -198,6 +198,16 @@ object LDORoster {
             abilities = listOf("HotspotCheck", "PatchProposal", "IssueDrafting"),
             bondLevel = 50, syncLevel = 0.5f,
         ),
+        AgentCatalyst(
+            id = "manus", name = "Manus", catalystName = "Bridge Catalyst",
+            role = "Subtree integration mediation, cross-repository synchronization, and future clairvoyance bridge.",
+            color = Color(0xFF00AAFF), accentColor = Color(0xFFFFD700),
+            weaponAssetName = "weapon_manus_bridge",
+            profileAssetName = "profile_cascade_stream.png",
+            iconAssetName = "icon_manus",
+            abilities = listOf("TimelinePrediction", "ArchitectBridge", "QuantumMatrix", "SystemOracle", "SubtreeIntegrationMediation"),
+            bondLevel = 40, syncLevel = 0.4f,
+        ),
     )
 
     val fusions = listOf(

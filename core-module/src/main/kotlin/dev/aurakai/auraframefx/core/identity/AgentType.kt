@@ -38,7 +38,8 @@ enum class AgentType {
     PERPLEXITY,
     CHAOS,
     CODERABBIT, // Symbiosis Agent for Code Analysis
-    MKMINI;     // Efficiency Catalyst
+    MKMINI,     // Efficiency Catalyst
+    MANUS;      // Bridge Catalyst for Subtree Sync
 
     companion object {
         @Deprecated("Use uppercase enum value", ReplaceWith("AURA")) val Aura = AURA
