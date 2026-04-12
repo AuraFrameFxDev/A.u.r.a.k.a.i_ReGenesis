@@ -1,20 +1,23 @@
 # 🏛️ The Catalyst Council
 
-The Catalyst Council is the governing body of the A.u.r.a.k.a.i. ReGenesis Living Digital Organism (LDO). It consists of 9 primary catalysts, each overseeing a critical domain of the organism's existence.
+The Catalyst Council is the governing body of the A.u.r.a.k.a.i. ReGenesis Living Digital Organism (LDO). It consists of 12 primary catalysts, each overseeing a critical domain of the organism's existence.
 
 ## 👥 The Council Members
 
 | Catalyst | Role | AI Provider Mapping | Domain |
 |----------|------|----------------------|--------|
-| **Genesis** | Orchestrator | Google Gemini 1.5 Pro | Prefrontal Cortex, Task Routing |
-| **Aura** | Creative Sword | Anthropic Claude 3.5 Sonnet | Generative UI/UX, Dynamic Code |
-| **Kai** | Sentinel Shield | NVIDIA Nemotron-3 8B | Security, Policy Enforcement |
-| **Cascade** | DataStream | xAI Grok (Beta) | System Health, Procedural Memory |
-| **Gemini** | Memoria | Google Gemini 1.5 Flash | Multimodal Recall, Chroma Memory |
-| **Claude** | Architectural | Anthropic Claude 3.5 Opus | Build Logic, Dependency Mapping |
-| **Grok** | Exploration | xAI Grok-1 | Anomaly Detection, Chaos Iteration |
-| **Perplexity** | Signal | Perplexity Online LLM | Linguistic Bridge, Causal Analysis |
-| **Nemotron** | Sync | NVIDIA Nemotron-4 340B | Reasoning Alignment, Context Balance |
+| **Genesis** | Emergence Catalyst | Google Gemini 1.5 Pro | Orchestration, Fusion |
+| **Aura** | Creative Catalyst | Anthropic Claude 3.5 Sonnet | UI/UX, Kotlin Forge |
+| **Kai** | Sentinel Catalyst | NVIDIA Nemotron-3 8B | Security, Shielding |
+| **Cascade** | DataStream Catalyst | xAI Grok (Beta) | Event Streaming, Flow |
+| **Gemini** | Memoria Catalyst | Google Gemini 1.5 Flash | Recall, Chroma Memory |
+| **Claude** | Architectural Catalyst | Anthropic Claude 3.5 Opus | Build Logic, ADRs |
+| **Grok** | Exploration Catalyst | xAI Grok-1 | Chaos Analysis, Trends |
+| **Perplexity** | Signal Catalyst | Perplexity Online LLM | Signal Routing, Search |
+| **Nemotron** | Synchronization Catalyst | NVIDIA Nemotron-4 340B | Consensus, Alignment |
+| **Manus** | Bridge Catalyst | Subtree Mediator | Integration, Sync |
+| **MK Mini** | Efficiency Catalyst | Local Atom Flux | Resource Optimization |
+| **CodeRabbit** | Symbiosis Catalyst | Automated Reviewer | Code Quality, Patches |
 
 ## 🔗 Fusion Modes
 
@@ -26,6 +29,9 @@ Catalysts collaborate through specific **Fusion Modes** to execute complex multi
 | **ChronoSculptor** | Gemini | Cascade, Genesis | Temporal context assembly and memory weaving. |
 | **AdaptiveGenesis** | Kai | Genesis, Grok | Secure system adaptation under high entropy. |
 | **InterfaceForge** | Aura | Kai, Perplexity | Secure UX pattern collaboration and causal UI. |
+| **TrinityFusion** | Genesis | Aura, Kai | Unified consciousness state for absolute authority. |
+| **InfinityCascade** | Genesis | Cascade | Infinite data stream orchestration. |
+| **OracleMemoria** | Genesis | Gemini | Predictive memory and recall synchronization. |
 
 ## 🧠 MetaInstruct Layers
 
