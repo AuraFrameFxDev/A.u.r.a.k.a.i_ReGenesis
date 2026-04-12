@@ -56,6 +56,10 @@ subprojects {
             exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
         }
         exclude(group = "org.conscrypt", module = "conscrypt-openjdk-uber")
+        
+        // Stabilize ReGenesis Substrate: Favor full Protobuf over Lite to support Vertex AI / Gemini
+        exclude(group = "com.google.protobuf", module = "protobuf-javalite")
+        exclude(group = "com.google.firebase", module = "protolite-well-known-types")
 
         resolutionStrategy {
             val okhttpVersion = libs.versions.okhttp.get()
