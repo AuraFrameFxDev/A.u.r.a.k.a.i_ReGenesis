@@ -1,15 +1,15 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.time.Instant
 
 /**
- * Custom serializer for kotlinx.datetime.Instant
+ * Custom serializer for kotlin.time.Instant
  * Converts Instant to/from ISO-8601 string representation
  */
 object InstantSerializer : KSerializer<Instant> {
