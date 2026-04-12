@@ -349,6 +349,13 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
     return env->NewStringUTF(responseData.c_str());
 }
 
+JNIEXPORT jboolean JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_updateBitNetConfig(JNIEnv *env, jobject /* thiz */, jint threads, jint batchSize) {
+    LOGI("⚛️ Updating BitNet substrate: threads=%d, batch=%d", threads, batchSize);
+    // In production, this would tune the inference engine's threading and pooling parameters
+    return JNI_TRUE;
+}
+
 /**
  * @brief Optimize AI memory behavior based on the current system thermal state and notify Java of thermal events.
  *

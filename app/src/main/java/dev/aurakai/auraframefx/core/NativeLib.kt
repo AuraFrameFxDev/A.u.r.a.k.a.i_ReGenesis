@@ -62,6 +62,7 @@ object NativeLib {
     external fun enableNativeHooks()
     external fun shutdownAI()
     external fun optimizeAIMemory(): Boolean
+    external fun updateBitNetConfig(threads: Int, batchSize: Int): Boolean
     external fun analyzeBootImage(bootImageData: ByteArray): String
 
     external fun initializeKernelShield(): Boolean
