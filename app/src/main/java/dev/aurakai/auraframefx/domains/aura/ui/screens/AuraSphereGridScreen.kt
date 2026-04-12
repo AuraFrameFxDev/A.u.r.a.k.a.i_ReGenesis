@@ -58,6 +58,33 @@ data class SphereNode(
 fun AuraSphereGridScreen(
     onNavigateBack: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val nativeLib = dev.aurakai.auraframefx.core.NativeLib
+    var metrics by remember { mutableStateOf<String>("Substrate: STANDBY") }
+    var cpuLoad by remember { mutableStateOf(0f) }
+    var skinTemp by remember { mutableStateOf(0f) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            val rawMetrics = nativeLib.getSystemMetrics()
+            metrics = rawMetrics
+            
+            // Simple parsing for visualization (In a real app, use JSON parsing)
+            try {
+                if (rawMetrics.contains("cpu_load\":")) {
+                    cpuLoad = rawMetrics.substringAfter("cpu_load\":").substringBefore(",").trim().toFloat()
+                }
+                if (rawMetrics.contains("skin_temp_c\":")) {
+                    skinTemp = rawMetrics.substringAfter("skin_temp_c\":").substringBefore(",").trim().toFloat()
+                }
+            } catch (e: Exception) {
+                // Ignore parse errors
+            }
+            
+            kotlinx.coroutines.delay(2000)
+        }
+    }
+
     val infiniteTransition = rememberInfiniteTransition(label = "spellhook_grid")
     
     val rotation by infiniteTransition.animateFloat(

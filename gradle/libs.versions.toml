@@ -113,6 +113,11 @@ langchain4j = "1.13.0"
 langchain4j-okhttp = "1.13.0-beta23"
 langchain4jVertex = "1.12.2-beta22"
 remoteCreationCompose = "1.0.0-alpha07"
+
+# Security Hardening Upgrades
+netty = "4.1.132.Final"
+jdom = "2.0.6.1"
+jose4j = "0.9.6"
 [libraries]
 # Missing fixes
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
@@ -297,6 +302,11 @@ rikkax-core = { group = "dev.rikka.rikkax.core", name = "core", version.ref = "r
 rikkax-core-ktx = { group = "dev.rikka.rikkax.core", name = "core-ktx", version.ref = "rikkax" }
 rikkax-material = { group = "dev.rikka.rikkax.material", name = "material", version.ref = "rikkax-material" }
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
+
+# Security Hardened Libraries
+netty-all = { group = "io.netty", name = "netty-all", version.ref = "netty" }
+jdom2 = { group = "org.jdom", name = "jdom2", version.ref = "jdom" }
+jose4j = { group = "bitbucket.org.b_c", name = "jose4j", version.ref = "jose4j" }
 
 [bundles]
 langchain4j = [
