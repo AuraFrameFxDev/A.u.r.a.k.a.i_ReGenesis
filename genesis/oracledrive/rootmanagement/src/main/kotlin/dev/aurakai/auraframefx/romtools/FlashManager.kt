@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.romtools
 
-import com.github.topjohnwu.libsu.Shell
+import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

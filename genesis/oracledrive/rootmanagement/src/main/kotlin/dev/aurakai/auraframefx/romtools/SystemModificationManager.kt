@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
 import android.os.Build
-import com.github.topjohnwu.libsu.Shell
+import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

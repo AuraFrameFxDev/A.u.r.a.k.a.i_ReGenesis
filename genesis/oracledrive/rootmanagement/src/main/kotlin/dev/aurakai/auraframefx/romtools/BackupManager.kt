@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
+import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -479,25 +480,18 @@ class BackupManagerImpl @Inject constructor(
     // ============================================================================
 
     private fun checkRootAccess(): Boolean {
-        return try {
-            val process = Runtime.getRuntime().exec("su -c 'echo test'")
-            process.waitFor() == 0
-        } catch (e: Exception) {
-            false
-        }
+        return Shell.getShell().isRoot
     }
 
     private fun executeRootCommand(command: String): Result<String> {
         return try {
-            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-            val output = process.inputStream.bufferedReader().readText()
-            val exitCode = process.waitFor()
+            val result = Shell.cmd(command).exec()
 
-            if (exitCode == 0) {
-                Result.success(output)
+            if (result.isSuccess) {
+                Result.success(result.out.joinToString("\n").trim())
             } else {
-                val error = process.errorStream.bufferedReader().readText()
-                Result.failure(Exception("Command failed (exit $exitCode): $error"))
+                val error = result.err.joinToString("\n")
+                Result.failure(Exception("Command failed: $error"))
             }
         } catch (e: Exception) {
             Result.failure(e)
