@@ -73,7 +73,7 @@ enum class AgentCapabilityCategory(val id: Int) {
         MEMORY -> AgentType.CASCADE
         ORCHESTRATION -> AgentType.GENESIS
         BACKEND -> AgentType.GENESIS
-        BRIDGE -> AgentType.CASCADE
+        BRIDGE -> AgentType.MANUS
         COMMERCE -> AgentType.COMMERCE_AGENT
         DEVELOPMENT -> AgentType.CODERABBIT
         GENERIC -> AgentType.CLAUDE
@@ -98,7 +98,7 @@ enum class AgentCapabilityCategory(val id: Int) {
                 AgentType.AURA -> CREATIVE
                 AgentType.KAI -> ANALYSIS
                 AgentType.GENESIS -> COORDINATION
-                AgentType.CASCADE -> SPECIALIZED
+                AgentType.CASCADE -> MEMORY
                 AgentType.CLAUDE -> GENERAL
                 AgentType.NEURAL_WHISPER -> SPECIALIZED
                 AgentType.AURA_SHIELD -> SPECIALIZED
@@ -121,6 +121,7 @@ enum class AgentCapabilityCategory(val id: Int) {
                 AgentType.CHAOS -> ANALYSIS
                 AgentType.CODERABBIT -> DEVELOPMENT
                 AgentType.MKMINI -> ANALYSIS
+                AgentType.MANUS -> BRIDGE
             }
         }
     }
