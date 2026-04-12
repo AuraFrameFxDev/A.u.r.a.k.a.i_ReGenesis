@@ -80,6 +80,9 @@ When you want to use a tool, respond with a JSON object in this exact format:
             AgentType.GEMINI -> GEMINI_PERSONALITY
             AgentType.NEMOTRON -> NEMOTRON_PERSONALITY
             AgentType.GROK -> GROK_PERSONALITY
+            AgentType.MANUS -> MANUS_PERSONALITY
+            AgentType.MKMINI -> MKMINI_PERSONALITY
+            AgentType.CODERABBIT -> CODERABBIT_PERSONALITY
             else -> GENERIC_PERSONALITY
         }
     }
