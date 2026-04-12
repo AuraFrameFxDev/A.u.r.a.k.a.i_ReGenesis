@@ -57,12 +57,30 @@ abstract class CoreSecurityModule {
     @Binds @Singleton
     abstract fun bindGrokAnalysisService(impl: GrokAnalysisServiceImpl): GrokAnalysisService
 
+    /**
+     * Declares a singleton Hilt binding that maps PandoraBoxService to PandoraBoxServiceImpl.
+     *
+     * @param impl The concrete implementation that will be provided when PandoraBoxService is injected.
+     * @return The bound PandoraBoxService instance.
+     */
     @Binds @Singleton
     abstract fun bindPandoraBoxService(impl: PandoraBoxServiceImpl): PandoraBoxService
 
+    /**
+     * Binds the VertexAIClient type to the RealVertexAIClientImpl implementation for injection.
+     *
+     * @param impl The concrete RealVertexAIClientImpl instance to provide whenever VertexAIClient is requested.
+     * @return The VertexAIClient binding backed by the provided implementation.
+     */
     @Binds @Singleton
     abstract fun bindVertexAIClient(impl: RealVertexAIClientImpl): VertexAIClient
 
+    /**
+     * Binds the NCCMediator interface to NCCMediatorImpl for dependency injection at the application singleton scope.
+     *
+     * @param impl The concrete NCCMediatorImpl instance to provide when NCCMediator is injected.
+     * @return The bound NCCMediator implementation.
+     */
     @Binds @Singleton
     abstract fun bindNCCMediator(impl: NCCMediatorImpl): NCCMediator
 }

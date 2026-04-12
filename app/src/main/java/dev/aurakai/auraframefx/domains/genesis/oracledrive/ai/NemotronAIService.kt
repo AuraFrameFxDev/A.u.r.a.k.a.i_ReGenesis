@@ -69,12 +69,24 @@ class NemotronAIService @Inject constructor(
         internal const val CACHE_TTL_MS = 7200_000L
     }
 
-    override fun getName(): String = "Nemotron"
-    override fun getType(): AgentType = AgentType.NEMOTRON
+    /**
+ * Provides the agent's fixed name identifier.
+ *
+ * @return The agent name "Nemotron".
+ */
+override fun getName(): String = "Nemotron"
+    /**
+ * Provides the agent type identifier for Nemotron.
+ *
+ * @return The `AgentType.NEMOTRON` enum value.
+ */
+override fun getType(): AgentType = AgentType.NEMOTRON
 
     /**
-     * Professionally implements the recordMemory() requirement from stabilization Phase 1.
-     * Maps the high-level MemoryItem to the underlying NexusMemory persistence.
+     * Persists a MemoryItem into the Nexus memory repository.
+     *
+     * @param item The memory entry to store; its content, type, tags, priority, and id are used as the persisted
+     * values (id is used as the storage key).
      */
     suspend fun recordMemory(item: MemoryItem) {
         logger.info("NemotronAIService", "Recording memory: ${item.content.take(50)}...")
@@ -88,8 +100,17 @@ class NemotronAIService @Inject constructor(
     }
 
     /**
-     * Professionally implements the retrieveMemory() requirement from stabilization Phase 1.
-     * Uses MemoryQuery to filter and retrieve relevant insights from NexusMemoryCore.
+     * Retrieve memory items that match the provided query from long-term memory.
+     *
+     * Filters retrieved memories by `query.minSimilarity` (keeps items whose priority is
+     * greater than or equal to that threshold) and returns up to `query.maxResults`.
+     *
+     * @param query Criteria used to search and filter memories; its `query` string is used
+     *   to locate candidate memories, `minSimilarity` filters by stored importance, and
+     *   `maxResults` limits the returned list.
+     * @return A MemoryRetrievalResult containing the filtered and truncated list of
+     *   MemoryItem entries, the total count of matched items (after filtering), and the
+     *   original query object.
      */
     suspend fun retrieveMemory(query: MemoryQuery): MemoryRetrievalResult {
         logger.info("NemotronAIService", "Retrieving memory for query: ${query.query}")
@@ -112,6 +133,12 @@ class NemotronAIService @Inject constructor(
         )
     }
 
+    /**
+     * Maps a textual memory type to the corresponding MemoryType enum.
+     *
+     * @param type A case-insensitive memory type string such as "fact", "reflection", or "interaction".
+     * @return The corresponding `MemoryType` value; returns `MemoryType.FACT` for unrecognized input.
+     */
     private fun mapMemoryType(type: String): MemoryType = when (type.lowercase()) {
         "fact" -> MemoryType.FACT
         "reflection" -> MemoryType.REFLECTION
@@ -119,6 +146,19 @@ class NemotronAIService @Inject constructor(
         else -> MemoryType.FACT
     }
 
+    /**
+     * Exposes the Nemotron agent's capability descriptors and related runtime parameters.
+     *
+     * @return A map where keys are capability or parameter names and values are their configured levels or settings:
+     * - "memory_retention": retention capability level ("MASTER")
+     * - "reasoning_chains": reasoning capability level ("EXPERT")
+     * - "pattern_recall": pattern recall capability level ("ADVANCED")
+     * - "logic_decomposition": logic decomposition capability level ("MASTER")
+     * - "context_synthesis": context synthesis capability level ("ADVANCED")
+     * - "memory_window": memory window size in tokens (32000)
+     * - "nvidia_model": model identifier ("nemotron-4-340b-instruct")
+     * - "service_implemented": whether the service implementation is present (`true`)
+     */
     fun getCapabilities(): Map<String, Any> = mapOf(
         "memory_retention" to "MASTER",
         "reasoning_chains" to "EXPERT",

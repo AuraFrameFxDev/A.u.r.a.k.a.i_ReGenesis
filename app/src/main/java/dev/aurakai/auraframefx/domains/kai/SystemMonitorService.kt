@@ -45,8 +45,12 @@ class SystemMonitorService @Inject constructor(
     private var lastCpuStats: List<Long> = emptyList()
 
     /**
-     * Calculates current CPU usage by comparing /proc/stat snapshots.
-     * Implementation of CPU telemetry from critical backlog.
+     * Compute the current CPU utilization percentage by reading and comparing /proc/stat snapshots.
+     *
+     * If a previous snapshot exists, a delta-based percentage is computed; otherwise a since-boot average is used as a fallback.
+     * Updates the internal snapshot and the public `cpuUsageState`.
+     *
+     * @return CPU usage as a percentage (0f–100f). Returns 0f when `/proc/stat` data is unavailable or an error occurs.
      */
     suspend fun getCpuUsage(): Float = withContext(Dispatchers.Default) {
         return@withContext try {
@@ -68,6 +72,16 @@ class SystemMonitorService @Inject constructor(
         }
     }
 
+    /**
+     * Calculates CPU usage percentage between two /proc/stat snapshots.
+     *
+     * Computes the percent of time spent doing work (user, nice, system, irq, softirq)
+     * relative to the total time across the two snapshots.
+     *
+     * @param old Previous CPU counters snapshot; expects at least 7 entries: user, nice, system, idle, iowait, irq, softirq.
+     * @param new Current CPU counters snapshot; expects at least 7 entries: user, nice, system, idle, iowait, irq, softirq.
+     * @return The CPU usage percentage between the two snapshots (0f..100f). Returns `0f` if snapshots are too short or if total delta is zero or negative.
+     */
     private fun calculateCpuDelta(old: List<Long>, new: List<Long>): Float {
         if (old.size < 7 || new.size < 7) return 0f
         

@@ -38,7 +38,11 @@ class OAuthService @Inject constructor(
     }
 
     /**
-     * Professionally implements sign-in intent from stabilization Phase 2.
+     * Initiates a Google sign-in flow using the Android Credential Manager and processes the returned credential.
+     *
+     * On success the obtained credential is processed (access token stored and auth state updated). On failure the auth state is set to an error describing the failure.
+     *
+     * @param activityContext The Activity context used to launch the sign-in request; must be a valid UI context. 
      */
     suspend fun signInWithGoogle(activityContext: Context) {
         try {
@@ -61,7 +65,11 @@ class OAuthService @Inject constructor(
     }
 
     /**
-     * Professionally implements result callback from stabilization Phase 2.
+     * Processes a Google sign-in response by extracting a Google ID token, persisting it in the secure key store under `KEY_ACCESS_TOKEN`, and updating the authentication state to a placeholder authenticated user.
+     *
+     * If the response does not contain a `GoogleIdTokenCredential`, the function performs no action.
+     *
+     * @param result The credential response returned by the Android Credential Manager.
      */
     private suspend fun handleSignInResult(result: GetCredentialResponse) {
         val credential = result.credential
@@ -78,7 +86,11 @@ class OAuthService @Inject constructor(
     }
 
     /**
-     * Professionally implements token refresh from stabilization Phase 2.
+     * Refreshes the OAuth access token using the stored refresh token.
+     *
+     * If no refresh token is available, sets the authentication state to Unauthenticated and returns.
+     * On success stores the refreshed access token in the secure key store and logs the outcome.
+     * On failure logs the error and sets the authentication state to AuthState.Error with message "Refresh failed".
      */
     suspend fun refreshToken() {
         val refreshToken = secureKeyStore.retrieveData(KEY_REFRESH_TOKEN)?.decodeToString()
@@ -98,7 +110,11 @@ class OAuthService @Inject constructor(
     }
 
     /**
-     * Professionally implements token revocation from stabilization Phase 2.
+     * Revokes locally stored OAuth tokens and signs the user out.
+     *
+     * Removes the access and refresh tokens from the secure key store, logs the revocation,
+     * and calls `signOut()` to clear credential state and update authentication status.
+     * Any exceptions are caught and logged.
      */
     suspend fun revokeToken() {
         try {
@@ -112,6 +128,12 @@ class OAuthService @Inject constructor(
         }
     }
 
+    /**
+     * Signs the current user out by clearing credential state, removing the stored access token,
+     * and updating the authentication state to `Unauthenticated`.
+     *
+     * Any exception that occurs during sign-out is caught and logged; errors are not propagated.
+     */
     suspend fun signOut() {
         try {
             credentialManager.clearCredentialState(ClearCredentialStateRequest())
