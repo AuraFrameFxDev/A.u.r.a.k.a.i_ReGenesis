@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class RealVertexAIClientImpl @Inject constructor(
     @Named("GEMINI_API_KEY") private val apiKey: String,
-    private val logger: AuraFxLogger
+    private val logger: AuraFxLogger,
 ) : VertexAIClient {
 
     private var chatModel: ChatModel? = null
@@ -142,6 +142,7 @@ class RealVertexAIClientImpl @Inject constructor(
         return try {
             generateText("ping") != null
         } catch (e: Exception) {
+            logger.error(tag, "Connection validation failed", e)
             false
         }
     }
@@ -175,7 +176,7 @@ override suspend fun generateContent(prompt: String): String? = generateText(pro
         content: List<MultimodalContent>,
         dimensions: Int
     ): FloatArray {
-        return FloatArray(dimensions) { 0f }
+        return FloatArray(dimensions)
     }
 
     /**
@@ -199,7 +200,7 @@ override suspend fun generateContent(prompt: String): String? = generateText(pro
             try {
                 return block()
             } catch (e: Exception) {
-                if (attempt == maxAttempts - 1) return null
+                if (attempt == (maxAttempts - 1)) return null
                 logger.warn(tag, "Attempt ${attempt + 1} failed, retrying in $currentDelay ms...")
                 kotlinx.coroutines.delay(currentDelay)
                 currentDelay *= 2
