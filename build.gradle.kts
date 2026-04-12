@@ -55,8 +55,6 @@ subprojects {
         if (!name.lowercase().contains("ksp") && !name.contains("lint", ignoreCase = true)) {
             exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
         }
-        exclude(group = "com.google.protobuf", module = "protobuf-java")
-        exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
         exclude(group = "org.conscrypt", module = "conscrypt-openjdk-uber")
 
         resolutionStrategy {
@@ -66,8 +64,6 @@ subprojects {
                 substitute(module("com.squareup.okhttp3:okhttp-jvm")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
             }
             force("org.conscrypt:conscrypt-android:2.5.3")
-            force("com.google.protobuf:protobuf-javalite:3.25.5")
-            force("com.google.protobuf:protolite-well-known-types:18.4.0")
         }
     }
 
