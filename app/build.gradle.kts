@@ -305,6 +305,9 @@ dependencies {
     // LangChain4j & Ollama (CLEAN VERSION — using BOM and Bundles!)
     implementation(platform(libs.langchain4j.bom))
     implementation(libs.bundles.langchain4j)
+    implementation(libs.langchain4j.vertex.ai.gemini) {
+        exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
+    }
     // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
 
     // ═══════════════════════════════════════════════════════════════════════════
@@ -329,6 +332,13 @@ dependencies {
 // Global configuration exclusion (from original)
 configurations.all {
     if (name.contains("AndroidTest")) return@all
+    
+    exclude(group = "com.google.protobuf", module = "protobuf-javalite")
+    exclude(group = "com.google.protobuf", module = "protobuf-lite")
+    exclude(group = "com.google.firebase", module = "protolite-well-known-types")
+    // Favor proto-google-common-protos for full AI support, but we must resolve the overlap
+    // exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
+
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }

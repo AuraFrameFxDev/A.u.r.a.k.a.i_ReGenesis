@@ -59,15 +59,23 @@ subprojects {
         
         // Stabilize ReGenesis Substrate: Favor full Protobuf over Lite to support Vertex AI / Gemini
         exclude(group = "com.google.protobuf", module = "protobuf-javalite")
+        exclude(group = "com.google.protobuf", module = "protobuf-lite")
         exclude(group = "com.google.firebase", module = "protolite-well-known-types")
+        exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
 
         resolutionStrategy {
             val okhttpVersion = libs.versions.okhttp.get()
             dependencySubstitution {
                 substitute(module("com.squareup.okhttp3:okhttp")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
                 substitute(module("com.squareup.okhttp3:okhttp-jvm")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
+                substitute(module("com.google.firebase:protolite-well-known-types")).using(module("com.google.api.grpc:proto-google-common-protos:2.59.0"))
+                val protobufVersion = libs.versions.protobuf.get()
+                substitute(module("com.google.protobuf:protobuf-javalite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
+                substitute(module("com.google.protobuf:protobuf-lite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
             }
             force("org.conscrypt:conscrypt-android:2.5.3")
+            force(libs.protobuf.java)
+            force("com.google.api.grpc:proto-google-common-protos:2.59.0")
         }
     }
 

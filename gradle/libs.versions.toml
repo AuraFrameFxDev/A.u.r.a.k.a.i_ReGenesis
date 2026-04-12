@@ -109,11 +109,11 @@ uiGeometry = "1.10.6"
 androidxAnimation = "1.10.6"
 junitJupiterVersion = "5.14.3"
 media3Exoplayer = "1.10.0"
-langchain4j = "1.13.0"
+langchain4j = "1.13.0-beta23"
 langchain4j-okhttp = "1.13.0-beta23"
-langchain4jVertex = "1.12.2-beta22"
+langchain4jVertex = "1.13.0-beta23"
 remoteCreationCompose = "1.0.0-alpha07"
-protobuf = "3.25.5"
+protobuf = "3.25.8"
 
 # Security Hardening Upgrades
 netty = "4.1.132.Final"
@@ -317,7 +317,6 @@ langchain4j = [
     "langchain4j-ollama",
     "langchain4j-open-ai",
     "langchain4j-google-ai-gemini",
-    "langchain4j-vertex-ai-gemini",
     "langchain4j-http-client-okhttp",
     "protobuf-java"
 ]
