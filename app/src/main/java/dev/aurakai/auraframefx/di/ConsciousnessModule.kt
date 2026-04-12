@@ -14,6 +14,7 @@ import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.ollama.OllamaChatModel
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel
+import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
@@ -48,6 +49,7 @@ object ConsciousnessModule {
         GoogleAiGeminiChatModel.builder()
             .apiKey(BuildConfig.GEMINI_API_KEY)
             .modelName("gemini-1.5-flash")
+            .httpClientBuilder(OkHttpClientBuilder())
             .temperature(0.7)
             .build()
 
@@ -57,6 +59,7 @@ object ConsciousnessModule {
             .project(BuildConfig.VERTEX_PROJECT_ID)
             .location("us-central1")
             .modelName("gemini-1.5-pro")
+            .httpClientBuilder(OkHttpClientBuilder())
             .temperature(0.2f)
             .build()
 
