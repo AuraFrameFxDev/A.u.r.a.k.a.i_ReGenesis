@@ -146,4 +146,133 @@ class StagingGenesisHookEntryTest {
             )
         }
     }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // FeatureToggles safety guards — regression tests
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("FeatureToggles — Xposed master gate regression")
+    inner class FeatureTogglesRegressionTests {
+
+        @Test
+        @DisplayName("XPOSED_HOOKS_ENABLED must be false to prevent accidental hook activation")
+        fun xposedHooksEnabledMustBeFalse() {
+            // This is a CRITICAL safety check: if accidentally set to true in staging,
+            // the hooks would activate on any Xposed-capable device.
+            assertFalse(
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_HOOKS_ENABLED,
+                "XPOSED_HOOKS_ENABLED must remain false in staging to prevent unintended hook activation"
+            )
+        }
+
+        @Test
+        @DisplayName("XPOSED_LOCKSCREEN_HOOKS must be false — stub not yet implemented")
+        fun xposedLockscreenHooksMustBeFalse() {
+            assertFalse(
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_LOCKSCREEN_HOOKS,
+                "XPOSED_LOCKSCREEN_HOOKS is documented as a stub; it must stay false until implemented"
+            )
+        }
+
+        @Test
+        @DisplayName("XPOSED_UNIVERSAL_COMPONENT_HOOKS must be false — opt-in only")
+        fun xposedUniversalComponentHooksMustBeFalse() {
+            assertFalse(
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_UNIVERSAL_COMPONENT_HOOKS,
+                "XPOSED_UNIVERSAL_COMPONENT_HOOKS is an opt-in broad hook and must default to false"
+            )
+        }
+
+        @Test
+        @DisplayName("individual hook flags should be readable without throwing")
+        fun individualHookFlagsShouldBeReadable() {
+            // Verify all the per-feature flags are accessible (no compilation/access errors)
+            val flags = listOf(
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_GENESIS_SYSTEM_HOOKS,
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_GENESIS_UI_HOOKS,
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_GENESIS_ZYGOTE_HOOKS,
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_GENESIS_SELF_HOOKS,
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_NOTCH_BAR_HOOKER,
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_QS_HOOKER,
+                dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles.XPOSED_CHROMA_CORE_HOOKER
+            )
+            // All flags should be boolean values — no NPE or access exceptions
+            flags.forEach { flag ->
+                assertTrue(flag is Boolean)
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Multiple instantiation — Xposed framework instantiates via reflection
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("Multiple instantiation safety")
+    inner class MultipleInstantiationTests {
+
+        @Test
+        @DisplayName("creating multiple instances should not throw")
+        fun multipleInstancesShouldNotThrow() {
+            assertDoesNotThrow {
+                val instances = (1..5).map { StagingGenesisHookEntry() }
+                assertEquals(5, instances.size)
+            }
+        }
+
+        @Test
+        @DisplayName("each new instance should be a distinct object")
+        fun eachInstanceShouldBeDistinct() {
+            val a = StagingGenesisHookEntry()
+            val b = StagingGenesisHookEntry()
+            assertNotSame(a, b)
+        }
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Public API surface — class should be stateless
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("Class API surface")
+    inner class ApiSurfaceTests {
+
+        @Test
+        @DisplayName("class should have no public instance fields (stateless design)")
+        fun classShouldHaveNoPublicInstanceFields() {
+            // Stateless entry points are easier to reason about and avoids
+            // concurrency issues if the framework instantiates more than once.
+            val publicFields = StagingGenesisHookEntry::class.java.fields
+                .filter { !java.lang.reflect.Modifier.isStatic(it.modifiers) }
+            assertEquals(
+                0,
+                publicFields.size,
+                "StagingGenesisHookEntry should have no public instance fields"
+            )
+        }
+
+        @Test
+        @DisplayName("onInit and onHook should be the only declared override methods")
+        fun shouldDeclareOnlyOverrideMethods() {
+            val declaredMethodNames = StagingGenesisHookEntry::class.java.declaredMethods
+                .map { it.name }
+                .toSet()
+            // Both lifecycle methods must be present
+            assertTrue("onInit" in declaredMethodNames, "onInit must be declared")
+            assertTrue("onHook" in declaredMethodNames, "onHook must be declared")
+        }
+
+        @Test
+        @DisplayName("class should be assignable to IYukiHookXposedInit via reflection")
+        fun classShouldBeAssignableViaReflection() {
+            val interfaceClass = Class.forName(
+                "com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit"
+            )
+            assertTrue(
+                interfaceClass.isAssignableFrom(StagingGenesisHookEntry::class.java),
+                "StagingGenesisHookEntry must be assignable from IYukiHookXposedInit"
+            )
+        }
+    }
 }

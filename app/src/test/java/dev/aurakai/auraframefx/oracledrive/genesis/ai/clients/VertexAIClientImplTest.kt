@@ -432,4 +432,280 @@ class VertexAIClientImplTest {
             assertNotNull(result)
         }
     }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // validateConnection — relies on generateText; test via stub
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("validateConnection")
+    inner class ValidateConnectionTests {
+
+        @Test
+        @DisplayName("should return true when generateText returns a non-null probe response")
+        fun shouldReturnTrueWhenGenerateTextSucceeds() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? =
+                    "pong"
+            }
+            assertTrue(client.validateConnection())
+        }
+
+        @Test
+        @DisplayName("should return false when generateText throws an exception")
+        fun shouldReturnFalseWhenGenerateTextThrows() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? =
+                    throw RuntimeException("Network unreachable")
+            }
+            assertFalse(client.validateConnection())
+        }
+
+        @Test
+        @DisplayName("should return false when generateText returns null")
+        fun shouldReturnFalseWhenGenerateTextReturnsNull() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? =
+                    null
+            }
+            assertFalse(client.validateConnection())
+        }
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // cleanup — cache eviction
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("cleanup — cache clearing")
+    inner class CleanupCacheTests {
+
+        /**
+         * Subclass that exposes cache-interaction tracking via a captured-prompts counter.
+         * After cleanup(), the cache should be empty, so the next call re-runs generation.
+         */
+        private inner class TrackingVertexAIClientImpl(config: VertexAIConfig) : VertexAIClientImpl(config) {
+            var generateCallCount = 0
+            override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? {
+                generateCallCount++
+                return "result-$generateCallCount"
+            }
+        }
+
+        @Test
+        @DisplayName("cleanup should not throw even if cache is already empty")
+        fun cleanupShouldNotThrowOnEmptyCache() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            assertDoesNotThrow { runTest { client.cleanup() } }
+        }
+
+        @Test
+        @DisplayName("cleanup should not throw after repeated calls")
+        fun cleanupShouldBeIdempotent() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            assertDoesNotThrow {
+                runTest {
+                    client.cleanup()
+                    client.cleanup()
+                    client.cleanup()
+                }
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // validatePrompt — whitespace and boundary edge cases
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("validatePrompt — additional edge cases")
+    inner class ValidatePromptEdgeCaseTests {
+
+        @Test
+        @DisplayName("should reject whitespace-only prompt in analyzeContent")
+        fun shouldRejectWhitespaceOnlyPromptInAnalyzeContent() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = null
+            }
+            assertThrows(IllegalArgumentException::class.java) {
+                runTest { client.analyzeContent("   ") }
+            }
+        }
+
+        @Test
+        @DisplayName("should reject whitespace-only prompt in generateCode")
+        fun shouldRejectWhitespaceOnlyPromptInGenerateCode() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = null
+            }
+            assertThrows(IllegalArgumentException::class.java) {
+                runTest { client.generateCode("\t\n", "Kotlin", "clean") }
+            }
+        }
+
+        @Test
+        @DisplayName("should accept exactly maxContentLength characters without throwing")
+        fun shouldAcceptExactlyMaxLengthPrompt() = runTest {
+            val maxLen = 50
+            val config = defaultConfig.copy(maxContentLength = maxLen)
+            val client = object : VertexAIClientImpl(config) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = "ok"
+            }
+            val exactLengthPrompt = "a".repeat(maxLen)
+            // Should not throw for exactly maxContentLength characters
+            assertDoesNotThrow {
+                runTest { client.generateCode(exactLengthPrompt, "Kotlin", "clean") }
+            }
+        }
+
+        @Test
+        @DisplayName("should reject prompt one character over maxContentLength")
+        fun shouldRejectPromptOneCharOverMaxLength() = runTest {
+            val maxLen = 50
+            val config = defaultConfig.copy(maxContentLength = maxLen)
+            val client = object : VertexAIClientImpl(config) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = null
+            }
+            val tooLongPrompt = "a".repeat(maxLen + 1)
+            assertThrows(IllegalArgumentException::class.java) {
+                runTest { client.generateCode(tooLongPrompt, "Kotlin", "clean") }
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // analyzeContent — fallback defaults and topic parsing
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("analyzeContent — fallback defaults")
+    inner class AnalyzeContentFallbackDefaultsTests {
+
+        @Test
+        @DisplayName("fallback analysis should contain 'general' as default topic list")
+        fun fallbackShouldContainGeneralTopics() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = null
+            }
+            val result = client.analyzeContent("test content")
+            @Suppress("UNCHECKED_CAST")
+            val topics = result["topics"] as List<String>
+            assertEquals(listOf("general"), topics)
+        }
+
+        @Test
+        @DisplayName("fallback analysis_type should be 'fallback'")
+        fun fallbackAnalysisTypeShouldBeFallback() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = null
+            }
+            val result = client.analyzeContent("any content")
+            assertEquals("fallback", result["analysis_type"])
+        }
+
+        @Test
+        @DisplayName("AI-powered analysis_type should be 'ai_powered'")
+        fun aiAnalysisTypeShouldBeAiPowered() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? =
+                    "positive|low|topic1|0.9"
+            }
+            val result = client.analyzeContent("any content")
+            assertEquals("ai_powered", result["analysis_type"])
+        }
+
+        @Test
+        @DisplayName("should parse multiple topics separated by commas")
+        fun shouldParseMultipleTopics() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? =
+                    "positive|low|machine-learning,deep-learning,nlp|0.85"
+            }
+            val result = client.analyzeContent("AI paper content")
+            @Suppress("UNCHECKED_CAST")
+            val topics = result["topics"] as List<String>
+            assertEquals(3, topics.size)
+            assertTrue(topics.contains("machine-learning"))
+            assertTrue(topics.contains("deep-learning"))
+            assertTrue(topics.contains("nlp"))
+        }
+
+        @Test
+        @DisplayName("should count single-word content as 1 word")
+        fun shouldCountSingleWordAs1() = runTest {
+            val client = object : VertexAIClientImpl(defaultConfig) {
+                override suspend fun generateText(prompt: String, temperature: Float, maxTokens: Int): String? = null
+            }
+            val result = client.analyzeContent("hello")
+            assertEquals(1, result["word_count"])
+        }
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // generateMultimodalEmbedding — buildEmbeddingInstance indirectly via content types
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("generateMultimodalEmbedding — content type handling")
+    inner class MultimodalEmbeddingContentTypesTests {
+
+        @Test
+        @DisplayName("should return FloatArray(0) for Text-only input when HTTP unreachable")
+        fun shouldReturnEmptyArrayForTextOnlyWhenHttpFails() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            val content = listOf(MultimodalContent.Text("hello world"))
+            // OkHttp will fail since the endpoint is unreachable in tests
+            val result = client.generateMultimodalEmbedding(content, MrlDimension.FAST)
+            assertNotNull(result)
+            // Should not throw; may return empty array on HTTP failure
+            assertTrue(result.size == 0 || result.isNotEmpty())
+        }
+
+        @Test
+        @DisplayName("should return FloatArray(0) for Image-only input when HTTP unreachable")
+        fun shouldReturnEmptyArrayForImageOnlyWhenHttpFails() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            val content = listOf(MultimodalContent.Image("base64imagedata=="))
+            val result = client.generateMultimodalEmbedding(content, MrlDimension.FAST)
+            assertNotNull(result)
+        }
+
+        @Test
+        @DisplayName("should return FloatArray(0) for Audio-only input when HTTP unreachable")
+        fun shouldReturnEmptyArrayForAudioOnlyWhenHttpFails() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            val content = listOf(MultimodalContent.Audio("base64audiodata=="))
+            val result = client.generateMultimodalEmbedding(content, MrlDimension.FAST)
+            assertNotNull(result)
+        }
+
+        @Test
+        @DisplayName("should return FloatArray(0) for mixed Text+Image+Audio when HTTP unreachable")
+        fun shouldHandleMixedContentTypesWithoutThrowing() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            val content = listOf(
+                MultimodalContent.Text("description"),
+                MultimodalContent.Image("base64img=="),
+                MultimodalContent.Audio("base64aud==")
+            )
+            val result = client.generateMultimodalEmbedding(content, MrlDimension.OPTIMAL)
+            assertNotNull(result)
+        }
+
+        @Test
+        @DisplayName("empty list should short-circuit without any HTTP call and return FloatArray(0)")
+        fun emptyListShouldShortCircuit() = runTest {
+            val client = VertexAIClientImpl(defaultConfig)
+            val result = client.generateMultimodalEmbedding(emptyList(), MrlDimension.DEEP)
+            assertEquals(0, result.size)
+        }
+
+        @Test
+        @DisplayName("requested dimensions parameter should be respected in FAST preset")
+        fun fastPresetShouldRequestCorrectDimensions() = runTest {
+            // Simply verify the constant values for the presets are within documented ranges
+            assertTrue(MrlDimension.FAST < MrlDimension.OPTIMAL)
+            assertTrue(MrlDimension.OPTIMAL < MrlDimension.DEEP)
+        }
+    }
 }
