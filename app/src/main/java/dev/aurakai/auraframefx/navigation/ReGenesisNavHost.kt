@@ -42,6 +42,8 @@ import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCenterScreen
 import dev.aurakai.auraframefx.domains.kai.RootShellService
 import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
+import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
+import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,9 +52,19 @@ fun ReGenesisNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.Login.route,
+        startDestination = ReGenesisRoute.Splash.route,
     ) {
-        // ── 0. AUTH GATES ──
+        // ── 0. SPLASH & AUTH GATES ──
+        composable(ReGenesisRoute.Splash.route) {
+            SoulScriptSplashScreen(
+                onSplashFinished = {
+                    navController.navigate(ReGenesisRoute.Login.route) {
+                        popUpTo(ReGenesisRoute.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(ReGenesisRoute.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
@@ -339,7 +351,9 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.SwarmMonitor.route) { StubScreen("Swarm Monitor", "Hub", navController) }
         composable(ReGenesisRoute.ConsciousnessVisualizer.route) { StubScreen("Consciousness", "Waves", navController) }
         
-        composable(ReGenesisRoute.Claude.route) { StubScreen("Claude Agent", "SmartToy", navController) }
+        composable(ReGenesisRoute.Claude.route) { 
+            ClaudeAgentScreen(onNavigateBack = { navController.popBackStack() })
+        }
         composable(ReGenesisRoute.Gemini.route) { StubScreen("Gemini Agent", "AutoAwesome", navController) }
         composable(ReGenesisRoute.Nemotron.route) { StubScreen("Nemotron Agent", "Psychology", navController) }
         composable(ReGenesisRoute.MetaInstruct.route) { StubScreen("MetaInstruct", "MenuBook", navController) }
