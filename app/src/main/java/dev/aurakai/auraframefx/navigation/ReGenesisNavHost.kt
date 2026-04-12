@@ -63,8 +63,18 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.Splash.route) {
             SoulScriptSplashScreen(
                 onSplashFinished = {
-                    navController.navigate(ReGenesisRoute.Login.route) {
+                    navController.navigate(ReGenesisRoute.VideoIntro.route) {
                         popUpTo(ReGenesisRoute.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(ReGenesisRoute.VideoIntro.route) {
+            dev.aurakai.auraframefx.domains.aura.ui.intro.VideoIntroScreen(
+                onVideoFinished = {
+                    navController.navigate(ReGenesisRoute.Login.route) {
+                        popUpTo(ReGenesisRoute.VideoIntro.route) { inclusive = true }
                     }
                 }
             )
