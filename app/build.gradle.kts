@@ -305,6 +305,7 @@ dependencies {
     // LangChain4j & Ollama (CLEAN VERSION — using BOM and Bundles!)
     implementation(platform(libs.langchain4j.bom))
     implementation(libs.bundles.langchain4j)
+    implementation(libs.protobuf.java)
     // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
 
     // ═══════════════════════════════════════════════════════════════════════════

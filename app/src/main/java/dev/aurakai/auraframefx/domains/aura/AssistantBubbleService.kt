@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
@@ -55,6 +57,9 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
 
     @Inject
     lateinit var messageBus: AgentMessageBus
+
+    @Inject
+    lateinit var breathingSentinel: dev.aurakai.auraframefx.domains.cascade.core.BreathingSentinelService
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -133,6 +138,7 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
             setContent {
                 val sidebarVisible = remember { mutableStateOf(false) }
                 val gaugeVisible = remember { mutableStateOf(true) }
+                val breathingState by breathingSentinel.breathingStream.collectAsState(initial = dev.aurakai.auraframefx.domains.cascade.models.BreathingEvent())
 
                 Box {
                     NeuralLinkSidebarUI(
@@ -183,7 +189,8 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                                     params.flags =
                                         (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
                                     windowManager.updateViewLayout(overlayLayout, params)
-                                }
+                                },
+                            manualBreathingState = breathingState
                         )
                     }
                 }

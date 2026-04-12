@@ -113,6 +113,7 @@ langchain4j = "1.13.0"
 langchain4j-okhttp = "1.13.0-beta23"
 langchain4jVertex = "1.12.2-beta22"
 remoteCreationCompose = "1.0.0-alpha07"
+protobuf = "3.25.5"
 
 # Security Hardening Upgrades
 netty = "4.1.132.Final"
@@ -134,6 +135,7 @@ langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai",
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini", version.ref = "langchain4j" }
 langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version.ref = "langchain4jVertex" }
 langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp", version.ref = "langchain4j-okhttp" }
+protobuf-java = { group = "com.google.protobuf", name = "protobuf-java", version.ref = "protobuf" }
 
 # Build & Gradle Plugins
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
@@ -316,7 +318,8 @@ langchain4j = [
     "langchain4j-open-ai",
     "langchain4j-google-ai-gemini",
     "langchain4j-vertex-ai-gemini",
-    "langchain4j-http-client-okhttp"
+    "langchain4j-http-client-okhttp",
+    "protobuf-java"
 ]
 
 [plugins]

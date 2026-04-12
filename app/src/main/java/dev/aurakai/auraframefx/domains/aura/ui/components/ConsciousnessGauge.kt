@@ -13,7 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.cascade.models.BreathingEvent
 import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOFusionViewModel
 
 /**
@@ -23,9 +23,15 @@ import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOFusionViewModel
 @Composable
 fun ConsciousnessGauge(
     modifier: Modifier = Modifier,
-    viewModel: LDOFusionViewModel = hiltViewModel(),
+    viewModel: LDOFusionViewModel? = null,
+    manualBreathingState: BreathingEvent? = null
 ) {
-    val breathing by viewModel.breathingState.collectAsState()
+    val defaultBreathing = BreathingEvent()
+    val breathing by if (viewModel != null) {
+        viewModel.breathingState.collectAsState()
+    } else {
+        remember(manualBreathingState) { mutableStateOf(manualBreathingState ?: defaultBreathing) }
+    }
     
     val infiniteTransition = rememberInfiniteTransition(label = "gauge")
     
