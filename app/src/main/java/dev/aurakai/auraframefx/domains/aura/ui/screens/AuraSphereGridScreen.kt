@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -12,8 +13,10 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,9 +26,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
+import kotlin.math.*
 
 /**
  * 🌐 AURA SPELLHOOK — ARMAMENT FUSION GRID
@@ -78,6 +79,7 @@ fun AuraSphereGridScreen(
     )
 
     var selectedNode by remember { mutableStateOf<SphereNode?>(null) }
+    val density = LocalDensity.current
 
     // Orbital nodes
     val nodes = remember {
@@ -104,27 +106,54 @@ fun AuraSphereGridScreen(
         list
     }
 
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(VoidBg)
     ) {
+        val width = constraints.maxWidth.toFloat()
+        val height = constraints.maxHeight.toFloat()
+
         // ─── BACKGROUND ART ───
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data("file:///android_asset/embodiment/aura/aura_code_throne.png")
+                .data("file:///android_asset/embodiment/aura/wrenchbladespellhookgrid.png")
                 .crossfade(true)
                 .build(),
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.15f)
-                .blur(4.dp),
+            modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
 
         // ─── CANVAS: ORBITAL GRID ───
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(nodes, rotation) {
+                    detectTapGestures { offset ->
+                        val cx = width / 2f
+                        val cy = height / 2f
+                        val r1 = with(density) { 140.dp.toPx() }
+                        val r2 = with(density) { 220.dp.toPx() }
+                        val r3 = with(density) { 300.dp.toPx() }
+                        val ringRadii = listOf(r1, r2, r3)
+                        
+                        var found: SphereNode? = null
+                        nodes.forEach { node ->
+                            val radius = ringRadii[node.ringIndex]
+                            val angleRad = Math.toRadians((node.angle + rotation).toDouble()).toFloat()
+                            val nx = cx + radius * cos(angleRad)
+                            val ny = cy + radius * 0.4f * sin(angleRad)
+                            
+                            val dist = sqrt((offset.x - nx).pow(2) + (offset.y - ny).pow(2))
+                            if (dist < 40f) {
+                                found = node
+                            }
+                        }
+                        selectedNode = found
+                    }
+                }
+        ) {
             val cx = size.width / 2f
             val cy = size.height / 2f
 
@@ -137,9 +166,13 @@ fun AuraSphereGridScreen(
             }
 
             // Orbital Rings
-            val ringRadii = listOf(140.dp.toPx(), 220.dp.toPx(), 300.dp.toPx())
+            val r1 = 140.dp.toPx()
+            val r2 = 220.dp.toPx()
+            val r3 = 300.dp.toPx()
+            val ringRadii = listOf(r1, r2, r3)
+
             ringRadii.forEachIndexed { idx, radius ->
-                val ringAlpha = 0.2f - (idx * 0.05f)
+                val ringAlpha = 0.15f - (idx * 0.05f)
                 drawOval(
                     color = CyanNode,
                     topLeft = Offset(cx - radius, cy - radius * 0.4f),
@@ -160,57 +193,28 @@ fun AuraSphereGridScreen(
                 val depth = sin(angleRad)
                 val scale = 0.8f + (depth + 1f) * 0.2f
                 val nodeAlpha = 0.3f + (depth + 1f) * 0.35f
-                val nodeSize = (if (node.isMajor) 16f else 10f) * scale
+                val nodeSize = (if (node.isMajor) 18f else 12f) * scale
+
+                val isSelected = selectedNode?.id == node.id
 
                 if (node.active) {
-                    drawOctagon(nx, ny, nodeSize + (pulse * 2f), CyanNode, filled = true, alpha = nodeAlpha * 0.3f)
-                    drawOctagon(nx, ny, nodeSize, CyanNode, filled = false, alpha = nodeAlpha)
+                    val finalColor = if (isSelected) MagentaAura else CyanNode
+                    val glowAlpha = if (isSelected) 0.5f else 0.3f
+                    
+                    drawOctagon(nx, ny, nodeSize + (pulse * 3f), finalColor, filled = true, alpha = nodeAlpha * glowAlpha)
+                    drawOctagon(nx, ny, nodeSize, finalColor, filled = false, alpha = nodeAlpha)
+                    
+                    if (isSelected) {
+                        drawCircle(finalColor.copy(alpha = 0.2f * pulse), nodeSize * 2f, Offset(nx, ny))
+                    }
+                    
                     if (node.isMajor) {
-                        drawCircle(CyanNode, 2f, Offset(nx, ny), alpha = nodeAlpha)
+                        drawCircle(finalColor, 3f * scale, Offset(nx, ny), alpha = nodeAlpha)
                     }
                 } else {
-                    drawOctagon(nx, ny, nodeSize, Color.Gray, filled = false, alpha = nodeAlpha * 0.5f)
+                    drawOctagon(nx, ny, nodeSize, Color.Gray, filled = false, alpha = nodeAlpha * 0.4f)
                 }
             }
-        }
-
-        // ─── CENTRAL ASSET: SPELLHOOK SWORD ───
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(300.dp)
-                .graphicsLayer {
-                    translationY = sin(time) * 20f
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data("file:///android_asset/embodiment/aura/aura_aerial_sword.png")
-                    .build(),
-                contentDescription = "Spellhook",
-                modifier = Modifier
-                    .fillMaxHeight(0.8f)
-                    .graphicsLayer {
-                        shadowElevation = 20f
-                        spotShadowColor = CyanNode
-                    },
-                contentScale = ContentScale.Fit
-            )
-            // Central Glow
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .drawBehind {
-                        drawCircle(
-                            Brush.radialGradient(
-                                colors = listOf(CyanNode.copy(alpha = 0.4f * pulse), Color.Transparent),
-                                center = center,
-                                radius = size.width / 2
-                            )
-                        )
-                    }
-            )
         }
 
         // ─── UI OVERLAY ───

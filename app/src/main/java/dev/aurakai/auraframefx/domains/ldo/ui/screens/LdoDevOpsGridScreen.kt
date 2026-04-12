@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,9 +19,16 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import kotlin.math.*
 
@@ -48,6 +56,8 @@ fun LdoDevOpsGridScreen(
     onNavigateBack: () -> Unit = {}
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "ldo_grid")
+    val density = LocalDensity.current
+    var selectedNode by remember { mutableStateOf<GridNode?>(null) }
     
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f, targetValue = 360f,
@@ -88,88 +98,96 @@ fun LdoDevOpsGridScreen(
         list
     }
 
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(LdoDark)
     ) {
-        // ─── CANVAS: THE GRID ───
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        val width = constraints.maxWidth.toFloat()
+        val height = constraints.maxHeight.toFloat()
+
+        // ─── BACKGROUND ART ───
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(dev.aurakai.auraframefx.R.drawable.gatescenes_nexus_ldo_roster)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // ─── CANVAS: THE GRID OVERLAY ───
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(nodes) {
+                    detectTapGestures { offset ->
+                        val cx = width / 2f
+                        val cy = height / 2f
+                        val r1 = with(density) { 140.dp.toPx() }
+                        val r2 = with(density) { 240.dp.toPx() }
+                        val r3 = with(density) { 340.dp.toPx() }
+                        val ringRadii = listOf(r1, r2, r3)
+                        
+                        var found: GridNode? = null
+                        nodes.forEach { node ->
+                            val radius = ringRadii[node.ringIndex]
+                            val angleRad = Math.toRadians(node.angle.toDouble()).toFloat()
+                            val nx = cx + radius * cos(angleRad)
+                            val ny = cy + radius * sin(angleRad)
+                            
+                            val dist = sqrt((offset.x - nx).pow(2) + (offset.y - ny).pow(2))
+                            if (dist < 40f) {
+                                found = node
+                            }
+                        }
+                        selectedNode = found
+                    }
+                }
+        ) {
             val cx = size.width / 2f
             val cy = size.height / 2f
 
-            // Starfield / Micro-dots
+            // Micro-dots
             repeat(100) { i ->
                 val x = (sin(i * 123f) * 0.5f + 0.5f) * size.width
                 val y = (cos(i * 456f) * 0.5f + 0.5f) * size.height
-                drawCircle(LdoCyan.copy(alpha = 0.1f), 1f, Offset(x, y))
+                drawCircle(LdoCyan.copy(alpha = 0.05f), 1f, Offset(x, y))
             }
 
-            // Concentric Rings
-            val ringRadii = listOf(140f, 240f, 340f)
+            // Concentric Rings detail
+            val r1 = 140.dp.toPx()
+            val r2 = 240.dp.toPx()
+            val r3 = 340.dp.toPx()
+            val ringRadii = listOf(r1, r2, r3)
+
             ringRadii.forEach { radius ->
                 drawCircle(
-                    color = LdoCyan.copy(alpha = 0.1f),
+                    color = LdoCyan.copy(alpha = 0.15f),
                     radius = radius,
                     center = Offset(cx, cy),
                     style = Stroke(1f)
                 )
-                // Inner dashed detail
-                drawCircle(
-                    color = LdoCyan.copy(alpha = 0.05f),
-                    radius = radius - 10f,
-                    center = Offset(cx, cy),
-                    style = Stroke(0.5f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(5f, 5f)))
-                )
             }
 
-            // Central Node
-            drawOctagon(cx, cy, 60f, LdoCyan.copy(alpha = 0.2f), filled = true)
-            drawOctagon(cx, cy, 60f, LdoCyan, filled = false)
-            drawCircle(LdoCyan.copy(alpha = 0.1f), 70f, Offset(cx, cy), style = Stroke(1f))
-
-            // Crosshair lines
-            drawLine(LdoCyan.copy(alpha = 0.1f), Offset(cx - 400f, cy), Offset(cx + 400f, cy), 0.5f)
-            drawLine(LdoCyan.copy(alpha = 0.1f), Offset(cx, cy - 400f), Offset(cx, cy + 400f), 0.5f)
-
-            // Connection Lines between rings
-            nodes.forEach { node ->
-                val r1 = ringRadii[node.ringIndex]
-                val angleRad = Math.toRadians(node.angle.toDouble()).toFloat()
-                val nx = cx + r1 * cos(angleRad)
-                val ny = cy + r1 * sin(angleRad)
-                
-                drawLine(LdoCyan.copy(alpha = 0.05f), Offset(cx, cy), Offset(nx, ny), 0.5f)
-            }
-        }
-
-        // ─── NODES (Icons) ───
-        Box(modifier = Modifier.fillMaxSize()) {
-            val ringRadii = listOf(140.dp, 240.dp, 340.dp)
+            // Connection Lines
             nodes.forEach { node ->
                 val radius = ringRadii[node.ringIndex]
                 val angleRad = Math.toRadians(node.angle.toDouble()).toFloat()
+                val nx = cx + radius * cos(angleRad)
+                val ny = cy + radius * sin(angleRad)
                 
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .offset(
-                            x = (radius.value * cos(angleRad)).dp,
-                            y = (radius.value * sin(angleRad)).dp
-                        )
-                        .size(48.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        drawOctagon(size.width / 2, size.height / 2, size.width / 2, LdoCyan.copy(alpha = 0.1f), filled = true)
-                        drawOctagon(size.width / 2, size.height / 2, size.width / 2, LdoCyan, filled = false)
-                    }
-                    Icon(
-                        node.icon,
-                        contentDescription = null,
-                        tint = LdoCyan,
-                        modifier = Modifier.size(20.dp)
-                    )
+                drawLine(LdoCyan.copy(alpha = 0.08f), Offset(cx, cy), Offset(nx, ny), 0.5f)
+                
+                val isSelected = selectedNode?.id == node.id
+                val nodeColor = if (isSelected) Color(0xFFE879F9) else LdoCyan
+                
+                drawOctagon(nx, ny, 24.dp.toPx(), nodeColor.copy(alpha = 0.1f), filled = true)
+                drawOctagon(nx, ny, 24.dp.toPx(), nodeColor, filled = false)
+                
+                if (isSelected) {
+                    drawCircle(nodeColor.copy(alpha = 0.2f), 30.dp.toPx(), Offset(nx, ny))
                 }
             }
         }
