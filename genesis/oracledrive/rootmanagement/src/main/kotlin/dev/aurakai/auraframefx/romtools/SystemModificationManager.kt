@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
 import android.os.Build
+import com.github.topjohnwu.libsu.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,13 +37,13 @@ class SystemModificationManagerImpl @Inject constructor(
 
     override fun checkSystemWriteAccess(): Boolean {
         return try {
-            val process = Runtime.getRuntime().exec("su -c 'mount -o remount,rw /system'")
-            val result = process.waitFor() == 0
+            val result = Shell.cmd("mount -o remount,rw /system").exec()
+            val success = result.isSuccess
 
             // Remount as read-only again
-            Runtime.getRuntime().exec("su -c 'mount -o remount,ro /system'").waitFor()
+            Shell.cmd("mount -o remount,ro /system").exec()
 
-            result
+            success
         } catch (e: Exception) {
             false
         }
@@ -393,14 +394,12 @@ class SystemModificationManagerImpl @Inject constructor(
 
     private fun executeRootCommand(command: String): Result<String> {
         return try {
-            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-            val output = process.inputStream.bufferedReader().readText()
-            val exitCode = process.waitFor()
+            val result = Shell.cmd(command).exec()
 
-            if (exitCode == 0) {
-                Result.success(output.trim())
+            if (result.isSuccess) {
+                Result.success(result.out.joinToString("\n").trim())
             } else {
-                val error = process.errorStream.bufferedReader().readText()
+                val error = result.err.joinToString("\n")
                 Result.failure(Exception("Command failed: $error"))
             }
         } catch (e: Exception) {
