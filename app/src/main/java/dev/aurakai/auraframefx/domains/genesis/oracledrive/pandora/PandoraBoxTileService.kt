@@ -47,7 +47,10 @@ class PandoraBoxTileService : TileService() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("aurakai://pandora_box")).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            startActivityAndCollapse(intent)
+            val pendingIntent = android.app.PendingIntent.getActivity(
+                this, 0, intent, android.app.PendingIntent.FLAG_IMMUTABLE
+            )
+            startActivityAndCollapse(pendingIntent)
         }
     }
 }

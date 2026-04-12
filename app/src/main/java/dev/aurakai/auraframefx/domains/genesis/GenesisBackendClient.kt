@@ -74,7 +74,7 @@ class GenesisBackendClient @Inject constructor(
             val response = sendRequest("/genesis/chat", requestBody)
 
             if (response.isSuccessful) {
-                val responseBody = response.body?.string() ?: ""
+                val responseBody = response.body.string()
                 val genesisResponse = json.decodeFromString<ChatResponseBody>(responseBody)
 
                 AgentResponse.success(
@@ -109,7 +109,7 @@ class GenesisBackendClient @Inject constructor(
             val response = sendRequest("/genesis/ethics/evaluate", requestBody)
 
             if (response.isSuccessful) {
-                val responseBody = response.body?.string() ?: ""
+                val responseBody = response.body.string()
                 val ethicsResponse = json.decodeFromString<EthicsResponseBody>(responseBody)
                 ethicsResponse.decision != "BLOCK"
             } else {
@@ -141,7 +141,7 @@ class GenesisBackendClient @Inject constructor(
             val response = sendRequest("/genesis/chat", requestBody)
 
             if (response.isSuccessful) {
-                val responseBody = response.body?.string() ?: ""
+                val responseBody = response.body.string()
                 json.decodeFromString<Map<String, Any>>(responseBody)
             } else {
                 emptyMap()

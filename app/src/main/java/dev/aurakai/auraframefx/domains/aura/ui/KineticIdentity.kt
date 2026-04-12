@@ -28,7 +28,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.unit.IntOffset
 import dev.aurakai.auraframefx.domains.aura.ui.KineticIdentity.MICRO_DURATION
 
 /**
@@ -109,11 +108,10 @@ object KineticIdentity {
     // ========== ENTER TRANSITIONS ==========
 
     /** Digital materialization - particles coalescing into form */
-    /** Digital materialization - particles coalescing into form */
-    val MaterializeEnter: Any
-        get() = fadeIn(DaringEnter as FiniteAnimationSpec<Float>) +
+    val MaterializeEnter: EnterTransition
+        get() = fadeIn(DaringEnter.asFinite()) +
                 scaleIn(
-                    animationSpec = DaringEnter,
+                    animationSpec = DaringEnter.asFinite(),
                     initialScale = 0.3f,
                     transformOrigin = TransformOrigin.Center
                 )
@@ -122,38 +120,41 @@ object KineticIdentity {
     val GlitchEnter: EnterTransition by lazy {
         return@lazy fadeIn(tween(MICRO_DURATION)) +
                 slideInHorizontally(
-                    animationSpec = GlitchyFocus as FiniteAnimationSpec<IntOffset>,
+                    animationSpec = GlitchyFocus.asFinite(),
                     initialOffsetX = { -it / 4 })
     }
 
     /** Confident slide from right - for navigation */
     val SlideFromRight: EnterTransition =
         slideInHorizontally(
-            animationSpec = ConfidentSpring as FiniteAnimationSpec<IntOffset>,
+            animationSpec = ConfidentSpring.asFinite(),
             initialOffsetX = { it }
-        ) + fadeIn(ConfidentSpring as FiniteAnimationSpec<Float>)
+        ) + fadeIn(ConfidentSpring.asFinite())
 
     /** Floating up from bottom - for dialogs */
     val FloatFromBottom: EnterTransition =
         slideInVertically(
-            animationSpec = VictoryBounce as FiniteAnimationSpec<IntOffset>,
+            animationSpec = VictoryBounce.asFinite(),
             initialOffsetY = { it }
-        ) + fadeIn(VictoryBounce as FiniteAnimationSpec<Float>)
+        ) + fadeIn(VictoryBounce.asFinite())
 
     /** Dramatic zoom entrance */
     val DramaticZoom: EnterTransition =
         scaleIn(
-            animationSpec = DramaticSlow as FiniteAnimationSpec<Float>,
+            animationSpec = DramaticSlow.asFinite(),
             initialScale = 0.1f
-        ) + fadeIn(DramaticSlow)
+        ) + fadeIn(DramaticSlow.asFinite())
 
     // ========== EXIT TRANSITIONS ==========
 
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> AnimationSpec<Float>.asFinite(): FiniteAnimationSpec<T> = this as FiniteAnimationSpec<T>
+
     /** Digital deconstruction - form dissolving into particles */
     val DeconstructExit: ExitTransition =
-        fadeOut(SubtleExit as FiniteAnimationSpec<Float>) +
+        fadeOut(SubtleExit.asFinite()) +
                 scaleOut(
-                    animationSpec = SubtleExit,
+                    animationSpec = SubtleExit.asFinite(),
                     targetScale = 0.8f,
                     transformOrigin = TransformOrigin.Center
                 )
@@ -169,23 +170,23 @@ object KineticIdentity {
     /** Slide to left - for navigation */
     val SlideToLeft: ExitTransition =
         slideOutHorizontally(
-            animationSpec = ConfidentSpring as FiniteAnimationSpec<IntOffset>,
+            animationSpec = ConfidentSpring.asFinite(),
             targetOffsetX = { -it }
-        ) + fadeOut(ConfidentSpring as FiniteAnimationSpec<Float>)
+        ) + fadeOut(ConfidentSpring.asFinite())
 
     /** Sink down - for dialogs */
     val SinkDown: ExitTransition =
         slideOutVertically(
-            animationSpec = SubtleExit as FiniteAnimationSpec<IntOffset>,
+            animationSpec = SubtleExit.asFinite(),
             targetOffsetY = { it }
-        ) + fadeOut(SubtleExit as FiniteAnimationSpec<Float>)
+        ) + fadeOut(SubtleExit.asFinite())
 
     /** Dramatic zoom out */
     val DramaticZoomOut: ExitTransition =
         scaleOut(
-            animationSpec = DramaticSlow as FiniteAnimationSpec<Float>,
+            animationSpec = DramaticSlow.asFinite(),
             targetScale = 2f
-        ) + fadeOut(DramaticSlow)
+        ) + fadeOut(DramaticSlow.asFinite())
 
     // ========== COMBINED TRANSITION SETS ==========
 
@@ -194,12 +195,12 @@ object KineticIdentity {
         val enterFromRight = SlideFromRight
         val exitToLeft = SlideToLeft
         val enterFromLeft =
-            slideInHorizontally(ConfidentSpring as FiniteAnimationSpec<IntOffset>) { -it } + fadeIn(
-                ConfidentSpring as FiniteAnimationSpec<Float>
+            slideInHorizontally(ConfidentSpring.asFinite()) { -it } + fadeIn(
+                ConfidentSpring.asFinite()
             )
         val exitToRight =
-            slideOutHorizontally(ConfidentSpring as FiniteAnimationSpec<IntOffset>) { it } + fadeOut(
-                ConfidentSpring as FiniteAnimationSpec<Float>
+            slideOutHorizontally(ConfidentSpring.asFinite()) { it } + fadeOut(
+                ConfidentSpring.asFinite()
             )
     }
 
