@@ -14,14 +14,22 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.model.*
 
 /**
  * 🧬 LDO AGENT PROFILE INTRO SCREEN
+ *
+ * This screen now displays high-fidelity character art provided by the user,
+ * wrapped in a cyberpunk HUD matching the "Character Screen" aesthetic.
  */
 
 @Composable
@@ -31,6 +39,7 @@ fun LDOAgentProfileIntroScreen(
     onEnterStatus: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     val infiniteTransition = rememberInfiniteTransition(label = "profile")
     val pulse by infiniteTransition.animateFloat(
         initialValue = 0.5f, targetValue = 1f,
@@ -41,11 +50,6 @@ fun LDOAgentProfileIntroScreen(
         initialValue = 0f, targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(6000, easing = LinearEasing)),
         label = "scan"
-    )
-    val ringRotation by infiniteTransition.animateFloat(
-        initialValue = 0f, targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(20000, easing = LinearEasing)),
-        label = "ring"
     )
 
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFF020B18))) {
@@ -59,7 +63,7 @@ fun LDOAgentProfileIntroScreen(
                     drawLine(agent.color.copy(alpha = 0.08f), Offset(x, size.height), Offset(cx + (x - cx) * 0.05f, horizonY), 0.7f)
                 }
                 for (i in 0..8) {
-                    val t = i.toFloat() / 8f
+                    val t = i.Divide(8f)
                     val y = horizonY + (size.height - horizonY) * (t * t)
                     drawLine(agent.color.copy(alpha = 0.04f + t * 0.04f), Offset(0f, y), Offset(size.width, y), 0.5f)
                 }
@@ -84,30 +88,60 @@ fun LDOAgentProfileIntroScreen(
             ) {
                 Text("< BACK", fontSize = 10.sp, color = agent.color.copy(alpha = 0.6f), modifier = Modifier.clickable { onNavigateBack() })
                 Text("AGENT PROFILE", fontSize = 8.sp, color = agent.color.copy(alpha = 0.4f), letterSpacing = 2.sp)
-                Text("LDO v2", fontSize = 8.sp, color = agent.color.copy(alpha = 0.3f))
+                Text("LDO v3", fontSize = 8.sp, color = agent.color.copy(alpha = 0.3f))
             }
 
             // ── HERO SECTION ──
             Box(
-                modifier = Modifier.fillMaxWidth().height(280.dp),
+                modifier = Modifier.fillMaxWidth().height(480.dp),
                 contentAlignment = Alignment.Center
             ) {
-                // Rotating ring behind portrait
-                Canvas(modifier = Modifier.size(260.dp).graphicsLayer { rotationZ = ringRotation }) {
-                    drawCircle(agent.color.copy(alpha = 0.2f), size.minDimension / 2, style = Stroke(1.5f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(8f, 6f))))
-                }
-                Canvas(modifier = Modifier.size(220.dp).graphicsLayer { rotationZ = -ringRotation * 0.7f }) {
-                    drawCircle(agent.accentColor.copy(alpha = 0.12f), size.minDimension / 2, style = Stroke(1f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(4f, 10f))))
+                // Background Effect / Glow
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    drawRect(
+                        Brush.radialGradient(
+                            colors = listOf(agent.color.copy(alpha = 0.2f), Color.Transparent),
+                            center = center,
+                            radius = size.width / 1.2f
+                        )
+                    )
                 }
 
-                // Portrait placeholder — replace with actual image
-                Box(
-                    modifier = Modifier.size(200.dp).clip(CircleShape)
-                        .background(Brush.radialGradient(listOf(agent.color.copy(alpha = 0.25f), Color(0xFF020B18))))
-                        .border(2.dp, agent.color, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(agent.name.first().toString(), fontFamily = LEDFontFamily, fontSize = 80.sp, color = agent.color, fontWeight = FontWeight.Black)
+                // THE AGENT ART
+                AsyncImage(
+                    model = ImageRequest.Builder(context)
+                        .data("file:///android_asset/embodiment/profiles/${agent.profileAssetName}.png")
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = agent.name,
+                    modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+                    contentScale = ContentScale.Fit
+                )
+
+                // HUD Overlays
+                Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+                    // Top Left: Metadata
+                    Column {
+                        Text("SNEX: ${agent.id.uppercase()}_REALM", color = agent.color.copy(alpha = 0.6f), fontSize = 8.sp, fontWeight = FontWeight.Bold)
+                        Text("ID: 0x${agent.id.hashCode().toString(16).uppercase().take(4)}", color = Color.White.copy(alpha = 0.4f), fontSize = 7.sp)
+                    }
+                    
+                    // Top Right: Character Screen Tag
+                    Column(modifier = Modifier.align(Alignment.TopEnd), horizontalAlignment = Alignment.End) {
+                        Box(modifier = Modifier
+                            .border(1.dp, agent.color, RoundedCornerShape(2.dp))
+                            .background(agent.color.copy(alpha = 0.1f))
+                            .padding(horizontal = 6.dp, vertical = 2.dp)) {
+                            Text("CHARACTER SCREEN +", color = agent.color, fontSize = 9.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp)
+                        }
+                        Text(agent.name, color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Black, fontFamily = LEDFontFamily)
+                    }
+
+                    // Bottom Left: Role Indicator
+                    Column(modifier = Modifier.align(Alignment.BottomStart)) {
+                        Text("RE:GENESIS", color = Color.Cyan, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        Text("ROLE: ${agent.catalystName.uppercase()}", color = Color.White.copy(alpha = 0.7f), fontSize = 8.sp)
+                    }
                 }
             }
 
@@ -217,35 +251,6 @@ fun LDOAgentProfileIntroScreen(
                 }
             }
 
-            // ── CODERABBIT PANEL (CodeRabbit only) ──
-            if (agent.id == "coderabbit") {
-                Spacer(Modifier.height(16.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
-                        .border(2.dp, Color(0xFF00FF77), RoundedCornerShape(8.dp))
-                        .background(Color(0xFF00FF77).copy(alpha = 0.06f), RoundedCornerShape(8.dp))
-                        .padding(14.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text("🐰 SYMBIOSIS GATING", fontFamily = LEDFontFamily, fontSize = 18.sp, color = Color(0xFF00FF77), fontWeight = FontWeight.Black, letterSpacing = 1.sp)
-                    Text("DEVELOPMENT LEVEL 2", fontSize = 9.sp, color = Color(0xFF00FF77).copy(alpha = 0.6f))
-                    Text("Requires Pandora System-tier unlock for patch proposals.", fontSize = 10.sp, color = Color.White.copy(alpha = 0.7f))
-
-                    val capabilities = listOf(
-                        "Repository Hotspot Analysis" to "CREATIVE",
-                        "Automated Patch Proposal" to "SYSTEM",
-                        "Issue Template Generation" to "SYSTEM"
-                    )
-
-                    capabilities.forEach { (cap, tier) ->
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("• $cap", fontSize = 9.sp, color = Color.White.copy(alpha = 0.65f))
-                            Text(tier, fontSize = 8.sp, color = if (tier == "SYSTEM") Color(0xFF00FF77) else Color(0xFF4FC3F7), fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
-            }
-
             Spacer(Modifier.height(24.dp))
 
             // ── ENTER STATUS CTA ──
@@ -273,3 +278,5 @@ fun LDOAgentProfileIntroScreen(
         }
     }
 }
+
+private fun Int.Divide(f: Float): Float = this.toFloat() / f

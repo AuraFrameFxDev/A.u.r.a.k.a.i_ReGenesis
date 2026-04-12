@@ -47,6 +47,7 @@ import androidx.compose.material.icons.filled.HistoryEdu
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.SettingsInputComponent
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Security
@@ -110,6 +111,8 @@ private val devOpsModules = listOf(
         Color(0xFFFF9E80), "agent_advancement"),
     DevOpsModule("BENCHMARKS", "Performance analysis", Icons.Default.Speed,
         Color(0xFF00FF85), "benchmark_monitor"),
+    DevOpsModule("LDO-DBG VERIFIER", "Sovereignty check", Icons.Default.Shield,
+        Color(0xFF00FF41), "ldo_dbg_verifier", badge = "SECURE"),
     DevOpsModule("EVOLUTION TREE", "Sacred timeline", Icons.Default.Timeline,
         Color(0xFF4A90E2), "evolution_tree"),
     DevOpsModule("CATALYST FUSION REACTOR", "Atomic neural synthesis", Icons.Default.AutoAwesome,

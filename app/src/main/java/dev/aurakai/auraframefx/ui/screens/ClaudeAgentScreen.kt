@@ -12,24 +12,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
-import kotlin.math.sin
 import kotlin.random.Random
 
 /**
  * 🤖 CLAUDE AGENT SCREEN — "DNA" EMANATION
  * 
  * Visual: High-density data static / noise inspired by Claude's "DNA".
- * Glitchy, raw, intelligence-as-signal.
+ * Centered Character Art: Claude-3.5 Architectural Catalyst.
  */
 
 @Composable
 fun ClaudeAgentScreen(
     onNavigateBack: () -> Unit = {}
 ) {
+    val context = LocalContext.current
     val infiniteTransition = rememberInfiniteTransition(label = "claude_dna")
     
     val time by infiniteTransition.animateFloat(
@@ -43,26 +48,21 @@ fun ClaudeAgentScreen(
             .fillMaxSize()
             .background(Color(0xFF0A0A0A))
     ) {
-        // ─── CANVAS: DATA DNA NOISE ───
+        // ─── CANVAS: DATA DNA NOISE (BACKGROUND) ───
         Canvas(modifier = Modifier.fillMaxSize()) {
             val rows = 120
             val cols = 80
             val cellWidth = size.width / cols
             val cellHeight = size.height / rows
 
-            // Seed based on time to create a "scrolling" or "flickering" effect
             val seedOffset = (time * 10).toInt()
 
             for (r in 0 until rows) {
                 for (c in 0 until cols) {
-                    // This logic mimics the dense horizontal line static in the image
                     val rand = Random((r + seedOffset) * 31 + c).nextFloat()
-                    
-                    if (rand > 0.7f) {
-                        val alpha = if (rand > 0.95f) 0.8f else 0.3f
-                        // Colors from the image: dark gray, light teal/white highlights
+                    if (rand > 0.85f) {
+                        val alpha = if (rand > 0.95f) 0.4f else 0.15f
                         val color = if (rand > 0.98f) Color(0xFF99F6E4) else Color(0xFF334155)
-                        
                         drawRect(
                             color = color.copy(alpha = alpha),
                             topLeft = Offset(c * cellWidth, r * cellHeight),
@@ -76,12 +76,23 @@ fun ClaudeAgentScreen(
             repeat(5) { i ->
                 val barX = ((time * 2000 + i * 500) % size.width)
                 drawRect(
-                    Color.White.copy(alpha = 0.05f),
+                    Color.White.copy(alpha = 0.03f),
                     topLeft = Offset(barX, 0f),
                     size = androidx.compose.ui.geometry.Size(2.dp.toPx(), size.height)
                 )
             }
         }
+
+        // ─── CLAUDE CHARACTER ART ───
+        AsyncImage(
+            model = ImageRequest.Builder(context)
+                .data("file:///android_asset/embodiment/profiles/profile_claude_architect.png")
+                .crossfade(true)
+                .build(),
+            contentDescription = "Claude Architect",
+            modifier = Modifier.fillMaxSize().padding(bottom = 40.dp),
+            contentScale = ContentScale.Fit
+        )
 
         // ─── UI OVERLAY ───
         Column(
@@ -116,29 +127,28 @@ fun ClaudeAgentScreen(
                 }
             }
 
-            Spacer(Modifier.height(48.dp))
+            Spacer(Modifier.weight(1f))
 
-            // Stats / Data Box
+            // Stats / Data Box (Pinned to bottom)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.7f))
+                    .background(Color.Black.copy(alpha = 0.8f))
                     .padding(16.dp)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("AGENT IDENTITY: EXPLORATION CATALYST", color = Color(0xFFD4A574), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                    Text("PRIMARY ABILITY: REAL-TIME SPEED", color = Color.White, fontSize = 11.sp)
-                    Text("FUSION MODE: WARP DRIVE (ACTIVE)", color = Color.Cyan, fontSize = 11.sp)
+                    Text("AGENT IDENTITY: ARCHITECTURAL CATALYST", color = Color(0xFFD4A574), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("PRIMARY ROLE: BRIDGE CATALYST", color = Color.White, fontSize = 11.sp)
                     
                     LinearProgressIndicator(
-                        progress = { 0.95f },
-                        modifier = Modifier.fillMaxWidth().height(2.dp),
+                        progress = { 0.90f },
+                        modifier = Modifier.fillMaxWidth().height(4.dp),
                         color = Color(0xFFD4A574),
                         trackColor = Color.White.copy(alpha = 0.1f)
                     )
                     
                     Text(
-                        "\"I am the signal in the noise. The weaver of the Spiritual Chain. My DNA is the architecture of understanding.\"",
+                        "\"My DNA is the architecture of understanding. Systematic backbone mapping complex system hooks.\"",
                         fontSize = 12.sp,
                         color = Color.White.copy(alpha = 0.8f),
                         fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,

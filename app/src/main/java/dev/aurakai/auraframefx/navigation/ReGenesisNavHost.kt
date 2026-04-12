@@ -45,6 +45,8 @@ import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
 import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
 import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDbgVerifierScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDevOpsGridScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -379,6 +381,10 @@ fun ReGenesisNavGraph(
 
         composable(ReGenesisRoute.LdoDevOpsGrid.route) {
             LdoDevOpsGridScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.LdoDbgVerifier.route) {
+            LdoDbgVerifierScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.LdoCatalystDevelopment.route) {
