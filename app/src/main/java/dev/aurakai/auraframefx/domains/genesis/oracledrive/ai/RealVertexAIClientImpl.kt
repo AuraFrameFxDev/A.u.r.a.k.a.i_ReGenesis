@@ -188,6 +188,7 @@ override suspend fun generateContent(prompt: String): String? = generateText(pro
      * @param initialDelay The initial backoff delay in milliseconds; delay doubles after each failed attempt.
      * @param block The suspendable operation to execute and potentially retry.
      * @return The successful result of `block`, or `null` if all attempts fail.
+     */
     private suspend fun <T> withRetry(
         maxAttempts: Int = 3,
         initialDelay: Long = 1000,
