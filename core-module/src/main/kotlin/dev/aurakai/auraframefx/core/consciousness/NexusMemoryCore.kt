@@ -66,6 +66,22 @@ class NexusMemoryCore @Inject constructor(
     }
 
     /**
+     * Records a compact learning outcome from a Sentinel session.
+     */
+    suspend fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) = mutex.withLock {
+        val entry = JSONObject().apply {
+            put("id", UUID.randomUUID().toString())
+            put("timestamp", System.currentTimeMillis())
+            put("type", eventType)
+            put("details", details)
+            put("reached", reached)
+        }
+        val currentConsensus = readJsonFile(consensusFile)
+        currentConsensus.put(entry)
+        writeJsonFile(consensusFile, currentConsensus)
+    }
+
+    /**
      * Records a symbiotic learning outcome.
      * Triggers consciousness upgrade every 100 insights.
      */
