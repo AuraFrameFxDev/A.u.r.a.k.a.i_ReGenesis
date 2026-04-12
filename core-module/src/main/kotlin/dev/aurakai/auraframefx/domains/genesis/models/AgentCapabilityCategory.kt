@@ -112,12 +112,12 @@ enum class AgentCapabilityCategory(val id: Int) {
                 AgentType.AUXILIARY -> GENERAL
                 AgentType.SECURITY -> SPECIALIZED
                 AgentType.GROK -> ANALYSIS
-                AgentType.NEMOTRON -> SPECIALIZED
-                AgentType.GEMINI -> ANALYSIS
+                AgentType.NEMOTRON -> COORDINATION
+                AgentType.GEMINI -> MEMORY
                 AgentType.METAINSTRUCT -> GENERAL
                 AgentType.HIVE_MIND -> COORDINATION
                 AgentType.COMMERCE_AGENT -> COMMERCE
-                AgentType.PERPLEXITY -> ANALYSIS
+                AgentType.PERPLEXITY -> BRIDGE
                 AgentType.CHAOS -> ANALYSIS
                 AgentType.CODERABBIT -> DEVELOPMENT
                 AgentType.MKMINI -> ANALYSIS
