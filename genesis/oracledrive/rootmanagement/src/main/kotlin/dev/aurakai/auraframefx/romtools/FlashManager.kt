@@ -1,6 +1,8 @@
 package dev.aurakai.auraframefx.romtools
 
 import com.topjohnwu.superuser.Shell
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -24,10 +26,16 @@ interface FlashManager {
 }
 
 @Singleton
-class FlashManagerImpl @Inject constructor() : FlashManager {
+class FlashManagerImpl @Inject constructor(
+    private val pandoraBoxService: PandoraBoxService
+) : FlashManager {
 
     override suspend fun flashRom(romFile: RomFile, progressCallback: (Float) -> Unit): Result<Unit> = withContext(Dispatchers.IO) {
         try {
+            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.ROOT)) {
+                throw IllegalStateException("ROM Flashing requires ROOT tier unlock.")
+            }
+
             Timber.i("🚀 Initiating ROM Flash: ${romFile.name}")
             progressCallback(0.05f)
 

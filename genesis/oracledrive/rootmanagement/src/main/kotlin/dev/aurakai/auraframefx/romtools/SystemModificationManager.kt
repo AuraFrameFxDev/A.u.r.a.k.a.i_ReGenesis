@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Build
 import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -30,7 +32,8 @@ interface SystemModificationManager {
  */
 @Singleton
 class SystemModificationManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val pandoraBoxService: PandoraBoxService
 ) : SystemModificationManager {
 
     private val genesisDir = File("/data/local/genesis_optimizations")
@@ -56,6 +59,10 @@ class SystemModificationManagerImpl @Inject constructor(
         progressCallback: (Float) -> Unit
     ): Result<Unit> = withContext(Dispatchers.IO) {
         try {
+            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.DEVELOPMENT)) {
+                throw IllegalStateException("Genesis Optimizations require DEVELOPMENT tier unlock.")
+            }
+
             Timber.i("🚀 Installing Genesis AI optimizations...")
             progressCallback(0.1f)
 

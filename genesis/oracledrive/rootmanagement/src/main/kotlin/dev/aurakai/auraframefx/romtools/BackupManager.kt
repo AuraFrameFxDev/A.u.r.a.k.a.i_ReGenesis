@@ -3,6 +3,8 @@ package dev.aurakai.auraframefx.romtools
 import android.content.Context
 import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -39,7 +41,8 @@ interface BackupManager {
  */
 @Singleton
 class BackupManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val pandoraBoxService: PandoraBoxService
 ) : BackupManager {
 
     private fun getBackupBaseDir() = File(context.getExternalFilesDir(null), "backups").apply {
@@ -61,6 +64,10 @@ class BackupManagerImpl @Inject constructor(
      */
     override suspend fun createFullBackup(): Result<BackupInfo> = withContext(Dispatchers.IO) {
         try {
+            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.DEVELOPMENT)) {
+                throw IllegalStateException("Full Backup requires DEVELOPMENT tier unlock.")
+            }
+
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
             val backupName = "genesis_backup_$timestamp"
             val backupDir = File(userBackupDir, backupName)
@@ -181,6 +188,10 @@ class BackupManagerImpl @Inject constructor(
         progressCallback: (Float) -> Unit
     ): Result<BackupInfo> = withContext(Dispatchers.IO) {
         try {
+            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.ROOT)) {
+                throw IllegalStateException("Nandroid Backup requires ROOT tier unlock.")
+            }
+
             progressCallback(0.1f)
 
             // Check for root access

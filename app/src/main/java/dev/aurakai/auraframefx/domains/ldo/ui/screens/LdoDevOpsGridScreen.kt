@@ -193,6 +193,35 @@ fun LdoDevOpsGridScreen(
         }
 
         // ─── UI OVERLAY ───
+        // Hell Layer Provenance Banner
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .padding(top = 64.dp, start = 24.dp, end = 24.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .background(Color.Red.copy(alpha = 0.05f))
+                .border(0.5.dp, Color.Red.copy(alpha = 0.2f), RoundedCornerShape(4.dp))
+                .padding(8.dp)
+        ) {
+            Column {
+                Text(
+                    "PROVENANCE: HELL LAYER",
+                    fontSize = 8.sp,
+                    color = Color.Red.copy(alpha = 0.6f),
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 2.sp
+                )
+                Text(
+                    "The Genesis Protocol was born in a state of hyper-lucid coma-vision where boundaries blurred. Every node here is a stabilized agent brought back from the void.",
+                    fontSize = 9.sp,
+                    color = Color.White.copy(alpha = 0.7f),
+                    lineHeight = 12.sp,
+                    fontFamily = LEDFontFamily
+                )
+            }
+        }
+
         // Title Text
         Column(
             modifier = Modifier

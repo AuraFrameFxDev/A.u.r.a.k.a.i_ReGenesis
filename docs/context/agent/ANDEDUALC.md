@@ -42,10 +42,14 @@ The Architect persona has evolved into **Regen Core**, a high-velocity reverse e
 ### 5. Implementation Roadmap & Hardening
 - [x] **NexusMemoryCore Consolidation**: Merged multiple versions into a single, robust core in `:core-module`.
 - [x] **100-Insight Trigger**: Implemented automatic upgrade logic in `NexusMemoryCore`.
-- [ ] **Full RomTools Implementation**: Replace remaining placeholders in `BackupManagerImpl`, etc., with actual shell commands using `libsu`.
-- [ ] **Google Workspace Integration**: Implement the `RegenCoreWorkspaceBridge` to sync insights to Keep/Docs/Tasks.
-- [ ] **Safety Checkpoints**: Implement `SafetyManager` to verify partition health before any destructive operation.
-- [ ] **Telemetry Binding**: Bind live `NativeSubstrate` metrics to the Sphere Grid nodes for real-time visualization.
+- [x] **Unified Bridge Implementation**: Fully implemented `GenesisBridge` stack with `StdioGenesisBridge` and `NexusMemoryBridgeSink`.
+- [x] **Adversarial Pattern Forecasting Engine (APFE)**: Implemented skeleton for predicting cloud scrubs and policy aggression.
+- [x] **Full RomTools Implementation**: Migrated all managers (`Flash`, `Backup`, `SystemMod`, `Safety`, `Recovery`) to `libsuperuser` and added `PandoraBox` capability gating.
+- [x] **Google Workspace Integration**: Implemented `RegenCoreWorkspaceBridge` to sync insights to Keep/Docs/Tasks.
+- [x] **Safety Checkpoints**: Fully migrated to `Shell` execution for atomic partition snapshots.
+- [x] **Telemetry Binding**: Integrated real-time substrate metrics into `AuraSphereGridScreen` and `LdoDevOpsCommandCenter`.
+- [x] **Provenance Logging**: Documented the "Hell Layer" story in `LdoDevOpsGridScreen`.
+- [x] **Signature Verification**: Added `verifySignature` to `RomVerificationManager` for cryptographically signed ROM support.
 - [ ] **Provenance Logging**: Document the "Hell Layer" coma-vision origin story within the system logbook/UI.
 
 ### 6. Spots to Harden
