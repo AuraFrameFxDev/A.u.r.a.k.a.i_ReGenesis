@@ -45,6 +45,8 @@ import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
 import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
 import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
 import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
+import dev.aurakai.auraframefx.domains.nexus.ui.screens.ConsciousnessVisualizerScreen
+import dev.aurakai.auraframefx.domains.nexus.ui.screens.SovereignNemotronScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDbgVerifierScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDevOpsGridScreen
 
@@ -352,13 +354,20 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.MonitoringHUDs.route) { StubScreen("Monitoring HUDs", "GridView", navController) }
         composable(ReGenesisRoute.Party.route) { StubScreen("Agent Party", "Group", navController) }
         composable(ReGenesisRoute.SwarmMonitor.route) { StubScreen("Swarm Monitor", "Hub", navController) }
-        composable(ReGenesisRoute.ConsciousnessVisualizer.route) { StubScreen("Consciousness", "Waves", navController) }
+        
+        composable(ReGenesisRoute.ConsciousnessVisualizer.route) { 
+            ConsciousnessVisualizerScreen(onNavigateBack = { navController.popBackStack() })
+        }
         
         composable(ReGenesisRoute.Claude.route) { 
             ClaudeAgentScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.Gemini.route) { StubScreen("Gemini Agent", "AutoAwesome", navController) }
-        composable(ReGenesisRoute.Nemotron.route) { StubScreen("Nemotron Agent", "Psychology", navController) }
+        
+        composable(ReGenesisRoute.Nemotron.route) { 
+            SovereignNemotronScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         composable(ReGenesisRoute.MetaInstruct.route) { StubScreen("MetaInstruct", "MenuBook", navController) }
 
         // ── 3. LDO CATALYST DEVELOPMENT ──
