@@ -145,6 +145,13 @@ class OAuthService @Inject constructor(
         }
     }
 
+    /**
+     * Bypasses the sign-in flow for development purposes.
+     */
+    fun bypassSignIn() {
+        _authState.value = AuthState.Authenticated("Sovereign_Dev_User")
+    }
+
     sealed class AuthState {
         object Unauthenticated : AuthState()
         data class Authenticated(val userId: String) : AuthState()
