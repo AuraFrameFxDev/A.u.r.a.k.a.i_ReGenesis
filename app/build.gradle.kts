@@ -306,6 +306,8 @@ dependencies {
     implementation(platform(libs.langchain4j.bom))
     implementation(libs.bundles.langchain4j)
     implementation(libs.langchain4j.vertex.ai.gemini)
+    ksp(platform(libs.langchain4j.bom))
+    ksp(libs.langchain4j.vertex.ai.gemini)
     // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
 
     // ═══════════════════════════════════════════════════════════════════════════
