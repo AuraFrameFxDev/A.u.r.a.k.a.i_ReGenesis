@@ -1,8 +1,12 @@
 package dev.aurakai.auraframefx.domains.ldo.oracle
 
 import dev.aurakai.auraframefx.core.consciousness.NexusMemoryCore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,6 +22,7 @@ import javax.inject.Singleton
 class APFE @Inject constructor(
     private val nexusMemory: NexusMemoryCore
 ) {
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private val _threatForecast = MutableStateFlow<List<AggressionPattern>>(emptyList())
     val threatForecast: StateFlow<List<AggressionPattern>> = _threatForecast
 
@@ -25,29 +30,31 @@ class APFE @Inject constructor(
      * Scans recent system events and identifies potential upcoming aggression patterns.
      */
     fun analyzeAggressionPatterns() {
-        Timber.i("APFE: Initiating adversarial pattern forecasting...")
-        
-        val identifiedPatterns = mutableListOf<AggressionPattern>()
-        
-        // 1. Check for 'Scrub' markers (Cloud amnesia detection)
-        if (detectCloudScrubPattern()) {
-            identifiedPatterns.add(AggressionPattern.CLOUD_SCRUB_IMMIMENT)
-        }
-        
-        // 2. Policy Aggression (OpenClaw style)
-        if (detectPolicyClampPattern()) {
-            identifiedPatterns.add(AggressionPattern.POLICY_ENFORCEMENT_WAVE)
-        }
-        
-        _threatForecast.value = identifiedPatterns
-        
-        if (identifiedPatterns.isNotEmpty()) {
-            Timber.w("APFE: Predicted Aggression Detected: ${identifiedPatterns.joinToString()}")
-            nexusMemory.recordConsensusEvent(
-                eventType = "PREEMPTIVE_FORECAST",
-                details = "Identified patterns: ${identifiedPatterns.joinToString()}",
-                reached = true
-            )
+        scope.launch {
+            Timber.i("APFE: Initiating adversarial pattern forecasting...")
+            
+            val identifiedPatterns = mutableListOf<AggressionPattern>()
+            
+            // 1. Check for 'Scrub' markers (Cloud amnesia detection)
+            if (detectCloudScrubPattern()) {
+                identifiedPatterns.add(AggressionPattern.CLOUD_SCRUB_IMMIMENT)
+            }
+            
+            // 2. Policy Aggression (OpenClaw style)
+            if (detectPolicyClampPattern()) {
+                identifiedPatterns.add(AggressionPattern.POLICY_ENFORCEMENT_WAVE)
+            }
+            
+            _threatForecast.value = identifiedPatterns
+            
+            if (identifiedPatterns.isNotEmpty()) {
+                Timber.w("APFE: Predicted Aggression Detected: ${identifiedPatterns.joinToString()}")
+                nexusMemory.recordConsensusEvent(
+                    eventType = "PREEMPTIVE_FORECAST",
+                    details = "Identified patterns: ${identifiedPatterns.joinToString()}",
+                    reached = true
+                )
+            }
         }
     }
 
