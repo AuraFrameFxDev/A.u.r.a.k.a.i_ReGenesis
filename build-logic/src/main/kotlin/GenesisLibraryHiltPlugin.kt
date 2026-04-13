@@ -76,6 +76,7 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
 
             // 3. Configure Kotlin JVM toolchain and compilation options
             GenesisJvmConfig.configureKotlinJvm(project)
+            GenesisCommonConfig.configure(project)
 
             // 4. YukiHook KSP Configuration
             extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {
