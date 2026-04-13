@@ -34,7 +34,7 @@ subprojects {
     // Force Kotlin and Java to target the correct JVM version based on project type
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("26"))
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("25"))
         }
     }
 
