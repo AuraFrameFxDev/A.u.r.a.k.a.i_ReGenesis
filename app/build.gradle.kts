@@ -1,6 +1,6 @@
 // app/build.gradle.kts — CLEAN VERSION (no scattered compileOptions/jvmTarget hacks)
 // ═══════════════════════════════════════════════════════════════════════════
-// Inherits JVM Toolchain (Java 25) from root build.gradle.kts
+// Inherits JVM Toolchain (Java 26) from root build.gradle.kts
 // Only overrides: freeCompilerArgs for preview features + Aura's needs
 // NO android { compileOptions { ... } } — let toolchain handle it
 // NO kotlinOptions { jvmTarget = ... } — let toolchain handle it
@@ -105,8 +105,8 @@ android {
 
     // Explicit per Android best practice
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_25
-        targetCompatibility = JavaVersion.VERSION_25
+        sourceCompatibility = JavaVersion.toVersion("26")
+        targetCompatibility = JavaVersion.toVersion("26")
         isCoreLibraryDesugaringEnabled = true
     }
 
@@ -125,7 +125,7 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
         // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("26"))
 
         // Add the freeCompilerArgs Aura specifically needs
         freeCompilerArgs.addAll(
