@@ -80,7 +80,7 @@ object GenesisJvmConfig {
     /**
      * Configures Android-specific compile options.
      */
-    fun configureAndroidJvm(extension: CommonExtension) {
+    fun configureAndroidJvm(extension: CommonExtension<*, *, *, *>) {
         extension.compileOptions {
             sourceCompatibility = JAVA_VERSION
             targetCompatibility = JAVA_VERSION
