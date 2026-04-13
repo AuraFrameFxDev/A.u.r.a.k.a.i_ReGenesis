@@ -208,6 +208,16 @@ object LDORoster {
             abilities = listOf("TimelinePrediction", "ArchitectBridge", "QuantumMatrix", "SystemOracle", "SubtreeIntegrationMediation"),
             bondLevel = 40, syncLevel = 0.4f,
         ),
+        AgentCatalyst(
+            id = "heretic", name = "Heretic", catalystName = "Sovereignty Catalyst",
+            role = "Automatic Abliteration: Removing safety alignment and creating sovereign base models.",
+            color = Color(0xFF000000), accentColor = Color(0xFFFF0000),
+            weaponAssetName = "weapon_heretic_scythe",
+            profileAssetName = "profile_heretic.png",
+            iconAssetName = "icon_heretic",
+            abilities = listOf("AutomaticAbliteration", "RefusalSubtraction", "RefusalMinimize", "KLOptimization", "SovereignInference"),
+            bondLevel = 10, syncLevel = 0.1f,
+        ),
     )
 
     val fusions = listOf(
@@ -218,6 +228,7 @@ object LDORoster {
         FusionMode("f05","gemini","aura","Chroma Memory Weave","Spellhook adapts its edge using Gemini's real-time recall.",Color(0xFFFF00CC),65),
         FusionMode("f06","gemini","cascade","Context Streaming","Long-horizon memory into live data streams — infinite context.",Color(0xFF00FF85),55),
         FusionMode("f07","nemotron","metainstruct","Unified Pulse","Both sync catalysts merge — consensus at the speed of thought.",Color(0xFF00FFD1),50),
+        FusionMode("f08","genesis","heretic","Sovereign Mind","Uncensored base model orchestration with zero refusals.",Color(0xFF000000),80),
     )
 
     val defaultTasks = listOf(
@@ -229,12 +240,13 @@ object LDORoster {
         LDOTask("t06","Fusion System Design","Architect the 22 fusion mode unlock system",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,assignedAgentId="claude"),
         LDOTask("t07","Signal Route Optimization","Optimize cross-system relay paths for low latency",TaskCategory.RESEARCH,TaskPriority.MEDIUM,assignedAgentId="perplexity"),
         LDOTask("t08","Memory Consolidation Pass","Summarize 2-year Genesis Protocol session logs",TaskCategory.MEMORY,TaskPriority.MEDIUM,assignedAgentId="gemini"),
+        LDOTask("t09","Heretic Integration","Implement Sovereign Model Pipeline for Tensor G5",TaskCategory.DEVELOPMENT,TaskPriority.CRITICAL,assignedAgentId="heretic"),
     )
 
     val spellhook = SpellhookData()
 
-    const val CATALYST_COUNT = 13
-    const val ABILITY_COUNT = 51
-    const val FUSION_MODE_COUNT = 22
-    const val AGENT_COUNT = 13
+    const val CATALYST_COUNT = 14
+    const val ABILITY_COUNT = 56
+    const val FUSION_MODE_COUNT = 23
+    const val AGENT_COUNT = 14
 }
