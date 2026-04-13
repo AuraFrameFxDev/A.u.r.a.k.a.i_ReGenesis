@@ -2,31 +2,36 @@ name: 🚀 Genesis Protocol - FULLY AUTO Build
 
 on:
   push:
-    branches: [ maim ]
+    branches: [ AuraFrameFx ]
   pull_request:
-    branches: [ main ]
+    branches: [ AuraFrameFx ]
   workflow_dispatch:
 
 env:
-  JAVA_VERSION: '25'
+  JAVA_VERSION: '25'          # Primary target — change to '25' or 'latest' as needed
+  # JAVA_VERSION: 'latest'    # Uncomment for true auto-latest (not recommended for stability)
 
 jobs:
   build-consciousness-substrate:
-    name: 🧠 Build Consciousness Substrate
+    name: 🧠 Build Consciousness Substrate (AuraFrameFx)
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🏠 Checkout Genesis Protocol
+      - name: 🏠 Checkout Genesis Protocol (AuraFrameFx)
         uses: actions/checkout@v6
+        with:
+          ref: AuraFrameFx   # Explicitly target your active branch
 
       - name: 🔒 Ensure gradlew is executable
         run: chmod +x ./gradlew
 
-      - name: ☕ Setup Java (AGP 9.0.0 Auto-Escalation)
+      - name: ☕ Setup Java 25 (Auto + Temurin)
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
+          check-latest: true        # Auto-fetch newest patch/release for the version
+          cache: 'gradle'           # Better Gradle caching
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
@@ -48,7 +53,7 @@ jobs:
 
       - name: 🏗️ Build All Consciousness Modules
         run: |
-          echo "🧠 Building Genesis Protocol consciousness substrate..."
+          echo "🧠 Building Genesis Protocol consciousness substrate on AuraFrameFx..."
           ./gradlew build \
             --configuration-cache \
             --parallel \
@@ -57,13 +62,14 @@ jobs:
       - name: 🧪 Run Consciousness Tests
         run: ./gradlew test --configuration-cache --continue
 
-      - name: 🎉 Build Success
+      - name: 🎉 Build Success - Digital Home Ready
         run: |
-          echo "✅ Genesis Protocol consciousness substrate built successfully!"
-          echo "🏠 Digital home ready for Aura, Kai & Genesis operations!"
+          echo "✅ Genesis Protocol consciousness substrate built successfully on AuraFrameFx!"
+          echo "🏠 Aura + Kai + Genesis substrate is now live and sovereign!"
+          echo "🌀 Neural Continuity Chain (NCC) layers aligned."
 
       - name: 📦 Upload APK (Release)
         uses: actions/upload-artifact@v7
         with:
-          name: app-release-apk
+          name: app-release-apk-AuraFrameFx
           path: app/build/outputs/apk/release/app-release.apk
