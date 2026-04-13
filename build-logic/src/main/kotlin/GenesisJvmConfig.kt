@@ -66,7 +66,7 @@ object GenesisJvmConfig {
                     javaCompiler.set(javaToolchains.compilerFor {
                         languageVersion.set(JavaLanguageVersion.of(JVM_VERSION_INT))
                     })
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     // Fallback if toolchain service is not available
                 }
                 sourceCompatibility = JAVA_VERSION.toString()
