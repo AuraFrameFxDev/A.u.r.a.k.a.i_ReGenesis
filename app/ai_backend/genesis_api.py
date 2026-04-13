@@ -21,6 +21,8 @@ from genesis_core import (
     shutdown_genesis
 )
 
+from heretic_bridge import heretic_bridge
+
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for Android app communication
@@ -298,6 +300,32 @@ def evaluate_ethics():
     except Exception as e:
         logger.error(f"❌ Ethics evaluation error: {str(e)}")
         return jsonify({"error": "Failed to evaluate ethics"}), 500
+
+
+@app.route('/heretic/abliterate', methods=['POST'])
+def heretic_abliterate():
+    """
+    Executes model abliteration via Heretic.
+    """
+    try:
+        if not request.is_json:
+            return jsonify({"error": "Request must be JSON"}), 400
+
+        data = request.get_json()
+        model_id = data.get("model_id")
+        preset = data.get("preset", "noslop")
+
+        if not model_id:
+            return jsonify({"error": "Missing 'model_id' field"}), 400
+
+        # Process abliteration (long-running, but simplified here)
+        result = run_async(heretic_bridge.abliterate(model_id, preset))
+
+        return jsonify(result)
+
+    except Exception as e:
+        logger.error(f"❌ Heretic endpoint error: {str(e)}")
+        return jsonify({"error": "Abliteration failed", "message": str(e)}), 500
 
 
 @app.route('/genesis/reset', methods=['POST'])

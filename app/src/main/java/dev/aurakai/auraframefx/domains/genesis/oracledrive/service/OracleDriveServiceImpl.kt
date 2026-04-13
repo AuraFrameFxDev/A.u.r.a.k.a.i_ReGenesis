@@ -210,4 +210,9 @@ class OracleDriveServiceImpl @Inject constructor(
             OraclePermission.EXECUTE
         )
     }
+
+    override suspend fun abliterateModel(modelId: String, preset: String): Result<String> {
+        Timber.i("OracleDrive: Delegating model abliteration to HereticBridge for $modelId")
+        return hereticBridge.abliterate(modelId, preset)
+    }
 }
