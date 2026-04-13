@@ -142,6 +142,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
 
             // Configure Kotlin JVM toolchain and compilation options
             GenesisJvmConfig.configureKotlinJvm(project)
+            GenesisCommonConfig.configure(project)
 
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
