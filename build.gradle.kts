@@ -1,4 +1,4 @@
-// Root build.gradle.kts — JVM TOOLCHAIN VERSION (Java 26)
+// Root build.gradle.kts — JVM TOOLCHAIN VERSION (Java 25)
 // ═══════════════════════════════════════════════════════════════════════════
 // Single source of truth: JVM Toolchain controls ALL Java/Kotlin versions
 // NO scattered compileOptions or kotlinOptions per-module
@@ -20,13 +20,13 @@ val skipTests = providers.gradleProperty("aurafx.skip.tests").orElse("false").ma
 
 subprojects {
     // ═══════════════════════════════════════════════════════════════════════════
-    // MASTER CONTROL: JVM Toolchain (Java 26) — controls everything below
+    // MASTER CONTROL: JVM Toolchain (Java 25) — controls everything below
     // ═══════════════════════════════════════════════════════════════════════════
 
     plugins.withType<org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper> {
         extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
             jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(26))
+                languageVersion.set(JavaLanguageVersion.of(25))
             }
         }
     }
@@ -34,15 +34,15 @@ subprojects {
     // Force Kotlin and Java to target the correct JVM version based on project type
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("25"))
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
         }
     }
 
-    // Ensure Java compiler also targets JVM 26 correctly via toolchain
+    // Ensure Java compiler also targets JVM 25 correctly via toolchain
     tasks.withType<JavaCompile>().configureEach {
         val javaToolchains = project.extensions.getByType<JavaToolchainService>()
         javaCompiler.set(javaToolchains.compilerFor {
-            languageVersion.set(JavaLanguageVersion.of(26))
+            languageVersion.set(JavaLanguageVersion.of(25))
         })
         options.compilerArgs.add("--enable-preview")
     }
