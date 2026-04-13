@@ -30,7 +30,7 @@ class OracleDriveServiceImpl @Inject constructor(
     private val kaiAgent: KaiAgent,
     private val securityContext: SecurityContext,
     private val oracleDriveApi: OracleDriveApi,
-    private val hereticBridge: dev.aurakai.auraframefx.domains.genesis.core.HereticBridge
+    private val hereticBridge: dev.aurakai.auraframefx.domains.genesis.core.HereticBridge,
 ) : OracleDriveService, OrchestratableAgent {
 
     override val agentName: String = "OracleDrive"
