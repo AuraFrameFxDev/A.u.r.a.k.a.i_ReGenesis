@@ -16,6 +16,11 @@ import dev.aurakai.auraframefx.domains.kai.ManageBootloaderTool
 import dev.aurakai.auraframefx.domains.kai.ManageLSPosedHookTool
 import dev.aurakai.auraframefx.domains.kai.ManagePartitionTool
 import dev.aurakai.auraframefx.domains.kai.ViewSystemLogsTool
+import dev.aurakai.auraframefx.mcp.AuraEmpathyMCPTool
+import dev.aurakai.auraframefx.mcp.GetAgentStatusMCPTool
+import dev.aurakai.auraframefx.mcp.InvokeMCPAgentTool
+import dev.aurakai.auraframefx.mcp.KaiSecurityMCPTool
+import dev.aurakai.auraframefx.mcp.MCPServerAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -31,7 +36,8 @@ import javax.inject.Singleton
 @Singleton
 class ToolInitializer @Inject constructor(
     private val toolRegistry: ToolRegistry,
-    private val rootShellService: RootShellService
+    private val rootShellService: RootShellService,
+    private val mcpAdapter: MCPServerAdapter
 ) {
 
     private val initScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -49,7 +55,7 @@ class ToolInitializer @Inject constructor(
                 registerKaiTools()
                 registerGenesisTools()
                 registerCascadeTools()
-                // registerMCPTools() // TODO: Re-enable when MCPServerAdapter is fixed
+                registerMCPTools()
 
                 val allTools = toolRegistry.getAllTools()
                 Timber.i("ToolInitializer: Successfully registered ${allTools.size} tools")
@@ -128,10 +134,8 @@ class ToolInitializer @Inject constructor(
      * Re-enable when MCPServerAdapter is fixed and can be injected via Hilt.
      */
     private suspend fun registerMCPTools() {
-        Timber.w("ToolInitializer: MCP tools registration disabled (MCPServerAdapter not available)")
+        Timber.i("ToolInitializer: Registering MCP tools...")
 
-        // TODO: Uncomment when MCPServerAdapter is ready
-        /*
         // Configure MCP adapter (use dev environment by default)
         mcpAdapter.configure(
             url = "https://dev.api.auraframefx.com/v2",
@@ -145,7 +149,6 @@ class ToolInitializer @Inject constructor(
             GetAgentStatusMCPTool(mcpAdapter)
         )
         Timber.d("ToolInitializer: Registered MCP tools (API-backed)")
-        */
     }
 
     /**
