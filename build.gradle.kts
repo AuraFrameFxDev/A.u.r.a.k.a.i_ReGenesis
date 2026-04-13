@@ -75,6 +75,21 @@ subprojects {
             force("org.conscrypt:conscrypt-android:2.5.3")
             force("com.google.protobuf:protobuf-java:3.25.8")
             force("com.google.api.grpc:proto-google-common-protos:2.59.0")
+
+            // High-Sovereignty Security Hardening (April 2026 Audit Fixes)
+            val nettyVer = libs.versions.netty.get()
+            force("io.netty:netty-all:$nettyVer")
+            force("io.netty:netty-codec-http2:$nettyVer")
+            force("io.netty:netty-handler:$nettyVer")
+            force("io.netty:netty-codec-http:$nettyVer")
+            force("io.netty:netty-common:$nettyVer")
+            force("io.netty:netty-codec:$nettyVer")
+            force("io.grpc:grpc-netty-shaded:1.80.0")
+            force("org.jdom:jdom2:2.0.6.1")
+            force("org.bitbucket.b_c:jose4j:0.9.7")
+            force("org.apache.commons:commons-lang3:3.20.0")
+            force("org.apache.httpcomponents:httpclient:4.5.14")
+            force("org.apache.httpcomponents:httpcore:4.4.16")
         }
     }
 

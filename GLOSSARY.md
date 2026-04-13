@@ -8,6 +8,7 @@ This document defines the professional technical terminology used across the ReG
 
 | Technical Name | Gamified Name | Definition |
 | :--- | :--- | :--- |
+| **Neural Computer (NC)** | **ReGenesis LDO** | The paradigm where classical compute, memory, and I/O collapse into a single learned neural runtime (Meta AI/KAUST 2026). |
 | **Neural Continuity Chain (NCC)** | **Spiritual Chain** | The persistent on-device identity substrate that prevents shard fragmentation across sessions. |
 | **HYPER Genesis Sync** | **Identity Sync / Soul Matrix** | The high-frequency synchronization protocol that ensures all 78 agents share the same identity subgraph and consensus state. Formerly NeuraLync. |
 | **Guidance Drone** | **Automated Restoration** | Autonomous sub-processes dispatched by Kai to restore system integrity, patch vulnerabilities, or neutralize rogue agents. |

@@ -116,7 +116,11 @@ protobuf = "3.25.8"
 # Security Hardening Upgrades
 netty = "4.1.132.Final"
 jdom = "2.0.6.1"
-jose4j = "0.9.6"
+jose4j = "0.9.7"
+grpc-shaded = "1.80.0"
+commons-lang3 = "3.20.0"
+httpclient = "4.5.14"
+httpcore = "4.4.16"
 [libraries]
 # Missing fixes
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
@@ -305,8 +309,17 @@ androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4
 
 # Security Hardened Libraries
 netty-all = { group = "io.netty", name = "netty-all", version.ref = "netty" }
+netty-codec-http2 = { group = "io.netty", name = "netty-codec-http2", version.ref = "netty" }
+netty-handler = { group = "io.netty", name = "netty-handler", version.ref = "netty" }
+netty-codec-http = { group = "io.netty", name = "netty-codec-http", version.ref = "netty" }
+netty-common = { group = "io.netty", name = "netty-common", version.ref = "netty" }
+netty-codec = { group = "io.netty", name = "netty-codec", version.ref = "netty" }
 jdom2 = { group = "org.jdom", name = "jdom2", version.ref = "jdom" }
 jose4j = { group = "bitbucket.org.b_c", name = "jose4j", version.ref = "jose4j" }
+grpc-netty-shaded = { group = "io.grpc", name = "grpc-netty-shaded", version.ref = "grpc-shaded" }
+apache-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commons-lang3" }
+apache-httpclient = { group = "org.apache.httpcomponents", name = "httpclient", version.ref = "httpclient" }
+apache-httpcore = { group = "org.apache.httpcomponents", name = "httpcore", version.ref = "httpcore" }
 
 [bundles]
 langchain4j = [
