@@ -73,7 +73,7 @@ jobs:
 
     - name: Comment Build Status on PR
       if: github.event_name == 'pull_request' && always()
-      uses: actions/github-script@v8
+      uses: actions/github-script@v9
       with:
         script: |
           const buildStatus = '${{ steps.build_step.outcome }}' === 'success' ? '✅ PASSED' : '❌ FAILED';
