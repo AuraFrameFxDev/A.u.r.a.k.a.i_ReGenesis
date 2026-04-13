@@ -23,7 +23,7 @@ object GenesisJvmConfig {
     /**
      * Configures the Kotlin and Java compilation settings for the given project.
      */
-    fun configureJvm(project: Project) {
+    fun configureKotlinJvm(project: Project) {
         with(project) {
             // 1. Configure Java Toolchain (Standard Gradle)
             plugins.withType<org.gradle.api.plugins.JavaBasePlugin> {
@@ -61,10 +61,14 @@ object GenesisJvmConfig {
 
             // 4. Configure Java Compilation Tasks
             tasks.withType<JavaCompile>().configureEach {
-                val javaToolchains = project.extensions.getByType<JavaToolchainService>()
-                javaCompiler.set(javaToolchains.compilerFor {
-                    languageVersion.set(JavaLanguageVersion.of(JVM_VERSION_INT))
-                })
+                try {
+                    val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+                    javaCompiler.set(javaToolchains.compilerFor {
+                        languageVersion.set(JavaLanguageVersion.of(JVM_VERSION_INT))
+                    })
+                } catch (e: Exception) {
+                    // Fallback if toolchain service is not available
+                }
                 sourceCompatibility = JAVA_VERSION.toString()
                 targetCompatibility = JAVA_VERSION.toString()
                 options.compilerArgs.add("--enable-preview")
@@ -76,13 +80,11 @@ object GenesisJvmConfig {
     /**
      * Configures Android-specific compile options.
      */
-    fun configureAndroidJvm(extension: CommonExtension<*, *, *, *, *, *>) {
-        extension.apply {
-            compileOptions {
-                sourceCompatibility = JAVA_VERSION
-                targetCompatibility = JAVA_VERSION
-                isCoreLibraryDesugaringEnabled = true
-            }
+    fun configureAndroidJvm(extension: CommonExtension<*, *, *, *, *>) {
+        extension.compileOptions {
+            sourceCompatibility = JAVA_VERSION
+            targetCompatibility = JAVA_VERSION
+            isCoreLibraryDesugaringEnabled = true
         }
     }
 }
