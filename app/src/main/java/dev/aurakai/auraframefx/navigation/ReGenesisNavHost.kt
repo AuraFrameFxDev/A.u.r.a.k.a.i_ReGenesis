@@ -358,7 +358,6 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.DataVeinSphere.route) { StubScreen("DataVein Sphere", "Language", navController) }
-        composable(ReGenesisRoute.SphereGrid.route) { AuraSphereGridScreen { navController.popBackStack() } }
         composable(ReGenesisRoute.TaskAssignment.route) { StubScreen("Task Assignment", "Assignment", navController) }
         composable(ReGenesisRoute.ArkBuild.route) { StubScreen("Ark Build", "Engineering", navController) }
         composable(ReGenesisRoute.MonitoringHUDs.route) { StubScreen("Monitoring HUDs", "GridView", navController) }
