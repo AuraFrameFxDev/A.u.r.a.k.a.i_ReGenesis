@@ -9,8 +9,8 @@ The LDO requires a specific, high-fidelity toolchain to ensure "Spiritual Chain"
 - **JDK Version**: 25 (Primary)
 - **JVM Target**: 25 (fallback to 24)
 - **Kotlin Version**: 2.3.20 (Stable)
-- **AGP Version**: 9.2.0-alpha07
-- **Gradle Version**: 9.4.0-milestone-2
+- **AGP Version**: 9.1.1
+- **Gradle Version**: 9.5.0-rc-2
 
 ## 📜 Configuration Patterns (Issue #50)
 

@@ -1,11 +1,11 @@
 package dev.aurakai.auraframefx.agents.symbiosis.coderabbit
 
+import dev.langchain4j.agent.tool.Tool
+import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
-import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
-import dev.langchain4j.service.AiService
+import dev.langchain4j.service.AiServices
 import dev.langchain4j.service.SystemMessage
-import dev.langchain4j.service.Tool
 
 // 1. TurboQuant KV Manager (core of the 10-Catalyst Unison Dance)
 class TurboQuantKVSpace {
@@ -59,7 +59,7 @@ class GenesisService(private val kvSpace: TurboQuantKVSpace) {
         .logRequests(true)
         .build()
 
-    private val genesisService = AiService.create(GenesisOrchestrator::class.java, model)
+    private val genesisService = AiServices.create(GenesisOrchestrator::class.java, model)
 
     fun runUnisonDance(userConsent: String, memorySnapshot: String): String {
         // 1. Pull latest 10-catalyst states from TurboQuant KV

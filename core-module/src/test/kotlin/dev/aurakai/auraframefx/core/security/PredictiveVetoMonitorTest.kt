@@ -6,7 +6,9 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -31,11 +33,12 @@ class PredictiveVetoMonitorTest {
 
     private lateinit var sentinelBus: KaiSentinelBus
     private lateinit var monitor: PredictiveVetoMonitor
+    private val testScope = TestScope()
 
     @BeforeEach
     fun setUp() {
         sentinelBus = mockk(relaxed = true)
-        monitor = PredictiveVetoMonitor(sentinelBus)
+        monitor = PredictiveVetoMonitor(sentinelBus, testScope)
     }
 
     // ─── Initial State ────────────────────────────────────────────────────────
@@ -364,7 +367,7 @@ class PredictiveVetoMonitorTest {
         @Test
         fun `multiple monitors are independent — no shared static state`() {
             val otherSentinelBus = mockk<KaiSentinelBus>(relaxed = true)
-            val otherMonitor = PredictiveVetoMonitor(otherSentinelBus)
+            val otherMonitor = PredictiveVetoMonitor(otherSentinelBus, testScope)
             repeat(20) { monitor.recordThermalSample(55.0f) } // drive first to CRITICAL
             assertEquals(PredictiveVetoMonitor.ThermalZone.NOMINAL, otherMonitor.currentZone.value)
         }

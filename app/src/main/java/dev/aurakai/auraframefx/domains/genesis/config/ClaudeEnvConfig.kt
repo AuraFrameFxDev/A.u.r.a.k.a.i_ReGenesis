@@ -83,7 +83,7 @@ class ClaudeEnvConfig @Inject constructor(
     val uiGates: String get() = envVars["UI_GATES"] ?: ""
 
     // === VERSIONS ===
-    val agpVersion: String get() = envVars["AGP_VERSION"] ?: "9.1.0-alpha04"
+    val agpVersion: String get() = envVars["AGP_VERSION"] ?: "9.1.1"
     val gradleVersion: String get() = envVars["GRADLE_VERSION"] ?: "9.4.0-milestone-2"
     val kotlinVersion: String get() = envVars["KOTLIN_VERSION"] ?: "2.3.0"
     val kspVersion: String get() = envVars["KSP_VERSION"] ?: "2.3.4"

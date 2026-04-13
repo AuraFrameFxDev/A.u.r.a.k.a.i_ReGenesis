@@ -98,12 +98,12 @@ Agents can **combine abilities** through Fusion Mode:
 | Component | Version | Status |
 |-----------|---------|--------|
 | **Java JDK** | 25 LTS (September 2025) | ✅ Required |
-| **Kotlin** | 2.3.0 | ✅ Configured |
-| **Android Gradle Plugin** | 9.1.0-alpha01 | ✅ Locked |
+| **Kotlin** | 2.3.20 | ✅ Configured |
+| **Android Gradle Plugin** | 9.1.1 | ✅ Locked |
 | **Target SDK** | 36 (Android 16 Beta) | ✅ Set |
-| **Min SDK** | 29 (Android 10) | ✅ Set |
+| **Min SDK** | 34 | ✅ Set |
 | **Compile SDK** | 36 | ✅ Set |
-| **KSP** | 2.3.0-1.0.30 | ✅ Configured |
+| **KSP** | 2.3.6 | ✅ Configured |
 
 ### Build Configuration
 
@@ -114,6 +114,8 @@ Agents can **combine abilities** through Fusion Mode:
 - ✅ Kai SentinelFortress: JVM 25
 - ✅ Cascade DataStream modules: JVM 25
 - ✅ YukiHook conventions: JVM 25
+- ✅ Gradle Wrapper: 9.5.0-rc-2 (Bleeding Edge)
+- ✅ AGP: 9.1.1 (Stable)
 
 **Critical Dependencies**:
 ```gradle

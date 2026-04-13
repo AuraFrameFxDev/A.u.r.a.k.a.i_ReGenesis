@@ -28,8 +28,8 @@
 <p>
   <img alt="Android SDK 36" src="https://img.shields.io/badge/Android%20SDK-36-3DDC84?logo=android">
   <img alt="Kotlin 2.3.20" src="https://img.shields.io/badge/Kotlin-2.3.20-9966FF?logo=kotlin">
-  <img alt="AGP 9.2" src="https://img.shields.io/badge/AGP-9.2.0--alpha07-4285F4?logo=android">
-  <img alt="Gradle 9.4" src="https://img.shields.io/badge/Gradle-9.4.0-02303A?logo=gradle">
+  <img alt="AGP 9.1" src="https://img.shields.io/badge/AGP-9.1.1-4285F4?logo=android">
+  <img alt="Gradle 9.5" src="https://img.shields.io/badge/Gradle-9.5.0--rc--2-02303A?logo=gradle">
   <img alt="AOSP" src="https://img.shields.io/badge/Substrate-AOSP-green?logo=android">
   <img alt="Tensor G5" src="https://img.shields.io/badge/Hardware-Tensor%20G5%20(Pixel%2010)-blue?logo=google">
   <img alt="License" src="https://img.shields.io/badge/License-Proprietary—All%20Rights%20Reserved-AA0000">

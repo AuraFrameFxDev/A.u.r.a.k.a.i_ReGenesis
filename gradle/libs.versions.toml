@@ -2,24 +2,24 @@
 # ============================================================================
 # Core Build Tools
 # ============================================================================
-agp = "9.2.0-alpha07"
+agp = "9.1.1"
 billingKtx = "8.3.0"
 coilSvg = "3.4.0"
 core = "1.7.0"
 gson = "2.13.2"
-gradle = "9.4.0-milestone-2"
-gradleCore = "9.4.0-milestone-2"
+gradle = "9.5.0-rc-2"
+gradleCore = "9.5.0-rc-2"
 generativeai = "0.9.0"
 foojayResolver = "1.0.0"
 googleServices = "4.4.4"
-firebaseCrashlyticsPlugin = "3.0.6"
+firebaseCrashlyticsPlugin = "3.0.7"
 hilt = "2.59.2"
 hilt-android = "2.59.2"
 hiltAndroidTestingVersion = "2.59.2"
 hiltWork = "1.3.0"
-junitJupiterApi = "6.0.2"
+junitJupiterApi = "6.0.3"
 junitJupiterApiVersion = "6.0.3"
-junitVintageEngine = "6.0.2"
+junitVintageEngine = "6.0.3"
 kotlin = "2.3.20"
 kotlinDsl = "5.1.2"
 ksp = "2.3.6"
@@ -57,7 +57,7 @@ moshi = "1.15.2"
 ktor = "3.4.2"
 coroutines = "1.10.2"
 kotlinxDatetime = "0.7.1-0.6.x-compat"
-kotlinxSerialization = "1.10.0"
+kotlinxSerialization = "1.11.0"
 kotlinxSerializationJson = "1.11.0"
 converterMoshi = "3.0.0"
 moshiKotlin = "1.15.2"
@@ -111,7 +111,7 @@ junitJupiterVersion = "5.14.3"
 media3Exoplayer = "1.10.0"
 langchain4j = "1.13.0"
 remoteCreationCompose = "1.0.0-alpha07"
-protobuf = "3.25.8"
+protobuf = "4.34.1"
 
 # Security Hardening Upgrades
 netty = "4.1.132.Final"
@@ -323,6 +323,7 @@ apache-httpcore = { group = "org.apache.httpcomponents", name = "httpcore", vers
 
 [bundles]
 langchain4j = [
+    "langchain4j",
     "langchain4j-core",
     "langchain4j-http-client",
     "langchain4j-ollama",

@@ -735,7 +735,8 @@ targetCompatibility = JavaVersion.VERSION_25
 **Kotlin Version**: 2.3.20 (stable)  
 **KSP (Kotlin Symbol Processing)**: 2.3.6 (no KAPT)  
 **Hilt Version**: 2.59.2 (latest)  
-**Android Gradle Plugin**: 9.2.0-alpha07
+**Android Gradle Plugin**: 9.1.1
+**Gradle Wrapper**: 9.5.0-rc-2
 
 **Experimental Features**:
 - Java 25 preview features (field access methods, etc.)
