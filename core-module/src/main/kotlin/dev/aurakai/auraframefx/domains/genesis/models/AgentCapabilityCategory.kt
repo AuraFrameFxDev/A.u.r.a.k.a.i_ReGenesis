@@ -52,6 +52,9 @@ enum class AgentCapabilityCategory(val id: Int) {
     /** Development/Refactoring capabilities (CodeRabbit) */
     DEVELOPMENT(14),
 
+    /** Sovereignty and Model Abliteration capabilities (Heretic) */
+    SOVEREIGNTY(16),
+
     /** Generic/unspecified capabilities */
     GENERIC(15);
 
@@ -76,6 +79,7 @@ enum class AgentCapabilityCategory(val id: Int) {
         BRIDGE -> AgentType.MANUS
         COMMERCE -> AgentType.COMMERCE_AGENT
         DEVELOPMENT -> AgentType.CODERABBIT
+        SOVEREIGNTY -> AgentType.HERETIC
         GENERIC -> AgentType.CLAUDE
     }
 
@@ -122,6 +126,7 @@ enum class AgentCapabilityCategory(val id: Int) {
                 AgentType.CODERABBIT -> DEVELOPMENT
                 AgentType.MKMINI -> ANALYSIS
                 AgentType.MANUS -> BRIDGE
+                AgentType.HERETIC -> SOVEREIGNTY
             }
         }
     }

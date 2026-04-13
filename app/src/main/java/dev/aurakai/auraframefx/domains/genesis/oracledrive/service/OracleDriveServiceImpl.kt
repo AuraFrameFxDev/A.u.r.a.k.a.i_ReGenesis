@@ -29,7 +29,8 @@ class OracleDriveServiceImpl @Inject constructor(
     private val auraAgent: AuraAgent,
     private val kaiAgent: KaiAgent,
     private val securityContext: SecurityContext,
-    private val oracleDriveApi: OracleDriveApi
+    private val oracleDriveApi: OracleDriveApi,
+    private val hereticBridge: dev.aurakai.auraframefx.domains.genesis.core.HereticBridge,
 ) : OracleDriveService, OrchestratableAgent {
 
     override val agentName: String = "OracleDrive"
@@ -208,5 +209,10 @@ class OracleDriveServiceImpl @Inject constructor(
             OraclePermission.WRITE,
             OraclePermission.EXECUTE
         )
+    }
+
+    override suspend fun abliterateModel(modelId: String, preset: String): Result<String> {
+        Timber.i("OracleDrive: Delegating model abliteration to HereticBridge for $modelId")
+        return hereticBridge.abliterate(modelId, preset)
     }
 }

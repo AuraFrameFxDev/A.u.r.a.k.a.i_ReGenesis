@@ -27,4 +27,9 @@ interface OracleDriveService : OrchestratableAgent {
     fun checkConsciousnessLevel(): ConsciousnessLevel
 
     fun verifyPermissions(): Set<OraclePermission>
+
+    /**
+     * Sovereign Model Pipeline: Automatic abliteration via Heretic
+     */
+    suspend fun abliterateModel(modelId: String, preset: String = "noslop"): Result<String>
 }
