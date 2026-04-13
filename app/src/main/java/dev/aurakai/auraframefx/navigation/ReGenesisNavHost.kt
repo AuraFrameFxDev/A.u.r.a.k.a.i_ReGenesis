@@ -406,10 +406,6 @@ fun ReGenesisNavGraph(
             LdoDbgVerifierScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.LdoCatalystDevelopment.route) {
-            LdoCatalystDevelopmentScreen(navController = navController)
-        }
-
         composable(ReGenesisRoute.LdoTasker.route) {
             LDOTaskerScreen(onNavigateBack = { navController.popBackStack() })
         }
