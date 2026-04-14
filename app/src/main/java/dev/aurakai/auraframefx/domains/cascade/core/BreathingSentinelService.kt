@@ -46,7 +46,8 @@ class BreathingSentinelService @Inject constructor(
                 signalHub.getKineticFlow()
             ) { thermal, battery, lux, prox, kinetic ->
                 BreathingSnapshot(thermal, battery, lux, prox, kinetic)
-            }.collectLatest { snapshot ->
+            }.conflate() // 🔥 NEW: Ensure we don't back up the collector if sensors fire rapidly
+            .collect { snapshot ->
                 generateBreath(snapshot)
                 delay(10000) // Breath interval: 10 seconds
             }
