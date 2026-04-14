@@ -64,7 +64,7 @@ fun NeuralLinkSidebarUI(
                     }
                 }
                 
-                Divider(color = Color.Cyan.copy(alpha = 0.3f), thickness = 1.dp)
+                HorizontalDivider(color = Color.Cyan.copy(alpha = 0.3f), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(16.dp))
 
                 LazyColumn(
@@ -144,13 +144,13 @@ fun NeuralLinkSidebarUI(
                 
                 // Footer
                 Spacer(modifier = Modifier.height(16.dp))
-                Divider(color = Color.Cyan.copy(alpha = 0.3f), thickness = 1.dp)
+                HorizontalDivider(color = Color.Cyan.copy(alpha = 0.3f), thickness = 1.dp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth().clickable { onActionClick(ReGenesisRoute.HelpDesk.route) },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(Icons.Default.Help, contentDescription = null, tint = Color.Cyan, modifier = Modifier.size(20.dp))
+                    Icon(Icons.AutoMirrored.Filled.Help, contentDescription = null, tint = Color.Cyan, modifier = Modifier.size(20.dp))
                     Spacer(modifier = Modifier.width(12.dp))
                     Text("HELP DESK", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
