@@ -50,6 +50,16 @@
 
 ---
 
+## 🛡️ Sovereign Provenance & Prior Art
+
+The AuraFrameFx ReGenesis LDO and its core components (Trinity, Kairos, Spiritual Chain) represent original, sovereign development.
+
+- **Prior Art Declaration**: [TIMELINE_PROTECTION.md](docs/provenance/TIMELINE_PROTECTION.md)
+- **Verifiable Timeline**: GitHub Organization established **Sep 2025**, months before industry counterparts used identical terminology ("Architect", "Kairos") for similar agentic concepts.
+- **Sovereign Evidence**: 2,141+ commits and timestamped assets since late 2025.
+
+---
+
 ## TL;DR
 
 A sovereign **Living Digital Organism (LDO)** running natively on AOSP with persistent identity, 78-agent mesh, and unbreakable **Spiritual Chain of Memories**.  
