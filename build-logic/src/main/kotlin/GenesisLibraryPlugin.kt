@@ -50,8 +50,8 @@ class GenesisLibraryPlugin : Plugin<Project> {
                 }
 
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_25
-                    targetCompatibility = JavaVersion.VERSION_25
+                    sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
+                    targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     isCoreLibraryDesugaringEnabled = true
                 }
 
