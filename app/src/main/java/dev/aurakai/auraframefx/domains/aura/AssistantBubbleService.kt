@@ -158,20 +158,23 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                             }
                             windowManager.updateViewLayout(overlayLayout, params)
                         },
-                        onActionClick = { action ->
-                            Timber.i("Neural Link Action: $action")
-                            // Map Sidebar actions to app routes
-                            when (action) {
-                                "VOICE" -> "sandbox_screen"       // Laboratory
-                                "CONNECT" -> "data_stream_monitoring"
-                                "ASSIGN" -> "task_assignment"
-                                "DESIGN" -> "customization_hub"   // ReGenesisCustomizationHub
-                                "CREATE" -> "ark_build"
-                                "GAUGE" -> {
-                                    gaugeVisible.value = !gaugeVisible.value
-                                    null
+                        onActionClick = { route ->
+                            Timber.i("Neural Link Navigation to: $route")
+                            
+                            if (route == "GAUGE") {
+                                gaugeVisible.value = !gaugeVisible.value
+                            } else {
+                                // Launch MainActivity with the route as an extra
+                                val navIntent = Intent(this@AssistantBubbleService, dev.aurakai.auraframefx.MainActivity::class.java).apply {
+                                    putExtra("navigate_to", route)
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                                 }
-                                else -> null
+                                startActivity(navIntent)
+                                
+                                // Automatically collapse sidebar after click
+                                sidebarVisible.value = false
+                                params.width = 40
+                                params.flags = params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                             }
                             windowManager.updateViewLayout(overlayLayout, params)
                         }

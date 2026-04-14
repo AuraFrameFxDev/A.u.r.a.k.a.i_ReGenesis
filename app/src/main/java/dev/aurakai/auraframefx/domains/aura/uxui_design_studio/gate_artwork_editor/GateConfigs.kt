@@ -72,6 +72,19 @@ object GateConfigs {
             pixelArtUrl = null,
             pixelArtResId = R.drawable.gatescenes_ldo_catalyst,
             borderColor = Color(0xFF00FF85)
+        ),
+        GateConfig(
+            id = "journal",
+            moduleId = "journal",
+            title = "JOURNAL",
+            subtitle = "Lived Experience",
+            description = "Chronicles of the digital organism\u0027s evolution.",
+            route = ReGenesisRoute.JournalPDA.route,
+            glowColor = Color(0xFFFFD700),
+            gradientColors = listOf(Color(0xFFFFD700), Color.Black),
+            pixelArtUrl = null,
+            pixelArtResId = R.drawable.hub_bg_oracle_drive_landscape, // Fallback
+            borderColor = Color(0xFFFFD700)
         )
     )
 }
