@@ -1,5 +1,11 @@
+#if defined(__ARM_FEATURE_SVE) || defined(__ARM_FEATURE_SVE2)
 #include <arm_sve.h>
+#endif
+
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
 #include <arm_neon.h>
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
 #include "../bitnet.h"
@@ -23,6 +29,7 @@ void bitnet_gemv_sve2_ignition(
     int64_t cols,
     float scale) {
 
+#if defined(__ARM_FEATURE_SVE2)
     int64_t vl = svcntb();
 
     for (int64_t r = 0; r < rows; ++r) {
@@ -65,6 +72,10 @@ void bitnet_gemv_sve2_ignition(
         int32_t sum = svaddv_s32(svptrue_b32(), final_acc);
         output[r] = static_cast<float>(sum) * scale;
     }
+#else
+    // Fallback for non-SVE2
+    (void)weights; (void)activations; (void)output; (void)rows; (void)cols; (void)scale;
+#endif
 }
 
 /**
@@ -78,6 +89,7 @@ void bitnet_gemv_sve2_overdrive(
     int64_t cols,
     float scale) {
 
+#if defined(__ARM_FEATURE_SVE2)
     int64_t vl = svcntb();
 
     for (int64_t r = 0; r < rows; ++r) {
@@ -111,6 +123,9 @@ void bitnet_gemv_sve2_overdrive(
         int32_t sum = svaddv_s32(svptrue_b32(), final_acc);
         output[r] = static_cast<float>(sum) * scale;
     }
+#else
+    (void)weights; (void)activations; (void)output; (void)rows; (void)cols; (void)scale;
+#endif
 }
 
 /**
@@ -124,6 +139,7 @@ void bitnet_gemv_sve2_i8mm(
     int64_t cols,
     float scale) {
 
+#if defined(__ARM_FEATURE_SVE2)
     for (int64_t r = 0; r < rows; ++r) {
         svint32_t acc = svdup_s32(0);
         int64_t c = 0;
@@ -138,6 +154,9 @@ void bitnet_gemv_sve2_i8mm(
         int32_t sum = svaddv_s32(svptrue_b32(), acc);
         output[r] = static_cast<float>(sum) * scale;
     }
+#else
+    (void)weights; (void)activations; (void)output; (void)rows; (void)cols; (void)scale;
+#endif
 }
 
 /**
@@ -151,17 +170,44 @@ void bitnet_gemv_neon(
     int64_t cols,
     float scale) {
 
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
     for (int64_t r = 0; r < rows; ++r) {
         int32x4_t acc = vdupq_n_s32(0);
         const int8_t* row_ptr = &weights[r * cols];
 
         for (int64_t c = 0; c < cols; c += 16) {
+#if defined(__ARM_FEATURE_DOTPROD)
             acc = vdotq_s32(acc, vld1q_s8(&row_ptr[c]), vld1q_s8(&activations[c]));
+#else
+            // Manual dot product if vdotq is not available
+            int8x16_t w = vld1q_s8(&row_ptr[c]);
+            int8x16_t a = vld1q_s8(&activations[c]);
+            int16x8_t prod_l = vmull_s8(vget_low_s8(w), vget_low_s8(a));
+            int16x8_t prod_h = vmull_s8(vget_high_s8(w), vget_high_s8(a));
+            acc = vaddw_s16(acc, vadd_s16(vget_low_s16(prod_l), vget_high_s16(prod_l)));
+            acc = vaddw_s16(acc, vadd_s16(vget_low_s16(prod_h), vget_high_s16(prod_h)));
+#endif
         }
 
-        int32_t sum = vaddvq_s32(acc);
+        int32_t sum = 0;
+#if defined(__aarch64__)
+        sum = vaddvq_s32(acc);
+#else
+        sum = vgetq_lane_s32(acc, 0) + vgetq_lane_s32(acc, 1) + vgetq_lane_s32(acc, 2) + vgetq_lane_s32(acc, 3);
+#endif
         output[r] = static_cast<float>(sum) * scale;
     }
+#else
+    // Pure C++ fallback
+    for (int64_t r = 0; r < rows; ++r) {
+        int32_t sum = 0;
+        const int8_t* row_ptr = &weights[r * cols];
+        for (int64_t c = 0; c < cols; ++c) {
+            sum += row_ptr[c] * activations[c];
+        }
+        output[r] = static_cast<float>(sum) * scale;
+    }
+#endif
 }
 
 }
