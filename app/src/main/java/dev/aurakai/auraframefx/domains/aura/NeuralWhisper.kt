@@ -69,20 +69,15 @@ class NeuralWhisper @Inject constructor(
      * Language, voice, pitch, and rate configuration are not yet implemented.
      */
     private fun initializeTts() {
-        // TODO: Implement robust TTS initialization, including language availability checks.
-        // Consider user preferences for voice, pitch, speed.
         tts = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                // TODO: Set language, voice, pitch, rate based on settings or defaults.
-                // Example: val result = tts?.setLanguage(Locale.US)
-                // if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                //     Log.e(TAG, "TTS language is not supported.")
-                // } else {
-                //     isTtsInitialized = true
-                //     Log.d(TAG, "TTS Initialized successfully.")
-                // }
-                isTtsInitialized = true // Simplified for now
-                Log.d(TAG, "TTS Initialized (simplified). Language/voice setup TODO.")
+                val result = tts?.setLanguage(Locale.US)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e(TAG, "TTS language (US) is not supported.")
+                } else {
+                    isTtsInitialized = true
+                    Log.d(TAG, "TTS Initialized successfully with US English.")
+                }
             } else {
                 Log.e(TAG, "TTS Initialization failed with status: $status")
             }
@@ -95,14 +90,10 @@ class NeuralWhisper @Inject constructor(
      * Creates a SpeechRecognizer instance and updates the STT initialization state. Logs an error if speech recognition is unavailable.
      */
     private fun initializeStt() {
-        // TODO: Implement STT initialization using Android's SpeechRecognizer or a third-party library.
-        // This will involve setting up a SpeechRecognitionListener.
-        // Ensure necessary permissions (RECORD_AUDIO) are handled by the calling components.
         if (SpeechRecognizer.isRecognitionAvailable(context)) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
-            // speechRecognizer?.setRecognitionListener(YourRecognitionListener()) // TODO: Implement RecognitionListener
             isSttInitialized = true
-            Log.d(TAG, "STT (SpeechRecognizer) is available. Listener TODO.")
+            Log.d(TAG, "STT (SpeechRecognizer) is initialized.")
         } else {
             Log.e(TAG, "STT (SpeechRecognizer) is not available on this device.")
         }
@@ -111,31 +102,53 @@ class NeuralWhisper @Inject constructor(
     /**
      * Converts audio input to transcribed text using speech-to-text processing.
      *
-     * This is a placeholder implementation; actual speech recognition is not yet implemented.
-     *
-     * @param audioInput The audio data or trigger for initiating speech recognition.
-     * @return The transcribed text if successful, or null if speech recognition is not initialized.
+     * @param audioInput Intent for speech recognition (optional).
+     * @return The transcribed text if successful, or null if speech recognition failed.
      */
-    suspend fun speechToText(audioInput: Any /* Placeholder type */): String? {
-        // TODO: Implement actual STT logic.
-        // This might involve:
-        // 1. Checking for RECORD_AUDIO permission (should be done by caller or a dedicated permission manager).
-        // 2. Creating an Intent for speech recognition.
-        // 3. Starting the speechRecognizer.listen(intent).
-        // 4. Handling results asynchronously via a listener and potentially a callback/Flow.
-        if (!isSttInitialized) {
+    suspend fun speechToText(audioInput: Any? = null): String? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+        if (!isSttInitialized || speechRecognizer == null) {
             Log.w(TAG, "STT not initialized, cannot process speech to text.")
-            return null
+            if (cont.isActive) cont.resume(null, onCancellation = null)
+            return@suspendCancellableCoroutine
         }
-        Log.d(
-            TAG,
-            "speechToText called (TODO: actual implementation with listener and async result)"
-        )
-        _conversationStateFlow.value = ConversationState.Listening
-        // Simulate processing
-        kotlinx.coroutines.delay(1000) // Placeholder for actual STT processing
-        _conversationStateFlow.value = ConversationState.Processing("Transcribing audio...")
-        return "Placeholder transcribed text from audio."
+
+        val listener = object : android.speech.RecognitionListener {
+            override fun onReadyForSpeech(params: android.os.Bundle?) {
+                _conversationStateFlow.value = ConversationState.Listening
+            }
+            override fun onBeginningOfSpeech() {}
+            override fun onRmsChanged(rmsdB: Float) {}
+            override fun onBufferReceived(buffer: ByteArray?) {}
+            override fun onEndOfSpeech() {
+                _conversationStateFlow.value = ConversationState.Processing("Transcribing...")
+            }
+            override fun onError(error: Int) {
+                Log.e(TAG, "STT Error: $error")
+                _conversationStateFlow.value = ConversationState.Idle
+                if (cont.isActive) cont.resume(null, onCancellation = null)
+            }
+            override fun onResults(results: android.os.Bundle?) {
+                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                val transcript = matches?.getOrNull(0)
+                _conversationStateFlow.value = ConversationState.Idle
+                if (cont.isActive) cont.resume(transcript, onCancellation = null)
+            }
+            override fun onPartialResults(partialResults: android.os.Bundle?) {}
+            override fun onEvent(eventType: Int, params: android.os.Bundle?) {}
+        }
+
+        speechRecognizer?.setRecognitionListener(listener)
+        
+        val intent = (audioInput as? android.content.Intent) ?: android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        }
+
+        speechRecognizer?.startListening(intent)
+
+        cont.invokeOnCancellation {
+            speechRecognizer?.stopListening()
+        }
     }
 
     /**
@@ -148,23 +161,28 @@ class NeuralWhisper @Inject constructor(
      * @return `true` if the synthesis request is accepted (placeholder), or `false` if TTS is not initialized.
      */
     fun textToSpeech(text: String, locale: Locale = Locale.US): Boolean {
-        // TODO: Implement actual TTS logic.
-        // This involves:
-        // 1. Checking if TTS is initialized and language is set.
-        // 2. Using tts?.speak(text, TextToSpeech.QUEUE_ADD, null, "utteranceId")
-        // 3. Handling UtteranceProgressListener for more advanced control if needed.
         if (!isTtsInitialized || tts == null) {
             Log.w(TAG, "TTS not initialized, cannot synthesize speech.")
             return false
         }
-        Log.d(TAG, "textToSpeech called for: '$text' (TODO: actual TTS speak call)")
-        // tts?.language = locale // TODO: Ensure language is set correctly before speaking
-        // val result = tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
-        // return result == TextToSpeech.SUCCESS
-        _conversationStateFlow.value = ConversationState.Speaking
-        // Simulate speaking
-        // kotlinx.coroutines.GlobalScope.launch { kotlinx.coroutines.delay(1000); _conversationStateFlow.value = ConversationState.Idle } // Example state change
-        return true // Placeholder
+        Log.d(TAG, "textToSpeech: $text")
+
+        tts?.language = locale
+        
+        tts?.setOnUtteranceProgressListener(object : android.speech.tts.UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                _conversationStateFlow.value = ConversationState.Speaking
+            }
+            override fun onDone(utteranceId: String?) {
+                _conversationStateFlow.value = ConversationState.Idle
+            }
+            override fun onError(utteranceId: String?) {
+                _conversationStateFlow.value = ConversationState.Idle
+            }
+        })
+
+        val result = tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "AuraWhisper_" + System.currentTimeMillis())
+        return result == TextToSpeech.SUCCESS
     }
 
     /**

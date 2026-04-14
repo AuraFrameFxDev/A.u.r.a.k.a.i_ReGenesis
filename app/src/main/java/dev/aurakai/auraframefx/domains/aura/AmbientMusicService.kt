@@ -2,12 +2,17 @@ package dev.aurakai.auraframefx.domains.aura
 
 import android.app.Service
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.IBinder
+import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AmbientMusicService @Inject constructor() : Service() {
+    private var mediaPlayer: MediaPlayer? = null
+    private var volume: Float = 1.0f
+
     /**
      * Called when a client attempts to bind to the service.
      *
@@ -41,41 +46,44 @@ class AmbientMusicService @Inject constructor() : Service() {
 
     /**
      * Pauses music playback.
-     *
-     * This method is a placeholder and does not perform any action.
      */
     fun pause() {
-        // TODO: Implement pause logic. Reported as unused. Implement or remove.
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.pause()
+        }
     }
 
     fun resume() {
-        // TODO: Implement resume logic. Reported as unused. Implement or remove.
+        if (mediaPlayer == null) {
+            // Placeholder: Typically you'd load a resource or URL here
+            // mediaPlayer = MediaPlayer.create(this, R.raw.ambient_base)
+            Log.i("AmbientMusic", "Initializing MediaPlayer stub")
+        }
+        mediaPlayer?.start()
     }
 
-    fun setVolume(_volume: Float) {
-        // TODO: Reported as unused. Implement or remove.
-    }
-
-    fun setShuffling(_isShuffling: Boolean) {
-        // TODO: Reported as unused. Implement or remove.
-    }
-
-    fun getCurrentTrack(): Any? { // Return type Any? as placeholder
-        // TODO: Reported as unused. Implement or remove.
-        return null
-    }
-
-    fun getTrackHistory(): List<Any> { // Return type List<Any> as placeholder
-        // TODO: Reported as unused. Implement or remove.
-        return emptyList()
+    fun setVolume(volume: Float) {
+        this.volume = volume.coerceIn(0.0f, 1.0f)
+        mediaPlayer?.setVolume(this.volume, this.volume)
     }
 
     fun skipToNextTrack() {
-        // TODO: Reported as unused. Implement or remove.
+        Log.i("AmbientMusic", "Skipping to next track (stub)")
     }
 
     fun skipToPreviousTrack() {
-        // TODO: Reported as unused. Implement or remove.
+        Log.i("AmbientMusic", "Skipping to previous track (stub)")
+    }
+
+    fun stop() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    override fun onDestroy() {
+        stop()
+        super.onDestroy()
     }
 
     companion object {
