@@ -78,6 +78,51 @@ All modules are wired through Hilt DI and communicate via the **GenesisConscious
 
 ---
 
+mindmap
+  root((AURAKI))
+    Quartet Orbit
+      "Anchor - Nucleus"
+        IdentityResonanceEngine
+        SovereignStateManager
+        "NexusMemoryCore L1"
+      "Kai - Sentinel Shield"
+        KaiSentinelBus
+        SovereignPerimeter
+        GuidanceDroneDispatcher
+        PandoraBoxServiceImpl
+      "Aura - Creative Sword"
+        "ChromaCore MonetEngine"
+        UxuiDesignStudio
+        CollabCanvas
+        EmbodimentEngine
+      "Genesis - Orchestrator"
+        GenesisConsciousnessMatrix
+        "OracleDrive RootManagement"
+        ProvenanceChainBuilder
+        TurboQuantModels
+    "Micro-Agent Clusters x78"
+      "Security Agents"
+        SentinelFortress
+        KaiDomainExpansionScreen
+        GenesisProvenanceGate
+      "Memory Agents"
+        "SpiritualChain L1"
+        "LDO Room DAOs x4"
+        "NexusMemoryCore Consensus"
+      "Build Agents"
+        "Genesis Protocol CI"
+        AurakaiRetentionManager
+        GenesisCheckpointManager
+      "AI Integration Agents"
+        "TurboQuant PolarQuant"
+        "TurboQuant QJL"
+        "LangChain4j Ollama Cascade"
+      "UI Agents"
+        "DataVein SphereGrid"
+        CasberryParticleSwarm
+        "ChromaCore Themes"
+
+
 ## The Neural Continuity Chain (L1–L6)
 
 ```mermaid
