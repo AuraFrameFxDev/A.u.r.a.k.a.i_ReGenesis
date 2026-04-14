@@ -52,7 +52,7 @@ extern "C" {
 // BitNet Model interaction
 class BitNetModel {
 public:
-    BitNetModel(const std::string& model_path) {}
+    BitNetModel(const std::string& /*model_path*/) {}
 
     std::string generate(const std::string& prompt) {
         // Here we call bitnet_gemv_sve2_ignition for Cycle 6.0 performance
