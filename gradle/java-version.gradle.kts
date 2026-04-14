@@ -59,9 +59,9 @@ allprojects {
         - Java Version: $jreVersion
         - Java Home: $jreHome
         - Active Java Toolchain: ${JavaVersion.current()}
-        - Target Java Toolchain: 25
-        - Java Bytecode Target: 25 (sourceCompatibility/targetCompatibility)
-        - Kotlin Compiler Target: 25
+        - Target Java Toolchain: 26
+        - Java Bytecode Target: 26 (sourceCompatibility/targetCompatibility)
+        - Kotlin Compiler Target: 26
         - Project: ${project.name} (${project.path})
         ===================================================================""".trimIndent()
         )

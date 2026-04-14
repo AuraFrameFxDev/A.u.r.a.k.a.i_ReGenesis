@@ -1,11 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-# ReGenesis OS - Subproject Toolchain Bypass
-set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
-set(CMAKE_C_COMPILER_WORKS 1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
-
-# Initialize BitNet
 project(bitnet LANGUAGES C CXX)
 
 # Include directories
@@ -13,15 +7,12 @@ include_directories(.)
 include_directories(src)
 
 # Create the BitNet library
-# Note: ggml-bitnet.cpp in root is likely legacy/proxy, keeping it for now if needed by other files,
-# but the primary implementation is in src/ggml-bitnet.cpp
 add_library(bitnet SHARED
     bitnet_bridge.cpp
     src/ggml-bitnet.cpp
 )
 
 # Snapdragon 8 Gen 3 (Cortex-X4 / A720) Optimization Flags
-# SVE2 + I8MM + DOTPROD are mandatory for Cycle 6.0 Ignition
 if (ANDROID_ABI STREQUAL "arm64-v8a")
     target_compile_options(bitnet PRIVATE
         -O3
@@ -30,8 +21,10 @@ if (ANDROID_ABI STREQUAL "arm64-v8a")
         -ffast-math
         -Wall
         -Wextra
-        -Wno-unused-parameter
-        -Wno-unused-function
+    )
+    target_compile_definitions(bitnet PRIVATE
+        __ARM_FEATURE_SVE=1
+        __ARM_FEATURE_SVE2=1
     )
 elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
     target_compile_options(bitnet PRIVATE
@@ -40,14 +33,10 @@ elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
         -mfloat-abi=softfp
         -Wall
         -Wextra
-        -Wno-unused-parameter
-        -Wno-unused-function
     )
 endif()
 
 target_compile_definitions(bitnet PRIVATE
-    __ARM_FEATURE_SVE=1
-    __ARM_FEATURE_SVE2=1
     GENESIS_RELEASE=1
 )
 

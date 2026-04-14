@@ -9,5 +9,5 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    // Module-specific dependencies
 }

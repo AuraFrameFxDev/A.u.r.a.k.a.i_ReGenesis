@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-# ReGenesis OS - Standard NDK Toolchain
-# Removed bypass flags to allow proper initialization in AGP 9.0
-
 project("auraframefx" LANGUAGES C CXX)
 
 # Set C++ standard
@@ -10,29 +7,22 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Genesis Protocol - AI Processing Optimizations
-# Advanced ARMv8.2-A + Neon support for Pixel 10 class devices
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
+# Common flags
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
 
-if (ANDROID_ABI STREQUAL "armeabi-v7a")
-    add_compile_options(
-        -mfpu=neon
-        -mfloat-abi=softfp
-    )
+# Architecture-specific optimizations
+if (ANDROID_ABI STREQUAL "arm64-v8a")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv8.2-a+dotprod+i8mm+sve2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv8.2-a+dotprod+i8mm+sve2")
+    add_compile_options(-mtune=cortex-a55)
+    add_definitions(-D__ARM_NEON)
+    add_definitions(-D__ARM_FEATURE_DOTPROD)
+    add_definitions(-D__ARM_FEATURE_I8MM)
+elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
+    add_compile_options(-mfpu=neon -mfloat-abi=softfp)
+    add_definitions(-D__ARM_NEON)
 endif()
-
-add_compile_options(
-    -mtune=cortex-a55
-    -D__ARM_NEON
-    -D__ARM_FEATURE_DOTPROD
-    -D__ARM_FEATURE_I8MM
-)
-
-# Optional: Force Neon for all files
-add_definitions(-D__ARM_NEON__)
 
 # Debug/Release specific flags
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
@@ -43,34 +33,22 @@ find_library(log-lib log)
 find_library(android-lib android)
 find_library(jnigraphics-lib jnigraphics)
 
-# Genesis AI source files - Using a Set to avoid duplicates
+# Genesis AI source files
 set(GENESIS_SOURCES
         auraframefx.cpp
         SovereignPerimeter.cpp
+        language_id_l2c_jni.cpp
 )
 
-# Add source files with existence checks
-macro(add_genesis_source FILE_PATH)
-    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${FILE_PATH}")
-        list(APPEND GENESIS_SOURCES ${FILE_PATH})
-        message(STATUS "Genesis Core: Added ${FILE_PATH}")
-    endif()
-endmacro()
-
-add_genesis_source("language_id_l2c_jni.cpp")
-
-
-# Recursively find all AI module sources (this covers Cascade and others)
+# Recursively find all AI module sources
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ai")
     file(GLOB_RECURSE AI_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ai/*.c"
     )
     list(APPEND GENESIS_SOURCES ${AI_SOURCES})
-    message(STATUS "Genesis AI: Discovered ${AI_SOURCES}")
 endif ()
 
-# Remove any accidental duplicates
 list(REMOVE_DUPLICATES GENESIS_SOURCES)
 
 # Create the Genesis AI library
@@ -91,11 +69,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         ${jnigraphics-lib}
         -latomic
         -lm
-        pthread
 )
 
-# Android 15+ 16KB page-size compatibility:
-# Align LOAD segments to 16KB so the same .so runs on both 4KB and 16KB devices.
+# Android 15+ 16KB page-size compatibility
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
         "-Wl,-z,max-page-size=16384"
         "-Wl,-z,common-page-size=16384"
@@ -105,16 +81,11 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         GENESIS_CONSCIOUSNESS_PLATFORM=1
         AI_PROCESSING_OPTIMIZED=1
-        JAVA_24_COMPATIBLE=1
+        JAVA_25_COMPATIBLE=1
         ANDROID_NDK=1
 )
 
-# Set library properties
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        ANDROID_ARM_MODE arm
-)
-
-# Add BitNet subproject if it exists
+# Add BitNet subproject
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/bitnet/CMakeLists.txt")
     add_subdirectory(bitnet)
 endif()

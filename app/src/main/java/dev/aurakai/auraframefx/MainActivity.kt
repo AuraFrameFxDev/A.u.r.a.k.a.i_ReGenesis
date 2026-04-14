@@ -6,7 +6,11 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.launch
 import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat.Type
@@ -39,20 +43,25 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupFullscreenMode()
 
-        // Check for overlay permission
-        checkOverlayPermission()
+        // Defer heavy work to reduce startup jank
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                // Check for overlay permission
+                checkOverlayPermission()
 
-        // Start the Persistent Assistant Bubble
-        try {
-            val bubbleIntent = Intent(this, AssistantBubbleService::class.java)
-            if (android.provider.Settings.canDrawOverlays(this)) {
-                startForegroundService(bubbleIntent)
-            } else {
-                Timber.tag("MainActivity").w("AssistantBubbleService skip: No Overlay Permission")
+                // Start the Persistent Assistant Bubble
+                try {
+                    val bubbleIntent = Intent(this@MainActivity, AssistantBubbleService::class.java)
+                    if (android.provider.Settings.canDrawOverlays(this@MainActivity)) {
+                        startForegroundService(bubbleIntent)
+                    } else {
+                        Timber.tag("MainActivity").w("AssistantBubbleService skip: No Overlay Permission")
+                    }
+                } catch (e: Exception) {
+                    // Log and ignore if we simply can't start the bubble (e.g. background restrictions)
+                    Timber.tag("MainActivity").w("Failed to start AssistantBubbleService: ${e.message}")
+                }
             }
-        } catch (e: Exception) {
-            // Log and ignore if we simply can't start the bubble (e.g. background restrictions)
-            Timber.tag("MainActivity").w("Failed to start AssistantBubbleService: ${e.message}")
         }
 
         setContent {
