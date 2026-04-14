@@ -1,6 +1,6 @@
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
 import org.gradle.kotlin.dsl.exclude
+import org.gradle.api.tasks.testing.Test
 
 /**
  * Shared configurations for all Genesis modules.
@@ -8,6 +8,8 @@ import org.gradle.kotlin.dsl.exclude
 object GenesisCommonConfig {
     fun configure(project: Project) {
         with(project) {
+            val skipTests = providers.gradleProperty("aurafx.skip.tests").orElse("false").map { it.toBoolean() }.getOrElse(false)
+
             configurations.all {
                 if (!name.lowercase().contains("ksp") && !name.contains("lint", ignoreCase = true)) {
                     exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
@@ -49,6 +51,15 @@ object GenesisCommonConfig {
                     force("org.apache.commons:commons-lang3:3.20.0")
                     force("org.apache.httpcomponents:httpclient:4.5.14")
                     force("org.apache.httpcomponents:httpcore:4.4.16")
+                }
+            }
+
+            // Disable tests if needed
+            if (skipTests) {
+                tasks.configureEach {
+                    if (name.contains("Test", ignoreCase = true) || this is Test) {
+                        enabled = false
+                    }
                 }
             }
         }

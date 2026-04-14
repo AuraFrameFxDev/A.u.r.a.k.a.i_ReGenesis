@@ -7,12 +7,6 @@ plugins {
 extensions.configure<LibraryExtension> {
     namespace = "dev.aurakai.auraframefx.aura.reactivedesign.collabcanvas"
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_25
-        targetCompatibility = JavaVersion.VERSION_25
-        isCoreLibraryDesugaringEnabled = true
-    }
-
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
@@ -20,12 +14,8 @@ extensions.configure<LibraryExtension> {
 
 dependencies {
     implementation(project(":core-module"))
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.okhttp)
     implementation(libs.gson)
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
     testImplementation(libs.junit)
 }
