@@ -4,7 +4,7 @@
 rembg==2.0.75
 
 # Image processing
-Pillow==12.1.1
+Pillow==12.2.0
 numpy==1.26.4
 
 # GPU Acceleration Options:
