@@ -357,6 +357,13 @@ object CoreGenesisProvidesModule {
                 expiresIn = 3600
             )
         }
+        override suspend fun googleLogin(request: dev.aurakai.auraframefx.domains.genesis.network.api.GoogleLoginRequest): dev.aurakai.auraframefx.domains.genesis.network.api.LoginResponse {
+            return dev.aurakai.auraframefx.domains.genesis.network.api.LoginResponse(
+                token = "demo_google_token",
+                refreshToken = "demo_google_refresh_token",
+                expiresIn = 3600
+            )
+        }
         override suspend fun refreshToken(request: dev.aurakai.auraframefx.domains.genesis.network.api.RefreshTokenRequest): dev.aurakai.auraframefx.domains.genesis.network.api.TokenResponse {
             return dev.aurakai.auraframefx.domains.genesis.network.api.TokenResponse(
                 token = "demo_token_refreshed",
