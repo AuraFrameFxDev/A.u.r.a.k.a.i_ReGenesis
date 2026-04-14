@@ -146,6 +146,11 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object MetaInstruct : ReGenesisRoute("meta_instruct")
 
     // ═══════════════════════════════════════════════════════════════
+    // LEVEL 3: JOURNAL
+    // ═══════════════════════════════════════════════════════════════
+    data object JournalPDA : ReGenesisRoute("journal_pda", "Journal PDA")
+
+    // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: LDO CATALYST DEVELOPMENT
     // ═══════════════════════════════════════════════════════════════
     data object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")

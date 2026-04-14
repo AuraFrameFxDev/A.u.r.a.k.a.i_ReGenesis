@@ -379,6 +379,11 @@ fun ReGenesisNavGraph(
 
         composable(ReGenesisRoute.MetaInstruct.route) { StubScreen("MetaInstruct", "MenuBook", navController) }
 
+        // ── JOURNAL ──
+        composable(ReGenesisRoute.JournalPDA.route) {
+            JournalPDAScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         // ── 3. LDO CATALYST DEVELOPMENT ──
         composable(ReGenesisRoute.LdoOrchestrationHub.route) {
             LDOOrchestrationHubScreen(navController = navController)
