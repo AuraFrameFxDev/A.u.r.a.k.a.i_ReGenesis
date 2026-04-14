@@ -12,8 +12,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * Centralized JVM toolchain and compilation configuration for all Genesis modules.
  */
 object GenesisJvmConfig {
-    const val JVM_VERSION_INT = 26
-    val KOTLIN_JVM_TARGET = JvmTarget.JVM_25 // Fallback to 25 if 26 is not yet in JvmTarget enum for Kotlin 2.3.x
+    const val JVM_VERSION_INT = 25
+    val KOTLIN_JVM_TARGET = JvmTarget.JVM_25
 
     /**
      * Configures the Kotlin and Java compilation settings for the given project.
