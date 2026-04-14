@@ -8,9 +8,11 @@ import androidx.credentials.GetCredentialResponse
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.core.CryptographyManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.network.api.AuthApi
+import dev.aurakai.auraframefx.domains.genesis.network.api.GoogleLoginRequest
 import dev.aurakai.auraframefx.domains.genesis.network.api.RefreshTokenRequest
 import dev.aurakai.auraframefx.securecomm.keystore.SecureKeyStore
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,7 +50,7 @@ class OAuthService @Inject constructor(
         try {
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("YOUR_SERVER_CLIENT_ID") // Placeholder for production client ID
+                .setServerClientId(BuildConfig.GOOGLE_OAUTH_CLIENT_ID)
                 .setAutoSelectEnabled(true)
                 .build()
 
@@ -76,12 +78,21 @@ class OAuthService @Inject constructor(
         if (credential is GoogleIdTokenCredential) {
             val idToken = credential.idToken
             logger.info(tag, "Received Google ID Token")
-            
-            // Securely store token (encrypted via hardware-backed Keystore)
-            secureKeyStore.storeData(KEY_ACCESS_TOKEN, idToken.toByteArray())
-            
-            // Exchange with Genesis backend (stubbed for now as per tech spec)
-            _authState.value = AuthState.Authenticated("User_From_Token")
+
+            try {
+                // Exchange with Genesis backend
+                val response = authApi.googleLogin(GoogleLoginRequest(idToken))
+
+                // Securely store access and refresh tokens
+                secureKeyStore.storeData(KEY_ACCESS_TOKEN, response.token.toByteArray())
+                secureKeyStore.storeData(KEY_REFRESH_TOKEN, response.refreshToken.toByteArray())
+
+                _authState.value = AuthState.Authenticated("User_${response.token.take(8)}")
+                logger.info(tag, "Backend exchange successful")
+            } catch (e: Exception) {
+                logger.error(tag, "Backend token exchange failed", e)
+                _authState.value = AuthState.Error("Backend sync failed")
+            }
         }
     }
 

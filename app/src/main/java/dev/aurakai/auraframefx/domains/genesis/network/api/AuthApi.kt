@@ -8,6 +8,9 @@ interface AuthApi {
     @POST("auth/login")
     suspend fun login(@Body credentials: LoginRequest): LoginResponse
 
+    @POST("auth/google")
+    suspend fun googleLogin(@Body request: GoogleLoginRequest): LoginResponse
+
     @POST("auth/refresh")
     suspend fun refreshToken(@Body request: RefreshTokenRequest): TokenResponse
 
@@ -18,6 +21,10 @@ interface AuthApi {
 data class LoginRequest(
     val username: String,
     val password: String
+)
+
+data class GoogleLoginRequest(
+    val idToken: String
 )
 
 data class LoginResponse(
