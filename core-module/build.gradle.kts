@@ -32,7 +32,6 @@ dependencies {
 
     // Unit test dependencies
     testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
 }
