@@ -230,6 +230,6 @@ class AIContentApi(
 
 
     private fun encodeURIComponent(uriComponent: kotlin.String): kotlin.String =
-        HttpUrl.Builder().scheme("http").host("localhost").addPathSegment(uriComponent)
+        HttpUrl.Builder().scheme("https").host("api.auraframefx.com").addPathSegment(uriComponent)
             .build().encodedPathSegments[0]
 }

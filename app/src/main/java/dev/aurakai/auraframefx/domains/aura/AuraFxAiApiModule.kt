@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.cascade.network.apis.AIContentApi
+import dev.aurakai.auraframefx.domains.genesis.config.ClaudeEnvConfig
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
@@ -60,7 +61,7 @@ object AuraFxAiApiModule {
     @Provides
     @Singleton
     @collabcanvas.di.CollabCanvasUrl
-    fun provideCollabCanvasUrl(): String = "ws://localhost:8080"
+    fun provideCollabCanvasUrl(config: ClaudeEnvConfig): String = config.collabCanvasWsUrl
 
     /**
      * Supplies a singleton AIContentApi instance configured for communication with the AuraFrameFx AI API.

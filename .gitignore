@@ -126,6 +126,9 @@ pip-delete-this-directory.txt
 *.sql
 *.sqlite
 *.db
+*.db-journal
+*.db-wal
+*.db-shm
 
 # ───────────────────────────────────────────────────────────────
 # OS FILES
