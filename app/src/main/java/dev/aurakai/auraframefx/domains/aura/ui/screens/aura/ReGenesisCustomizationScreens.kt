@@ -304,17 +304,38 @@ object IconifySettingsCatalog {
         SettingItem("Pill Thickness", "Adjust vertical size", SettingType.SLIDER)
     )
 
+    val iconPackSettings = listOf(
+        SettingItem("Icon Pack Selection", "Choose from installed icon packs", SettingType.LIST),
+        SettingItem("Icon Masking", "Apply mask to unthemed icons", SettingType.TOGGLE),
+        SettingItem("Adaptive Icons", "Enable adaptive icon support", SettingType.TOGGLE)
+    )
+
+    val batteryStyleSettings = listOf(
+        SettingItem("Battery Style", "Choose portrait, landscape, or circle", SettingType.LIST),
+        SettingItem("Battery Percentage", "Show/Hide text percentage", SettingType.TOGGLE),
+        SettingItem("Charging Animation", "Customize glow effect", SettingType.LIST)
+    )
+
     val uiRoundnessSettings = listOf(
         SettingItem("Corner Radius", "Change interface roundness", SettingType.SLIDER),
         SettingItem("QS Tile Roundness", "Specific radius for tiles", SettingType.SLIDER)
     )
 
+    val xposedSettings = listOf(
+        SettingItem("Custom Font", "Override system font with Warpen", SettingType.TOGGLE, requiresRoot = true),
+        SettingItem("Volume Panel", "Redesign system volume dialog", SettingType.LIST, requiresRoot = true),
+        SettingItem("Brightness Slider", "Custom slider in QS panel", SettingType.LIST, requiresRoot = true)
+    )
+
     val allCategories: Map<String, List<SettingItem>> = mapOf(
+        "Icon Packs" to iconPackSettings,
+        "Battery Styles" to batteryStyleSettings,
         "Status Bar" to statusBarSettings,
         "QS Panel" to qsPanelSettings,
         "Lock Screen" to lockScreenSettings,
         "Navigation Bar" to navigationBarSettings,
-        "UI Roundness" to uiRoundnessSettings
+        "UI Roundness" to uiRoundnessSettings,
+        "Xposed Features" to xposedSettings
     )
 
     val totalSettingsCount: Int = allCategories.values.sumOf { it.size }

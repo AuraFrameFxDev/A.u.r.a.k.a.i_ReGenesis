@@ -181,9 +181,15 @@ fun ReGenesisNavGraph(
             ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
         }
         
-        composable(ReGenesisRoute.ColorBlendrMonet.route) { StubScreen("Monet Engine", "Palette", navController) }
-        composable(ReGenesisRoute.ColorBlendrPalette.route) { StubScreen("Palette Editor", "ColorLens", navController) }
-        composable(ReGenesisRoute.ColorBlendrPerApp.route) { StubScreen("Per-App Theming", "Apps", navController) }
+        composable(ReGenesisRoute.ColorBlendrMonet.route) {
+            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.ColorBlendrPalette.route) {
+            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.ColorBlendrPerApp.route) {
+            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
+        }
 
         composable(ReGenesisRoute.IconifyPicker.route) {
             IconifyPickerScreen(
@@ -206,17 +212,59 @@ fun ReGenesisNavGraph(
             )
         }
 
-        composable(ReGenesisRoute.IconifyIconPacks.route) { StubScreen("Icon Packs", "Category", navController) }
-        composable(ReGenesisRoute.IconifyBatteryStyles.route) { StubScreen("Battery Styles", "BatteryChargingFull", navController) }
+        composable(ReGenesisRoute.IconifyIconPacks.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "Icon Packs",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
+        composable(ReGenesisRoute.IconifyBatteryStyles.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "Battery Styles",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
         composable(ReGenesisRoute.IconifyBrightnessBars.route) { StubScreen("Brightness Bars", "Brightness6", navController) }
-        composable(ReGenesisRoute.IconifyQSPanel.route) { StubScreen("QS Panel", "GridOn", navController) }
+        composable(ReGenesisRoute.IconifyQSPanel.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "QS Panel",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
         composable(ReGenesisRoute.IconifyNotifications.route) { StubScreen("Notifications", "Notifications", navController) }
         composable(ReGenesisRoute.IconifyVolumePanel.route) { StubScreen("Volume Panel", "VolumeUp", navController) }
-        composable(ReGenesisRoute.IconifyNavigationBar.route) { StubScreen("Navigation Bar", "ViewHeadline", navController) }
-        composable(ReGenesisRoute.IconifyUIRoundness.route) { StubScreen("UI Roundness", "RoundedCorner", navController) }
+        composable(ReGenesisRoute.IconifyNavigationBar.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "Navigation Bar",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
+        composable(ReGenesisRoute.IconifyUIRoundness.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "UI Roundness",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
         composable(ReGenesisRoute.IconifyIconShape.route) { StubScreen("Icon Shape", "ChangeHistory", navController) }
-        composable(ReGenesisRoute.IconifyStatusBar.route) { StubScreen("Status Bar", "PhoneAndroid", navController) }
-        composable(ReGenesisRoute.IconifyXposedFeatures.route) { StubScreen("Xposed Features", "Extension", navController) }
+        composable(ReGenesisRoute.IconifyStatusBar.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "Status Bar",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
+        composable(ReGenesisRoute.IconifyXposedFeatures.route) {
+            IconifyCategoryDetailScreen(
+                categoryName = "Xposed Features",
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPicker = { /* TODO */ }
+            )
+        }
         composable(ReGenesisRoute.IconifyColorEngine.route) { StubScreen("Color Engine", "FormatColorFill", navController) }
 
         composable(ReGenesisRoute.PixelLauncherEnhanced.route) {
@@ -289,7 +337,7 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.CodeAssist.route) {
-            CodeAssistScreen()
+            CodeAssistScreen(navController = navController)
         }
 
         composable(ReGenesisRoute.Terminal.route) {
@@ -303,11 +351,14 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.ConferenceRoom.route) {
-            ConferenceRoomScreen()
+            ConferenceRoomScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToAgents = { navController.navigate(ReGenesisRoute.LdoRoster.route) }
+            )
         }
 
         composable(ReGenesisRoute.SentientShell.route) {
-            SentientShellScreen()
+            SentientShellScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.Trinity.route) { StubScreen("Trinity Core", "Grain", navController) }
@@ -347,7 +398,7 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.AgentNeuralExplorer.route) { StubScreen("Neural Explorer", "Explore", navController) }
         
         composable(ReGenesisRoute.FusionMode.route) {
-            NexusFusionScreen()
+            NexusFusionScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.BenchmarkMonitor.route) { StubScreen("Benchmarks", "Speed", navController) }
