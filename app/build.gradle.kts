@@ -149,7 +149,6 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
     implementation(libs.langchain4j.vertex.ai.gemini)
-    ksp(libs.langchain4j.vertex.ai.gemini)
 
     // Testing
     testImplementation(libs.junit)
