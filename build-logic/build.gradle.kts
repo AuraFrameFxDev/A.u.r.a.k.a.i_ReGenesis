@@ -1,6 +1,3 @@
-import org.gradle.api.artifacts.Configuration
-import org.gradle.kotlin.dsl.exclude
-
 plugins {
     `kotlin-dsl`        // applies java-gradle-plugin
 }
@@ -83,7 +80,7 @@ gradlePlugin {
 dependencies {
     // CRITICAL: All versions MUST match root build.gradle.kts and gradle/libs.versions.toml
     // Using version catalog for consistency
-    implementation(libs.gradle.plugin)
+    implementation(libs.android.gradle.plugin)
     implementation(libs.kotlin.gradle.plugin)
 
     implementation(libs.compose.compiler.gradle.plugin)
@@ -94,9 +91,8 @@ dependencies {
     implementation(libs.ksp.gradle.plugin)
     implementation(libs.gms.google.services)
     testImplementation(kotlin("test"))
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.params)
-    testRuntimeOnly(libs.jupiter.junit.jupiter.engine)
+    testImplementation(libs.bundles.junit.jupiter)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

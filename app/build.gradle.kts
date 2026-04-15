@@ -22,7 +22,8 @@ extensions.configure<ApplicationExtension> {
         buildConfigField("String", "VERTEX_PROJECT_ID", "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\"")
         buildConfigField("String", "GENESIS_BACKEND_URL", "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "https://ais-dev-wli45m6aqwcfphhayj5w5o-16460197508.us-east5.run.app"}\"")
         buildConfigField("String", "API_BASE_URL", "\"https://ais-dev-wli45m6aqwcfphhayj5w5o-16460197508.us-east5.run.app/v1/\"")
-        buildConfigField("String", "GOOGLE_OAUTH_CLIENT_ID", "\"${project.findProperty("GOOGLE_OAUTH_CLIENT_ID") ?: "YOUR_SERVER_CLIENT_ID"}\"")
+        buildConfigField("String", "GOOGLE_OAUTH_CLIENT_ID", "\"${project.findProperty("GOOGLE_OAUTH_CLIENT_ID") ?: ""}\"")
+        buildConfigField("String", "COLLAB_CANVAS_WS_URL", "\"${project.findProperty("COLLAB_CANVAS_WS_URL") ?: "wss://api.auraframefx.com/canvas"}\"")
 
         // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
