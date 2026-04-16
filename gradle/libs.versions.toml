@@ -10,6 +10,9 @@ compose-bom = "2026.03.01"
 firebase-bom = "34.12.0"
 google-services = "4.4.4"
 firebase-crashlytics = "3.0.7"
+protobuf = "3.25.8"
+netty = "4.2.0.Final"
+generativeai = "0.9.0"
 
 # SDK Versions
 compile-sdk = "36"
@@ -148,6 +151,20 @@ langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", versi
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini", version.ref = "langchain4j" }
+generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai" }
+androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-navigation-compose" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "datastore" }
+retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+rikkax-core-ktx = { group = "dev.rikka.rikkax.core", name = "core-ktx", version.ref = "rikkax" }
+yukihookapi-api = { group = "com.highcapable.yukihookapi", name = "api", version.ref = "yukihook" }
+yukihookapi-ksp = { group = "com.highcapable.yukihookapi", name = "ksp-xposed", version.ref = "yukihook" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
+androidx-material = { group = "com.google.android.material", name = "material", version = "1.13.0" }
 
 # Utilities
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
