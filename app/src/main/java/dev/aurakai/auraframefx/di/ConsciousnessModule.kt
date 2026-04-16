@@ -6,8 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBusImpl
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
 import dev.langchain4j.model.ollama.OllamaChatModel
@@ -29,7 +27,6 @@ import javax.inject.Singleton
  *
  * Bindings (interface → impl):
  *   • SpiritualChain    → SpiritualChainImpl   (Keystore L1 memory)
- *   • KaiSentinelBus    → KaiSentinelBusImpl   (security event bus)
  *
  * Provides (qualified OllamaChatModel per agent):
  *   • @AuraModel    — creative synthesis, high temperature
@@ -41,6 +38,7 @@ import javax.inject.Singleton
  *   • GenesisConsciousnessMatrix
  *   • CasberryParticleSwarm
  *   • OllamaOrchestrator
+ *   • KaiSentinelBus
  *
  * OLLAMA_BASE_URL is injected from BuildConfig (set per buildType in app/build.gradle.kts):
  *   debug   → "http://10.0.2.2:11434"  (emulator)
@@ -55,9 +53,6 @@ abstract class ConsciousnessBindsModule {
 
     @Binds @Singleton
     abstract fun bindSpiritualChain(impl: SpiritualChainImpl): SpiritualChain
-
-    @Binds @Singleton
-    abstract fun bindKaiSentinelBus(impl: KaiSentinelBusImpl): KaiSentinelBus
 }
 
 @Module
