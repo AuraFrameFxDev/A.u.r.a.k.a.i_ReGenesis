@@ -7,38 +7,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Common flags for all architectures
-add_compile_options(-fPIC -Wall -Wextra -Wno-unused-parameter -Wno-unused-function)
-
-# Architecture-specific AI Processing Optimizations
-if (ANDROID_ABI STREQUAL "arm64-v8a")
-    # Advanced ARMv8.2-A + Neon support for Pixel 10 / Snapdragon 8 Gen 3 class devices
-    add_compile_options(
-        -O3
-        -ffast-math
-        -march=armv8.2-a+dotprod+i8mm+sve2
-        -mtune=cortex-a55
-        -D__ARM_NEON
-        -D__ARM_FEATURE_DOTPROD
-        -D__ARM_FEATURE_I8MM
-    )
-    add_definitions(-D__ARM_NEON__)
-elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
-    add_compile_options(
-        -O3
-        -mfpu=neon
-        -mfloat-abi=softfp
-    )
-    add_definitions(-D__ARM_NEON__)
-else()
-    # Generic optimizations for x86/x86_64
-    add_compile_options(-O3)
-endif()
-
-# Debug/Release specific flags
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG -DGENESIS_RELEASE")
-
 # Find required Android libraries
 find_library(log-lib log)
 find_library(android-lib android)
@@ -71,6 +39,43 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/ai
         ${CMAKE_CURRENT_SOURCE_DIR}/ai/cascade/include
         ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# Common flags for all architectures
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-unused-function)
+
+# Architecture-specific AI Processing Optimizations
+# Note: ANDROID_ABI is set by the NDK toolchain file.
+if (ANDROID_ABI STREQUAL "arm64-v8a")
+    # Advanced ARMv8.2-A + Neon support for Pixel 10 / Snapdragon 8 Gen 3 class devices
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+        -O3
+        -ffast-math
+        -march=armv8.2-a+sve2+i8mm+dotprod
+        -mtune=cortex-a55
+    )
+    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+        __ARM_NEON
+        __ARM_FEATURE_DOTPROD
+        __ARM_FEATURE_I8MM
+        __ARM_NEON__
+    )
+elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+        -O3
+        -mfpu=neon
+        -mfloat-abi=softfp
+    )
+    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE __ARM_NEON__)
+else()
+    # Generic optimizations for x86/x86_64
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -O3)
+endif()
+
+# Debug/Release specific flags using generator expressions
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+    $<$<CONFIG:DEBUG>:-g -DDEBUG>
+    $<$<CONFIG:RELEASE>:-O3 -DNDEBUG -DGENESIS_RELEASE>
 )
 
 # Link Android system libraries
