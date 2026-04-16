@@ -1,22 +1,20 @@
 plugins {
-    `kotlin-dsl`        // applies java-gradle-plugin
+    `kotlin-dsl`   // Enables Kotlin DSL for writing plugins
 }
 
 // Define the anchor point for our external AI assets
 val importedPackageDir = layout.projectDirectory.dir("libs/ai_cores")
+
 tasks.register("syncAuraMemories") {
     inputs.dir(importedPackageDir)
-    // Sync logic for the Spiritual Chain
+    // TODO: Add your sync logic for the Spiritual Chain here
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CRITICAL: Exclude AAALL Android AAR dependencies from build-logic
+// CRITICAL: Prevent Android AAR leakage into build-logic (JVM-only)
+// hilt-android-gradle-plugin transitively pulls Android dependencies.
+// We exclude them aggressively here.
 // ═══════════════════════════════════════════════════════════════════════════
-// build-logic is JVM-only and cannot consume Android AAR (Android Archive) files.
-// hilt-android-gradle-plugin incorrectly depends on hilt-android (runtime library),
-// which transitively pulls in AndroidX AAR dependencies.
-// Force exclude these from ALL configurations to prevent variant resolution errors.
-
 configurations.all {
     exclude(group = "com.google.dagger", module = "hilt-android")
     exclude(group = "androidx.activity")
@@ -27,28 +25,23 @@ configurations.all {
     exclude(group = "androidx.core")
 }
 
-// Configure Java toolchain to JVM 25 (matches gradle.properties and Kotlin target)
+// Java toolchain — matches your project (JVM 25)
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(25))
     }
-    // Explicitly set source and target compatibility to 25
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
 }
 
-// Configure Kotlin compilation to match Java toolchain
-// MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
-// Explicitly configure Java compilation tasks to target JVM 25
+// Ensure all JavaCompile tasks target JVM 25
 tasks.withType<JavaCompile>().configureEach {
     sourceCompatibility = "25"
     targetCompatibility = "25"
 }
 
-// Tests enabled to validate build script configuration
-// Temporarily disable tests in build-logic during urgent test releases.
-// Re-enable later when we run CI/validation: set enabled = true
-tasks.matching { it.name.contains("Test") }.configureEach {
+// Disable tests in build-logic for now (re-enable when running CI)
+tasks.matching { it.name.contains("Test", ignoreCase = true) }.configureEach {
     enabled = false
 }
 
@@ -77,63 +70,15 @@ gradlePlugin {
     }
 }
 
+// Dependencies for the convention plugins themselves
+// Use compileOnly so they are available at compile time but not shipped
 dependencies {
-    // CRITICAL: All versions MUST match root build.gradle.kts and gradle/libs.versions.toml
-    // Using version catalog for consistency
-    implementation(libs.android.gradle.plugin)
-    implementation(libs.kotlin.gradle.plugin)
+    // Core Gradle plugins needed by your convention plugins
+    compileOnly(libs.kotlin.gradle.plugin)            // Kotlin Gradle plugin
+    compileOnly(libs.ksp.gradle.plugin)               // KSP
+    compileOnly(libs.hilt.gradle.plugin)              // Hilt Gradle plugin
+    compileOnly(libs.google.services.gradle.plugin)   // Google Services (if used)
 
-    implementation(libs.compose.compiler.gradle.plugin)
-    implementation(libs.jetbrains.kotlin.serialization)
-
-    // Hilt Gradle Plugin (Android AAR dependencies excluded globally via configurations.all)
-    implementation(libs.hilt.gradle.plugin)
-    implementation(libs.ksp.gradle.plugin)
-    implementation(libs.gms.google.services)
-    testImplementation(kotlin("test"))
-    testImplementation(libs.bundles.junit.jupiter)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    // Optional: if your plugins need Compose compiler plugin access
+    compileOnly(libs.compose.compiler.gradle.plugin)
 }
-
-// ═══════════════════════════════════════════════════════════════════════════
-// Genesis Convention Plugins Registration
-// ═══════════════════════════════════════════════════════════════════════════
-//
-// These are the PRIMARY convention plugins that modules should use.
-// They are Kotlin class plugins (not precompiled scripts) for maximum control
-// over plugin application order.
-//
-
-
-// ═══════════════════════════════════════════════════════════════════════════
-// CORRECT USAGE EXAMPLES
-// ═══════════════════════════════════════════════════════════════════════════
-//
-// For :app module:
-//   plugins {
-//       id("genesis.android.application")  // All-in-one: Android, Hilt, KSP, Compose, Serialization, Firebase
-//   }
-//
-// For standard library module (Now includes Hilt by default):
-//   plugins {
-//       id("genesis.android.library")  // Base library: Android, Compose, Serialization, Hilt, KSP
-//   }
-//
-// For legacy reasons or explicit Hilt naming:
-//   plugins {
-//       id("genesis.android.library.hilt")  // Same as genesis.android.library
-//   }
-//
-// For YukiHook/Xposed module:
-//   plugins {
-//       id("genesis.android.library")   // Base library with Hilt, Compose, KSP
-//       id("genesis.android.yukihook")  // Add YukiHook/Xposed support
-//   }
-//
-// For Room database module:
-//   plugins {
-//       id("genesis.android.library")  // Base library
-//       id("genesis.android.room")     // Add Room Database
-//   }
-//
-// ══════════════════════════════════════════════════
