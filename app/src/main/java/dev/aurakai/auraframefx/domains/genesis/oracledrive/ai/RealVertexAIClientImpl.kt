@@ -42,7 +42,6 @@ class RealVertexAIClientImpl @Inject constructor(
             chatModel = GoogleAiGeminiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-1.5-pro")
-                .httpClientBuilder(OkHttpClientBuilder())
                 .timeout(Duration.ofSeconds(60))
                 .logRequests(true)
                 .logResponses(true)

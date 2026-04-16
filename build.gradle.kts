@@ -99,10 +99,10 @@ subprojects {
             }
         }
 
-// Global build properties
-        val skipTests =
-            providers.gradleProperty("aurafx.skip.tests").orElse("false").map { it.toBoolean() }
-                .getOrElse(false)
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xjdk-release=25", "-Xenable-incremental-compilation")
+        }
     }
 }
 

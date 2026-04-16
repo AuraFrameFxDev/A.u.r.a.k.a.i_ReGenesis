@@ -217,6 +217,7 @@ dependencies {
     implementation(libs.generativeai)
 
     // LangChain4j & Ollama
+    implementation(platform(libs.langchain4j.bom))
     implementation(libs.bundles.langchain4j)
 
     // Desugaring
