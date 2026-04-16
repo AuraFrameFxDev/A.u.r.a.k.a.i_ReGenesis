@@ -99,12 +99,14 @@ subprojects {
             }
         }
 
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs += listOf("-Xjdk-release=25", "-Xenable-incremental-compilation")
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+            compilerOptions {
+                freeCompilerArgs.addAll("-Xjdk-release=25", "-Xenable-incremental-compilation")
+            }
         }
     }
 }
+
 
 // Root project level tasks/config can go here if needed
 // Most logic is now in build-logic convention plugins
