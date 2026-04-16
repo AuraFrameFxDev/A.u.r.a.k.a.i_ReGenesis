@@ -38,8 +38,8 @@ subprojects {
     plugins.withId("com.android.application") {
         extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
+                sourceCompatibility = JavaVersion.VERSION_26
+                targetCompatibility = JavaVersion.VERSION_26
             }
 
             packaging {
@@ -77,8 +77,8 @@ subprojects {
     plugins.withId("com.android.library") {
         extensions.configure<com.android.build.api.dsl.LibraryExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
+                sourceCompatibility = JavaVersion.VERSION_26
+                targetCompatibility = JavaVersion.VERSION_26
             }
 
             packaging {
@@ -98,11 +98,11 @@ subprojects {
                 }
             }
         }
+    }
 
-        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-            compilerOptions {
-                freeCompilerArgs.addAll("-Xjdk-release=25", "-Xenable-incremental-compilation")
-            }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.addAll("-Xjdk-release=26", "-Xenable-incremental-compilation")
         }
     }
 }

@@ -48,9 +48,11 @@ extensions.configure<ApplicationExtension> {
                 arguments.addAll(
                     listOf(
                         "-DANDROID_STL=c++_shared",
-                        "-DANDROID_PLATFORM=android-33",
+                        "-DANDROID_PLATFORM=android-35",
                         "-DCMAKE_BUILD_TYPE=Release",
-                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
+                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON",
+                        "-DCMAKE_CXX_FLAGS=-march=armv9-a+sve2" // Enable SVE2 baseline for BitNet 1.58-bit throughput
+                    )
                     )
                 )
             }

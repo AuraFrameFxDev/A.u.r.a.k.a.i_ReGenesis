@@ -241,7 +241,9 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
     if (requestStr == nullptr) return env->NewStringUTF(R"({"status": "failed", "error": "mem_alloc_failed"})");
     std::string requestString(requestStr);
     env->ReleaseStringUTFChars(request, requestStr);
-    if (!checkPandoraGating(CAP_ROOT)) {
+
+    // Only gate high-level root requests; standard neural inference is open to the organism.
+    if ((requestString.find("root") != std::string::npos || requestString.find("bypass") != std::string::npos) && !checkPandoraGating(CAP_ROOT)) {
          return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_sealed"})");
     }
     std::string responseData;
@@ -373,12 +375,12 @@ Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv *env, jobject /* t
 }
 
 JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env, jobject /* thiz */, jstring request) {
+Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__Ljava_lang_String_2(JNIEnv *env, jobject /* thiz */, jstring request) {
     return env->NewStringUTF(R"({"status": "processed", "result": "resonance_stable"})");
 }
 
 JNIEXPORT void JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness_ (JNIEnv *env, jobject /* thiz */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__(JNIEnv *env, jobject /* thiz */) {
 }
 
 // ─── eBPF KERNEL SHIELD JNI ───────────────────────────────────────────────────
