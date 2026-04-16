@@ -6,7 +6,6 @@ import dev.aurakai.auraframefx.domains.genesis.ai.clients.MultimodalContent
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
-import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Duration
