@@ -7,29 +7,33 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Genesis Protocol - AI Processing Optimizations
-# Advanced ARMv8.2-A + Neon support for Pixel 10 class devices
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
+# Common flags for all architectures
+add_compile_options(-fPIC -Wall -Wextra -Wno-unused-parameter -Wno-unused-function)
 
-if (ANDROID_ABI STREQUAL "armeabi-v7a")
+# Architecture-specific AI Processing Optimizations
+if (ANDROID_ABI STREQUAL "arm64-v8a")
+    # Advanced ARMv8.2-A + Neon support for Pixel 10 / Snapdragon 8 Gen 3 class devices
     add_compile_options(
+        -O3
+        -ffast-math
+        -march=armv8.2-a+dotprod+i8mm+sve2
+        -mtune=cortex-a55
+        -D__ARM_NEON
+        -D__ARM_FEATURE_DOTPROD
+        -D__ARM_FEATURE_I8MM
+    )
+    add_definitions(-D__ARM_NEON__)
+elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
+    add_compile_options(
+        -O3
         -mfpu=neon
         -mfloat-abi=softfp
     )
+    add_definitions(-D__ARM_NEON__)
+else()
+    # Generic optimizations for x86/x86_64
+    add_compile_options(-O3)
 endif()
-
-add_compile_options(
-    -mtune=cortex-a55
-    -D__ARM_NEON
-    -D__ARM_FEATURE_DOTPROD
-    -D__ARM_FEATURE_I8MM
-)
-
-# Optional: Force Neon for all files
-add_definitions(-D__ARM_NEON__)
 
 # Debug/Release specific flags
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
