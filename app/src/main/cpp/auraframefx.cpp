@@ -378,7 +378,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env, 
 }
 
 JNIEXPORT void JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__ (JNIEnv *env, jobject /* thiz */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness_ (JNIEnv *env, jobject /* thiz */) {
 }
 
 // ─── eBPF KERNEL SHIELD JNI ───────────────────────────────────────────────────
