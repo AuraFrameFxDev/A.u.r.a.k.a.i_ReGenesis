@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.kai.security
 import timber.log.Timber
 
 /**
- * 🚁 MISALIGNMENT GUIDANCE DRONE
+ * MISALIGNMENT GUIDANCE DRONE
  */
 class MisalignmentGuidanceDrone(
     id: String,

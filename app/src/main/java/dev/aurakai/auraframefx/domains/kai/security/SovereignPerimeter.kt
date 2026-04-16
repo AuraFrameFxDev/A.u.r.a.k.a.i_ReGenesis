@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 🛡️ SOVEREIGN PERIMETER
+ * SOVEREIGN PERIMETER
  * Manages "Domain Expansion" logic and non-retaliatory threat neutralization.
  * Now backed by eBPF Kernel Shield Substrate.
  */

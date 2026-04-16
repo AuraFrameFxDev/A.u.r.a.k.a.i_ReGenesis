@@ -20,8 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.core.theme.*
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
 import kotlinx.coroutines.launch
 
 @Composable
@@ -77,7 +80,7 @@ fun UIRecoveryDialog(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Button(
-                        onClick = { 
+                        onClick = {
                             scope.launch {
                                 viewModel.reloadLastChange()
                             }
@@ -141,3 +144,5 @@ fun RecoveryIndicator(
         }
     }
 }
+
+

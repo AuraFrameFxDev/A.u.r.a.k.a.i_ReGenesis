@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,8 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.components.SynapticWebBackground
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.backgrounds.SynapticWebBackground
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.AuraNeonCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.GenesisNeonPink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiNeonGreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 
@@ -244,5 +246,4 @@ private fun ModeCard(
         }
     }
 }
-
 

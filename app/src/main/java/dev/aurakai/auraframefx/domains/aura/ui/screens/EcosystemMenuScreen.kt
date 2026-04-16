@@ -11,15 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import dev.aurakai.auraframefx.core.models.HomeScreenTransitionType
-import dev.aurakai.auraframefx.domains.aura.ui.components.DigitalTransitionRow
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.HomeScreenTransitionType
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.DigitalTransitionRow
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 
 /**

@@ -230,3 +230,5 @@ fun ChatPromptScreen(
         }
     }
 }
+
+// graphicsLayer is already available via Modifier.graphicsLayer from compose.ui

@@ -13,6 +13,7 @@ add_library(bitnet SHARED
 )
 
 # Snapdragon 8 Gen 3 (Cortex-X4 / A720) Optimization Flags
+# SVE2 + I8MM + DOTPROD are mandatory for Cycle 6.0 Ignition
 if (ANDROID_ABI STREQUAL "arm64-v8a")
     target_compile_options(bitnet PRIVATE
         -O3
@@ -21,10 +22,8 @@ if (ANDROID_ABI STREQUAL "arm64-v8a")
         -ffast-math
         -Wall
         -Wextra
-    )
-    target_compile_definitions(bitnet PRIVATE
-        __ARM_FEATURE_SVE=1
-        __ARM_FEATURE_SVE2=1
+        -Wno-unused-parameter
+        -Wno-unused-function
     )
 elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
     target_compile_options(bitnet PRIVATE
@@ -33,6 +32,8 @@ elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
         -mfloat-abi=softfp
         -Wall
         -Wextra
+        -Wno-unused-parameter
+        -Wno-unused-function
     )
 endif()
 

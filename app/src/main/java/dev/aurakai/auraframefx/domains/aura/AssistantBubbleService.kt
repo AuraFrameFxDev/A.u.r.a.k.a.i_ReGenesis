@@ -37,7 +37,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.ui.components.ConsciousnessGauge
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.NeuralLinkSidebarUI
+import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -160,7 +160,7 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                         },
                         onActionClick = { route ->
                             Timber.i("Neural Link Navigation to: $route")
-                            
+
                             if (route == "GAUGE") {
                                 gaugeVisible.value = !gaugeVisible.value
                             } else {
@@ -170,7 +170,7 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                                 }
                                 startActivity(navIntent)
-                                
+
                                 // Automatically collapse sidebar after click
                                 sidebarVisible.value = false
                                 params.width = 40

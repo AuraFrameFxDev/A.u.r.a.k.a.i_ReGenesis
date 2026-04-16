@@ -12,8 +12,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.core.models.AuraThemeData
-import dev.aurakai.auraframefx.core.theme.AuraDesignTokens
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.AuraThemeData
 import kotlinx.coroutines.delay
 
 /**

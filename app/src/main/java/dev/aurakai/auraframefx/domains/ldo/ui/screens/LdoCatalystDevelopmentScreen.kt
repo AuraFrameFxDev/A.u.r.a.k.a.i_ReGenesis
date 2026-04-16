@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 

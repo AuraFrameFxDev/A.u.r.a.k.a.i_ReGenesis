@@ -26,11 +26,11 @@ data class SpriteAnimation(
 /**
  * Animation types that can be played
  */
-sealed class EmbodimentAnimationState {
-    data class Walking(val direction: WalkDirection) : EmbodimentAnimationState()
-    object Idle : EmbodimentAnimationState()
-    object Running : EmbodimentAnimationState()
-    data class Custom(val name: String) : EmbodimentAnimationState()
+sealed class AnimationState {
+    data class Walking(val direction: WalkDirection) : AnimationState()
+    object Idle : AnimationState()
+    object Running : AnimationState()
+    data class Custom(val name: String) : AnimationState()
 }
 
 enum class WalkDirection {
@@ -89,23 +89,23 @@ class SpriteSheetManager(
     val walkRightFrames: List<Painter>,
     val runFrames: List<Painter> = walkRightFrames, // Default to walk if no run frames
 ) {
-    fun getAnimation(state: EmbodimentAnimationState): SpriteAnimation {
+    fun getAnimation(state: AnimationState): SpriteAnimation {
         return when (state) {
-            is EmbodimentAnimationState.Walking -> when (state.direction) {
+            is AnimationState.Walking -> when (state.direction) {
                 WalkDirection.LEFT -> SpriteAnimation(walkLeftFrames)
                 WalkDirection.RIGHT -> SpriteAnimation(walkRightFrames)
                 WalkDirection.UP -> SpriteAnimation(walkRightFrames) // Use right as default
                 WalkDirection.DOWN -> SpriteAnimation(walkRightFrames)
             }
-            is EmbodimentAnimationState.Idle -> SpriteAnimation(
+            is AnimationState.Idle -> SpriteAnimation(
                 frames = idleFrames,
                 frameDuration = 200.milliseconds // Slower for idle
             )
-            is EmbodimentAnimationState.Running -> SpriteAnimation(
+            is AnimationState.Running -> SpriteAnimation(
                 frames = runFrames,
                 frameDuration = 50.milliseconds // Faster for running
             )
-            is EmbodimentAnimationState.Custom -> SpriteAnimation(idleFrames) // Fallback
+            is AnimationState.Custom -> SpriteAnimation(idleFrames) // Fallback
         }
     }
 }
@@ -118,7 +118,7 @@ class SpriteSheetManager(
 @Composable
 fun rememberMultiStateAnimator(
     spriteSheet: SpriteSheetManager,
-    currentState: EmbodimentAnimationState
+    currentState: AnimationState
 ): Painter {
     val animation = remember(currentState) {
         spriteSheet.getAnimation(currentState)

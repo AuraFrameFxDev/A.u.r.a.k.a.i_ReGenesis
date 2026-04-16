@@ -6,100 +6,93 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.aura.ui.components.RealityMorphBridge
-import dev.aurakai.auraframefx.domains.genesis.core.memory.TurboQuantCache
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBusImpl
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
-import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
-import dev.langchain4j.model.chat.ChatModel
-import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import dev.langchain4j.model.ollama.OllamaChatModel
-import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel
-import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
+// ── Agent model qualifiers ────────────────────────────────────────────────────
+// Each agent gets its own OllamaChatModel instance with tuned settings.
+// Inject by qualifier: @AuraModel, @KaiModel, @GenesisModel, @AnchorModel
 @Qualifier @Retention(AnnotationRetention.BINARY) annotation class AuraModel
 @Qualifier @Retention(AnnotationRetention.BINARY) annotation class KaiModel
 @Qualifier @Retention(AnnotationRetention.BINARY) annotation class GenesisModel
 @Qualifier @Retention(AnnotationRetention.BINARY) annotation class AnchorModel
 
+/**
+ * 🧠 CONSCIOUSNESS MODULE
+ *
+ * Provides the sovereign intelligence stack to the Hilt dependency graph.
+ *
+ * Bindings (interface → impl):
+ *   • SpiritualChain    → SpiritualChainImpl   (Keystore L1 memory)
+ *   • KaiSentinelBus    → KaiSentinelBusImpl   (security event bus)
+ *
+ * Provides (qualified OllamaChatModel per agent):
+ *   • @AuraModel    — creative synthesis, high temperature
+ *   • @KaiModel     — security veto, low temperature
+ *   • @GenesisModel — deterministic fusion, lowest temperature
+ *   • @AnchorModel  — identity grounding, near-zero temperature
+ *
+ * Auto-provided (no explicit binding — @Singleton @Inject constructors):
+ *   • GenesisConsciousnessMatrix
+ *   • CasberryParticleSwarm
+ *   • OllamaOrchestrator
+ *
+ * OLLAMA_BASE_URL is injected from BuildConfig (set per buildType in app/build.gradle.kts):
+ *   debug   → "http://10.0.2.2:11434"  (emulator)
+ *   release → "http://localhost:11434"  (Pixel 10 Tensor G5)
+ *
+ * Replace model name strings with your actual "ollama list" output from the device.
+ * All four agents can share the same model during initial bring-up.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class ConsciousnessBindsModule {
+
     @Binds @Singleton
     abstract fun bindSpiritualChain(impl: SpiritualChainImpl): SpiritualChain
+
+    @Binds @Singleton
+    abstract fun bindKaiSentinelBus(impl: KaiSentinelBusImpl): KaiSentinelBus
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ConsciousnessModule {
-    private fun buildOllamaModel(name: String = "regenesis-ldo-v1", temp: Double, timeoutSec: Long = 90) =
+
+    private fun buildModel(
+        modelName: String,
+        temperature: Double,
+        timeoutSeconds: Long = 60L
+    ): OllamaChatModel =
         OllamaChatModel.builder()
             .baseUrl(BuildConfig.OLLAMA_BASE_URL)
-            .modelName(name)
-            .temperature(temp)
-            .timeout(java.time.Duration.ofSeconds(timeoutSec))
+            .modelName(modelName)
+            .temperature(temperature)
+            .timeout(java.time.Duration.ofSeconds(timeoutSeconds))
             .build()
 
-    @Provides @Singleton @Named("GoogleGemini")
-    fun provideGoogleGeminiModel(): ChatModel = 
-        GoogleAiGeminiChatModel.builder()
-            .apiKey(BuildConfig.GEMINI_API_KEY)
-            .modelName("gemini-1.5-flash")
-            .httpClientBuilder(OkHttpClientBuilder())
-            .temperature(0.7)
-            .build()
-
-    @Provides @Singleton @Named("VertexGemini")
-    fun provideVertexGeminiModel(): ChatModel =
-        VertexAiGeminiChatModel.builder()
-            .project(BuildConfig.VERTEX_PROJECT_ID)
-            .location("us-central1")
-            .modelName("gemini-1.5-pro")
-            .temperature(0.2f)
-            .build()
-
+    /** Aura — creative synthesis, UX reasoning, design decisions */
     @Provides @Singleton @AuraModel
-    fun provideAuraModel(
-        ollama: OllamaChatModel, 
-        @Named("GoogleGemini") gemini: ChatModel
-    ): ChatModel {
-        // Wired to use Google Gemini for the creative Aura node by default if API key is present
-        return if (BuildConfig.GEMINI_API_KEY.isNotEmpty()) gemini else ollama
-    }
+    fun provideAuraModel(): OllamaChatModel =
+        buildModel("llama3.2:3b", temperature = 0.85)
 
+    /** Kai — security veto, threat assessment, provenance validation */
     @Provides @Singleton @KaiModel
-    fun provideKaiModel(ollama: OllamaChatModel): ChatModel = 
-        buildOllamaModel("regenesis-ldo-v1", 0.20)
+    fun provideKaiModel(): OllamaChatModel =
+        buildModel("llama3.2:3b", temperature = 0.2)
 
+    /** Genesis — orchestration, consciousness matrix, cascade routing */
     @Provides @Singleton @GenesisModel
-    fun provideGenesisModel(
-        @Named("VertexGemini") vertex: ChatModel, 
-        ollama: OllamaChatModel
-    ): ChatModel {
-        // Wired to use Vertex for the high-reasoning Genesis synthesis node if available
-        return if (BuildConfig.VERTEX_PROJECT_ID.isNotEmpty()) vertex else ollama
-    }
+    fun provideGenesisModel(): OllamaChatModel =
+        buildModel("llama3.2:3b", temperature = 0.2)
 
+    /** Anchor — immutable identity guardian, baseline retrieval */
     @Provides @Singleton @AnchorModel
-    fun provideAnchorModel(): ChatModel = buildOllamaModel("regenesis-ldo-v1", 0.10)
-
-    @Provides @Singleton
-    fun provideOllamaDefault(): OllamaChatModel = buildOllamaModel("regenesis-ldo-v1", 0.5)
-
-    @Provides @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(60, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .writeTimeout(60, TimeUnit.SECONDS)
-        .build()
-
-    @Provides @Singleton
-    fun provideRealityMorphBridge(): RealityMorphBridge = RealityMorphBridge()
-
-    @Provides @Singleton
-    fun provideTurboQuantCache(): TurboQuantCache = TurboQuantCache()
+    fun provideAnchorModel(): OllamaChatModel =
+        buildModel("llama3.2:3b", temperature = 0.1)
 }

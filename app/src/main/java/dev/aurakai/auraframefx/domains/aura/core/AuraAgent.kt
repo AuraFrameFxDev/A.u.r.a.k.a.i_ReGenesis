@@ -10,10 +10,10 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
@@ -21,7 +21,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxSer
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.core.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

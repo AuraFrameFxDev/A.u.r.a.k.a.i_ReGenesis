@@ -7,12 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.ldo.data.LDODatabase
-import dev.aurakai.auraframefx.domains.ldo.data.LDORepository
-import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOAgentDao
-import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOBondLevelDao
-import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOTaskDao
-import dev.aurakai.auraframefx.domains.ldo.data.dao.QuarantineDao
+import dev.aurakai.auraframefx.domains.ldo.roster.LDOAgentDao
+import dev.aurakai.auraframefx.domains.ldo.roster.LDOBondLevelDao
+import dev.aurakai.auraframefx.domains.ldo.roster.LDODatabase
+import dev.aurakai.auraframefx.domains.ldo.roster.LDOTaskDao
+import dev.aurakai.auraframefx.domains.ldo.roster.LDORepository
 import javax.inject.Singleton
 
 @Module

@@ -94,7 +94,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.aura.IconPickerViewModel
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconPickerViewModel
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**
@@ -1016,5 +1016,4 @@ private val xposedCategories = listOf(
         requiresXposed = true
     )
 )
-
 

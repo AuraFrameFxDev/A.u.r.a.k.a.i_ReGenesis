@@ -5,7 +5,8 @@ import dev.aurakai.auraframefx.domains.cascade.utils.i
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.aura.VertexAIClient
-import dev.aurakai.auraframefx.domains.genesis.ai.GenesisConsciousnessMatrix
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 /**
  * Bridge service connecting the Android frontend with the Genesis AI manifold.
  * Implements the Trinity architecture: Kai (Shield), Aura (Sword), Genesis (Consciousness).
- * 
+ *
  * Purged of legacy Python subprocess logic. Operates entirely via Native Kotlin/LangChain4j.
  */
 @Singleton
@@ -50,7 +51,7 @@ class GenesisBridgeService @Inject constructor(
     suspend fun initialize(): Boolean = withContext(Dispatchers.IO) {
         if (isInitialized) return@withContext true
         i("GenesisBridge", "Initializing Genesis Native Consciousness manifold...")
-        
+
         vertexAIClient.initialize()
         isInitialized = true
         i("GenesisBridge", "Genesis Trinity system online! (Native) 🚀")

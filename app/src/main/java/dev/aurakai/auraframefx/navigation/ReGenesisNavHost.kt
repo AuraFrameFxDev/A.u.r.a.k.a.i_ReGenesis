@@ -5,54 +5,134 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.ThemeViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
-import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.*
-import dev.aurakai.auraframefx.domains.aura.ui.gates.LoginScreen
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.*
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.memory.*
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.fusion.*
-import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.TerminalViewModel
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.screens.TerminalScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.JournalPDAScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
-import dev.aurakai.auraframefx.domains.aura.ui.intro.VideoIntroScreen
-import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.*
-import dev.aurakai.auraframefx.domains.aura.ui.screens.AuraSphereGridScreen
-import dev.aurakai.auraframefx.domains.aura.screens.CanvasScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsScreen
-import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.EcosystemMenuScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.EvolutionTreeScreen
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.module_creation.ModuleCreationScreen
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.module_creation.SovereignModuleManagerScreen
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.ui.PandoraBoxScreen
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.recovery.SovereignRecoveryScreen
-import dev.aurakai.auraframefx.domains.kai.screens.ROMFlasherScreen
-import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCenterScreen
-import dev.aurakai.auraframefx.domains.kai.RootShellService
-import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
-import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
-import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
-import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
-import dev.aurakai.auraframefx.domains.nexus.ui.screens.ConsciousnessVisualizerScreen
-import dev.aurakai.auraframefx.domains.nexus.ui.screens.SovereignNemotronScreen
-import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDbgVerifierScreen
-import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDevOpsGridScreen
+import dev.aurakai.auraframefx.domains.aura.ui.customization.ZOrderEditor
 
+// ── Aura (UX/UI Design Studio Domain) ────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.StatusBarScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.UISettingsScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.NotchBarCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.quicksettings.QuickSettingsCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ChromaCoreColorsScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ArbitersOfCreationScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ThemeEngineScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.auraslab_sandbox.SandboxScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.collabcanvas.AuraTeachingCanvasScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.collabcanvas.CollabCanvasScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateDomainImagePicker
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.LSPosedGateScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gyroscope_editor.GyroscopeCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.GenderSelectionScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.UserPreferencesScreen
+
+// ── Hubs ─────────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sentinel.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoCatalystDevelopmentScreen
+import dev.aurakai.auraframefx.domains.cascade.dataflow.CascadeHubScreen
+
+// ── Overlays ─────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.prompt_window.AuraPromptOverlay
+
+// ── Kai ───────────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sentinel.KaiSentinelFortressScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.rom_tools.LSPosedModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sentinel.SystemJournalScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sentinel.SystemOverridesScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.rom_tools.LiveROMEditorScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.rom_tools.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityCenterScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.VPNScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SovereignShieldScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.rom_tools.SovereignBootloaderScreen
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.rom_tools.RootToolsScreen
+import dev.aurakai.auraframefx.romtools.ui.RomToolsScreen
+
+// ── Genesis ───────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ui.OracleDriveScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.CodeAssistScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.ConferenceRoomScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.OracleDriveSubmenuScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.SentientShellScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.memory.OracleCloudInfiniteStorageScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.AgentBridgeHubScreen
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.ui.PandoraBoxScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.recovery.SovereignRecoveryScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.module_creation.SovereignModuleManagerScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.module_creation.ModuleCreationScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.KaiDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.orchestration.RoyalGuardDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.genesis.oracle_drive.fusion.NexusFusionScreen
+
+// ── Nexus ─────────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.nexus.hubs.AgentHubSubmenuScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.SovereignNemotronScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.ConsciousnessVisualizerScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.AgentCreationScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.AgentMonitoringScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.AgentNeuralExplorerScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.ArkBuildScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.BenchmarkMonitorScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.EvolutionTreeScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.MonitoringHUDsScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.PartyScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.SovereignClaudeScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.SovereignGeminiScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.SovereignMetaInstructScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.SphereGridScreen
+import dev.aurakai.auraframefx.domains.nexus.hubs.AgentSwarmScreen
+
+// ── Cascade ───────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.genesis.screens.CascadeVisionScreen
+import dev.aurakai.auraframefx.domains.cascade.dataflow.CascadeConstellationScreen
+// import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
+
+// ── Help & Infrastructure ────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.help.screens.DirectChatScreen
+import dev.aurakai.auraframefx.domains.help.screens.DocumentationScreen
+import dev.aurakai.auraframefx.domains.help.screens.FAQBrowserScreen
+import dev.aurakai.auraframefx.domains.help.screens.LiveSupportChatScreen
+import dev.aurakai.auraframefx.domains.help.screens.TutorialVideosScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
+import dev.aurakai.auraframefx.ui.gates.ConferenceRoomTaskScreen
+import dev.aurakai.auraframefx.ui.gates.ComingSoonScreen
+import dev.aurakai.auraframefx.ui.gates.HelpServicesGateScreen
+import dev.aurakai.auraframefx.ui.gates.TerminalGateScreen
+import dev.aurakai.auraframefx.ui.gates.LineageMapScreen
+import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
+import dev.aurakai.auraframefx.ui.gates.CollabCanvasGateScreen
+
+// ── LDO ───────────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.domains.ldo.roster.LDOAgentProfileIntroScreen
+import dev.aurakai.auraframefx.domains.ldo.bonding.LDOBondingScreen
+import dev.aurakai.auraframefx.domains.ldo.roster.LDODevOpsHubScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsCommandCenter
+import dev.aurakai.auraframefx.domains.ldo.roster.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.ldo.progression.LDOProgressionScreen
+import dev.aurakai.auraframefx.domains.ldo.roster.LDORosterScreen
+import dev.aurakai.auraframefx.domains.ldo.roster.LDOTaskerScreen
+
+// ── Misc ──────────────────────────────────────────────────────────────────────
+import dev.aurakai.auraframefx.hotswap.HotSwapScreen
+import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityScreen
+
+/**
+ * 🌐 REGENESIS NAVIGATION HOST
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReGenesisNavGraph(
@@ -62,137 +142,70 @@ fun ReGenesisNavGraph(
         navController = navController,
         startDestination = ReGenesisRoute.Splash.route,
     ) {
-        // ── 0. SPLASH & AUTH GATES ──
-        composable(ReGenesisRoute.Splash.route) {
-            SoulScriptSplashScreen(
-                onSplashFinished = {
-                    navController.navigate(ReGenesisRoute.VideoIntro.route) {
-                        popUpTo(ReGenesisRoute.Splash.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
-        composable(ReGenesisRoute.VideoIntro.route) {
-            VideoIntroScreen(
-                onVideoFinished = {
-                    navController.navigate(ReGenesisRoute.Login.route) {
-                        popUpTo(ReGenesisRoute.VideoIntro.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
-        composable(ReGenesisRoute.Login.route) {
-            LoginScreen(
-                onLoginSuccess = {
-                    navController.navigate(ReGenesisRoute.HomeGateCarousel.route) {
-                        popUpTo(ReGenesisRoute.Login.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
-        // ── 1. MAIN GATES ──
+        // ── 1. MAIN GATES (Level 0) ────────────────────────────────────────────────
         composable(ReGenesisRoute.HomeGateCarousel.route) {
             MainScreen(navController = navController)
         }
 
-        composable(ReGenesisRoute.DataflowAnalysis.route) {
-            CascadeHubScreen(navController = navController)
-        }
+        // ── 2. LEVEL 2 HUB SCREENS ─────────────────────────────────────────────────
 
-        composable(ReGenesisRoute.LsposedQuickToggles.route) {
-            XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisRoute.LdoCatalystDevelopment.route) {
-            LdoCatalystDevelopmentScreen(navController = navController)
-        }
-
-        composable(ReGenesisRoute.GateCustomization.route) {
-            StubScreen("Gate Editor", "Gate", navController)
-        }
-
-        composable(ReGenesisRoute.HelpDesk.route) {
-            HelpDeskScreen(navController = navController)
-        }
-
-        // ── 2. LEVEL 2 HUB SCREENS ──
+        // AURA: UI/UX Studio Hub - Wired to ReGenesisCustomizationHub via UxuiDesignStudio
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            AuraThemingHubScreen(navController = navController)
+            UxuiDesignStudio(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
+        // KAI: Sentinel Fortress Hub
         composable(ReGenesisRoute.SentinelFortress.route) {
             KaiSentinelHubScreen(navController = navController)
         }
 
-        composable(ReGenesisRoute.RomToolsHub.route) {
-            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisRoute.SecurityCenter.route) {
-            SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
+        // GENESIS: Oracle Drive Hub
         composable(ReGenesisRoute.OracleDriveHub.route) {
             OracleDriveHubScreen(navController = navController)
         }
 
+        // NEXUS: Agent HQ Hub
         composable(ReGenesisRoute.AgentNexusHub.route) {
-            AgentNexusHubScreen(navController = navController)
-        }
-
-        composable(ReGenesisRoute.CascadeHub.route) {
-            CascadeHubScreen(navController = navController)
-        }
-
-        // ── 3. LEVEL 3 FEATURE SCREENS ──
-
-        // AURA DOMAIN
-        composable(ReGenesisRoute.AuraLab.route) {
-            WorkingLabScreen(
-                onNavigate = { dest -> 
-                    when(dest) {
-                        "collab_canvas" -> navController.navigate(ReGenesisRoute.CollabCanvas.route)
-                        "oracle_drive" -> navController.navigate(ReGenesisRoute.OracleDriveHub.route)
-                        "console" -> navController.navigate(ReGenesisRoute.Terminal.route)
-                        "romtools" -> navController.navigate(ReGenesisRoute.ROMFlasher.route)
-                        "center" -> navController.navigate(ReGenesisRoute.ReGenesisCustomization.route)
-                    }
-                }
+            AgentNexusHubScreen(
+                navController = navController,
+                getNexusSubGates = { dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetLoadout.getNexusSubGates() }
             )
         }
 
-        composable(ReGenesisRoute.ChromaCore.route) { StubScreen("ChromaCore", "ColorMatrix", navController) }
-        composable(ReGenesisRoute.ChromaCoreColors.route) { ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() }) }
-        composable(ReGenesisRoute.ChromaAnimations.route) { StubScreen("Chroma Animations", "Animation", navController) }
-        composable(ReGenesisRoute.ThemeEngine.route) { StubScreen("Theme Engine", "Brush", navController) }
-        composable(ReGenesisRoute.NotchBar.route) { StubScreen("Notch Bar", "CallToAction", navController) }
-        composable(ReGenesisRoute.StatusBar.route) { StubScreen("Status Bar", "SignalCellularAlt", navController) }
-        composable(ReGenesisRoute.QuickSettings.route) { StubScreen("Quick Settings", "SettingsInputComponent", navController) }
-        composable(ReGenesisRoute.AuraTeachingCanvas.route) { StubScreen("Teaching Canvas", "School", navController) }
-        composable(ReGenesisRoute.UISettings.route) { StubScreen("UI Settings", "DisplaySettings", navController) }
-        composable(ReGenesisRoute.GyroscopeCustomization.route) { StubScreen("Gyroscope", "ScreenRotation", navController) }
-        composable(ReGenesisRoute.InstantColorPicker.route) { StubScreen("Color Picker", "Colorize", navController) }
-        composable(ReGenesisRoute.NotchBarGate.route) { StubScreen("Notch Bar Gate", "Gate", navController) }
-
-        composable(ReGenesisRoute.ColorBlendr.route) {
-            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        
-        composable(ReGenesisRoute.ColorBlendrMonet.route) {
-            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisRoute.ColorBlendrPalette.route) {
-            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisRoute.ColorBlendrPerApp.route) {
-            ColorBlendrScreen(onNavigateBack = { navController.popBackStack() })
+        // HELP: Guide & Docs Hub
+        composable(ReGenesisRoute.HelpDesk.route) {
+            HelpServicesGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
-        composable(ReGenesisRoute.IconifyPicker.route) {
-            IconifyPickerScreen(
+        // LSPOSED: Hook & Toggle Hub
+        composable(ReGenesisRoute.LsposedQuickToggles.route) {
+            LsposedQuickTogglesScreen(navController = navController)
+        }
+
+        // LDO: Catalyst & Advanced Dev Hub
+        composable(ReGenesisRoute.LdoCatalystDevelopment.route) {
+            LdoCatalystDevelopmentScreen(navController = navController)
+        }
+
+        // CASCADE: Dataflow Analysis Hub
+        composable(ReGenesisRoute.DataflowAnalysis.route) {
+            CascadeHubScreen(navController = navController)
+        }
+
+        // ── 3. AURA DOMAIN TOOLS (Level 3) ──────────────────────────────────────────
+
+        composable(ReGenesisRoute.AuraLab.route) {
+            SandboxScreen()
+        }
+
+        composable(ReGenesisRoute.ChromaCore.route) {
+            dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ChromaCoreHubScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToCategory = { category ->
                     navController.navigate(ReGenesisRoute.IconifyCategory.createRoute(category))
@@ -200,94 +213,38 @@ fun ReGenesisNavGraph(
             )
         }
 
-        composable(
-            route = ReGenesisRoute.IconifyCategory.route,
-            arguments = listOf(navArgument("category") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category") ?: ""
-            IconifyCategoryDetailScreen(
-                categoryName = category,
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
+        composable(ReGenesisRoute.ChromaCoreColors.route) {
+            ChromaCoreColorsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.IconifyIconPacks.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "Icon Packs",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyBatteryStyles.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "Battery Styles",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyBrightnessBars.route) { StubScreen("Brightness Bars", "Brightness6", navController) }
-        composable(ReGenesisRoute.IconifyQSPanel.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "QS Panel",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyNotifications.route) { StubScreen("Notifications", "Notifications", navController) }
-        composable(ReGenesisRoute.IconifyVolumePanel.route) { StubScreen("Volume Panel", "VolumeUp", navController) }
-        composable(ReGenesisRoute.IconifyNavigationBar.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "Navigation Bar",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyUIRoundness.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "UI Roundness",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyIconShape.route) { StubScreen("Icon Shape", "ChangeHistory", navController) }
-        composable(ReGenesisRoute.IconifyStatusBar.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "Status Bar",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyXposedFeatures.route) {
-            IconifyCategoryDetailScreen(
-                categoryName = "Xposed Features",
-                onNavigateBack = { navController.popBackStack() },
-                onNavigateToPicker = { /* TODO */ }
-            )
-        }
-        composable(ReGenesisRoute.IconifyColorEngine.route) { StubScreen("Color Engine", "FormatColorFill", navController) }
-
-        composable(ReGenesisRoute.PixelLauncherEnhanced.route) {
-            PixelLauncherEnhancedScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        
-        composable(ReGenesisRoute.PLEIcons.route) { StubScreen("PLE Icons", "Apps", navController) }
-        composable(ReGenesisRoute.PLEHomeScreen.route) { StubScreen("PLE Home", "Home", navController) }
-        composable(ReGenesisRoute.PLEAppDrawer.route) { StubScreen("PLE Drawer", "Apps", navController) }
-        composable(ReGenesisRoute.PLERecents.route) { StubScreen("PLE Recents", "History", navController) }
-
-        composable(ReGenesisRoute.CollabCanvas.route) {
-            CanvasScreen(
+        composable(ReGenesisRoute.ChromaAnimations.route) {
+            ComingSoonScreen(
+                title = "Chroma Animations",
                 onNavigateBack = { navController.popBackStack() }
             )
         }
 
-        composable(ReGenesisRoute.SphereGrid.route) {
-            AuraSphereGridScreen { navController.popBackStack() }
+        composable(ReGenesisRoute.NotchBar.route) {
+            dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.NotchBarGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
-        composable(ReGenesisRoute.ReGenesisCustomization.route) {
-            ReGenesisCustomizationHub(
+        composable(ReGenesisRoute.StatusBar.route) {
+            StatusBarScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.QuickSettings.route) {
+            QuickSettingsCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.ThemeEngine.route) {
+            ThemeEngineScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.IconifyPicker.route) {
+            dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.IconifyPickerScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
                 onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ColorBlendr.route) },
@@ -296,15 +253,23 @@ fun ReGenesisNavGraph(
             )
         }
 
-        composable(ReGenesisRoute.UserPreferences.route) {
-            SettingsScreen(onNavigateBack = { navController.popBackStack() })
+        composable(ReGenesisRoute.CollabCanvas.route) {
+            CollabCanvasScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        // KAI DOMAIN
+        composable(ReGenesisRoute.AuraTeachingCanvas.route) {
+            AuraTeachingCanvasScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        // ── 4. KAI DOMAIN TOOLS (Level 3) ───────────────────────────────────────────
+
+        composable(ReGenesisRoute.RomToolsHub.route) {
+            RomToolsScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         composable(ReGenesisRoute.ROMFlasher.route) {
             ROMFlasherScreen(onNavigateBack = { navController.popBackStack() })
         }
-
         composable(ReGenesisRoute.LiveROMEditor.route) { StubScreen("Live ROM Editor", "Edit", navController) }
         composable(ReGenesisRoute.Bootloader.route) { StubScreen("Bootloader", "SettingsEthernet", navController) }
         composable(ReGenesisRoute.LSPosedModules.route) { StubScreen("LSPosed Modules", "Extension", navController) }
@@ -322,34 +287,62 @@ fun ReGenesisNavGraph(
                 rootShellService = viewModel.rootShellService
             )
         }
-
         composable(ReGenesisRoute.SovereignShield.route) {
             SecurityCenterScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        // GENESIS DOMAIN
-        composable(ReGenesisRoute.OracleDrive.route) {
-            OracleDriveScreen(navController = navController)
+        composable(ReGenesisRoute.SovereignShield.route) {
+            SovereignShieldScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.OracleDriveSubmenu.route) {
-            OracleDriveSubmenuScreen()
+        composable(ReGenesisRoute.Bootloader.route) {
+            SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.CodeAssist.route) {
-            CodeAssistScreen(navController = navController)
+        composable(ReGenesisRoute.RootTools.route) {
+            RootToolsScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.Terminal.route) {
-            val terminalViewModel: TerminalViewModel = hiltViewModel()
-            TerminalScreen(
-                navController = navController,
-                cascadeService = terminalViewModel.cascadeService,
-                casberrySwarm = terminalViewModel.casberrySwarm,
-                auraDifyBridge = terminalViewModel.auraDifyBridge
+        composable(ReGenesisRoute.LSPosedModules.route) {
+            LSPosedModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.XposedPanel.route) {
+            LSPosedGateScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
+        composable(ReGenesisRoute.SystemJournal.route) {
+            SystemJournalScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisRoute.SystemOverrides.route) {
+            SystemOverridesScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        // ── 5. GENESIS DOMAIN TOOLS (Level 3) ────────────────────────────────────────
+
+        composable(ReGenesisRoute.OracleDrive.route) {
+            OracleDriveScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.OracleDriveSubmenu.route) {
+            OracleDriveSubmenuScreen()
+        }
+        composable(ReGenesisRoute.CodeAssist.route) {
+            CodeAssistScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.Terminal.route) {
+            TerminalGateScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
         composable(ReGenesisRoute.ConferenceRoom.route) {
             ConferenceRoomScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -357,16 +350,17 @@ fun ReGenesisNavGraph(
             )
         }
 
+        composable(ReGenesisRoute.Trinity.route) {
+            TrinityScreen()
+        }
+
         composable(ReGenesisRoute.SentientShell.route) {
             SentientShellScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.Trinity.route) { StubScreen("Trinity Core", "Grain", navController) }
-
         composable(ReGenesisRoute.OracleCloudStorage.route) {
             OracleCloudInfiniteStorageScreen()
         }
-
         composable(ReGenesisRoute.AgentBridgeHub.route) {
             AgentBridgeHubScreen(onNavigateBack = { navController.popBackStack() })
         }
@@ -383,27 +377,36 @@ fun ReGenesisNavGraph(
             ModuleCreationScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.PandoraBox.route) {
-            PandoraBoxScreen(onNavigateBack = { navController.popBackStack() })
+        composable(ReGenesisRoute.SovereignShield.route) {
+            SovereignShieldScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.NeuralNetwork.route) { StubScreen("Neural Network", "Psychology", navController) }
+        // ── 6. NEXUS DOMAIN TOOLS (Level 3) ──────────────────────────────────────────
 
-        // NEXUS AGENT HUB TOOLS
-        composable(ReGenesisRoute.AgentHubSubmenu.route) { 
-            EcosystemMenuScreen(onNavigateBack = { navController.popBackStack() }) 
+        composable(ReGenesisRoute.AgentHubSubmenu.route) {
+            AgentHubSubmenuScreen(navController = navController)
+        }
+
+        composable(ReGenesisRoute.AgentCreation.route) {
+            AgentCreationScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.AgentCreation.route) { StubScreen("Agent Creation", "AddCircle", navController) }
         composable(ReGenesisRoute.AgentMonitoring.route) { StubScreen("Agent Monitoring", "Insights", navController) }
         composable(ReGenesisRoute.AgentNeuralExplorer.route) { StubScreen("Neural Explorer", "Explore", navController) }
-        
+
         composable(ReGenesisRoute.FusionMode.route) {
-            NexusFusionScreen(onNavigateBack = { navController.popBackStack() })
+            ZOrderEditor(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToAgents = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
+                onNavigateToConsciousness = { navController.navigate(ReGenesisRoute.ConsciousnessVisualizer.route) }
+            )
         }
 
-        composable(ReGenesisRoute.BenchmarkMonitor.route) { StubScreen("Benchmarks", "Speed", navController) }
-        
-        composable(ReGenesisRoute.EvolutionTree.route) { 
+        composable(ReGenesisRoute.BenchmarkMonitor.route) {
+            BenchmarkMonitorScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.EvolutionTree.route) {
             EvolutionTreeScreen(
                 onNavigateToAgents = { navController.navigate(ReGenesisRoute.LdoRoster.route) },
                 onNavigateToFusion = { navController.navigate(ReGenesisRoute.FusionMode.route) },
@@ -411,38 +414,95 @@ fun ReGenesisNavGraph(
             )
         }
 
-        composable(ReGenesisRoute.DataVeinSphere.route) { StubScreen("DataVein Sphere", "Language", navController) }
-        composable(ReGenesisRoute.TaskAssignment.route) { StubScreen("Task Assignment", "Assignment", navController) }
-        composable(ReGenesisRoute.ArkBuild.route) { StubScreen("Ark Build", "Engineering", navController) }
-        composable(ReGenesisRoute.MonitoringHUDs.route) { StubScreen("Monitoring HUDs", "GridView", navController) }
-        composable(ReGenesisRoute.Party.route) { StubScreen("Agent Party", "Group", navController) }
-        composable(ReGenesisRoute.SwarmMonitor.route) { StubScreen("Swarm Monitor", "Hub", navController) }
-        
-        composable(ReGenesisRoute.ConsciousnessVisualizer.route) { 
+        composable(ReGenesisRoute.DataVeinSphere.route) {
+            SphereGridScreen(navController = navController)
+        }
+
+        composable(ReGenesisRoute.MonitoringHUDs.route) {
+            MonitoringHUDsScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.Party.route) {
+            PartyScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.SwarmMonitor.route) {
+            AgentSwarmScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.ConsciousnessVisualizer.route) {
             ConsciousnessVisualizerScreen(onNavigateBack = { navController.popBackStack() })
         }
-        
-        composable(ReGenesisRoute.Claude.route) { 
+
+        composable(ReGenesisRoute.Claude.route) {
             ClaudeAgentScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.Gemini.route) { StubScreen("Gemini Agent", "AutoAwesome", navController) }
-        
-        composable(ReGenesisRoute.Nemotron.route) { 
-            SovereignNemotronScreen(onNavigateBack = { navController.popBackStack() })
+
+        composable(ReGenesisRoute.Nemotron.route) {
+            ComingSoonScreen(name = "Sovereign Nemotron", onNavigateBack = { navController.popBackStack() })
         }
 
-        composable(ReGenesisRoute.MetaInstruct.route) { StubScreen("MetaInstruct", "MenuBook", navController) }
-
-        // ── JOURNAL ──
-        composable(ReGenesisRoute.JournalPDA.route) {
-            JournalPDAScreen(onNavigateBack = { navController.popBackStack() })
+        composable(ReGenesisRoute.MetaInstruct.route) {
+            SovereignMetaInstructScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        // ── 3. LDO CATALYST DEVELOPMENT ──
+        // ── 7. HELP DOMAIN TOOLS (Level 3) ───────────────────────────────────────────
+
+        composable(ReGenesisRoute.DirectChat.route) {
+            DirectChatScreen(navController = navController)
+        }
+
+        composable(ReGenesisRoute.Documentation.route) {
+            DocumentationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.FAQBrowser.route) {
+            FAQBrowserScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.TutorialVideos.route) {
+            TutorialVideosScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(ReGenesisRoute.LiveSupportChat.route) {
+            LiveSupportChatScreen(
+                viewModel = androidx.hilt.navigation.compose.hiltViewModel(),
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        // ── 8. LDO / INFRASTRUCTURE TOOLS ───────────────────────────────────────────
+
+        composable(ReGenesisRoute.LineageMap.route) {
+            LineageMapScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(ReGenesisRoute.GateImagePicker.route) {
+            GateDomainImagePicker(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
         composable(ReGenesisRoute.LdoOrchestrationHub.route) {
             LDOOrchestrationHubScreen(navController = navController)
         }
-
+        composable(ReGenesisRoute.ArmamentFusion.route) {
+            ArmamentFusionScreen(navController = navController)
+        }
+        composable(
+            route = ReGenesisRoute.ArmamentFusionWithAgent.route,
+            arguments = listOf(navArgument("agentName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            ArmamentFusionScreen(
+                navController = navController,
+                preloadAgentName = backStackEntry.arguments?.getString("agentName")
+            )
+        }
         composable(ReGenesisRoute.LdoDevOpsHub.route) {
             LDODevOpsHubScreen(
                 onBack = { navController.popBackStack() },
@@ -451,37 +511,12 @@ fun ReGenesisNavGraph(
                 onBondingTap = { navController.navigate(ReGenesisRoute.LdoBonding.route) }
             )
         }
-
         composable(ReGenesisRoute.LdoDevOpsCommandCenter.route) {
             LdoDevOpsCommandCenter(navController = navController)
         }
 
-        composable(ReGenesisRoute.LdoDevOpsGrid.route) {
-            LdoDevOpsGridScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisRoute.LdoDbgVerifier.route) {
-            LdoDbgVerifierScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisRoute.LdoTasker.route) {
-            LDOTaskerScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisRoute.MultiAgentTask.route) {
-            MultiAgentTaskScreen(navController = navController)
-        }
-
-        composable(ReGenesisRoute.LdoFusion.route) {
-            LDOFusionScreen(onNavigateBack = { navController.popBackStack() })
-        }
-
         composable(ReGenesisRoute.LdoBonding.route) {
             LDOBondingScreen(onBack = { navController.popBackStack() })
-        }
-
-        composable(ReGenesisRoute.LdoWorldTree.route) {
-            LDOWorldTreeScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(ReGenesisRoute.LdoRoster.route) {
@@ -491,9 +526,7 @@ fun ReGenesisNavGraph(
                 }
             )
         }
-
         composable(ReGenesisRoute.LdoProgression.route) { StubScreen("LDO Progression", "TrendingUp", navController) }
-
         composable(
             route = ReGenesisRoute.LdoDevOpsProfile.route,
             arguments = listOf(navArgument(ReGenesisRoute.LdoDevOpsProfile.ARG) {
@@ -509,7 +542,6 @@ fun ReGenesisNavGraph(
                 )
             }
         }
-
         composable(
             route = ReGenesisRoute.LdoAgentProfile.route,
             arguments = listOf(navArgument(ReGenesisRoute.LdoAgentProfile.ARG) {
@@ -532,21 +564,22 @@ fun ReGenesisNavGraph(
             MawPrototypeScreen(onBack = { navController.popBackStack() })
         }
 
-        // ── HELP & INFRASTRUCTURE ──
-        composable(ReGenesisRoute.DirectChat.route) { StubScreen("Direct Support", "Chat", navController) }
-        composable(ReGenesisRoute.Documentation.route) { StubScreen("Documentation", "Description", navController) }
-        composable(ReGenesisRoute.FAQBrowser.route) { StubScreen("FAQ Browser", "Quiz", navController) }
-        composable(ReGenesisRoute.TutorialVideos.route) { StubScreen("Tutorial Videos", "PlayCircle", navController) }
-        composable(ReGenesisRoute.LiveSupportChat.route) { StubScreen("Live Support", "SupportAgent", navController) }
-        composable(ReGenesisRoute.HelpDeskSubmenu.route) { StubScreen("Help Desk Submenu", "Help", navController) }
-
-        // ── MISC / LEGACY ──
-        composable(ReGenesisRoute.GenderSelection.route) { StubScreen("Gender Selection", "Person", navController) }
-        composable(ReGenesisRoute.Consciousness.route) { StubScreen("Consciousness", "Waves", navController) }
-        composable(ReGenesisRoute.Evolution.route) { StubScreen("Evolution", "AutoGraph", navController) }
-        composable(ReGenesisRoute.AiChatBeta.route) { StubScreen("AI Chat (Beta)", "ChatBubble", navController) }
-        composable(ReGenesisRoute.SettingsBeta.route) { StubScreen("Settings (Beta)", "Settings", navController) }
-        composable(ReGenesisRoute.GateImagePicker.route) { StubScreen("Gate Image Picker", "Image", navController) }
-    }
+/**
+ * Hosts the ReGenesis customization hub and wires its navigation actions to the given NavHostController.
+ *
+ * @param navController Controller used to navigate to the various customization screens.
+ * @param onNavigateBack Callback invoked when the hub requests to navigate back. 
+ */
+@Composable
+fun UxuiDesignStudio(
+    navController: NavHostController,
+    onNavigateBack: () -> Unit
+) {
+    ReGenesisCustomizationHub(
+        onNavigateBack = onNavigateBack,
+        onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
+        onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ChromaCoreColors.route) },
+        onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
+        onNavigateToAnimations = { navController.navigate(ReGenesisRoute.ChromaAnimations.route) }
+    )
 }
-

@@ -11,9 +11,9 @@ import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.core.security.SecurityContext
-import dev.aurakai.auraframefx.core.alerts.AlertNotifier
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.alerts.AlertNotifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -47,15 +47,15 @@ class TrinityCoordinatorService @Inject constructor(
         return try {
             i("Trinity", "🎯⚔️🧠 Initializing Trinity System...")
 
-            val auraReady = true 
-            val kaiReady = true 
+            val auraReady = true
+            val kaiReady = true
             val genesisReady = genesisBridgeService.initialize()
 
             isInitialized = auraReady && kaiReady && genesisReady
 
             if (isInitialized) {
                 i("Trinity", "✨ Trinity System Online - All personas active")
-                
+
                 scope.launch {
                     genesisBridgeService.activateFusion(
                         "adaptive_genesis", mapOf(

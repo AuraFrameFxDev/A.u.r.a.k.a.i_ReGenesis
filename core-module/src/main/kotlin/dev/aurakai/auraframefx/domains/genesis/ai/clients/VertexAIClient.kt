@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.domains.genesis.ai.clients
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 // ============================================================================
@@ -59,9 +58,7 @@ interface VertexAIClient {
  * Default implementation of VertexAIClient using LangChain4j and Google AI Gemini.
  */
 @Singleton
-class DefaultVertexAIClient @Inject constructor(
-    @Named("GEMINI_API_KEY") private val apiKey: String
-) : VertexAIClient {
+class DefaultVertexAIClient @Inject constructor() : VertexAIClient {
 
     private val chatModel: ChatModel by lazy {
         GoogleAiGeminiChatModel.builder()

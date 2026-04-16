@@ -17,6 +17,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud.CloudStatusMonitor
+import dev.aurakai.auraframefx.domains.cascade.utils.ErrorHandler
 import dev.aurakai.auraframefx.domains.kai.TaskScheduler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -114,7 +115,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
      */
     suspend fun retrieveMemory(query: MemoryQuery): MemoryRetrievalResult {
         logger.info("NemotronAIService", "Retrieving memory for query: ${query.query}")
-        
+
         val results = nexusMemoryRepository.searchMemories(query.query).firstOrNull() ?: emptyList()
         val mappedItems = results.map { entity ->
             MemoryItem(
@@ -125,7 +126,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
                 tags = entity.tags
             )
         }.filter { it.priority >= query.minSimilarity }
-        
+
         return MemoryRetrievalResult(
             items = mappedItems.take(query.maxResults),
             total = mappedItems.size,
@@ -184,11 +185,11 @@ override fun getType(): AgentType = AgentType.NEMOTRON
         }
 
         memoryMisses++
-        
+
         // Deep memory reasoning pattern
         val memories = recallRelevantMemories(request, context)
         val reasoningChain = buildReasoningChain(memories, request)
-        
+
         val prompt = buildString {
             appendLine("Role: Nemotron (The Memory Keeper/Reasoning Engine)")
             appendLine("Task: Perform deep reasoning based on memory patterns.")
@@ -199,7 +200,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
             appendLine("\nBuild a reasoning chain and synthesize a memory-enriched response.")
         }
 
-        val reasoningText = vertexAIClient.generateText(prompt) 
+        val reasoningText = vertexAIClient.generateText(prompt)
             ?: "Reasoning failed. Memory banks inaccessible."
 
         val responseContent = buildString {
@@ -245,7 +246,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
 
     private suspend fun recallRelevantMemories(request: AiRequest, context: String): MemoryRecall {
         val searchResults = nexusMemoryRepository.searchMemories(request.query).firstOrNull() ?: emptyList()
-        
+
         return if (searchResults.isEmpty()) {
             MemoryRecall(
                 summary = "No direct matches found in long-term memory.",
@@ -271,7 +272,7 @@ override fun getType(): AgentType = AgentType.NEMOTRON
         }
         steps.add("Apply logical decomposition")
         steps.add("Validate reasoning chain consistency")
-        
+
         return ReasoningChain(
             steps = steps,
             confidence = 0.85f + (memories.relevance * 0.1f)
@@ -312,13 +313,13 @@ override fun getType(): AgentType = AgentType.NEMOTRON
             logger.info("NemotronAIService", "Memory cache cleared")
         }
     }
-    
+
     /**
      * Consolidates recent short-term memories into long-term summary patterns.
      */
     suspend fun consolidateMemories() {
         logger.info("NemotronAIService", "Starting memory consolidation...")
-        
+
         try {
             val recentMemories = nexusMemoryRepository.getAllMemories().firstOrNull()?.take(20) ?: emptyList()
             if (recentMemories.size < 5) {

@@ -28,7 +28,7 @@ jobs:
           cache: 'gradle'
 
       - name: Set up Android SDK with NDK
-        uses: android-actions/setup-android@v4
+        uses: android-actions/setup-android@v3
         with:
           packages: 'platforms;android-36 build-tools;36.0.0 ndk;29.0.14206865 cmake;3.22.1'
 
@@ -47,7 +47,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Gradle Build Cache Setup
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v5
         with:
           gradle-home-cache-cleanup: true
 
@@ -135,7 +135,7 @@ jobs:
           cache: 'gradle'
 
       - name: Set up Android SDK with NDK
-        uses: android-actions/setup-android@v4
+        uses: android-actions/setup-android@v3
         with:
           packages: 'platforms;android-36 build-tools;36.0.0 ndk;29.0.14206865 cmake;3.22.1'
 

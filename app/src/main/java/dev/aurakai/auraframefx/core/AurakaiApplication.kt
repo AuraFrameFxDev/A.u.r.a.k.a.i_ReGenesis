@@ -13,14 +13,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.IntegrityMonitorService
-import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
-import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -35,22 +27,19 @@ class AurakaiApplication : Application(), Configuration.Provider {
     lateinit var orchestrator: GenesisOrchestrator
 
     @Inject
+    lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
+
+    @Inject
     lateinit var sentinelBus: KaiSentinelBus
 
     @Inject
-    lateinit var sovereignManager: SovereignStateManager
+    lateinit var stateManager: SovereignStateManager
 
     @Inject
     lateinit var pandoraBox: PandoraBoxService
 
     @Inject
-    lateinit var droneDispatcher: GuidanceDroneDispatcher
-
-    @Inject
     lateinit var sovereignPerimeter: SovereignPerimeter
-
-    @Inject
-    lateinit var trinityCoordinatorService: dagger.Lazy<dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService>
 
     // Application-scoped coroutine for background init
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -80,7 +69,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
         applicationScope.launch {
             try {
                 Timber.i("🧬 Seeding ReGenesis Identity...")
-                NexusMemoryCore.seedLDOIdentity()
+                dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore.seedLDOIdentity()
 
                 // Native AI Runtime
                 initializeNativeAIPlatform()
@@ -118,16 +107,16 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            val ok = NativeLib.tryInitializeAICore()
-            Timber.i("✅ Native AI platform init result: %s", ok)
-        } catch (t: Throwable) {
-            Timber.e(t, "❌ Native AI initialization error: ${t.message} (swallowed to prevent startup crash)")
+            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
+            Timber.d("✅ Native AI platform initialized")
+        } catch (e: Exception) {
+            Timber.e(e, "❌ Native AI initialization error: ${e.message}")
         }
     }
 
     private fun startIntegrityMonitor() {
         try {
-            val intent = Intent(this, IntegrityMonitorService::class.java)
+            val intent = Intent(this, dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService::class.java)
             try {
                 startForegroundService(intent)
                 Timber.d("✅ Integrity monitor started")
@@ -145,7 +134,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
                 override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
                     // Filter noisy hardware sensor hub spam (AOC/CHRE/USF)
                     if (tag != null && (
-                        tag.contains("AOC", ignoreCase = true) || 
+                        tag.contains("AOC", ignoreCase = true) ||
                         tag.contains("CHRE", ignoreCase = true) ||
                         tag.contains("USF", ignoreCase = true) ||
                         message.contains("Calculated CCT", ignoreCase = true)

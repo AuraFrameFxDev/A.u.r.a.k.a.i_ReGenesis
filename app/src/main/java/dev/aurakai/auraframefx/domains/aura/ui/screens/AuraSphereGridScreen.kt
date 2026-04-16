@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import kotlin.math.*
 
 /**
@@ -68,7 +68,7 @@ fun AuraSphereGridScreen(
         while (true) {
             val rawMetrics = nativeLib.getSystemMetrics()
             metrics = rawMetrics
-            
+
             // Simple parsing for visualization (In a real app, use JSON parsing)
             try {
                 if (rawMetrics.contains("cpu_load\":")) {
@@ -80,13 +80,13 @@ fun AuraSphereGridScreen(
             } catch (e: Exception) {
                 // Ignore parse errors
             }
-            
+
             kotlinx.coroutines.delay(2000)
         }
     }
 
     val infiniteTransition = rememberInfiniteTransition(label = "spellhook_grid")
-    
+
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f, targetValue = 360f,
         animationSpec = infiniteRepeatable(tween(20000, easing = LinearEasing)),
@@ -164,14 +164,14 @@ fun AuraSphereGridScreen(
                         val r2 = with(density) { 220.dp.toPx() }
                         val r3 = with(density) { 300.dp.toPx() }
                         val ringRadii = listOf(r1, r2, r3)
-                        
+
                         var found: SphereNode? = null
                         nodes.forEach { node ->
                             val radius = ringRadii[node.ringIndex]
                             val angleRad = Math.toRadians((node.angle + rotation).toDouble()).toFloat()
                             val nx = cx + radius * cos(angleRad)
                             val ny = cy + radius * 0.4f * sin(angleRad)
-                            
+
                             val dist = sqrt((offset.x - nx).pow(2) + (offset.y - ny).pow(2))
                             if (dist < 40f) {
                                 found = node
@@ -215,7 +215,7 @@ fun AuraSphereGridScreen(
                 val angleRad = Math.toRadians((node.angle + rotation).toDouble()).toFloat()
                 val nx = cx + radius * cos(angleRad)
                 val ny = cy + radius * 0.4f * sin(angleRad)
-                
+
                 // Z-index trick: scale and alpha based on sin(angle)
                 val depth = sin(angleRad)
                 val scale = 0.8f + (depth + 1f) * 0.2f
@@ -227,14 +227,14 @@ fun AuraSphereGridScreen(
                 if (node.active) {
                     val finalColor = if (isSelected) MagentaAura else CyanNode
                     val glowAlpha = if (isSelected) 0.5f else 0.3f
-                    
+
                     drawOctagon(nx, ny, nodeSize + (pulse * 3f), finalColor, filled = true, alpha = nodeAlpha * glowAlpha)
                     drawOctagon(nx, ny, nodeSize, finalColor, filled = false, alpha = nodeAlpha)
-                    
+
                     if (isSelected) {
                         drawCircle(finalColor.copy(alpha = 0.2f * pulse), nodeSize * 2f, Offset(nx, ny))
                     }
-                    
+
                     if (node.isMajor) {
                         drawCircle(finalColor, 3f * scale, Offset(nx, ny), alpha = nodeAlpha)
                     }
@@ -274,7 +274,7 @@ fun AuraSphereGridScreen(
                         letterSpacing = 4.sp
                     )
                 }
-                
+
                 IconButton(onClick = onNavigateBack) {
                     Box(
                         modifier = Modifier
@@ -345,5 +345,4 @@ private fun DrawScope.drawOctagon(cx: Float, cy: Float, size: Float, color: Colo
     if (filled) drawPath(path, color, alpha = alpha)
     else drawPath(path, color, alpha = alpha, style = Stroke(1.5f))
 }
-
 

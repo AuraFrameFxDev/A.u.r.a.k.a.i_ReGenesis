@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.network.api
 
-import dev.aurakai.auraframefx.domains.genesis.network.model.AgentRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse
 import retrofit2.http.Body

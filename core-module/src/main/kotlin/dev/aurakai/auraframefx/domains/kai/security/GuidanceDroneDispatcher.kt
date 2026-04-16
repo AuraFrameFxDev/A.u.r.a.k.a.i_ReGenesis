@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 🚁 GUIDANCE DRONE DISPATCHER
+ * GUIDANCE DRONE DISPATCHER
  */
 @Singleton
 class GuidanceDroneDispatcher @Inject constructor() {

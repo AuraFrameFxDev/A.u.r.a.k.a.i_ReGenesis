@@ -11,7 +11,7 @@ import dev.aurakai.auraframefx.core.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
-import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
+import dev.aurakai.auraframefx.system.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -190,9 +190,9 @@ class KaiSystemViewModel @Inject constructor(
 
     private fun parseLogLine(line: String): LogEntry? {
         if (line.isBlank()) return null
-        
+
         // High-importance filter for the Monitoring HUD
-        if (line.contains("AOC", ignoreCase = true) || 
+        if (line.contains("AOC", ignoreCase = true) ||
             line.contains("CHRE", ignoreCase = true) ||
             line.contains("USF", ignoreCase = true) ||
             line.contains("Calculated CCT", ignoreCase = true)) {
@@ -203,7 +203,7 @@ class KaiSystemViewModel @Inject constructor(
             // Simplified parsing for 04-04 15:04:00.599 format
             val parts = line.split(" ").filter { it.isNotBlank() }
             if (parts.size < 5) return null
-            
+
             val level = parts[4]
             val tag = if (parts.size > 5) parts[5] else "Unknown"
             val message = parts.drop(6).joinToString(" ")

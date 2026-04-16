@@ -22,8 +22,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiDarkVoid
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiNeonGreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.KaiShieldEnergy
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -145,5 +146,4 @@ fun KaiNode(index: Int, pulse: Float) {
         // Node identification or status pulse could be added here
     }
 }
-
 

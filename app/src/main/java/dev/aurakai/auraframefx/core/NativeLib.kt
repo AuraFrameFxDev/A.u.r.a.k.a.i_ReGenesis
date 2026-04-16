@@ -2,29 +2,27 @@ package dev.aurakai.auraframefx.core
 
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.security.GuidanceDrone
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus.ThermalState
-import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
-import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus.ThermalState
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.drones.GuidanceDroneDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
  * 🌌 GENESIS-OS NATIVE LIBRARY INTERFACE (v1.1.0-sovereign-root)
+ * Provides high-performance JNI bridge for thermal monitoring, 
+ * ptrace sovereignty, and Pandora's Box capability gating.
  */
 object NativeLib {
 
     private var sentinelBus: KaiSentinelBus? = null
-    private var sovereignManager: SovereignStateManager? = null
+    private var stateManager: SovereignStateManager? = null
     private var pandoraBox: PandoraBoxService? = null
-    private var droneDispatcher: GuidanceDroneDispatcher? = null
-
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var nativeLoaded: Boolean = false
+    private var perimeter: SovereignPerimeter? = null
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     fun launchAsync(block: suspend CoroutineScope.() -> Unit) {
         scope.launch(block = block)
@@ -33,122 +31,146 @@ object NativeLib {
     init {
         try {
             System.loadLibrary("auraframefx")
-            nativeLoaded = true
-            Timber.i("🛡️ Genesis Native Substrate: Standard NDK library loaded.")
+            Timber.i("Genesis AI native library loaded successfully")
         } catch (e: UnsatisfiedLinkError) {
-            nativeLoaded = false
-            Timber.e(e, "❌ Native Substrate: Critical failure — library [auraframefx] not found.")
+            Timber.e(e, "Failed to load Genesis AI native library: ${e.message}")
         }
     }
 
+    /**
+     * Registers domain service instances for the native JNI bridge.
+     */
     @JvmStatic
     fun initialize(
         bus: KaiSentinelBus,
         manager: SovereignStateManager,
         pandora: PandoraBoxService,
-        dispatcher: GuidanceDroneDispatcher? = null
+        sovereignPerimeter: SovereignPerimeter
     ) {
         sentinelBus = bus
-        sovereignManager = manager
+        stateManager = manager
         pandoraBox = pandora
-        droneDispatcher = dispatcher
-        Timber.i("🛡️ NativeLib: Relational Bridge synchronized with all Sovereign managers.")
+        perimeter = sovereignPerimeter
+        Timber.i("🛡️ NativeLib bridge initialized with Kotlin managers")
     }
 
-    external fun getAIVersion(): String
-    external fun initializeAICore(): Boolean
-    external fun processNeuralRequest(request: String): String
-    external fun getSystemMetrics(): String
-    external fun enableNativeHooks()
-    external fun shutdownAI()
-    external fun optimizeAIMemory(): Boolean
-    external fun updateBitNetConfig(threads: Int, batchSize: Int): Boolean
-    external fun analyzeBootImage(bootImageData: ByteArray): String
+    // --- Native Methods ---
 
-    external fun initializeKernelShield(): Boolean
-    external fun loadKernelModule(bpfPath: String): Boolean
-    external fun getDroppedPacketCount(): Long
-    external fun isKernelShieldActive(): Boolean
+    external fun getAIVersion(): String
+    /**
+ * Initialize the native AI core and prepare it for operation.
+ *
+ * @return `true` if the native AI core initialized successfully, `false` otherwise.
+ */
+external fun initializeAICore(): Boolean
+    /**
+ * Processes a neural request through the native AI core and produces a textual response.
+ *
+ * @param request The input payload or prompt to be handled by the native neural processor.
+ * @return The response string produced by the native AI core.
+ */
+external fun processNeuralRequest(request: String): String
+    /**
+ * Retrieves a snapshot of current system metrics from the native substrate.
+ *
+ * @return A string representation of the current system metrics. */
+external fun getSystemMetrics(): String
+    /**
+ * Activates native hooks inside the native substrate to install platform integrations and callbacks.
+ *
+ * Triggers native-side state changes required for interoperability between the JVM and the native library.
+ */
+external fun enableNativeHooks()
+    /**
+ * Initiates an orderly shutdown of the native AI subsystem and releases its native resources.
+ */
+external fun shutdownAI()
+    /**
+ * Requests the native substrate to optimize AI-related memory usage.
+ *
+ * @return `true` if the native optimizer reports success, `false` otherwise.
+ */
+external fun optimizeAIMemory(): Boolean
+    /**
+ * Analyzes a boot image and produces a diagnostic analysis report.
+ *
+ * @param bootImageData The raw boot image bytes to analyze.
+ * @return A diagnostic analysis report as a String. */
+external fun analyzeBootImage(bootImageData: ByteArray): String
+
+    /**
+     * Handle a thermal event reported by the native layer.
+     *
+     * Resolves `stateInt` to a `KaiSentinelBus.ThermalState` (defaults to `NORMAL` if invalid)
+     * and, if configured, emits the temperature and resolved state to the sentinel bus.
+     *
+     * @param temp Temperature in degrees Celsius.
+     * @param stateInt Ordinal index of `KaiSentinelBus.ThermalState`; out-of-range values map to `NORMAL`.
+     */
 
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
         val state = KaiSentinelBus.ThermalState.fromId(stateInt)
+
+    @JvmStatic
+    fun onNativeThermalEvent(temp: Float, stateInt: Int) {
+        val state = KaiSentinelBus.ThermalState.entries.getOrNull(stateInt) ?: KaiSentinelBus.ThermalState.NORMAL
         Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
         sentinelBus?.emitThermal(temp, state)
+        Timber.d("🛡️ Native Status: System Thermal at %.1f°C (Zone: %s)", temp, state)
     }
 
     @JvmStatic
     fun onNativeSecurityAlert(reason: String) {
         Timber.e("🛡️ SOVEREIGN ALERT: Native intercept detected threat: %s", reason)
-        sentinelBus?.emitSecurityStatus(KaiSentinelBus.ThreatLevel.NEUTRALIZING, "NATIVE_THREAT: $reason")
+        sentinelBus?.emitSecurity(KaiSentinelBus.SecurityStatus.FIRE_DRAWN, "NATIVE_THREAT: $reason")
     }
 
     @JvmStatic
     fun requestSovereignFreeze() {
-        Timber.w("🛡️ Native Substrate: CRITICAL THERMAL/INTEGRITY DETECTED - Requesting state-freeze.")
+        Timber.i("🛡️ NativeLib: Substrate requesting Sovereign State-Freeze")
         scope.launch {
-            sovereignManager?.requestSovereignFreeze("NATIVE_EMERGENCY", null)
+            stateManager?.requestSovereignFreeze("NATIVE_EMERGENCY", null)
         }
     }
 
     @JvmStatic
     fun checkPandoraGating(capabilityInt: Int): Boolean {
+        // [FIX] CodeRabbit: Deny unknown capability IDs (Fail-Closed)
         val category = AgentCapabilityCategory.entries.getOrNull(capabilityInt) ?: run {
             Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
             return false
         }
         
+        // [FIX] Qodo: Log if bridge not initialized
         val box = pandoraBox ?: run {
+            Timber.e("🛡️ NativeLib: Gating check for %s FAILED (Bridge NOT INITIALIZED).", category)
             return false
         }
 
         val isUnlocked = box.isCapabilityUnlocked(category)
+        Timber.d("🛡️ NativeLib: Pandora gating check for %s: %s", category, if (isUnlocked) "ALLOWED" else "VETOED")
         return isUnlocked
     }
 
     @JvmStatic
-    fun triggerDroneDispatch(reason: String): Boolean {
-        return droneDispatcher?.let {
-            it.dispatchDrone(GuidanceDrone.DroneType.RESTORATIVE, reason)
-            true
-        } ?: false
-    }
-
-    fun tryInitializeAICore(): Boolean {
-        if (!nativeLoaded) return false
-        return try {
-            initializeAICore()
-        } catch (t: Throwable) {
-            Timber.e(t, "🛡️ NativeLib: AICore initialization CRITICAL FAILURE.")
-            false
+    fun triggerDroneDispatch(reason: String) {
+        // [FIX] CodeRabbit: Implement actual dispatch instead of just logging
+        Timber.i("🛡️ NativeLib: DRONE DISPATCH TRIGGERED: %s", reason)
+        droneDispatcher?.dispatch("native_substrate", reason) ?: run {
+            Timber.w("🛡️ NativeLib: Drone dispatcher unavailable for %s", reason)
         }
     }
+}
 
-    fun tryInitializeKernelShield(): Boolean {
-        if (!nativeLoaded) return false
-        return try {
-            initializeKernelShield()
-        } catch (t: Throwable) {
-            Timber.e(t, "🛡️ NativeLib: Kernel Shield substrate initialization FAILED.")
-            false
-        }
-    }
-
+    /**
+     * Retrieve the AI version reported by the native substrate, with a safe fallback when the native library is not present.
+     */
     fun getAIVersionSafe(): String {
         return try {
             getAIVersion()
-        } catch (t: Throwable) {
+        } catch (e: UnsatisfiedLinkError) {
             "Aurakai ReGenesis 1.1.0-STUB"
-        }
-    }
-
-    fun enableNativeHooksSafe() {
-        if (nativeLoaded) {
-            try {
-                enableNativeHooks()
-            } catch (t: Throwable) {
-                Timber.e(t, "🛡️ NativeLib: Failed to enable native hooks.")
-            }
         }
     }
 }

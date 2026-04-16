@@ -1,13 +1,9 @@
 package dev.aurakai.auraframefx.domains.aura.ui.gates
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.SwapHoriz
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,23 +11,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
 
 /**
  * 🛡️ KAI SENTINEL HUB (Level 2 Hub)
+ *
+ * ANIMATION: IcyTundraBackground
+ * - Frozen fortress aesthetic
+ * - Ice crystals and cold gradients
+ * - Security-themed visuals
+ *
+ * TWO VISUAL STYLES:
+ * Style A: "Fortress" - Military bunker aesthetic
+ * Style B: "Cyber Sentinel" - High-tech security hub
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KaiSentinelHubScreen(navController: NavController) {
-
-    // val subGates = GateAssetLoadout.getKaiLoadout()
-    val subGates = emptyList<dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard>()
-
     var useStyleB by remember {
-        mutableStateOf(false) // Defaulting since StyleMode might be stubbed
     }
 
     val styleName = if (useStyleB) "CYBER SENTINEL" else "FORTRESS"
@@ -40,6 +40,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
         // 🛡️ KAI'S ANIMATED BACKGROUND - Icy Tundra!
         IcyTundraBackground()
 
+        // Semi-transparent Overlay for "Fortress" feel
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,6 +75,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                     actions = {
                         IconButton(onClick = {
                             useStyleB = !useStyleB
+                            GateAssetConfig.toggleKaiStyle()
                         }) {
                             Icon(
                                 Icons.Default.SwapHoriz,
@@ -82,7 +84,6 @@ fun KaiSentinelHubScreen(navController: NavController) {
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent
                     )
                 )

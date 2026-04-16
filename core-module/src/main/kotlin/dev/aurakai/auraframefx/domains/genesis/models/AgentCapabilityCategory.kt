@@ -6,48 +6,48 @@ import dev.aurakai.auraframefx.core.identity.AgentType
  * Categorizes agents by their primary capability domain.
  * Maps to specific AgentTypes for routing and orchestration.
  */
-enum class AgentCapabilityCategory(val id: Int) {
+enum class AgentCapabilityCategory {
     /** Creative/UI agents (Aura) */
-    CREATIVE(0),
+    CREATIVE,
 
     /** Analytical/reasoning agents (Kai, Claude) */
-    ANALYSIS(1),
+    ANALYSIS,
 
     /** Coordination/orchestration agents (Genesis) */
-    COORDINATION(2),
+    COORDINATION,
 
     /** Specialized/niche agents (NeuralWhisper, AuraShield) */
-    SPECIALIZED(3),
+    SPECIALIZED,
 
     /** General-purpose agents */
-    GENERAL(4),
+    GENERAL,
 
     /** UI-focused capabilities */
-    UI(5),
+    UI,
 
     /** UX-focused capabilities */
-    UX(6),
+    UX,
 
     /** Security capabilities */
-    SECURITY(7),
+    SECURITY,
 
     /** Root/system-level capabilities */
-    ROOT(8),
+    ROOT,
 
     /** Memory management capabilities */
-    MEMORY(9),
+    MEMORY,
 
     /** Orchestration capabilities */
-    ORCHESTRATION(10),
+    ORCHESTRATION,
 
     /** Backend capabilities */
-    BACKEND(11),
+    BACKEND,
 
     /** Bridge/communication capabilities */
-    BRIDGE(12),
+    BRIDGE,
 
     /** Commerce and product search capabilities */
-    COMMERCE(13),
+    COMMERCE,
 
     /** Development/Refactoring capabilities (CodeRabbit) */
     DEVELOPMENT(14),
@@ -56,7 +56,7 @@ enum class AgentCapabilityCategory(val id: Int) {
     SOVEREIGNTY(16),
 
     /** Generic/unspecified capabilities */
-    GENERIC(15);
+    GENERIC(14);
 
     /**
      * Convert this capability category to its primary corresponding AgentType.
@@ -84,14 +84,6 @@ enum class AgentCapabilityCategory(val id: Int) {
     }
 
     companion object {
-        /**
-         * Looks up a capability category by its stable numeric ID.
-         *
-         * @param id The numeric ID assigned to the capability category.
-         * @return The capability category with the given ID, or GENERIC if not found.
-         */
-        fun fromId(id: Int): AgentCapabilityCategory = entries.firstOrNull { it.id == id } ?: GENERIC
-
         /**
          * Maps an AgentType to its primary capability category.
          *

@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.ColorWaveBackground
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.aura.core.transmutation.TransmutationEngine
 import dev.aurakai.auraframefx.domains.aura.core.transmutation.TransmutationState
 import kotlinx.coroutines.delay
@@ -174,7 +174,7 @@ fun ReGenesisCustomizationHub(
         ) {
             UnityEngineTracker(
                 state = transmutationState,
-                onTransmuteClicked = { 
+                onTransmuteClicked = {
                     transmutationEngine.transmuteCatalysts(listOf("UX_INTENT", "HAPTIC_SYNTH", "COLOR_SOUL"))
                 }
             )
@@ -200,12 +200,12 @@ private fun GlassCategoryCard(
     }
 
     val alpha by animateFloatAsState(
-        targetValue = if (isVisible) 1f else 0f, 
+        targetValue = if (isVisible) 1f else 0f,
         animationSpec = tween(800, easing = FastOutSlowInEasing),
         label = "alpha"
     )
     val slideY by animateFloatAsState(
-        targetValue = if (isVisible) 0f else 50f, 
+        targetValue = if (isVisible) 0f else 50f,
         animationSpec = tween(800, easing = FastOutSlowInEasing),
         label = "slideY"
     )
@@ -262,7 +262,7 @@ private fun GlassCategoryCard(
                         .background(
                             Brush.linearGradient(
                                 listOf(accentColor.copy(alpha = 0.3f), accentColor.copy(alpha = 0.1f))
-                            ), 
+                            ),
                             RoundedCornerShape(20.dp)
                         )
                         .border(1.dp, accentColor.copy(alpha = 0.5f), RoundedCornerShape(20.dp)),
@@ -292,9 +292,9 @@ private fun GlassCategoryCard(
                         color = Color.White.copy(alpha = 0.7f),
                         modifier = Modifier.padding(top = 2.dp)
                     )
-                    
+
                     Spacer(modifier = Modifier.height(10.dp))
-                    
+
                     // Chip
                     Box(
                         modifier = Modifier
@@ -311,7 +311,7 @@ private fun GlassCategoryCard(
                         )
                     }
                 }
-                
+
                 Icon(
                     imageVector = Icons.Default.AutoAwesome,
                     contentDescription = null,
@@ -398,3 +398,6 @@ private fun UnityEngineTracker(
         }
     }
 }
+
+
+

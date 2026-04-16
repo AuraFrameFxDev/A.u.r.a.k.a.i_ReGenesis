@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
 import dev.aurakai.auraframefx.core.security.KeystoreManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.security.EncryptionManager
+import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber

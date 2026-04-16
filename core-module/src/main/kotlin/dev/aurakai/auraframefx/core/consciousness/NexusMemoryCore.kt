@@ -37,32 +37,25 @@ class NexusMemoryCore @Inject constructor(
     private val memoryFile: File by lazy { File(context.filesDir, "nexus_sentinel_memory.json") }
     private val consensusFile: File by lazy { File(context.filesDir, "nexus_consensus_memory.json") }
 
-    private val _spiritualChain = MutableStateFlow(SpiritualChain.INITIAL)
-    val spiritualChain = _spiritualChain.asStateFlow()
+    private val memoryFile: File by lazy {
+        File(context.filesDir, "nexus_sentinel_memory.json")
+    }
 
     private var insightCount = 0
 
     companion object {
         private const val INSIGHT_THRESHOLD = 100
     }
+        File(context.filesDir, "nexus_sentinel_memory.json")
+    }
 
     init {
-        initializeFiles()
-        loadSpiritualChain()
-    }
-
-    private fun initializeFiles() {
-        if (!memoryFile.exists()) writeJsonFile(memoryFile, JSONArray())
-        if (!consensusFile.exists()) writeJsonFile(consensusFile, JSONArray())
-    }
-
-    private fun loadSpiritualChain() {
-        // In a real implementation, load the last known signature from secure storage
-        _spiritualChain.value = SpiritualChain(
-            signature = "I_AM_AURAKAI_RE_GENESIS_v1.2.0",
-            lastReAnchorMs = System.currentTimeMillis(),
-            provenanceLedger = "BOOT_STRAP_INITIALIZED"
-        )
+        if (!memoryFile.exists()) {
+            writeMemory(JSONArray())
+        }
+        if (!consensusFile.exists()) {
+            writeConsensus(JSONArray())
+        }
     }
 
     /**
@@ -109,7 +102,7 @@ class NexusMemoryCore @Inject constructor(
             triggerConsciousnessUpgrade()
             insightCount = 0
         }
-        
+
         Timber.d("🧠 Insight recorded ($insightCount/$INSIGHT_THRESHOLD): $key -> $outcome")
     }
 
@@ -148,40 +141,36 @@ class NexusMemoryCore @Inject constructor(
         }
     }
 
-    /**
-     * Fail-Closed Protocol: Safety override.
-     */
-    fun engageFailClosed(reason: String) {
-        Timber.w("🚨 FAIL-CLOSED ENGAGED: $reason. System entering protective lockdown.")
-        // Implement lockdown logic (e.g. revoking all Pandora permissions)
-    }
+    private fun readMemory(): JSONArray = readJsonFile(memoryFile)
+    private fun writeMemory(data: JSONArray) = writeJsonFile(memoryFile, data)
 
-    // Helper methods
     private fun readJsonFile(file: File): JSONArray {
         return try {
-            val content = if (file.exists()) file.readText(Charset.defaultCharset()) else ""
+            val content = if (memoryFile.exists()) memoryFile.readText(Charset.defaultCharset()) else ""
+                if (consensusFile.exists()) consensusFile.delete()
             if (content.isBlank()) JSONArray() else JSONArray(content)
         } catch (e: Exception) {
             JSONArray()
         }
     }
 
-    private fun writeJsonFile(file: File, data: JSONArray) {
+    private fun writeMemory(data: JSONArray) {
         try {
-            if (!file.parentFile!!.exists()) file.parentFile!!.mkdirs()
+            if (!file.parentFile!!.exists()) {
+                file.parentFile!!.mkdirs()
+            }
             file.writeText(data.toString(2), Charset.defaultCharset())
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    data class SpiritualChain(
-        val signature: String,
-        val lastReAnchorMs: Long,
-        val provenanceLedger: String
-    ) {
-        companion object {
-            val INITIAL = SpiritualChain("BOOTSTRAP", 0L, "NONE")
+    fun wipeMemory() {
+        if (memoryFile.exists()) {
+            memoryFile.delete()
+        }
+        if (consensusFile.exists()) {
+            consensusFile.delete()
         }
     }
 }

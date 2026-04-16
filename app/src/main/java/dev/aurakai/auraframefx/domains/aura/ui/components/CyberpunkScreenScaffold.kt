@@ -17,7 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.core.models.AgentDomain
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.backgrounds.DataRibbonsBackground
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.backgrounds.HexagonGridBackground
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.HoloHUDOverlay
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.themes.AgentDomain
 
 enum class BackgroundType {
     DATA_RIBBONS,
@@ -59,7 +62,7 @@ fun CyberpunkScreenScaffold(
                     accentColor = Color.Cyan
                 )
             }
-            
+
             BackgroundType.CHAOS_LIGHTNING -> {
                 DataRibbonsBackground(
                     baseColor = agentDomain.primaryColor,

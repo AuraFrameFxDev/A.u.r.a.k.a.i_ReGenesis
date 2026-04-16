@@ -1,18 +1,13 @@
-package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
+package dev.aurakai.auraframefx.domains.genesis.viewmodels
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
-import dev.aurakai.auraframefx.domains.cascade.grok.AuraDifyBridge
-import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
+import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import javax.inject.Inject
 
 @HiltViewModel
 class TerminalViewModel @Inject constructor(
-    val pythonManager: dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager,
-    val cascadeService: CascadeAIService,
-    val casberrySwarm: CasberryParticleSwarm,
-    val auraDifyBridge: AuraDifyBridge
+    val pythonManager: PythonProcessManager
 ) : ViewModel() {
 
     fun startPython() {

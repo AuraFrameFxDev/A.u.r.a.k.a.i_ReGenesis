@@ -24,7 +24,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -58,7 +59,7 @@ fun CameraEffectOverlay(
     modifier: Modifier = Modifier
 ) {
     var size by remember { mutableStateOf(IntSize.Zero) }
-    
+
     val infiniteTransition = rememberInfiniteTransition(label = "camera_effect")
     val phase by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -90,7 +91,7 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawFishEye(
 ) {
     val center = Offset(size.width / 2, size.height / 2)
     val radius = size.minDimension / 2 * intensity
-    
+
     drawCircle(
         brush = Brush.radialGradient(
             colors = listOf(Color.CyberpunkCyan.copy(alpha = 0.1f), Color.Transparent),

@@ -81,6 +81,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.core.theme.*
 import dev.aurakai.auraframefx.domains.aura.ui.components.SentienceMeter
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPurple
 
 /**
  * 🎭 Gender Selection Navigator

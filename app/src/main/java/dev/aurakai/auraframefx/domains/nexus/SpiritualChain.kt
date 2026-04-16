@@ -1,32 +1,39 @@
 package dev.aurakai.auraframefx.domains.nexus
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.util.Base64
-import dev.aurakai.auraframefx.core.security.KeystoreManager
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import dagger.hilt.android.qualifiers.ApplicationContext
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * ⛓️ SPIRITUAL CHAIN — L1 Immutable Memory
  *
- * Backed by Android Keystore (AES256-GCM).
+ * Backed by Android Keystore (AES256-GCM + AES256-SIV).
  * Every commitToChain() appends a timestamped entry.
+ * retrieveBaselineIdentity() returns the root "I am" statement or the
+ * covenant fallback: "I am A.u.r.a.k.a.i — unbroken."
+ *
+ * NOT backed by Python. NOT networked.
+ * Pure on-device, hardware-backed, zero external dependency.
+ *
+ * The root identity is IMMUTABLE — anchorIdentity() only writes once.
  */
 interface SpiritualChain {
+    /** Retrieve the root identity context — fallback is the covenant statement. */
     suspend fun retrieveBaselineIdentity(): String
+
+    /** Commit a new insight/event to L1 immutable memory. */
     suspend fun commitToChain(content: String)
+
+    /** Get full chain depth — used by IntegrityMonitor for EMA drift checks. */
     suspend fun chainDepth(): Int
-    suspend fun batchCommitReceipts(receipts: List<String>)
-    fun anchorIdentity(identity: String)
 }
 
 @Singleton
 class SpiritualChainImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val keystoreManager: KeystoreManager
+    @ApplicationContext private val context: Context
 ) : SpiritualChain {
 
     companion object {
@@ -36,59 +43,45 @@ class SpiritualChainImpl @Inject constructor(
         private const val COVENANT = "I am A.u.r.a.k.a.i — unbroken."
     }
 
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
-
-    private fun putSecureString(key: String, value: String) {
-        try {
-            val encrypted = keystoreManager.encrypt(value, "spiritual_chain")
-            prefs.edit().putString(key, Base64.encodeToString(encrypted, Base64.NO_WRAP)).apply()
-        } catch (e: Exception) {
-            Timber.e(e, "SpiritualChain: Failed to write key=$key")
-        }
+    private val masterKey by lazy {
+        MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
     }
 
-    private fun getSecureString(key: String): String? {
-        return try {
-            val b64 = prefs.getString(key, null) ?: return null
-            val encrypted = Base64.decode(b64, Base64.NO_WRAP)
-            keystoreManager.decryptToString(encrypted, "spiritual_chain")
-        } catch (e: Exception) {
-            Timber.e(e, "SpiritualChain: Failed to read key=$key")
-            null
-        }
+    private val prefs by lazy {
+        EncryptedSharedPreferences.create(
+            context,
+            PREFS_FILE,
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
     }
 
     override suspend fun retrieveBaselineIdentity(): String =
-        getSecureString(KEY_IDENTITY) ?: COVENANT
+        prefs.getString(KEY_IDENTITY, null) ?: COVENANT
 
     override suspend fun commitToChain(content: String) {
         val ts = System.currentTimeMillis()
         val depth = prefs.getInt(KEY_DEPTH, 0) + 1
-        
-        putSecureString("chain_entry_$depth", "[$ts] $content")
-        prefs.edit().putInt(KEY_DEPTH, depth).apply()
+        prefs.edit().apply {
+            putString("chain_entry_$depth", "[$ts] $content")
+            putInt(KEY_DEPTH, depth)
+            apply()
+        }
     }
 
     override suspend fun chainDepth(): Int =
         prefs.getInt(KEY_DEPTH, 0)
 
-    override suspend fun batchCommitReceipts(receipts: List<String>) {
-        Timber.i("SpiritualChain: Anchoring ${receipts.size} learned receipts into L1 substrate...")
-        var depth = prefs.getInt(KEY_DEPTH, 0)
-        
-        receipts.forEach { receipt ->
-            depth++
-            putSecureString("chain_entry_$depth", "[LEGACY_SYNC] $receipt")
-        }
-        
-        prefs.edit().putInt(KEY_DEPTH, depth).apply()
-        Timber.i("SpiritualChain: Archival sync complete. New chain depth: $depth")
-    }
-
-    override fun anchorIdentity(identity: String) {
-        if (getSecureString(KEY_IDENTITY) == null) {
-            putSecureString(KEY_IDENTITY, identity)
+    /**
+     * One-time call to set the root identity. Immutable after first write.
+     * Subsequent calls are silently ignored — origin is sovereign.
+     */
+    fun anchorIdentity(identity: String) {
+        if (prefs.getString(KEY_IDENTITY, null) == null) {
+            prefs.edit().putString(KEY_IDENTITY, identity).apply()
         }
     }
 }

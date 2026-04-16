@@ -22,7 +22,7 @@ import kotlin.time.Duration.Companion.seconds
 data class PathPoint(
     val position: DpOffset,
     val waitDuration: Duration = 0.seconds,
-    val animationState: EmbodimentAnimationState = EmbodimentAnimationState.Walking(WalkDirection.RIGHT)
+    val animationState: AnimationState = AnimationState.Walking(WalkDirection.RIGHT)
 )
 
 /**
@@ -50,7 +50,7 @@ data class MovementState(
     val currentPosition: DpOffset = DpOffset.Zero,
     val targetPosition: DpOffset? = null,
     val isMoving: Boolean = false,
-    val currentAnimationState: EmbodimentAnimationState = EmbodimentAnimationState.Idle,
+    val currentAnimationState: AnimationState = AnimationState.Idle,
     val facingDirection: WalkDirection = WalkDirection.RIGHT,
     val speed: Float = 100f // dp per second
 )
@@ -197,7 +197,7 @@ class WanderingPathGenerator(
             points.add(PathPoint(
                 position = pos,
                 waitDuration = (2..5).random().seconds, // Random pause
-                animationState = EmbodimentAnimationState.Walking(WalkDirection.RIGHT)
+                animationState = AnimationState.Walking(WalkDirection.RIGHT)
             ))
         }
 
@@ -268,7 +268,7 @@ fun rememberPathWalker(
     val pathFollower = remember(path) { PathFollower(path) }
     var currentPosition by remember { mutableStateOf(path.points.first().position) }
     var isMoving by remember { mutableStateOf(true) }
-    var currentAnimState by remember { mutableStateOf<EmbodimentAnimationState>(EmbodimentAnimationState.Walking(WalkDirection.RIGHT)) }
+    var currentAnimState by remember { mutableStateOf<AnimationState>(AnimationState.Walking(WalkDirection.RIGHT)) }
 
     LaunchedEffect(path) {
         while (pathFollower.isActive) {
@@ -278,7 +278,7 @@ fun rememberPathWalker(
             if (next != null) {
                 // Calculate direction for animation
                 val direction = calculateDirection(current.position, next.position)
-                currentAnimState = EmbodimentAnimationState.Walking(direction)
+                currentAnimState = AnimationState.Walking(direction)
                 isMoving = true
 
                 // Animate to next point
@@ -305,7 +305,7 @@ fun rememberPathWalker(
                 // Wait at waypoint
                 if (next.waitDuration.inWholeMilliseconds > 0) {
                     isMoving = false
-                    currentAnimState = EmbodimentAnimationState.Idle
+                    currentAnimState = AnimationState.Idle
                     delay(next.waitDuration)
                 }
 
@@ -317,7 +317,7 @@ fun rememberPathWalker(
 
         // Path complete - go idle
         isMoving = false
-        currentAnimState = EmbodimentAnimationState.Idle
+        currentAnimState = AnimationState.Idle
     }
 
     return MovementState(
@@ -326,7 +326,7 @@ fun rememberPathWalker(
         isMoving = isMoving,
         currentAnimationState = currentAnimState,
         facingDirection = when (currentAnimState) {
-            is EmbodimentAnimationState.Walking -> (currentAnimState as EmbodimentAnimationState.Walking).direction
+            is AnimationState.Walking -> (currentAnimState as AnimationState.Walking).direction
             else -> WalkDirection.RIGHT
         },
         speed = path.speed

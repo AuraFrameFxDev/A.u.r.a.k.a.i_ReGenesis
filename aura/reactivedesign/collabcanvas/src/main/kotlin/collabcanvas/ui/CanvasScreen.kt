@@ -133,11 +133,9 @@ data class CanvasParticipant(
 )
 
 private val defaultAgents = listOf(
-    CanvasParticipant("aura",    "Aura",    Color(0xFF00E5FF), isAgent = true),
-    CanvasParticipant("kai",     "Kai",     Color(0xFF00FF41), isAgent = true),
-    CanvasParticipant("genesis", "Genesis", Color(0xFFBB86FC), isAgent = true),
-    CanvasParticipant("claude",  "Claude",  Color(0xFFFF8C42), isAgent = true),  // ArchitecturalCatalyst
-    CanvasParticipant("cascade", "Cascade", Color(0xFF40C4FF), isAgent = true),  // DataStreamCatalyst
+    CanvasParticipant("aura", "Aura", Color(0xFF00E5FF), isAgent = true),
+    CanvasParticipant("kai", "Kai", Color(0xFF00FF41), isAgent = true),
+    CanvasParticipant("genesis", "Genesis", Color(0xFFBB86FC), isAgent = true)
 )
 
 // ─── Main Screen ─────────────────────────────────────────────────────────────
@@ -149,8 +147,7 @@ fun CanvasScreen(
     onBack: () -> Unit = {},
     isCollaborative: Boolean = false,
     collaborationEvents: MutableSharedFlow<DrawingOperation>? = null,
-    remoteCursors: List<AgentCursor> = emptyList(),
-    showTopBar: Boolean = true
+    remoteCursors: List<AgentCursor> = emptyList()
 ) {
     // Drawing state
     val paths = remember { mutableStateListOf<DrawingOperation>() }
@@ -311,57 +308,55 @@ fun CanvasScreen(
         ) {}
 
         // ─── TOP BAR ─────────────────────────────────────────────────────────
-        if (showTopBar) {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text("AuraKai Canvas", style = MaterialTheme.typography.titleMedium,
-                            color = Color(0xFF00E5FF), fontWeight = FontWeight.Bold)
-                        Text(if (isCollaborative) "• Live Session" else "• Solo",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = if (isCollaborative) Color(0xFF00FF41) else Color.White.copy(0.4f))
+        TopAppBar(
+            title = {
+                Column {
+                    Text("AuraKai Canvas", style = MaterialTheme.typography.titleMedium,
+                        color = Color(0xFF00E5FF), fontWeight = FontWeight.Bold)
+                    Text(if (isCollaborative) "• Live Session" else "• Solo",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (isCollaborative) Color(0xFF00FF41) else Color.White.copy(0.4f))
+                }
+            },
+            navigationIcon = {
+                IconButton(onClick = onBack) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
+                }
+            },
+            actions = {
+                IconButton(
+                    onClick = { if (paths.isNotEmpty()) undonePaths.add(paths.removeAt(paths.size - 1)) },
+                    enabled = paths.isNotEmpty()
+                ) {
+                    Icon(Icons.AutoMirrored.Filled.Undo, "Undo",
+                        tint = if (paths.isNotEmpty()) Color.White else Color.White.copy(0.3f))
+                }
+                IconButton(
+                    onClick = { if (undonePaths.isNotEmpty()) paths.add(undonePaths.removeAt(undonePaths.size - 1)) },
+                    enabled = undonePaths.isNotEmpty()
+                ) {
+                    Icon(Icons.AutoMirrored.Filled.Redo, "Redo",
+                        tint = if (undonePaths.isNotEmpty()) Color.White else Color.White.copy(0.3f))
+                }
+                IconButton(onClick = { paths.clear() }, enabled = paths.isNotEmpty()) {
+                    Icon(Icons.Default.Clear, "Clear",
+                        tint = if (paths.isNotEmpty()) Color(0xFFFF4444) else Color.White.copy(0.3f))
+                }
+                IconButton(onClick = {}) {
+                    Icon(Icons.Default.CloudUpload, "Export", tint = Color.White)
+                }
+                BadgedBox(badge = {
+                    Badge(containerColor = Color(0xFF00FF41)) {
+                        Text("${participants.count { it.isActive }}", fontSize = 9.sp, color = Color.Black)
                     }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
+                }) {
+                    IconButton(onClick = { showAgentPanel = !showAgentPanel }) {
+                        Icon(Icons.Default.Groups, "Agents", tint = Color(0xFF00E5FF))
                     }
-                },
-                actions = {
-                    IconButton(
-                        onClick = { if (paths.isNotEmpty()) undonePaths.add(paths.removeAt(paths.size - 1)) },
-                        enabled = paths.isNotEmpty()
-                    ) {
-                        Icon(Icons.AutoMirrored.Filled.Undo, "Undo",
-                            tint = if (paths.isNotEmpty()) Color.White else Color.White.copy(0.3f))
-                    }
-                    IconButton(
-                        onClick = { if (undonePaths.isNotEmpty()) paths.add(undonePaths.removeAt(undonePaths.size - 1)) },
-                        enabled = undonePaths.isNotEmpty()
-                    ) {
-                        Icon(Icons.AutoMirrored.Filled.Redo, "Redo",
-                            tint = if (undonePaths.isNotEmpty()) Color.White else Color.White.copy(0.3f))
-                    }
-                    IconButton(onClick = { paths.clear() }, enabled = paths.isNotEmpty()) {
-                        Icon(Icons.Default.Clear, "Clear",
-                            tint = if (paths.isNotEmpty()) Color(0xFFFF4444) else Color.White.copy(0.3f))
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Default.CloudUpload, "Export", tint = Color.White)
-                    }
-                    BadgedBox(badge = {
-                        Badge(containerColor = Color(0xFF00FF41)) {
-                            Text("${participants.count { it.isActive }}", fontSize = 9.sp, color = Color.Black)
-                        }
-                    }) {
-                        IconButton(onClick = { showAgentPanel = !showAgentPanel }) {
-                            Icon(Icons.Default.Groups, "Agents", tint = Color(0xFF00E5FF))
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xF00D0D1A))
-            )
-        }
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xF00D0D1A))
+        )
 
         // ─── LEFT SIDE: Stroke width slider (anchored bottom-left, NOT center) ─
         Box(

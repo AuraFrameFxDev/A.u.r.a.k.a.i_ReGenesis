@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
 import dev.aurakai.auraframefx.domains.genesis.models.DriveFile
-import dev.aurakai.auraframefx.domains.genesis.storage.FileMetadata
+import dev.aurakai.auraframefx.domains.genesis.models.FileMetadata
 import dev.aurakai.auraframefx.domains.genesis.models.FileOperationResult
 import dev.aurakai.auraframefx.domains.genesis.models.StorageOptimizationResult
 import dev.aurakai.auraframefx.domains.genesis.models.SyncConfiguration

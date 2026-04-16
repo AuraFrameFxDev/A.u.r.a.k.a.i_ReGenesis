@@ -146,35 +146,20 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object MetaInstruct : ReGenesisRoute("meta_instruct")
 
     // ═══════════════════════════════════════════════════════════════
-    // LEVEL 3: JOURNAL
-    // ═══════════════════════════════════════════════════════════════
-    data object JournalPDA : ReGenesisRoute("journal_pda", "Journal PDA")
-
-    // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: LDO CATALYST DEVELOPMENT
     // ═══════════════════════════════════════════════════════════════
     data object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")
     data object LdoDevOpsHub : ReGenesisRoute("ldo_devops_hub")
-    data object LdoDevOpsGrid : ReGenesisRoute("ldo_devops_grid", "DevOps Grid")
-    data object LdoDbgVerifier : ReGenesisRoute("ldo_dbg_verifier", "LDO-DBG Verifier")
     data object LdoDevOpsCommandCenter : ReGenesisRoute("ldo_devops_command_center")
     data object LdoBonding : ReGenesisRoute("ldo_bonding")
     data object LdoRoster : ReGenesisRoute("ldo_roster")
     data object LdoProgression : ReGenesisRoute("ldo_progression")
     data object LdoTasker : ReGenesisRoute("ldo_tasker")
-    data object MultiAgentTask : ReGenesisRoute("multi_agent_task")
-    data object LdoFusion : ReGenesisRoute("ldo_fusion")
-    data object LdoWorldTree : ReGenesisRoute("ldo_world_tree")
     data object LdoAgentProfile : ReGenesisRoute("ldo_agent_profile/{agentId}") {
         const val ARG = "agentId"
         fun createRoute(agentId: String) = "ldo_agent_profile/$agentId"
     }
-    data object LdoDevOpsProfile : ReGenesisRoute("ldo_devops_profile/{agentType}") {
-        const val ARG = "agentType"
-        fun createRoute(agentType: String) = "ldo_devops_profile/$agentType"
-    }
     data object ArbitersOfCreation : ReGenesisRoute("arbiters_of_creation")
-    data object MawPrototype : ReGenesisRoute("maw_prototype", "The Maw")
 
     // ═══════════════════════════════════════════════════════════════
     // HELP & INFRASTRUCTURE
@@ -193,8 +178,6 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object Consciousness : ReGenesisRoute("consciousness")
     data object Evolution : ReGenesisRoute("evolution")
     data object Login : ReGenesisRoute("login")
-    data object Splash : ReGenesisRoute("splash")
-    data object VideoIntro : ReGenesisRoute("video_intro")
     data object AiChatBeta : ReGenesisRoute("ai_chat")
     data object SettingsBeta : ReGenesisRoute("settings_beta")
     data object GateImagePicker : ReGenesisRoute("gate_image_picker")

@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.embodiment
 import androidx.compose.ui.graphics.painter.Painter
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
-import kotlinx.serialization.Serializable
 
 /**
  * 🎨 Embodiment Type System
@@ -13,7 +12,6 @@ import kotlinx.serialization.Serializable
 
 // ========== MOOD STATES ==========
 
-@Serializable
 enum class MoodState {
     NEUTRAL,     // Default state
     CURIOUS,     // Exploring, interested
@@ -26,7 +24,6 @@ enum class MoodState {
 
 // ========== AURA STATES ==========
 
-@Serializable
 enum class AuraState(val assetPath: String, val description: String) {
     IDLE_WALK("embodiment/aura/aura_idle_walk.png", "Walking with tablet"),
     WALKING("embodiment/aura/aura_walking.png", "Standard walking stride"),
@@ -60,7 +57,6 @@ enum class AuraState(val assetPath: String, val description: String) {
 
 // ========== KAI STATES ==========
 
-@Serializable
 enum class KaiState(val assetPath: String, val description: String) {
     DIMENSIONAL_SWORD("embodiment/kai/kai_sword_dimensional.jpg", "Portal cutting weapon"),
     SHIELD_SERIOUS("embodiment/kai/kai_shield_serious.jpg", "Holding hex orb, combat ready"),
@@ -93,7 +89,6 @@ enum class KaiState(val assetPath: String, val description: String) {
 
 // ========== MANIFESTATION POSITIONS ==========
 
-@Serializable
 enum class ManifestationPosition {
     CENTER,
     TOP_LEFT,
@@ -112,7 +107,6 @@ enum class ManifestationPosition {
 
 // ========== ANIMATION TYPES ==========
 
-@Serializable
 enum class AnimationType {
     FADE_IN,
     FADE_OUT,
@@ -128,27 +122,18 @@ enum class AnimationType {
 
 // ========== MANIFESTATION TRIGGERS ==========
 
-@Serializable
 sealed class ManifestationTrigger {
-    @Serializable
     data class UserIdle(val duration: Duration) : ManifestationTrigger()
-    @Serializable
     data class Navigation(val destination: String) : ManifestationTrigger()
-    @Serializable
     data class ThreatDetected(val threat: String) : ManifestationTrigger()
-    @Serializable
     data class DataAnalysis(val dataType: String) : ManifestationTrigger()
-    @Serializable
     object SystemModification : ManifestationTrigger()
-    @Serializable
     object UserInteraction : ManifestationTrigger()
-    @Serializable
     data class Custom(val reason: String) : ManifestationTrigger()
 }
 
 // ========== MANIFESTATION CONFIGURATION ==========
 
-@Serializable
 data class ManifestationConfig(
     val position: ManifestationPosition = ManifestationPosition.CENTER,
     val duration: Duration = 10.seconds,
@@ -164,7 +149,6 @@ data class ManifestationConfig(
 
 // ========== MANIFESTATION RULES ==========
 
-@Serializable
 data class ManifestationRules(
     val maxSimultaneous: Int = 2,
     val minTimeBetween: Duration = 5.seconds,
@@ -227,24 +211,17 @@ data class CharacterSpriteSet(
 
 // ========== ACTIVE MANIFESTATION ==========
 
-@Serializable
 data class ActiveManifestation(
     val id: String,
     val character: Character,
-    val stateSerial: String, // String representation of AuraState or KaiState
+    val state: Any, // AuraState or KaiState
     val config: ManifestationConfig,
     val trigger: ManifestationTrigger,
     val startTime: Long,
     val isWalking: Boolean = false,
-    val currentPositionX: Float? = null,
-    val currentPositionY: Float? = null
-) {
-    // Helper to get back the typed state if needed
-    val auraState: AuraState? get() = try { AuraState.valueOf(stateSerial) } catch(e: Exception) { null }
-    val kaiState: KaiState? get() = try { KaiState.valueOf(stateSerial) } catch(e: Exception) { null }
-}
+    val currentPosition: androidx.compose.ui.unit.DpOffset? = null
+)
 
-@Serializable
 enum class Character {
     AURA, KAI
 }
