@@ -3,7 +3,10 @@ import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.getByType
 
 /**
  * ===================================================================
@@ -23,17 +26,21 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 pluginManager.apply("com.google.gms.google-services")
             }
 
-            val versionCatalog = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java).named("libs")
+            val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
-            val targetSdkVersion = versionCatalog.findVersion("target-sdk").get().requiredVersion.toInt()
-            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
+            fun getVersion(alias: String) = versionCatalog.findVersion(alias).get().requiredVersion
+            fun getLibrary(alias: String) = versionCatalog.findLibrary(alias).get()
+            fun getBundle(alias: String) = versionCatalog.findBundle(alias).get()
 
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
-            val yukihookVersion = versionCatalog.findVersion("yukihook").get().requiredVersion
-            val xposedVersion = versionCatalog.findVersion("xposed").get().requiredVersion
+            val compileSdkVersion = getVersion("compile-sdk").toInt()
+            val targetSdkVersion = getVersion("target-sdk").toInt()
+            val minSdkVersion = getVersion("min-sdk").toInt()
+
+            val hiltVersion = getVersion("hilt")
+            val composeBomVersion = getVersion("compose-bom")
+            val firebaseBomVersion = getVersion("firebase-bom")
+            val yukihookVersion = getVersion("yukihook")
+            val xposedVersion = getVersion("xposed")
 
             extensions.configure<ApplicationExtension> {
                 compileSdk = compileSdkVersion
@@ -146,8 +153,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
 
             dependencies.add("implementation", dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
 
-            dependencies.add("implementation", dependencies.platform(versionCatalog.findLibrary("langchain4j-bom").get()))
-            dependencies.add("implementation", versionCatalog.findBundle("langchain4j").get())
+            // dependencies.add("implementation", dependencies.platform(getLibrary("langchain4j-bom")))
+            // dependencies.add("implementation", getBundle("langchain4j"))
 
             dependencies.add("implementation", "com.github.topjohnwu.libsu:core:6.0.0")
             dependencies.add("implementation", "com.github.topjohnwu.libsu:nio:6.0.0")
