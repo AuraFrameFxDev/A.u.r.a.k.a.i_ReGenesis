@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
  * Categorizes agents by their primary capability domain.
  * Maps to specific AgentTypes for routing and orchestration.
  */
-enum class AgentCapabilityCategory {
+enum class AgentCapabilityCategory(val priority: Int = 0) {
     /** Creative/UI agents (Aura) */
     CREATIVE,
 

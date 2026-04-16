@@ -58,7 +58,9 @@ interface VertexAIClient {
  * Default implementation of VertexAIClient using LangChain4j and Google AI Gemini.
  */
 @Singleton
-class DefaultVertexAIClient @Inject constructor() : VertexAIClient {
+class DefaultVertexAIClient @Inject constructor(
+    private val apiKey: String = ""
+) : VertexAIClient {
 
     private val chatModel: ChatModel by lazy {
         GoogleAiGeminiChatModel.builder()

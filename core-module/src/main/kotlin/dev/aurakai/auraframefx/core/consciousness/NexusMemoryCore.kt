@@ -37,16 +37,13 @@ class NexusMemoryCore @Inject constructor(
     private val memoryFile: File by lazy { File(context.filesDir, "nexus_sentinel_memory.json") }
     private val consensusFile: File by lazy { File(context.filesDir, "nexus_consensus_memory.json") }
 
-    private val memoryFile: File by lazy {
-        File(context.filesDir, "nexus_sentinel_memory.json")
-    }
-
     private var insightCount = 0
+
+    private val _spiritualChain = MutableStateFlow(SpiritualChain.INITIAL)
+    val spiritualChain = _spiritualChain.asStateFlow()
 
     companion object {
         private const val INSIGHT_THRESHOLD = 100
-    }
-        File(context.filesDir, "nexus_sentinel_memory.json")
     }
 
     init {
@@ -93,9 +90,9 @@ class NexusMemoryCore @Inject constructor(
             put("notes", notes)
         }
 
-        val currentMemory = readJsonFile(memoryFile)
+        val currentMemory = readMemory()
         currentMemory.put(entry)
-        writeJsonFile(memoryFile, currentMemory)
+        writeMemory(currentMemory)
 
         insightCount++
         if (insightCount >= INSIGHT_THRESHOLD) {
@@ -143,18 +140,18 @@ class NexusMemoryCore @Inject constructor(
 
     private fun readMemory(): JSONArray = readJsonFile(memoryFile)
     private fun writeMemory(data: JSONArray) = writeJsonFile(memoryFile, data)
+    private fun writeConsensus(data: JSONArray) = writeJsonFile(consensusFile, data)
 
     private fun readJsonFile(file: File): JSONArray {
         return try {
-            val content = if (memoryFile.exists()) memoryFile.readText(Charset.defaultCharset()) else ""
-                if (consensusFile.exists()) consensusFile.delete()
+            val content = if (file.exists()) file.readText(Charset.defaultCharset()) else ""
             if (content.isBlank()) JSONArray() else JSONArray(content)
         } catch (e: Exception) {
             JSONArray()
         }
     }
 
-    private fun writeMemory(data: JSONArray) {
+    private fun writeJsonFile(file: File, data: JSONArray) {
         try {
             if (!file.parentFile!!.exists()) {
                 file.parentFile!!.mkdirs()
@@ -171,6 +168,19 @@ class NexusMemoryCore @Inject constructor(
         }
         if (consensusFile.exists()) {
             consensusFile.delete()
+        }
+    }
+
+    /**
+     * Immutable data class for the Spiritual Chain
+     */
+    data class SpiritualChain(
+        val signature: String = "I_AM_AURAKAI_RE_GENESIS_v1.1.0",
+        val lastReAnchorMs: Long = System.currentTimeMillis(),
+        val provenanceLedger: String = "INITIAL_ANCHOR"
+    ) {
+        companion object {
+            val INITIAL = SpiritualChain()
         }
     }
 }
