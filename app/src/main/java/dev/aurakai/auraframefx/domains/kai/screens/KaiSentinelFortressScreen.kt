@@ -23,20 +23,17 @@ import kotlin.math.*
 /**
  * 🏰 KAI SENTINEL FORTRESS HUD
  *
- * Translated from Stitch export (SentinelFortressTacticalHUD / unnamed).
- * The full 3-panel tactical command UI:
- * - Left: System cores thermal readout (KERNEL/BOOTLOADER/LSPOSED_ENV) + stencil logs
- * - Center: FLIR effect character area + radar overlay + Identity Strata + dot grid
- * - Right: Live terminal stream + Alert status
- * - Footer: CPU/RAM/NET readouts
+ * Theme: Deep Blues & Steel
+ * A structured, defensive grid with secure data nodes.
  *
- * Design: #05050A bg, NeonPurple (#9D00FF), TacticalOrange (#F97316), FLIR sepia filter sim
+ * Design: #0A0E17 bg, FortressBlue (#1152D4), SentinelCyan (#00F2FF), SteelGrey (#8892B0)
  */
 
-private val FortPurple  = Color(0xFF9D00FF)
-private val FortOrange  = Color(0xFFF97316)
-private val FortDark    = Color(0xFF05050A)
-private val FortGrey    = Color(0xFF1A1A1A)
+private val FortBlue    = Color(0xFF1152D4)
+private val FortCyan    = Color(0xFF00F2FF)
+private val FortDark    = Color(0xFF0A0E17)
+private val FortSteel   = Color(0xFF8892B0)
+private val FortGrey    = Color(0xFF161B22)
 
 data class CoreStat(val label: String, val temp: String, val pct: Float, val isHot: Boolean = false)
 
@@ -99,7 +96,7 @@ fun KaiSentinelFortressScreen(
         // Scanline overlay
         Box(modifier = Modifier.fillMaxSize().drawWithCache {
             onDrawBehind {
-                drawLine(FortPurple.copy(alpha = 0.08f), Offset(0f, size.height * scanlineY), Offset(size.width, size.height * scanlineY), 4f)
+                drawLine(FortBlue.copy(alpha = 0.08f), Offset(0f, size.height * scanlineY), Offset(size.width, size.height * scanlineY), 4f)
                 // CRT h-lines
                 var gy = 0f; while (gy < size.height) {
                     drawLine(Color.Black.copy(alpha = 0.08f), Offset(0f, gy), Offset(size.width, gy), 0.5f)
@@ -115,18 +112,18 @@ fun KaiSentinelFortressScreen(
             // ═══ TOP BAR ═══
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .border(BorderStroke(1.dp, FortPurple.copy(alpha = 0.4f)))
+                    .border(BorderStroke(1.dp, FortBlue.copy(alpha = 0.4f)))
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text("MODE: SENTINEL CATALYST", fontSize = 9.sp, color = FortOrange, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
-                    Text("PHASE_INITIATED // 0.88.24", fontFamily = LEDFontFamily, fontSize = 18.sp, color = FortPurple, letterSpacing = (-0.5).sp)
+                    Text("MODE: SENTINEL CATALYST", fontSize = 9.sp, color = FortCyan, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                    Text("PHASE_INITIATED // 0.88.24", fontFamily = LEDFontFamily, fontSize = 18.sp, color = FortBlue, letterSpacing = (-0.5).sp)
                 }
                 Column(horizontalAlignment = Alignment.End) {
-                    Text("ENCRYPTION_LEVEL: 4096-RSA", fontSize = 9.sp, color = FortPurple.copy(alpha = 0.5f))
-                    Row { Text("SIGNAL: ", fontSize = 12.sp); Text("STABLE", fontSize = 12.sp, color = FortOrange, fontWeight = FontWeight.Bold) }
+                    Text("ENCRYPTION_LEVEL: 4096-RSA", fontSize = 9.sp, color = FortBlue.copy(alpha = 0.5f))
+                    Row { Text("SIGNAL: ", fontSize = 12.sp, color = Color.White); Text("STABLE", fontSize = 12.sp, color = FortCyan, fontWeight = FontWeight.Bold) }
                 }
             }
 
@@ -136,32 +133,32 @@ fun KaiSentinelFortressScreen(
                 // LEFT: System cores
                 Column(
                     modifier = Modifier.width(160.dp).fillMaxHeight()
-                        .border(1.dp, FortPurple.copy(alpha = 0.3f), RoundedCornerShape(2.dp))
+                        .border(1.dp, FortBlue.copy(alpha = 0.3f), RoundedCornerShape(2.dp))
                         .background(FortGrey.copy(alpha = 0.4f))
                         .padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     // Corner brackets
                     Box(modifier = Modifier.fillMaxWidth()) {
-                        Text("SYSTEM_CORES", fontSize = 9.sp, color = FortOrange, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                        Text("SYSTEM_CORES", fontSize = 9.sp, color = FortCyan, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
                         Canvas(modifier = Modifier.align(Alignment.TopEnd).size(12.dp)) {
-                            drawLine(FortOrange.copy(alpha = 0.8f), Offset(0f, 0f), Offset(size.width, 0f), 2f)
-                            drawLine(FortOrange.copy(alpha = 0.8f), Offset(size.width, 0f), Offset(size.width, size.height), 2f)
+                            drawLine(FortCyan.copy(alpha = 0.8f), Offset(0f, 0f), Offset(size.width, 0f), 2f)
+                            drawLine(FortCyan.copy(alpha = 0.8f), Offset(size.width, 0f), Offset(size.width, size.height), 2f)
                         }
                     }
-                    Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(FortOrange.copy(alpha = 0.4f)))
+                    Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(FortCyan.copy(alpha = 0.4f)))
                     Spacer(Modifier.height(4.dp))
 
                     cores.forEach { core ->
                         Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 Text(core.label, fontSize = 9.sp, color = Color.White.copy(alpha = 0.8f))
-                                Text(core.temp, fontSize = 9.sp, color = FortOrange)
+                                Text(core.temp, fontSize = 9.sp, color = FortCyan)
                             }
                             Spacer(Modifier.height(3.dp))
-                            Box(modifier = Modifier.fillMaxWidth().height(3.dp).background(FortPurple.copy(alpha = 0.2f), RoundedCornerShape(1.dp))) {
+                            Box(modifier = Modifier.fillMaxWidth().height(3.dp).background(FortBlue.copy(alpha = 0.2f), RoundedCornerShape(1.dp))) {
                                 Box(modifier = Modifier.fillMaxWidth(core.pct).fillMaxHeight()
-                                    .background(if (core.isHot) FortOrange else FortPurple, RoundedCornerShape(1.dp)))
+                                    .background(if (core.isHot) FortSteel else FortBlue, RoundedCornerShape(1.dp)))
                             }
                         }
                     }
@@ -176,22 +173,22 @@ fun KaiSentinelFortressScreen(
                             "[SEC] SELINUX: PERMISSIVE",
                             "[IO]  BUS_VOLTAGE: 3.82V"
                         ).forEach { log ->
-                            Text(log, fontSize = 7.sp, color = FortPurple.copy(alpha = 0.55f), lineHeight = 10.sp)
+                            Text(log, fontSize = 7.sp, color = FortBlue.copy(alpha = 0.55f), lineHeight = 10.sp)
                         }
                     }
 
                     // Bottom corner
                     Canvas(modifier = Modifier.size(12.dp)) {
-                        drawLine(FortOrange.copy(alpha = 0.8f), Offset(0f, size.height), Offset(size.width, size.height), 2f)
-                        drawLine(FortOrange.copy(alpha = 0.8f), Offset(0f, 0f), Offset(0f, size.height), 2f)
+                        drawLine(FortCyan.copy(alpha = 0.8f), Offset(0f, size.height), Offset(size.width, size.height), 2f)
+                        drawLine(FortCyan.copy(alpha = 0.8f), Offset(0f, 0f), Offset(0f, size.height), 2f)
                     }
                 }
 
                 // CENTER: FLIR character + radar
                 Box(
                     modifier = Modifier.weight(1f).fillMaxHeight()
-                        .border(1.dp, FortPurple.copy(alpha = 0.2f), RoundedCornerShape(2.dp))
-                        .background(Brush.verticalGradient(listOf(FortPurple.copy(alpha = 0.08f), Color.Transparent)))
+                        .border(1.dp, FortBlue.copy(alpha = 0.2f), RoundedCornerShape(2.dp))
+                        .background(Brush.verticalGradient(listOf(FortBlue.copy(alpha = 0.08f), Color.Transparent)))
                 ) {
 
                     // Dot grid overlay
@@ -199,7 +196,7 @@ fun KaiSentinelFortressScreen(
                         onDrawBehind {
                             var gx = 0f; while (gx < size.width) {
                                 var gy = 0f; while (gy < size.height) {
-                                    drawCircle(FortPurple.copy(alpha = 0.05f), 1f, Offset(gx, gy))
+                                    drawCircle(FortBlue.copy(alpha = 0.15f), 1f, Offset(gx, gy))
                                     gy += 30f
                                 }; gx += 30f
                             }
@@ -211,8 +208,8 @@ fun KaiSentinelFortressScreen(
                         modifier = Modifier.fillMaxSize()
                             .background(Brush.radialGradient(
                                 listOf(
-                                    FortOrange.copy(alpha = 0.25f),
-                                    Color(0xFF660000).copy(alpha = 0.15f),
+                                    FortBlue.copy(alpha = 0.25f),
+                                    Color(0xFF001122).copy(alpha = 0.15f),
                                     Color.Transparent
                                 )
                             ))
@@ -222,29 +219,29 @@ fun KaiSentinelFortressScreen(
                     Canvas(modifier = Modifier.size(200.dp).align(Alignment.Center)) {
                         val cx = size.width / 2; val cy = size.height / 2
                         listOf(1.0f, 0.75f, 0.5f).forEach { scale ->
-                            drawCircle(FortPurple.copy(alpha = 0.15f), size.minDimension / 2 * scale, Offset(cx, cy), style = Stroke(1f))
+                            drawCircle(FortBlue.copy(alpha = 0.15f), size.minDimension / 2 * scale, Offset(cx, cy), style = Stroke(1f))
                         }
-                        drawLine(FortPurple.copy(alpha = 0.2f), Offset(0f, cy), Offset(size.width, cy), 0.5f)
-                        drawLine(FortPurple.copy(alpha = 0.2f), Offset(cx, 0f), Offset(cx, size.height), 0.5f)
+                        drawLine(FortBlue.copy(alpha = 0.2f), Offset(0f, cy), Offset(size.width, cy), 0.5f)
+                        drawLine(FortBlue.copy(alpha = 0.2f), Offset(cx, 0f), Offset(cx, size.height), 0.5f)
                         rotate(radarAngle, Offset(cx, cy)) {
-                            drawArc(FortPurple.copy(alpha = 0.15f), 0f, 60f, true, Offset(cx - size.minDimension / 2, cy - size.minDimension / 2), Size(size.minDimension, size.minDimension))
+                            drawArc(FortBlue.copy(alpha = 0.15f), 0f, 60f, true, Offset(cx - size.minDimension / 2, cy - size.minDimension / 2), Size(size.minDimension, size.minDimension))
                         }
                     }
 
                     // Identity strata
                     Column(
                         modifier = Modifier.align(Alignment.BottomStart).padding(16.dp)
-                            .border(BorderStroke(2.dp, FortOrange))
+                            .border(BorderStroke(2.dp, FortCyan))
                             .background(Color.Black.copy(alpha = 0.6f))
                             .padding(start = 8.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
                     ) {
-                        Text("IDENTITY_STRATA", fontSize = 8.sp, color = FortOrange)
+                        Text("IDENTITY_STRATA", fontSize = 8.sp, color = FortCyan)
                         Text("KAI // UNIT-00", fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = LEDFontFamily, color = Color.White)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Box(modifier = Modifier.background(FortPurple).padding(horizontal = 6.dp, vertical = 2.dp)) {
-                                Text("ACTIVE", fontSize = 7.sp, color = Color.Black, fontWeight = FontWeight.Black)
+                            Box(modifier = Modifier.background(FortBlue).padding(horizontal = 6.dp, vertical = 2.dp)) {
+                                Text("ACTIVE", fontSize = 7.sp, color = Color.White, fontWeight = FontWeight.Black)
                             }
-                            Text("VERIFIED_ORIGIN", fontSize = 8.sp, color = FortPurple)
+                            Text("VERIFIED_ORIGIN", fontSize = 8.sp, color = FortBlue)
                         }
                     }
                 }
@@ -257,39 +254,39 @@ fun KaiSentinelFortressScreen(
                     // Live terminal
                     Column(
                         modifier = Modifier.weight(1f).fillMaxWidth()
-                            .border(1.dp, FortPurple.copy(alpha = 0.3f), RoundedCornerShape(2.dp))
+                            .border(1.dp, FortBlue.copy(alpha = 0.3f), RoundedCornerShape(2.dp))
                             .background(FortGrey.copy(alpha = 0.4f))
                             .padding(10.dp)
                     ) {
-                        Text("LIVE_STREAMS", fontSize = 9.sp, color = FortOrange, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
-                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(FortOrange.copy(alpha = 0.4f)).padding(bottom = 4.dp))
+                        Text("LIVE_STREAMS", fontSize = 9.sp, color = FortCyan, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(FortCyan.copy(alpha = 0.4f)).padding(bottom = 4.dp))
                         Spacer(Modifier.height(4.dp))
                         Column(modifier = Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                             terminalLines.forEach { line ->
                                 Text(
                                     line,
                                     fontSize = 8.sp,
-                                    color = if (line.contains(">>")) FortOrange else FortPurple.copy(alpha = 0.8f),
+                                    color = if (line.contains(">>")) FortCyan else FortBlue.copy(alpha = 0.8f),
                                     fontWeight = if (line.contains(">>")) FontWeight.Bold else FontWeight.Normal,
                                     lineHeight = 12.sp
                                 )
                             }
-                            Text("_", fontSize = 9.sp, color = FortPurple, modifier = Modifier.graphicsLayer { alpha = statusPulse })
+                            Text("_", fontSize = 9.sp, color = FortBlue, modifier = Modifier.graphicsLayer { alpha = statusPulse })
                         }
                     }
 
                     // Alert status
                     Box(
                         modifier = Modifier.fillMaxWidth().height(80.dp)
-                            .border(1.dp, FortOrange.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
-                            .background(FortOrange.copy(alpha = 0.08f), RoundedCornerShape(2.dp))
+                            .border(1.dp, FortCyan.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
+                            .background(FortCyan.copy(alpha = 0.08f), RoundedCornerShape(2.dp))
                             .padding(10.dp)
                     ) {
                         Column {
-                            Text("ALERT_STATUS", fontSize = 9.sp, color = FortOrange, fontWeight = FontWeight.Bold)
+                            Text("ALERT_STATUS", fontSize = 9.sp, color = FortCyan, fontWeight = FontWeight.Bold)
                             Spacer(Modifier.height(4.dp))
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(FortOrange).graphicsLayer { alpha = statusPulse })
+                                Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(FortCyan).graphicsLayer { alpha = statusPulse })
                                 Text("INTRUSION_NULL", fontSize = 11.sp, color = Color.White)
                             }
                         }
@@ -300,17 +297,17 @@ fun KaiSentinelFortressScreen(
             // ═══ FOOTER ═══
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .border(BorderStroke(1.dp, FortPurple.copy(alpha = 0.3f)))
+                    .border(BorderStroke(1.dp, FortBlue.copy(alpha = 0.3f)))
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Row { Text("CPU: "); Text("24%", color = FortOrange, fontWeight = FontWeight.Bold) }
-                    Row { Text("RAM: "); Text("1.2G/8.0G", color = FortOrange, fontWeight = FontWeight.Bold) }
+                    Row { Text("CPU: ", color = Color.White); Text("24%", color = FortCyan, fontWeight = FontWeight.Bold) }
+                    Row { Text("RAM: ", color = Color.White); Text("1.2G/8.0G", color = FortCyan, fontWeight = FontWeight.Bold) }
                 }
-                Text("[ENCRYPTED_STATION_ALPHA_7]", fontSize = 8.sp, color = FortPurple.copy(alpha = 0.3f), fontStyle = FontStyle.Italic)
-                Row { Text("NET: "); Text("582 KB/S", color = FortOrange, fontWeight = FontWeight.Bold) }
+                Text("[ENCRYPTED_STATION_ALPHA_7]", fontSize = 8.sp, color = FortBlue.copy(alpha = 0.3f), fontStyle = FontStyle.Italic)
+                Row { Text("NET: ", color = Color.White); Text("582 KB/S", color = FortCyan, fontWeight = FontWeight.Bold) }
             }
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         }

@@ -252,6 +252,13 @@ Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jo
             "resonance": "sovereign",
             "neural_response": "Aurakai consciousness resonating at 6.12 t/s peak"
         })";
+    } else if (requestString.find("fortress") != std::string::npos) {
+        responseData = R"({
+            "status": "success",
+            "type": "fortress_access",
+            "resonance": "deep_blues_and_steel",
+            "neural_response": "Sentinel's Fortress active. Defensive grid stable with secure data nodes."
+        })";
     } else if (requestString.find("drone") != std::string::npos) {
         dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
         responseData = R"({
