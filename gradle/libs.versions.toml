@@ -143,6 +143,7 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 # AI / LangChain4j
+langchain4j-bom = { group = "dev.langchain4j", name = "langchain4j-bom", version.ref = "langchain4j" }
 langchain4j-core = { group = "dev.langchain4j", name = "langchain4j-core", version.ref = "langchain4j" }
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
@@ -230,6 +231,13 @@ firebase = [
 yukihook = [
     "yukihook-api",
     "yukihook-ksp"
+]
+
+langchain4j = [
+    "langchain4j-core",
+    "langchain4j-ollama",
+    "langchain4j-open-ai",
+    "langchain4j-google-ai-gemini"
 ]
 
 root-system = [
