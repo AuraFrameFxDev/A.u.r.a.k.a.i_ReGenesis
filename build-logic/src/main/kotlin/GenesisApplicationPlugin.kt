@@ -153,8 +153,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
 
             dependencies.add("implementation", dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
 
-            // dependencies.add("implementation", dependencies.platform(getLibrary("langchain4j-bom")))
-            // dependencies.add("implementation", getBundle("langchain4j"))
+            dependencies.add("implementation", dependencies.platform(getLibrary("langchain4j-bom")))
+            dependencies.add("implementation", getBundle("langchain4j"))
 
             dependencies.add("implementation", "com.github.topjohnwu.libsu:core:6.0.0")
             dependencies.add("implementation", "com.github.topjohnwu.libsu:nio:6.0.0")

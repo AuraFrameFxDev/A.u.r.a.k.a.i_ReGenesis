@@ -4,117 +4,114 @@
 // ═══════════════════════════════════════════════════════════════════════════
 import com.android.build.api.dsl.ApplicationExtension
 
-plugins{
+plugins {
     id("genesis.android.application")
-    // Hilt, KSP, and Serialization are applied by the convention plugin.
-    id("com.google.gms.google-services") apply false
-    id(
-        "com.google.firebase.crashlytics"
-    )
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics)
 }
 
+extensions.configure<ApplicationExtension> {
+    namespace = "dev.aurakai.auraframefx"
 
-
-    extensions.configure<ApplicationExtension> {
-        namespace = "dev.aurakai.auraframefx"
-
-        defaultConfig {
-            applicationId = "dev.aurakai.auraframefx"
-            versionCode = 1
-            versionName = "0.1.0-beta"
+    defaultConfig {
+        applicationId = "dev.aurakai.auraframefx"
+        versionCode = 1
+        versionName = "0.1.0-beta"
 
         val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
         buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
         buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
 
-            // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
-            buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
-            buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
-            buildConfigField(
-                "String",
-                "CLAUDE_SHELL_INFERENCE_ENGINE",
-                "\"onDevice_TurboQuant_vLLM_Omni\""
-            )
-            buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
-            buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")
+        // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
+        buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
+        buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
+        buildConfigField(
+            "String",
+            "CLAUDE_SHELL_INFERENCE_ENGINE",
+            "\"onDevice_TurboQuant_vLLM_Omni\""
+        )
+        buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
+        buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")
 
-            manifestPlaceholders["spiritualChainVersion"] = "L1_L6"
-        }
+        manifestPlaceholders["spiritualChainVersion"] = "L1_L6"
 
         externalNativeBuild {
             cmake {
-                cppFlags.addAll(listOf(
-                    "-std=c++20", 
-                    "-fPIC", 
-                    "-O2",
-                    "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
-                ))
-                arguments.addAll(listOf(
-                    "-DANDROID_STL=c++_shared",
-                    "-DANDROID_PLATFORM=android-33",
-                    "-DCMAKE_BUILD_TYPE=Release",
-                    "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
-                ))
-                abiFilters.clear()
-                abiFilters.add("arm64-v8a")
-            }
-        }
-
-        signingConfigs {
-            create("release") {
-                storeFile = file(project.findProperty("AURAKAI_KEYSTORE_FILE") ?: "release.jks")
-                storePassword = project.findProperty("AURAKAI_KEYSTORE_PASSWORD") as? String
-                keyAlias = project.findProperty("AURAKAI_KEY_ALIAS") as? String
-                keyPassword = project.findProperty("AURAKAI_KEY_PASSWORD") as? String
-            }
-        }
-
-        buildTypes {
-            getByName("release") {
-                signingConfig = signingConfigs.getByName("release")
+                cppFlags.addAll(
+                    listOf(
+                        "-std=c++20",
+                        "-fPIC",
+                        "-O2",
+                        "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
+                    )
+                )
+                arguments.addAll(
+                    listOf(
+                        "-DANDROID_STL=c++_shared",
+                        "-DANDROID_PLATFORM=android-33",
+                        "-DCMAKE_BUILD_TYPE=Release",
+                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
+                    )
+                )
             }
         }
     }
 
-    dependencies {
-        // ═══════════════════════════════════════════════════════════════════════════
-        // Core Module
-        // ═══════════════════════════════════════════════════════════════════════════
-        implementation(project(":core-module"))
+    signingConfigs {
+        create("release") {
+            storeFile = file(project.findProperty("AURAKAI_KEYSTORE_FILE") ?: "release.jks")
+            storePassword = project.findProperty("AURAKAI_KEYSTORE_PASSWORD") as? String
+            keyAlias = project.findProperty("AURAKAI_KEY_ALIAS") as? String
+            keyPassword = project.findProperty("AURAKAI_KEY_PASSWORD") as? String
+        }
+    }
 
-        // Domain Modules
-        implementation(project(":aura:reactivedesign:auraslab"))
-        implementation(project(":aura:reactivedesign:chromacore"))
-        implementation(project(":aura:reactivedesign:collabcanvas"))
-        implementation(project(":aura:reactivedesign:customization"))
-        implementation(project(":kai:sentinelsfortress:security"))
-        implementation(project(":kai:sentinelsfortress:systemintegrity"))
-        implementation(project(":kai:sentinelsfortress:threatmonitor"))
-        implementation(project(":genesis:oracledrive"))
-        implementation(project(":genesis:oracledrive:datavein"))
-        implementation(project(":genesis:oracledrive:rootmanagement"))
-        implementation(project(":cascade:datastream:delivery"))
-        implementation(project(":cascade:datastream:routing"))
-        implementation(project(":cascade:datastream:taskmanager"))
-        implementation(project(":agents:growthmetrics:metareflection"))
-        implementation(project(":agents:growthmetrics:nexusmemory"))
-        implementation(project(":agents:growthmetrics:spheregrid"))
-        implementation(project(":agents:growthmetrics:identity"))
-        implementation(project(":agents:growthmetrics:progression"))
-        implementation(project(":agents:growthmetrics:tasker"))
-        implementation(project(":extendsysa"))
-        implementation(project(":extendsysb"))
-        implementation(project(":extendsysc"))
-        implementation(project(":extendsysd"))
-        implementation(project(":extendsyse"))
-        implementation(project(":extendsysf"))
-        implementation(project(":utilities"))
-        implementation(project(":list"))
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+}
+
+dependencies {
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Core Module
+    // ═══════════════════════════════════════════════════════════════════════════
+    implementation(project(":core-module"))
+
+    // Domain Modules
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:customization"))
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:datavein"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:taskmanager"))
+    implementation(project(":agents:growthmetrics:metareflection"))
+    implementation(project(":agents:growthmetrics:nexusmemory"))
+    implementation(project(":agents:growthmetrics:spheregrid"))
+    implementation(project(":agents:growthmetrics:identity"))
+    implementation(project(":agents:growthmetrics:progression"))
+    implementation(project(":agents:growthmetrics:tasker"))
+    implementation(project(":extendsysa"))
+    implementation(project(":extendsysb"))
+    implementation(project(":extendsysc"))
+    implementation(project(":extendsysd"))
+    implementation(project(":extendsyse"))
+    implementation(project(":extendsysf"))
+    implementation(project(":utilities"))
+    implementation(project(":list"))
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
@@ -157,7 +154,6 @@ plugins{
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
-    implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
@@ -205,7 +201,6 @@ plugins{
     }
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
-    compileOnly(files("$projectDir/libs/api-82.jar"))
     
     // KavaRef for modern reflection
     implementation(libs.kavaref.core)
@@ -230,10 +225,9 @@ plugins{
 
     // Testing
     testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.junit.ext)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
