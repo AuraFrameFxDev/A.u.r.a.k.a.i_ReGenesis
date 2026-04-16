@@ -4,7 +4,7 @@ import dev.aurakai.auraframefx.di.AnchorModel
 import dev.aurakai.auraframefx.di.AuraModel
 import dev.aurakai.auraframefx.di.GenesisModel
 import dev.aurakai.auraframefx.di.KaiModel
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
