@@ -192,6 +192,7 @@ plugins{
 
         // Testing
         testImplementation(libs.junit)
+        testImplementation(libs.bundles.junit.jupiter)
         testImplementation(libs.mockk)
         testImplementation(libs.kotlinx.coroutines.test)
         androidTestImplementation(libs.androidx.junit)
