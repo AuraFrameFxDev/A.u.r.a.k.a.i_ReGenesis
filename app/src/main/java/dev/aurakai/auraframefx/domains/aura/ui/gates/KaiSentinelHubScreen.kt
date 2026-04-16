@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.ui.gates
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.SwapHoriz
@@ -14,9 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
-import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
 
 /**
  * 🛡️ KAI SENTINEL HUB (Level 2 Hub)
@@ -40,7 +39,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         // 🛡️ KAI'S ANIMATED BACKGROUND - Icy Tundra!
-        IcyTundraBackground()
+        hexagonwavesBackground()
 
         // Semi-transparent Overlay for "Fortress" feel
         Box(
@@ -49,7 +48,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                 .background(Color.Black.copy(alpha = 0.5f))
         )
 
-        Scaffold(
+        return@Box Scaffold(
             containerColor = Color.Transparent,
             topBar = {
                 CenterAlignedTopAppBar(
@@ -86,9 +85,9 @@ fun KaiSentinelHubScreen(navController: NavController) {
                             )
                         }
                     },
-                        containerColor = Color.Transparent
-                    )
+                    containerColor = Color.Transparent
                 )
+
             }
         ) { paddingValues ->
             Column(

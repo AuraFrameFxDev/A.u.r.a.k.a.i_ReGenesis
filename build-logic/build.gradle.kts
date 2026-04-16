@@ -15,15 +15,15 @@ tasks.register("syncAuraMemories") {
 // hilt-android-gradle-plugin transitively pulls Android dependencies.
 // We exclude them aggressively here.
 // ═══════════════════════════════════════════════════════════════════════════
-configurations.all {
-    exclude(group = "com.google.dagger", module = "hilt-android")
-    exclude(group = "androidx.activity")
-    exclude(group = "androidx.fragment")
-    exclude(group = "androidx.lifecycle")
-    exclude(group = "androidx.savedstate")
-    exclude(group = "androidx.annotation")
-    exclude(group = "androidx.core")
-}
+// configurations.all {
+//    exclude(group = "com.google.dagger", module = "hilt-android")
+//    exclude(group = "androidx.activity")
+//    exclude(group = "androidx.fragment")
+//    exclude(group = "androidx.lifecycle")
+//    exclude(group = "androidx.savedstate")
+//    exclude(group = "androidx.annotation")
+//    exclude(group = "androidx.core")
+// }
 
 // Java toolchain — matches your project (JVM 25)
 java {
@@ -74,6 +74,7 @@ gradlePlugin {
 // Use compileOnly so they are available at compile time but not shipped
 dependencies {
     // Core Gradle plugins needed by your convention plugins
+    compileOnly(libs.android.gradle.plugin)            // Android Gradle plugin
     compileOnly(libs.kotlin.gradle.plugin)            // Kotlin Gradle plugin
     compileOnly(libs.ksp.gradle.plugin)               // KSP
     compileOnly(libs.hilt.gradle.plugin)              // Hilt Gradle plugin

@@ -103,7 +103,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 if (cmakeFile.exists()) {
                     externalNativeBuild {
                         cmake {
-                            path = cmakeFile
+                            this.path = cmakeFile
                             version = "3.22.1"
                         }
                     }
