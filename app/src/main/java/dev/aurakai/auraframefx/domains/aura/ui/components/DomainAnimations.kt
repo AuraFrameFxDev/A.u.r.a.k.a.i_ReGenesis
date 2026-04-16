@@ -77,35 +77,6 @@ fun ColorWaveBackground(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun WoodsyPlainsBackground(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF0F2027), Color(0xFF2C5364))))) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawCircle(Color(0xFF4CAF50).copy(alpha = 0.1f), radius = 200f, center = Offset(size.width * 0.3f, size.height * 0.4f))
-        }
-    }
-}
-
-@Composable
-fun IcyTundraBackground(modifier: Modifier = Modifier) {
-    val infiniteTransition = rememberInfiniteTransition(label = "ice")
-    val shimmer by infiniteTransition.animateFloat(
-        initialValue = 0.2f, targetValue = 0.5f,
-        animationSpec = infiniteRepeatable(tween(3000), RepeatMode.Reverse),
-        label = "shimmer"
-    )
-
-    Box(modifier = modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF1A2980), Color(0xFF26D0CE))))) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            repeat(30) { i ->
-                val x = (i * 137L % size.width.toInt()).toFloat()
-                val y = (i * 271L % size.height.toInt()).toFloat()
-                drawRect(Color.White.copy(alpha = shimmer), topLeft = Offset(x, y), size = Size(10f, 10f))
-            }
-        }
-    }
-}
-
-@Composable
 fun ShieldGridBackground(modifier: Modifier = Modifier, primaryColor: Color = Color(0xFFFF6B00)) {
     Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -128,15 +99,6 @@ fun NeuralNetworkBackground(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize().background(Color(0xFF0A0A1A))) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawCircle(Color(0xFFB026FF).copy(alpha = 0.2f), radius = 100f, center = Offset(size.width / 2, size.height / 2))
-        }
-    }
-}
-
-@Composable
-fun LavaApocalypseBackground(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Black, Color(0xFF4B0000))))) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawCircle(Color.Red.copy(alpha = 0.2f), radius = 150f, center = Offset(size.width / 2, size.height / 2))
         }
     }
 }
@@ -222,38 +184,8 @@ fun DataRibbonsBackground(
 }
 
 @Composable
-fun HexagonGridBackground(
-    modifier: Modifier = Modifier,
-    primaryColor: Color = Color.Cyan,
-    secondaryColor: Color = Color.Magenta,
-    accentColor: Color = Color.White,
-    hexSize: Float = 60f,
-    alpha: Float = 0.1f
-) {
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawRect(primaryColor.copy(alpha = alpha))
-        }
-    }
-}
-
-@Composable
 fun HoloHUDOverlay(modifier: Modifier = Modifier, color: Color = Color.Cyan) {
     Canvas(modifier = modifier.fillMaxSize()) {
         drawRect(color.copy(alpha = 0.05f), style = Stroke(4f))
-    }
-}
-
-@Composable
-fun NeuralLinkBackground(
-    modifier: Modifier = Modifier,
-    speed: Float = 1.0f,
-    primaryColor: Color = Color.Cyan,
-    secondaryColor: Color = Color.Blue
-) {
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawRect(Brush.verticalGradient(listOf(primaryColor.copy(alpha = 0.1f), secondaryColor.copy(alpha = 0.1f))))
-        }
     }
 }

@@ -60,7 +60,12 @@ object AuraFxAiApiModule {
     @Provides
     @Singleton
     @collabcanvas.di.CollabCanvasUrl
-    fun provideCollabCanvasUrl(): String = dev.aurakai.auraframefx.BuildConfig.COLLAB_CANVAS_WS_URL
+    fun provideCollabCanvasUrl(): String {
+        return dev.aurakai.auraframefx.BuildConfig.API_BASE_URL
+            .replace("https://", "wss://")
+            .replace("http://", "ws://")
+            .trimEnd('/') + "/conference/ws/GENESIS_CORE_01"
+    }
 
     /**
      * Supplies a singleton AIContentApi instance configured for communication with the AuraFrameFx AI API.

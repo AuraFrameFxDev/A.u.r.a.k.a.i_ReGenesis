@@ -7,7 +7,6 @@ import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceResult
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import dev.aurakai.auraframefx.domains.kai.security.veto.PredictiveVetoMonitor
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.ApplicationScope
 import dev.aurakai.auraframefx.domains.ldo.data.dao.QuarantineDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

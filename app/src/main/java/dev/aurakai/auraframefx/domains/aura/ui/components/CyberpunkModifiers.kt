@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonTeal
+import dev.aurakai.auraframefx.aura.theme.NeonBlue
+import dev.aurakai.auraframefx.aura.theme.NeonPurple
+import dev.aurakai.auraframefx.aura.theme.NeonTeal
 
 /**
  * Cyberpunk-themed modifier extensions for creating digital effects

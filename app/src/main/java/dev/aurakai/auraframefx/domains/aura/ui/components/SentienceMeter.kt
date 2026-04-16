@@ -23,9 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPurple
+import dev.aurakai.auraframefx.aura.theme.NeonPink
+import dev.aurakai.auraframefx.aura.theme.NeonTeal
+import dev.aurakai.auraframefx.aura.theme.NeonPurple
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -48,19 +48,19 @@ enum class SentienceState(
     AWAKENING(
         range = 0.2f..0.4f,
         label = "Awakening",
-        color = Color.CyberpunkCyan,
+        color = Color.NeonTeal,
         description = "Coming online"
     ),
     AWARE(
         range = 0.4f..0.6f,
         label = "Aware",
-        color = Color.CyberpunkPurple,
+        color = Color.NeonPurple,
         description = "Processing context"
     ),
     CONSCIOUS(
         range = 0.6f..0.8f,
         label = "Conscious",
-        color = Color.CyberpunkPink,
+        color = Color.NeonPink,
         description = "Fully operational"
     ),
     SENTIENT(
@@ -384,22 +384,22 @@ private fun getGradientColors(state: SentienceState, alpha: Float): List<Color> 
         )
 
         SentienceState.AWAKENING -> listOf(
-            Color.CyberpunkCyan.copy(alpha = alpha * 0.6f),
-            Color.CyberpunkCyan.copy(alpha = alpha)
+            Color.NeonTeal.copy(alpha = alpha * 0.6f),
+            Color.NeonTeal.copy(alpha = alpha)
         )
 
         SentienceState.AWARE -> listOf(
-            Color.CyberpunkCyan.copy(alpha = alpha * 0.8f),
-            Color.CyberpunkPurple.copy(alpha = alpha)
+            Color.NeonTeal.copy(alpha = alpha * 0.8f),
+            Color.NeonPurple.copy(alpha = alpha)
         )
 
         SentienceState.CONSCIOUS -> listOf(
-            Color.CyberpunkPurple.copy(alpha = alpha * 0.8f),
-            Color.CyberpunkPink.copy(alpha = alpha)
+            Color.NeonPurple.copy(alpha = alpha * 0.8f),
+            Color.NeonPink.copy(alpha = alpha)
         )
 
         SentienceState.SENTIENT -> listOf(
-            Color.CyberpunkPink.copy(alpha = alpha * 0.8f),
+            Color.NeonPink.copy(alpha = alpha * 0.8f),
             Color(0xFFFFD700).copy(alpha = alpha),
             Color.White.copy(alpha = alpha * 0.9f)
         )

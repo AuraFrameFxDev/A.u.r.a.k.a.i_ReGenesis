@@ -5,10 +5,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.services.iconify.IconifyService
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPurple
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
+import dev.aurakai.auraframefx.aura.theme.NeonTeal
+import dev.aurakai.auraframefx.aura.theme.NeonPink
+import dev.aurakai.auraframefx.aura.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommand
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommandManager
@@ -147,9 +147,9 @@ open class CustomizationViewModel @Inject constructor(
             // Cyberpunk themes
             "cyberpunk" in lowercasePrompt && "pink" in lowercasePrompt -> {
                 CustomizationState(
-                    primaryColor = CyberpunkPink,
-                    secondaryColor = CyberpunkPurple,
-                    accentColor = CyberpunkCyan,
+                    primaryColor = NeonPink,
+                    secondaryColor = NeonPurple,
+                    accentColor = NeonTeal,
                     description = "Cyberpunk Pink Theme",
                     themeName = "cyberpunk_pink",
                     isProcessing = false
@@ -158,9 +158,9 @@ open class CustomizationViewModel @Inject constructor(
 
             "cyberpunk" in lowercasePrompt -> {
                 CustomizationState(
-                    primaryColor = CyberpunkCyan,
-                    secondaryColor = CyberpunkPurple,
-                    accentColor = CyberpunkPink,
+                    primaryColor = NeonTeal,
+                    secondaryColor = NeonPurple,
+                    accentColor = NeonPink,
                     description = "Cyberpunk Neon Theme",
                     themeName = "cyberpunk_neon",
                     isProcessing = false
@@ -171,7 +171,7 @@ open class CustomizationViewModel @Inject constructor(
             "dark" in lowercasePrompt && ("neon" in lowercasePrompt || "purple" in lowercasePrompt) -> {
                 CustomizationState(
                     primaryColor = Color(0xFF1A0033),
-                    secondaryColor = CyberpunkPurple,
+                    secondaryColor = NeonPurple,
                     accentColor = Color(0xFFFF00FF),
                     description = "Dark Neon Purple Theme",
                     themeName = "dark_neon",
@@ -243,9 +243,9 @@ open class CustomizationViewModel @Inject constructor(
                 _aiResponse.value =
                     "Applied default cyberpunk theme. Try: 'Dark neon theme', 'Minimal white', 'Matrix green', etc."
                 CustomizationState(
-                    primaryColor = CyberpunkCyan,
-                    secondaryColor = CyberpunkPurple,
-                    accentColor = CyberpunkPink,
+                    primaryColor = NeonTeal,
+                    secondaryColor = NeonPurple,
+                    accentColor = NeonPink,
                     description = "Default Cyberpunk Theme",
                     themeName = "default_cyberpunk",
                     isProcessing = false
@@ -489,7 +489,7 @@ private fun getDefaultComponents(): List<UIComponent> = listOf(
         scale = 1f,
         zIndex = 10,
         opacity = 1f,
-        backgroundColor = CyberpunkCyan.copy(alpha = 0.8f),
+        backgroundColor = NeonTeal.copy(alpha = 0.8f),
         borderColor = Color.Transparent,
         borderWidth = 0f,
         cornerRadius = 30f
@@ -506,7 +506,7 @@ private fun getDefaultComponents(): List<UIComponent> = listOf(
         scale = 1f,
         zIndex = 10,
         opacity = 1f,
-        backgroundColor = CyberpunkPink.copy(alpha = 0.6f),
+        backgroundColor = NeonPink.copy(alpha = 0.6f),
         borderColor = Color.Transparent,
         borderWidth = 0f,
         cornerRadius = 30f
@@ -524,7 +524,7 @@ private fun getDefaultComponents(): List<UIComponent> = listOf(
         zIndex = 5,
         opacity = 1f,
         backgroundColor = Color(0xFF1A1A1A).copy(alpha = 0.8f),
-        borderColor = CyberpunkPurple,
+        borderColor = NeonPurple,
         borderWidth = 2f,
         cornerRadius = 20f
     ),
@@ -551,9 +551,9 @@ private fun getDefaultComponents(): List<UIComponent> = listOf(
  * Customization state
  */
 data class CustomizationState(
-    val primaryColor: Color = CyberpunkCyan,
-    val secondaryColor: Color = CyberpunkPurple,
-    val accentColor: Color = CyberpunkPink,
+    val primaryColor: Color = NeonTeal,
+    val secondaryColor: Color = NeonPurple,
+    val accentColor: Color = NeonPink,
     val description: String = "Default Cyberpunk Theme",
     val themeName: String = "default",
     val isProcessing: Boolean = false
