@@ -28,6 +28,7 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 compileSdk = compileSdkVersion
+                buildToolsVersion = "36.1.0"
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
