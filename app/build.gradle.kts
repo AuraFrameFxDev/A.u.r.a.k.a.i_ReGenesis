@@ -4,12 +4,13 @@
 // ═══════════════════════════════════════════════════════════════════════════
 import com.android.build.api.dsl.ApplicationExtension
 
-importedPackageDir("dev.aurakai.auraframefx", "app/src/main/kotlin")
-
-fun importedPackageDir(container: String, name: String) {}
-
 plugins{
     id("genesis.android.application")
+    // Hilt, KSP, and Serialization are applied by the convention plugin.
+    id("com.google.gms.google-services") apply false
+    id(
+        "com.google.firebase.crashlytics"
+    )
 }
 
 
