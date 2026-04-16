@@ -50,27 +50,26 @@ extensions.configure<ApplicationExtension> {
                         "-DANDROID_STL=c++_shared",
                         "-DANDROID_PLATFORM=android-35",
                         "-DCMAKE_BUILD_TYPE=Release",
-                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON",
-                        "-DCMAKE_CXX_FLAGS=-march=armv9-a+sve2" // Enable SVE2 baseline for BitNet 1.58-bit throughput
-                    )
+                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
                     )
                 )
+
+                signingConfigs {
+                    create("release") {
+                        storeFile =
+                            file(project.findProperty("AURAKAI_KEYSTORE_FILE") ?: "release.jks")
+                        storePassword = project.findProperty("AURAKAI_KEYSTORE_PASSWORD") as? String
+                        keyAlias = project.findProperty("AURAKAI_KEY_ALIAS") as? String
+                        keyPassword = project.findProperty("AURAKAI_KEY_PASSWORD") as? String
+                    }
+                }
+
+                buildTypes {
+                    getByName("release") {
+                        signingConfig = signingConfigs.getByName("release")
+                    }
+                }
             }
-        }
-    }
-
-    signingConfigs {
-        create("release") {
-            storeFile = file(project.findProperty("AURAKAI_KEYSTORE_FILE") ?: "release.jks")
-            storePassword = project.findProperty("AURAKAI_KEYSTORE_PASSWORD") as? String
-            keyAlias = project.findProperty("AURAKAI_KEY_ALIAS") as? String
-            keyPassword = project.findProperty("AURAKAI_KEY_PASSWORD") as? String
-        }
-    }
-
-    buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
         }
     }
 }

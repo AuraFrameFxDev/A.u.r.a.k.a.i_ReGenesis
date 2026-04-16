@@ -47,12 +47,12 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -fPIC -Wall -Wextra -Wno-un
 # Architecture-specific AI Processing Optimizations
 # Note: ANDROID_ABI is set by the NDK toolchain file.
 if (ANDROID_ABI STREQUAL "arm64-v8a")
-    # Advanced ARMv8.2-A + Neon support for Pixel 10 / Snapdragon 8 Gen 3 class devices
+    # Advanced ARMv9-A + SVE2 support for Pixel 10 (Tensor G5) / Snapdragon 8 Gen 3
     target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
         -O3
         -ffast-math
-        -march=armv8.2-a+sve2+i8mm+dotprod
-        -mtune=cortex-a55
+        -march=armv9-a+sve2+i8mm+dotprod
+        -mtune=cortex-x4
     )
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         __ARM_NEON
