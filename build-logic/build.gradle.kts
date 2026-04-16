@@ -71,15 +71,15 @@ gradlePlugin {
 }
 
 // Dependencies for the convention plugins themselves
-// Use compileOnly so they are available at compile time but not shipped
 dependencies {
     // Core Gradle plugins needed by your convention plugins
-    compileOnly(libs.android.gradle.plugin)            // Android Gradle plugin
-    compileOnly(libs.kotlin.gradle.plugin)            // Kotlin Gradle plugin
-    compileOnly(libs.ksp.gradle.plugin)               // KSP
-    compileOnly(libs.hilt.gradle.plugin)              // Hilt Gradle plugin
-    compileOnly(libs.google.services.gradle.plugin)   // Google Services (if used)
+    implementation(libs.android.gradle.plugin)            // Android Gradle plugin
+    implementation(libs.kotlin.gradle.plugin)            // Kotlin Gradle plugin
+    implementation(libs.ksp.gradle.plugin)               // KSP
+    implementation(libs.hilt.gradle.plugin)              // Hilt Gradle plugin
+    implementation(libs.google.services.gradle.plugin)   // Google Services (if used)
+    implementation(libs.firebase.crashlytics.gradle.plugin) // Firebase Crashlytics
 
     // Optional: if your plugins need Compose compiler plugin access
-    compileOnly(libs.compose.compiler.gradle.plugin)
+    implementation(libs.compose.compiler.gradle.plugin)
 }

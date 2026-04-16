@@ -2,13 +2,14 @@
 # ============================================================================
 # Core Build Tools
 # ============================================================================
-agp = "9.1.1"
+agp = "9.2.0-alpha08"
 kotlin = "2.3.20"
 ksp = "2.3.6"
 hilt = "2.59.2"
 compose-bom = "2026.03.01"
 firebase-bom = "34.12.0"
 google-services = "4.4.4"
+firebase-crashlytics = "3.0.7"
 
 # SDK Versions
 compile-sdk = "36"
@@ -78,6 +79,7 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "symbol-processing-gradle-plugin", version.ref = "ksp" }
 hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 google-services-gradle-plugin = { group = "com.google.gms", name = "google-services", version.ref = "google-services" }
+firebase-crashlytics-gradle-plugin = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebase-crashlytics" }
 compose-compiler-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
 
@@ -255,3 +257,4 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
