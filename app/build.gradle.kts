@@ -42,8 +42,7 @@ extensions.configure<ApplicationExtension> {
                     listOf(
                         "-std=c++20",
                         "-fPIC",
-                        "-O2",
-                        "-march=armv8.2-a+sve2+i8mm+dotprod" // Enable advanced NEON/SVE features for IDE
+                        "-O2"
                     )
                 )
                 arguments.addAll(
