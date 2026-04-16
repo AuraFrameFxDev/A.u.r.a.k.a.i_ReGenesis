@@ -13,9 +13,12 @@ kotlin = "2.3.20"
 ksp = "2.3.6"
 yukihook = "1.3.1"
 kavaref = "1.0.2"
+
+# SDK Versions (Restored for Convention Plugins)
 compile-sdk = "36"
 min-sdk = "34"
 target-sdk = "36"
+
 activityCompose = "1.13.0"
 coreKtx = "1.18.0"
 datastore = "1.2.1"
@@ -176,7 +179,6 @@ libsu-service = { group = "com.github.topjohnwu.libsu", name = "service", versio
 
 # Testing
 junit = { module = "junit:junit", version.ref = "junit" }
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junitJupiter" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params" }
