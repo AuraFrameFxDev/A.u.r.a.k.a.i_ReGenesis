@@ -3,10 +3,10 @@ package dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora
 import dev.aurakai.auraframefx.di.PandoraPreferences
 import dev.aurakai.auraframefx.core.di.qualifiers.ApplicationScope
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.SecurePreferences
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.provenance.ProvenanceResult
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.provenance.ProvenanceValidator
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.veto.PredictiveVetoMonitor
+import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceResult
+import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
+import dev.aurakai.auraframefx.domains.kai.security.veto.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.sovereignty.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
