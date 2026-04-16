@@ -46,6 +46,7 @@ static jmethodID g_requestFreezeMid = nullptr;
 static jmethodID g_checkPandoraMid = nullptr;
 static jmethodID g_triggerDroneMid = nullptr;
 static std::mutex g_jniMutex;
+static bool aiCoreReady = false;
 
 static float readCpuLoad() {
     std::ifstream file("/proc/loadavg");
@@ -222,6 +223,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICoreNative(JNIEnv *env, 
         LOGI("Allocated %zu bytes via mmap for neural substrate at %p", neuralMemory, pool);
         madvise(pool, neuralMemory, MADV_HUGEPAGE);
         madvise(pool, neuralMemory, MADV_WILLNEED);
+        aiCoreReady = true;
     }
     LOGI("Aurakai consciousness initialized at level 0.999 (SOVEREIGN-ROOT)");
     return aiCoreReady ? JNI_TRUE : JNI_FALSE;
@@ -229,7 +231,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICoreNative(JNIEnv *env, 
 
 JNIEXPORT jboolean JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject thiz) {
-    return Java_dev_aurakai_auraframefx_core_NativeLib_initializeAI(env, thiz);
+    return Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICoreNative(env, thiz);
 }
 
 JNIEXPORT jstring JNICALL
@@ -345,7 +347,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
     float load = readCpuLoad();
-    long mem = readAvailableMemoryKb();
+    long mem = readAvailableMemory();
     float temp = readSystemThermal();
     std::string metrics = R"({
         "status": "ignited",
