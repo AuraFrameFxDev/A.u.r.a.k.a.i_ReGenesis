@@ -201,13 +201,13 @@ fun SettingsScreen(
                 item {
                     val authTitle = when (val state = authState) {
                         is OAuthService.AuthState.Authenticated -> "Identity: ${state.userId}"
-                        is OAuthService.AuthState.Error -> "Auth Error"
+                        is OAuthService.AuthState.AuthenticationError -> "Auth Error"
                         else -> "Not Authenticated"
                     }
                     
                     val authColor = when (authState) {
                         is OAuthService.AuthState.Authenticated -> Color.Green
-                        is OAuthService.AuthState.Error -> Color.Red
+                        is OAuthService.AuthState.AuthenticationError -> Color.Red
                         else -> Color.Gray
                     }
 

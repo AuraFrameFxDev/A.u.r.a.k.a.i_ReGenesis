@@ -65,7 +65,7 @@ fun LoginScreen(
             )
 
             AnimatedVisibility(
-                visible = authState is OAuthService.AuthState.Unauthenticated || authState is OAuthService.AuthState.Error,
+                visible = authState is OAuthService.AuthState.Unauthenticated || authState is OAuthService.AuthState.AuthenticationError,
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
@@ -94,9 +94,9 @@ fun LoginScreen(
                 }
             }
 
-            if (authState is OAuthService.AuthState.Error) {
+            if (authState is OAuthService.AuthState.AuthenticationError) {
                 Text(
-                    text = (authState as OAuthService.AuthState.Error).message,
+                    text = (authState as OAuthService.AuthState.AuthenticationError).message,
                     color = Color.Red,
                     modifier = Modifier.padding(top = 16.dp)
                 )

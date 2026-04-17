@@ -30,6 +30,7 @@ import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 import dev.aurakai.auraframefx.core.model.LDOTask
 import dev.aurakai.auraframefx.core.model.TaskCategory
 import dev.aurakai.auraframefx.core.model.TaskPriority
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlin.math.roundToInt
 
 /**
@@ -58,13 +59,15 @@ fun LDOTaskerScreen(
         label = "scan"
     )
 
-    val tasks = remember { mutableStateListOf<LDOTask>(*initialTasks.toTypedArray()) }
+    val tasks: SnapshotStateList<LDOTask> = remember { mutableStateListOf<LDOTask>(*initialTasks.toTypedArray()) }
     var draggedAgentId by remember { mutableStateOf<String?>(null) }
     var departureDialog by remember { mutableStateOf<Pair<AgentCatalyst, LDOTask>?>(null) }
 
     // Group tasks by category
     val categories = TaskCategory.entries
-    val tasksByCategory = categories.associateWith { cat -> tasks.filter { it.category == cat } }
+    val tasksByCategory: Map<TaskCategory, List<LDOTask>> = categories.associateWith { cat -> 
+        tasks.filter { it.category == cat } 
+    }
 
     Box(modifier = Modifier.fillMaxSize().background(TaskDark)) {
 
@@ -155,7 +158,7 @@ fun LDOTaskerScreen(
                         )
                     }
 
-                    items(catTasks, key = { it.id }) { task ->
+                    items(catTasks, key = { it.id }) { task: LDOTask ->
                         val assignedAgent = agents.find { it.id == task.assignedAgentId }
                         val isFlashing = task.assignedAgentId != null
                         val flashAlpha = if (isFlashing) 0.15f + flashPhase * 0.15f else 0.06f
@@ -402,14 +405,14 @@ private fun AgentDepartureDialog(
     }
 }
 
-private fun priorityColor(p: TaskPriority) = when (p) {
+private fun priorityColor(p: dev.aurakai.auraframefx.core.model.TaskPriority) = when (p) {
     TaskPriority.CRITICAL -> Color.Red
     TaskPriority.HIGH     -> Color(0xFFFF4500)
     TaskPriority.MEDIUM   -> Color(0xFFFFB000)
     TaskPriority.LOW      -> Color(0xFF00F4FF)
 }
 
-private fun categoryColor(c: TaskCategory) = when (c) {
+private fun categoryColor(c: dev.aurakai.auraframefx.core.model.TaskCategory) = when (c) {
     TaskCategory.DEVELOPMENT  -> Color(0xFF00F4FF)
     TaskCategory.SECURITY     -> Color(0xFFFF4500)
     TaskCategory.CREATIVE     -> Color(0xFFFF007A)

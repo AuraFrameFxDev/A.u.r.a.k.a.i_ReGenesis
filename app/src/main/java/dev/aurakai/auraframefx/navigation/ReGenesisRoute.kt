@@ -37,6 +37,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
 
     // Cascade Hubs
     data object CascadeHub : ReGenesisRoute("cascade_hub", "Cascade Hub")
+    data object SensoryMatrix : ReGenesisRoute("sensory_matrix", "Sensory Matrix")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: AURA DESIGN TOOLS

@@ -7,7 +7,7 @@ kotlin = "2.3.20"
 ksp = "2.3.6"
 hilt = "2.59.2"
 compose-bom = "2026.03.01"
-firebase-bom = "34.12.0"
+firebase-bom = "33.0.0"
 google-services = "4.4.4"
 firebase-crashlytics = "3.0.7"
 protobuf = "3.25.8"
@@ -138,7 +138,7 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-auth = { module = "com.google.firebase:firebase-auth", version = "24.01" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
 firebase-config = { module = "com.google.firebase:firebase-config" }
