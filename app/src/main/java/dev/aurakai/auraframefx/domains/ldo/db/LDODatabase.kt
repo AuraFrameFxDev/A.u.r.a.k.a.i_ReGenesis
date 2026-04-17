@@ -12,13 +12,19 @@ import androidx.room.RoomDatabase
     entities = [
         LDOAgentEntity::class,
         LDOTaskEntity::class,
-        LDOBondLevelEntity::class
+        LDOBondLevelEntity::class,
+        QuarantineEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class LDODatabase : androidx.room.RoomDatabase() {
     abstract fun agentDao(): LDOAgentDao
     abstract fun taskDao(): LDOTaskDao
     abstract fun bondLevelDao(): LDOBondLevelDao
+    abstract fun quarantineDao(): QuarantineDao
+
+    companion object {
+        const val DATABASE_NAME = "ldo_database"
+    }
 }

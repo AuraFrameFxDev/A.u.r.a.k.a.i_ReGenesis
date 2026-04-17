@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.ldo.data.entities
+package dev.aurakai.auraframefx.domains.ldo.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
