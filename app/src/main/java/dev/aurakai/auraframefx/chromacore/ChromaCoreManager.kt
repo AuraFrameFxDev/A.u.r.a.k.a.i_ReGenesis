@@ -14,7 +14,7 @@ import javax.inject.Singleton
  * Chroma color system manager.
  */
 @Singleton
-class ChromaCoreManager @Inject constructor(
+class ChromaPaletteManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     data class ChromaPalette(
