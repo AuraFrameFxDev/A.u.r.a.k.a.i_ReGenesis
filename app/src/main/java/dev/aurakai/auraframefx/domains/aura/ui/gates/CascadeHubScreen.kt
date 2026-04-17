@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Hub
+import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.StackedLineChart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -92,6 +93,7 @@ fun CascadeHubScreen(navController: NavController) {
             ) {
                 items(tools) { tool ->
                     CascadeToolCard(tool) {
+                        navController.navigate(tool.destination)
                     }
                 }
             }
@@ -145,5 +147,6 @@ private data class CascadeTool(
     val title: String,
     val subtitle: String,
     val icon: ImageVector,
+    val destination: String,
     val color: Color
 )
