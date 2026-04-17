@@ -17,6 +17,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.UnifiedGateRegistry
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 
 // Placeholder for LED font — replace with real font registration when available
@@ -100,7 +102,9 @@ fun KaiSentinelHubScreen(navController: NavController) {
                             )
                         }
                     },
-                    containerColor = Color.Transparent
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent
+                    )
                 )
             }
         ) { paddingValues ->
@@ -122,7 +126,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // 🎠 SUB-GATE CAROUSEL
-                val subGates = GateAssetConfig.getKaiSubGates()
+                val subGates = UnifiedGateRegistry.getKaiLoadout()
                 DomainSubGateCarousel(
                     subGates = subGates,
                     onGateSelected = { gate ->
