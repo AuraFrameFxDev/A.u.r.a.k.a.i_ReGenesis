@@ -1,13 +1,14 @@
 package dev.aurakai.auraframefx.domains.aura.ui.gates
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Hub
 import androidx.compose.material.icons.filled.StackedLineChart
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🌊 CASCADE HUB - Sensory Matrix Domain
@@ -28,18 +30,26 @@ import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 fun CascadeHubScreen(navController: NavController) {
     val tools = listOf(
         CascadeTool(
+            title = "Cascade Vision",
+            subtitle = "Pattern Recognition HUD",
+            icon = Icons.Default.RemoveRedEye,
+            destination = ReGenesisRoute.SensoryMatrix.route, // Using Route as ReGenesisRoute
+            color = Color(0xFF00FFD4)
+        ),
+        CascadeTool(
             title = "Data Monitoring",
             subtitle = "Real-time Stream Analysis",
             icon = Icons.Default.StackedLineChart,
+            destination = ReGenesisRoute.SensoryMatrix.route,
             color = Color(0xFF00E5FF)
         ),
         CascadeTool(
             title = "Neural Link",
             subtitle = "Direct Matrix Interface",
             icon = Icons.Default.Hub,
+            destination = ReGenesisRoute.SensoryMatrix.route,
             color = Color(0xFFB026FF)
         )
-
     )
 
     Box(

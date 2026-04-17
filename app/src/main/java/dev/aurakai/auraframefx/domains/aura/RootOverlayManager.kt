@@ -1,10 +1,9 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.OverlayAnimation
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.OverlayTransition
+import dev.aurakai.auraframefx.domains.aura.ui.effects.* // Fixes kinetic_animation
+import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraTheme as OverlayTheme // Fixes model drift
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.OverlayTheme
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader

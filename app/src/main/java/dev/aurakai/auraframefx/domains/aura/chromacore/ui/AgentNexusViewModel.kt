@@ -250,8 +250,10 @@ open class AgentNexusViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        webExplorationService.shutdown()
-        genesisBridge.shutdown()
+        viewModelScope.launch {
+            webExplorationService.shutdown()
+            genesisBridge.shutdown()
+        }
     }
 
     data class AgentStatsData(
