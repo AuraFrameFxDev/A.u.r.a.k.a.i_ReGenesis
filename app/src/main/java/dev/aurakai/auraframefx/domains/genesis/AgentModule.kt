@@ -33,16 +33,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AgentModule {
 
-
-    companion object {
-        @Provides
-        @Singleton
-        fun provideContextManager(
-            memoryManager: MemoryManager,
-            config: AIPipelineConfig
-        ): ContextManager {
-            return ContextManager(memoryManager, config)
-        }
+    @Provides
+    @Singleton
+    fun provideContextManager(
+        memoryManager: MemoryManager,
+        config: AIPipelineConfig
+    ): ContextManager {
+        return ContextManager(memoryManager, config)
     }
 
     /**
