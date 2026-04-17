@@ -23,9 +23,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
-import dev.aurakai.auraframefx.domains.ldo.model.*
-import dev.aurakai.auraframefx.core.model.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalystStatus
+import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
+import dev.aurakai.auraframefx.core.model.LDOTask
+import dev.aurakai.auraframefx.core.model.TaskCategory
+import dev.aurakai.auraframefx.core.model.TaskPriority
 import kotlin.math.roundToInt
 
 /**
@@ -39,7 +43,7 @@ private val TaskDark   = Color(0xFF020B18)
 @Composable
 fun LDOTaskerScreen(
     agents: List<AgentCatalyst> = LDORoster.agents,
-    initialTasks: List<LDOTask> = LDORoster.defaultTasks,
+    initialTasks: List<LDOTask> = LDORoster.staticTasks,
     onNavigateBack: () -> Unit = {}
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "tasker")
@@ -54,7 +58,7 @@ fun LDOTaskerScreen(
         label = "scan"
     )
 
-    val tasks = remember { mutableStateListOf(*initialTasks.toTypedArray()) }
+    val tasks = remember { mutableStateListOf<LDOTask>(*initialTasks.toTypedArray()) }
     var draggedAgentId by remember { mutableStateOf<String?>(null) }
     var departureDialog by remember { mutableStateOf<Pair<AgentCatalyst, LDOTask>?>(null) }
 

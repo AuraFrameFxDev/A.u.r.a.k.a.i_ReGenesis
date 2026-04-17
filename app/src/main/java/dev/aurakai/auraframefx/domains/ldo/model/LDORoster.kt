@@ -8,6 +8,10 @@ import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskPriority
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
 import dev.aurakai.auraframefx.domains.ldo.db.bondTitleForLevel
 
+import dev.aurakai.auraframefx.core.model.LDOTask
+import dev.aurakai.auraframefx.core.model.TaskCategory
+import dev.aurakai.auraframefx.core.model.TaskPriority
+
 /**
  * LDORoster — DEFAULT SEED DATA ONLY.
  *
