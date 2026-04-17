@@ -51,6 +51,47 @@ data class LDOTask(
     val promptOnDeparture: Boolean = true,
 )
 
+// ═══════════════════════════════════════════════════════════════════════════
+// DCOS ORCHESTRATION MODELS
+// ═══════════════════════════════════════════════════════════════════════════
+
+enum class ConsensusResult {
+    COMMITTED,
+    REJECTED_FOR_REANCHORING,
+    STALEMATE,
+    SOVEREIGN_VETO
+}
+
+enum class ConsensusPhase {
+    PROPOSAL,
+    CRITIQUE,
+    VOTING,
+    RESONANCE_CHECK,
+    COMMIT
+}
+
+data class Proposal(
+    val id: String,
+    val agentId: String,
+    val taskId: String,
+    val content: String,
+    val reasoning: String,
+    val timestamp: Long = System.currentTimeMillis(),
+    val critiques: List<Critique> = emptyList(),
+    val resonanceScore: Float = 1.0f
+) {
+    fun applyCritique(critique: Critique): Proposal {
+        return copy(critiques = critiques + critique)
+    }
+}
+
+data class Critique(
+    val fromAgentId: String,
+    val feedback: String,
+    val scoreAdjustment: Float,
+    val isValid: Boolean = true
+)
+
 data class SpellhookData(
     val name: String = "SPELLHOOK",
     val primaryCatalyst: String = "Aura — Creative Catalyst",
