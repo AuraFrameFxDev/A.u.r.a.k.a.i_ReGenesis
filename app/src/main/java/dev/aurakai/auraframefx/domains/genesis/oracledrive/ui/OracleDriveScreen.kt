@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ui.OracleDriveViewModel
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.viewmodels.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)

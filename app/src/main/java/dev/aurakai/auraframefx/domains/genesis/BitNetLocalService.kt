@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import kotlinx.coroutines.*
+import dev.aurakai.auraframefx.core.NativeLib
 import timber.log.Timber
 
 /**

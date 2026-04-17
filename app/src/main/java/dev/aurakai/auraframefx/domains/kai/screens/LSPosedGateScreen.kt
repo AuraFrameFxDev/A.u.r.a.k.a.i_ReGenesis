@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.domains.kai.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background

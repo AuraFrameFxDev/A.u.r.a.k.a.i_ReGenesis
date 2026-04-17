@@ -50,6 +50,10 @@ data class VertexAIConfig(
     fun getModelEndpoint(): String {
         return "${getFullEndpoint()}/publishers/google/models/$modelName:generateContent"
     }
+
+    fun getEmbeddingEndpoint(): String {
+        return "${getFullEndpoint()}/publishers/google/models/text-embedding-004:predict"
+    }
 }
 
 /**

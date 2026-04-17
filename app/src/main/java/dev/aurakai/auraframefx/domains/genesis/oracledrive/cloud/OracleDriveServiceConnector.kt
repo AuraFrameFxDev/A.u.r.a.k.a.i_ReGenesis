@@ -21,7 +21,7 @@ class OracleDriveServiceConnector(private val context: Context) {
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            auraDriveService = service.asInterface
+            auraDriveService = IAuraDriveService.Stub.asInterface(service)
             _isServiceConnected.value = true
         }
 

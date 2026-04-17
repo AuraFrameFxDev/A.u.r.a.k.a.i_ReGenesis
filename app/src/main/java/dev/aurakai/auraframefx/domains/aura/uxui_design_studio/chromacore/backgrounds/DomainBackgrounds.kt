@@ -116,7 +116,7 @@ fun HexagonGridBackground(
                     if (angle == 0) hexPath.moveTo(px, py) else hexPath.lineTo(px, py)
                 }
                 hexPath.close()
-                drawPath(hexPath, color = primaryColor.copy(alpha = pulse), style = androidx.compose.ui.graphics.drawscope.Stroke(strokeWidth = 1f))
+                drawPath(hexPath, color = primaryColor.copy(alpha = pulse), style = androidx.compose.ui.graphics.drawscope.Stroke(width = 1f))
                 x += hexW
             }
             y += hexH * 0.75f

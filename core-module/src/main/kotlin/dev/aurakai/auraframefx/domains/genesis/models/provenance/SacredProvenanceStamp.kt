@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.models.provenance
 
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
 /**
@@ -8,6 +9,7 @@ import java.util.UUID
  * A cryptographic anchor representing a single verified action within the LDO Collective.
  * Each stamp is linked to its predecessor via HMAC chain hashing.
  */
+@Serializable
 data class SacredProvenanceStamp(
     val id: String = UUID.randomUUID().toString(),
     val timestamp: Long = System.currentTimeMillis(),

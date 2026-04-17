@@ -5,45 +5,46 @@ import android.security.keystore.KeyProperties
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 
 /**
- * Extension functions for SecurityContext
+ * Extension functions for KaiSecurityContext
  */
 
 /**
  * Check if the security context is in a secure state
  */
-fun SecurityContext.isSecure(): Boolean {
+fun KaiSecurityContext.isSecureExt(): Boolean {
     return securityState.value.errorState == false &&
-            securityState.value.threatLevel != dev.aurakai.auraframefx.domains.kai.models.ThreatLevel.CRITICAL &&
+            securityState.value.threatLevel != ThreatLevel.CRITICAL &&
             encryptionStatus.value == EncryptionStatus.ACTIVE
 }
 
 /**
  * Check if the security context is NOT secure
  */
-fun SecurityContext.isNotSecure(): Boolean {
+fun KaiSecurityContext.isNotSecure(): Boolean {
     return !this.isSecure()
 }
 
 /**
  * Get the current threat count
  */
-fun SecurityContext.getThreatCount(): Int {
+fun KaiSecurityContext.getThreatCount(): Int {
     return securityState.value.detectedThreats.size
 }
 
 /**
  * Check if encryption is ready for use
  */
-fun SecurityContext.isEncryptionReady(): Boolean {
+fun KaiSecurityContext.isEncryptionReady(): Boolean {
     return encryptionStatus.value == EncryptionStatus.ACTIVE
 }
 
 /**
  * Safely encrypt data with null handling
  */
-fun SecurityContext.safeEncrypt(data: String?): EncryptedData? {
+fun KaiSecurityContext.safeEncrypt(data: String?): EncryptedData? {
     if (data == null) return null
     return encrypt(data)
 }
@@ -51,7 +52,7 @@ fun SecurityContext.safeEncrypt(data: String?): EncryptedData? {
 /**
  * Safely decrypt data with null handling
  */
-fun SecurityContext.safeDecrypt(encryptedData: EncryptedData?): String? {
+fun KaiSecurityContext.safeDecrypt(encryptedData: EncryptedData?): String? {
     if (encryptedData == null) return null
     return decrypt(encryptedData)
 }
@@ -59,14 +60,14 @@ fun SecurityContext.safeDecrypt(encryptedData: EncryptedData?): String? {
 /**
  * Check if a specific threat type is present
  */
-fun SecurityContext.hasThreatType(type: ThreatType): Boolean {
+fun KaiSecurityContext.hasThreatType(type: ThreatType): Boolean {
     return securityState.value.detectedThreats.any { it.type == type }
 }
 
 /**
  * Get threats by severity level
  */
-fun SecurityContext.getThreatsBySeverity(severity: ThreatSeverity): List<SecurityThreat> {
+fun KaiSecurityContext.getThreatsBySeverity(severity: ThreatSeverity): List<SecurityThreat> {
     return securityState.value.detectedThreats.filter { it.severity == severity }
 }
 

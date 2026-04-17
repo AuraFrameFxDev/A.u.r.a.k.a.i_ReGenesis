@@ -22,6 +22,7 @@ extensions.configure<ApplicationExtension> {
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
         buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
         buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
+        buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000/\"")
 
         // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
