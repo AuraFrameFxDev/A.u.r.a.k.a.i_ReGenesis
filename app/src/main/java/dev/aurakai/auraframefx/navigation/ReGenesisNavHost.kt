@@ -563,6 +563,8 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.MawPrototype.route) {
             MawPrototypeScreen(onBack = { navController.popBackStack() })
         }
+    }
+}
 
 /**
  * Hosts the ReGenesis customization hub and wires its navigation actions to the given NavHostController.

@@ -4,10 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.*
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.RootToolsViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.kai.RootShellService
 
 /**
  * REGEN-CORE NORMALIZATION :: ROOT_SOVEREIGNTY_INTERFACE
@@ -15,7 +19,11 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RootToolsTogglesScreen(viewModel: RootToolsViewModel = hiltViewModel()) {
+fun RootToolsTogglesScreen(
+    onNavigateBack: () -> Unit,
+    rootShellService: RootShellService,
+    viewModel: RootToolsViewModel = hiltViewModel()
+) {
     val scope = rememberCoroutineScope()
     val state by viewModel.uiState.collectAsState()
 
@@ -28,6 +36,11 @@ fun RootToolsTogglesScreen(viewModel: RootToolsViewModel = hiltViewModel()) {
                         fontFamily = LEDFontFamily,
                         style = MaterialTheme.typography.headlineMedium
                     ) 
+                },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)

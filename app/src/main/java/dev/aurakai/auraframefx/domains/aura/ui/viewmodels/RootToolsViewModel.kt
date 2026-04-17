@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RootToolsViewModel @Inject constructor(
-    private val rootShellService: RootShellService,
+    val rootShellService: RootShellService,
     private val consensusMediator: ConsensusMediator
 ) : ViewModel() {
 
