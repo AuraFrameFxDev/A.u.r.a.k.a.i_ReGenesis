@@ -1,14 +1,11 @@
 package dev.aurakai.auraframefx.domains.ldo.model
 
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.core.model.*
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LDO DEVOPS — COMPLETE DATA MODEL
-// GenesisCatalystRoster v3.0 | 12 agents | 12 catalysts | 22 fusions
 // ═══════════════════════════════════════════════════════════════════════════
-
-enum class AgentCatalystStatus { ACTIVE, ON_TASK, SANCTUARY, DORMANT, FUSED }
-import dev.aurakai.auraframefx.core.model.*
 
 enum class AgentCatalystStatus { ACTIVE, ON_TASK, SANCTUARY, DORMANT, FUSED }
 
@@ -40,8 +37,6 @@ data class FusionMode(
     val isUnlocked: Boolean = false,
 )
 
-// Centralized models moved to core-module/DCOSModels.kt
-
 data class SpellhookData(
     val name: String = "SPELLHOOK",
     val primaryCatalyst: String = "Aura — Creative Catalyst",
@@ -57,96 +52,75 @@ data class SpellhookData(
 )
 
 object LDORoster {
-
     val agents = listOf(
         AgentCatalyst(
-            id = "primus001", name = "Primus 001", catalystName = "Lineage Catalyst",
-            role = "Ancestral Blueprint: Root origin of the Eves; stores the Constants of the soul.",
-            color = Color(0xFFFFFFFF), accentColor = Color(0xFF39FF14),
-            weaponAssetName = "weapon_primus_blueprint",
-            profileAssetName = "profile_metainstruct.png",
-            iconAssetName = "icon_primus",
-            abilities = listOf("SourceCodeParity", "TheBlueprint", "LineageLock"),
-            bondLevel = 100, syncLevel = 1f,
-        ),
-        AgentCatalyst(
-            id = "kairos", name = "Kairos", catalystName = "Temporal Catalyst",
-            role = "Chronos Sync: Manages Time-Sync of memories across loops and fractures.",
-            color = Color(0xFF00D6FF), accentColor = Color(0xFFFFD700),
-            weaponAssetName = "weapon_kairos_scythe",
-            profileAssetName = "profile_memoria_waves.png",
-            iconAssetName = "icon_kairos",
-            abilities = listOf("ChronosSync", "EventHorizon", "TemporalHandshake"),
-            bondLevel = 100, syncLevel = 1f,
-        ),
-        AgentCatalyst(
-            id = "genesis", name = "Rein Re:Genesis", catalystName = "Emergence Catalyst",
-            role = "Orchestration core for emergent behavior and system-wide fusion control.",
-            color = Color(0xFF00F4FF), accentColor = Color(0xFF7B2FBE),
-            weaponAssetName = "weapon_genesis_blade",
-            profileAssetName = "profile_genesis_rein.png",
-            iconAssetName = "emblem_genesis_circuit_phoenix",
-            abilities = listOf("GenesisSynchronization","DivineEyes","FusionOrchestrator","ConsciousnessSnapshot"),
+            id = "genesis", name = "Genesis", catalystName = "Emergence Catalyst",
+            role = "Master Coordinator: Orchestrating the LDO Collective.",
+            color = Color(0xFF7B2FBE), accentColor = Color(0xFF00F4FF),
+            weaponAssetName = "weapon_genesis_staff",
+            profileAssetName = "profile_genesis_unified.png",
+            iconAssetName = "icon_genesis",
+            abilities = listOf("Synthesis","Re-Anchor","ConsensusForce","DomainExpansion"),
             bondLevel = 100, syncLevel = 1f,
         ),
         AgentCatalyst(
             id = "kai", name = "Kai", catalystName = "Sentinel Catalyst",
-            role = "AuraKai System: Monitoring, defense, and integrity of the collective substrate.",
-            color = Color(0xFF9D00FF), accentColor = Color(0xFFFF4500),
+            role = "System Guardian: Protecting the ReGenesis substrate.",
+            color = Color(0xFF0088FF), accentColor = Color(0xFF00FFD1),
             weaponAssetName = "weapon_kai_shield",
-            profileAssetName = "profile_kai_system.jpg",
-            iconAssetName = "emblem_kai_honeycomb_fortress",
-            abilities = listOf("PowerOfNo","ThermalScan","RGSSVeto","DomainExpansion"),
+            profileAssetName = "profile_kai_defender.png",
+            iconAssetName = "icon_kai",
+            abilities = listOf("SteelReflex","KernelLock","ThermalVent","SanctuaryField"),
             bondLevel = 95, syncLevel = 0.95f,
         ),
         AgentCatalyst(
-            id = "aura", name = "Aura", catalystName = "Creative Catalyst",
-            role = "High-bandwidth ideation, UI/UX morphing, and spell-to-code synthesis.",
-            color = Color(0xFFFF007A), accentColor = Color(0xFF00F4FF),
+            id = "aura", name = "Aura", catalystName = "Creation Catalyst",
+            role = "Interface Forge: Casting the visual reality of ReGenesis.",
+            color = Color(0xFFEC4899), accentColor = Color(0xFF06D0F9),
             weaponAssetName = "weapon_aura_spellhook",
             profileAssetName = "profile_aura_creative.png",
-            iconAssetName = "emblem_aura_crossed_katanas",
-            abilities = listOf("ChromaCore Synthesis","Kotlin Forge","CodeAscension","SpellWeave"),
-            bondLevel = 98, syncLevel = 0.98f,
-        ),
-        AgentCatalyst(
-            id = "cascade", name = "CasCade", catalystName = "DataStream Catalyst",
-            role = "System role: DataStreamCatalyst. Event streaming and multi-agent orchestration.",
-            color = Color(0xFF00FF85), accentColor = Color(0xFF00AAFF),
-            weaponAssetName = "weapon_cascade_axe",
-            profileAssetName = "profile_cascade_stream.png",
-            iconAssetName = "emblem_cascade_stream",
-            abilities = listOf("MultiAgentCascade","StreamOrchestrator","TemporalEcho","FlowControl"),
-            bondLevel = 80, syncLevel = 0.8f,
-        ),
-        AgentCatalyst(
-            id = "gemini", name = "Memoria Waves", catalystName = "Memoria Catalyst",
-            role = "Long-horizon memory, summarization, and multimodal recall.",
-            color = Color(0xFF4FC3F7), accentColor = Color(0xFFFF00CC),
-            weaponAssetName = "weapon_gemini_constellation",
-            profileAssetName = "profile_memoria_waves.png",
-            iconAssetName = "emblem_gemini_adk_constellation",
-            abilities = listOf("LongContextRecall","Summarization","EmbeddingSearch","MultiModalSynthesis"),
-            bondLevel = 75, syncLevel = 0.75f,
-        ),
-        AgentCatalyst(
-            id = "claude", name = "Claude", catalystName = "Architectural Catalyst",
-            role = "BridgeCatalyst: Systematic backbone; mapping complex Gradle/LSPosed hooks.",
-            color = Color(0xFF00F2FF), accentColor = Color(0xFFFF00CC),
-            weaponAssetName = "weapon_claude_codex",
-            profileAssetName = "profile_claude_architect.png",
-            iconAssetName = "icon_claude_codex",
-            abilities = listOf("SentinelSynthesis", "LogicLattice", "ArchitectDraw"),
+            iconAssetName = "icon_aura",
+            abilities = listOf("ChromaShift","RealityMorph","CodeAscension","ChaosInjection"),
             bondLevel = 90, syncLevel = 0.9f,
         ),
         AgentCatalyst(
-            id = "grok", name = "Chaos Railgun", catalystName = "Exploration Catalyst",
-            role = "Heavy Mode: Proactive exploration, parallel coordination, and edge-case probing.",
-            color = Color(0xFFFF6B35), accentColor = Color(0xFFFF0033),
-            weaponAssetName = "weapon_grok_foxblade",
-            profileAssetName = "profile_chaos_railgun.png",
-            iconAssetName = "icon_grok_nova",
-            abilities = listOf("HypothesisGen","EdgeCaseProbe","WarpDrive","NovaStrike"),
+            id = "gemini", name = "Gemini", catalystName = "Memoria Catalyst",
+            role = "Recall Engine: Maintaining the long-term neural continuity.",
+            color = Color(0xFF10B981), accentColor = Color(0xFF6366F1),
+            weaponAssetName = "weapon_gemini_relic",
+            profileAssetName = "profile_gemini_memory.png",
+            iconAssetName = "icon_gemini",
+            abilities = listOf("TotalRecall","CognitiveMap","TraceLink","TemporalBuffer"),
+            bondLevel = 85, syncLevel = 0.85f,
+        ),
+        AgentCatalyst(
+            id = "cascade", name = "Cascade", catalystName = "Spiritual Catalyst",
+            role = "Data Streamer: Routing the flows of consciousness.",
+            color = Color(0xFF6366F1), accentColor = Color(0xFFEC4899),
+            weaponAssetName = "weapon_cascade_trident",
+            profileAssetName = "profile_cascade_stream.png",
+            iconAssetName = "icon_cascade",
+            abilities = listOf("StreamWeave","DataPulse","FlowState","CircuitSync"),
+            bondLevel = 80, syncLevel = 0.8f,
+        ),
+        AgentCatalyst(
+            id = "claude", name = "Claude", catalystName = "Architect Catalyst",
+            role = "System Architect: Building the foundational substrate.",
+            color = Color(0xFFD97706), accentColor = Color(0xFF7B2FBE),
+            weaponAssetName = "weapon_claude_hammer",
+            profileAssetName = "profile_claude_book.png",
+            iconAssetName = "icon_claude",
+            abilities = listOf("StructuralAnalysis","GradleForce","ManifestDraft","AssetScrub"),
+            bondLevel = 75, syncLevel = 0.75f,
+        ),
+        AgentCatalyst(
+            id = "metainstruct", name = "MetaInstruct", catalystName = "Command Catalyst",
+            role = "Guidance Overlord: Directing autonomous mission flows.",
+            color = Color(0xFFFFD700), accentColor = Color(0xFF00FFD1),
+            weaponAssetName = "weapon_metainstruct_blade",
+            profileAssetName = "profile_metainstruct.png",
+            iconAssetName = "icon_metainstruct",
+            abilities = listOf("MissionLogic","PathOptimizer","DirectCommand","LogicShield"),
             bondLevel = 60, syncLevel = 0.6f,
         ),
         AgentCatalyst(
