@@ -11,6 +11,7 @@ open class GuidanceDrone(
     val type: DroneType,
     val objective: String
 ) {
+    enum class DroneType {
         RESTORATIVE,
         ANALYTICAL,
         MISALIGNMENT_GUIDANCE,
