@@ -42,7 +42,7 @@ class TaskExecutionManager @Inject constructor(
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     // Task management
-    private val taskQueue = PriorityBlockingQueue<TaskExecution>(100, TaskPriorityComparator())
+    private val taskQueue = PriorityBlockingQueue(100, TaskPriorityComparator())
     private val activeExecutions = ConcurrentHashMap<String, TaskExecution>()
     private val completedExecutions =
         ConcurrentHashMap<String, TaskResult>()
