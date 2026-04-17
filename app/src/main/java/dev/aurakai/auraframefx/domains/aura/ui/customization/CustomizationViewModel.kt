@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
 import dev.aurakai.auraframefx.domains.aura.services.iconify.IconifyService
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
@@ -35,6 +36,7 @@ open class CustomizationViewModel @Inject constructor(
     application: Application,
     private val gyroscopeManager: GyroscopeManager,
     val iconifyService: IconifyService,
+    val iconifyApiClient: IconifyApiClient,
     private val voiceCommandManager: VoiceCommandManager,
     private val voiceCommandProcessor: VoiceCommandProcessor,
     private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus

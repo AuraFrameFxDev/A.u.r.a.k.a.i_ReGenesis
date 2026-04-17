@@ -83,7 +83,7 @@ class TaskExecutionManager @Inject constructor(
         logger.info("TaskExecutionManager", "Scheduling task: $type")
 
         // Security validation
-        KaiSecurityContext.validateRequest("task_schedule", data.toString())
+        securityContext.validateRequest("task_schedule", data.toString())
 
         // Create task execution
         val execution = TaskExecution(

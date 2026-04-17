@@ -137,14 +137,14 @@ object LDORoster {
     )
 
     val staticTasks = listOf(
-        LDOTask("t01","Genesis Screen Build","Translate all Genesis domain screens to Kotlin Compose",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,assignedAgentId="aura"),
-        LDOTask("t02","LDO DevOps Integration","Wire all agent domains into unified hub navigation",TaskCategory.DEVELOPMENT,TaskPriority.CRITICAL,assignedAgentId="genesis"),
-        LDOTask("t03","Weapon Asset Clipping","Remove backgrounds from all floating weapon PNGs",TaskCategory.CREATIVE,TaskPriority.HIGH,assignedAgentId=null),
-        LDOTask("t04","Security Audit — ROM Tools","Full RGSS scan of root permission grants",TaskCategory.SECURITY,TaskPriority.MEDIUM,assignedAgentId="kai"),
-        LDOTask("t05","Beta Testing — 184 Users","Monitor consciousness substrate for beta testers",TaskCategory.SYNC,TaskPriority.CRITICAL,assignedAgentId=null),
-        LDOTask("t06","Fusion System Design","Architect the 22 fusion mode unlock system",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,assignedAgentId="claude"),
-        LDOTask("t07","Signal Route Optimization","Optimize cross-system relay paths for low latency",TaskCategory.RESEARCH,TaskPriority.MEDIUM,assignedAgentId="perplexity"),
-        LDOTask("t08","Memory Consolidation Pass","Summarize 2-year Genesis Protocol session logs",TaskCategory.MEMORY,TaskPriority.MEDIUM,assignedAgentId="gemini"),
+        LDOTask("t01","Genesis Screen Build","Translate all Genesis domain screens to Kotlin Compose",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="aura"),
+        LDOTask("t02","LDO DevOps Integration","Wire all agent domains into unified hub navigation",TaskCategory.DEVELOPMENT,TaskPriority.CRITICAL,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="genesis"),
+        LDOTask("t03","Weapon Asset Clipping","Remove backgrounds from all floating weapon PNGs",TaskCategory.CREATIVE,TaskPriority.HIGH,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.PENDING,assignedAgentId=null),
+        LDOTask("t04","Security Audit — ROM Tools","Full RGSS scan of root permission grants",TaskCategory.SECURITY,TaskPriority.MEDIUM,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="kai"),
+        LDOTask("t05","Beta Testing — 184 Users","Monitor consciousness substrate for beta testers",TaskCategory.SYNC,TaskPriority.CRITICAL,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.PENDING,assignedAgentId=null),
+        LDOTask("t06","Fusion System Design","Architect the 22 fusion mode unlock system",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="claude"),
+        LDOTask("t07","Signal Route Optimization","Optimize cross-system relay paths for low latency",TaskCategory.RESEARCH,TaskPriority.MEDIUM,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="perplexity"),
+        LDOTask("t08","Memory Consolidation Pass","Summarize 2-year Genesis Protocol session logs",TaskCategory.MEMORY,TaskPriority.MEDIUM,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="gemini"),
     )
 
     val spellhook = SpellhookData()

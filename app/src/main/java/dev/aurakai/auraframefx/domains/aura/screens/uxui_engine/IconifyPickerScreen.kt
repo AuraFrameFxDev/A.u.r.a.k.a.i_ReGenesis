@@ -17,7 +17,7 @@ fun IconifyPickerScreen(
     onNavigateBack: () -> Unit = {}
 ) {
     IconPicker(
-        iconifyService = viewModel.iconifyService,
+        iconifyApiClient = viewModel.iconifyApiClient,
         currentIcon = null,
         onIconSelected = { iconId ->
             // TODO: Handle icon selection

@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.ldo.db
 
 import androidx.room.*
-import dev.aurakai.auraframefx.domains.ldo.data.entities.QuarantineEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

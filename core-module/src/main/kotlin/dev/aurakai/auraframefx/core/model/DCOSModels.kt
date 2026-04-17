@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 enum class TaskPriority { LOW, MEDIUM, HIGH, CRITICAL }
 
 @Serializable
+enum class LDOTaskStatus { PENDING, IN_PROGRESS, COMPLETED, FAILED, BLOCKED }
+
+@Serializable
 enum class TaskCategory { DEVELOPMENT, SECURITY, CREATIVE, RESEARCH, MEMORY, SYNC, EXPLORATION, TEMPORAL, EFFICIENCY }
 
 @Serializable
@@ -15,6 +18,7 @@ data class LDOTask(
     val description: String,
     val category: TaskCategory,
     val priority: TaskPriority,
+    val status: LDOTaskStatus = LDOTaskStatus.PENDING,
     val assignedAgentId: String? = null,
     val isComplete: Boolean = false,
     val isFlashing: Boolean = false,

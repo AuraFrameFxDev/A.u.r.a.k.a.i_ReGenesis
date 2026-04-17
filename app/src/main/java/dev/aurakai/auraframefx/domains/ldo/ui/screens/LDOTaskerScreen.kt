@@ -28,6 +28,7 @@ import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalystStatus
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 import dev.aurakai.auraframefx.core.model.LDOTask
+import dev.aurakai.auraframefx.core.model.LDOTaskStatus
 import dev.aurakai.auraframefx.core.model.TaskCategory
 import dev.aurakai.auraframefx.core.model.TaskPriority
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -179,7 +180,10 @@ fun LDOTaskerScreen(
                                             departureDialog = Pair(existingAgentObj, tasks[idx])
                                         }
                                     } else {
-                                        tasks[idx] = tasks[idx].copy(assignedAgentId = agentId)
+                                        tasks[idx] = tasks[idx].copy(
+                                            assignedAgentId = agentId,
+                                            status = LDOTaskStatus.IN_PROGRESS
+                                        )
                                     }
                                 }
                             },
@@ -193,13 +197,22 @@ fun LDOTaskerScreen(
                                             departureDialog = Pair(agentObj, tasks[idx])
                                         }
                                     } else {
-                                        tasks[idx] = tasks[idx].copy(assignedAgentId = null)
+                                        tasks[idx] = tasks[idx].copy(
+                                            assignedAgentId = null,
+                                            status = LDOTaskStatus.PENDING
+                                        )
                                     }
                                 }
                             },
                             onToggleComplete = {
                                 val idx = tasks.indexOfFirst { it.id == task.id }
-                                if (idx != -1) tasks[idx] = tasks[idx].copy(isComplete = !tasks[idx].isComplete)
+                                if (idx != -1) {
+                                    val newComplete = !tasks[idx].isComplete
+                                    tasks[idx] = tasks[idx].copy(
+                                        isComplete = newComplete,
+                                        status = if (newComplete) LDOTaskStatus.COMPLETED else LDOTaskStatus.IN_PROGRESS
+                                    )
+                                }
                             }
                         )
                     }
@@ -292,6 +305,8 @@ private fun TaskNode(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text(task.priority.name, fontSize = 7.sp, color = priorityColor, fontWeight = FontWeight.Bold)
+                    Text("//", fontSize = 7.sp, color = Color.White.copy(alpha = 0.3f))
+                    Text(task.status.name, fontSize = 7.sp, color = statusColor(task.status))
                     Text("//", fontSize = 7.sp, color = Color.White.copy(alpha = 0.3f))
                     Text(task.category.name, fontSize = 7.sp, color = TaskCyan.copy(alpha = 0.6f))
                     if (task.isComplete) {
@@ -403,6 +418,14 @@ private fun AgentDepartureDialog(
             }
         }
     }
+}
+
+private fun statusColor(s: dev.aurakai.auraframefx.core.model.LDOTaskStatus) = when (s) {
+    LDOTaskStatus.PENDING     -> Color(0xFFFFD700)
+    LDOTaskStatus.IN_PROGRESS -> Color(0xFF00E5FF)
+    LDOTaskStatus.COMPLETED   -> Color(0xFF00FF85)
+    LDOTaskStatus.FAILED      -> Color(0xFFFF4444)
+    LDOTaskStatus.BLOCKED     -> Color(0xFFFF6B6B)
 }
 
 private fun priorityColor(p: dev.aurakai.auraframefx.core.model.TaskPriority) = when (p) {

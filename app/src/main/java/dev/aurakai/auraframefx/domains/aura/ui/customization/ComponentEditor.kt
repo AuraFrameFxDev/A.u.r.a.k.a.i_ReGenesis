@@ -30,8 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconPicker
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPicker
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkCyan
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkPink
 
@@ -97,7 +97,7 @@ fun ComponentEditor(
     component: UIComponent,
     onUpdate: (UIComponent) -> Unit,
     onClose: () -> Unit = {},
-    iconifyService: IconifyService? = null,
+    iconifyApiClient: IconifyApiClient? = null,
     modifier: Modifier = Modifier
 ) {
     var editingComponent by remember { mutableStateOf(component) }
@@ -230,10 +230,10 @@ fun ComponentEditor(
         }
     }
 
-    if (showIconPicker && iconifyService != null) {
+    if (showIconPicker && iconifyApiClient != null) {
         Dialog(onDismissRequest = { showIconPicker = false }) {
             Surface(modifier = Modifier.fillMaxWidth(0.95f).fillMaxHeight(0.9f), shape = RoundedCornerShape(16.dp), color = Color(0xFF1A1A1A)) {
-                IconPicker(iconifyService = iconifyService, currentIcon = editingComponent.iconId, onIconSelected = { iconId -> editingComponent = editingComponent.copy(iconId = iconId); onUpdate(editingComponent); showIconPicker = false }, onDismiss = { showIconPicker = false })
+                IconPicker(iconifyApiClient = iconifyApiClient, currentIcon = editingComponent.iconId, onIconSelected = { iconId -> editingComponent = editingComponent.copy(iconId = iconId); onUpdate(editingComponent); showIconPicker = false }, onDismiss = { showIconPicker = false })
             }
         }
     }

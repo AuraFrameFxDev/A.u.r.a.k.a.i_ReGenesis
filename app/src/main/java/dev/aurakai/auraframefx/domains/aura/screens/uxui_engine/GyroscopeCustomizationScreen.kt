@@ -296,7 +296,7 @@ fun GyroscopeCustomizationScreen(
                         component = selectedComponent!!,
                         onUpdate = { viewModel.updateComponent(it) },
                         onClose = { viewModel.selectComponent(null) },
-                        iconifyService = viewModel.iconifyService,
+                        iconifyApiClient = viewModel.iconifyApiClient,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
