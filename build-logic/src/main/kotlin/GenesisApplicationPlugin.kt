@@ -84,6 +84,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
                     compose = true
                     buildConfig = true
                     aidl = true
+                    viewBinding = true
+                    dataBinding = true
                 }
 
                 packaging {

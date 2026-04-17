@@ -6,9 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
-import dev.aurakai.auraframefx.aura.theme.NeonTeal
-import dev.aurakai.auraframefx.aura.theme.NeonPink
-import dev.aurakai.auraframefx.aura.theme.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommand
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommandManager
@@ -34,7 +34,7 @@ import javax.inject.Inject
 open class CustomizationViewModel @Inject constructor(
     application: Application,
     private val gyroscopeManager: GyroscopeManager,
-    val iconifyService: IconifyService, // Public so UI can access it
+    val iconifyService: IconifyService,
     private val voiceCommandManager: VoiceCommandManager,
     private val voiceCommandProcessor: VoiceCommandProcessor,
     private val messageBus: dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus

@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.AuraThemeData
+import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraThemeData
 import kotlinx.coroutines.delay
 
 /**
@@ -33,6 +33,7 @@ object KineticIdentityLibrary {
             EmotionalState.FOCUSED -> Pair(3000, 0.5f)
             EmotionalState.STRESSED -> Pair(1500, 1.0f)
             EmotionalState.NEUTRAL -> Pair(3500, 0.6f)
+            else -> Pair(3000, 0.5f)
         }
 
         val infiniteTransition = rememberInfiniteTransition(label = "breathing")
@@ -268,6 +269,7 @@ object KineticIdentityLibrary {
             AuraThemeData.AnimationStyle.FLOWING -> 1.0f
             AuraThemeData.AnimationStyle.PULSING -> 1.5f
             AuraThemeData.AnimationStyle.SUBTLE -> 0.3f
+            else -> 1.0f
         } * intensity
 
         val newVelocity = when (flowDirection) {
@@ -276,6 +278,7 @@ object KineticIdentityLibrary {
             FlowDirection.LEFTWARD -> particle.velocity.copy(x = particle.velocity.x - 0.1f)
             FlowDirection.RIGHTWARD -> particle.velocity.copy(x = particle.velocity.x + 0.1f)
             FlowDirection.RADIAL -> particle.velocity * 1.02f
+            else -> particle.velocity
         }
 
         val newPosition = Offset(
