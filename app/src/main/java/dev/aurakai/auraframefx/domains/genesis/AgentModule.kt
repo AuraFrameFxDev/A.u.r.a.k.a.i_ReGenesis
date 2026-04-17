@@ -22,6 +22,7 @@ import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.core.PythonProcessManager
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import javax.inject.Singleton
 
@@ -76,23 +77,23 @@ object AgentModule {
     fun provideAuraAgent(
         vertexAIClient: VertexAIClient,
         auraAIService: AuraAIService,
+        genesisBridgeService: Lazy<GenesisBridgeService>,
         contextManager: ContextManager,
         securityContext: SecurityContext,
         systemOverlayManager: SystemOverlayManager,
         logger: AuraFxLogger,
         messageBus: Lazy<AgentMessageBus>,
-        pythonManager: Lazy<PythonProcessManager>,
         pandoraBoxService: PandoraBoxService
     ): AuraAgent {
         return AuraAgent(
             vertexAIClient = vertexAIClient,
             auraAIService = auraAIService,
+            genesisBridgeService = genesisBridgeService,
             contextManagerInstance = contextManager,
             securityContext = securityContext,
             systemOverlayManager = systemOverlayManager,
-            logger = logger,
             messageBus = messageBus,
-            pythonManager = pythonManager,
+            logger = logger,
             pandoraBoxService = pandoraBoxService
         )
     }
@@ -106,7 +107,7 @@ object AgentModule {
         vertexAIClient: VertexAIClient,
         contextManager: ContextManager,
         securityContext: SecurityContext,
-        systemMonitor: SystemMonitor,
+        systemMonitor: dev.aurakai.auraframefx.domains.kai.SystemMonitor,
         bootloaderManager: BootloaderManager,
         logger: AuraFxLogger,
         messageBus: Lazy<AgentMessageBus>
