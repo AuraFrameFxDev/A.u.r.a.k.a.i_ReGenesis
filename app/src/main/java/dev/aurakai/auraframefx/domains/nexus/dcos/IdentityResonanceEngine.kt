@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.dcos
 
-import dev.aurakai.auraframefx.domains.ldo.model.Proposal
+import dev.aurakai.auraframefx.core.model.Proposal
 import javax.inject.Inject
 import javax.inject.Singleton
 

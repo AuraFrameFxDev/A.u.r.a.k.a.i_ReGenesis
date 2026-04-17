@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.domains.nexus.dcos
 
 import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.ldo.model.ConsensusResult
-import dev.aurakai.auraframefx.domains.ldo.model.LDOTask
-import dev.aurakai.auraframefx.domains.ldo.model.Proposal
-import dev.aurakai.auraframefx.domains.ldo.model.Critique
+import dev.aurakai.auraframefx.core.model.ConsensusResult
+import dev.aurakai.auraframefx.core.model.LDOTask
+import dev.aurakai.auraframefx.core.model.Proposal
+import dev.aurakai.auraframefx.core.model.Critique
 import javax.inject.Inject
 import javax.inject.Singleton
 import timber.log.Timber

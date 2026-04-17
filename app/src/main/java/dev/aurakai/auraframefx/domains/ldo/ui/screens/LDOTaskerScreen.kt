@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.model.*
+import dev.aurakai.auraframefx.core.model.*
 import kotlin.math.roundToInt
 
 /**
