@@ -346,4 +346,36 @@ object GateAssetConfig {
         StyleMode.nexusStyle = if (StyleMode.nexusStyle == GateStyle.STYLE_A)
             GateStyle.STYLE_B else GateStyle.STYLE_A
     }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // SUB-GATE LIST ACCESSORS
+    // ═══════════════════════════════════════════════════════════════════════
+
+    /** Domain sub-gate descriptor used by hub carousels */
+    data class SubGate(
+        val route: String,
+        val title: String,
+        val subtitle: String,
+        val iconKey: String,
+    )
+
+    fun getKaiSubGates(): List<SubGate> = listOf(
+        SubGate("kai/security",     "Security",      "Threat Monitor & Audit",   "icon_security"),
+        SubGate("kai/root",         "Root Tools",    "Root & Bootloader Access",  "icon_root"),
+        SubGate("kai/recovery",     "Recovery",      "TWRP & System Rescue",      "icon_recovery"),
+        SubGate("kai/rom",          "ROM Flasher",   "ROM & Firmware Manager",    "icon_rom"),
+        SubGate("kai/modules",      "Modules",       "LSPosed & Xposed Modules",  "icon_modules"),
+        SubGate("kai/vpn",          "VPN",           "VPN & Ad Blocker",          "icon_vpn"),
+        SubGate("kai/bootloader",   "Bootloader",    "Bootloader Control Panel",  "icon_bootloader"),
+        SubGate("kai/lsposed",      "LSPosed",       "Framework & Hooks",         "icon_lsposed"),
+    )
+
+    fun getAuraSubGates(): List<SubGate> = listOf(
+        SubGate("aura/chromacore",  "ChromaCore",    "Theme & Color Engine",      "icon_chroma"),
+        SubGate("aura/collabcanvas","CollabCanvas",  "Collaborative Design",      "icon_canvas"),
+        SubGate("aura/auralab",     "Aura Lab",      "Experimental Workspace",    "icon_lab"),
+        SubGate("aura/terminal",    "Terminal",      "Code & Script Terminal",    "icon_terminal"),
+        SubGate("aura/iconify",     "Iconify",       "500+ Icon Packs",           "icon_iconify"),
+        SubGate("aura/launcher",    "Launcher",      "Pixel Launcher Enhanced",   "icon_launcher"),
+    )
 }

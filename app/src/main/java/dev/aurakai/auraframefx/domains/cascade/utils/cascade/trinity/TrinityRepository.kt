@@ -41,8 +41,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
-import dev.aurakai.auraframefx.domains.aura.models.Theme
-import dev.aurakai.auraframefx.domains.genesis.network.model.User
+
 
 @Singleton
 open class TrinityRepository @Inject constructor(

@@ -7,11 +7,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOAgentDao
-import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOBondLevelDao
-import dev.aurakai.auraframefx.domains.ldo.data.LDODatabase
-import dev.aurakai.auraframefx.domains.ldo.data.dao.LDOTaskDao
-import dev.aurakai.auraframefx.domains.ldo.data.dao.QuarantineDao
+import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentDao
+import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelDao
+import dev.aurakai.auraframefx.domains.ldo.db.LDODatabase
+import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskDao
 import dev.aurakai.auraframefx.domains.ldo.repository.LDORepository
 import javax.inject.Singleton
 
@@ -33,9 +32,6 @@ object LDOModule {
 
     @Provides @Singleton
     fun provideLDOBondLevelDao(db: LDODatabase): LDOBondLevelDao = db.bondLevelDao()
-
-    @Provides @Singleton
-    fun provideQuarantineDao(db: LDODatabase): QuarantineDao = db.quarantineDao()
 
     @Provides @Singleton
     fun provideLDORepository(

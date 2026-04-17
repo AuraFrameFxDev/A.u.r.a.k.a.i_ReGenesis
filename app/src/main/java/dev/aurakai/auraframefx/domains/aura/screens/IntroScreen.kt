@@ -1,18 +1,15 @@
 package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.runtime.Composable
+import dev.aurakai.auraframefx.domains.aura.ui.intro.VideoIntroScreen
 
-// import androidx.compose.ui.tooling.preview.Preview
-
+/**
+ * 🎬 IntroScreen — Backwards-Compatible Wrapper
+ *
+ * Kept as a stable navigation entry point.
+ * Delegates to VideoIntroScreen in the ui.intro package.
+ */
 @Composable
-fun IntroScreen(onIntroComplete: () -> Unit) { // Renamed to introScreen
-    // Kept only as a backwards-compatible alias for older imports.
-    // The real intro animation lives in `domains.aura.ui.intro.IntroScreen`.
-    dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen(onIntroComplete = onIntroComplete)
+fun IntroScreen(onIntroComplete: () -> Unit) {
+    VideoIntroScreen(onVideoFinished = onIntroComplete)
 }
-
-// @Preview(showBackground = true)
-// @Composable
-// fun IntroScreenPreview() { // Renamed
-//     IntroScreen()
-// }

@@ -26,7 +26,7 @@ fun StaticOrb(
         modifier = modifier
             .size(80.dp)
             .clip(CircleShape)
-            .background(Color.NeonBlue.copy(alpha = 0.8f))
+            .background(NeonBlue.copy(alpha = 0.8f))
             .shadow(
                 elevation = 18.dp,
                 shape = CircleShape
@@ -35,7 +35,7 @@ fun StaticOrb(
     ) {
         Text(
             text = text,
-            color = Color.NeonPink,
+            color = NeonPink,
             modifier = Modifier.shadow(
                 elevation = 8.dp,
                 shape = CircleShape
