@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.ui.effects.* // Fixes kinetic_animation
-import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraTheme as OverlayTheme // Fixes model drift
+import dev.aurakai.auraframefx.domains.aura.ui.effects.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraTheme as OverlayTheme
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 import timber.log.Timber
@@ -33,14 +33,14 @@ class RootOverlayManager @Inject constructor() : SystemOverlayManager {
     }
 
     override fun applyTransition(transition: OverlayTransition) {
-        Timber.d("Applying system transition: ${transition.name}")
+        Timber.d("Applying system transition: ${transition.type}")
     }
 
     override fun applyShape(shape: OverlayShape) {
-        Timber.d("Applying system shape: ${shape.name}")
+        Timber.d("Applying system shape: ${shape.id}")
         // Typically targets config_buttonCornerRadius etc.
         val command =
-            "cmd overlay fabricate --target android --name aura_shape --res dimen/config_buttonCornerRadius --type 0x05 --value ${shape.ordinal} && cmd overlay enable com.android.shell:aura_shape"
+            "cmd overlay fabricate --target android --name aura_shape --res dimen/config_buttonCornerRadius --type 0x05 --value ${shape.cornerRadius.toInt()} && cmd overlay enable com.android.shell:aura_shape"
         runShellCommand(command)
     }
 

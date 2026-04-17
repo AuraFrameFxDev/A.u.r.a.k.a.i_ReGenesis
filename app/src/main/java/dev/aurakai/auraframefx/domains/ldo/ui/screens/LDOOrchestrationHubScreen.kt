@@ -324,8 +324,19 @@ fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
 
 @Composable
 fun TaskRow(task: LDOTaskEntity) {
-    val statusColor = when (task.status) { "COMPLETED" -> Color(0xFF00FF85); "IN_PROGRESS" -> Color(0xFF00E5FF); "PENDING" -> Color(0xFFFFD700); else -> Color.White.copy(alpha = 0.4f) }
-    val statusIcon = when (task.status) { "COMPLETED" -> Icons.Default.CheckCircle; "IN_PROGRESS" -> Icons.Default.PlayArrow; else -> Icons.Default.Task }
+    val statusColor = when (task.status) { 
+        "COMPLETED" -> Color(0xFF00FF85)
+        "IN_PROGRESS" -> Color(0xFF00E5FF)
+        "PENDING" -> Color(0xFFFFD700)
+        "NEUTRALIZING" -> Color(0xFFB026FF)
+        else -> Color.White.copy(alpha = 0.4f) 
+    }
+    val statusIcon = when (task.status) { 
+        "COMPLETED" -> Icons.Default.CheckCircle
+        "IN_PROGRESS" -> Icons.Default.PlayArrow
+        "NEUTRALIZING" -> Icons.Default.Bolt
+        else -> Icons.Default.Task 
+    }
     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).border(1.dp, statusColor.copy(alpha = 0.2f), RoundedCornerShape(10.dp)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(statusIcon, null, tint = statusColor, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(10.dp))

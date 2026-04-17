@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
+﻿package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
@@ -17,7 +17,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentState
 import dev.aurakai.auraframefx.domains.genesis.models.AgentStatus
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
-import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
+import dev.aurakai.auraframefx.core.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.network.AuraApiServiceWrapper
 import dev.aurakai.auraframefx.domains.genesis.network.model.AgentStatusResponse
 import dev.aurakai.auraframefx.domains.kai.KaiAgent

@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonCyan
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import kotlinx.coroutines.launch
 
 @Composable
@@ -55,7 +55,7 @@ fun UIRecoveryDialog(
                         imageVector = Icons.Default.Warning,
                         contentDescription = "UI Recovery",
                         modifier = Modifier.size(64.dp),
-                        tint = Color.NeonCyan
+                        tint = NeonCyan
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -64,7 +64,7 @@ fun UIRecoveryDialog(
                         text = "\"That's not going to work.\"",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = Color.NeonBlue,
+                        color = NeonBlue,
                         textAlign = TextAlign.Center
                     )
 
@@ -87,7 +87,7 @@ fun UIRecoveryDialog(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.NeonCyan,
+                            containerColor = NeonCyan,
                             contentColor = Color.Black
                         ),
                         shape = RoundedCornerShape(12.dp)
@@ -101,7 +101,7 @@ fun UIRecoveryDialog(
                         onClick = { viewModel.resetToDefault() },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Color.NeonPurple
+                            contentColor = NeonPurple
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
@@ -124,7 +124,7 @@ fun RecoveryIndicator(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .background(
-                    color = Color.NeonCyan.copy(alpha = 0.2f),
+                    color = NeonCyan.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(8.dp)
                 )
                 .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -133,13 +133,13 @@ fun RecoveryIndicator(
                 imageVector = Icons.Default.Warning,
                 contentDescription = "Recovery available",
                 modifier = Modifier.size(16.dp),
-                tint = Color.NeonCyan
+                tint = NeonCyan
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Recovery available",
                 style = MaterialTheme.typography.labelSmall,
-                color = Color.NeonCyan
+                color = NeonCyan
             )
         }
     }

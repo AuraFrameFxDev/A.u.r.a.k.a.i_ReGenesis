@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis
+﻿package dev.aurakai.auraframefx.domains.genesis
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.NeuralWhisper
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityRepository
-import dev.aurakai.auraframefx.domains.cascade.models.ChatMessage
+import dev.aurakai.auraframefx.core.models.ChatMessage
 import collabcanvas.CanvasWebSocketService
 import collabcanvas.ParticipantStatus
 import collabcanvas.CanvasWebSocketEvent

@@ -32,10 +32,10 @@ object IconifyModule {
 
     @Provides
     @Singleton
-    fun provideIconifyService(
+    fun provideIconifyApiClient(
         @Named("BasicOkHttpClient") okHttpClient: OkHttpClient,
         iconCacheManager: IconCacheManager
-    ): IconifyService {
-        return IconifyService(okHttpClient, iconCacheManager)
+    ): IconifyApiClient {
+        return IconifyApiClient(okHttpClient, iconCacheManager)
     }
 }

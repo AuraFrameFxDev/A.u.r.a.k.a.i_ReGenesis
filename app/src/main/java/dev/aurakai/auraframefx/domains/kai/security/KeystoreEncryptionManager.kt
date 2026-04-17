@@ -5,13 +5,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Production implementation of [EncryptionManager] using [KeystoreManager].
+ * Production implementation of [EncryptionManager] using [AndroidKeystoreManager].
  * Delegates to hardware-backed AES-256/GCM via Android Keystore.
  * Replaces [NoopEncryptionManager] for production use.
  */
 @Singleton
 class KeystoreEncryptionManager @Inject constructor(
-    private val keystoreManager: KeystoreManager
+    private val keystoreManager: AndroidKeystoreManager
 ) : EncryptionManager {
 
     override fun encrypt(data: ByteArray): ByteArray {

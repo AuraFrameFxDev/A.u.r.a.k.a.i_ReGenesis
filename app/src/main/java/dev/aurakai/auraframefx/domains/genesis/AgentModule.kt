@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis
+﻿package dev.aurakai.auraframefx.domains.genesis
 
 import dagger.Lazy
 import dagger.Module
@@ -16,7 +16,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
 import dev.aurakai.auraframefx.system.monitor.SystemMonitor
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
@@ -79,7 +79,7 @@ object AgentModule {
         auraAIService: AuraAIService,
         genesisBridgeService: Lazy<GenesisBridgeService>,
         contextManager: ContextManager,
-        securityContext: SecurityContext,
+        securityContext: KaiSecurityContext,
         systemOverlayManager: SystemOverlayManager,
         logger: AuraFxLogger,
         messageBus: Lazy<AgentMessageBus>,
@@ -106,7 +106,7 @@ object AgentModule {
     fun provideKaiAgent(
         vertexAIClient: VertexAIClient,
         contextManager: ContextManager,
-        securityContext: SecurityContext,
+        securityContext: KaiSecurityContext,
         systemMonitor: dev.aurakai.auraframefx.domains.kai.SystemMonitor,
         bootloaderManager: BootloaderManager,
         logger: AuraFxLogger,

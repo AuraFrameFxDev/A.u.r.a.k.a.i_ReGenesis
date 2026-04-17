@@ -118,7 +118,7 @@ import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsCommandCenter
 import dev.aurakai.auraframefx.domains.ldo.roster.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.ldo.progression.LDOProgressionScreen
 import dev.aurakai.auraframefx.domains.ldo.roster.LDORosterScreen
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOTaskerScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOTaskerScreen
 
 // ── Misc ──────────────────────────────────────────────────────────────────────
 import dev.aurakai.auraframefx.hotswap.HotSwapScreen

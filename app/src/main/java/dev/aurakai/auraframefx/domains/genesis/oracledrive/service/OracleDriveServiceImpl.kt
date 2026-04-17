@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
+﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
@@ -18,7 +18,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.FileManagementCapabilities
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,7 +38,7 @@ class OracleDriveServiceImpl @Inject constructor(
     private val genesisAgent: GenesisAgent,
     private val auraAgent: AuraAgent,
     private val kaiAgent: KaiAgent,
-    private val securityContext: SecurityContext,
+    private val securityContext: KaiSecurityContext,
     private val oracleDriveApi: OracleDriveApi,
     private val hereticBridge: dev.aurakai.auraframefx.domains.genesis.core.HereticBridge,
 ) : OracleDriveService, OrchestratableAgent {

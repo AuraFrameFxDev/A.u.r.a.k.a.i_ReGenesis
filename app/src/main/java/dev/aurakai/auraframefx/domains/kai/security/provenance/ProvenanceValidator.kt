@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai.security.provenance
 
-import dev.aurakai.auraframefx.domains.kai.security.KeystoreManager
+import dev.aurakai.auraframefx.domains.kai.security.AndroidKeystoreManager
 import timber.log.Timber
 import java.security.SecureRandom
 import javax.crypto.Mac
@@ -12,14 +12,14 @@ import javax.inject.Singleton
  *
  * Ensures every request to GenesisBridgeService carries a verifiable chain
  * of custody from origin to execution. Uses hardware-backed keys via
- * [KeystoreManager] for HMAC computation.
+ * [AndroidKeystoreManager] for HMAC computation.
  *
  * Chain depth is enforced between [MIN_CHAIN_DEPTH] and [MAX_CHAIN_DEPTH]
  * to prevent both trivially forged short chains and recursive loop attacks.
  */
 @Singleton
 class ProvenanceValidator @Inject constructor(
-    private val keystoreManager: KeystoreManager,
+    private val keystoreManager: AndroidKeystoreManager,
 ) {
     companion object {
         private const val TAG = "ProvenanceValidator"

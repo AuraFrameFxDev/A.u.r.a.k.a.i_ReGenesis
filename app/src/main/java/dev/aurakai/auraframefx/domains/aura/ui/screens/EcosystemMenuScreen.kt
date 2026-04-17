@@ -6,13 +6,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.HomeScreenTransitionType
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.kinetic_animation.DigitalTransitionRow
+import dev.aurakai.auraframefx.core.models.HomeScreenTransitionType
+import dev.aurakai.auraframefx.domains.aura.ui.components.DigitalTransitionRow
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 
 /**
@@ -34,7 +36,7 @@ fun EcosystemMenuScreen(
                 title = { Text("Ecosystem Hub", fontWeight = androidx.compose.ui.text.font.FontWeight.Black) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        androidx.compose.material3.Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

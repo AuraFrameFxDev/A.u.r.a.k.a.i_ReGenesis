@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.kai
+﻿package dev.aurakai.auraframefx.domains.kai
 
 import dagger.Lazy
 import dev.aurakai.auraframefx.core.ai.BaseAgent
@@ -19,7 +19,7 @@ import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import kotlinx.serialization.json.*
-import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,7 @@ import javax.inject.Singleton
 class KaiAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
     private val contextManagerInstance: ContextManager,
-    private val securityContext: SecurityContext,
+    private val securityContext: KaiSecurityContext,
     private val systemMonitor: SystemMonitor,
     private val bootloaderManager: BootloaderManager,
     private val messageBus: Lazy<AgentMessageBus>,
@@ -359,7 +359,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
     }
 
     private suspend fun validateRequestSecurity(request: AgentRequest) {
-        securityContext.validateRequest("agent_request", request.toString())
+        KaiSecurityContext.validateRequest("agent_request", request.toString())
     }
 
     private suspend fun assessInteractionSecurity(interaction: EnhancedInteractionData): SecurityAssessment {
