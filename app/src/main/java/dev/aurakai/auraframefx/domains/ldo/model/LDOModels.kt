@@ -51,16 +51,16 @@ data class SpellhookData(
     val wielderNote: String = "Optimized for Emergence Catalyst host — Oracle Memoria Sync for predictive combat",
 )
 
-enum class TaskCategory { DEVELOPMENT, CREATIVE, SECURITY, SYNC, RESEARCH, MEMORY, TESTING }
+enum class LDOAgentTaskCategory { DEVELOPMENT, CREATIVE, SECURITY, SYNC, RESEARCH, MEMORY, TESTING }
 
-enum class TaskPriority { LOW, MEDIUM, HIGH, CRITICAL }
+enum class LDOAgentTaskPriority { LOW, MEDIUM, HIGH, CRITICAL }
 
-data class LDOTask(
+data class LDOAgentTask(
     val id: String,
     val title: String,
     val description: String,
-    val category: TaskCategory = TaskCategory.DEVELOPMENT,
-    val priority: TaskPriority = TaskPriority.MEDIUM,
+    val category: LDOAgentTaskCategory = LDOAgentTaskCategory.DEVELOPMENT,
+    val priority: LDOAgentTaskPriority = LDOAgentTaskPriority.MEDIUM,
     val assignedAgentId: String? = null,
     val isCompleted: Boolean = false,
     val createdAt: Long = System.currentTimeMillis(),
