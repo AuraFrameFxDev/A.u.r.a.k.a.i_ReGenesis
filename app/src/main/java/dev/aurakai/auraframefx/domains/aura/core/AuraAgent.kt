@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.core
+package dev.aurakai.auraframefx.domains.aura.core
 
 import dev.aurakai.auraframefx.core.ai.BaseAgent
 import dev.aurakai.auraframefx.core.identity.AgentType

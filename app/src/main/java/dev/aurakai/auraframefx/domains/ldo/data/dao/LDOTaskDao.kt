@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LDOTaskDao {
-    @Query("SELECT * FROM ldo_tasks ORDER BY priority DESC, createdAtMs DESC")
+    @Query("SELECT * FROM ldo_tasks ORDER BY priority DESC, createdAt DESC")
     fun observeAll(): Flow<List<LDOTaskEntity>>
 
-    @Query("SELECT * FROM ldo_tasks WHERE assignedAgentId = :agentId")
-    fun observeForAgent(agentId: String): Flow<List<LDOTaskEntity>>
+    @Query("SELECT * FROM ldo_tasks WHERE agentId = :agentId")
+    fun observeByAgent(agentId: String): Flow<List<LDOTaskEntity>>
 
     @Query("SELECT * FROM ldo_tasks WHERE status = :status")
-    suspend fun getByStatus(status: String): List<LDOTaskEntity>
+    fun observeByStatus(status: String): Flow<List<LDOTaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(task: LDOTaskEntity): Long
@@ -21,8 +21,11 @@ interface LDOTaskDao {
     @Update
     suspend fun update(task: LDOTaskEntity)
 
-    @Query("UPDATE ldo_tasks SET status = :status, completedAtMs = :completedAt WHERE id = :id")
+    @Query("UPDATE ldo_tasks SET status = :status, completedAt = :completedAt WHERE id = :id")
     suspend fun updateStatus(id: Long, status: String, completedAt: Long? = null)
+
+    @Query("DELETE FROM ldo_tasks WHERE id = :id")
+    suspend fun delete(id: Long)
 
     @Delete
     suspend fun delete(task: LDOTaskEntity)

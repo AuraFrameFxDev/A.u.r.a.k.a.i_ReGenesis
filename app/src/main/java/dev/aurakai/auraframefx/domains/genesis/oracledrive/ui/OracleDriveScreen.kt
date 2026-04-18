@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
+package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -74,7 +74,7 @@ fun OracleDriveScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Neural Archive - Memory Lineage (Eves → Genesis)
+            // Neural Archive - Memory Lineage (Eves ? Genesis)
             OracleDriveMenuItem(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",

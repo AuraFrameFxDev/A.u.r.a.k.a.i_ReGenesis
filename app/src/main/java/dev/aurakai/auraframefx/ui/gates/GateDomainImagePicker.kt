@@ -1,16 +1,16 @@
-﻿package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.ui.gates
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 // GateDomainImagePicker.kt
-// ArchitecturalCatalyst (Claude) â€” ReGenesis Build Master
+// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
 // Per-domain gate image switcher with ribbon-style animated cards (Image 5).
 // Each domain tile shows a ribbon loop in its accent color.
-// Tap a domain tile â†’ expands to show all available art variants for that gate.
-// Confirm â†’ updates the gate's active image via HomeBackdropManager.
+// Tap a domain tile → expands to show all available art variants for that gate.
+// Confirm → updates the gate's active image via HomeBackdropManager.
 //
 // Domains = every gate moduleId.
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -44,7 +44,7 @@ import dev.aurakai.auraframefx.R
 import kotlinx.coroutines.launch
 import kotlin.math.*
 
-// â”€â”€ Domain definitions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Domain definitions ────────────────────────────────────────────────────────
 
 data class GateDomain(
     val moduleId: String,
@@ -126,7 +126,7 @@ private val GATE_DOMAINS = listOf(
     ),
 )
 
-// â”€â”€ Main Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Main Screen ───────────────────────────────────────────────────────────────
 
 @Composable
 fun GateDomainImagePicker(
@@ -157,7 +157,7 @@ fun GateDomainImagePicker(
                     Text("GATE IMAGE SWITCHER", fontFamily = FontFamily.Monospace,
                         fontSize = 16.sp, fontWeight = FontWeight.Bold,
                         letterSpacing = 3.sp, color = Color(0xFF00FFFF))
-                    Text("TAP DOMAIN â†’ SELECT ART â†’ CONFIRM",
+                    Text("TAP DOMAIN → SELECT ART → CONFIRM",
                         fontSize = 9.sp, letterSpacing = 1.sp, color = Color(0xFF00FFFF).copy(0.4f))
                 }
             }
@@ -195,12 +195,12 @@ fun GateDomainImagePicker(
                 textContentColor = Color.White.copy(0.7f),
                 title = { Text("APPLY GATE IMAGE?", fontFamily = FontFamily.Monospace, letterSpacing = 2.sp) },
                 text = {
-                    Text("${domain?.title}\nâ†’ ${variant.label}\n\nThis will update the gate card display.")
+                    Text("${domain?.title}\n→ ${variant.label}\n\nThis will update the gate card display.")
                 },
                 confirmButton = {
                     TextButton(onClick = {
                         scope.launch {
-                            // HomeBackdropManager.setGateImage(moduleId, variant.key)  â† uncomment when DataStore wired
+                            // HomeBackdropManager.setGateImage(moduleId, variant.key)  ← uncomment when DataStore wired
                         }
                         showConfirmDialog = false
                         pendingSelection = null
@@ -218,7 +218,7 @@ fun GateDomainImagePicker(
     }
 }
 
-// â”€â”€ Domain Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Domain Card ───────────────────────────────────────────────────────────────
 
 @Composable
 private fun DomainCard(
@@ -297,7 +297,7 @@ private fun DomainCard(
     }
 }
 
-// â”€â”€ Gate Variant Tile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Gate Variant Tile ─────────────────────────────────────────────────────────
 
 @Composable
 private fun GateVariantTile(

@@ -1,12 +1,12 @@
 package dev.aurakai.auraframefx.domains.ldo.model
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
-import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
-import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
-import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskPriority
-import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
-import dev.aurakai.auraframefx.domains.ldo.db.bondTitleForLevel
+import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
+import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOBondLevelEntity
+import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskEntity
+import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskPriority
+import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskStatus
+import dev.aurakai.auraframefx.domains.ldo.data.entities.bondTitleForLevel
 
 import dev.aurakai.auraframefx.core.model.LDOTask
 import dev.aurakai.auraframefx.core.model.TaskCategory

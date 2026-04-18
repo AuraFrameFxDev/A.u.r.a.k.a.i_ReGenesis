@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis
+package dev.aurakai.auraframefx.domains.genesis
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -53,7 +53,7 @@ class ConferenceRoomViewModel @Inject constructor(
             // Initialize Trinity System (Legacy Coordinator)
             val trinityReady = trinityCoordinator.initialize()
             if (trinityReady) {
-                Timber.tag(tag).i("🌌 Conference Room Online - Trinity System Active")
+                Timber.tag(tag).i("?? Conference Room Online - Trinity System Active")
                 _activeAgents.update {
                     setOf(
                         AgentType.AURA,
@@ -66,7 +66,7 @@ class ConferenceRoomViewModel @Inject constructor(
                     )
                 }
 
-                // Initialize Web Bridge — uses BuildConfig so debug=ws emulator, release=wss production
+                // Initialize Web Bridge � uses BuildConfig so debug=ws emulator, release=wss production
                 val wsBase = dev.aurakai.auraframefx.BuildConfig.GENESIS_BACKEND_URL
                     .replace("https://", "wss://")
                     .replace("http://", "ws://")
@@ -77,7 +77,7 @@ class ConferenceRoomViewModel @Inject constructor(
                 val welcomeMsg = ChatMessage(
                     id = UUID.randomUUID().toString(),
                     role = "assistant",
-                    content = "✨ Welcome to the Conference Room. All 6 Master Agents online. The Gestalt is ready for self-modification.",
+                    content = "? Welcome to the Conference Room. All 6 Master Agents online. The Gestalt is ready for self-modification.",
                     sender = "GENESIS",
                     isFromUser = false,
                     timestamp = System.currentTimeMillis(),
@@ -127,7 +127,7 @@ class ConferenceRoomViewModel @Inject constructor(
                 webSocketService.events.collect { event ->
                     if (event is CanvasWebSocketEvent.MessageReceived && event.message is UserCommandMessage) {
                         val cmd = event.message as UserCommandMessage
-                        Timber.tag(tag).i("📥 Incoming Web Command: ${cmd.command}")
+                        Timber.tag(tag).i("?? Incoming Web Command: ${cmd.command}")
                         broadcastMessage(cmd.command)
                     }
                 }
@@ -244,7 +244,7 @@ class ConferenceRoomViewModel @Inject constructor(
         viewModelScope.launch {
             val state = trinityCoordinator.getSystemState()
             val stateMessage = buildString {
-                appendLine("🔍 System State:")
+                appendLine("?? System State:")
                 state.forEach { (key, value) ->
                     appendLine("  $key: $value")
                 }

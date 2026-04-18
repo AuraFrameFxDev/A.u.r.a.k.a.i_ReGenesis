@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.screens
+package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
@@ -58,7 +58,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.ChessFontFamily
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.core.models.ChatMessage
@@ -75,7 +75,7 @@ private val DarkBackground = Color(0xFF050508)
 private val SurfaceGlass = Color(0xFF121216)
 
 /**
- * ðŸ§  NEXUS CONFERENCE ROOM
+ * 🧠 NEXUS CONFERENCE ROOM
  * Multi-Agent collaboration space with Gemini-style visuals.
  */
 @Composable

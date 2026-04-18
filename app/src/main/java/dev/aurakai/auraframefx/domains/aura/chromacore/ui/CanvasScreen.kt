@@ -1,9 +1,9 @@
-﻿package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import collabcanvas.ui.CanvasViewModel
 
 /**

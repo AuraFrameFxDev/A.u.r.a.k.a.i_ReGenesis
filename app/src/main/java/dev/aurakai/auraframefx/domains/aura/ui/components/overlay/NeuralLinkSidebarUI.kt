@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
+package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -66,7 +66,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
-// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Data ──────────────────────────────────────────────────────────────────
 
 private data class CommandItem(
     val abbrev: String,   // 3-4 char label always shown
@@ -85,26 +85,26 @@ private val COMMAND_ITEMS = listOf(
 )
 
 private data class Shortcut(
-    val key: String,      // e.g. "âŒ˜V"
+    val key: String,      // e.g. "⌘V"
     val label: String,
     val icon: ImageVector,
     val action: String
 )
 
 private val SHORTCUTS = listOf(
-    Shortcut("âŒ˜V", "Voice",    Icons.Default.Mic,              "VOICE"),
-    Shortcut("âŒ˜T", "Terminal", Icons.Default.Terminal,         "TERMINAL"),
-    Shortcut("âŒ˜B", "Build",    Icons.Default.Build,            "BUILD"),
-    Shortcut("âŒ˜C", "Code",     Icons.Default.Code,             "CODE"),
-    Shortcut("âŒ˜D", "Dash",     Icons.Default.DashboardCustomize, "DASHBOARD"),
+    Shortcut("⌘V", "Voice",    Icons.Default.Mic,              "VOICE"),
+    Shortcut("⌘T", "Terminal", Icons.Default.Terminal,         "TERMINAL"),
+    Shortcut("⌘B", "Build",    Icons.Default.Build,            "BUILD"),
+    Shortcut("⌘C", "Code",     Icons.Default.Code,             "CODE"),
+    Shortcut("⌘D", "Dash",     Icons.Default.DashboardCustomize, "DASHBOARD"),
 )
 
-// â”€â”€â”€ Main Composable â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Composable ───────────────────────────────────────────────────────
 
 /**
- * ðŸ›°ï¸ NEURAL LINK SIDEBAR
+ * 🛰️ NEURAL LINK SIDEBAR
  * Command Deck with:
- *  - 10-second pulse fade on all labels (infinite, inâ†’outâ†’in)
+ *  - 10-second pulse fade on all labels (infinite, in→out→in)
  *  - Abbreviated 3-4 char item names for compact readability
  *  - Collapsible shortcuts menu for maximum user flexibility
  */
@@ -167,9 +167,9 @@ fun NeuralLinkSidebarUI(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // ── Header ───────────────────────────────────────────────
                 Text(
-                    "NRLâ€¢LNK",
+                    "NRL•LNK",
                     fontFamily = LEDFontFamily,
                     color = Color.Cyan.copy(alpha = headerAlpha),
                     fontSize = 16.sp,
@@ -186,7 +186,7 @@ fun NeuralLinkSidebarUI(
                     modifier = Modifier.padding(bottom = 20.dp)
                 )
 
-                // â”€â”€ Command items â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // ── Command items ─────────────────────────────────────────
                 COMMAND_ITEMS.forEach { item ->
                     SidebarCommandItem(
                         abbrev = item.abbrev,
@@ -202,7 +202,7 @@ fun NeuralLinkSidebarUI(
                 HorizontalDivider(color = Color.White.copy(alpha = 0.15f), thickness = 0.5.dp)
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // â”€â”€ Shortcuts section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // ── Shortcuts section ─────────────────────────────────────
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -245,7 +245,7 @@ fun NeuralLinkSidebarUI(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // â”€â”€ Close button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // ── Close button ──────────────────────────────────────────
                 IconButton(onClick = { onVisibleChange(false) }) {
                     Icon(
                         Icons.Default.KeyboardArrowRight,
@@ -279,7 +279,7 @@ fun NeuralLinkSidebarUI(
     }
 }
 
-// â”€â”€â”€ Command item â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Command item ──────────────────────────────────────────────────────────
 
 @Composable
 private fun SidebarCommandItem(
@@ -351,7 +351,7 @@ private fun SidebarCommandItem(
     }
 }
 
-// â”€â”€â”€ Shortcut row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Shortcut row ──────────────────────────────────────────────────────────
 
 @Composable
 private fun ShortcutRow(

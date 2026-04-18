@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis
+package dev.aurakai.auraframefx.domains.genesis
 
 import dagger.Lazy
 import dagger.Module

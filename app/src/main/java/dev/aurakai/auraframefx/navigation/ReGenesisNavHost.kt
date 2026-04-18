@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.screens.MainScreen
@@ -65,6 +65,8 @@ import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDevOpsCommandCenter
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOBondingScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOAgentRosterScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOAgentProfileIntroScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOProgressionScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOTaskerScreen
 import dev.aurakai.auraframefx.ui.gates.TerminalGateScreen
 import dev.aurakai.auraframefx.ui.gates.HelpServicesGateScreen
 import dev.aurakai.auraframefx.domains.lsposed.screens.LsposedQuickTogglesScreen
@@ -287,6 +289,8 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.LdoDevOpsCommandCenter.route) { LdoDevOpsCommandCenter(navController = navController) }
         composable(ReGenesisRoute.LdoBonding.route) { LDOBondingScreen(onBack = { navController.popBackStack() }) }
+        composable(ReGenesisRoute.LdoProgression.route) { LDOProgressionScreen(onBack = { navController.popBackStack() }) }
+        composable(ReGenesisRoute.LdoTasker.route) { LDOTaskerScreen(onNavigateBack = { navController.popBackStack() }) }
         composable(ReGenesisRoute.LdoRoster.route) {
             LDOAgentRosterScreen(onAgentTap = { agent -> navController.navigate(ReGenesisRoute.LdoAgentProfile.createRoute(agent.id)) })
         }

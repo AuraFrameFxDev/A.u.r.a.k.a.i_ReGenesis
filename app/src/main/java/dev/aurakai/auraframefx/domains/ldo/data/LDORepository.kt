@@ -30,32 +30,27 @@ class LDORepository @Inject constructor(
         taskDao.updateStatus(taskId, status, completedAt)
     }
     suspend fun deleteTask(taskId: Long) {
-        // Find task first or use dummy entity for delete if DAO allows
-        // taskDao.delete(...)
+        taskDao.delete(taskId)
     }
 
     suspend fun addBondPoints(agentId: String, points: Int) {
-        bondLevelDao.addExperience(agentId, points.toLong())
+        bondLevelDao.addBondPoints(agentId, points)
     }
 
     suspend fun setAgentActive(agentId: String, active: Boolean) {
-        agentDao.getById(agentId)?.let {
-            agentDao.update(it.copy(isActive = active))
-        }
+        agentDao.setActive(agentId, active)
     }
 
     suspend fun seedIfEmpty() {
-        // Simplified seeding for now
-        LDORoster.agents.forEach { agent ->
-            agentDao.upsert(
-                LDOAgentEntity(
-                    agentId = agent.id,
-                    name = agent.name,
-                    catalystTitle = agent.catalystName,
-                    bondLevel = agent.bondLevel,
-                    isActive = true
-                )
-            )
+        // Simplified seeding for now using rich defaults from LDORoster
+        LDORoster.defaultAgents.forEach { agent ->
+            agentDao.upsert(agent)
+        }
+        LDORoster.defaultBondLevels.forEach { bond ->
+            bondLevelDao.insert(bond)
+        }
+        LDORoster.defaultTasks.forEach { task ->
+            taskDao.insert(task)
         }
     }
 }

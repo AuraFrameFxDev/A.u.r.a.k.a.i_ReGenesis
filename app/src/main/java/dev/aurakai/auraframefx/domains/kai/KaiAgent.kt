@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.kai
+package dev.aurakai.auraframefx.domains.kai
 
 import dagger.Lazy
 import dev.aurakai.auraframefx.core.ai.BaseAgent

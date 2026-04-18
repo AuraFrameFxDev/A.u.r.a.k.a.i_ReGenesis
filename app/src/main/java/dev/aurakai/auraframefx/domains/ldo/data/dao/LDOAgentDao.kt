@@ -6,14 +6,17 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LDOAgentDao {
-    @Query("SELECT * FROM ldo_agents ORDER BY lastActiveMs DESC")
+    @Query("SELECT * FROM ldo_agents ORDER BY updatedAt DESC")
     fun observeAll(): Flow<List<LDOAgentEntity>>
 
-    @Query("SELECT * FROM ldo_agents WHERE agentId = :id")
+    @Query("SELECT * FROM ldo_agents WHERE id = :id")
     suspend fun getById(id: String): LDOAgentEntity?
 
+    @Query("SELECT * FROM ldo_agents WHERE id = :id")
+    fun observeAgent(id: String): Flow<LDOAgentEntity?>
+
     @Query("SELECT * FROM ldo_agents WHERE isActive = 1")
-    suspend fun getActiveAgents(): List<LDOAgentEntity>
+    fun observeActiveAgents(): Flow<List<LDOAgentEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(agent: LDOAgentEntity)
@@ -21,9 +24,12 @@ interface LDOAgentDao {
     @Update
     suspend fun update(agent: LDOAgentEntity)
 
+    @Query("UPDATE ldo_agents SET isActive = :active WHERE id = :id")
+    suspend fun setActive(id: String, active: Boolean)
+
+    @Query("UPDATE ldo_agents SET tasksCompleted = tasksCompleted + 1 WHERE id = :id")
+    suspend fun incrementTasksCompleted(id: String)
+
     @Delete
     suspend fun delete(agent: LDOAgentEntity)
-
-    @Query("UPDATE ldo_agents SET lastActiveMs = :ms WHERE agentId = :id")
-    suspend fun updateLastActive(id: String, ms: Long = System.currentTimeMillis())
 }

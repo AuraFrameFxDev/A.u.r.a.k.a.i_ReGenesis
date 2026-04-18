@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.models.Emotion
 import dev.aurakai.auraframefx.domains.aura.models.MoodState
@@ -137,7 +137,7 @@ fun AuraFrameFXTheme(
     val baseColorScheme = when (themeState) {
         Theme.CYBERPUNK -> CyberpunkColorScheme
         Theme.SOLARIZED -> SolarizedColorScheme
-        else -> when {
+        Theme.LIGHT, Theme.DARK -> when {
             dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                 val context = LocalContext.current
                 if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(

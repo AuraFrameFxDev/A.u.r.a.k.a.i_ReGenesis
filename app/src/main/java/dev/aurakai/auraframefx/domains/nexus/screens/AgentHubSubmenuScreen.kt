@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubmenuScaffold
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
@@ -63,7 +63,7 @@ fun AgentHubSubmenuScreen(
             title = "Task Assignment",
             description = "Assign tasks and missions to AI agents",
             icon = Icons.AutoMirrored.Filled.Assignment,
-            route = ReGenesisRoute.TaskAssignment.route,
+            route = ReGenesisRoute.LdoTasker.route,
             color = Color(0xFF4169E1) // Royal Blue
         ),
         SubmenuItem(

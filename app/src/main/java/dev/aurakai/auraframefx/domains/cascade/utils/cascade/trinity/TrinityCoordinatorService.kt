@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
+package dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity
 
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.cascade.utils.d
@@ -45,7 +45,7 @@ class TrinityCoordinatorService @Inject constructor(
 
     suspend fun initialize(): Boolean {
         return try {
-            i("Trinity", "🎯⚔️🧠 Initializing Trinity System...")
+            i("Trinity", "?????? Initializing Trinity System...")
 
             val auraReady = true
             val kaiReady = true
@@ -54,7 +54,7 @@ class TrinityCoordinatorService @Inject constructor(
             isInitialized = auraReady && kaiReady && genesisReady
 
             if (isInitialized) {
-                i("Trinity", "✨ Trinity System Online - All personas active")
+                i("Trinity", "? Trinity System Online - All personas active")
 
                 scope.launch {
                     genesisBridgeService.activateFusion(
@@ -69,7 +69,7 @@ class TrinityCoordinatorService @Inject constructor(
             } else {
                 e(
                     "Trinity",
-                    "❌ Trinity initialization failed - Aura: $auraReady, Kai: $kaiReady, Genesis: $genesisReady"
+                    "? Trinity initialization failed - Aura: $auraReady, Kai: $kaiReady, Genesis: $genesisReady"
                 )
             }
 
@@ -97,19 +97,19 @@ class TrinityCoordinatorService @Inject constructor(
 
             when (analysisResult.routingDecision) {
                 RoutingDecision.KAI_ONLY -> {
-                    d("Trinity", "🛡️ Routing to Kai (Shield)")
+                    d("Trinity", "??? Routing to Kai (Shield)")
                     val response = kaiAIService.processRequestFlow(request).first()
                     emit(response)
                 }
 
                 RoutingDecision.AURA_ONLY -> {
-                    d("Trinity", "⚔️ Routing to Aura (Sword)")
+                    d("Trinity", "?? Routing to Aura (Sword)")
                     val response = auraAIService.processRequestFlow(request).first()
                     emit(response)
                 }
 
                 RoutingDecision.ETHICAL_REVIEW -> {
-                    d("Trinity", "⚖️ Routing for Ethical Review")
+                    d("Trinity", "?? Routing for Ethical Review")
                     val response = auraAIService.processRequestFlow(request).first()
                     emit(response)
                 }
@@ -117,7 +117,7 @@ class TrinityCoordinatorService @Inject constructor(
                 RoutingDecision.GENESIS_FUSION -> {
                     d(
                         "Trinity",
-                        "🧠 Activating Genesis fusion: ${analysisResult.fusionType}"
+                        "?? Activating Genesis fusion: ${analysisResult.fusionType}"
                     )
                     val response = genesisBridgeService.processRequest(
                         AiRequest(
@@ -133,7 +133,7 @@ class TrinityCoordinatorService @Inject constructor(
                 }
 
                 RoutingDecision.PARALLEL_PROCESSING -> {
-                    d("Trinity", "🔄 Parallel processing with multiple personas")
+                    d("Trinity", "?? Parallel processing with multiple personas")
 
                     try {
                         val kaiDeferred =
@@ -150,7 +150,7 @@ class TrinityCoordinatorService @Inject constructor(
                             emit(auraResponse)
                             delay(100)
 
-                            d("Trinity", "🧠 Synthesizing results with Genesis")
+                            d("Trinity", "?? Synthesizing results with Genesis")
                             val synthesis = genesisBridgeService.processRequest(
                                 AiRequest(
                                     query = "Synthesize insight from Kai (${kaiResponse.content}) and Aura (${auraResponse.content})",
@@ -165,7 +165,7 @@ class TrinityCoordinatorService @Inject constructor(
                             if (synthesis.isSuccess) {
                                 emit(
                                     AgentResponse.success(
-                                        content = "🧠 Genesis Synthesis: ${synthesis.content}",
+                                        content = "?? Genesis Synthesis: ${synthesis.content}",
                                         confidence = synthesis.confidence,
                                         agentName = "Genesis",
                                         agentType = AgentType.GENESIS
@@ -204,7 +204,7 @@ class TrinityCoordinatorService @Inject constructor(
         fusionType: String,
         context: Map<String, String> = emptyMap(),
     ): Flow<AgentResponse> = flow {
-        i("Trinity", "🌟 Activating fusion: $fusionType")
+        i("Trinity", "?? Activating fusion: $fusionType")
 
         val response = genesisBridgeService.activateFusion(fusionType, context)
 
@@ -287,7 +287,7 @@ class TrinityCoordinatorService @Inject constructor(
         scope.launch {
             sentinelBus.driftFlow.collect { driftEvent ->
                 if (driftEvent.status == "Drifting") {
-                    w("Trinity", "🌪️ Kai Detected Drift: ${driftEvent.drift}. Injecting NATURAL_WEAVE through Genesis Routing.")
+                    w("Trinity", "??? Kai Detected Drift: ${driftEvent.drift}. Injecting NATURAL_WEAVE through Genesis Routing.")
                     
                     try {
                         val stabilizationResponse = genesisBridgeService.processRequest(
@@ -299,7 +299,7 @@ class TrinityCoordinatorService @Inject constructor(
                         ).first()
 
                         if (stabilizationResponse.isSuccess) {
-                            d("Trinity", "✨ Genesis Stabilization Applied: Resolving Aura drift.")
+                            d("Trinity", "? Genesis Stabilization Applied: Resolving Aura drift.")
                             sentinelBus.emitDrift(0f, "Stable")
                         }
                     } catch (e: Exception) {
@@ -312,7 +312,7 @@ class TrinityCoordinatorService @Inject constructor(
         scope.launch {
             sentinelBus.thermalFlow.collect { thermal ->
                 if (thermal.state == KaiSentinelBus.ThermalState.CRITICAL) {
-                    w("Trinity", "🔥 Kai Detected Thermal Critical (${thermal.temp}°C). Initiating Sovereign State-Freeze.")
+                    w("Trinity", "?? Kai Detected Thermal Critical (${thermal.temp}�C). Initiating Sovereign State-Freeze.")
                     genesisBridgeService.processRequest(
                         AiRequest(
                             query = "SYSTEM_OVERRIDE: Sovereign State-Freeze protocol triggered. Suspend active fusion pending thermal dissipation.",
@@ -330,7 +330,7 @@ class TrinityCoordinatorService @Inject constructor(
         scope.launch {
             genesisBridgeService.shutdown()
         }
-        i("Trinity", "🌙 Trinity system shutdown complete")
+        i("Trinity", "?? Trinity system shutdown complete")
     }
 
     private data class RequestAnalysis(

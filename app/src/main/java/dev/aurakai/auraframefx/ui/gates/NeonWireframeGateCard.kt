@@ -91,7 +91,7 @@ fun NeonWireframeGateCard(
             )
             if (!subtitle.isNullOrBlank()) {
                 Text(
-                    text = subtitle!!,
+                    text = subtitle,
                     color = Color(0xFFFFB000).copy(alpha = 0.9f), // Yellow accent like reference
                     style = MaterialTheme.typography.bodySmall.copy(
                         letterSpacing = 0.8.sp

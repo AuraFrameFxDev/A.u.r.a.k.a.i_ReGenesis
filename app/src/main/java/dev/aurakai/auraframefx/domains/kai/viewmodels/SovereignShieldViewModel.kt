@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.kai.viewmodels
+package dev.aurakai.auraframefx.domains.kai.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -93,7 +93,7 @@ class SovereignShieldViewModel @Inject constructor(
     }
 
     fun toggleShizukuBridge() {
-        // Can't programmatically toggle Shizuku — re-probe actual liveness
+        // Can't programmatically toggle Shizuku � re-probe actual liveness
         refreshShizukuStatus()
     }
 }

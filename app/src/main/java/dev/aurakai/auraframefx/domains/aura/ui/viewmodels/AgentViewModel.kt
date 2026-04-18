@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
+package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,7 +34,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 /**
- * 🤖 AgentViewModel - Centralized Agent State Management
+ * ?? AgentViewModel - Centralized Agent State Management
  *
  * Manages:
  * - Active agent selection
@@ -45,7 +45,7 @@ import javax.inject.Inject
  *
  * "One mind, many voices" - The Genesis Principle
  *
- * ✨ NOW WITH REAL AI AGENTS! ✨
+ * ? NOW WITH REAL AI AGENTS! ?
  */
 @HiltViewModel
 open class AgentViewModel @Inject constructor(
@@ -57,9 +57,9 @@ open class AgentViewModel @Inject constructor(
     private val persistentAgentRepository: PersistentAgentRepository
 ) : ViewModel() {
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // STATE MANAGEMENT
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     private val _activeAgent = MutableStateFlow<AgentStats?>(null)
     val activeAgent: StateFlow<AgentStats?> = _activeAgent.asStateFlow()
@@ -126,9 +126,9 @@ open class AgentViewModel @Inject constructor(
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // AGENT MANAGEMENT
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     private fun loadAgents() {
         viewModelScope.launch {
@@ -161,7 +161,7 @@ open class AgentViewModel @Inject constructor(
 
                 // Agents are now initialized by GenesisOrchestrator at startup.
                 // This message confirms the agent is selected in the UI.
-                addSystemMessage(agentName, "I am now online and ready to assist. ⚡")
+                addSystemMessage(agentName, "I am now online and ready to assist. ?")
             }
         }
     }
@@ -182,9 +182,9 @@ open class AgentViewModel @Inject constructor(
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // TASK MANAGEMENT
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     fun assignTask(
         agentName: String,
@@ -233,7 +233,7 @@ open class AgentViewModel @Inject constructor(
                 // Send completion message
                 addSystemMessage(
                     task.agentName,
-                    "Task completed: ${task.description.take(50)}${if (task.description.length > 50) "..." else ""} ✓"
+                    "Task completed: ${task.description.take(50)}${if (task.description.length > 50) "..." else ""} ?"
                 )
             } catch (e: Exception) {
                 error("AgentViewModel", "Task execution failed: ${task.id}", e)
@@ -264,9 +264,9 @@ open class AgentViewModel @Inject constructor(
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // CHAT & MESSAGING
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     fun sendMessage(agentName: String, message: String) {
         viewModelScope.launch {
@@ -321,12 +321,12 @@ open class AgentViewModel @Inject constructor(
         // Check if agents are initialized
         if (!genesisOrchestrator.isReady()) {
             return """
-                ⚠️ Agent system is still initializing...
+                ?? Agent system is still initializing...
 
                 This can happen if:
-                • Vertex AI client needs configuration
-                • API key is missing from local.properties
-                • Network connectivity issues
+                � Vertex AI client needs configuration
+                � API key is missing from local.properties
+                � Network connectivity issues
 
                 Check logcat for details or add GEMINI_API_KEY to local.properties.
             """.trimIndent()
@@ -388,13 +388,13 @@ open class AgentViewModel @Inject constructor(
 
                 else -> {
                     warn("AgentViewModel", "Unknown agent: $agentName, using fallback")
-                    "I'm here to assist you. Let me know what you need. 🤖"
+                    "I'm here to assist you. Let me know what you need. ??"
                 }
             }
         } catch (e: NoSuchMethodError) {
             error("AgentViewModel", "Method missing in VertexAI client", e)
             """
-                ❌ Agent initialization failed: Missing method '${e.message}'
+                ? Agent initialization failed: Missing method '${e.message}'
 
                 This is a code configuration issue. Please ensure:
                 1. VertexAI stub has all required methods
@@ -404,12 +404,12 @@ open class AgentViewModel @Inject constructor(
         } catch (e: Exception) {
             error("AgentViewModel", "Error generating response from $agentName", e)
             """
-                ⚠️ Error communicating with $agentName: ${e.message}
+                ?? Error communicating with $agentName: ${e.message}
 
                 Please check:
-                • Internet connection
-                • API key configuration
-                • Application logs for details
+                � Internet connection
+                � API key configuration
+                � Application logs for details
             """.trimIndent()
         }
     }
@@ -418,9 +418,9 @@ open class AgentViewModel @Inject constructor(
         return _chatMessages.value[agentName] ?: emptyList()
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // VOICE MODE
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     fun toggleVoiceMode() {
         _isVoiceModeEnabled.value = !_isVoiceModeEnabled.value
@@ -434,9 +434,9 @@ open class AgentViewModel @Inject constructor(
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // MONITORING
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     private fun startAgentMonitoring() {
         viewModelScope.launch {
@@ -451,9 +451,9 @@ open class AgentViewModel @Inject constructor(
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
     // DATA MODELS
-    // ═══════════════════════════════════════════════════════════════════════════
+    // ---------------------------------------------------------------------------
 
     data class AgentTask(
         val id: String,

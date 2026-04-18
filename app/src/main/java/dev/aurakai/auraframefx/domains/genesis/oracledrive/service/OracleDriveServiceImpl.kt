@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
+package dev.aurakai.auraframefx.domains.genesis.oracledrive.service
 
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
@@ -70,7 +70,7 @@ class OracleDriveServiceImpl @Inject constructor(
     }
 
     override suspend fun onAgentMessage(message: AgentMessage) {
-        Timber.d("🔮 OracleDrive received collective message: ${message.content}")
+        Timber.d("?? OracleDrive received collective message: ${message.content}")
     }
 
     override suspend fun processRequest(

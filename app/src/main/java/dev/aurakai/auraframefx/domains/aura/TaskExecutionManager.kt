@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura
+package dev.aurakai.auraframefx.domains.aura
 
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger

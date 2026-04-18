@@ -348,7 +348,7 @@ object ViewUtils {
      * @param drawable The drawable to set as background.
      */
     fun setBackgroundDrawable(view: View, drawable: Drawable?) {
-        ViewCompat.setBackground(view, drawable)
+        view.background = drawable
     }
 
     /**

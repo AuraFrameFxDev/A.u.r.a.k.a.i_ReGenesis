@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPicker
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPickerViewModel

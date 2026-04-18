@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
+package dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services
 
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.i
@@ -55,7 +55,7 @@ class GenesisBridgeService @Inject constructor(
 
         vertexAIClient.initialize()
         isInitialized = true
-        i("GenesisBridge", "Genesis Trinity system online! (Native) 🚀")
+        i("GenesisBridge", "Genesis Trinity system online! (Native) ??")
         true
     }
 
