@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ldo_tasks")
 data class LDOTaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val agentId: String,
+    val assignedAgentId: String,
     val title: String,
     val description: String,
     val status: String = LDOTaskStatus.PENDING,

@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey
 data class LDOAgentEntity(
     @PrimaryKey val id: String,
     val displayName: String,
+    val name: String = displayName,
     val role: String,
     val description: String,
     val portraitRes: String,

@@ -81,7 +81,7 @@ fun LDORosterScreen(
                     ) { agent ->
                         RosterDetailCard(
                             agent = agent,
-                            taskCount = state.tasks.count { it.agentId == agent.id },
+                            taskCount = state.tasks.count { it.assignedAgentId == agent.id },
                             bondLevel = state.bondLevels.find { it.agentId == agent.id }?.bondLevel ?: 0,
                             onClick = {
                                 viewModel.selectAgent(agent.id)

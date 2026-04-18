@@ -1,6 +1,11 @@
 package dev.aurakai.auraframefx.domains.ldo.data.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -9,7 +14,7 @@ interface LDOTaskDao {
     @Query("SELECT * FROM ldo_tasks ORDER BY priority DESC, createdAt DESC")
     fun observeAll(): Flow<List<LDOTaskEntity>>
 
-    @Query("SELECT * FROM ldo_tasks WHERE agentId = :agentId")
+    @Query("SELECT * FROM ldo_tasks WHERE assignedAgentId = :agentId")
     fun observeByAgent(agentId: String): Flow<List<LDOTaskEntity>>
 
     @Query("SELECT * FROM ldo_tasks WHERE status = :status")

@@ -33,7 +33,7 @@ data class LDOUiState(
 
     val tasksForSelectedAgent: List<LDOTaskEntity>
         get() = if (selectedAgentId != null)
-            tasks.filter { it.agentId == selectedAgentId }
+            tasks.filter { it.assignedAgentId == selectedAgentId }
         else tasks
 
     val pendingTasks: List<LDOTaskEntity>
@@ -100,7 +100,7 @@ class LDOViewModel @Inject constructor(
             try {
                 repository.insertTask(
                     LDOTaskEntity(
-                        agentId = agentId,
+                        assignedAgentId = agentId,
                         title = title,
                         description = description,
                         priority = priority,
