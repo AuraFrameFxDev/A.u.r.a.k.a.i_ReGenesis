@@ -78,6 +78,11 @@ robolectric = "4.16.1"
 billing-ktx = "8.3.0"
 credentials = "1.6.0"
 gson = "2.13.2"
+jdom = "2.0.6.1"
+jose4j = "0.9.4"
+commons-lang3 = "3.17.0"
+guava = "33.3.0-jre"
+bouncycastle = "1.78"
 
 [libraries]
 # Build Plugins
@@ -191,6 +196,12 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 slf4j-android = { group = "org.slf4j", name = "slf4j-android", version.ref = "slf4j" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+jdom = { group = "org.jdom", name = "jdom2", version.ref = "jdom" }
+jose4j = { group = "org.bitbucket.b_c", name = "jose4j", version.ref = "jose4j" }
+commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commons-lang3" }
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+bouncycastle-bcprov = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncycastle" }
+bouncycastle-bcpkix = { group = "org.bouncycastle", name = "bcpkix-jdk18on", version.ref = "bouncycastle" }
 
 # Root / Xposed / Shizuku
 libsu-core = { group = "com.github.topjohnwu.libsu", name = "core", version.ref = "libsu" }
