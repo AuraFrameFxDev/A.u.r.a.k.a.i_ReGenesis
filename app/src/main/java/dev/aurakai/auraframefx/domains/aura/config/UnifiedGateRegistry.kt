@@ -90,7 +90,7 @@ object UnifiedGateRegistry {
                 styleA = GateAssetConfig.AuraSubGates.ICONIFY.styleA,
                 styleB = GateAssetConfig.AuraSubGates.ICONIFY.styleB,
                 fallback = GateAssetConfig.AuraSubGates.ICONIFY.fallback,
-                route = ReGenesisRoute.IconifyIconPacks.route,
+                route = ReGenesisRoute.IconifyPicker.route,
                 accentColor = Color(0xFFFFCC00),
                 domain = DomainType.AURA
             )
@@ -250,7 +250,7 @@ object UnifiedGateRegistry {
                 styleA = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleA,
                 styleB = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.styleB,
                 fallback = GateAssetConfig.GenesisSubGates.NEURAL_ARCHIVE.fallback,
-                route = ReGenesisRoute.NeuralNetwork.route,
+                route = ReGenesisRoute.SentientShell.route,
                 accentColor = Color(0xFF00FFD4),
                 domain = DomainType.GENESIS
             )
@@ -369,7 +369,7 @@ object UnifiedGateRegistry {
                 styleA = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleA,
                 styleB = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleB,
                 fallback = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.fallback,
-                route = ReGenesisRoute.TaskAssignment.route,
+                route = ReGenesisRoute.LdoTasker.route,
                 accentColor = Color(0xFFB026FF),
                 domain = DomainType.NEXUS
             )

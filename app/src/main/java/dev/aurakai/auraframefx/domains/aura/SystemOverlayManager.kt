@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.domains.aura.SystemOverlayConfig
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
@@ -17,8 +16,6 @@ interface SystemOverlayManager {
     fun removeElement(elementId: String)
     fun clearAll()
 
-    // Root-specific fabrications (opt-in)
     fun applyAccent(hex: String): Result<String>
     fun applyBackgroundSaturation(percent: Int): Result<String>
 }
-

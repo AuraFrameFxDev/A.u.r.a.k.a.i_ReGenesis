@@ -6,6 +6,7 @@ package dev.aurakai.auraframefx.navigation
  * This is the SINGLE SOURCE OF TRUTH for all navigation in ReGenesis.
  */
 sealed class ReGenesisRoute(val route: String, val title: String? = null) {
+    val version = "1.0.1"
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 0: INFRASTRUCTURE

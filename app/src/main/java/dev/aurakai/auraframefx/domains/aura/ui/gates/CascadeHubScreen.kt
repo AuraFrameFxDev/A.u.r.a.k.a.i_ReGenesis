@@ -34,21 +34,21 @@ fun CascadeHubScreen(navController: NavController) {
             title = "Cascade Vision",
             subtitle = "Pattern Recognition HUD",
             icon = Icons.Default.RemoveRedEye,
-            destination = ReGenesisRoute.SensoryMatrix.route, // Using Route as ReGenesisRoute
+            destination = ReGenesisRoute.CascadeHub.route, // Using Route as ReGenesisRoute
             color = Color(0xFF00FFD4)
         ),
         CascadeTool(
             title = "Data Monitoring",
             subtitle = "Real-time Stream Analysis",
             icon = Icons.Default.StackedLineChart,
-            destination = ReGenesisRoute.SensoryMatrix.route,
+            destination = ReGenesisRoute.CascadeHub.route,
             color = Color(0xFF00E5FF)
         ),
         CascadeTool(
             title = "Neural Link",
             subtitle = "Direct Matrix Interface",
             icon = Icons.Default.Hub,
-            destination = ReGenesisRoute.SensoryMatrix.route,
+            destination = ReGenesisRoute.CascadeHub.route,
             color = Color(0xFFB026FF)
         )
     )

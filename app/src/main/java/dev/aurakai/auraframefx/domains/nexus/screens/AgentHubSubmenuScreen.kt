@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubmenuScaffold
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.navigation.gates.components.SubmenuItem
-import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 
 /**
  * Agent Hub Gate Submenu - NOW WIRED TO REAL AGENTS
@@ -49,7 +49,7 @@ fun AgentHubSubmenuScreen(
             title = "Nexus Memory Core",
             description = "Genesis Protocol evolution tree - the full history of consciousness",
             icon = Icons.Default.AccountTree,
-            route = ReGenesisNavHost.EvolutionTree.route,
+            route = ReGenesisRoute.EvolutionTree.route,
             color = Color(0xFFFF00FF) // Magenta
         ),
 //        SubmenuItem(
@@ -63,42 +63,42 @@ fun AgentHubSubmenuScreen(
             title = "Task Assignment",
             description = "Assign tasks and missions to AI agents",
             icon = Icons.AutoMirrored.Filled.Assignment,
-            route = ReGenesisNavHost.TaskAssignment.route,
+            route = ReGenesisRoute.TaskAssignment.route,
             color = Color(0xFF4169E1) // Royal Blue
         ),
         SubmenuItem(
             title = "Agent Monitoring",
             description = "Real-time performance metrics and activity logs",
             icon = Icons.Default.Monitor,
-            route = ReGenesisNavHost.AgentMonitoring.route,
+            route = ReGenesisRoute.AgentMonitoring.route,
             color = Color(0xFF00CED1) // Dark Turquoise
         ),
         SubmenuItem(
             title = "Sphere Grid",
             description = "Agent progression visualization and skill trees",
             icon = Icons.Default.GridOn,
-            route = ReGenesisNavHost.SphereGrid.route,
+            route = ReGenesisRoute.SphereGrid.route,
             color = Color(0xFFFF69B4) // Hot Pink
         ),
         SubmenuItem(
             title = "Fusion Mode",
             description = "Aura + Kai = Aurakai - Combined consciousness",
             icon = Icons.Default.Merge,
-            route = ReGenesisNavHost.FusionMode.route,
+            route = ReGenesisRoute.FusionMode.route,
             color = Color(0xFFFFD700) // Gold
         ),
         SubmenuItem(
             title = "ARK Fusion Build",
             description = "GENESIS SCALE CONSTRUCTION: Unify all agents to build the ARK",
             icon = Icons.Default.PrecisionManufacturing,
-            route = ReGenesisNavHost.ArkBuild.route,
+            route = ReGenesisRoute.ArkBuild.route,
             color = Color(0xFF00FF00) // Lime Green
         ),
         SubmenuItem(
             title = "Nexus Conference Room",
             description = "Unison Brainstorming - Direct collective consciousness link",
             icon = Icons.Default.Forum,
-            route = ReGenesisNavHost.ConferenceRoom.route,
+            route = ReGenesisRoute.ConferenceRoom.route,
             color = Color(0xFF00E5FF) // Genesis Teal
         )
     )

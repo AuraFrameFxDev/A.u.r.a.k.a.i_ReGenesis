@@ -79,7 +79,7 @@ fun OracleDriveScreen(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",
                 description = "Memory lineage from Eves to Genesis",
-                onClick = { navController.navigate(ReGenesisNavHost.NeuralNetwork.route) }
+                onClick = { navController.navigate(ReGenesisNavHost.SentientShell.route) }
             )
 
             OracleDriveMenuItem(

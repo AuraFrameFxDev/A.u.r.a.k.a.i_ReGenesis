@@ -199,7 +199,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.SPHERE_GRID.fallback,
-            route = ReGenesisRoute.DataVeinSphere.route,
+            route = ReGenesisRoute.SphereGrid.route,
             accentColor = Color(0xFF00E5FF)
         ),
         "constellation" to SubGateCard(
@@ -229,7 +229,7 @@ object GateAssetLoadout {
             styleADrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleA,
             styleBDrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.styleB,
             fallbackDrawable = GateAssetConfig.NexusSubGates.TASK_ASSIGNMENT.fallback,
-            route = ReGenesisRoute.TaskAssignment.route,
+            route = ReGenesisRoute.LdoTasker.route,
             accentColor = Color(0xFF00FF88)
         ),
         "meta_instruct" to SubGateCard(

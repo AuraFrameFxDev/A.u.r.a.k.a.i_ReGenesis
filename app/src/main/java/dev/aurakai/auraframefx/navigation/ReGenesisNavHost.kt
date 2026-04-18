@@ -44,7 +44,7 @@ import dev.aurakai.auraframefx.domains.nexus.hubs.AgentHubSubmenuScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.AgentCreationScreen
 import dev.aurakai.auraframefx.domains.aura.aura.ui.FusionModeScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.BenchmarkMonitorScreen
-import dev.aurakai.auraframefx.domains.nexus.hubs.EvolutionTreeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.SphereGridScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.MonitoringHUDsScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.PartyScreen
