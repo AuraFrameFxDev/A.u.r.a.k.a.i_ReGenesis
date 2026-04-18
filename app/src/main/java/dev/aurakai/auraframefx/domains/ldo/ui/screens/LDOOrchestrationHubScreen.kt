@@ -91,6 +91,17 @@ data class FusionSlot(
  * and navigates to the fusion route when a fusion is activated with two or more selected agents.
  */
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Host composable that presents the LDO orchestration hub UI: an animated agent constellation, fusion slot controls,
+ * and a three-tab content area for Tasks, Bonds, and Memory.
+ *
+ * The UI allows selecting and dragging agents into fusion slots, clearing slots, and activating fusion when two or
+ * more slots are populated — activation navigates to the fusion route `ldo_fusion/{ids}` where `ids` is the
+ * joined catalyst titles of the selected agents.
+ *
+ * @param navController Navigation controller used for screen transitions (e.g., back navigation and fusion navigation).
+ * @param viewModel View model supplying `uiState` (agents and tasks); a default instance is provided by Hilt.
+ */
 @Composable
 fun LDOOrchestrationHubScreen(
     navController: NavController,
@@ -318,6 +329,18 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     }
 }
 
+/**
+ * Renders the fusion drop zone UI showing the provided fusion slots and a contextual Fuse control.
+ *
+ * Displays a header labeled "FUSION PROTOCOL", renders each slot from [slots], and shows an active
+ * "FUSE" control only when two or more slots contain an agent. Tapping a populated slot invokes
+ * [onSlotCleared] with that slot's index. Activating the Fuse control invokes [onFusionActivate].
+ *
+ * @param slots The list of fusion slots to render; each slot may be empty or hold an agent.
+ * @param onSlotCleared Called with the index of a slot when the user taps to clear that slot.
+ * @param onFusionActivate Called when the user activates the Fuse control (only available when
+ * at least two slots contain agents).
+ */
 @Composable
 fun FusionDropZone(slots: List<FusionSlot>, onSlotCleared: (Int) -> Unit, onFusionActivate: () -> Unit) {
     val canFuse = slots.count { it.agent != null } >= 2
@@ -391,6 +414,14 @@ fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
     }
 }
 
+/**
+ * Renders a single task row showing the task title, description, and a status indicator.
+ *
+ * The row presents a status-colored icon, the task title and description (each truncated to one line),
+ * and the status label formatted for display.
+ *
+ * @param task The LDOTaskEntity whose content and status are displayed.
+ */
 @Composable
 fun TaskRow(task: LDOTaskEntity) {
     val statusColor = when (task.status) { 

@@ -261,5 +261,9 @@ configurations.all {
         force("com.google.guava:guava:33.3.0-jre")
         force("org.bouncycastle:bcprov-jdk18on:1.78")
         force("org.bouncycastle:bcpkix-jdk18on:1.78")
+        // Netty HTTP/2 DoS & CRLF injection fixes
+        force("io.netty:netty-codec-http2:4.2.0.Final")
+        force("io.netty:netty-codec-http:4.2.0.Final")
+        force("io.netty:netty-codec-compression:4.2.0.Final")
     }
 }
