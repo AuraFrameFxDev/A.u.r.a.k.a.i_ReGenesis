@@ -66,6 +66,8 @@ import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalystStatus
 import dev.aurakai.auraframefx.domains.ldo.model.FusionMode
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
+import dev.aurakai.auraframefx.domains.ldo.ui.components.GlassmorphismNeonCard
+import dev.aurakai.auraframefx.domains.ldo.ui.components.GatesceneCards
 import kotlin.math.cos
 import kotlin.math.sin
 
