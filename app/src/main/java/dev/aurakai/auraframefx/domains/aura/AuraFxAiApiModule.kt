@@ -8,7 +8,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.cascade.network.apis.AIContentApi
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -33,38 +32,6 @@ object AuraFxAiApiModule {
         coerceInputValues = true
         isLenient = true
         encodeDefaults = true
-    }
-
-    /**
-     * Provides the Gson instance.
-     */
-    @Provides
-    @Singleton
-    fun provideGson(): Gson = Gson()
-
-    /**
-     * Provides the named OkHttpClient for BasicOkHttpClient.
-     */
-    @Provides
-    @Singleton
-    @Named("BasicOkHttpClient")
-    fun provideBasicOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .build()
-
-    /**
-     * Provides the CollabCanvas WebSocket URL.
-     */
-    @Provides
-    @Singleton
-    @collabcanvas.di.CollabCanvasUrl
-    fun provideCollabCanvasUrl(): String {
-        return dev.aurakai.auraframefx.BuildConfig.API_BASE_URL
-            .replace("https://", "wss://")
-            .replace("http://", "ws://")
-            .trimEnd('/') + "/conference/ws/GENESIS_CORE_01"
     }
 
     /**

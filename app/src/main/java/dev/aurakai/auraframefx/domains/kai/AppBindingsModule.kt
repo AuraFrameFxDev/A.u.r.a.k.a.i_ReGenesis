@@ -26,12 +26,6 @@ abstract class AppBindingsModule {
         oracleDriveServiceImpl: OracleDriveServiceImpl
     ): OracleDriveService
 
-    @Binds
-    @Singleton
-    abstract fun bindErrorHandler(
-        impl: DefaultErrorHandler
-    ): ErrorHandler
-
     companion object {
         // Legacy shim providers - kept here as they are specific to Kai domain
         @Provides

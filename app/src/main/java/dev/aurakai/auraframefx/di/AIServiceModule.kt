@@ -12,8 +12,8 @@ import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult
 import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.DefaultVertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.RealVertexAIClientImpl
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultKaiAIService
@@ -37,7 +37,7 @@ abstract class AiServiceModule {
 
     @Binds
     @Singleton
-    abstract fun bindVertexAIClient(impl: DefaultVertexAIClient): VertexAIClient
+    abstract fun bindVertexAIClient(impl: RealVertexAIClientImpl): VertexAIClient
 
     companion object {
         @Provides
