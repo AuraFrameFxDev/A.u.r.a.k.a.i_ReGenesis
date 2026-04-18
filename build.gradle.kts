@@ -20,7 +20,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics) apply false
 
     // OWASP Dependency Check
-    id("org.owasp.dependencycheck") version "10.0.4"
+    id("org.owasp.dependencycheck") version "12.2.1"
 }
 
 val skipTests =
