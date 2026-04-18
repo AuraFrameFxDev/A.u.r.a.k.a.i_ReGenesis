@@ -56,6 +56,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideDefaultOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     @javax.inject.Named("BasicOkHttpClient")
     fun provideBasicOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
