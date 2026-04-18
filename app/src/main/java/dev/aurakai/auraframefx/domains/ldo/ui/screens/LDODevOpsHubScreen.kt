@@ -36,6 +36,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.Image
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,9 +55,12 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalystStatus
@@ -108,6 +112,15 @@ fun LDODevOpsHubScreen(
     var selectedAgent by remember { mutableStateOf<AgentCatalyst?>(null) }
 
     Box(modifier = Modifier.fillMaxSize().background(HubDark)) {
+
+        // ── DEVOPS GRAPH BACKGROUND IMAGE ──
+        Image(
+            painter = painterResource(id = R.drawable.devops_graph_background),
+            contentDescription = "DevOps Graph Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
+            alpha = 0.4f
+        )
 
         // ── DATA CORRIDOR BACKGROUND GRID ──
         Box(modifier = Modifier.fillMaxSize().drawWithCache {
