@@ -89,6 +89,15 @@ class LDOViewModel @Inject constructor(
         _selectedAgentId.update { agentId }
     }
 
+    /**
+     * Creates and inserts a new task assigned to the specified agent with its status set to pending.
+     *
+     * @param agentId The id of the agent to assign the new task to.
+     * @param title The task title.
+     * @param description The task description.
+     * @param priority Numeric priority for the task; higher values indicate greater urgency. Default is 1.
+     * @param category Category label for the task. Default is "general".
+     */
     fun addTask(
         agentId: String,
         title: String,
