@@ -178,6 +178,7 @@ langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama", v
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai", version.ref = "langchain4j" }
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini", version.ref = "langchain4j" }
 langchain4j-http-client-jdk = { group = "dev.langchain4j", name = "langchain4j-http-client-jdk", version.ref = "langchain4j" }
+langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp", version.ref = "langchain4j" }
 
 # Utilities
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
@@ -274,7 +275,8 @@ langchain4j = [
     "langchain4j-ollama",
     "langchain4j-open-ai",
     "langchain4j-google-ai-gemini",
-    "langchain4j-http-client-jdk"
+    "langchain4j-http-client-jdk",
+    "langchain4j-http-client-okhttp"
 ]
 
 root-system = [
