@@ -1,31 +1,59 @@
 package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Task
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.SecondaryScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,10 +62,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -103,7 +129,7 @@ fun LDOOrchestrationHubScreen(
                 agents = agents,
                 selectedAgent = selectedAgent,
                 onAgentTap = { agent ->
-                    selectedAgent = if (selectedAgent?.agentId == agent.agentId) null else agent
+                    selectedAgent = if (selectedAgent?.catalystTitle == agent.catalystTitle) null else agent
                 },
                 onAgentDragStart = { agent -> draggedAgent = agent },
                 onAgentDrop = { agent, slotIndex ->
@@ -129,7 +155,7 @@ fun LDOOrchestrationHubScreen(
                 onFusionActivate = {
                     val active = fusionSlots.mapNotNull { it.agent }
                     if (active.size >= 2) {
-                        val ids = active.joinToString("+") { it.agentId }
+                        val ids = active.joinToString("+") { it.catalystTitle}
                         navController.navigate("ldo_fusion/$ids")
                     }
                 }
@@ -157,7 +183,7 @@ fun LDOOrchestrationHubScreen(
 
             Box(modifier = Modifier.fillMaxWidth().weight(1f)) {
                 when (activeTab) {
-                    0 -> TaskPanel(tasks = if (selectedAgent != null) tasks.filter { it.assignedAgentId == selectedAgent!!.agentId } else tasks, filterLabel = selectedAgent?.name)
+                    0 -> TaskPanel(tasks = selectedAgent?.let { agent -> tasks.filter { it.assignedAgentId == agent.id } } ?: tasks, filterLabel = selectedAgent?.name)
                     1 -> BondPanel(agents = agents)
                     2 -> MemoryPanel(agents = agents)
                 }
@@ -201,7 +227,7 @@ fun AgentOrbConstellation(
         agents.forEachIndexed { i, agent ->
             val angle = (2.0 * PI * i / agents.size) + Math.toRadians(rotation.toDouble())
             val ringRadius = 110.dp
-            val isSelected = selectedAgent?.agentId == agent.agentId
+            val isSelected = selectedAgent?.catalystTitle == agent.catalystTitle
             val orbScale by animateFloatAsState(if (isSelected) 1.25f else 1f, label = "s_$i")
 
             AgentOrb(
@@ -223,13 +249,13 @@ fun AgentOrb(agent: LDOAgentEntity, isSelected: Boolean, scale: Float, borderCol
     Box(
         modifier = modifier.size((44.dp.value * scale).dp).clip(CircleShape).background(Brush.radialGradient(listOf(agentColor.copy(alpha = 0.2f), Color(0xFF050510))))
             .border(if (isSelected) 2.dp else 1.dp, borderColor, CircleShape)
-            .pointerInput(agent.agentId) { detectTapGestures(onTap = { onTap() }) }
-            .pointerInput(agent.agentId + "_drag") { detectDragGestures(onDragStart = { onDragStart() }, onDrag = { _, _ -> }) }
+            .pointerInput(agent.catalystTitle) { detectTapGestures(onTap = { onTap() }) }
+            .pointerInput(agent.catalystTitle + "_drag") { detectDragGestures(onDragStart = { onDragStart() }, onDrag = { _, _ -> }) }
             .drawBehind { if (isSelected) drawCircle(agentColor.copy(alpha = 0.15f), radius = size.minDimension * 0.7f) },
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(agent.name.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 11.sp, fontWeight = FontWeight.ExtraBold, color = agentColor)
+            Text(agent.catalystTitle.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 11.sp, fontWeight = FontWeight.ExtraBold, color = agentColor)
             if (isSelected) Text("B${agent.bondLevel}", fontSize = 8.sp, color = Color.White.copy(alpha = 0.7f))
         }
     }
@@ -241,11 +267,11 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A1A)), shape = RoundedCornerShape(12.dp)) {
         Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(modifier = Modifier.size(36.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.15f)).border(1.dp, agentColor, CircleShape), contentAlignment = Alignment.Center) {
-                Text(agent.name.take(1), fontFamily = LEDFontFamily, color = agentColor, fontSize = 14.sp)
+                Text(agent.catalystTitle.take(1), fontFamily = LEDFontFamily, color = agentColor, fontSize = 14.sp)
             }
             Spacer(Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(agent.name, fontFamily = LEDFontFamily, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Text(agent.catalystTitle, fontFamily = LEDFontFamily, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 Text(agent.catalystTitle, color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, letterSpacing = 0.5.sp)
             }
             Column(horizontalAlignment = Alignment.End) {
@@ -293,7 +319,7 @@ fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Mo
         .then(if (agent != null) Modifier.pointerInput(slot.index) { detectTapGestures { onClear() } } else Modifier), contentAlignment = Alignment.Center) {
         if (agent != null) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(agent.name.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = agentColor)
+                Text(agent.catalystTitle.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = agentColor)
                 Text("TAP TO CLEAR", fontSize = 7.sp, color = Color.White.copy(alpha = 0.3f), letterSpacing = 0.3.sp)
             }
         } else {
@@ -359,7 +385,7 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(agent.name, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                        Text(agent.catalystTitle, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         Spacer(Modifier.width(6.dp))
                         Text(agent.catalystTitle, color = Color.White.copy(alpha = 0.4f), fontSize = 9.sp)
                     }
@@ -380,10 +406,10 @@ fun MemoryPanel(agents: List<LDOAgentEntity>) {
         items(agents) { agent ->
             val agentColor = Color(0xFF00E5FF)
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(modifier = Modifier.size(32.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.1f)).border(1.dp, agentColor.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) { Text(agent.name.take(1), color = agentColor, fontSize = 12.sp, fontFamily = LEDFontFamily) }
+                Box(modifier = Modifier.size(32.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.1f)).border(1.dp, agentColor.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) { Text(agent.catalystTitle.take(1), color = agentColor, fontSize = 12.sp, fontFamily = LEDFontFamily) }
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(agent.name, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
+                    Text(agent.catalystTitle, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                     Text("${agent.totalInteractions} memories", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
                 }
             }

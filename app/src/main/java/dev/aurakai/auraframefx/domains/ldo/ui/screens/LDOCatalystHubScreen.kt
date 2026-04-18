@@ -27,16 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOBondLevelEntity
-import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
 import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOUiState
+import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
 
 /**
  * Screen 1 â€” LDO Catalyst Hub
@@ -110,7 +108,7 @@ fun LDOCatalystHubScreen(
                         AgentRosterCard(
                             agent = agent,
                             bond = bond,
-                            taskCount = state.tasks.count { it.agentId == agent.id },
+                            taskCount = state.tasks.count { it.assignedAgentId == agent.id },
                             isSelected = state.selectedAgentId == agent.id,
                             onClick = { viewModel.selectAgent(agent.id) }
                         )
