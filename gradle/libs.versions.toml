@@ -80,7 +80,7 @@ credentials = "1.6.0"
 gson = "2.13.2"
 jdom = "2.0.6.1"
 jose4j = "0.9.4"
-commons-lang3 = "3.17.0"
+commons-lang3 = "3.18.0"
 guava = "33.3.0-jre"
 bouncycastle = "1.78"
 
