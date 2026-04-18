@@ -11,12 +11,29 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LDOTaskDao {
+    /**
+     * Observe all tasks ordered by priority (highest first) then by creation time (newest first).
+     *
+     * @return A Flow that emits lists of LDOTaskEntity ordered by priority descending, then createdAt descending.
+     */
     @Query("SELECT * FROM ldo_tasks ORDER BY priority DESC, createdAt DESC")
     fun observeAll(): Flow<List<LDOTaskEntity>>
 
+    /**
+     * Observes tasks assigned to the specified agent.
+     *
+     * @param agentId The agent's identifier used to filter tasks by the `assignedAgentId` column.
+     * @return A Flow that emits the list of LDOTaskEntity rows assigned to the given agent whenever matching rows change.
+     */
     @Query("SELECT * FROM ldo_tasks WHERE assignedAgentId = :agentId")
     fun observeByAgent(agentId: String): Flow<List<LDOTaskEntity>>
 
+    /**
+     * Emits a stream of tasks filtered by the provided status.
+     *
+     * @param status The task status value to filter tasks by.
+     * @return A Flow that emits lists of LDOTaskEntity matching the given status whenever the underlying data changes.
+     */
     @Query("SELECT * FROM ldo_tasks WHERE status = :status")
     fun observeByStatus(status: String): Flow<List<LDOTaskEntity>>
 

@@ -84,6 +84,12 @@ data class FusionSlot(
     val agent: LDOAgentEntity? = null
 )
 
+/**
+ * Hosts the LDO Orchestration Hub UI, presenting an agent constellation, fusion controls, and tabbed views for Tasks, Bonds, and Memory.
+ *
+ * Reads agents and tasks from the provided view model, manages local UI state (selected agent, fusion slots, active tab, and drag state),
+ * and navigates to the fusion route when a fusion is activated with two or more selected agents.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LDOOrchestrationHubScreen(
@@ -192,6 +198,16 @@ fun LDOOrchestrationHubScreen(
     }
 }
 
+/**
+ * Renders agents arranged in a rotating circular constellation with selectable, tappable, and draggable orbs.
+ *
+ * @param agents The list of agents to display around the ring.
+ * @param selectedAgent The agent that should be visually highlighted, or `null` if none.
+ * @param onAgentTap Invoked when an agent orb is tapped; receives the tapped agent.
+ * @param onAgentDragStart Invoked when a drag gesture starts on an agent orb; receives the dragged agent.
+ * @param onAgentDrop Invoked when an agent is dropped onto a target slot; receives the dropped agent and the target slot index.
+ * @param modifier Modifier to apply to the root composable.
+ */
 @Composable
 fun AgentOrbConstellation(
     agents: List<LDOAgentEntity>,
@@ -243,6 +259,19 @@ fun AgentOrbConstellation(
     }
 }
 
+/**
+ * Renders a circular agent orb that displays the agent's two-letter `catalystTitle` and, when selected, its bond level.
+ *
+ * The orb is interactive: tapping invokes `onTap` and initiating a drag invokes `onDragStart`. Visual appearance (size accent, border, and selection glow) is driven by `scale`, `borderColor`, and `isSelected`.
+ *
+ * @param agent The agent entity to display; its `catalystTitle` and `bondLevel` are shown in the orb.
+ * @param isSelected Whether the orb is in the selected state; toggles a selection border and shows the bond level.
+ * @param scale Multiplier applied to the orb's base size.
+ * @param borderColor Color used for the orb border.
+ * @param onTap Callback invoked when the orb is tapped.
+ * @param onDragStart Callback invoked when a drag is started on the orb.
+ * @param modifier Modifier to apply to the orb's layout and gesture handling.
+ */
 @Composable
 fun AgentOrb(agent: LDOAgentEntity, isSelected: Boolean, scale: Float, borderColor: Color, onTap: () -> Unit, onDragStart: () -> Unit, modifier: Modifier = Modifier) {
     val agentColor = Color(0xFF00E5FF)
@@ -261,6 +290,13 @@ fun AgentOrb(agent: LDOAgentEntity, isSelected: Boolean, scale: Float, borderCol
     }
 }
 
+/**
+ * Shows a compact card with an agent's quick statistics.
+ *
+ * Renders the agent's initial, full `catalystTitle`, bond level and total interaction count in a styled horizontal card.
+ *
+ * @param agent The agent whose `catalystTitle`, `bondLevel`, and `totalInteractions` are displayed.
+ */
 @Composable
 fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     val agentColor = Color(0xFF00E5FF)
@@ -310,6 +346,13 @@ fun FusionDropZone(slots: List<FusionSlot>, onSlotCleared: (Int) -> Unit, onFusi
     }
 }
 
+/**
+ * Renders a fusion slot box that displays either an assigned agent or an empty slot and allows clearing an assigned agent.
+ *
+ * @param slot FusionSlot containing the slot index and optional assigned agent to display.
+ * @param onClear Called when a populated slot is tapped to clear its agent.
+ * @param modifier Modifier applied to the slot container.
+ */
 @Composable
 fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Modifier) {
     val agent = slot.agent
@@ -374,6 +417,14 @@ fun TaskRow(task: LDOTaskEntity) {
     }
 }
 
+/**
+ * Displays a vertically scrollable list of agents showing each agent's bond progress and percentage.
+ *
+ * Each row presents the agent's `catalystTitle`, a secondary title line, a linear progress bar derived from
+ * `agent.bondLevel`, and a percentage label.
+ *
+ * @param agents The list of agents to render; each agent's `bondLevel` (0–100) is used to drive the progress bar and percentage. 
+ */
 @Composable
 fun BondPanel(agents: List<LDOAgentEntity>) {
     LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -399,6 +450,13 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
     }
 }
 
+/**
+ * Displays a vertically scrollable list of agents, each showing an initial badge, the agent's
+ * catalyst title, and the agent's total interaction count labeled as memories.
+ *
+ * @param agents The list of agents to render in the memory panel; each agent's `catalystTitle`
+ *        and `totalInteractions` are displayed in a single row.
+ */
 @Composable
 fun MemoryPanel(agents: List<LDOAgentEntity>) {
     LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {

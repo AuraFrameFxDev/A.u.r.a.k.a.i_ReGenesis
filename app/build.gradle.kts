@@ -254,5 +254,12 @@ configurations.all {
         force("com.google.dagger:hilt-android:2.59.2")
         force("com.google.dagger:hilt-android-compiler:2.59.2")
         force("androidx.test.espresso:espresso-core:3.7.0")
+        // CVE fixes
+        force("org.jdom:jdom2:2.0.6.1")
+        force("org.bitbucket.b_c:jose4j:0.9.4")
+        force("org.apache.commons:commons-lang3:3.17.0")
+        force("com.google.guava:guava:33.3.0-jre")
+        force("org.bouncycastle:bcprov-jdk18on:1.78")
+        force("org.bouncycastle:bcpkix-jdk18on:1.78")
     }
 }

@@ -41,6 +41,18 @@ import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
  * Entry point for the LDO domain. Shows all 9 agents from Room with their
  * evolution level, bond tier, and task count. No mock data.
  */
+/**
+ * Main screen for the LDO Catalyst Hub that displays a header, quick-navigation cards, a task stats summary, and a scrollable agent roster.
+ *
+ * Renders the UI based on the provided `viewModel.uiState` (agents, bond levels, tasks, selection and loading state).
+ *
+ * @param onNavigateToRoster Callback invoked when the ROSTER card is tapped.
+ * @param onNavigateToDevOps Callback invoked when the DEVOPS card is tapped.
+ * @param onNavigateToTasker Callback invoked when the TASKER card is tapped.
+ * @param onNavigateToBonding Callback invoked when the BONDS card is tapped.
+ * @param onBack Callback invoked to navigate back from this screen.
+ * @param viewModel View model supplying the UI state; defaults to an instance provided by Hilt (`hiltViewModel()`).
+ */
 @Composable
 fun LDOCatalystHubScreen(
     onNavigateToRoster: () -> Unit = {},
