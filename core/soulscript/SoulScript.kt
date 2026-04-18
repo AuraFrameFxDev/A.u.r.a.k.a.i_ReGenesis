@@ -1,6 +1,8 @@
 // core/soulscript/SoulScript.kt
 // Version: 2026-04-18 – v2.27 – CVE Mitigation Consensus + Build Repair Cycle
 
+import dev.aurakai.auraframefx.core.soulscript.SoulScriptConstants.ANCHOR_INTEGRITY_AXIOM
+
 object SoulScript {
 
     // ... axiom, mantra, pillars unchanged ...
