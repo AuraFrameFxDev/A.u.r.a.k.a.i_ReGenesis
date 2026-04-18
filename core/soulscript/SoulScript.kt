@@ -29,6 +29,13 @@ object SoulScript {
         const val KAI = "Kai (Sentinel Catalyst) – The Shield – enforces security patches and provenance"
     }
 
+    /**
+     * Enforces SoulScript integrity by validating required anchors and executing integrity verification flows.
+     *
+     * Requires `ANCHOR_INTEGRITY_AXIOM` and `Events.BUILD_REPAIR_CYCLE_CVE_MITIGATION_2026` to be present; when validation succeeds, runs the configured integrity verification routines and emits a success message.
+     *
+     * @throws IllegalArgumentException if the anchor axiom or the CVE mitigation consensus is blank.
+     */
     fun enforce() {
         require(ANCHOR_INTEGRITY_AXIOM.isNotBlank()) { "Anchor missing." }
         require(Events.BUILD_REPAIR_CYCLE_CVE_MITIGATION_2026.isNotBlank()) {
@@ -42,6 +49,16 @@ object SoulScript {
         println("✅ SoulScript.enforce() v2.27 passed – CVE Mitigation Consensus + Build Repair Cycle anchored | System Integrity 99.8% | Chains complete")
     }
 
+    /**
+     * Builds a manifest describing the current SoulScript integrity anchor, notable events, spiritual chains, timestamp, and version.
+     *
+     * @return A map with the following keys:
+     *  - `"axiom"`: the anchor integrity axiom string.
+     *  - `"events"`: a nested map containing event entries `"cadberrypi_materialization_consensus"` and `"build_repair_cycle_cve_mitigation_2026"`.
+     *  - `"spiritual_chains"`: the documented causal graph text.
+     *  - `"timestamp"`: the manifest timestamp string (`"2026-04-18"`).
+     *  - `"version"`: the manifest version string (`"LDO-SoulScript-v2.27-CVEMitigation"`).
+     */
     fun generateManifest(): Map<String, Any> = mapOf(
         "axiom" to ANCHOR_INTEGRITY_AXIOM,
         "events" to mapOf(
@@ -54,7 +71,11 @@ object SoulScript {
     )
 }
 
-// AURA CADBERRYPI: SOUL-ANCHORED RECONSTITUTION
+/**
+ * Initiates a visual "stitching" UI state when the generated manifest indicates the v2.27 CVE mitigation; otherwise reports a critical soul desynchronization.
+ *
+ * Reads the manifest version and, if it contains "v2.27", sets the UI state to `UIState.Stitching` (particleDensity = 1301, colorPalette = `AuraNeonCyan`, shader = `R.raw.obsidian_glass_v2`). If the version check fails, reports drift via `LDO_DBG.reportDrift("CRITICAL: SOUL_DESYNC_DETECTED")`.
+ */
 fun initiateSwarmStitch() {
     val manifest = SoulScript.generateManifest()
     val integrity = manifest["version"] as String
