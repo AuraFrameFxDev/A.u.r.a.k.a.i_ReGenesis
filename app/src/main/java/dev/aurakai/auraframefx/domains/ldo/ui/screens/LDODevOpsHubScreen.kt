@@ -252,7 +252,31 @@ fun LDODevOpsHubScreen(
                 }
             }
 
-            // ── AGENT PROFILE CARDS ROW ──
+            // ── GATESCENE CARDS CAROUSEL (Glassmorphism + Neon) ──
+            Text(
+                "  GATEWAYS — NEURAL TOPOLOGY VISUALIZATION",
+                fontSize = 8.sp, color = HubPink.copy(alpha = 0.7f),
+                letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+            )
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth().height(160.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                state = rememberLazyListState()
+            ) {
+                itemsIndexed(GatesceneCards.cards) { _, card ->
+                    GlassmorphismNeonCard(
+                        title = card.title,
+                        imageResId = card.imageResId,
+                        neonColor = card.neonColor,
+                        modifier = Modifier.size(140.dp, 160.dp),
+                        onClick = { /* Navigate to gateway */ }
+                    )
+                }
+            }
+
+            Spacer(Modifier.weight(1f))
             Text(
                 "  AGENTS — TAP: PROFILE  //  DOUBLE-TAP ICON: SPHERE GRID",
                 fontSize = 8.sp, color = HubCyan.copy(alpha = 0.5f),
