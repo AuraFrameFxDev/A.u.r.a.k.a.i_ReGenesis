@@ -22,17 +22,17 @@ interface LDOTaskDao {
     /**
      * Observes tasks assigned to the specified agent.
      *
-     * @param agentId The agent's identifier used to filter tasks by the `assignedAgentId` column.
-     * @return A Flow that emits the list of LDOTaskEntity rows assigned to the given agent whenever matching rows change.
+     * @param agentId Identifier used to filter tasks by the `assignedAgentId` column.
+     * @return The list of `LDOTaskEntity` rows assigned to the given agent.
      */
     @Query("SELECT * FROM ldo_tasks WHERE assignedAgentId = :agentId")
     fun observeByAgent(agentId: String): Flow<List<LDOTaskEntity>>
 
     /**
-     * Emits a stream of tasks filtered by the provided status.
+     * Observes tasks matching the given status.
      *
-     * @param status The task status value to filter tasks by.
-     * @return A Flow that emits lists of LDOTaskEntity matching the given status whenever the underlying data changes.
+     * @param status The status to filter tasks by.
+     * @return Lists of LDOTaskEntity matching the given status whenever the underlying data changes.
      */
     @Query("SELECT * FROM ldo_tasks WHERE status = :status")
     fun observeByStatus(status: String): Flow<List<LDOTaskEntity>>

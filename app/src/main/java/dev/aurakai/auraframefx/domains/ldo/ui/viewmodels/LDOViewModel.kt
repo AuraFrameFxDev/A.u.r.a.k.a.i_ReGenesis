@@ -85,6 +85,11 @@ class LDOViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Sets the currently selected agent by its id.
+     *
+     * @param agentId The id of the agent to select.
+     */
     fun selectAgent(agentId: String) {
         _selectedAgentId.update { agentId }
     }

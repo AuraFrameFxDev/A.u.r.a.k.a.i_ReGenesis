@@ -53,6 +53,20 @@ import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
  * @param onBack Callback invoked to navigate back from this screen.
  * @param viewModel View model supplying the UI state; defaults to an instance provided by Hilt (`hiltViewModel()`).
  */
+/**
+ * Displays the LDO Catalyst Hub screen: header, four quick-navigation cards, a task-stats summary,
+ * and a scrollable roster of agents driven by the viewModel's UI state.
+ *
+ * The UI reflects `viewModel.uiState`: shows a loading indicator while `state.isLoading` is true,
+ * otherwise renders the list of agents with bond and task counts. Selecting an agent updates the
+ * view model's selection; tapping a navigation card invokes the corresponding callback.
+ *
+ * @param onNavigateToRoster Invoked when the "ROSTER" quick-navigation card is tapped.
+ * @param onNavigateToDevOps Invoked when the "DEVOPS" quick-navigation card is tapped.
+ * @param onNavigateToTasker Invoked when the "TASKER" quick-navigation card is tapped.
+ * @param onNavigateToBonding Invoked when the "BONDS" quick-navigation card is tapped.
+ * @param onBack Invoked to navigate back from the screen.
+ */
 @Composable
 fun LDOCatalystHubScreen(
     onNavigateToRoster: () -> Unit = {},
