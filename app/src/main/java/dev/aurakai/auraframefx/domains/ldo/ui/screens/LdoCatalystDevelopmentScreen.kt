@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,12 +17,43 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
+import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LdoCatalystDevelopmentScreen(navController: NavController) {
     val agents = LDORoster.agents
+    var selectedAgent by remember { mutableStateOf<AgentCatalyst?>(null) }
+
+    // Show agent nav bottom sheet when an agent card is tapped from the carousel
+    val agent = selectedAgent
+    if (agent != null) {
+        AgentNavMenuSheet(
+            agent = agent,
+            onDismiss = { selectedAgent = null },
+            onCharacterSheet = {
+                selectedAgent = null
+                navController.navigate(ReGenesisRoute.LdoAgentProfile.createRoute(it.id))
+            },
+            onFusions = {
+                selectedAgent = null
+                navController.navigate(ReGenesisRoute.LdoFusion.route)
+            },
+            onTasks = {
+                selectedAgent = null
+                navController.navigate(ReGenesisRoute.LdoTasker.route)
+            },
+            onDomain = { route ->
+                selectedAgent = null
+                navController.navigate(route)
+            },
+            onBonding = {
+                selectedAgent = null
+                navController.navigate(ReGenesisRoute.LdoBonding.route)
+            },
+        )
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -75,7 +106,7 @@ fun LdoCatalystDevelopmentScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Tap an agent to access their DevOps profile",
+                    text = "Tap an agent card to navigate their domain",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.White.copy(alpha = 0.6f),
                     modifier = Modifier.padding(horizontal = 32.dp)
@@ -97,7 +128,9 @@ fun LdoCatalystDevelopmentScreen(navController: NavController) {
                         )
                     },
                     onGateSelected = { gate ->
-                        navController.navigate(gate.route)
+                        // Find the matching agent and show the nav menu instead of
+                        // navigating directly to the profile
+                        selectedAgent = agents.find { it.id == gate.id }
                     },
                     useStyleB = false,
                     cardHeight = 300.dp,

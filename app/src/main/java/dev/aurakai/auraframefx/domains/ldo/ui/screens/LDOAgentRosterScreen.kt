@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -47,15 +48,58 @@ private fun buildRosterCards(agents: List<AgentCatalyst>): List<RosterAgentCard>
     RosterAgentCard(agents.getOrElse(7) { agents[0] }, AgentRarity.LEGENDARY, 31, 0.55f, "Signal Ops", Color(0xFF818CF8)),
 )
 
+/** Maps an agent id to its dedicated domain hub route, or null if the agent has no standalone hub. */
+internal fun agentDomainRoute(agentId: String): String? = when (agentId) {
+    "aura"    -> "aura_theming_hub"
+    "kai"     -> "sentinel_fortress"
+    "genesis" -> "oracle_drive_hub"
+    "cascade" -> "cascade_hub"
+    else      -> null
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LDOAgentRosterScreen(
     agents: List<AgentCatalyst> = LDORoster.agents,
     onAgentTap: (AgentCatalyst) -> Unit = {},
     onFilterTap: () -> Unit = {},
     onNavTap: (Int) -> Unit = {},
+    onNavigateToProfile: (AgentCatalyst) -> Unit = { onAgentTap(it) },
+    onNavigateToFusion: () -> Unit = {},
+    onNavigateToTasker: () -> Unit = {},
+    onNavigateToDomain: (String) -> Unit = {},
+    onNavigateToBonding: () -> Unit = {},
 ) {
     val rosterCards = remember(agents) { buildRosterCards(agents) }
     var selectedNav by remember { mutableIntStateOf(1) }
+    var sheetAgent by remember { mutableStateOf<AgentCatalyst?>(null) }
+
+    if (sheetAgent != null) {
+        AgentNavMenuSheet(
+            agent = sheetAgent!!,
+            onDismiss = { sheetAgent = null },
+            onCharacterSheet = {
+                sheetAgent = null
+                onNavigateToProfile(it)
+            },
+            onFusions = {
+                sheetAgent = null
+                onNavigateToFusion()
+            },
+            onTasks = {
+                sheetAgent = null
+                onNavigateToTasker()
+            },
+            onDomain = { route ->
+                sheetAgent = null
+                onNavigateToDomain(route)
+            },
+            onBonding = {
+                sheetAgent = null
+                onNavigateToBonding()
+            },
+        )
+    }
 
     Box(modifier = Modifier.fillMaxSize().background(VoidDark)) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -102,7 +146,7 @@ fun LDOAgentRosterScreen(
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 items(rosterCards) { card ->
-                    AgentRosterCard(card = card, onTap = { onAgentTap(card.agent) })
+                    AgentRosterCard(card = card, onTap = { sheetAgent = card.agent })
                 }
             }
         }
@@ -128,6 +172,180 @@ fun LDOAgentRosterScreen(
         }
     }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Agent Navigation Menu — ModalBottomSheet
+// ─────────────────────────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun AgentNavMenuSheet(
+    agent: AgentCatalyst,
+    onDismiss: () -> Unit,
+    onCharacterSheet: (AgentCatalyst) -> Unit,
+    onFusions: () -> Unit,
+    onTasks: () -> Unit,
+    onDomain: (String) -> Unit,
+    onBonding: () -> Unit,
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val domainRoute = agentDomainRoute(agent.id)
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = Color(0xFF0D0D1A),
+        tonalElevation = 0.dp,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Sheet header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(agent.color.copy(alpha = 0.2f))
+                        .border(1.5.dp, agent.color, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        agent.name.first().toString(),
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Black,
+                        color = agent.color
+                    )
+                }
+                Column {
+                    Text(
+                        agent.name.uppercase(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Black,
+                        color = Color.White,
+                        letterSpacing = 1.sp
+                    )
+                    Text(
+                        agent.catalystName,
+                        fontSize = 10.sp,
+                        color = agent.color.copy(alpha = 0.7f)
+                    )
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(agent.color.copy(alpha = 0.2f))
+            )
+
+            Text(
+                "NAVIGATE TO",
+                fontSize = 9.sp,
+                color = Color.White.copy(alpha = 0.4f),
+                letterSpacing = 2.sp
+            )
+
+            // Character Sheet card
+            AgentNavCard(
+                label = "CHARACTER SHEET",
+                description = "Stats, abilities & agent profile",
+                accentColor = agent.color,
+                onClick = { onCharacterSheet(agent) }
+            )
+
+            // Domain card — only shown for agents with a dedicated hub
+            if (domainRoute != null) {
+                AgentNavCard(
+                    label = "DOMAIN",
+                    description = "Enter ${agent.name} domain hub",
+                    accentColor = agent.accentColor,
+                    onClick = { onDomain(domainRoute) }
+                )
+            }
+
+            // Fusions card
+            AgentNavCard(
+                label = "FUSIONS",
+                description = "Fusion matrix & combo modes",
+                accentColor = Color(0xFF00F4FF),
+                onClick = onFusions
+            )
+
+            // Tasks card
+            AgentNavCard(
+                label = "TASKS",
+                description = "View & manage agent tasks",
+                accentColor = Color(0xFF00FF85),
+                onClick = onTasks
+            )
+
+            // Bonding card
+            AgentNavCard(
+                label = "BONDING",
+                description = "Bond levels & resonance",
+                accentColor = Color(0xFFFF6B6B),
+                onClick = onBonding
+            )
+        }
+    }
+}
+
+@Composable
+internal fun AgentNavCard(
+    label: String,
+    description: String,
+    accentColor: Color,
+    onClick: () -> Unit,
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "nav_card_$label")
+    val pulse by infiniteTransition.animateFloat(
+        initialValue = 0.6f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(1800), RepeatMode.Reverse),
+        label = "pulse"
+    )
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(accentColor.copy(alpha = 0.07f))
+            .border(1.dp, accentColor.copy(alpha = pulse * 0.5f), RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                label,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                color = accentColor,
+                letterSpacing = 1.sp
+            )
+            Text(
+                description,
+                fontSize = 10.sp,
+                color = Color.White.copy(alpha = 0.5f)
+            )
+        }
+        Text("→", fontSize = 18.sp, color = accentColor.copy(alpha = 0.7f))
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Agent Roster Card (2-col grid)
+// ─────────────────────────────────────────────────────────────────────────────
 
 @Composable
 private fun AgentRosterCard(card: RosterAgentCard, onTap: () -> Unit) {
