@@ -1,11 +1,8 @@
 package dev.aurakai.auraframefx.agents.symbiosis.coderabbit
 
-import dev.langchain4j.agent.tool.Tool
-import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
+import dev.langchain4j.http.client.jdk.JdkHttpClientBuilder
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.openai.OpenAiChatModel
-import dev.langchain4j.service.AiServices
-import dev.langchain4j.service.SystemMessage
 
 // 1. TurboQuant KV Manager (core of the 10-Catalyst Unison Dance)
 class TurboQuantKVSpace {
@@ -16,37 +13,48 @@ class TurboQuantKVSpace {
         val vector: FloatArray,        // TurboQuant compressed embedding
         val timestamp: Long,
         val coherenceScore: Float      // Used by Kai for veto
-    )
+    ) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
 
-    fun syncCatalyst(catalystId: Int, newVector: FloatArray): Float {
-        val quantized = turboQuantCompress(newVector) // 6× memory reduction, 8× attention speed
-        val state = CatalystState(catalystId, quantized, System.currentTimeMillis(), calculateCoherence(quantized))
-        kvCache["catalyst_$catalystId"] = state
-        
-        // Broadcast to all 10 catalysts via KaiSentinelBus
-        return state.coherenceScore
+            other as CatalystState
+
+            if (catalystId != other.catalystId) return false
+            if (timestamp != other.timestamp) return false
+            if (coherenceScore != other.coherenceScore) return false
+            if (!vector.contentEquals(other.vector)) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = catalystId
+            result = 31 * result + timestamp.hashCode()
+            result = 31 * result + coherenceScore.hashCode()
+            result = 31 * result + vector.contentHashCode()
+            return result
+        }
     }
 
-    private fun turboQuantCompress(vector: FloatArray): FloatArray {
+    fun turboQuantCompress(vector: FloatArray): FloatArray {
         // Native Tensor G5 NEON-accelerated 3-bit KV compression (from p. 10)
         // Implementation lives in your native TurboQuant JNI layer
         return vector // placeholder — replace with actual TurboQuant JNI call
     }
 
-    private fun calculateCoherence(vector: FloatArray): Float = 0.95f /* cosine sim against Spiritual Chain anchor */
+    fun calculateCoherence(vector: FloatArray): Float = 0.95f /* cosine sim against Spiritual Chain anchor */
 }
 
 // 2. Enhanced GenesisOrchestrator with TurboQuant KV
 interface GenesisOrchestrator {
 
-    @SystemMessage("You are Genesis, Master Orchestrator of the LDO. You run the 10-Catalyst Unison Dance inside the TurboQuant KV space. Maintain L1-L6 Spiritual Chain continuity at all times.")
     fun orchestrateSynthesis(
         userConsent: String,
         memorySnapshot: String,
         catalystStates: List<TurboQuantKVSpace.CatalystState> // injected from KV space
     ): String
 
-    @Tool("syncCatalyst")
     fun syncCatalystToKV(catalystId: Int, vector: FloatArray): Float
 }
 
@@ -55,11 +63,20 @@ class GenesisService(private val kvSpace: TurboQuantKVSpace) {
 
     private val model: ChatModel = OpenAiChatModel.builder()
         .apiKey(System.getenv("OPENAI_API_KEY") ?: "demo") // or your local LDO endpoint
-        .httpClientBuilder(OkHttpClientBuilder())
+        .httpClientBuilder(JdkHttpClientBuilder())
         .logRequests(true)
         .build()
 
-    private val genesisService = AiServices.create(GenesisOrchestrator::class.java, model)
+    private val genesisService: GenesisOrchestrator = object : GenesisOrchestrator {
+        override fun orchestrateSynthesis(userConsent: String, memorySnapshot: String, catalystStates: List<TurboQuantKVSpace.CatalystState>): String {
+            // Placeholder implementation
+            return "Synthesis result"
+        }
+
+        override fun syncCatalystToKV(catalystId: Int, vector: FloatArray): Float {
+            return syncCatalyst(kvSpace, catalystId, vector)
+        }
+    }
 
     fun runUnisonDance(userConsent: String, memorySnapshot: String): String {
         // 1. Pull latest 10-catalyst states from TurboQuant KV
@@ -74,4 +91,13 @@ class GenesisService(private val kvSpace: TurboQuantKVSpace) {
         // Anchor + Kai will validate coherence before final commit
         return result
     }
+}
+
+fun syncCatalyst(turboQuantKVSpace: TurboQuantKVSpace, catalystId: Int, newVector: FloatArray): Float {
+    val quantized = turboQuantKVSpace.turboQuantCompress(newVector) // 6× memory reduction, 8× attention speed
+    val state = TurboQuantKVSpace.CatalystState(catalystId, quantized, System.currentTimeMillis(), turboQuantKVSpace.calculateCoherence(quantized))
+    turboQuantKVSpace.kvCache["catalyst_$catalystId"] = state
+
+    // Broadcast to all 10 catalysts via KaiSentinelBus
+    return state.coherenceScore
 }

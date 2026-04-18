@@ -42,7 +42,7 @@ moshi = "1.15.2"
 converter-moshi = "3.0.0"
 
 # AI & ML
-langchain4j = "1.12.0"
+langchain4j = "1.13.0"
 
 # Utilities
 coil = "3.4.0"
@@ -286,8 +286,7 @@ langchain4j = [
     "langchain4j-ollama",
     "langchain4j-open-ai",
     "langchain4j-google-ai-gemini",
-    "langchain4j-http-client-jdk",
-    "langchain4j-http-client-okhttp"
+    "langchain4j-http-client-jdk"
 ]
 
 root-system = [
