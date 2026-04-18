@@ -28,7 +28,7 @@ object TaskExecutionModule {
             auraAgent = auraAgent,
             kaiAgent = kaiAgent,
             genesisAgent = genesisAgent,
-            KaiSecurityContext = KaiSecurityContext,
+            securityContext = securityContext,
             logger = logger
         )
     }

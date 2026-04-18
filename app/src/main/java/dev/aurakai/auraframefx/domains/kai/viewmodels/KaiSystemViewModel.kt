@@ -12,6 +12,7 @@ import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import dev.aurakai.auraframefx.system.ShizukuManager
+import timber.log.Timber
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -179,6 +180,18 @@ class KaiSystemViewModel @Inject constructor(
     fun softReboot() {
         viewModelScope.launch(Dispatchers.IO) {
             Shell.cmd("reboot soft").exec()
+        }
+    }
+
+    fun clearLogs() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Shell.cmd("logcat -c").exec()
+                _logsState.value = _logsState.value.copy(entries = emptyList())
+                Timber.i("Logcat cleared")
+            } catch (e: Exception) {
+                _error.value = "Failed to clear logs"
+            }
         }
     }
 

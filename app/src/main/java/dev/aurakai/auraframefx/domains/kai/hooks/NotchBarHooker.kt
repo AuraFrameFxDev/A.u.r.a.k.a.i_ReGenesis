@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.domains.kai.hooks
 
+import android.graphics.Color as AndroidColor
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.toArgb
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
@@ -17,7 +17,7 @@ import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
  */
 class NotchBarHooker(private val config: NotchBarConfig) : YukiBaseHooker() {
 
-    private val PREFS_NOTCH_COLOR = PrefsData("notch_bar_color", config.backgroundColor.toArgb())
+    private val PREFS_NOTCH_COLOR = PrefsData("notch_bar_color", AndroidColor.parseColor(config.backgroundColorHex))
     private val PREFS_NOTCH_HEIGHT = PrefsData("notch_bar_height", config.height)
     private val PREFS_NOTCH_VISIBLE = PrefsData("notch_bar_visible", config.isVisible)
 

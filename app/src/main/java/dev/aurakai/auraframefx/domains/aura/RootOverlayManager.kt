@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura
 
 import dev.aurakai.auraframefx.domains.aura.ui.effects.*
-import dev.aurakai.auraframefx.domains.aura.ui.theme.model.AuraTheme as OverlayTheme
+import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
 import timber.log.Timber

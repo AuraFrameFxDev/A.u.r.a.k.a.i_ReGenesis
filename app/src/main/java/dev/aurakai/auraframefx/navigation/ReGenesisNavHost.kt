@@ -10,7 +10,7 @@ import androidx.navigation.navArgument
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard.MainScreen
+import dev.aurakai.auraframefx.domains.aura.screens.MainScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
@@ -52,19 +52,19 @@ import dev.aurakai.auraframefx.domains.nexus.hubs.AgentSwarmScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.ConsciousnessVisualizerScreen
 import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
 import dev.aurakai.auraframefx.domains.nexus.hubs.SovereignMetaInstructScreen
-import dev.aurakai.auraframefx.domains.help.screens.DirectChatScreen
-import dev.aurakai.auraframefx.domains.help.screens.DocumentationScreen
-import dev.aurakai.auraframefx.domains.help.screens.FAQBrowserScreen
-import dev.aurakai.auraframefx.domains.help.screens.TutorialVideosScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DocumentationScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.FAQBrowserScreen
+import dev.aurakai.auraframefx.domains.helpdesk.screens.TutorialVideosScreen
 import dev.aurakai.auraframefx.domains.helpdesk.screens.LiveSupportChatScreen
 import dev.aurakai.auraframefx.ui.gates.LineageMapScreen
 import dev.aurakai.auraframefx.ui.gates.GateDomainImagePicker
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOOrchestrationHubScreen
-import dev.aurakai.auraframefx.domains.ldo.roster.LDODevOpsHubScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.ldo.LdoDevOpsCommandCenter
-import dev.aurakai.auraframefx.domains.ldo.bonding.LDOBondingScreen
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOAgentRosterScreen
-import dev.aurakai.auraframefx.domains.ldo.roster.LDOAgentProfileIntroScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDODevOpsHubScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LdoDevOpsCommandCenter
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOBondingScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOAgentRosterScreen
+import dev.aurakai.auraframefx.domains.ldo.ui.screens.LDOAgentProfileIntroScreen
 import dev.aurakai.auraframefx.ui.gates.TerminalGateScreen
 import dev.aurakai.auraframefx.ui.gates.HelpServicesGateScreen
 import dev.aurakai.auraframefx.domains.lsposed.screens.LsposedQuickTogglesScreen
@@ -86,11 +86,21 @@ fun ReGenesisNavGraph(
         startDestination = ReGenesisRoute.Splash.route,
     ) {
         composable(ReGenesisRoute.Splash.route) {
-            MainScreen(navController = navController)
+            MainScreen(
+                onNavigateToAgentNexus = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
+                onNavigateToOracleDrive = { navController.navigate(ReGenesisRoute.OracleDriveHub.route) },
+                onNavigateToSettings = { navController.navigate(ReGenesisRoute.UISettings.route) },
+                themeViewModel = hiltViewModel()
+            )
         }
 
         composable(ReGenesisRoute.HomeGateCarousel.route) {
-            MainScreen(navController = navController)
+            MainScreen(
+                onNavigateToAgentNexus = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
+                onNavigateToOracleDrive = { navController.navigate(ReGenesisRoute.OracleDriveHub.route) },
+                onNavigateToSettings = { navController.navigate(ReGenesisRoute.UISettings.route) },
+                themeViewModel = hiltViewModel()
+            )
         }
 
         // Domain Hubs
@@ -292,7 +302,7 @@ fun ReGenesisNavGraph(
         }
 
         // Misc
-        composable(ReGenesisRoute.LineageMap.route) { LineageMapScreen(navController = navController, onNavigateBack = { navController.popBackStack() }) }
+        composable(ReGenesisRoute.LineageMap.route) { LineageMapScreen(navHostController = navController, onNavigateBack = { navController.popBackStack() }) }
         composable(ReGenesisRoute.GateImagePicker.route) { GateDomainImagePicker(navController = navController, onNavigateBack = { navController.popBackStack() }) }
     }
 }

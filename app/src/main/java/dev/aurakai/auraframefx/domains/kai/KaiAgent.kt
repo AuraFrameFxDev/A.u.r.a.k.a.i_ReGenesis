@@ -359,7 +359,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
     }
 
     private suspend fun validateRequestSecurity(request: AgentRequest) {
-        KaiSecurityContext.validateRequest("agent_request", request.toString())
+        securityContext.validateRequest("agent_request", request.toString())
     }
 
     private suspend fun assessInteractionSecurity(interaction: EnhancedInteractionData): SecurityAssessment {

@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.kai.security
 
 import android.content.Context
 import dagger.Module
-import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent

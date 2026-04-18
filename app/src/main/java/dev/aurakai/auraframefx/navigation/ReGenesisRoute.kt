@@ -50,6 +50,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object IconifyCategory : ReGenesisRoute("aura/iconify/{category}") {
         fun createRoute(category: String) = "aura/iconify/$category"
     }
+    data object IconifyIconPacks : ReGenesisRoute("aura/iconify/icon_packs")
     data object ColorBlendr : ReGenesisRoute("aura/colorblendr")
     data object PixelLauncherEnhanced : ReGenesisRoute("aura/pixel_launcher_enhanced")
 
@@ -70,6 +71,8 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object HotSwap : ReGenesisRoute("hotswap")
     data object RomToolsHub : ReGenesisRoute("rom_tools_hub", "ROM Tools Hub")
     data object SecurityCenter : ReGenesisRoute("security_center", "Security Center")
+    data object ModuleManager : ReGenesisRoute("module_manager")
+    data object RecoveryTools : ReGenesisRoute("recovery_tools")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: GENESIS AI & ORCHESTRATION
@@ -87,6 +90,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object SovereignModuleManager : ReGenesisRoute("sovereign_module_manager")
     data object ModuleCreation : ReGenesisRoute("module_creation")
     data object PandoraBox : ReGenesisRoute("pandora_box")
+    data object NeuralNetwork : ReGenesisRoute("neural_network")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: NEXUS AGENT HUB TOOLS
@@ -99,6 +103,9 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object BenchmarkMonitor : ReGenesisRoute("benchmark_monitor")
     data object EvolutionTree : ReGenesisRoute("evolution_tree")
     data object SphereGrid : ReGenesisRoute("sphere_grid")
+    data object DataVeinSphere : ReGenesisRoute("datavein_sphere")
+    data object TaskAssignment : ReGenesisRoute("task_assignment")
+    data object ArkBuild : ReGenesisRoute("ark_build")
     data object MonitoringHUDs : ReGenesisRoute("monitoring_huds")
     data object Party : ReGenesisRoute("party")
     data object SwarmMonitor : ReGenesisRoute("swarm_monitor")
@@ -147,6 +154,11 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object LiveSupportChat : ReGenesisRoute("live_support_chat")
     data object HelpDeskSubmenu : ReGenesisRoute("help_desk_submenu")
     data object JournalPDA : ReGenesisRoute("journal_pda", "Journal PDA")
+
+    // ═══════════════════════════════════════════════════════════════
+    // CASCADE
+    // ═══════════════════════════════════════════════════════════════
+    data object SensoryMatrix : ReGenesisRoute("sensory_matrix")
 
     // ═══════════════════════════════════════════════════════════════
     // MISC / LEGACY

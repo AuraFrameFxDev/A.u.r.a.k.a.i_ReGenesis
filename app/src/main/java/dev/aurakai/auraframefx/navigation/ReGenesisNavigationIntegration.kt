@@ -10,8 +10,10 @@ package dev.aurakai.auraframefx.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.IconifyPickerScreen
-// ColorBlendrScreen, IconifyCategoryDetailScreen, PixelLauncherEnhancedScreen - pending AgentsWired merge
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyPickerScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyCategoryDetailScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ColorBlendrScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.PixelLauncherEnhancedScreen
 
 // ============================================================================
 // NAVIGATION DESTINATIONS FOR CUSTOMIZATION
@@ -82,8 +84,8 @@ fun NavGraphBuilder.auraCustomizationNavigation(
         IconifyCategoryDetailScreen(
             categoryName = category,
             onNavigateBack = { navController.popBackStack() },
-            onNavigateToCategory = { category ->
-                navController.navigate(ReGenesisRoute.IconifyCategory.createRoute(category))
+            onNavigateToPicker = { cat ->
+                navController.navigate(ReGenesisRoute.IconifyCategory.createRoute(cat))
             }
         )
     }

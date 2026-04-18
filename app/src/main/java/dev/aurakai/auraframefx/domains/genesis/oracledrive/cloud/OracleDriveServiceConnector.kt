@@ -81,7 +81,7 @@ class OracleDriveServiceConnector(private val context: Context) {
 
     suspend fun getInternalDiagnosticsLog(): String? = withContext(Dispatchers.IO) {
         try {
-            auraDriveService?.getInternalDiagnosticsLog()?.joinToString("\n")
+            auraDriveService?.getInternalDiagnosticsLog()
         } catch (e: RemoteException) {
             null
         }

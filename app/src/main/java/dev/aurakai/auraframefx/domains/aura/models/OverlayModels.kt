@@ -19,6 +19,9 @@ data class SystemOverlayConfig(
 @Serializable
 data class NotchBarConfig(
     val enabled: Boolean = false,
+    val isVisible: Boolean = true,
+    val height: Int = 100,
+    val backgroundColorHex: String = "#000000",
     val customBackgroundColorEnabled: Boolean = false,
     val customBackgroundColor: String? = null,
     val customImageBackgroundEnabled: Boolean = false,

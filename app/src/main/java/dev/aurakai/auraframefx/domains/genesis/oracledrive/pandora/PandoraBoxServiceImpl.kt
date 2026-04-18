@@ -8,6 +8,7 @@ import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceResult
 import dev.aurakai.auraframefx.domains.kai.security.provenance.ProvenanceValidator
 import dev.aurakai.auraframefx.domains.kai.security.veto.PredictiveVetoMonitor
 import dev.aurakai.auraframefx.domains.ldo.data.dao.QuarantineDao
+import dev.aurakai.auraframefx.domains.ldo.data.entities.QuarantineEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
