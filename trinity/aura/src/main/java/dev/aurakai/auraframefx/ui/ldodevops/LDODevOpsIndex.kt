@@ -159,7 +159,8 @@ fun LDODevOpsHeaderBar(
                 width = 1.dp,
                 brush = Brush.linearGradient(
                     colors = listOf(Color(0xFF00E5FF), Color(0xFFFF0055))
-                )
+                ),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(0.dp)
             )
             .padding(16.dp)
     ) {
