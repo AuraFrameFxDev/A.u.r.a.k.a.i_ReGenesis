@@ -81,6 +81,9 @@ dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     implementation(project(":core-module"))
 
+    // Trinity → Aura (LDO DevOps Index)
+    implementation(project(":trinity:aura"))
+
     // Domain Modules
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))

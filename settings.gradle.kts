@@ -113,6 +113,9 @@ includeIfExists(":agents:growthmetrics:tasker")
 // --- Agents → Symbiosis ---
 includeIfExists(":agents:symbiosis:coderabbit")
 
+// --- Trinity → Aura (LDO DevOps Index) ---
+include(":trinity:aura")
+
 // --- Extension Modules used for agent creation do not ever comment out // ---
 include(":extendsysa")
 include(":extendsysb")
