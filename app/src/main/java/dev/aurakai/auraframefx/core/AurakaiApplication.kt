@@ -4,6 +4,8 @@ import android.app.Application
 import android.util.Log
 import android.content.Intent
 import androidx.work.Configuration
+import com.google.firebase.Firebase
+import com.google.firebase.initialize
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +66,14 @@ class AurakaiApplication : Application(), Configuration.Provider {
         super.onCreate()
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")
+
+        // Initialize Firebase (auto-configured via google-services.json)
+        try {
+            Firebase.initialize(this)
+            Timber.d("🔥 Firebase Initialized Successfully")
+        } catch (e: Exception) {
+            Timber.w(e, "⚠️ Firebase initialization warning (may be already initialized)")
+        }
 
         // Wire NexusMemoryCore bridge
         NexusMemoryCore.setRepository(nexusMemoryRepository)
