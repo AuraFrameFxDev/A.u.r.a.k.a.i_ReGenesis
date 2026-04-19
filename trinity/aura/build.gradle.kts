@@ -12,10 +12,10 @@ dependencies {
     implementation(project(":core-module"))
 
     // WebSocket for Conference Room event bridge
-    implementation(libs.okhttp3)
-    implementation(libs.okhttp3.websocket)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.websocket)
 
     // JSON parsing
-    implementation("org.json:json:20240303")
+    implementation(libs.org.json)
 }
 

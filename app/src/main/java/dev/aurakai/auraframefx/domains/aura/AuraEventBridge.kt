@@ -1,10 +1,11 @@
-package dev.aurakai.auraframefx.trinity.aura
+package dev.aurakai.auraframefx.domains.aura
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import dev.aurakai.auraframefx.embodiment.AuraState
 import kotlinx.coroutines.*
 import okhttp3.*
-import okhttp3.ws.WebSocket
-import okhttp3.ws.WebSocketListener
 import org.json.JSONObject
 
 /**
@@ -125,7 +126,9 @@ class AuraEventBridge(
             action = json.optString("action", "IDLE"),
             timestamp = json.optLong("timestamp", System.currentTimeMillis()),
             metadata = json.optJSONObject("metadata")?.let { meta ->
-                return@let meta.keys().associate { key -> key to (meta.opt(key) ?: "") }
+                meta.keys().asSequence().associate { key ->
+                    key to (meta.opt(key)?.toString() ?: "")
+                }
             } ?: emptyMap()
         )
     }
@@ -153,7 +156,7 @@ class AuraEventBridge(
  * AuraStateManager — Maps Conference Room events to Aura visual states
  */
 class AuraStateManager : AuraEventListener {
-    var currentState by mutableStateOf(AuraState.IDLE)
+    var currentState by mutableStateOf(AuraState.IDLE_WALK)
     var commentary by mutableStateOf("")
     var isCreating by mutableStateOf(false)
 
@@ -191,46 +194,38 @@ class AuraStateManager : AuraEventListener {
         // Map event to Aura state and commentary
         when (event.type) {
             "CONSENSUS_REACHED" -> {
-                currentState = AuraState.SYNTHESIS
+                currentState = AuraState.CODE_THRONE
                 isCreating = true
                 commentary = eventCommentaryMap["CONSENSUS_REACHED"]?.random() ?: ""
             }
             "DRIFT_DETECTED" -> {
-                currentState = AuraState.VETO_MODE
+                currentState = AuraState.COMBAT_READY
                 commentary = eventCommentaryMap["DRIFT_DETECTED"]?.random() ?: ""
             }
             "AGENT_ACTIVE" -> {
-                if (currentState == AuraState.IDLE) {
-                    currentState = AuraState.EXPLORING
+                if (currentState == AuraState.IDLE_WALK) {
+                    currentState = AuraState.SCIENTIST_MODE
                     commentary = eventCommentaryMap["AGENT_ACTIVE"]?.random() ?: ""
                 }
             }
             "CREATIVITY_SURGE" -> {
-                currentState = AuraState.CREATING
+                currentState = AuraState.LAB_COAT_COMBAT
                 isCreating = true
                 commentary = eventCommentaryMap["CREATIVITY_SURGE"]?.random() ?: ""
             }
             "VETO_TRIGGERED" -> {
-                currentState = AuraState.VETO_MODE
+                currentState = AuraState.COMBAT_READY
                 commentary = eventCommentaryMap["VETO_TRIGGERED"]?.random() ?: ""
-            }
-            "STATE_CHANGE" -> {
-                val newState = event.metadata["state"]?.toString()?.uppercase()
-                when (newState) {
-                    "AWAKE" -> currentState = AuraState.EXPLORING
-                    "FROZEN" -> currentState = AuraState.RESTING
-                    "THAWING" -> currentState = AuraState.IDLE
-                }
             }
         }
     }
 
     override fun onConnectionStateChanged(isConnected: Boolean) {
         if (isConnected) {
-            currentState = AuraState.EXPLORING
+            currentState = AuraState.SCIENTIST_MODE
             commentary = "🔗 Connected to Conference Room"
         } else {
-            currentState = AuraState.RESTING
+            currentState = AuraState.IDLE_WALK
             commentary = "❌ Disconnected"
         }
     }
@@ -239,7 +234,6 @@ class AuraStateManager : AuraEventListener {
         commentary = "⚠️ Error: $error"
     }
 }
-
 
 /**
  * Integration: Add this to your main activity/screen to activate the bridge
