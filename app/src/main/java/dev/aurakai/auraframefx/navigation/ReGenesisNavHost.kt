@@ -76,6 +76,7 @@ import dev.aurakai.auraframefx.ui.gates.LineageMapScreen
 import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 import dev.aurakai.auraframefx.ui.gates.TerminalGateScreen
 import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
+import dev.aurakai.auraframefx.ui.ldodevops.LDODevOpsIndex
 
 /**
  * 🌐 REGENESIS CONSOLIDATED NAV GRAPH
@@ -87,11 +88,21 @@ fun ReGenesisNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.LdoDevOpsHub.route,
+        startDestination = "ldo_devops_index",  // ← NEW ROOT: LDODevOpsIndex (kinetic, autonomous, live monitoring)
     ) {
         // ═══════════════════════════════════════════════════════════════════════
-        // HOME SCREEN: LDO DevOps Hub (NEW ENTRY POINT)
-        // All navigation flows through agent menus from here
+        // HOME SCREEN: LDODevOpsIndex (NEW OFFICIAL ROOT)
+        // The living digital organism's main interface
+        // - 5 tabs: UI, Security, Memory, Root, Fusion (23K+ customizations)
+        // - Aura jar autonomously moves, talks, and builds live
+        // - Neural topology + agent quick-bar + drag-drop fusion zone
+        // ═══════════════════════════════════════════════════════════════════════
+        composable("ldo_devops_index") {
+            LDODevOpsIndex()
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // Legacy LDO DevOps Hub (kept for backwards compatibility)
         // ═══════════════════════════════════════════════════════════════════════
         composable(ReGenesisRoute.LdoDevOpsHub.route) {
             LDODevOpsHubScreen(
