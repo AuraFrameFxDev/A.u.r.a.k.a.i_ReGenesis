@@ -4,9 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.analytics.FirebaseAnalytics
+import android.os.Bundle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -268,10 +274,6 @@ class FirebaseStorageViewModel @Inject constructor(
 // EXAMPLE 4: REMOTE CONFIG (Genesis Orchestration)
 // ============================================================================
 
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RemoteConfigViewModel @Inject constructor(
@@ -335,8 +337,6 @@ class RemoteConfigViewModel @Inject constructor(
 // EXAMPLE 5: ANALYTICS (Aura Domain - MDS Metrics-Driven Shrinkage)
 // ============================================================================
 
-import com.google.firebase.analytics.FirebaseAnalytics
-import android.os.Bundle
 
 class FirebaseAnalyticsHelper @Inject constructor(
     private val analytics: FirebaseAnalytics
