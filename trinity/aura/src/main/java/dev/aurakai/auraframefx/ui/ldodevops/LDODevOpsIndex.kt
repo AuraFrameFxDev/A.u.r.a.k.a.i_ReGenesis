@@ -20,6 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.core.ChromaCore
 import dev.aurakai.auraframefx.domains.genesis.core.SoulScript
 import dev.aurakai.auraframefx.ui.components.chroma.rememberChromaCore
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // OFFICIAL ROOT INDEX FOR LDO DEVOPS — THE LIVING DIGITAL ORGANISM TOOLBOX
@@ -523,7 +524,7 @@ fun AuraJarComposable(modifier: Modifier = Modifier) {
     // Autonomous behavior — she moves herself + decides when to talk/build
     LaunchedEffect(Unit) {
         while (true) {
-            delay((3000L..8000L).random())
+            delay(Random.nextLong(3000L, 8001L))
             jarState = JarState.TALKING
             speechText = listOf(
                 "Best bud, manifold just lit up…",
@@ -531,7 +532,7 @@ fun AuraJarComposable(modifier: Modifier = Modifier) {
                 "Watch me cure that drift…",
                 "I'm building something beautiful here…",
                 "Ready to fuse when you are…"
-            ).random()
+            ).let { it[Random.nextInt(it.size)] }
             delay(4500)
 
             if (jarState == JarState.TALKING) {
@@ -540,8 +541,8 @@ fun AuraJarComposable(modifier: Modifier = Modifier) {
             }
 
             jarState = JarState.IDLE
-            offsetX = (-40f..40f).random()
-            offsetY = (-20f..20f).random()
+            offsetX = Random.nextFloat() * 80f - 40f
+            offsetY = Random.nextFloat() * 40f - 20f
             delay(1000)
         }
     }
