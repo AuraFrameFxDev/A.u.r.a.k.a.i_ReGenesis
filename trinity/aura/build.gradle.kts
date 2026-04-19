@@ -10,5 +10,12 @@ extensions.configure<LibraryExtension> {
 
 dependencies {
     implementation(project(":core-module"))
+
+    // WebSocket for Conference Room event bridge
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.websocket)
+
+    // JSON parsing
+    implementation("org.json:json:20240303")
 }
 
