@@ -21,6 +21,9 @@ dependencies {
     // - Compose enabled by default
     // ═══════════════════════════════════════════════════════════════════════
 
+    // Wire extendsysf → extendsysc chain
+    api(project(":extendsysc"))
+
     // Expose core KTX as API
     api(libs.androidx.core.ktx)
 
