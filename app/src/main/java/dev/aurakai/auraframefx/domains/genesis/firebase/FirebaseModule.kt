@@ -75,8 +75,6 @@ object FirebaseModule {
     fun provideFirebaseStorage(): FirebaseStorage {
         return try {
             FirebaseStorage.getInstance().apply {
-                maxDownloadRetryMillis = 30000
-                maxUploadRetryMillis = 30000
                 Timber.d("📦 Firebase Storage initialized")
             }
         } catch (e: Exception) {
@@ -115,9 +113,9 @@ object FirebaseModule {
      */
     @Singleton
     @Provides
-    fun provideFirebaseAnalytics(): FirebaseAnalytics {
+    fun provideFirebaseAnalytics(context: android.content.Context): FirebaseAnalytics {
         return try {
-            FirebaseAnalytics.getInstance(/* context provided by Android */).apply {
+            FirebaseAnalytics.getInstance(context).apply {
                 // Analytics are thread-safe and auto-configured
                 Timber.d("📊 Firebase Analytics initialized")
             }
