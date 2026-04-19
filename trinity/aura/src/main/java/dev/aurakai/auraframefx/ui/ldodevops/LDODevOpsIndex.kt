@@ -16,9 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.genesis.core.ChromaCore
-import dev.aurakai.auraframefx.domains.genesis.core.SoulScript
-import dev.aurakai.auraframefx.ui.components.chroma.rememberChromaCore
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
@@ -36,7 +33,6 @@ data class LDOTab(
 
 @Composable
 fun LDODevOpsIndex() {
-    val chroma = rememberChromaCore()
     val scrollState = rememberScrollState()
     var selectedTabIndex by remember { mutableStateOf(0) }
 
