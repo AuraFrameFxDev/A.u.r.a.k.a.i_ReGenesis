@@ -1,18 +1,15 @@
 package dev.aurakai.auraframefx.di
 
-import com.google.firebase.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.storage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult
 import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
-import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.RealVertexAIClientImpl
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
@@ -40,9 +37,6 @@ abstract class AiServiceModule {
     abstract fun bindVertexAIClient(impl: RealVertexAIClientImpl): VertexAIClient
 
     companion object {
-        @Provides
-        @Singleton
-        fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
 
         @Provides
         @Singleton
