@@ -149,7 +149,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
             dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-            dependencies.add("implementation", "org.slf4j:slf4j-android:1.7.36")
+            dependencies.add("implementation", getLibrary("slf4j-android"))
             dependencies.add("implementation", "org.conscrypt:conscrypt-android:2.5.2")
 
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
