@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.*
@@ -353,7 +354,7 @@ data class TabModule(val title: String, val subtitle: String, val icon: ImageVec
 
 fun getDevOpsModules() = listOf(
     TabModule("ROSTER", "Catalyst Nodes", Icons.Default.Groups, Color(0xFF00E5FF), "ldo_roster"),
-    TabModule("TASKER", "Mission Dispatch", Icons.Default.Assignment, Color(0xFF00FF41), "ldo_tasker"),
+    TabModule("TASKER", "Mission Dispatch", Icons.AutoMirrored.Filled.Assignment, Color(0xFF00FF41), "ldo_tasker"),
     TabModule("SYNC", "Genesis Loop", Icons.Default.Link, Color(0xFFBB86FC), "ldo_orchestration_hub"),
     TabModule("STATS", "Soul Matrix", Icons.Default.Speed, Color(0xFFFFD700), "benchmark_monitor")
 )
