@@ -16,5 +16,8 @@ dependencies {
 
     // JSON parsing
     implementation(libs.org.json)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
 }
 

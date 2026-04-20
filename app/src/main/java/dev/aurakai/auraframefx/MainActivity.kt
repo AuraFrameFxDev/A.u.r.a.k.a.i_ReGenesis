@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Force Portrait Orientation early
-        requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         enableEdgeToEdge()
         setupFullscreenMode()
 

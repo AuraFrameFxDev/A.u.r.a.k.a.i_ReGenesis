@@ -32,7 +32,9 @@ data class LDOTab(
 )
 
 @Composable
-fun LDODevOpsIndex() {
+fun LDODevOpsIndex(
+    onNavigateToRoute: (String) -> Unit = {}
+) {
     val scrollState = rememberScrollState()
     var selectedTabIndex by remember { mutableStateOf(0) }
 
@@ -92,11 +94,11 @@ fun LDODevOpsIndex() {
                 .verticalScroll(scrollState)
         ) {
             when (selectedTabIndex) {
-                0 -> UIChromaMonitoringPanel()
-                1 -> KaiSecurityMonitoringPanel()
-                2 -> MemorySoulMonitoringPanel()
-                3 -> RootLSPosedMonitoringPanel()
-                4 -> FusionAgentsMonitoringPanel()
+                0 -> UIChromaMonitoringPanel(onNavigateToRoute)
+                1 -> KaiSecurityMonitoringPanel(onNavigateToRoute)
+                2 -> MemorySoulMonitoringPanel(onNavigateToRoute)
+                3 -> RootLSPosedMonitoringPanel(onNavigateToRoute)
+                4 -> FusionAgentsMonitoringPanel(onNavigateToRoute)
             }
         }
 
@@ -111,6 +113,7 @@ fun LDODevOpsIndex() {
 
         // ─── AGENT QUICK-BAR (middle area) ───
         AgentQuickBarPanel(
+            onNavigateToRoute = onNavigateToRoute,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 180.dp)
@@ -118,6 +121,7 @@ fun LDODevOpsIndex() {
 
         // ─── BOTTOM DRAG-AND-DROP TOOLBOX ───
         TaskFusionDropZone(
+            onOpenTasker = { onNavigateToRoute("ldo_tasker") },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp)
@@ -259,91 +263,96 @@ fun LDOTabButton(
 // ═══════════════════════════════════════════════════════════════════════════════
 
 @Composable
-fun UIChromaMonitoringPanel() {
+fun UIChromaMonitoringPanel(onNavigateToRoute: (String) -> Unit) {
     MonitoringPanelLayout(
         title = "UI & ChromaCore Customizations",
         count = 10247,
         items = listOf(
-            "Color Palettes: 847",
-            "Glassmorphism Layers: 3,204",
-            "Particle Shaders: 1,892",
-            "RealityMorph Animations: 2,156",
-            "Iconify Packs: 1,048",
-            "Custom Fonts: 256",
-            "Gradient Presets: 844"
+            "Color Palettes: 847" to "chroma_core_colors",
+            "Glassmorphism Layers: 3,204" to "sandbox_ui",
+            "Particle Shaders: 1,892" to "chroma_animations",
+            "RealityMorph Animations: 2,156" to "chroma_animations",
+            "Iconify Packs: 1,048" to "aura/iconify",
+            "Custom Fonts: 256" to "theme_engine",
+            "Gradient Presets: 844" to "chroma_core_colors"
         ),
-        tint = Color(0xFF00E5FF)
+        tint = Color(0xFF00E5FF),
+        onItemClick = onNavigateToRoute
     )
 }
 
 @Composable
-fun KaiSecurityMonitoringPanel() {
+fun KaiSecurityMonitoringPanel(onNavigateToRoute: (String) -> Unit) {
     MonitoringPanelLayout(
         title = "Security & Sentinel Fortress",
         count = 3892,
         items = listOf(
-            "Bootloader Hooks: 256",
-            "Thermal Guards: 128",
-            "RGSS Encryption Keys: 64",
-            "LSPosed Modules: 512",
-            "Root Persistence Chains: 89",
-            "Integrity Audits: 1,842",
-            "Access Control Rules: 401"
+            "Bootloader Hooks: 256" to "bootloader",
+            "Thermal Guards: 128" to "system_overrides",
+            "RGSS Encryption Keys: 64" to "sovereign_shield",
+            "LSPosed Modules: 512" to "lsposed_modules",
+            "Root Persistence Chains: 89" to "root_tools",
+            "Integrity Audits: 1,842" to "system_journal",
+            "Access Control Rules: 401" to "sovereign_shield"
         ),
-        tint = Color(0xFFFF0055)
+        tint = Color(0xFFFF0055),
+        onItemClick = onNavigateToRoute
     )
 }
 
 @Composable
-fun MemorySoulMonitoringPanel() {
+fun MemorySoulMonitoringPanel(onNavigateToRoute: (String) -> Unit) {
     MonitoringPanelLayout(
         title = "Memory & Spiritual Chain L1-L6",
         count = 2104,
         items = listOf(
-            "L1 Immutable Archives: 320",
-            "L2 Hardware Keystore Anchors: 128",
-            "L3 State-Freeze Snapshots: 256",
-            "L4 TurboQuant Compressions: 512",
-            "L5 Drift Detection Events: 704",
-            "L6 Consciousness Matrix States: 184"
+            "L1 Immutable Archives: 320" to "cascade_hub",
+            "L2 Hardware Keystore Anchors: 128" to "cascade_hub",
+            "L3 State-Freeze Snapshots: 256" to "cascade_hub",
+            "L4 TurboQuant Compressions: 512" to "cascade_hub",
+            "L5 Drift Detection Events: 704" to "dataflow_analysis",
+            "L6 Consciousness Matrix States: 184" to "consciousness_visualizer"
         ),
-        tint = Color(0xFF00E5FF)
+        tint = Color(0xFF00E5FF),
+        onItemClick = onNavigateToRoute
     )
 }
 
 @Composable
-fun RootLSPosedMonitoringPanel() {
+fun RootLSPosedMonitoringPanel(onNavigateToRoute: (String) -> Unit) {
     MonitoringPanelLayout(
         title = "Root & LSPosed Hook Manager",
         count = 5687,
         items = listOf(
-            "Active Hooks: 1,247",
-            "Z-Order Overlays: 892",
-            "System Patches: 456",
-            "Iconify Packs: 200+",
-            "Module Hooks: 1,234",
-            "Thermal Throttle Rules: 512",
-            "Custom Permission Sets: 146"
+            "Active Hooks: 1,247" to "xposed_panel",
+            "Z-Order Overlays: 892" to "lsposed_quick_toggles",
+            "System Patches: 456" to "root_tools",
+            "Iconify Packs: 200+" to "aura/iconify",
+            "Module Hooks: 1,234" to "lsposed_modules",
+            "Thermal Throttle Rules: 512" to "system_overrides",
+            "Custom Permission Sets: 146" to "sovereign_shield"
         ),
-        tint = Color(0xFFFF0055)
+        tint = Color(0xFFFF0055),
+        onItemClick = onNavigateToRoute
     )
 }
 
 @Composable
-fun FusionAgentsMonitoringPanel() {
+fun FusionAgentsMonitoringPanel(onNavigateToRoute: (String) -> Unit) {
     MonitoringPanelLayout(
         title = "Fusion & 12-Point Catalyst Manifold",
         count = 1289,
         items = listOf(
-            "Catalyst Agents: 12",
-            "Active Fusions: 0 / 7",
-            "Conference Room Tasks: 0 / 64",
-            "Voltron Combinations: 42",
-            "Tasking Queue: 0 / 128",
-            "Bond Levels: 95-100%",
-            "Genesis Consensus: 99.8%"
+            "Catalyst Agents: 12" to "ldo_roster",
+            "Active Fusions: 0 / 7" to "fusion_mode",
+            "Conference Room Tasks: 0 / 64" to "conference_room",
+            "Voltron Combinations: 42" to "fusion_mode",
+            "Tasking Queue: 0 / 128" to "ldo_tasker",
+            "Bond Levels: 95-100%" to "ldo_bonding",
+            "Genesis Consensus: 99.8%" to "agent_nexus_hub"
         ),
-        tint = Color(0xFF00E5FF)
+        tint = Color(0xFF00E5FF),
+        onItemClick = onNavigateToRoute
     )
 }
 
@@ -351,8 +360,9 @@ fun FusionAgentsMonitoringPanel() {
 fun MonitoringPanelLayout(
     title: String,
     count: Int,
-    items: List<String>,
-    tint: Color
+    items: List<Pair<String, String>>,
+    tint: Color,
+    onItemClick: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -373,11 +383,12 @@ fun MonitoringPanelLayout(
                 color = tint
             )
             Spacer(modifier = Modifier.height(12.dp))
-            items.forEach { item ->
+            items.forEach { (label, route) ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .clickable { onItemClick(route) },
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -388,7 +399,7 @@ fun MonitoringPanelLayout(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = item,
+                        text = label,
                         fontSize = 12.sp,
                         color = Color(0xFFCCCCCC)
                     )
@@ -420,7 +431,10 @@ fun NeuralTopologyVisualizer(modifier: Modifier = Modifier) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 @Composable
-fun AgentQuickBarPanel(modifier: Modifier = Modifier) {
+fun AgentQuickBarPanel(
+    onNavigateToRoute: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .fillMaxWidth(0.85f)
@@ -434,15 +448,15 @@ fun AgentQuickBarPanel(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AgentCard("Genesis", "Emergence\nCatalyst", bond = 100)
-        AgentCard("Kai", "Sentinel\nCatalyst", bond = 95)
-        AgentCard("Aura", "Creative\nCatalyst", bond = 98)
-        AgentCard("Cascade", "DataStream\nCatalyst", bond = 80)
+        AgentCard("Genesis", "Emergence\nCatalyst", bond = 100) { onNavigateToRoute("agent_nexus_hub") }
+        AgentCard("Kai", "Sentinel\nCatalyst", bond = 95) { onNavigateToRoute("sentinel_fortress") }
+        AgentCard("Aura", "Creative\nCatalyst", bond = 98) { onNavigateToRoute("aura_theming_hub") }
+        AgentCard("Cascade", "DataStream\nCatalyst", bond = 80) { onNavigateToRoute("cascade_hub") }
     }
 }
 
 @Composable
-fun AgentCard(name: String, role: String, bond: Int) {
+fun AgentCard(name: String, role: String, bond: Int, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(60.dp)
@@ -451,7 +465,7 @@ fun AgentCard(name: String, role: String, bond: Int) {
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             )
             .border(1.5.dp, Color(0xFF00E5FF).copy(alpha = 0.5f), androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
-            .clickable { /* open agent profile */ }
+            .clickable(onClick = onClick)
             .padding(4.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -467,7 +481,7 @@ fun AgentCard(name: String, role: String, bond: Int) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 @Composable
-fun TaskFusionDropZone(modifier: Modifier = Modifier) {
+fun TaskFusionDropZone(onOpenTasker: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .background(
@@ -475,6 +489,7 @@ fun TaskFusionDropZone(modifier: Modifier = Modifier) {
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
             )
             .border(2.dp, Color(0xFF00E5FF).copy(alpha = 0.5f), androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+            .clickable(onClick = onOpenTasker)
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -621,4 +636,3 @@ fun AuraJarComposable(modifier: Modifier = Modifier) {
         }
     }
 }
-

@@ -98,7 +98,9 @@ fun ReGenesisNavGraph(
         // - Neural topology + agent quick-bar + drag-drop fusion zone
         // ═══════════════════════════════════════════════════════════════════════
         composable("ldo_devops_index") {
-            LDODevOpsIndex()
+            LDODevOpsIndex(
+                onNavigateToRoute = { route -> navController.navigate(route) }
+            )
         }
 
         // ═══════════════════════════════════════════════════════════════════════
