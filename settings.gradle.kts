@@ -9,12 +9,12 @@ pluginManagement {
     includeBuild("build-logic")
 
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
         maven { url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/eap") }
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://dl.google.com/dl/android/maven2/") }
+        gradlePluginPortal()
     }
 }
 

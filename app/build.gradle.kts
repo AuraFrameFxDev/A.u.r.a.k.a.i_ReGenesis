@@ -13,6 +13,10 @@ plugins {
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
 
+    androidResources {
+        localeFilters += "en"
+    }
+
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
         versionCode = 1
@@ -71,6 +75,12 @@ extensions.configure<ApplicationExtension> {
                     }
                 }
             }
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            isCrunchPngs = false
         }
     }
 }

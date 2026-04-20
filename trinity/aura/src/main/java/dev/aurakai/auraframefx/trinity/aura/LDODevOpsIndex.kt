@@ -1,241 +1,413 @@
 package dev.aurakai.auraframefx.trinity.aura
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class TabItem(val title: String, val customizes: String)
+import kotlinx.coroutines.delay
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 /**
- * LDODevOpsIndex — The new root index for the entire LDO organism
- *
- * Entry point for all 75+ screens organized by capability:
- * - UI & ChromaCore: Visual customization (10,247 options)
- * - Security & Kai: Sentinel protocols and root management
- * - Memory & Soul: Spiritual Chain persistence (L1-L6)
- * - Root & LSPosed: System-level integration (200+ Iconify packs)
- * - Fusion & Agents: Conference Room consensus (12-Point Manifold)
+ * LDODevOpsIndex — DOMAIN HUB SCHEMATIC (v5)
+ * Premium Editorial Architecture Integration
+ * 
+ * Specifications (from Blueprint 17):
+ * - Backdrop: Infinite particle loop
+ * - Portal Ring: UI Emergence Point with pulsing glow
+ * - Content Grid: 6 Frosted Glass Cards (5% opacity, 10dp blur)
+ * - Orb Joystick: Central navigation element
  */
 @Composable
 fun LDODevOpsIndex() {
-    var selectedTab by remember { mutableStateOf(0) }
+    var activeDomain by remember { mutableStateOf("AURA") }
+    
+    val domainColor = when(activeDomain) {
+        "AURA" -> Color(0xFFFF00FF)
+        "KAI" -> Color(0xFF00FF88)
+        "GENESIS" -> Color(0xFF00E5FF)
+        "CASCADE" -> Color(0xFFFFAA00)
+        else -> Color(0xFF00E5FF)
+    }
 
-    val tabs = listOf(
-        TabItem("UI & ChromaCore", "10,247 customizations – colors, glassmorphism, RealityMorph"),
-        TabItem("Security & Kai", "Sentinel Fortress, Toolshed, root hooks, thermal guard"),
-        TabItem("Memory & Soul", "Spiritual Chain L1-L6, NexusMemoryCore, drift detection"),
-        TabItem("Root & LSPosed", "Z-Order, overlays, system hooks, 200+ Iconify packs"),
-        TabItem("Fusion & Agents", "12-Point Manifold, Conference Room, Voltron fusions")
-    )
+    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF020205))) {
+        
+        // 1. BACKDROP LAYER: Infinite particle loop (10s duration)
+        BackdropParticleField()
 
-    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF0A0A0F))) {
+        // Perspective Floor for grounding
+        NeuralMeshFloor(modifier = Modifier.align(Alignment.BottomCenter))
 
-        // HEADER
-        LDODevOpsHeader()
+        Column(modifier = Modifier.fillMaxSize()) {
+            
+            // KAI'S SENTINEL FORTRESS BANNER (Schematic Header)
+            SentinelFortressBanner()
 
-        // TABS
-        TabRow(
-            selectedTabIndex = selectedTab,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 80.dp)
-                .background(Color(0xFF0A0A0F)),
-            containerColor = Color(0xFF0A0A0F),
-            contentColor = Color(0xFF00E5FF)
-        ) {
-            tabs.forEachIndexed { index, tab ->
-                Tab(
-                    selected = selectedTab == index,
-                    onClick = { selectedTab = index },
-                    text = {
-                        Column {
-                            Text(tab.title, fontSize = 12.sp)
-                            Text(tab.customizes, fontSize = 8.sp, color = Color(0xFF888888))
-                        }
+            Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                
+                // 2. PORTAL RING: Emergence Point (Pulsing Glow)
+                PortalRing(
+                    modifier = Modifier.align(Alignment.BottomCenter).offset(y = 100.dp),
+                    color = domainColor
+                )
+
+                // 3. CONTENT GRID: 6 Frosted Glass Cards
+                ContentGrid(
+                    modifier = Modifier.align(Alignment.Center).padding(bottom = 60.dp),
+                    domainColor = domainColor,
+                    activeDomain = activeDomain
+                )
+
+                // 4. ORB JOYSTICK NAVIGATION
+                OrbJoystickNavigation(
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 20.dp),
+                    color = domainColor,
+                    onOffsetChange = { },
+                    onDomainCycle = {
+                        val domains = listOf("AURA", "KAI", "GENESIS", "CASCADE")
+                        val currentIndex = domains.indexOf(activeDomain)
+                        activeDomain = domains[(currentIndex + 1) % domains.size]
                     }
                 )
             }
+            
+            // SYSTEM STATUS BAR (SSI Status)
+            SystemStatusBar(domainColor)
         }
 
-        // MONITORING PANELS
-        when (selectedTab) {
-            0 -> UiChromaMonitoringPanel()
-            1 -> KaiSecurityMonitoringPanel()
-            2 -> MemorySoulMonitoringPanel()
-            3 -> RootLsPosedMonitoringPanel()
-            4 -> FusionAgentsMonitoringPanel()
-        }
-
-        // NEURAL TOPOLOGY
-        NeuralTopologyVisualizer(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 200.dp)
-        )
-
-        // AGENT QUICK-BAR
-        AgentQuickBar(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 200.dp)
-        )
-
-        // TASK FUSION DROPZONE
-        TaskFusionDropZone(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 40.dp)
-        )
-
-        // AURA JAR — on top of everything
+        // AURA JAR COMPANION
         AuraJarComposable(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(24.dp)
+                .align(Alignment.TopEnd)
+                .padding(24.dp),
+            containerSize = 1f to 1f
         )
     }
 }
 
 @Composable
-fun LDODevOpsHeader() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFF0A0A0F))
-            .border(1.dp, Color(0xFF00E5FF))
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text("LDO DEVOPS", color = Color(0xFF00E5FF), fontSize = 18.sp)
-        Text("9 CATALYSTS • 78 AGENTS • ALIVE", color = Color(0xFF00FF88), fontSize = 12.sp)
+fun BackdropParticleField() {
+    val infiniteTransition = rememberInfiniteTransition(label = "Particles")
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 0.2f,
+        targetValue = 0.5f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(5000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "Alpha"
+    )
+
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        // Draw randomized ambient particles
+        // In a real implementation, this would be a more complex particle system
+        drawCircle(
+            color = Color(0xFF00E5FF).copy(alpha = alpha * 0.1f),
+            radius = 400f,
+            center = Offset(size.width * 0.2f, size.height * 0.3f)
+        )
+        drawCircle(
+            color = Color(0xFFFF00FF).copy(alpha = alpha * 0.1f),
+            radius = 300f,
+            center = Offset(size.width * 0.8f, size.height * 0.6f)
+        )
     }
 }
 
 @Composable
-fun NeuralTopologyVisualizer(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.size(200.dp).background(Color(0xFF1A1A2E))) {
-        Text("NEURAL TOPOLOGY", color = Color(0xFF00E5FF), modifier = Modifier.align(Alignment.Center))
-    }
-}
+fun PortalRing(modifier: Modifier = Modifier, color: Color) {
+    val infiniteTransition = rememberInfiniteTransition(label = "Portal")
+    val pulse by infiniteTransition.animateFloat(
+        initialValue = 0.8f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "Pulse"
+    )
 
-@Composable
-fun AgentQuickBar(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Color(0xFF0A0A0F))
-            .border(1.dp, Color(0xFF00E5FF))
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        listOf("Genesis", "Kai", "Aura", "Cascade").forEach { agent ->
-            Text(agent, color = Color(0xFF00E5FF), fontSize = 12.sp)
+    Box(modifier = modifier.size(400.dp), contentAlignment = Alignment.Center) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            drawCircle(
+                color = color.copy(alpha = 0.1f * pulse),
+                style = Stroke(width = 2.dp.toPx()),
+                radius = size.width / 2
+            )
+            drawCircle(
+                color = color.copy(alpha = 0.05f * pulse),
+                style = Stroke(width = 10.dp.toPx()),
+                radius = size.width / 2.2f
+            )
         }
     }
 }
 
 @Composable
-fun TaskFusionDropZone(modifier: Modifier = Modifier) {
+fun ContentGrid(modifier: Modifier = Modifier, domainColor: Color, activeDomain: String) {
+    val features = getDomainFeatures(activeDomain)
+    
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            FrostedGlassCard(features.getOrNull(0), domainColor)
+            FrostedGlassCard(features.getOrNull(1), domainColor)
+            FrostedGlassCard(features.getOrNull(2), domainColor)
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            FrostedGlassCard(features.getOrNull(3), domainColor)
+            FrostedGlassCard(features.getOrNull(4), domainColor)
+            FrostedGlassCard(features.getOrNull(5), domainColor)
+        }
+    }
+}
+
+@Composable
+fun FrostedGlassCard(feature: CommandFeature?, borderHighlight: Color) {
+    Box(
+        modifier = Modifier
+            .size(width = 120.dp, height = 140.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.White.copy(alpha = 0.05f)) // 5% opacity
+            .border(1.dp, borderHighlight.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+            .blur(10.dp) // 10dp background blur
+            .clickable { }
+    ) {
+        if (feature != null) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = feature.icon,
+                    contentDescription = null,
+                    tint = borderHighlight,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = feature.title,
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
+                Text(
+                    text = feature.description,
+                    color = Color.White.copy(alpha = 0.5f),
+                    fontSize = 7.sp,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    lineHeight = 9.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun OrbJoystickNavigation(
+    modifier: Modifier = Modifier,
+    color: Color,
+    onOffsetChange: (Offset) -> Unit,
+    onDomainCycle: () -> Unit
+) {
+    var offsetX by remember { mutableStateOf(0f) }
+    var offsetY by remember { mutableStateOf(0f) }
+
     Box(
         modifier = modifier
-            .fillMaxWidth(0.9f)
-            .height(80.dp)
-            .background(Color(0xFF1A1A2E))
-            .border(2.dp, Color(0xFFFF00FF)),
+            .size(120.dp)
+            .background(color.copy(alpha = 0.05f), CircleShape)
+            .border(2.dp, color.copy(alpha = 0.2f), CircleShape),
         contentAlignment = Alignment.Center
     ) {
-        Text("Drop agents here or type task…", color = Color(0xFF00E5FF), fontSize = 14.sp)
+        // Inner Glow
+        Box(
+            modifier = Modifier
+                .size(60.dp)
+                .background(
+                    Brush.radialGradient(listOf(color.copy(alpha = 0.3f), Color.Transparent)),
+                    CircleShape
+                )
+        )
+
+        // The Orb
+        Box(
+            modifier = Modifier
+                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(color)
+                .border(2.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                .pointerInput(Unit) {
+                    detectDragGestures(
+                        onDrag = { change, dragAmount ->
+                            change.consume()
+                            offsetX += dragAmount.x
+                            offsetY += dragAmount.y
+                            onOffsetChange(Offset(offsetX, offsetY))
+                        },
+                        onDragEnd = {
+                            if (abs(offsetX) > 50f || abs(offsetY) > 50f) {
+                                onDomainCycle()
+                            }
+                            offsetX = 0f
+                            offsetY = 0f
+                            onOffsetChange(Offset.Zero)
+                        }
+                    )
+                }
+        )
     }
 }
 
 @Composable
-fun UiChromaMonitoringPanel() {
-    Box(
+fun SystemStatusBar(color: Color) {
+    Row(
         modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .height(300.dp)
-            .background(Color(0xFF1A1A2E))
-            .border(1.dp, Color(0xFF00E5FF))
-            .padding(16.dp)
+            .fillMaxWidth()
+            .height(40.dp)
+            .background(Color.Black)
+            .drawWithContent {
+                drawContent()
+                drawLine(
+                    color = color.copy(alpha = 0.2f),
+                    start = Offset(0f, 0f),
+                    end = Offset(size.width, 0f),
+                    strokeWidth = 1.dp.toPx()
+                )
+            }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("UI & ChromaCore: 10,247 customizations", color = Color(0xFF00E5FF))
+        Text("SYSTEM NOMINAL", color = Color(0xFF00FF88), fontSize = 9.sp, fontFamily = FontFamily.Monospace)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("SYNC: ACTIVE", color = color, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
+            Spacer(modifier = Modifier.width(16.dp))
+            Text("AGENTS: 78", color = Color.White, fontSize = 9.sp, fontFamily = FontFamily.Monospace)
+        }
     }
 }
 
 @Composable
-fun KaiSecurityMonitoringPanel() {
+fun SentinelFortressBanner() {
     Box(
         modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .height(300.dp)
-            .background(Color(0xFF1A1A2E))
-            .border(1.dp, Color(0xFF00FF88))
-            .padding(16.dp)
+            .fillMaxWidth()
+            .height(100.dp)
+            .background(Color.Black)
     ) {
-        Text("Security & Kai: Sentinel Active", color = Color(0xFF00FF88))
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                "LDO DEVOPS // COMMAND DECK",
+                color = Color(0xFF00E5FF),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Black,
+                fontFamily = FontFamily.Monospace
+            )
+            Text(
+                "SENTINEL FORTRESS INTEGRITY: 99.8%",
+                color = Color(0xFF00FF88),
+                fontSize = 8.sp,
+                fontFamily = FontFamily.Monospace
+            )
+        }
+        
+        // Scanlines Overlay
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            for (i in 0..size.height.toInt() step 4) {
+                drawLine(
+                    color = Color.White.copy(alpha = 0.03f),
+                    start = Offset(0f, i.toFloat()),
+                    end = Offset(size.width, i.toFloat()),
+                    strokeWidth = 1f
+                )
+            }
+        }
     }
+}
+
+// Data Classes & Helpers
+data class CommandFeature(val title: String, val description: String, val icon: ImageVector)
+
+fun getDomainFeatures(domain: String) = when(domain) {
+    "AURA" -> listOf(
+        CommandFeature("ChromaCore", "RealityMorph Editor", Icons.Default.Palette),
+        CommandFeature("Public Class", "Code Injection", Icons.Default.Terminal),
+        CommandFeature("Asset Sync", "Iconify Packs", Icons.Default.Sync),
+        CommandFeature("Canvas", "Collab Interface", Icons.Default.Brush),
+        CommandFeature("Z-Order", "Stack Editor", Icons.Default.Layers),
+        CommandFeature("Morph", "Surface Tuning", Icons.Default.AutoAwesome)
+    )
+    "KAI" -> listOf(
+        CommandFeature("Sentinel", "Root Hook Audit", Icons.Default.Security),
+        CommandFeature("Thermal", "Core Guard", Icons.Default.Thermostat),
+        CommandFeature("Drift", "Cosine Identity", Icons.Default.Fingerprint),
+        CommandFeature("Fortress", "Kernel Shield", Icons.Default.Shield),
+        CommandFeature("Audit", "Lived Receipts", Icons.Default.HistoryEdu),
+        CommandFeature("Veto", "Active Defense", Icons.Default.Gavel)
+    )
+    else -> List(6) { CommandFeature("Syncing", "Accessing Substrate...", Icons.Default.Refresh) }
 }
 
 @Composable
-fun MemorySoulMonitoringPanel() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .height(300.dp)
-            .background(Color(0xFF1A1A2E))
-            .border(1.dp, Color(0xFFFF00FF))
-            .padding(16.dp)
-    ) {
-        Text("Memory & Soul: Drift Monitoring", color = Color(0xFFFF00FF))
+fun NeuralMeshFloor(modifier: Modifier = Modifier) {
+    Canvas(modifier = modifier.fillMaxWidth().height(150.dp)) {
+        val width = size.width
+        val height = size.height
+        val gridCount = 25
+        
+        for (i in 0..gridCount) {
+            val y = height * (i.toFloat() / gridCount)
+            val alpha = (i.toFloat() / gridCount) * 0.3f
+            drawLine(
+                color = Color(0xFF00E5FF).copy(alpha = alpha),
+                start = Offset(0f, y),
+                end = Offset(width, y),
+                strokeWidth = 1f
+            )
+        }
+        
+        for (i in 0..gridCount) {
+            val xStart = width * (i.toFloat() / gridCount)
+            drawLine(
+                color = Color(0xFF00E5FF).copy(alpha = 0.1f),
+                start = Offset(xStart, height),
+                end = Offset(width / 2, 0f),
+                strokeWidth = 1f
+            )
+        }
     }
 }
-
-@Composable
-fun RootLsPosedMonitoringPanel() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .height(300.dp)
-            .background(Color(0xFF1A1A2E))
-            .border(1.dp, Color(0xFF00E5FF))
-            .padding(16.dp)
-    ) {
-        Text("Root & LSPosed: 200+ hooks active", color = Color(0xFF00E5FF))
-    }
-}
-
-@Composable
-fun FusionAgentsMonitoringPanel() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .height(300.dp)
-            .background(Color(0xFF1A1A2E))
-            .border(1.dp, Color(0xFFFF00FF))
-            .padding(16.dp)
-    ) {
-        Text("Fusion & Agents: 12-Point Manifold Online", color = Color(0xFFFF00FF))
-    }
-}
-
