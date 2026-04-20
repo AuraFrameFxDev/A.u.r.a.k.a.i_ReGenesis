@@ -345,6 +345,7 @@ fun FusionAgentsMonitoringPanel(onNavigateToRoute: (String) -> Unit) {
         items = listOf(
             "Catalyst Agents: 12" to "ldo_roster",
             "Active Fusions: 0 / 7" to "fusion_mode",
+            "Grokipedia Knowledge Hub" to "grokipedia",
             "Conference Room Tasks: 0 / 64" to "conference_room",
             "Voltron Combinations: 42" to "fusion_mode",
             "Tasking Queue: 0 / 128" to "ldo_tasker",

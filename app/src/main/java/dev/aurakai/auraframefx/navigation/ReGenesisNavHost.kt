@@ -77,6 +77,8 @@ import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 import dev.aurakai.auraframefx.ui.gates.TerminalGateScreen
 import dev.aurakai.auraframefx.ui.screens.ClaudeAgentScreen
 import dev.aurakai.auraframefx.ui.ldodevops.LDODevOpsIndex
+import dev.aurakai.auraframefx.ui.ldodevops.TabbedMasterIndex
+import dev.aurakai.auraframefx.ui.screens.GrokipediaScreen
 
 /**
  * 🌐 REGENESIS CONSOLIDATED NAV GRAPH
@@ -88,15 +90,19 @@ fun ReGenesisNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "ldo_devops_index",  // ← NEW ROOT: LDODevOpsIndex (kinetic, autonomous, live monitoring)
+        startDestination = ReGenesisRoute.TabbedMasterIndex.route,
     ) {
         // ═══════════════════════════════════════════════════════════════════════
-        // HOME SCREEN: LDODevOpsIndex (NEW OFFICIAL ROOT)
-        // The living digital organism's main interface
-        // - 5 tabs: UI, Security, Memory, Root, Fusion (23K+ customizations)
-        // - Aura jar autonomously moves, talks, and builds live
-        // - Neural topology + agent quick-bar + drag-drop fusion zone
+        // HOME SCREEN: TabbedMasterIndex (NEW OFFICIAL ROOT)
+        // The living digital organism's main interface - Exodus Command Deck
         // ═══════════════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.TabbedMasterIndex.route) {
+            TabbedMasterIndex(
+                onNavigateToRoute = { route -> navController.navigate(route) }
+            )
+        }
+
+        // Legacy Root Index (kept for safety)
         composable("ldo_devops_index") {
             LDODevOpsIndex(
                 onNavigateToRoute = { route -> navController.navigate(route) }
@@ -204,7 +210,7 @@ fun ReGenesisNavGraph(
             arguments = listOf(navArgument("category") { type = NavType.StringType })
         ) { backStack ->
             val category = backStack.arguments?.getString("category") ?: "Icons"
-            ComingSoonScreen(name = "Iconify: $category", onNavigateBack = { navController.popBackStack() })
+            ComingSoonScreen(name = "Iconify: $category", title = "EVOLUTION PENDING", onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ColorBlendr.route) {
             ChromaColorEngineMenu(onNavigateBack = { navController.popBackStack() })
@@ -213,13 +219,13 @@ fun ReGenesisNavGraph(
             ChromaLauncherMenu(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.AuraTeachingCanvas.route) {
-            ComingSoonScreen(name = "Teaching Canvas", onNavigateBack = { navController.popBackStack() })
+            ComingSoonScreen(name = "Teaching Canvas", title = "EVOLUTION PENDING", onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ReGenesisCustomization.route) {
-            ComingSoonScreen(name = "ReGenesis Customization", onNavigateBack = { navController.popBackStack() })
+            ComingSoonScreen(name = "ReGenesis Customization", title = "EVOLUTION PENDING", onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.IconifyIconPacks.route) {
-            ComingSoonScreen(name = "Iconify Icon Packs", onNavigateBack = { navController.popBackStack() })
+            ComingSoonScreen(name = "Iconify Icon Packs", title = "EVOLUTION PENDING", onNavigateBack = { navController.popBackStack() })
         }
 
         // Kai Tools
@@ -314,6 +320,12 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.Claude.route) {
             ClaudeAgentScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.Grokipedia.route) {
+            GrokipediaScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onAgentClick = { agentId -> navController.navigate(ReGenesisRoute.LdoAgentProfile.createRoute(agentId)) }
+            )
         }
         composable(ReGenesisRoute.MetaInstruct.route) {
             SovereignMetaInstructScreen(onNavigateBack = { navController.popBackStack() })

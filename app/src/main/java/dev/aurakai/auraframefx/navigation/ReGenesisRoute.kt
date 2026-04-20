@@ -13,6 +13,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     // ═══════════════════════════════════════════════════════════════
     data object Splash : ReGenesisRoute("splash", "Splash")
     data object HomeGateCarousel : ReGenesisRoute("home_gate_carousel", "Home")
+    data object TabbedMasterIndex : ReGenesisRoute("tabbed_master_index", "Command Deck")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 1: PRIMARY GATES (Main Entry Points)
@@ -21,7 +22,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object LsposedQuickToggles : ReGenesisRoute("lsposed_quick_toggles", "LSPosed Toggles")
     data object LdoCatalystDevelopment : ReGenesisRoute("ldo_catalyst_development", "LDO Catalyst")
     data object GateCustomization : ReGenesisRoute("gate_customization", "Gate Editor")
-    data object HelpDesk : ReGenesisRoute("help_desk", "Help Desk")
+    data object HelpDesk : ReGenesisRoute("help_desk", "Sentinel's Aid")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 2: DOMAIN HUBS
@@ -82,7 +83,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object OracleDriveSubmenu : ReGenesisRoute("oracle_drive_submenu")
     data object CodeAssist : ReGenesisRoute("code_assist", "Code Assist")
     data object SentientShell : ReGenesisRoute("sentient_shell", "Sentient Shell")
-    data object Terminal : ReGenesisRoute("terminal", "Terminal")
+    data object Terminal : ReGenesisRoute("terminal", "Genesis Neural Shell")
     data object ConferenceRoom : ReGenesisRoute("conference_room", "Conference Room")
     data object Trinity : ReGenesisRoute("trinity", "Trinity Core")
     data object OracleCloudStorage : ReGenesisRoute("oracle_cloud_storage")
@@ -114,6 +115,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object Claude : ReGenesisRoute("claude")
     data object Gemini : ReGenesisRoute("gemini")
     data object Nemotron : ReGenesisRoute("nemotron")
+    data object Grokipedia : ReGenesisRoute("grokipedia", "Grokipedia")
     data object MetaInstruct : ReGenesisRoute("meta_instruct")
 
     // ═══════════════════════════════════════════════════════════════
