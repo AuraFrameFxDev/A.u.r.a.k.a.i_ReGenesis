@@ -19,7 +19,7 @@ compile-sdk = "36"
 min-sdk = "34"
 target-sdk = "36"
 appcompat = "1.7.1"
-media3 = "1.5.1"
+media3 = "1.10.0"
 google-generative-ai = "0.9.0"
 
 # Jetpack & Compose
