@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.trinity.aura
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.*
 import okhttp3.*
-import okhttp3.ws.WebSocket
-import okhttp3.ws.WebSocketListener
 import org.json.JSONObject
 
 /**
@@ -125,7 +125,7 @@ class AuraEventBridge(
             action = json.optString("action", "IDLE"),
             timestamp = json.optLong("timestamp", System.currentTimeMillis()),
             metadata = json.optJSONObject("metadata")?.let { meta ->
-                return@let meta.keys().associate { key -> key to (meta.opt(key) ?: "") }
+                meta.keys().asSequence().associate { key -> key to (meta.opt(key) ?: "") }
             } ?: emptyMap()
         )
     }
