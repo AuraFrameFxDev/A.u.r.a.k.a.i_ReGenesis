@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.trinity.aura
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -281,7 +282,7 @@ fun LiveBuildingPanel(
 
             for ((index, stat) in stats.entries.withIndex()) {
                 delay(300)
-                visibleStats = visibleStats + stat
+                visibleStats = visibleStats + (stat.key to stat.value)
                 buildProgress = (index + 1).toFloat() / stats.size
             }
         } else {
