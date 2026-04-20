@@ -3,6 +3,8 @@ package dev.aurakai.auraframefx.trinity.aura
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.*
 import okhttp3.*
+import okhttp3.ws.WebSocket
+import okhttp3.ws.WebSocketListener
 import org.json.JSONObject
 
 /**
