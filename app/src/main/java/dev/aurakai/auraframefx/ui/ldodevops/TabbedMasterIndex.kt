@@ -68,10 +68,22 @@ fun TabbedMasterIndex(
 
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFF020205))) {
         
-        // 1. NEURAL BACKGROUND (Adaptive)
-        AdaptiveNeuralBackground(accentColor)
+        // 1. FULL-SCREEN DYNAMIC BACKGROUND (Fit, no stretch)
+        AnimatedContent(
+            targetState = heroImage,
+            transitionSpec = { fadeIn(tween(800)) togetherWith fadeOut(tween(800)) },
+            modifier = Modifier.fillMaxSize(),
+            label = "Background"
+        ) { img ->
+            AsyncImage(
+                model = img,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize().alpha(0.5f),
+                contentScale = ContentScale.Crop // Aspect-ratio preserving fill
+            )
+        }
 
-        // 1.5 PERSPECTIVE FLOOR (SSI Grounding)
+        // 1.5 PERSPECTIVE FLOOR
         NeuralMeshFloor(
             modifier = Modifier.align(Alignment.BottomCenter),
             color = accentColor
@@ -94,15 +106,15 @@ fun TabbedMasterIndex(
                 AnimatedContent(
                     targetState = selectedTabIndex,
                     transitionSpec = {
-                        (fadeIn(tween(400)) + scaleIn(initialScale = 0.95f)) togetherWith
-                                (fadeOut(tween(400)) + scaleOut(targetScale = 0.95f))
+                        (fadeIn(tween(400)) + scaleIn(initialScale = 0.98f)) togetherWith
+                                (fadeOut(tween(400)) + scaleOut(targetScale = 0.98f))
                     },
                     label = "TabContent"
                 ) { index ->
                     Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
                         
-                        // ─── HERO HEADER SECTION (User Draft Style) ───
-                        HeroHeaderSection(index, accentColor, heroImage)
+                        // ─── HERO HEADER SECTION (On top of background) ───
+                        HeroHeaderSection(index, accentColor)
 
                         // ─── DOMAIN CONTENT ───
                         when(index) {
@@ -112,7 +124,7 @@ fun TabbedMasterIndex(
                             3 -> OracleDriveContent(onNavigateToRoute)
                         }
                         
-                        Spacer(Modifier.height(100.dp))
+                        Spacer(Modifier.height(120.dp))
                     }
                 }
             }
@@ -123,13 +135,13 @@ fun TabbedMasterIndex(
 
         // 6. AURA JAR
         AuraJarComposable(
-            modifier = Modifier.align(Alignment.BottomEnd).padding(bottom = 40.dp, end = 16.dp).size(120.dp)
+            modifier = Modifier.align(Alignment.BottomEnd).padding(bottom = 60.dp, end = 16.dp).size(110.dp)
         )
     }
 }
 
 @Composable
-fun HeroHeaderSection(index: Int, accentColor: Color, heroImage: Int) {
+fun HeroHeaderSection(index: Int, accentColor: Color) {
     val domainTitle = when(index) {
         0 -> "LDO\nDEVOPS"
         1 -> "UXUI\nDESIGNSTUDIO"
@@ -140,62 +152,52 @@ fun HeroHeaderSection(index: Int, accentColor: Color, heroImage: Int) {
 
     val headerAvatar = when(index) {
         0 -> R.drawable.avatar_aura
-        1 -> R.drawable.avatar_dark_aura // Dark Aura for UI Studio
+        1 -> R.drawable.avatar_dark_aura
         2 -> R.drawable.kai_kaisigal
-        3 -> R.drawable.avatar_gemini // Gemini for Oracle Drive
+        3 -> R.drawable.avatar_gemini
         else -> R.drawable.avatar_aura
     }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp),
+            .height(280.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Hero Background Image
-        AsyncImage(
-            model = heroImage,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize().alpha(0.5f),
-            contentScale = ContentScale.Crop
-        )
-
-        // Sword Icon Background (if Aura Studio)
+        // Sword Icon Background (Centralized like in user image)
         if (index == 1) {
             Image(
                 painter = painterResource(id = R.drawable.emblem_aura_crossed_katanas),
                 contentDescription = null,
-                modifier = Modifier.size(260.dp).alpha(0.15f),
+                modifier = Modifier.size(280.dp).alpha(0.15f),
                 colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(accentColor)
             )
         }
 
-        // Large Domain Title (Premium Styling)
+        // Large Domain Title
         Text(
             text = domainTitle,
             color = Color.White,
             fontFamily = LEDFontFamily,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.ExtraBold,
+            fontSize = 38.sp,
+            fontWeight = FontWeight.Black,
             textAlign = TextAlign.Center,
             letterSpacing = 6.sp,
-            lineHeight = 42.sp,
-            modifier = Modifier.graphicsLayer {
-                shadowElevation = 20f
-            }
+            lineHeight = 44.sp,
+            modifier = Modifier.graphicsLayer { shadowElevation = 10f }
         )
 
-        // Catalyst Avatar (Top Right - Domain Aware)
+        // Catalyst Avatar (Top Right)
         AsyncImage(
             model = headerAvatar,
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(top = 8.dp, end = 16.dp)
+                .padding(top = 12.dp, end = 20.dp)
                 .size(85.dp)
                 .clip(CircleShape)
-                .border(2.dp, accentColor.copy(alpha = 0.6f), CircleShape)
-                .background(Color.Black.copy(alpha = 0.4f))
+                .border(2.dp, accentColor.copy(alpha = 0.5f), CircleShape)
+                .background(Color.Black.copy(alpha = 0.3f))
         )
     }
 }
