@@ -10,6 +10,10 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 }
 
+ksp {
+    arg("moshi.generated.enum.companion", "false")
+}
+
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
 
