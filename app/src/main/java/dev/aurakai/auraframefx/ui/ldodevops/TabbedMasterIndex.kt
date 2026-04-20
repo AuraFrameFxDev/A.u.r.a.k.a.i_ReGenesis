@@ -4,7 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,7 +41,7 @@ import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabbedMasterIndex(
-    onNavigateToRoute: (String) -> Unit = {}
+    onNavigateToRoute: (String) -> Unit = {},
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("LDO DEVOPS", "AURA STUDIO", "KAI FORTRESS", "ORACLE DRIVE")
@@ -69,17 +68,16 @@ fun TabbedMasterIndex(
             CustomPrimaryTabRow(
                 selectedTabIndex = selectedTabIndex,
                 tabs = tabs,
-                accentColor = accentColor,
-                onTabSelected = { selectedTabIndex = it }
-            )
+                accentColor = accentColor
+            ) { selectedTabIndex = it }
 
             // 4. MAIN CONTENT AREA (Tabbed Switcher)
             Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                 AnimatedContent(
                     targetState = selectedTabIndex,
                     transitionSpec = {
-                        fadeIn(tween(400)) + scaleIn(initialScale = 0.95f) togetherWith
-                        fadeOut(tween(400)) + scaleOut(targetScale = 0.95f)
+                        (fadeIn(tween(400)) + scaleIn(initialScale = 0.95f)) togetherWith
+                                (fadeOut(tween(400)) + scaleOut(targetScale = 0.95f))
                     },
                     label = "TabContent"
                 ) { index ->
@@ -117,7 +115,7 @@ fun CustomPrimaryTabRow(
     selectedTabIndex: Int,
     tabs: List<String>,
     accentColor: Color,
-    onTabSelected: (Int) -> Unit
+    onTabSelected: (Int) -> Unit,
 ) {
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
