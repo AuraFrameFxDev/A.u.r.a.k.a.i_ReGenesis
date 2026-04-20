@@ -54,7 +54,7 @@ desugar-jdk-libs = "2.1.5"
 leakcanary = "2.14"
 lottie = "6.7.1"
 timber = "5.0.1"
-slf4j = "2.0.17"
+slf4j = "1.7.36"
 
 # Root & Xposed
 libsu = "6.0.0"
