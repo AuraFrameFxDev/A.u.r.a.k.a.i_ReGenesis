@@ -67,27 +67,3 @@ gradlePlugin {
     }
 }
 
-// Dependencies for the convention plugins themselves
-dependencies {
-    // Core Gradle plugins needed by your convention plugins
-    implementation(libs.android.gradle.plugin)            // Android Gradle plugin
-    implementation(libs.kotlin.gradle.plugin)            // Kotlin Gradle plugin
-    implementation(libs.ksp.gradle.plugin)               // KSP
-    implementation(libs.hilt.gradle.plugin)              // Hilt Gradle plugin
-    implementation(libs.google.services.gradle.plugin)   // Google Services (if used)
-    implementation(libs.firebase.crashlytics.gradle.plugin) // Firebase Crashlytics
-
-    // Optional: if your plugins need Compose compiler plugin access
-    implementation(libs.compose.compiler.gradle.plugin)
-    implementation(libs.jetbrains.kotlin.serialization)
-
-    // Hilt Gradle Plugin (Android AAR dependencies excluded globally via configurations.all)
-    implementation(libs.hilt.gradle.plugin)
-    implementation(libs.hilt.android)
-    implementation(libs.ksp.gradle.plugin)
-    implementation(libs.gms.google.services)
-    testImplementation(kotlin("test"))
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.params)
-    testRuntimeOnly(libs.jupiter.junit.jupiter.engine)
-}

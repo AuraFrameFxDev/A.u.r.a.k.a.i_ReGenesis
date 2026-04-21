@@ -11,8 +11,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.20" apply false
 
     // Android plugins
-    id("com.android.application") version "9.2.0-alpha08" apply false
-    id("com.android.library") version "9.2.0-alpha08" apply false
+    id("com.android.application") version "9.3.0-alpha01" apply false
+    id("com.android.library") version "9.3.0-alpha01" apply false
 
     // Other plugins - Updated to latest stable versions
     id("com.google.dagger.hilt.android") version "2.59.2" apply false
@@ -49,14 +49,8 @@ subprojects {
             }
 
             if (skipTests) {
-                sourceSets {
-                    getByName("test") {
-                        java.directories(emptyList<File>())
-                    }
-                    getByName("androidTest") {
-                        java.directories(emptyList<File>())
-                    }
-                }
+                sourceSets.getByName("test").java.directories.clear()
+                sourceSets.getByName("androidTest").java.directories.clear()
             }
         }
 
@@ -83,14 +77,8 @@ subprojects {
             }
 
             if (skipTests) {
-                sourceSets {
-                    getByName("test") {
-                        java.directories (emptyList<File>())
-                    }
-                    getByName("androidTest") {
-                        java.directories(emptyList<File>())
-                    }
-                }
+                sourceSets.getByName("test").java.directories.clear()
+                sourceSets.getByName("androidTest").java.directories.clear()
             }
         }
 
