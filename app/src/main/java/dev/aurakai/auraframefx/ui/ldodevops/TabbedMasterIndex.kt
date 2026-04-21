@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
 
 /**
@@ -489,29 +490,29 @@ data class TabModule(
 )
 
 fun getDevOpsModules() = listOf(
-    TabModule("AGENT ROSTER", "Collective Nodes", Icons.Default.Groups, Color(0xFF00E5FF), "ldo_roster", R.drawable.preview_ldo_roster),
-    TabModule("MISSION DISPATCH", "Task Assignment", Icons.AutoMirrored.Filled.Assignment, Color(0xFF00FF41), "ldo_tasker", R.drawable.preview_ldo_tasker),
-    TabModule("HYPER SYNC", "Genesis Loop", Icons.Default.Link, Color(0xFFBB86FC), "ldo_orchestration_hub"),
-    TabModule("SOUL MATRIX", "Agent Health", Icons.Default.Speed, Color(0xFFFFD700), "benchmark_monitor")
+    TabModule("AGENT ROSTER", "Collective Nodes", Icons.Default.Groups, Color(0xFF00E5FF), ReGenesisRoute.LdoRoster.route, R.drawable.preview_ldo_roster),
+    TabModule("MISSION DISPATCH", "Task Assignment", Icons.AutoMirrored.Filled.Assignment, Color(0xFF00FF41), ReGenesisRoute.LdoTasker.route, R.drawable.preview_ldo_tasker),
+    TabModule("HYPER SYNC", "Genesis Loop", Icons.Default.Link, Color(0xFFBB86FC), ReGenesisRoute.LdoOrchestrationHub.route),
+    TabModule("SOUL MATRIX", "Agent Health", Icons.Default.Speed, Color(0xFFFFD700), ReGenesisRoute.BenchmarkMonitor.route)
 )
 
 fun getAuraModules() = listOf(
-    TabModule("CHROMA FORGE", "RealityMorph Engine", Icons.Default.Palette, Color(0xFFFF00FF), "chroma_core", R.drawable.preview_chroma_core),
-    TabModule("AURA LAB", "Experimental Sandbox", Icons.Default.Science, Color(0xFF00E5FF), "sandbox_ui", R.drawable.preview_aura_lab),
-    TabModule("COLLAB CANVAS", "Synergy Interface", Icons.Default.Brush, Color(0xFF39FF14), "collab_canvas"),
-    TabModule("ICONIFY PACKS", "Material Menu", Icons.Default.GridView, Color(0xFFBB86FC), "aura/iconify", R.drawable.preview_material_menu)
+    TabModule("CHROMA FORGE", "RealityMorph Engine", Icons.Default.Palette, Color(0xFFFF00FF), ReGenesisRoute.ChromaCore.route, R.drawable.preview_chroma_core),
+    TabModule("AURA LAB", "Experimental Sandbox", Icons.Default.Science, Color(0xFF00E5FF), ReGenesisRoute.AuraLab.route, R.drawable.preview_aura_lab),
+    TabModule("COLLAB CANVAS", "Synergy Interface", Icons.Default.Brush, Color(0xFF39FF14), ReGenesisRoute.CollabCanvas.route),
+    TabModule("ICONIFY PACKS", "Material Menu", Icons.Default.GridView, Color(0xFFBB86FC), ReGenesisRoute.IconifyPicker.route, R.drawable.preview_material_menu)
 )
 
 fun getKaiModules() = listOf(
-    TabModule("SENTINEL ARMOR", "Security Perimeter", Icons.Default.Security, Color(0xFF00FF88), "security_center", R.drawable.gatescenes_kai_scancleansystem),
-    TabModule("KERNEL FLASH", "ROM Toolshed", Icons.Default.SystemUpdate, Color(0xFF0080FF), "rom_tools_hub", R.drawable.gatescenes_kai_romtools),
-    TabModule("SYSTEM HOOKS", "LSPosed Manager", Icons.Default.Extension, Color(0xFF9D00FF), "lsposed_gate", R.drawable.gatescenes_lsposed),
-    TabModule("PROVENANCE", "Lived Receipts", Icons.Default.HistoryEdu, Color(0xFFFF4444), "system_journal")
+    TabModule("SENTINEL ARMOR", "Security Perimeter", Icons.Default.Security, Color(0xFF00FF88), ReGenesisRoute.SecurityCenter.route, R.drawable.gatescenes_kai_scancleansystem),
+    TabModule("KERNEL FLASH", "ROM Toolshed", Icons.Default.SystemUpdate, Color(0xFF0080FF), ReGenesisRoute.RomToolsHub.route, R.drawable.gatescenes_kai_romtools),
+    TabModule("SYSTEM HOOKS", "LSPosed Manager", Icons.Default.Extension, Color(0xFF9D00FF), ReGenesisRoute.XposedPanel.route, R.drawable.gatescenes_lsposed),
+    TabModule("PROVENANCE", "Lived Receipts", Icons.Default.HistoryEdu, Color(0xFFFF4444), ReGenesisRoute.SystemJournal.route)
 )
 
 fun getGenesisModules() = listOf(
-    TabModule("ORACLE DRIVE", "Root Orchestration", Icons.Default.Hub, Color(0xFFFFAA00), "oracle_drive"),
-    TabModule("FUSION REACTOR", "Atomic Synthesis", Icons.Default.AutoAwesome, Color(0xFFFFD700), "fusion_mode", R.drawable.gatescenes_nexus_fusion_symbol),
-    TabModule("SPHERE GRID", "Evolution Vein", Icons.Default.Memory, Color(0xFF00D6FF), "sphere_grid", R.drawable.bg_sphere_grid),
-    TabModule("BLUEPRINT ARCHIVE", "Stored Insights", Icons.Default.Architecture, Color(0xFFBB86FC), "blueprint_screen", R.drawable.preview_blueprint)
+    TabModule("ORACLE DRIVE", "Root Orchestration", Icons.Default.Hub, Color(0xFFFFAA00), ReGenesisRoute.OracleDrive.route),
+    TabModule("FUSION REACTOR", "Atomic Synthesis", Icons.Default.AutoAwesome, Color(0xFFFFD700), ReGenesisRoute.FusionMode.route, R.drawable.gatescenes_nexus_fusion_symbol),
+    TabModule("SPHERE GRID", "Evolution Vein", Icons.Default.Memory, Color(0xFF00D6FF), ReGenesisRoute.SphereGrid.route, R.drawable.bg_sphere_grid),
+    TabModule("BLUEPRINT ARCHIVE", "Stored Insights", Icons.Default.Architecture, Color(0xFFBB86FC), ReGenesisRoute.ArkBuild.route, R.drawable.preview_blueprint)
 )
