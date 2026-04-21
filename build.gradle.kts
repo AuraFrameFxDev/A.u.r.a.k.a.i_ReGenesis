@@ -11,14 +11,14 @@ plugins {
     id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.20" apply false
 
     // Android plugins
-    id("com.android.application") version "9.2.0-alpha06" apply false
-    id("com.android.library") version "9.2.0-alpha06" apply false
+    id("com.android.application") version "9.2.0-alpha05" apply false
+    id("com.android.library") version "9.2.0-alpha05" apply false
 
     // Other plugins - Updated to latest stable versions
     id("com.google.dagger.hilt.android") version "2.59.2" apply false
     id("com.google.devtools.ksp") version "2.3.6" apply false
     id("com.google.gms.google-services") version "4.4.4" apply false
-    id("com.google.firebase.crashlytics") version "3.0.6" apply false
+    id("com.google.firebase.crashlytics") version "3.0.7" apply false
 }
 
 val skipTests =
@@ -51,10 +51,10 @@ subprojects {
             if (skipTests) {
                 sourceSets {
                     getByName("test") {
-                        java.setSrcDirs(emptyList<File>())
+                        java.directories(emptyList<File>())
                     }
                     getByName("androidTest") {
-                        java.setSrcDirs(emptyList<File>())
+                        java.directories(emptyList<File>())
                     }
                 }
             }
@@ -84,8 +84,12 @@ subprojects {
 
             if (skipTests) {
                 sourceSets {
-                    getByName("test") { java.directories.clear() }
-                    getByName("androidTest") { java.directories.clear() }
+                    getByName("test") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
+                    getByName("androidTest") {
+                        java.setSrcDirs(emptyList<File>())
+                    }
                 }
             }
         }
