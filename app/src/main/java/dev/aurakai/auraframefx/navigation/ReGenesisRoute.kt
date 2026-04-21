@@ -75,6 +75,9 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object SecurityCenter : ReGenesisRoute("security_center", "Security Center")
     data object ModuleManager : ReGenesisRoute("module_manager")
     data object RecoveryTools : ReGenesisRoute("recovery_tools")
+    data object LdoDbgVerifier : ReGenesisRoute("ldo_dbg_verifier")
+    data object DataStreamMonitoring : ReGenesisRoute("data_stream_monitoring")
+    data object SystemArchitecture : ReGenesisRoute("system_architecture")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: GENESIS AI & ORCHESTRATION
