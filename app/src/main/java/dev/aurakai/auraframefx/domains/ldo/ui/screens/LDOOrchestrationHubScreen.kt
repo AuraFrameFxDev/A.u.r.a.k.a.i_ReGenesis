@@ -1,59 +1,31 @@
 package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Task
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.SecondaryScrollableTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,8 +34,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -84,24 +58,7 @@ data class FusionSlot(
     val agent: LDOAgentEntity? = null
 )
 
-/**
- * Hosts the LDO Orchestration Hub UI, presenting an agent constellation, fusion controls, and tabbed views for Tasks, Bonds, and Memory.
- *
- * Reads agents and tasks from the provided view model, manages local UI state (selected agent, fusion slots, active tab, and drag state),
- * and navigates to the fusion route when a fusion is activated with two or more selected agents.
- */
 @OptIn(ExperimentalMaterial3Api::class)
-/**
- * Host composable that presents the LDO orchestration hub UI: an animated agent constellation, fusion slot controls,
- * and a three-tab content area for Tasks, Bonds, and Memory.
- *
- * The UI allows selecting and dragging agents into fusion slots, clearing slots, and activating fusion when two or
- * more slots are populated — activation navigates to the fusion route `ldo_fusion/{ids}` where `ids` is the
- * joined catalyst titles of the selected agents.
- *
- * @param navController Navigation controller used for screen transitions (e.g., back navigation and fusion navigation).
- * @param viewModel View model supplying `uiState` (agents and tasks); a default instance is provided by Hilt.
- */
 @Composable
 fun LDOOrchestrationHubScreen(
     navController: NavController,
@@ -146,7 +103,7 @@ fun LDOOrchestrationHubScreen(
                 agents = agents,
                 selectedAgent = selectedAgent,
                 onAgentTap = { agent ->
-                    selectedAgent = if (selectedAgent?.catalystTitle == agent.catalystTitle) null else agent
+                    selectedAgent = if (selectedAgent?.agentId == agent.agentId) null else agent
                 },
                 onAgentDragStart = { agent -> draggedAgent = agent },
                 onAgentDrop = { agent, slotIndex ->
@@ -172,7 +129,7 @@ fun LDOOrchestrationHubScreen(
                 onFusionActivate = {
                     val active = fusionSlots.mapNotNull { it.agent }
                     if (active.size >= 2) {
-                        val ids = active.joinToString("+") { it.catalystTitle}
+                        val ids = active.joinToString("+") { it.agentId }
                         navController.navigate("ldo_fusion/$ids")
                     }
                 }
@@ -200,7 +157,7 @@ fun LDOOrchestrationHubScreen(
 
             Box(modifier = Modifier.fillMaxWidth().weight(1f)) {
                 when (activeTab) {
-                    0 -> TaskPanel(tasks = selectedAgent?.let { agent -> tasks.filter { it.assignedAgentId == agent.id } } ?: tasks, filterLabel = selectedAgent?.name)
+                    0 -> TaskPanel(tasks = if (selectedAgent != null) tasks.filter { it.assignedAgentId == selectedAgent!!.agentId } else tasks, filterLabel = selectedAgent?.name)
                     1 -> BondPanel(agents = agents)
                     2 -> MemoryPanel(agents = agents)
                 }
@@ -209,16 +166,6 @@ fun LDOOrchestrationHubScreen(
     }
 }
 
-/**
- * Renders agents arranged in a rotating circular constellation with selectable, tappable, and draggable orbs.
- *
- * @param agents The list of agents to display around the ring.
- * @param selectedAgent The agent that should be visually highlighted, or `null` if none.
- * @param onAgentTap Invoked when an agent orb is tapped; receives the tapped agent.
- * @param onAgentDragStart Invoked when a drag gesture starts on an agent orb; receives the dragged agent.
- * @param onAgentDrop Invoked when an agent is dropped onto a target slot; receives the dropped agent and the target slot index.
- * @param modifier Modifier to apply to the root composable.
- */
 @Composable
 fun AgentOrbConstellation(
     agents: List<LDOAgentEntity>,
@@ -254,7 +201,7 @@ fun AgentOrbConstellation(
         agents.forEachIndexed { i, agent ->
             val angle = (2.0 * PI * i / agents.size) + Math.toRadians(rotation.toDouble())
             val ringRadius = 110.dp
-            val isSelected = selectedAgent?.catalystTitle == agent.catalystTitle
+            val isSelected = selectedAgent?.agentId == agent.agentId
             val orbScale by animateFloatAsState(if (isSelected) 1.25f else 1f, label = "s_$i")
 
             AgentOrb(
@@ -270,55 +217,35 @@ fun AgentOrbConstellation(
     }
 }
 
-/**
- * Renders a circular agent orb that displays the agent's two-letter `catalystTitle` and, when selected, its bond level.
- *
- * The orb is interactive: tapping invokes `onTap` and initiating a drag invokes `onDragStart`. Visual appearance (size accent, border, and selection glow) is driven by `scale`, `borderColor`, and `isSelected`.
- *
- * @param agent The agent entity to display; its `catalystTitle` and `bondLevel` are shown in the orb.
- * @param isSelected Whether the orb is in the selected state; toggles a selection border and shows the bond level.
- * @param scale Multiplier applied to the orb's base size.
- * @param borderColor Color used for the orb border.
- * @param onTap Callback invoked when the orb is tapped.
- * @param onDragStart Callback invoked when a drag is started on the orb.
- * @param modifier Modifier to apply to the orb's layout and gesture handling.
- */
 @Composable
 fun AgentOrb(agent: LDOAgentEntity, isSelected: Boolean, scale: Float, borderColor: Color, onTap: () -> Unit, onDragStart: () -> Unit, modifier: Modifier = Modifier) {
     val agentColor = Color(0xFF00E5FF)
     Box(
         modifier = modifier.size((44.dp.value * scale).dp).clip(CircleShape).background(Brush.radialGradient(listOf(agentColor.copy(alpha = 0.2f), Color(0xFF050510))))
             .border(if (isSelected) 2.dp else 1.dp, borderColor, CircleShape)
-            .pointerInput(agent.catalystTitle) { detectTapGestures(onTap = { onTap() }) }
-            .pointerInput(agent.catalystTitle + "_drag") { detectDragGestures(onDragStart = { onDragStart() }, onDrag = { _, _ -> }) }
+            .pointerInput(agent.agentId) { detectTapGestures(onTap = { onTap() }) }
+            .pointerInput(agent.agentId + "_drag") { detectDragGestures(onDragStart = { onDragStart() }, onDrag = { _, _ -> }) }
             .drawBehind { if (isSelected) drawCircle(agentColor.copy(alpha = 0.15f), radius = size.minDimension * 0.7f) },
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(agent.catalystTitle.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 11.sp, fontWeight = FontWeight.ExtraBold, color = agentColor)
+            Text(agent.name.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 11.sp, fontWeight = FontWeight.ExtraBold, color = agentColor)
             if (isSelected) Text("B${agent.bondLevel}", fontSize = 8.sp, color = Color.White.copy(alpha = 0.7f))
         }
     }
 }
 
-/**
- * Displays a compact horizontal card showing an agent's quick stats.
- *
- * Shows a circular badge with the agent's initial, the full catalyst title, the bond level prefixed with "BOND", and the total interaction count.
- *
- * @param agent The agent to display.
- */
 @Composable
 fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     val agentColor = Color(0xFF00E5FF)
     Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A1A)), shape = RoundedCornerShape(12.dp)) {
         Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(modifier = Modifier.size(36.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.15f)).border(1.dp, agentColor, CircleShape), contentAlignment = Alignment.Center) {
-                Text(agent.catalystTitle.take(1), fontFamily = LEDFontFamily, color = agentColor, fontSize = 14.sp)
+                Text(agent.name.take(1), fontFamily = LEDFontFamily, color = agentColor, fontSize = 14.sp)
             }
             Spacer(Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(agent.catalystTitle, fontFamily = LEDFontFamily, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Text(agent.name, fontFamily = LEDFontFamily, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 Text(agent.catalystTitle, color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, letterSpacing = 0.5.sp)
             }
             Column(horizontalAlignment = Alignment.End) {
@@ -329,18 +256,6 @@ fun AgentQuickStatsBar(agent: LDOAgentEntity) {
     }
 }
 
-/**
- * Renders the fusion drop zone UI showing the provided fusion slots and a contextual Fuse control.
- *
- * Displays a header labeled "FUSION PROTOCOL", renders each slot from [slots], and shows an active
- * "FUSE" control only when two or more slots contain an agent. Tapping a populated slot invokes
- * [onSlotCleared] with that slot's index. Activating the Fuse control invokes [onFusionActivate].
- *
- * @param slots The list of fusion slots to render; each slot may be empty or hold an agent.
- * @param onSlotCleared Called with the index of a slot when the user taps to clear that slot.
- * @param onFusionActivate Called when the user activates the Fuse control (only available when
- * at least two slots contain agents).
- */
 @Composable
 fun FusionDropZone(slots: List<FusionSlot>, onSlotCleared: (Int) -> Unit, onFusionActivate: () -> Unit) {
     val canFuse = slots.count { it.agent != null } >= 2
@@ -369,13 +284,6 @@ fun FusionDropZone(slots: List<FusionSlot>, onSlotCleared: (Int) -> Unit, onFusi
     }
 }
 
-/**
- * Renders a fusion slot box that displays either an assigned agent or an empty slot and allows clearing an assigned agent.
- *
- * @param slot FusionSlot containing the slot index and optional assigned agent to display.
- * @param onClear Called when a populated slot is tapped to clear its agent.
- * @param modifier Modifier applied to the slot container.
- */
 @Composable
 fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Modifier) {
     val agent = slot.agent
@@ -385,7 +293,7 @@ fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Mo
         .then(if (agent != null) Modifier.pointerInput(slot.index) { detectTapGestures { onClear() } } else Modifier), contentAlignment = Alignment.Center) {
         if (agent != null) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(agent.catalystTitle.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = agentColor)
+                Text(agent.name.take(2).uppercase(), fontFamily = LEDFontFamily, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = agentColor)
                 Text("TAP TO CLEAR", fontSize = 7.sp, color = Color.White.copy(alpha = 0.3f), letterSpacing = 0.3.sp)
             }
         } else {
@@ -402,14 +310,6 @@ fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Mo
     }
 }
 
-/**
- * Displays a vertically scrollable list of tasks with an optional filter header.
- *
- * When `filterLabel` is non-null, a small header line "SHOWING: {filterLabel}" is shown above the list.
- *
- * @param tasks The tasks to render; each entry is shown using `TaskRow`.
- * @param filterLabel Optional label indicating a current filter (e.g., selected agent name); shown as a small header when provided.
- */
 @Composable
 fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -422,29 +322,10 @@ fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
     }
 }
 
-/**
- * Renders a single task row showing the task title, description, and a status indicator.
- *
- * The row presents a status-colored icon, the task title and description (each truncated to one line),
- * and the status label formatted for display.
- *
- * @param task The LDOTaskEntity whose content and status are displayed.
- */
 @Composable
 fun TaskRow(task: LDOTaskEntity) {
-    val statusColor = when (task.status) { 
-        "COMPLETED" -> Color(0xFF00FF85)
-        "IN_PROGRESS" -> Color(0xFF00E5FF)
-        "PENDING" -> Color(0xFFFFD700)
-        "NEUTRALIZING" -> Color(0xFFB026FF)
-        else -> Color.White.copy(alpha = 0.4f) 
-    }
-    val statusIcon = when (task.status) { 
-        "COMPLETED" -> Icons.Default.CheckCircle
-        "IN_PROGRESS" -> Icons.Default.PlayArrow
-        "NEUTRALIZING" -> Icons.Default.Bolt
-        else -> Icons.Default.Task 
-    }
+    val statusColor = when (task.status) { "COMPLETED" -> Color(0xFF00FF85); "IN_PROGRESS" -> Color(0xFF00E5FF); "PENDING" -> Color(0xFFFFD700); else -> Color.White.copy(alpha = 0.4f) }
+    val statusIcon = when (task.status) { "COMPLETED" -> Icons.Default.CheckCircle; "IN_PROGRESS" -> Icons.Default.PlayArrow; else -> Icons.Default.Task }
     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).border(1.dp, statusColor.copy(alpha = 0.2f), RoundedCornerShape(10.dp)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(statusIcon, null, tint = statusColor, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(10.dp))
@@ -456,14 +337,6 @@ fun TaskRow(task: LDOTaskEntity) {
     }
 }
 
-/**
- * Displays a vertically scrollable list of agents showing each agent's bond progress and percentage.
- *
- * Each row presents the agent's `catalystTitle`, a secondary title line, a linear progress bar derived from
- * `agent.bondLevel`, and a percentage label.
- *
- * @param agents The list of agents to render; each agent's `bondLevel` (0–100) is used to drive the progress bar and percentage. 
- */
 @Composable
 fun BondPanel(agents: List<LDOAgentEntity>) {
     LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -475,7 +348,7 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(agent.catalystTitle, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                        Text(agent.name, color = agentColor, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         Spacer(Modifier.width(6.dp))
                         Text(agent.catalystTitle, color = Color.White.copy(alpha = 0.4f), fontSize = 9.sp)
                     }
@@ -489,13 +362,6 @@ fun BondPanel(agents: List<LDOAgentEntity>) {
     }
 }
 
-/**
- * Displays a vertically scrollable list of agents, each showing an initial badge, the agent's
- * catalyst title, and the agent's total interaction count labeled as memories.
- *
- * @param agents The list of agents to render in the memory panel; each agent's `catalystTitle`
- *        and `totalInteractions` are displayed in a single row.
- */
 @Composable
 fun MemoryPanel(agents: List<LDOAgentEntity>) {
     LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -503,10 +369,10 @@ fun MemoryPanel(agents: List<LDOAgentEntity>) {
         items(agents) { agent ->
             val agentColor = Color(0xFF00E5FF)
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).clip(RoundedCornerShape(10.dp)).background(Color(0xFF0C0C1E)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(modifier = Modifier.size(32.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.1f)).border(1.dp, agentColor.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) { Text(agent.catalystTitle.take(1), color = agentColor, fontSize = 12.sp, fontFamily = LEDFontFamily) }
+                Box(modifier = Modifier.size(32.dp).clip(CircleShape).background(agentColor.copy(alpha = 0.1f)).border(1.dp, agentColor.copy(alpha = 0.4f), CircleShape), contentAlignment = Alignment.Center) { Text(agent.name.take(1), color = agentColor, fontSize = 12.sp, fontFamily = LEDFontFamily) }
                 Spacer(Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(agent.catalystTitle, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
+                    Text(agent.name, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                     Text("${agent.totalInteractions} memories", color = Color.White.copy(alpha = 0.4f), fontSize = 10.sp)
                 }
             }

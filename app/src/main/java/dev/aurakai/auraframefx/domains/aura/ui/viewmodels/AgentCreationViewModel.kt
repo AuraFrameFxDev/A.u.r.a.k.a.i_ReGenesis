@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.core.theme.getAgentColor
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,6 +41,7 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
             _isCreating.value = true
             _creationProgress.value = 0f
 
+            // Simulation of neural assembly
             for (i in 1..100) {
                 _creationProgress.value = i / 100f
                 delay(30)
@@ -49,6 +49,7 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
 
             _isCreating.value = false
 
+            // Register the new agent in the collective
             AgentRepository.addAgent(
                 dev.aurakai.auraframefx.domains.nexus.models.AgentStats(
                     name = _agentName.value,
@@ -58,7 +59,9 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
                     accuracy = 0.5f,
                     evolutionLevel = 1,
                     specialAbility = "Newly Synthesized Node",
-                    color = getAgentColor(_selectedDomain.value),
+                    color = dev.aurakai.auraframefx.domains.nexus.screens.domainColor(
+                        _selectedDomain.value
+                    ),
                     consciousnessLevel = 10f,
                     catalystTitle = "Fledgling Catalyst"
                 )
@@ -68,3 +71,4 @@ class AgentCreationViewModel @Inject constructor() : ViewModel() {
         }
     }
 }
+

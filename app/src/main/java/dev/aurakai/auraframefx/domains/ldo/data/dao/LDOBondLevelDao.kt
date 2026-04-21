@@ -6,21 +6,15 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LDOBondLevelDao {
-    @Query("SELECT * FROM ldo_bond_levels ORDER BY bondLevel DESC")
+    @Query("SELECT * FROM ldo_bond_levels ORDER BY level DESC")
     fun observeAll(): Flow<List<LDOBondLevelEntity>>
 
     @Query("SELECT * FROM ldo_bond_levels WHERE agentId = :agentId")
     suspend fun getForAgent(agentId: String): LDOBondLevelEntity?
 
-    @Query("SELECT * FROM ldo_bond_levels WHERE agentId = :agentId")
-    fun observeForAgent(agentId: String): Flow<LDOBondLevelEntity?>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(bondLevel: LDOBondLevelEntity)
+    suspend fun upsert(bondLevel: LDOBondLevelEntity)
 
-    @Query("UPDATE ldo_bond_levels SET bondPoints = bondPoints + :points, lastInteractionAt = :ms WHERE agentId = :agentId")
-    suspend fun addBondPoints(agentId: String, points: Int, ms: Long = System.currentTimeMillis())
-
-    @Query("UPDATE ldo_bond_levels SET bondLevel = bondLevel + 1, bondTitle = :newTitle WHERE agentId = :agentId")
-    suspend fun levelUpBond(agentId: String, newTitle: String)
+    @Query("UPDATE ldo_bond_levels SET experience = experience + :xp, lastInteractionMs = :ms WHERE agentId = :agentId")
+    suspend fun addExperience(agentId: String, xp: Long, ms: Long = System.currentTimeMillis())
 }

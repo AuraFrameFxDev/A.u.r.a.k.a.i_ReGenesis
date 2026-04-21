@@ -23,9 +23,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonGreen
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
+import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.core.theme.*
 import kotlin.math.cos
 import kotlin.math.sin
 

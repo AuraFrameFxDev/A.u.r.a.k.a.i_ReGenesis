@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.romtools
 
-import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -16,7 +15,6 @@ interface RomVerificationManager {
     suspend fun verifyInstallation(): Result<Unit>
     suspend fun calculateChecksum(file: File, algorithm: String = "SHA-256"): Result<String>
     suspend fun verifyZipIntegrity(zipFile: File): Result<ZipVerificationResult>
-    suspend fun verifySignature(file: File, publicKey: String): Result<Boolean>
 }
 
 /**
@@ -292,26 +290,6 @@ class RomVerificationManagerImpl @Inject constructor() : RomVerificationManager 
         }
     }
 
-    override suspend fun verifySignature(file: File, publicKey: String): Result<Boolean> = withContext(Dispatchers.IO) {
-        try {
-            Timber.i("🔐 Verifying ROM signature...")
-            // In a real implementation, this would use java.security.Signature
-            // to verify the file against a trusted Genesis Protocol public key.
-            
-            val isVerified = file.exists() // Placeholder logic
-            
-            if (isVerified) {
-                Timber.i("✅ Signature verified")
-                Result.success(true)
-            } else {
-                Timber.e("❌ Signature verification FAILED")
-                Result.failure(SecurityException("Invalid ROM signature"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
     // ============================================================================
     // Helper Functions
     // ============================================================================
@@ -327,13 +305,15 @@ class RomVerificationManagerImpl @Inject constructor() : RomVerificationManager 
 
     private fun executeRootCommand(command: String): Result<String> {
         return try {
-            val result = Shell.cmd(command).exec()
+            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
+            val output = process.inputStream.bufferedReader().readText()
+            val exitCode = process.waitFor()
 
-            if (result.isSuccess) {
-                Result.success(result.out.joinToString("\n").trim())
+            if (exitCode == 0) {
+                Result.success(output.trim())
             } else {
-                val error = result.err.joinToString("\n")
-                Result.failure(Exception("Command failed: $error"))
+                val error = process.errorStream.bufferedReader().readText()
+                Result.failure(Exception("Command failed (exit $exitCode): $error"))
             }
         } catch (e: Exception) {
             Result.failure(e)

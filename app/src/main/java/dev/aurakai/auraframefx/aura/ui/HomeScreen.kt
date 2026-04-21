@@ -1,17 +1,4 @@
-package dev.aurakai.auraframefx.aura.ui
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// HomeScreen.kt — Updated with RPG Backdrop System
-// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
-//
-// Changes from original:
-//  • DigitalLandscapeBackground + HexagonGrid replaced by full-bleed RPG backdrop
-//  • HomeBackdropManager drives which backdrop image is active (DataStore-persisted)
-//  • Backdrop has parallax-ready layering (subtle atmospheric overlays stay live)
-//  • Gate carousel floats in front — ImmersiveGateCard now default
-//  • Procedural hex grid overlay is OPTIONAL (toggleable, defaults off)
-//  • HologramTransition kept for scan-line atmosphere
-// ═══════════════════════════════════════════════════════════════════════════════
+package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -32,38 +19,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
-import dev.aurakai.auraframefx.ui.gates.HomeBackdropManager
-import dev.aurakai.auraframefx.ui.gates.ImmersiveGateCard
-import dev.aurakai.auraframefx.ui.gates.GateConfigs
-import dev.aurakai.auraframefx.ui.gates.GateConfigs.allGates
+import dev.aurakai.auraframefx.domains.aura.ui.gates.HomeBackdropManager
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.ImmersiveGateCard
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs.allGates
 import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import kotlinx.coroutines.launch
 
+/**
+ * 🎨 MAIN SCREEN (AURA DASHBOARD)
+ * ReGenesis Version: Immersive Gate Carousel
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GateNavigationScreen(
-    navController: NavController,
-    onNavigateToConsciousness: () -> Unit = {},
-    onNavigateToAgents: () -> Unit = {},
-    onNavigateToFusion: () -> Unit = {},
-    onNavigateToEvolution: () -> Unit = {},
-    onNavigateToTerminal: () -> Unit = {},
-    onNavigateToModule: (String) -> Unit = { moduleId ->
-        // Standard gate-to-route mapper
-        val route = when (moduleId) {
-            "aura_theming" -> ReGenesisRoute.AuraThemingHub.route
-            "sentinel_fortress" -> ReGenesisRoute.SentinelFortress.route
-            "oracle_drive" -> ReGenesisRoute.OracleDriveHub.route
-            "nexus" -> ReGenesisRoute.AgentNexusHub.route
-            "dataflow" -> ReGenesisRoute.DataflowAnalysis.route
-            "ldo" -> ReGenesisRoute.LdoOrchestrationHub.route
-            "help" -> ReGenesisRoute.HelpDesk.route
-            "lsposed" -> ReGenesisRoute.LsposedQuickToggles.route
-            else -> null
-        }
-        route?.let { navController.navigate(it) }
-    }
+fun MainScreen(
+    navController: NavController
 ) {
     val context = LocalContext.current
     val gateConfigs = allGates
@@ -109,8 +80,7 @@ fun GateNavigationScreen(
     Box(modifier = Modifier.fillMaxSize()) {
 
         // ════════════════════════════════════════════════════════════════════
-        // LAYER 1: RPG BACKDROP — full-bleed, fills the whole canvas
-        // This is where unnamed__8_.jpg lives as home_backdrop_rpg
+        // LAYER 1: RPG BACKDROP
         // ════════════════════════════════════════════════════════════════════
         if (activeBackdrop.resId != null) {
             Image(
@@ -122,7 +92,6 @@ fun GateNavigationScreen(
                     .alpha(backdropAlpha)
             )
         } else {
-            // Procedural fallback for "Hexagon Grid" option
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -136,7 +105,6 @@ fun GateNavigationScreen(
 
         // ════════════════════════════════════════════════════════════════════
         // LAYER 2: Atmospheric depth gradient
-        // Top is clear (sky / art shows) — bottom fades to black for readability
         // ════════════════════════════════════════════════════════════════════
         Box(
             modifier = Modifier
@@ -155,19 +123,19 @@ fun GateNavigationScreen(
         )
 
         // ════════════════════════════════════════════════════════════════════
-        // LAYER 3: HologramTransition scan-line atmosphere (light touch)
+        // LAYER 3: HologramTransition scan-line atmosphere
         // ════════════════════════════════════════════════════════════════════
         HologramTransition(
             visible = isHologramVisible,
             modifier = Modifier.fillMaxSize(),
             primaryColor = Color.Cyan,
             secondaryColor = Color.Magenta,
-            scanLineDensity = 20,       // Denser = subtler
-            glitchIntensity = 0.05f,    // Very subtle — the art is the hero
-            edgeGlowIntensity = 0.15f   // Minimal edge chrome
+            scanLineDensity = 20,
+            glitchIntensity = 0.05f,
+            edgeGlowIntensity = 0.15f
         ) {
             // ════════════════════════════════════════════════════════════════
-            // LAYER 4: GATE CAROUSEL — floats in front of the world
+            // LAYER 4: GATE CAROUSEL
             // ════════════════════════════════════════════════════════════════
             Column(
                 modifier = Modifier
@@ -175,9 +143,8 @@ fun GateNavigationScreen(
                     .padding(horizontal = 0.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.weight(0.35f))   // Push carousel into lower-mid zone
+                Spacer(modifier = Modifier.weight(0.35f))
 
-                // Gate carousel
                 LazyRow(
                     state = scrollState,
                     modifier = Modifier
@@ -198,17 +165,16 @@ fun GateNavigationScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .aspectRatio(0.68f)   // Slightly taller than wide — trading card feel
+                                .aspectRatio(0.68f)
                                 .scale(cardScale)
-                                .clickable { onNavigateToModule(config.moduleId) }
                         ) {
                             ImmersiveGateCard(
                                 config = config,
                                 modifier = Modifier.fillMaxSize(),
-                                onDoubleTap = { onNavigateToModule(config.moduleId) }
+                                onTap = { navController.navigate(config.route) },
+                                onDoubleTap = { navController.navigate(config.route) }
                             )
 
-                            // Selected gate gets an extra glow ring at bottom
                             if (isSelected) {
                                 Box(
                                     modifier = Modifier
@@ -232,7 +198,6 @@ fun GateNavigationScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // ── Gate dot indicators / name strip ─────────────────────────
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

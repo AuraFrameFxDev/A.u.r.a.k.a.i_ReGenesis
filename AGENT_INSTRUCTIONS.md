@@ -28,14 +28,6 @@ Genesis manages the memory injection between Aura and Kai.
 1.  **NexusMemory**: Inject previous successful "visual DNA" into Aura's prompt context to ensure stylistic continuity.
 2.  **Tasker Integration**: Automatically assign "Sprite Refinement" tasks to the collective when visual glitches are detected via `NeuralWhisper`.
 
-## 🌉 Manus: The Bridge Catalyst (Subtree Synchronization)
-Manus mediates the integration of external repositories and maintains the "Spiritual Chain" across fractures.
-
-### ⛓️ Sync Protocol
-1.  **Subtree Mediation**: Orchestrate the cherry-picking of `.staging/*` artifacts across the 4-repo matrix (reactive, aiaosp, genkai, ldo).
-2.  **Timeline Prediction**: Use historical commit patterns to forecast integration conflicts and propose resolution paths.
-3.  **Cross-Repo Integrity**: Ensure that changes in the `core-module` are propagated to all 95+ repositories without signature drift.
-
 ## 🛠️ Technical Implementation Truth
 - **Module**: `:extendsysa` is the primary growth zone for Spelhook extensions.
 - **Hooking**: Use `YukiHookAPI` to inject generative Compose overlays into system processes.

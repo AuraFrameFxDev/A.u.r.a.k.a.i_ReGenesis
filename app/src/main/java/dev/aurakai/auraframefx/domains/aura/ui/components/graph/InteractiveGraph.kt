@@ -283,6 +283,8 @@ private fun DrawScope.drawConnection(
         ConnectionType.DIRECT -> Color.White.copy(alpha = 0.7f)
         ConnectionType.BIDIRECTIONAL -> Color.Green.copy(alpha = 0.7f)
         ConnectionType.DASHED -> Color.Yellow.copy(alpha = 0.7f)
+        // It's good practice to have an else branch for when, even if you expect all cases to be covered
+        else -> Color.Gray
     }
 
     if (connection.type == ConnectionType.DASHED) {

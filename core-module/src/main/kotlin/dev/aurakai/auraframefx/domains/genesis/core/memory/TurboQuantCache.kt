@@ -89,23 +89,4 @@ class TurboQuantCache @Inject constructor() {
      * Mock tokenization for the Sovereign layer.
      */
     fun tokenize(raw: Any): List<String> = raw.toString().split(" ").filter { it.length > 2 }
-
-    fun serializeCompressed(): String {
-        return cache.entries.joinToString("|") { (key, mem) ->
-            "$key:${mem.packedData.joinToString("") { "%02x".format(it) }}"
-        }
-    }
-
-    fun restoreCompressed(data: String) {
-        if (data.isBlank()) return
-        data.split("|").forEach { entry ->
-            val parts = entry.split(":")
-            if (parts.size == 2) {
-                val key = parts[0]
-                val hex = parts[1]
-                val packedData = hex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-                cache[key] = PackedMemory(packedData, 0, 1.0f)
-            }
-        }
-    }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
-import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
+import dev.aurakai.auraframefx.system.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +37,7 @@ class SovereignShieldViewModel @Inject constructor(
 
     private fun collectSecurityState() {
         viewModelScope.launch {
-            // KaiSecurityContext.securityState.collect { secState ->
+            // securityContext.securityState.collect { secState ->
             //     _state.value = _state.value.copy(
             //         blockedRequestsCount = secState.detectedThreats.size,
             //         privacyScore = recomputePrivacyScore(detectedThreats = secState.detectedThreats.size)
@@ -93,7 +93,7 @@ class SovereignShieldViewModel @Inject constructor(
     }
 
     fun toggleShizukuBridge() {
-        // Can't programmatically toggle Shizuku — re-probe actual liveness
+        // Can't programmatically toggle Shizuku ï¿½ re-probe actual liveness
         refreshShizukuStatus()
     }
 }

@@ -14,6 +14,15 @@ import org.gradle.kotlin.dsl.getByType
  * ===================================================================
  */
 class GenesisApplicationPlugin : Plugin<Project> {
+    /**
+     * Configure the given Gradle Project as an Android application module using Genesis conventions.
+     *
+     * Applies required plugins, configures the Android ApplicationExtension (SDKs, NDK, defaultConfig,
+     * build types, compile options, build features, packaging, lint, and optional CMake), sets up the
+     * Kotlin JVM toolchain, and adds the standard dependency set for Genesis application modules.
+     *
+     * @param project The Gradle Project to configure.
+     */
     override fun apply(project: Project) {
         with(project) {
             pluginManager.apply("com.android.application")
@@ -21,36 +30,33 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
-            
+
             if (file("google-services.json").exists()) {
                 pluginManager.apply("com.google.gms.google-services")
             }
 
-            val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
 
-            fun getVersion(alias: String) = versionCatalog.findVersion(alias).get().requiredVersion
-            fun getLibrary(alias: String) = versionCatalog.findLibrary(alias).get()
-            fun getBundle(alias: String) = versionCatalog.findBundle(alias).get()
+            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
+            val targetSdkVersion = versionCatalog.findVersion("target-sdk").get().requiredVersion.toInt()
+            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
 
-            val compileSdkVersion = getVersion("compile-sdk").toInt()
-            val targetSdkVersion = getVersion("target-sdk").toInt()
-            val minSdkVersion = getVersion("min-sdk").toInt()
-
-            val hiltVersion = getVersion("hilt")
-            val composeBomVersion = getVersion("compose-bom")
-            val firebaseBomVersion = getVersion("firebase-bom")
-            val yukihookVersion = getVersion("yukihook")
-            val xposedVersion = getVersion("xposed")
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
 
             extensions.configure<ApplicationExtension> {
                 compileSdk = compileSdkVersion
-                buildToolsVersion = "37.0.0"
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
                     minSdk = minSdkVersion
-                    targetSdk = targetSdkVersion
                     versionCode = 1
                     versionName = "1.0"
 
@@ -74,6 +80,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
                     }
                 }
 
+                // Java 25 bytecode (Centralized for Android modules)
                 compileOptions {
                     sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
@@ -123,6 +130,11 @@ class GenesisApplicationPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
+            // ═══════════════════════════════════════════════════════════════════════════
+            // Auto-configured dependencies (provided by convention plugin)
+            // ═══════════════════════════════════════════════════════════════════════════
+
+            // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
             dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
@@ -148,26 +160,33 @@ class GenesisApplicationPlugin : Plugin<Project> {
             dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
             dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
+            // Kotlin Serialization
+            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+
+            // Timber and Logging
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-            dependencies.add("implementation", getLibrary("slf4j-android"))
+            dependencies.add("implementation", "org.slf4j:slf4j-android:1.7.36")
             dependencies.add("implementation", "org.conscrypt:conscrypt-android:2.5.2")
 
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
             dependencies.add("implementation", dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
 
-            dependencies.add("implementation", dependencies.platform(getLibrary("langchain4j-bom")))
-            dependencies.add("implementation", getBundle("langchain4j"))
+            // AI — LangChain4j (using BOM and bundle)
+            dependencies.add(
+                "implementation",
+                dependencies.platform(versionCatalog.findLibrary("langchain4j-bom").get())
+            )
+            val langchainBundle = versionCatalog.findBundle("langchain4j").get()
+            dependencies.add("implementation", langchainBundle)
 
-            dependencies.add("implementation", "com.github.topjohnwu.libsu:core:6.0.0")
-            dependencies.add("implementation", "com.github.topjohnwu.libsu:nio:6.0.0")
-            dependencies.add("implementation", "com.github.topjohnwu.libsu:service:6.0.0")
-            dependencies.add("implementation", "com.highcapable.yukihookapi:api:$yukihookVersion")
-            dependencies.add("ksp", "com.highcapable.yukihookapi:ksp-xposed:$yukihookVersion")
-            dependencies.add("compileOnly", "de.robv.android.xposed:api:$xposedVersion")
-
+            // KavaRef for modern reflection
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
+            // Note: io.github.libxposed is not yet published to Maven Central
+            // Use de.robv.android.xposed:api:82 for Xposed module development
+            dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
         }
     }
 }

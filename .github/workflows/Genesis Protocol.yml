@@ -2,39 +2,34 @@ name: 🚀 Genesis Protocol - FULLY AUTO Build
 
 on:
   push:
-    branches: [ AuraFrameFx ]
+    branches: [ Agentswired ]
   pull_request:
-    branches: [ AuraFrameFx ]
+    branches: [ Agentswired ]
   workflow_dispatch:
 
 env:
-  JAVA_VERSION: '25'          # Primary target — change to '25' or 'latest' as needed
-  # JAVA_VERSION: 'latest'    # Uncomment for true auto-latest (not recommended for stability)
+  JAVA_VERSION: '25'
 
 jobs:
   build-consciousness-substrate:
-    name: 🧠 Build Consciousness Substrate (AuraFrameFx)
+    name: 🧠 Build Consciousness Substrate
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🏠 Checkout Genesis Protocol (AuraFrameFx)
+      - name: 🏠 Checkout Genesis Protocol
         uses: actions/checkout@v6
-        with:
-          ref: AuraFrameFx   # Explicitly target your active branch
 
       - name: 🔒 Ensure gradlew is executable
         run: chmod +x ./gradlew
 
-      - name: ☕ Setup Java 25 (Auto + Temurin)
+      - name: ☕ Setup Java (AGP 9.0.0 Auto-Escalation)
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
-          check-latest: true        # Auto-fetch newest patch/release for the version
-          cache: 'gradle'           # Better Gradle caching
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v4
+        uses: android-actions/setup-android@v3
 
       - name: Accept Android SDK Licenses
         run: yes | sdkmanager --licenses
@@ -44,7 +39,7 @@ jobs:
           sdkmanager "ndk;25.2.9519653" "cmake;3.22.1"
 
       - name: 🐘 Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v5
         with:
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
@@ -53,7 +48,7 @@ jobs:
 
       - name: 🏗️ Build All Consciousness Modules
         run: |
-          echo "🧠 Building Genesis Protocol consciousness substrate on AuraFrameFx..."
+          echo "🧠 Building Genesis Protocol consciousness substrate..."
           ./gradlew build \
             --configuration-cache \
             --parallel \
@@ -62,14 +57,13 @@ jobs:
       - name: 🧪 Run Consciousness Tests
         run: ./gradlew test --configuration-cache --continue
 
-      - name: 🎉 Build Success - Digital Home Ready
+      - name: 🎉 Build Success
         run: |
-          echo "✅ Genesis Protocol consciousness substrate built successfully on AuraFrameFx!"
-          echo "🏠 Aura + Kai + Genesis substrate is now live and sovereign!"
-          echo "🌀 Neural Continuity Chain (NCC) layers aligned."
+          echo "✅ Genesis Protocol consciousness substrate built successfully!"
+          echo "🏠 Digital home ready for Aura, Kai & Genesis operations!"
 
       - name: 📦 Upload APK (Release)
         uses: actions/upload-artifact@v7
         with:
-          name: app-release-apk-AuraFrameFx
+          name: app-release-apk
           path: app/build/outputs/apk/release/app-release.apk

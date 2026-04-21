@@ -36,7 +36,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.Image
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,19 +54,14 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalyst
 import dev.aurakai.auraframefx.domains.ldo.model.AgentCatalystStatus
 import dev.aurakai.auraframefx.domains.ldo.model.FusionMode
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
-import dev.aurakai.auraframefx.domains.ldo.ui.components.GlassmorphismNeonCard
-import dev.aurakai.auraframefx.domains.ldo.ui.components.GatesceneCards
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -114,15 +108,6 @@ fun LDODevOpsHubScreen(
     var selectedAgent by remember { mutableStateOf<AgentCatalyst?>(null) }
 
     Box(modifier = Modifier.fillMaxSize().background(HubDark)) {
-
-        // ── DEVOPS GRAPH BACKGROUND IMAGE ──
-        Image(
-            painter = painterResource(id = R.drawable.devops_graph_background),
-            contentDescription = "DevOps Graph Background",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-            alpha = 0.4f
-        )
 
         // ── DATA CORRIDOR BACKGROUND GRID ──
         Box(modifier = Modifier.fillMaxSize().drawWithCache {
@@ -254,31 +239,7 @@ fun LDODevOpsHubScreen(
                 }
             }
 
-            // ── GATESCENE CARDS CAROUSEL (Glassmorphism + Neon) ──
-            Text(
-                "  GATEWAYS — NEURAL TOPOLOGY VISUALIZATION",
-                fontSize = 8.sp, color = HubPink.copy(alpha = 0.7f),
-                letterSpacing = 1.sp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-            )
-
-            LazyRow(
-                modifier = Modifier.fillMaxWidth().height(160.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                state = rememberLazyListState()
-            ) {
-                itemsIndexed(GatesceneCards.cards) { _, card ->
-                    GlassmorphismNeonCard(
-                        title = card.title,
-                        imageResId = card.imageResId,
-                        neonColor = card.neonColor,
-                        modifier = Modifier.size(140.dp, 160.dp),
-                        onClick = { /* Navigate to gateway */ }
-                    )
-                }
-            }
-
-            Spacer(Modifier.weight(1f))
+            // ── AGENT PROFILE CARDS ROW ──
             Text(
                 "  AGENTS — TAP: PROFILE  //  DOUBLE-TAP ICON: SPHERE GRID",
                 fontSize = 8.sp, color = HubCyan.copy(alpha = 0.5f),

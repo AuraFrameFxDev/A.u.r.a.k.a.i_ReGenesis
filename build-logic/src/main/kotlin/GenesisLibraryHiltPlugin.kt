@@ -87,23 +87,46 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
-            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
+            // 5. Dependencies
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val langchainVersion = versionCatalog.findVersion("langchain4j").get().requiredVersion
 
             dependencies.add("api", dependencies.platform("androidx.compose:compose-bom:$composeBomVersion"))
             dependencies.add("api", "androidx.compose.runtime:runtime")
             dependencies.add("api", "androidx.compose.ui:ui")
             dependencies.add("api", "androidx.compose.material3:material3")
 
-            dependencies.add("implementation", "androidx.core:core-ktx:1.17.0")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-            dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-            
-            dependencies.add("implementation", "com.highcapable.yukihookapi:api:$yukihookVersion")
-            dependencies.add("ksp", "com.highcapable.yukihookapi:ksp-xposed:$yukihookVersion")
-            dependencies.add("compileOnly", "de.robv.android.xposed:api:$xposedVersion")
+                // LangChain4j Core - Explicitly added to KSP to resolve visibility issues
+                add("ksp", "dev.langchain4j:langchain4j-core:$langchainVersion")
+                
+                // AI — LangChain4j (using BOM and bundle)
+                add("api", platform("dev.langchain4j:langchain4j-bom:$langchainVersion"))
+                val langchainBundle = versionCatalog.findBundle("langchain4j").get()
+                add("api", langchainBundle)
 
-            dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                // Compose BOM — version from libs.versions.toml (single source of truth)
+                add("api", platform("androidx.compose:compose-bom:$composeBomVersion"))
+                add("api", "androidx.compose.runtime:runtime")
+                add("api", "androidx.compose.ui:ui")
+                add("api", "androidx.compose.material3:material3")
+
+                // YukiHook & Xposed
+                val yukiDep = add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
+                (yukiDep as? org.gradle.api.artifacts.ExternalModuleDependency)?.exclude(
+                    mapOf("group" to "com.highcapable.yukihookapi", "module" to "ksp-xposed")
+                )
+                add("ksp", "com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+                add("compileOnly", "de.robv.android.xposed:api:82")
+
+                // Core
+                add("implementation", "androidx.core:core-ktx:1.17.0")
+                add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                add("implementation", "com.jakewharton.timber:timber:5.0.1")
+            }
         }
     }
 }

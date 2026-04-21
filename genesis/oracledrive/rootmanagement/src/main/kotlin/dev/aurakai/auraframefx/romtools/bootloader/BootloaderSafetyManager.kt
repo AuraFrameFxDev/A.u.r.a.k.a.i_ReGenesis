@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.romtools.bootloader
 
 import android.content.Context
 import android.os.Build
-import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -151,7 +150,8 @@ class BootloaderSafetyManagerImpl @Inject constructor(
         // For this implementation, we stage a record in our secure database
         android.util.Log.i("BootloaderSafety", "Creating system checkpoint: $checkpointId")
         try {
-            Shell.cmd("mkdir -p /data/aurakai/checkpoints/$checkpointId").exec()
+            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "mkdir -p /data/aurakai/checkpoints/$checkpointId"))
+            process.waitFor()
         } catch (e: Exception) {
             android.util.Log.e("BootloaderSafety", "Failed to create physical checkpoint directory", e)
         }
@@ -235,34 +235,46 @@ class BootloaderSafetyManagerImpl @Inject constructor(
     }
 
     private fun isBootloaderUnlocked(): Boolean {
-        val flashLocked = executeGetProp("ro.boot.flash.locked")
-        val verified = executeGetProp("ro.boot.verifiedbootstate")
+        return try {
+            val flashLocked = executeGetProp("ro.boot.flash.locked")
+            val verified = executeGetProp("ro.boot.verifiedbootstate")
 
-        // Multiple ways to detect unlocked bootloader
-        return when {
-            flashLocked == "0" -> true
-            verified == "orange" -> true
-            else -> false
+            // Multiple ways to detect unlocked bootloader
+            when {
+                flashLocked == "0" -> true
+                verified == "orange" -> true
+                else -> false
+            }
+        } catch (e: Exception) {
+            false
         }
     }
 
     private fun getVerifiedBootState(): BootState {
-        val state = executeGetProp("ro.boot.verifiedbootstate")
-        return when (state) {
-            "green" -> BootState.VERIFIED
-            "yellow" -> BootState.SELF_SIGNED
-            "orange" -> BootState.UNLOCKED
-            "red" -> BootState.CORRUPTED
-            else -> BootState.UNKNOWN
+        return try {
+            val state = executeGetProp("ro.boot.verifiedbootstate")
+            when (state) {
+                "green" -> BootState.VERIFIED
+                "yellow" -> BootState.SELF_SIGNED
+                "orange" -> BootState.UNLOCKED
+                "red" -> BootState.CORRUPTED
+                else -> BootState.UNKNOWN
+            }
+        } catch (e: Exception) {
+            BootState.UNKNOWN
         }
     }
 
     private fun getSELinuxStatus(): SELinuxMode {
-        val status = executeGetProp("ro.boot.selinux")
-        return when (status) {
-            "enforcing" -> SELinuxMode.ENFORCING
-            "permissive" -> SELinuxMode.PERMISSIVE
-            else -> SELinuxMode.UNKNOWN
+        return try {
+            val status = executeGetProp("ro.boot.selinux")
+            when (status) {
+                "enforcing" -> SELinuxMode.ENFORCING
+                "permissive" -> SELinuxMode.PERMISSIVE
+                else -> SELinuxMode.UNKNOWN
+            }
+        } catch (e: Exception) {
+            SELinuxMode.UNKNOWN
         }
     }
 
@@ -288,15 +300,25 @@ class BootloaderSafetyManagerImpl @Inject constructor(
     }
 
     private fun isSystemResponsive(): Boolean {
-        val result = Shell.cmd("uptime").exec()
-        val output = result.out.joinToString("\n")
-        return !output.contains("load average: 20") // Cap at a very high load
+        return try {
+            val process = Runtime.getRuntime().exec("uptime")
+            val output = process.inputStream.bufferedReader().use { it.readText() }
+            process.waitFor()
+            !output.contains("load average: 20") // Cap at a very high load
+        } catch (e: Exception) {
+            true
+        }
     }
 
     private fun arePartitionsHealthy(): Boolean {
-        val result = Shell.cmd("mount").exec()
-        val output = result.out.joinToString("\n")
-        return output.contains("/system") && output.contains("/data") && !output.contains("errors=remount-ro")
+        return try {
+            val process = Runtime.getRuntime().exec("mount")
+            val output = process.inputStream.bufferedReader().use { it.readText() }
+            process.waitFor()
+            output.contains("/system") && output.contains("/data") && !output.contains("errors=remount-ro")
+        } catch (e: Exception) {
+            false
+        }
     }
 
     private fun isBootEnvironmentStable(): Boolean {
@@ -326,9 +348,14 @@ class BootloaderSafetyManagerImpl @Inject constructor(
     }
 
     private fun executeGetProp(property: String): String? {
-        val result = Shell.cmd("getprop $property").exec()
-        val output = result.out.joinToString("\n").trim()
-        return if (output.isEmpty()) null else output
+        return try {
+            val process = Runtime.getRuntime().exec(arrayOf("getprop", property))
+            val output = process.inputStream.bufferedReader().use { it.readText().trim() }
+            process.waitFor()
+            if (output.isEmpty()) null else output
+        } catch (e: Exception) {
+            null
+        }
     }
 }
 

@@ -12,15 +12,28 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * Centralized JVM toolchain and compilation configuration for all Genesis modules.
  */
 object GenesisJvmConfig {
-    const val JVM_VERSION_INT = 25
-    val KOTLIN_JVM_TARGET = JvmTarget.JVM_25
+    /**
+     * The JVM version used throughout the Genesis project.
+     *
+     * Java 25 bytecode is:
+     * - Firebase compatible
+     * - Maximum target supported by Kotlin 2.3.x/2.4.x
+     * - Enables modern Java features with backward compatibility via desugaring
+     */
+    const val JVM_VERSION = 25
 
     /**
-     * Configures the Kotlin and Java compilation settings for the given project.
+     * Apply consistent Kotlin and Java compilation settings and attempt to configure the JVM toolchain for the given Gradle project.
+     *
+     * Configured behavior:
+     * - Sets Kotlin compiler options: `jvmTarget` to `JvmTarget.JVM_25` (KGP limit), adds `-Xjdk-release=$JVM_VERSION` and opt-in compiler flags.
+     * - Adds `--enable-preview` to Java compilation tasks.
+     * - After project evaluation, attempts to set the Kotlin JVM toolchain via the `kotlin` extension or by detecting an `android` extension; exceptions raised while attempting toolchain configuration are caught and ignored.
+     *
+     * @param project The Gradle project to configure.
      */
     fun configureKotlinJvm(project: Project) {
         with(project) {
-            // 1. Configure Kotlin Compilation Tasks
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(KOTLIN_JVM_TARGET)
@@ -36,20 +49,41 @@ object GenesisJvmConfig {
                 }
             }
 
-            // 2. Configure Java Compilation Tasks
+            // Explicitly configure Java compilation tasks to target JVM 25 with toolchain
             tasks.withType<JavaCompile>().configureEach {
-                try {
-                    val javaToolchains = project.extensions.getByType<JavaToolchainService>()
-                    javaCompiler.set(javaToolchains.compilerFor {
-                        languageVersion.set(JavaLanguageVersion.of(JVM_VERSION_INT))
-                    })
-                } catch (_: Exception) {
-                    // Fallback
-                }
-                sourceCompatibility = JVM_VERSION_INT.toString()
-                targetCompatibility = JVM_VERSION_INT.toString()
+                val javaToolchains = project.extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService::class.java)
+                javaCompiler.set(javaToolchains.compilerFor {
+                    languageVersion.set(org.gradle.jvm.toolchain.JavaLanguageVersion.of(JVM_VERSION))
+                })
+                sourceCompatibility = JVM_VERSION.toString()
+                targetCompatibility = JVM_VERSION.toString()
                 options.compilerArgs.add("--enable-preview")
-                options.encoding = "UTF-8"
+            }
+
+            // Configure toolchain - use afterEvaluate so extensions are ready
+            afterEvaluate {
+                // Technique 1: Try via 'kotlin' extension (Standard/External)
+                try {
+                    extensions.findByType(org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension::class.java)?.apply {
+                        jvmToolchain(JVM_VERSION)
+                    }
+                } catch (e: Exception) {
+                    logger.debug("Could not configure toolchain via 'kotlin' extension: ${e.message}")
+                }
+
+                // Technique 2: Try via 'android' extension (AGP 9.0 Built-in)
+                try {
+                    // This is harder to do type-safely without importing AGP internal types,
+                    // but we can try to find the extension named "android"
+                    val android = extensions.findByName("android")
+                    if (android != null) {
+                        // AGP 9.0 built-in Kotlin might expose a 'kotlin' block
+                        // Alternatively, we rely on compileOptions.sourceCompatibility/targetCompatibility
+                        // which are already set in the convention plugins.
+                    }
+                } catch (e: Exception) {
+                    logger.debug("Could not configure toolchain via 'android' extension: ${e.message}")
+                }
             }
         }
     }

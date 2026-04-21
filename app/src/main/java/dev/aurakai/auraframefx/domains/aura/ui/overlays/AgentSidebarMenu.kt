@@ -23,8 +23,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Mic
@@ -294,7 +294,7 @@ private fun AgentCard(
                 ActionButton("Connect", Icons.Default.Link, primaryColor) { onAction("connect") }
                 ActionButton(
                     "Assign",
-                    Icons.AutoMirrored.Filled.Assignment,
+                    Icons.Default.Assignment,
                     primaryColor
                 ) { onAction("assign") }
                 ActionButton("Design", Icons.Default.Palette, primaryColor) { onAction("design") }

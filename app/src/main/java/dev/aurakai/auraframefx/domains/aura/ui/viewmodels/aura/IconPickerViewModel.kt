@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels.aura
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
+import dev.aurakai.auraframefx.domains.aura.services.iconify.IconifyService
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +17,7 @@ sealed class IconState {
 
 @HiltViewModel
 class IconPickerViewModel @Inject constructor(
-    val iconifyApiClient: IconifyApiClient
+    val iconifyService: IconifyService
 ) : ViewModel() {
 
     private val _iconState = MutableStateFlow<IconState>(IconState.Idle)
@@ -34,7 +34,7 @@ class IconPickerViewModel @Inject constructor(
 
         viewModelScope.launch {
             _iconState.value = IconState.Loading
-            iconifyApiClient.searchIcons(query).onSuccess { result ->
+            iconifyService.searchIcons(query).onSuccess { result ->
                 _iconState.value = IconState.Success(result.icons)
             }.onFailure { error ->
                 _iconState.value = IconState.Error(error.message ?: "Search failed")

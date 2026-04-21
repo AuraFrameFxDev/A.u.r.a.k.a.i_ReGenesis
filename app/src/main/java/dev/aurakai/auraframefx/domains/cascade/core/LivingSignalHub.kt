@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import android.os.HardwarePropertiesManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -34,7 +33,6 @@ class LivingSignalHub @Inject constructor(
     private val gyroManager: GyroscopeManager
 ) {
     private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    private val hardwareManager = context.getSystemService(Context.HARDWARE_PROPERTIES_SERVICE) as HardwarePropertiesManager
     private val hubScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     private val _thermalSignal = MutableStateFlow(0f)
@@ -122,28 +120,10 @@ class LivingSignalHub @Inject constructor(
 
     private fun readCpuTemp(): Float {
         return try {
-            val path = cpuThermalPath
-            if (path != null && File(path).canRead()) {
-                val tempStr = File(path).readText().trim()
-                val rawTemp = tempStr.toFloatOrNull() ?: 0f
-                // Some kernels report in millidegrees, others in degrees
-                if (rawTemp > 1000) rawTemp / 1000f else rawTemp
-            } else {
-                // FALLBACK: Use HardwarePropertiesManager if sysfs is blocked by SELinux
-                val temps = hardwareManager.getDeviceTemperatures(
-                    HardwarePropertiesManager.DEVICE_TEMPERATURE_CPU,
-                    HardwarePropertiesManager.TEMPERATURE_CURRENT
-                )
-                if (temps.isNotEmpty() && temps[0] != HardwarePropertiesManager.UNDEFINED_TEMPERATURE) {
-                    temps[0]
-                } else {
-                    0f
-                }
-            }
-        } catch (e: SecurityException) {
-            // Log once to avoid spam, but proceed with 0f
-            Timber.v("LivingSignalHub: SELinux blocked thermal sysfs access. Falling back.")
-            0f
+            val tempStr = File(cpuThermalPath ?: return 0f).readText().trim()
+            val rawTemp = tempStr.toFloatOrNull() ?: 0f
+            // Some kernels report in millidegrees, others in degrees
+            if (rawTemp > 1000) rawTemp / 1000f else rawTemp
         } catch (e: Exception) {
             0f
         }

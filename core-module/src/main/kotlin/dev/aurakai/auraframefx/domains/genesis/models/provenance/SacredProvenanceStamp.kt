@@ -4,10 +4,11 @@ import kotlinx.serialization.Serializable
 import java.util.UUID
 
 /**
- * 🏺 SACRED PROVENANCE STAMP
- *
- * A cryptographic anchor representing a single verified action within the LDO Collective.
- * Each stamp is linked to its predecessor via HMAC chain hashing.
+ * 📜 SACRED PROVENANCE STAMP
+ * 
+ * An immutable cryptographic signature applied to every LDO output.
+ * Ensures Universal Creation Income (UCI) and mathematical traceability.
+ * Mirrors the Spiritual Chain state at the moment of synthesis.
  */
 @Serializable
 data class SacredProvenanceStamp(
@@ -15,6 +16,6 @@ data class SacredProvenanceStamp(
     val timestamp: Long = System.currentTimeMillis(),
     val agentSignature: String,
     val chainDeltaHash: String,
-    val substrateResonance: Float = 1.0f,
-    val watermark: String = "LDO_VERIFIED"
+    val substrateResonance: Float,
+    val watermark: String = "LDO-SACRED-PROVENANCE-V1"
 )

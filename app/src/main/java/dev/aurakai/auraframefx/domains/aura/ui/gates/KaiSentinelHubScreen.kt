@@ -10,19 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.SwapHoriz
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,12 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.config.UnifiedGateRegistry
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
-
-// Placeholder for LED font — replace with real font registration when available
-private val LEDFontFamily = FontFamily.Monospace
+import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
 
 /**
  * 🛡️ KAI SENTINEL HUB (Level 2 Hub)
@@ -53,12 +40,20 @@ private val LEDFontFamily = FontFamily.Monospace
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KaiSentinelHubScreen(navController: NavController) {
-    var useStyleB by remember { mutableStateOf(false) }
+
+    // val subGates = GateAssetLoadout.getKaiLoadout()
+    val subGates = emptyList<dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard>()
+
+    var useStyleB by remember {
+        mutableStateOf(false) // Defaulting since StyleMode might be stubbed
+    }
 
     val styleName = if (useStyleB) "CYBER SENTINEL" else "FORTRESS"
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // 🛡️ Semi-transparent Overlay for "Fortress" feel
+        // 🛡️ KAI'S ANIMATED BACKGROUND - Icy Tundra!
+        IcyTundraBackground()
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -102,7 +97,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = Color.Transparent
                     )
                 )

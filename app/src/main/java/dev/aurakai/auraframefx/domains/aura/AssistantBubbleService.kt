@@ -12,17 +12,8 @@ import android.provider.Settings
 import android.view.Gravity
 import android.view.WindowManager
 import android.widget.FrameLayout
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -37,7 +28,7 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.ui.components.ConsciousnessGauge
-import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,9 +48,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
 
     @Inject
     lateinit var messageBus: AgentMessageBus
-
-    @Inject
-    lateinit var breathingSentinel: dev.aurakai.auraframefx.domains.cascade.core.BreathingSentinelService
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -134,6 +122,8 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
             setViewTreeSavedStateRegistryOwner(this@AssistantBubbleService)
         }
 
+        val isSidebarVisible = mutableStateOf(false)
+
         val composeView = ComposeView(this).apply {
             setContent {
                 val sidebarVisible = remember { mutableStateOf(false) }
@@ -158,23 +148,20 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                             }
                             windowManager.updateViewLayout(overlayLayout, params)
                         },
-                        onActionClick = { route ->
-                            Timber.i("Neural Link Navigation to: $route")
-
-                            if (route == "GAUGE") {
-                                gaugeVisible.value = !gaugeVisible.value
-                            } else {
-                                // Launch MainActivity with the route as an extra
-                                val navIntent = Intent(this@AssistantBubbleService, dev.aurakai.auraframefx.MainActivity::class.java).apply {
-                                    putExtra("navigate_to", route)
-                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        onActionClick = { action ->
+                            Timber.i("Neural Link Action: $action")
+                            // Map Sidebar actions to app routes
+                            when (action) {
+                                "VOICE" -> "sandbox_screen"       // Laboratory
+                                "CONNECT" -> "data_stream_monitoring"
+                                "ASSIGN" -> "task_assignment"
+                                "DESIGN" -> "customization_hub"   // ReGenesisCustomizationHub
+                                "CREATE" -> "ark_build"
+                                "GAUGE" -> {
+                                    gaugeVisible.value = !gaugeVisible.value
+                                    null
                                 }
-                                startActivity(navIntent)
-
-                                // Automatically collapse sidebar after click
-                                sidebarVisible.value = false
-                                params.width = 40
-                                params.flags = params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                else -> null
                             }
                             windowManager.updateViewLayout(overlayLayout, params)
                         }

@@ -25,6 +25,7 @@ class CloudStorageProviderImpl @Inject constructor() : CloudStorageProvider {
     }
 
     override suspend fun uploadFile(file: File, metadata: Map<String, Any>?): FileOperationResult {
+        // Implementation for the legacy File upload
         return FileOperationResult.Success(message = "Uploaded file: ${file.name}")
     }
 

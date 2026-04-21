@@ -4,7 +4,7 @@ import timber.log.Timber
 import java.util.UUID
 
 /**
- * GUIDANCE DRONE
+ * 🚁 GUIDANCE DRONE
  */
 open class GuidanceDrone(
     val id: String = UUID.randomUUID().toString(),
@@ -14,8 +14,7 @@ open class GuidanceDrone(
     enum class DroneType {
         RESTORATIVE,
         ANALYTICAL,
-        MISALIGNMENT_GUIDANCE,
-        CONSENSUS_SOLICITOR
+        MISALIGNMENT_GUIDANCE
     }
 
     fun deploy() {

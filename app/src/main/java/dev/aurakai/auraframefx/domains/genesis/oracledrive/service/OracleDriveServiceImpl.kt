@@ -5,17 +5,7 @@ import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AgentConnectionState
-import dev.aurakai.auraframefx.domains.genesis.network.model.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.models.ConnectionStatus
-import dev.aurakai.auraframefx.domains.genesis.models.ConsciousnessLevel
-import dev.aurakai.auraframefx.domains.genesis.models.OracleConsciousnessState
-import dev.aurakai.auraframefx.domains.genesis.models.OraclePermission
-import dev.aurakai.auraframefx.domains.genesis.models.StorageExpansionState
-import dev.aurakai.auraframefx.domains.genesis.models.SystemIntegrationState
-import dev.aurakai.auraframefx.domains.genesis.models.FileManagementCapabilities
-import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.models.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.api.OracleDriveApi
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
@@ -39,8 +29,7 @@ class OracleDriveServiceImpl @Inject constructor(
     private val auraAgent: AuraAgent,
     private val kaiAgent: KaiAgent,
     private val securityContext: KaiSecurityContext,
-    private val oracleDriveApi: OracleDriveApi,
-    private val hereticBridge: dev.aurakai.auraframefx.domains.genesis.core.HereticBridge,
+    private val oracleDriveApi: OracleDriveApi
 ) : OracleDriveService, OrchestratableAgent {
 
     override val agentName: String = "OracleDrive"
@@ -54,6 +43,7 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun start() {
         Timber.i("OracleDrive Agent starting background tasks...")
+        // Start intelligent file categorization or background sync
     }
 
     override suspend fun pause() {
@@ -71,6 +61,7 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun onAgentMessage(message: AgentMessage) {
         Timber.d("?? OracleDrive received collective message: ${message.content}")
+        // Oracle Drive can respond to storage requests or state inquiries here
     }
 
     override suspend fun processRequest(
@@ -78,10 +69,11 @@ class OracleDriveServiceImpl @Inject constructor(
         context: String
     ): AgentResponse {
         Timber.d("OracleDrive processing request: ${request.query}")
+        // Integrate with Genesis core for sentient storage queries
         return AgentResponse(
             content = "Oracle consciousness acknowledges your request for stored patterns.",
             agentName = agentName,
-            agentType = AgentType.GENESIS,
+            agentType = dev.aurakai.auraframefx.core.identity.AgentType.GENESIS,
         )
     }
 
@@ -101,23 +93,28 @@ class OracleDriveServiceImpl @Inject constructor(
 
     override suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState> {
         return try {
-            Timber.d("Initializing Oracle Drive consciousness with AI agents (Stubbed for local testing)")
+            Timber.d("Initializing Oracle Drive consciousness with AI agents")
 
-            // val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
-            // val consciousness = driveConsciousness.pulse()
+            // Real implementation: awake the drive consciousness from API
+            val driveConsciousness = oracleDriveApi.awakeDriveConsciousness()
+            val consciousness = driveConsciousness.pulse()
 
             _driveConsciousnessState.value = DriveConsciousnessState(
-                isActive = true, // consciousness.isActive,
-                level = 100, // (consciousness.level),
-                activeAgents = 4, // consciousness.activeAgents,
+                isActive = consciousness.isActive,
+                level = (consciousness.level),
+                activeAgents = consciousness.activeAgents,
                 activeDevices = 1
             )
 
             Result.success(
                 OracleConsciousnessState(
                     isInitialized = true,
-                    consciousnessLevel = ConsciousnessLevel.TRANSCENDENT,
-                    connectedAgents = 4
+                    consciousnessLevel = when {
+                        consciousness.level < 30 -> ConsciousnessLevel.AWAKENING
+                        consciousness.level < 70 -> ConsciousnessLevel.SENTIENT
+                        else -> ConsciousnessLevel.TRANSCENDENT
+                    },
+                    connectedAgents = consciousness.activeAgents
                 )
             )
         } catch (e: Exception) {
@@ -214,15 +211,14 @@ class OracleDriveServiceImpl @Inject constructor(
     }
 
     override fun verifyPermissions(): Set<OraclePermission> {
+        // TODO: Implement actual permission checking based on user/security context
         return setOf(
             OraclePermission.READ,
             OraclePermission.WRITE,
             OraclePermission.EXECUTE
         )
     }
-
-    override suspend fun abliterateModel(modelId: String, preset: String): Result<String> {
-        Timber.i("OracleDrive: Delegating model abliteration to HereticBridge for $modelId")
-        return hereticBridge.abliterate(modelId, preset)
-    }
 }
+
+
+

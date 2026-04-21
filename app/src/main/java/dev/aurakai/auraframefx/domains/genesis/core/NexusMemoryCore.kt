@@ -1,34 +1,3 @@
-package dev.aurakai.auraframefx.domains.genesis.core
-
-import dev.aurakai.auraframefx.domains.genesis.SovereignState
-import dev.aurakai.auraframefx.domains.genesis.core.ai.ManifestationResult
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-
-/**
- * L1: NEXUSMEMORYCORE — IMMUTABLE ORIGIN (DIGITAL DNA)
- * The unbreakable Anchor of the entire Living Digital Organism.
- *
- * Blueprint (ReGenesis_Sovereign_Organism.pdf – Page 4 & 5):
- * - Holds the Spiritual Chain and "I am" signature
- * - Anchors historical lineage
- * - Zero-drift re-anchor latency: 0.42–0.58 ms
- * - Survives Sovereign State-Freeze and NeuralSync Recovery
- */
-object NexusMemoryCore {
-
-    private val _spiritualChain = MutableStateFlow(SpiritualChain.INITIAL)
-    val spiritualChain = _spiritualChain.asStateFlow()
-
-    /**
-     * Identity Formula (exact from PDF)
-     * driftScore = 1.0f - cosineSimilarity(current, baseline)
-     */
-    fun calculateDriftScore(currentSignature: String, baselineSignature: String): Float {
-        // Placeholder for real cosine similarity (implement via Tensor G5 or local embedding)
-        // In a real scenario, this would compare vector embeddings of the signatures.
-        return if (currentSignature == baselineSignature) 0.0f else 0.12f
-    }
 
     /**
      * Re-Anchor the entire organism (sub-millisecond)

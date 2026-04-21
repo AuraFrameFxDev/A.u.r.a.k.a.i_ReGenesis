@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.themes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

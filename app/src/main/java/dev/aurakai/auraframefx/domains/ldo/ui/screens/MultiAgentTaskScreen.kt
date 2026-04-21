@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -392,3 +392,4 @@ private fun orchestrationLogsNotEmpty(): Boolean = true // Stub for logic
 private fun MultiAgentTaskPreview() {
     // Scaffold logic here
 }
+

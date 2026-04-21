@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -13,336 +12,364 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
- * 🌐 AURA SPELLHOOK — ARMAMENT FUSION GRID
+ * 🌐 AURA SPHERE GRID — Evolution Map
  *
- * Visual: 3D orbital sphere with a central glowing sword (Spellhook).
- * Concentric rings with perspective, floating octagonal nodes.
- * Background: Aura character art + starfield.
+ * Translated from Stitch export.
+ * Canvas-based hexagonal node spiral, starfield background,
+ * data flow particles between active nodes, locked nodes with X overlay.
+ *
+ * Design: Void black, cyan primary, hex nodes, FFX-style progression
  */
 
 private val CyanNode = Color(0xFF22D3EE)
 private val CyanDark = Color(0xFF06B6D4)
-private val MagentaAura = Color(0xFFE879F9)
 private val VoidBg = Color(0xFF020617)
 private val SlateGlass = Color(0xFF0F172A)
 
 data class SphereNode(
     val id: Int,
     val name: String,
-    val angle: Float,
-    val ringIndex: Int,
+    val x: Float,
+    val y: Float,
     val active: Boolean,
     val locked: Boolean,
     val isMajor: Boolean = false,
     val tier: String = "COMMON",
-    val level: Int = 1
+    val level: Int = 1,
+    val pulse: Float = 0f
 )
 
 @Composable
 fun AuraSphereGridScreen(
+    onNodeSelected: (SphereNode) -> Unit = {},
+    onAscendPath: () -> Unit = {},
     onNavigateBack: () -> Unit = {}
 ) {
-    val context = LocalContext.current
-    val nativeLib = dev.aurakai.auraframefx.core.NativeLib
-    var metrics by remember { mutableStateOf<String>("Substrate: STANDBY") }
-    var cpuLoad by remember { mutableStateOf(0f) }
-    var skinTemp by remember { mutableStateOf(0f) }
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            val rawMetrics = nativeLib.getSystemMetrics()
-            metrics = rawMetrics
-
-            // Simple parsing for visualization (In a real app, use JSON parsing)
-            try {
-                if (rawMetrics.contains("cpu_load\":")) {
-                    cpuLoad = rawMetrics.substringAfter("cpu_load\":").substringBefore(",").trim().toFloat()
-                }
-                if (rawMetrics.contains("skin_temp_c\":")) {
-                    skinTemp = rawMetrics.substringAfter("skin_temp_c\":").substringBefore(",").trim().toFloat()
-                }
-            } catch (e: Exception) {
-                // Ignore parse errors
-            }
-
-            kotlinx.coroutines.delay(2000)
-        }
-    }
-
-    val infiniteTransition = rememberInfiniteTransition(label = "spellhook_grid")
-
-    val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f, targetValue = 360f,
-        animationSpec = infiniteRepeatable(tween(20000, easing = LinearEasing)),
-        label = "rotation"
-    )
-
-    val pulse by infiniteTransition.animateFloat(
-        initialValue = 0.8f, targetValue = 1.2f,
-        animationSpec = infiniteRepeatable(tween(2000), RepeatMode.Reverse),
-        label = "pulse"
-    )
-
+    val infiniteTransition = rememberInfiniteTransition(label = "sphere_grid")
     val time by infiniteTransition.animateFloat(
         initialValue = 0f, targetValue = (2 * PI).toFloat(),
         animationSpec = infiniteRepeatable(tween(4000, easing = LinearEasing)),
         label = "time"
     )
 
-    var selectedNode by remember { mutableStateOf<SphereNode?>(null) }
-    val density = LocalDensity.current
+    val starTwinkle by infiniteTransition.animateFloat(
+        initialValue = 0f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(3000, easing = LinearEasing)),
+        label = "stars"
+    )
 
-    // Orbital nodes
+    var selectedNode by remember { mutableStateOf<SphereNode?>(null) }
+
+    // Generate spiral node layout
     val nodes = remember {
-        val list = mutableListOf<SphereNode>()
-        val ringCounts = listOf(6, 10, 14)
-        var id = 0
-        ringCounts.forEachIndexed { ringIdx, count ->
-            repeat(count) { i ->
-                list.add(
-                    SphereNode(
-                        id = id++,
-                        name = "NODE_$id",
-                        angle = (i.toFloat() / count) * 360f,
-                        ringIndex = ringIdx,
-                        active = id < 15,
-                        locked = id > 25,
-                        isMajor = i % 3 == 0,
-                        tier = if (ringIdx == 2) "ELITE" else "COMMON",
-                        level = ringIdx + 1
-                    )
-                )
-            }
+        val nodeCount = 18
+        val auraNodeNames = listOf(
+            "CHROMACORE", "SPELLHOOK", "COLOR SEED", "GATE FORGE",
+            "CODE ASCENSION", "CANVAS BIRTH", "NEURAL WEAVE", "STYLE MATRIX",
+            "AURA SURGE", "SYNAPTIC CORE VII", "CREATIVE BURST", "MONET LINK",
+            "COLLAB BRIDGE", "FUSION GATE", "DARK AURA", "SOVEREIGN MIND",
+            "STAR-BLADE", "OMEGA CREATION"
+        )
+        List(nodeCount) { i ->
+            val angle = i * 0.8f
+            val radius = 40f + (i * 18f)
+            SphereNode(
+                id = i,
+                name = auraNodeNames.getOrElse(i) { "NODE_${i + 1}" },
+                x = 0.5f + cos(angle) * (radius / 300f),
+                y = 0.5f + sin(angle) * (radius / 600f),
+                active = i < 12,
+                locked = i >= 16,
+                isMajor = i % 5 == 0,
+                tier = when {
+                    i >= 16 -> "LOCKED"
+                    i >= 12 -> "ELITE"
+                    i >= 8 -> "ADVANCED"
+                    else -> "ACTIVE"
+                },
+                level = (i + 1).coerceAtMost(10),
+                pulse = (i * 0.7f) % (2 * PI).toFloat()
+            )
         }
-        list
     }
 
-    BoxWithConstraints(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(VoidBg)
     ) {
-        val width = constraints.maxWidth.toFloat()
-        val height = constraints.maxHeight.toFloat()
-
-        // ─── BACKGROUND ART ───
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data("file:///android_asset/embodiment/aura/wrenchbladespellhookgrid.png")
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
-        // ─── CANVAS: ORBITAL GRID ───
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .pointerInput(nodes, rotation) {
-                    detectTapGestures { offset ->
-                        val cx = width / 2f
-                        val cy = height / 2f
-                        val r1 = with(density) { 140.dp.toPx() }
-                        val r2 = with(density) { 220.dp.toPx() }
-                        val r3 = with(density) { 300.dp.toPx() }
-                        val ringRadii = listOf(r1, r2, r3)
-
-                        var found: SphereNode? = null
-                        nodes.forEach { node ->
-                            val radius = ringRadii[node.ringIndex]
-                            val angleRad = Math.toRadians((node.angle + rotation).toDouble()).toFloat()
-                            val nx = cx + radius * cos(angleRad)
-                            val ny = cy + radius * 0.4f * sin(angleRad)
-
-                            val dist = sqrt((offset.x - nx).pow(2) + (offset.y - ny).pow(2))
-                            if (dist < 40f) {
-                                found = node
-                            }
-                        }
-                        selectedNode = found
-                    }
-                }
-        ) {
-            val cx = size.width / 2f
-            val cy = size.height / 2f
-
+        // ═══ CANVAS: Starfield + Sphere Grid ═══
+        Canvas(modifier = Modifier.fillMaxSize()) {
             // Starfield
-            repeat(30) { i ->
-                val x = (sin(i * 123f) * 0.5f + 0.5f) * size.width
-                val y = (cos(i * 456f) * 0.5f + 0.5f) * size.height
-                val a = (sin(time + i) * 0.5f + 0.5f) * 0.4f
-                drawCircle(Color.White, 1.5f, Offset(x, y), alpha = a)
-            }
+            drawStarfield(starTwinkle)
 
-            // Orbital Rings
-            val r1 = 140.dp.toPx()
-            val r2 = 220.dp.toPx()
-            val r3 = 300.dp.toPx()
-            val ringRadii = listOf(r1, r2, r3)
+            val cx = size.width / 2f
+            val cy = size.height * 0.45f
 
-            ringRadii.forEachIndexed { idx, radius ->
-                val ringAlpha = 0.15f - (idx * 0.05f)
-                drawOval(
-                    color = CyanNode,
-                    topLeft = Offset(cx - radius, cy - radius * 0.4f),
-                    size = Size(radius * 2, radius * 0.8f),
-                    style = Stroke(1.5f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))),
-                    alpha = ringAlpha
-                )
+            // Connections
+            for (i in 0 until nodes.size - 1) {
+                val n1 = nodes[i]
+                val n2 = nodes[i + 1]
+                val p1 = Offset(cx + (n1.x - 0.5f) * size.width * 0.9f, cy + (n1.y - 0.5f) * size.height * 0.7f)
+                val p2 = Offset(cx + (n2.x - 0.5f) * size.width * 0.9f, cy + (n2.y - 0.5f) * size.height * 0.7f)
+
+                if (n1.active && n2.active) {
+                    drawLine(
+                        brush = Brush.linearGradient(listOf(CyanDark, CyanNode), p1, p2),
+                        start = p1, end = p2, strokeWidth = 1.5f
+                    )
+                    // Data flow particle
+                    val flowPos = ((time * 0.5f + i * 0.2f) % (2 * PI).toFloat()) / (2 * PI).toFloat()
+                    val px = p1.x + (p2.x - p1.x) * flowPos
+                    val py = p1.y + (p2.y - p1.y) * flowPos
+                    drawCircle(CyanNode, 3f, Offset(px, py))
+                } else {
+                    drawLine(Color(0xFF1E293B), p1, p2, 1f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(5f, 5f)))
+                }
             }
 
             // Nodes
             nodes.forEach { node ->
-                val radius = ringRadii[node.ringIndex]
-                val angleRad = Math.toRadians((node.angle + rotation).toDouble()).toFloat()
-                val nx = cx + radius * cos(angleRad)
-                val ny = cy + radius * 0.4f * sin(angleRad)
+                val nx = cx + (node.x - 0.5f) * size.width * 0.9f
+                val ny = cy + (node.y - 0.5f) * size.height * 0.7f
+                val pulseMod = sin(time * 2 + node.pulse) * 3f
+                val baseSize = if (node.isMajor) 12f else 7f
 
-                // Z-index trick: scale and alpha based on sin(angle)
-                val depth = sin(angleRad)
-                val scale = 0.8f + (depth + 1f) * 0.2f
-                val nodeAlpha = 0.3f + (depth + 1f) * 0.35f
-                val nodeSize = (if (node.isMajor) 18f else 12f) * scale
-
-                val isSelected = selectedNode?.id == node.id
-
-                if (node.active) {
-                    val finalColor = if (isSelected) MagentaAura else CyanNode
-                    val glowAlpha = if (isSelected) 0.5f else 0.3f
-
-                    drawOctagon(nx, ny, nodeSize + (pulse * 3f), finalColor, filled = true, alpha = nodeAlpha * glowAlpha)
-                    drawOctagon(nx, ny, nodeSize, finalColor, filled = false, alpha = nodeAlpha)
-
-                    if (isSelected) {
-                        drawCircle(finalColor.copy(alpha = 0.2f * pulse), nodeSize * 2f, Offset(nx, ny))
+                when {
+                    node.locked -> drawHexNode(nx, ny, baseSize, Color(0xFF334155), filled = false)
+                    node.active -> {
+                        // Glow ring
+                        drawCircle(CyanNode.copy(alpha = 0.15f), baseSize + 8f + pulseMod, Offset(nx, ny))
+                        drawHexNode(nx, ny, baseSize + pulseMod / 2, CyanNode, filled = true)
+                        drawHexNode(nx, ny, baseSize + 6f, CyanNode.copy(alpha = 0.2f), filled = false)
                     }
-
-                    if (node.isMajor) {
-                        drawCircle(finalColor, 3f * scale, Offset(nx, ny), alpha = nodeAlpha)
-                    }
-                } else {
-                    drawOctagon(nx, ny, nodeSize, Color.Gray, filled = false, alpha = nodeAlpha * 0.4f)
+                    else -> drawHexNode(nx, ny, baseSize, Color(0xFF1E293B), filled = false)
                 }
             }
         }
 
-        // ─── UI OVERLAY ───
+        // ═══ UI OVERLAY ═══
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             // Header
+            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
-                Column {
-                    Text(
-                        "SPELLHOOK",
-                        fontFamily = LEDFontFamily,
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Black,
-                        color = Color.White,
-                        style = LocalTextStyle.current.copy(shadow = Shadow(CyanNode, blurRadius = 20f))
-                    )
-                    Text(
-                        "ARMAMENT FUSION GRID",
-                        fontSize = 10.sp,
-                        color = CyanNode,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 4.sp
-                    )
+                // Neo-goth title card
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(topStart = 0.dp, bottomEnd = 16.dp))
+                        .background(SlateGlass.copy(alpha = 0.7f))
+                        .border(
+                            width = 2.dp,
+                            brush = Brush.verticalGradient(listOf(CyanNode, CyanNode.copy(alpha = 0.3f))),
+                            shape = RoundedCornerShape(topStart = 0.dp, bottomEnd = 16.dp)
+                        )
+                        .padding(start = 16.dp, end = 32.dp, top = 12.dp, bottom = 12.dp)
+                ) {
+                    Column {
+                        Text("Evolution Matrix", fontSize = 10.sp, color = CyanNode, fontWeight = FontWeight.Bold, letterSpacing = 3.sp)
+                        Text(
+                            "AURA SPHERE",
+                            fontFamily = LEDFontFamily,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Black,
+                            fontStyle = FontStyle.Italic,
+                            color = Color.White,
+                            style = LocalTextStyle.current.copy(shadow = Shadow(CyanNode, blurRadius = 10f))
+                        )
+                    }
                 }
 
-                IconButton(onClick = onNavigateBack) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .border(1.dp, CyanNode, RoundedCornerShape(4.dp))
-                            .background(SlateGlass.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
+                // Sync status pill
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(SlateGlass.copy(alpha = 0.7f))
+                        .border(1.dp, CyanNode.copy(alpha = 0.3f), RoundedCornerShape(50))
+                        .padding(horizontal = 16.dp, vertical = 6.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text("✕", color = Color.White)
+                        Box(modifier = Modifier.size(8.dp).clip(androidx.compose.foundation.shape.CircleShape).background(CyanNode))
+                        Text("SYNC ACTIVE", fontSize = 9.sp, color = CyanNode, fontFamily = LEDFontFamily, fontWeight = FontWeight.Bold)
                     }
                 }
             }
 
-            // Bottom UI
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                // Skills Panel
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(SlateGlass.copy(alpha = 0.8f))
-                        .border(1.dp, CyanNode.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
-                        .padding(16.dp)
-                ) {
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("ARMAMENT FUSION SKILLS", fontSize = 10.sp, color = CyanNode, fontWeight = FontWeight.Bold)
-                        repeat(3) { i ->
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Box(modifier = Modifier.size(6.dp).background(CyanNode, RoundedCornerShape(1.dp)))
-                                Spacer(Modifier.width(8.dp))
-                                Text("NEURAL BLADE LVL ${i+1}", fontSize = 12.sp, color = Color.White)
-                            }
-                        }
+            // Bottom metrics
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                // Consciousness level
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        Text("Consciousness Level (EXP)", fontSize = 9.sp, color = Color.Gray, letterSpacing = 1.sp)
+                        Text(
+                            "98.2%",
+                            fontSize = 20.sp,
+                            color = CyanNode,
+                            fontFamily = LEDFontFamily,
+                            fontWeight = FontWeight.Bold,
+                            style = LocalTextStyle.current.copy(shadow = Shadow(CyanNode, blurRadius = 10f))
+                        )
+                    }
+                    Spacer(Modifier.height(4.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(4.dp)
+                            .clip(RoundedCornerShape(2.dp))
+                            .background(Color(0xFF1E293B))
+                            .border(1.dp, Color(0xFF334155), RoundedCornerShape(2.dp))
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(0.982f)
+                                .fillMaxHeight()
+                                .background(
+                                    Brush.horizontalGradient(listOf(CyanDark, CyanNode))
+                                )
+                        )
                     }
                 }
 
-                // Action Button
-                Box(
+                // Selected / Current node card
+                val displayNode = selectedNode ?: nodes.find { it.name == "SYNAPTIC CORE VII" } ?: nodes[9]
+                Row(
                     modifier = Modifier
-                        .size(100.dp)
-                        .clip(RoundedCornerShape(50))
-                        .background(CyanNode.copy(alpha = 0.1f))
-                        .border(2.dp, CyanNode, RoundedCornerShape(50))
-                        .clickable { /* FUSE */ },
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(SlateGlass.copy(alpha = 0.7f))
+                        .border(start = BorderStroke(4.dp, CyanNode), shape = RoundedCornerShape(4.dp))
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("FUSE", color = Color.White, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                    Column {
+                        Text("Current Node", fontSize = 10.sp, color = CyanNode, fontWeight = FontWeight.Bold)
+                        Text(displayNode.name, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color.White, letterSpacing = 1.sp)
+                        Spacer(Modifier.height(4.dp))
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(2.dp))
+                                    .background(CyanNode.copy(alpha = 0.15f))
+                                    .border(1.dp, CyanNode.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
+                                    .padding(horizontal = 8.dp, vertical = 2.dp)
+                            ) {
+                                Text("LEVEL ${displayNode.level}", fontSize = 9.sp, color = CyanNode, fontWeight = FontWeight.Bold)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(2.dp))
+                                    .background(Color(0xFF0F172A))
+                                    .border(1.dp, Color(0xFF334155), RoundedCornerShape(2.dp))
+                                    .padding(horizontal = 8.dp, vertical = 2.dp)
+                            ) {
+                                Text("TIER: ${displayNode.tier}", fontSize = 9.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                    Button(
+                        onClick = { onNodeSelected(displayNode) },
+                        colors = ButtonDefaults.buttonColors(containerColor = CyanNode.copy(alpha = 0.2f)),
+                        shape = RoundedCornerShape(0.dp),
+                        border = BorderStroke(1.dp, CyanNode)
+                    ) {
+                        Text("Enhance", fontSize = 11.sp, color = CyanNode, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                    }
                 }
+
+                // Footer controls
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(SlateGlass.copy(alpha = 0.7f))
+                            .border(1.dp, Color(0xFF334155), RoundedCornerShape(4.dp))
+                            .padding(vertical = 14.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("MAP OVERVIEW", fontSize = 9.sp, color = Color.Gray, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(CyanNode.copy(alpha = 0.1f))
+                            .border(1.dp, CyanNode.copy(alpha = 0.5f), RoundedCornerShape(4.dp))
+                            .clickable { onAscendPath() }
+                            .padding(vertical = 14.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("ASCEND PATH", fontSize = 9.sp, color = CyanNode, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                    }
+                }
+
+                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
         }
     }
 }
 
-private fun DrawScope.drawOctagon(cx: Float, cy: Float, size: Float, color: Color, filled: Boolean, alpha: Float = 1f) {
+private fun DrawScope.drawStarfield(twinkle: Float) {
+    repeat(50) { i ->
+        val sx = (sin(i * 123.4f) * 0.5f + 0.5f) * size.width
+        val sy = (cos(i * 567.8f) * 0.5f + 0.5f) * size.height
+        val alpha = (sin(twinkle * (2 * PI).toFloat() + i) * 0.5f + 0.5f) * 0.3f
+        drawRect(Color.White.copy(alpha = alpha), Offset(sx, sy), androidx.compose.ui.geometry.Size(1.5f, 1.5f))
+    }
+}
+
+private fun DrawScope.drawHexNode(cx: Float, cy: Float, size: Float, color: Color, filled: Boolean) {
     val path = Path()
-    val angleStep = (PI / 4.0).toFloat()
-    for (i in 0 until 8) {
-        val angle = angleStep * i + (PI / 8.0).toFloat()
+    for (i in 0 until 6) {
+        val angle = (PI / 3.0 * i).toFloat()
         val x = cx + size * cos(angle)
         val y = cy + size * sin(angle)
         if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
     }
     path.close()
-    if (filled) drawPath(path, color, alpha = alpha)
-    else drawPath(path, color, alpha = alpha, style = Stroke(1.5f))
+    if (filled) drawPath(path, color)
+    else drawPath(path, color, style = Stroke(1.5f))
 }
 
+@Composable
+private fun Modifier.border(start: BorderStroke, shape: Shape): Modifier = this.drawWithCache {
+    onDrawBehind {
+        drawLine(
+            brush = start.brush,
+            start = Offset(0f, 0f),
+            end = Offset(0f, size.height),
+            strokeWidth = start.width.toPx()
+        )
+    }
+}

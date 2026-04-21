@@ -10,6 +10,15 @@ import org.gradle.kotlin.dsl.configure
  * ===================================================================
  */
 class GenesisLibraryPlugin : Plugin<Project> {
+    /**
+     * Configures the given Gradle project with the convention defaults for an Android library module.
+     *
+     * Applies standard plugins (Android library, Hilt, KSP, Compose, Kotlin serialization), configures
+     * the Android LibraryExtension (SDK, NDK, defaultConfig, buildTypes, compile/packaging/lint/build features),
+     * delegates Kotlin JVM toolchain/compilation setup, and adds the convention's standard dependencies.
+     *
+     * @param project The Gradle project to configure as an Android library module.
+     */
     override fun apply(project: Project) {
         with(project) {
             pluginManager.apply("com.android.library")
@@ -18,7 +27,12 @@ class GenesisLibraryPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
-            val versionCatalog = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java).named("libs")
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
 
             val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
             val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
@@ -28,11 +42,10 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 compileSdk = compileSdkVersion
-                buildToolsVersion = "36.1.0"
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
-                    minSdk = minSdkVersion
+                    minSdk = 34
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
                     ndk {
@@ -50,6 +63,7 @@ class GenesisLibraryPlugin : Plugin<Project> {
                     }
                 }
 
+                // Java 25 bytecode (Centralized for Android modules)
                 compileOptions {
                     sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
@@ -87,6 +101,11 @@ class GenesisLibraryPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
+            // ═══════════════════════════════════════════════════════════════════════════
+            // Auto-configured dependencies (provided by convention plugin)
+            // ═══════════════════════════════════════════════════════════════════════════
+
+            // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
             dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
@@ -111,13 +130,23 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
 
-            dependencies.add("api", dependencies.platform(versionCatalog.findLibrary("langchain4j-bom").get()))
-            dependencies.add("api", versionCatalog.findBundle("langchain4j").get())
+            // AI — LangChain4j (using BOM and bundle)
+            dependencies.add(
+                "api",
+                dependencies.platform(versionCatalog.findLibrary("langchain4j-bom").get())
+            )
+            val langchainBundle = versionCatalog.findBundle("langchain4j").get()
+            dependencies.add("api", langchainBundle)
 
+            // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
+            // KavaRef for modern reflection
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
+            // EzXHelper for simplified Xposed development
+            dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
         }
     }
 }

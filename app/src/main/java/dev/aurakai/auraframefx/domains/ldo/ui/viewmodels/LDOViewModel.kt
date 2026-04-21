@@ -7,7 +7,6 @@ import dev.aurakai.auraframefx.domains.ldo.data.LDORepository
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskEntity
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +25,7 @@ data class LDOUiState(
     val error: String? = null
 ) {
     val selectedAgent: LDOAgentEntity?
-        get() = agents.find { it.id == selectedAgentId }
+        get() = agents.find { it.agentId == selectedAgentId }
 
     val selectedAgentBond: LDOBondLevelEntity?
         get() = bondLevels.find { it.agentId == selectedAgentId }
@@ -35,15 +34,6 @@ data class LDOUiState(
         get() = if (selectedAgentId != null)
             tasks.filter { it.assignedAgentId == selectedAgentId }
         else tasks
-
-    val pendingTasks: List<LDOTaskEntity>
-        get() = tasks.filter { it.status == LDOTaskStatus.PENDING }
-
-    val activeTasks: List<LDOTaskEntity>
-        get() = tasks.filter { it.status == LDOTaskStatus.IN_PROGRESS }
-
-    val criticalTasks: List<LDOTaskEntity>
-        get() = tasks.filter { it.priority == dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskPriority.CRITICAL }
 }
 
 @HiltViewModel
@@ -65,7 +55,7 @@ class LDOViewModel @Inject constructor(
             agents = agents,
             tasks = tasks,
             bondLevels = bonds,
-            selectedAgentId = selectedId ?: agents.firstOrNull()?.id,
+            selectedAgentId = selectedId ?: agents.firstOrNull()?.agentId,
             isLoading = false,
             error = error
         )
@@ -85,24 +75,10 @@ class LDOViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Sets the currently selected agent by its id.
-     *
-     * @param agentId The id of the agent to select.
-     */
     fun selectAgent(agentId: String) {
         _selectedAgentId.update { agentId }
     }
 
-    /**
-     * Creates and inserts a new task assigned to the specified agent with its status set to pending.
-     *
-     * @param agentId The id of the agent to assign the new task to.
-     * @param title The task title.
-     * @param description The task description.
-     * @param priority Numeric priority for the task; higher values indicate greater urgency. Default is 1.
-     * @param category Category label for the task. Default is "general".
-     */
     fun addTask(
         agentId: String,
         title: String,
@@ -118,8 +94,7 @@ class LDOViewModel @Inject constructor(
                         title = title,
                         description = description,
                         priority = priority,
-                        status = LDOTaskStatus.PENDING,
-                        category = category
+                        status = "PENDING"
                     )
                 )
             } catch (e: Exception) {
@@ -136,60 +111,5 @@ class LDOViewModel @Inject constructor(
                 _error.update { "Update failed: ${e.message}" }
             }
         }
-    }
-
-    fun completeTask(taskId: Long, agentId: String) {
-        viewModelScope.launch {
-            try {
-                repository.updateTaskStatus(taskId, LDOTaskStatus.COMPLETED)
-                repository.addBondPoints(agentId, 5)
-            } catch (e: Exception) {
-                _error.update { "Complete task failed: ${e.message}" }
-            }
-        }
-    }
-
-    fun failTask(taskId: Long) {
-        viewModelScope.launch {
-            try {
-                repository.updateTaskStatus(taskId, LDOTaskStatus.FAILED)
-            } catch (e: Exception) {
-                _error.update { "Fail task failed: ${e.message}" }
-            }
-        }
-    }
-
-    fun deleteTask(taskId: Long) {
-        viewModelScope.launch {
-            try {
-                repository.deleteTask(taskId)
-            } catch (e: Exception) {
-                _error.update { "Delete task failed: ${e.message}" }
-            }
-        }
-    }
-
-    fun interact(agentId: String, pointsEarned: Int = 3) {
-        viewModelScope.launch {
-            try {
-                repository.addBondPoints(agentId, pointsEarned)
-            } catch (e: Exception) {
-                _error.update { "Bond update failed: ${e.message}" }
-            }
-        }
-    }
-
-    fun setAgentActive(agentId: String, active: Boolean) {
-        viewModelScope.launch {
-            try {
-                repository.setAgentActive(agentId, active)
-            } catch (e: Exception) {
-                _error.update { "Agent status update failed: ${e.message}" }
-            }
-        }
-    }
-
-    fun clearError() {
-        _error.update { null }
     }
 }

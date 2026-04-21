@@ -6,6 +6,7 @@ import dev.aurakai.auraframefx.domains.genesis.ai.clients.MultimodalContent
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel
+import dev.langchain4j.http.client.okhttp.OkHttpClientBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Duration
@@ -42,6 +43,7 @@ class RealVertexAIClientImpl @Inject constructor(
             chatModel = GoogleAiGeminiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-1.5-pro")
+                .httpClientBuilder(OkHttpClientBuilder())
                 .timeout(Duration.ofSeconds(60))
                 .logRequests(true)
                 .logResponses(true)

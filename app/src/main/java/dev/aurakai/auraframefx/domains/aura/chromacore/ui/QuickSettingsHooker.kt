@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.quicksettings
 
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker

@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
 import okhttp3.ResponseBody
-import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
@@ -129,7 +128,7 @@ class OracleCloudApi @Inject constructor() {
 
     suspend fun downloadFile(bucketName: String, objectName: String): Response<ResponseBody> {
         // Stub implementation - returns empty response body
-        return Response.success(ByteArray(0).toResponseBody(null))
+        return Response.success(ResponseBody.create(null, ByteArray(0)))
     }
 
     suspend fun deleteFile(bucketName: String, objectName: String): Response<Unit> {

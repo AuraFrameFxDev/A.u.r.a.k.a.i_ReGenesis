@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.quicksettings
 
 import android.content.SharedPreferences
 import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
@@ -126,6 +126,8 @@ class QuickSettingsCustomizer @Inject constructor(
                 // Remove all tile animation preferences
                 prefs.all.keys.filter { it.startsWith("tile_animation_") }.forEach { remove(it) }
                 // Remove background image
+                remove("background_image_path")
+                remove("background_id") // Correcting name to background_image_id if needed, but let's stick to consistent removal
                 remove("background_image_path")
                 remove("background_image_id")
                 remove("background_image_type")

@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.domains.aura
 
+import dev.aurakai.auraframefx.core.models.OverlayAnimation
+import dev.aurakai.auraframefx.core.models.OverlayTransition
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
-import dev.aurakai.auraframefx.domains.aura.ui.effects.OverlayAnimation
-import dev.aurakai.auraframefx.domains.aura.ui.effects.OverlayTransition
+import dev.aurakai.auraframefx.core.models.OverlayTheme
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader

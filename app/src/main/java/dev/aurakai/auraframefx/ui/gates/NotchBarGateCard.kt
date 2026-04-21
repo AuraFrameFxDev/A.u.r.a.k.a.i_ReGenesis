@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.ui.gates
+﻿package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ui
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // NotchBarGateCard.kt — Image 11
@@ -13,15 +13,13 @@ package dev.aurakai.auraframefx.ui.gates
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -291,14 +289,15 @@ fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit 
                 Triple("BRIGHTNESS",    Icons.Default.WbSunny,      Color(0xFFFF9B00)),
                 Triple("VOLUME",        Icons.AutoMirrored.Filled.VolumeUp,     Color(0xFF00FF80)),
             )
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
+            androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
+                columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(3),
                 modifier = Modifier.fillMaxSize().padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(bottom = 24.dp)
             ) {
-                items(shortcuts) { (label, icon, color) ->
+                items(shortcuts.size) { idx ->
+                    val (label, icon, color) = shortcuts[idx]
                     Box(
                         modifier = Modifier.aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp))

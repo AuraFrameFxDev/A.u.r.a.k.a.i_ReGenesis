@@ -1,49 +1,71 @@
-// app/build.gradle.kts — CLEAN VERSION
+// app/build.gradle.kts — CLEAN VERSION (no scattered compileOptions/jvmTarget hacks)
 // ═══════════════════════════════════════════════════════════════════════════
-// Inherits all core settings from genesis.android.application
+// Inherits JVM Toolchain (Java 25) from root build.gradle.kts
+// Only overrides: freeCompilerArgs for preview features + Aura's needs
+// NO android { compileOptions { ... } } — let toolchain handle it
+// NO kotlinOptions { jvmTarget = ... } — let toolchain handle it
 // ═══════════════════════════════════════════════════════════════════════════
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
-    id("genesis.android.application")
-    alias(libs.plugins.google.services) apply false
-    alias(libs.plugins.firebase.crashlytics)
-}
-
-ksp {
-    arg("moshi.generated.enum.companion", "false")
+    id("com.android.application")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    // id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    // alias(libs.plugins.google.services)
+    // alias(libs.plugins.firebase.crashlytics)
 }
 
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
-
-    androidResources {
-        localeFilters += "en"
-    }
-
+    compileSdk = libs.versions.compile.sdk.get().toInt()
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
         versionCode = 1
         versionName = "0.1.0-beta"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables { useSupportLibrary = true }
 
-        val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
-        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
-        buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
-        buildConfigField("String", "OLLAMA_BASE_URL", "\"http://localhost:11434\"")
-        buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000/\"")
+        // Genesis Protocol - Build Configuration Constants
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "OLLAMA_BASE_URL",
+            "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\""
+        )
+        buildConfigField(
+            "String",
+            "VERTEX_PROJECT_ID",
+            "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "GENESIS_BACKEND_URL",
+            "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\""
+        )
 
         // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
         buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
-        buildConfigField(
-            "String",
-            "CLAUDE_SHELL_INFERENCE_ENGINE",
-            "\"onDevice_TurboQuant_vLLM_Omni\""
-        )
+        buildConfigField("String", "CLAUDE_SHELL_INFERENCE_ENGINE", "\"onDevice_TurboQuant_vLLM_Omni\"")
         buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
-        buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")
+        buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")  // triggers re-anchor if > 5%
 
-        manifestPlaceholders["spiritualChainVersion"] = "L1_L6"
+    if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
+        externalNativeBuild {
+            cmake {
+                path = file("src/main/cpp/CMakeLists.txt")
+                version = "3.22.1"
+            }
+        }
 
         externalNativeBuild {
             cmake {
@@ -73,26 +95,83 @@ extensions.configure<ApplicationExtension> {
                     }
                 }
 
-                buildTypes {
-                    getByName("release") {
-                        signingConfig = signingConfigs.getByName("release")
-                    }
-                }
-            }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
+            isMinifyEnabled = false
         }
     }
 
-    buildTypes {
-        getByName("debug") {
-            isCrunchPngs = false
+    buildFeatures {
+        compose = true
+        buildConfig = true
+        aidl = true
+    }
+
+    packaging {
+            jniLibs {
+                useLegacyPackaging = false
+            }
+            resources {
+                // Annihilate the specific Big Tech collision
+                excludes.add("META-INF/INDEX.LIST")
+
+                // Proactive strike: Clear out the rest of the metadata trash
+                excludes.add("META-INF/DEPENDENCIES")
+                excludes.add("META-INF/LICENSE")
+                excludes.add("META-INF/LICENSE.txt")
+                excludes.add("META-INF/license.txt")
+                excludes.add("META-INF/NOTICE")
+                excludes.add("META-INF/NOTICE.txt")
+                excludes.add("META-INF/notice.txt")
+                excludes.add("META-INF/ASL2.0")
+                excludes.add("META-INF/*.kotlin_module")
+            }
         }
+
+
+    // Explicit per Android best practice
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
+        isCoreLibraryDesugaringEnabled = true
+    }
+
+    flavorDimensions += "shell"
+    productFlavors {
+        create("claudeLocalShell") {
+            dimension = "shell"
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-claude-local-shell"
+            buildConfigField("String", "SHELL_MODE", "\"CLAUDE_LOCAL_SOVEREIGN\"")
+            // This flavor forces full local inference + Spiritual Chain binding
+        }
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+
+        // Add the freeCompilerArgs Aura specifically needs
+        freeCompilerArgs.addAll(
+            "-Xcontext-parameters",           // Aura's context-aware UI sculpting
+            "-Xannotation-default-target=param-property",
+            "-Xlambdas=indy"                  // Performance optimization
+        )
     }
 }
 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     // Core Module
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(project(":core-module"))
 
     // Trinity → Aura (LDO DevOps Index)
@@ -129,17 +208,12 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
-    
-    // UI SUBSTRATE INJECTION - REGEN-CORE
-    implementation("androidx.compose.material3:material3:1.4.0")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
+    implementation(libs.espresso.core)
 
-
+    // ═══════════════════════════════════════════════════════════════════════════
     // AndroidX Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -225,8 +299,11 @@ dependencies {
     }
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
-    
-    // KavaRef for modern reflection
+    compileOnly(files("$projectDir/libs/api-82.jar"))
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // KavaRef (modern reflection)
+    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.kavaref.core)
     implementation(libs.kavaref.extension)
 
@@ -241,18 +318,25 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.generativeai)
 
-    // LangChain4j & Ollama
+    // LangChain4j & Ollama (CLEAN VERSION — using BOM and Bundles!)
     implementation(platform(libs.langchain4j.bom))
     implementation(libs.bundles.langchain4j)
+    implementation(libs.langchain4j.vertex.ai.gemini)
+    ksp(platform(libs.langchain4j.bom))
+    ksp(libs.langchain4j.vertex.ai.gemini)
+    // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
 
-    // Desugaring
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Desugaring (for Java 25 forward compatibility on older Android versions)
+    // ═══════════════════════════════════════════════════════════════════════════
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Testing
     testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockk)
-    androidTestImplementation(libs.androidx.junit.ext)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -264,23 +348,7 @@ configurations.all {
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-    resolutionStrategy {
-        force("org.jetbrains:annotations:26.1.0")
-        force("androidx.appcompat:appcompat:1.7.1")
-        force("com.google.android.material:material:1.13.0")
-        force("com.google.dagger:hilt-android:2.59.2")
-        force("com.google.dagger:hilt-android-compiler:2.59.2")
-        force("androidx.test.espresso:espresso-core:3.7.0")
-        // CVE fixes
-        force("org.jdom:jdom2:2.0.6.1")
-        force("org.bitbucket.b_c:jose4j:0.9.6")
-        force("org.apache.commons:commons-lang3:3.20.0")
-        force("com.google.guava:guava:33.3.0-jre")
-        force("org.bouncycastle:bcprov-jdk18on:1.78")
-        force("org.bouncycastle:bcpkix-jdk18on:1.78")
-        // Netty HTTP/2 DoS & CRLF injection fixes
-        force("io.netty:netty-codec-http2:4.2.12.Final")
-        force("io.netty:netty-codec-http:4.2.12.Final")
-        force("io.netty:netty-codec-compression:4.2.12.Final")
+    if (name.lowercase().contains("annotationprocessor")) {
+        exclude(group = "com.squareup.moshi", module = "moshi-kotlin-codegen")
     }
 }
