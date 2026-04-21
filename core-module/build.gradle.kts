@@ -25,10 +25,6 @@ dependencies {
     // - Java 25 bytecode target
     // ═══════════════════════════════════════════════════════════════════════
     
-    // Hilt - Explicit dependencies
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-
     // Expose core KTX as API (types leak to consumers)
     api(libs.androidx.core.ktx)
 
@@ -37,10 +33,7 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
 
-    // Unit test dependencies
-    testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
 

@@ -36,8 +36,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class ToolInitializer @Inject constructor(
-    private val toolRegistry: ToolRegistry,
-    private val rootShellService: RootShellService
+    private val toolRegistry: ToolRegistry
+    // private val mcpAdapter: MCPServerAdapter // TODO: Re-add when MCPServerAdapter is fixed
 ) {
 
     private val initScope = CoroutineScope(Dispatchers.Default + SupervisorJob())

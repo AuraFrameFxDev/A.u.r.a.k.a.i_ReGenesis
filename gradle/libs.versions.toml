@@ -2,7 +2,7 @@
 # ============================================================================
 # Core Build Tools (AGP 9.0.0-beta02 + Kotlin 2.3.0-RC2)
 # ============================================================================
-agp = "9.2.0-alpha05"
+agp = "9.3.0-alpha01"
 billingKtx = "8.3.0"
 coilSvg = "3.4.0"
 core = "1.7.0"
@@ -104,9 +104,9 @@ androidxJunit = "1.3.0"
 espresso = "3.7.0"
 benchmark = "1.4.1"
 material3 = "1.4.0"
-foundationLayout = "1.10.5"
-foundation = "1.10.5"
-animation = "1.10.5"
+foundationLayout = "1.10.6"
+foundation = "1.10.6"
+animation = "1.10.6"
 # kotlinVersion removed — duplicate of 'kotlin' key above (use kotlin = "2.3.10" as the single source)
 navigationCommonKtx = "2.9.7"
 junitKtx = "1.3.0"
@@ -116,11 +116,11 @@ rikkax = "1.4.1"
 rikkax-material = "2.7.2"
 rikkax-layoutinflater = "1.3.0"
 shizuku = "13.1.5"
-uiGeometry = "1.10.5"
-androidxAnimation = "1.10.5"
-junitJupiterVersion = "5.14.3"
+uiGeometry = "1.10.6"
+androidxAnimation = "1.10.6"
+junitJupiterVersion = "6.0.3"
 firebaseVertexai = "16.5.0"
-media3Exoplayer = "1.9.3"
+media3Exoplayer = "1.10.0"
 
 # Security Hardening Upgrades
 netty = "4.1.132.Final"

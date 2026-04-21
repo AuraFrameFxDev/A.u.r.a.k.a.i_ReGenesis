@@ -220,44 +220,6 @@ fun SettingsScreen(
                 }
 
                 item {
-                    ShellStatusCard(
-                        status = shellStatus,
-                        onRequestRoot = { viewModel.requestRoot() },
-                        onRefresh = { viewModel.refreshShellStatus() }
-                    )
-                }
-
-                item {
-                    val authTitle = when (val state = authState) {
-                        is OAuthService.AuthState.Authenticated -> "Identity: ${state.userId}"
-                        is OAuthService.AuthState.Error -> "Auth Error"
-                        else -> "Not Authenticated"
-                    }
-                    
-                    val authColor = when (authState) {
-                        is OAuthService.AuthState.Authenticated -> Color.Green
-                        is OAuthService.AuthState.Error -> Color.Red
-                        else -> Color.Gray
-                    }
-
-                    SettingsActionCard(
-                        title = authTitle,
-                        subtitle = if (authState is OAuthService.AuthState.Authenticated) "Secure session active" else "Connect your Google ID",
-                        icon = Icons.Default.Fingerprint,
-                        actionLabel = if (authState is OAuthService.AuthState.Authenticated) "LOGOUT" else "LOGIN",
-                        onClick = { 
-                            if (authState is OAuthService.AuthState.Authenticated) {
-                                viewModel.signOut()
-                            } else {
-                                // In a real app, this might navigate to LoginScreen
-                                viewModel.signOut() // Reset state for demo
-                            }
-                        },
-                        accentColor = authColor
-                    )
-                }
-
-                item {
                     SettingsToggleCard(
                         title = "Bio-Metric Phase Lock",
                         subtitle = "Require pulse-sync for critical actions",

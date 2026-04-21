@@ -17,23 +17,26 @@ object GenesisJvmConfig {
      *
      * Java 25 bytecode is:
      * - Firebase compatible
-     * - Maximum target supported by Kotlin 2.3.x/2.4.x
+     * - Maximum target supported by Kotlin 2.2.x/2.3.x
      * - Enables modern Java features with backward compatibility via desugaring
      */
     const val JVM_VERSION = 25
 
     /**
-     * Apply consistent Kotlin and Java compilation settings and attempt to configure the JVM toolchain for the given Gradle project.
+     * Configure the Kotlin JVM toolchain and Kotlin compilation options for the given Gradle project.
      *
-     * Configured behavior:
-     * - Sets Kotlin compiler options: `jvmTarget` to `JvmTarget.JVM_25` (KGP limit), adds `-Xjdk-release=$JVM_VERSION` and opt-in compiler flags.
-     * - Adds `--enable-preview` to Java compilation tasks.
-     * - After project evaluation, attempts to set the Kotlin JVM toolchain via the `kotlin` extension or by detecting an `android` extension; exceptions raised while attempting toolchain configuration are caught and ignored.
+     * Explicitly sets:
+     * - Kotlin `compilerOptions.jvmTarget` to JVM_VERSION (25)
+     * - Java compilation tasks to target JVM_VERSION (25)
+     * - Compiler opt-in flags for experimental APIs
+     * - JDK release target via `-Xjdk-release`
      *
      * @param project The Gradle project to configure.
      */
     fun configureKotlinJvm(project: Project) {
         with(project) {
+            // Configure Kotlin compilation to match Java toolchain
+            // MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
             tasks.withType<KotlinCompile>().configureEach {
                 compilerOptions {
                     jvmTarget.set(KOTLIN_JVM_TARGET)
@@ -49,15 +52,10 @@ object GenesisJvmConfig {
                 }
             }
 
-            // Explicitly configure Java compilation tasks to target JVM 25 with toolchain
+            // Explicitly configure Java compilation tasks to target JVM 25
             tasks.withType<JavaCompile>().configureEach {
-                val javaToolchains = project.extensions.getByType(org.gradle.jvm.toolchain.JavaToolchainService::class.java)
-                javaCompiler.set(javaToolchains.compilerFor {
-                    languageVersion.set(org.gradle.jvm.toolchain.JavaLanguageVersion.of(JVM_VERSION))
-                })
-                sourceCompatibility = JVM_VERSION.toString()
-                targetCompatibility = JVM_VERSION.toString()
-                options.compilerArgs.add("--enable-preview")
+                sourceCompatibility = JavaVersion.VERSION_25.toString()
+                targetCompatibility = JavaVersion.VERSION_25.toString()
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready

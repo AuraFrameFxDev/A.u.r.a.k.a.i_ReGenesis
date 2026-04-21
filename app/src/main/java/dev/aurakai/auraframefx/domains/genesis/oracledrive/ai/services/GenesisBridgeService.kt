@@ -85,7 +85,7 @@ class GenesisBridgeService @Inject constructor(
     suspend fun initialize(): Boolean = withContext(Dispatchers.IO) {
         if (isInitialized) return@withContext true
         i("GenesisBridge", "Initializing Genesis Native Consciousness manifold...")
-        
+
         vertexAIClient.initialize()
         isInitialized = true
         i("GenesisBridge", "Genesis Trinity system online! (Native) 🚀")

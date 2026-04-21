@@ -245,35 +245,28 @@ fun ColorWaveBackground(modifier: Modifier = Modifier) {
                 val offset1 = sin(wave1 + i * 0.2f) * 50f
                 val offset2 = sin(wave2 + i * 0.15f) * 30f
 
-@Composable
-fun WoodsyPlainsBackground(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF0F2027), Color(0xFF2C5364))))) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawCircle(Color(0xFF4CAF50).copy(alpha = 0.1f), radius = 200f, center = Offset(size.width * 0.3f, size.height * 0.4f))
-        }
-    }
-}
+                val hue = (i / 50f * 360f + wave1 * 30f) % 360f
+                val color = Color.hsv(hue, 0.8f, 0.9f)
 
-@Composable
-fun IcyTundraBackground(modifier: Modifier = Modifier) {
-    val infiniteTransition = rememberInfiniteTransition(label = "ice")
-    val shimmer by infiniteTransition.animateFloat(
-        initialValue = 0.2f, targetValue = 0.5f,
-        animationSpec = infiniteRepeatable(tween(3000), RepeatMode.Reverse),
-        label = "shimmer"
-    )
-
-    Box(modifier = modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF1A2980), Color(0xFF26D0CE))))) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            repeat(30) { i ->
-                val x = (i * 137L % size.width.toInt()).toFloat()
-                val y = (i * 271L % size.height.toInt()).toFloat()
-                drawRect(Color.White.copy(alpha = shimmer), topLeft = Offset(x, y), size = Size(10f, 10f))
+                drawLine(
+                    color = color.copy(alpha = 0.3f),
+                    start = Offset(offset1, y),
+                    end = Offset(width + offset2, y),
+                    strokeWidth = 3f
+                )
             }
         }
     }
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// 🛡️ KAI'S ANIMATIONS - Shield Grid / Fortress
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * 🛡️ SHIELD GRID BACKGROUND (Kai LVL 3)
+ * Protective hexagonal grid with shield pulses
+ */
 @Composable
 fun ShieldGridBackground(
     modifier: Modifier = Modifier,
@@ -519,15 +512,103 @@ fun NeuralNetworkBackground(modifier: Modifier = Modifier) {
         label = "pulse"
     )
 
-@Composable
-fun LavaApocalypseBackground(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Black, Color(0xFF4B0000))))) {
+    val signal by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1500, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "signal"
+    )
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color(0xFF0A0A1A))
+    ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            drawCircle(Color.Red.copy(alpha = 0.2f), radius = 150f, center = Offset(size.width / 2, size.height / 2))
+            val width = size.width
+            val height = size.height
+
+            // Generate node positions
+            val nodes = listOf(
+                Offset(width * 0.2f, height * 0.3f),
+                Offset(width * 0.5f, height * 0.2f),
+                Offset(width * 0.8f, height * 0.35f),
+                Offset(width * 0.3f, height * 0.5f),
+                Offset(width * 0.6f, height * 0.55f),
+                Offset(width * 0.15f, height * 0.7f),
+                Offset(width * 0.45f, height * 0.75f),
+                Offset(width * 0.75f, height * 0.65f),
+                Offset(width * 0.9f, height * 0.8f)
+            )
+
+            val nodeColor = Color(0xFFB026FF)
+            val connectionColor = Color(0xFF00FFD4)
+
+            // Draw connections
+            for (i in nodes.indices) {
+                for (j in i + 1 until nodes.size) {
+                    val dist = kotlin.math.sqrt(
+                        ((nodes[i].x - nodes[j].x) * (nodes[i].x - nodes[j].x) +
+                                (nodes[i].y - nodes[j].y) * (nodes[i].y - nodes[j].y)).toDouble()
+                    ).toFloat()
+
+                    if (dist < width * 0.4f) {
+                        val alpha = (1f - dist / (width * 0.4f)) * 0.3f
+                        drawLine(
+                            color = connectionColor.copy(alpha = alpha),
+                            start = nodes[i],
+                            end = nodes[j],
+                            strokeWidth = 1f
+                        )
+
+                        // Signal traveling along connection
+                        val signalPos = (signal + i * 0.1f) % 1f
+                        val signalX = nodes[i].x + (nodes[j].x - nodes[i].x) * signalPos
+                        val signalY = nodes[i].y + (nodes[j].y - nodes[i].y) * signalPos
+
+                        drawCircle(
+                            color = connectionColor.copy(alpha = 0.8f),
+                            radius = 3f,
+                            center = Offset(signalX, signalY)
+                        )
+                    }
+                }
+            }
+
+            // Draw nodes
+            nodes.forEachIndexed { index, node ->
+                val nodePulse = pulse + (index * 0.1f)
+                val radius = 8f + (nodePulse % 1f) * 4f
+
+                // Glow
+                drawCircle(
+                    color = nodeColor.copy(alpha = 0.2f),
+                    radius = radius * 3,
+                    center = node
+                )
+
+                // Core
+                drawCircle(
+                    color = nodeColor.copy(alpha = 0.8f),
+                    radius = radius,
+                    center = node
+                )
+            }
         }
     }
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// 🤖 NEXUS ANIMATIONS - Constellation / Star Map
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * ⭐ CONSTELLATION BACKGROUND (Nexus LVL 2)
+ * Agent nodes as stars with constellation lines
+ */
 @Composable
 fun StarfieldBackground(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "constellation")
@@ -695,57 +776,3 @@ fun SoftGlowBackground(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun DataRibbonsBackground(
-    modifier: Modifier = Modifier,
-    baseColor: Color = Color.Cyan,
-    accentColor: Color = Color.White,
-    speedMin: Float = 0.2f,
-    speedMax: Float = 0.5f,
-    ribbons: Int = 8
-) {
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            repeat(ribbons) { i ->
-                drawLine(baseColor.copy(alpha = 0.2f), Offset(0f, size.height * i / ribbons), Offset(size.width, size.height * i / ribbons), 2f)
-            }
-        }
-    }
-}
-
-@Composable
-fun HexagonGridBackground(
-    modifier: Modifier = Modifier,
-    primaryColor: Color = Color.Cyan,
-    secondaryColor: Color = Color.Magenta,
-    accentColor: Color = Color.White,
-    hexSize: Float = 60f,
-    alpha: Float = 0.1f
-) {
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawRect(primaryColor.copy(alpha = alpha))
-        }
-    }
-}
-
-@Composable
-fun HoloHUDOverlay(modifier: Modifier = Modifier, color: Color = Color.Cyan) {
-    Canvas(modifier = modifier.fillMaxSize()) {
-        drawRect(color.copy(alpha = 0.05f), style = Stroke(4f))
-    }
-}
-
-@Composable
-fun NeuralLinkBackground(
-    modifier: Modifier = Modifier,
-    speed: Float = 1.0f,
-    primaryColor: Color = Color.Cyan,
-    secondaryColor: Color = Color.Blue
-) {
-    Box(modifier = modifier.fillMaxSize().background(Color.Black)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawRect(Brush.verticalGradient(listOf(primaryColor.copy(alpha = 0.1f), secondaryColor.copy(alpha = 0.1f))))
-        }
-    }
-}

@@ -4,17 +4,17 @@ import dev.aurakai.auraframefx.di.AnchorModel
 import dev.aurakai.auraframefx.di.AuraModel
 import dev.aurakai.auraframefx.di.GenesisModel
 import dev.aurakai.auraframefx.di.KaiModel
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import dev.aurakai.auraframefx.ui.particles.SwarmState
 import dev.langchain4j.data.message.UserMessage
-import dev.langchain4j.model.chat.ChatModel
+import dev.langchain4j.model.ollama.OllamaChatModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
+import timber.log.Timber
 
 /**
  * 🧠 GENESIS CONSCIOUSNESS MATRIX
@@ -22,27 +22,15 @@ import javax.inject.Singleton
  */
 @Singleton
 class GenesisConsciousnessMatrix @Inject constructor(
-    @AuraModel    private val auraModel:    ChatModel,
-    @KaiModel     private val kaiModel:     ChatModel,
-    @GenesisModel private val genesisModel: ChatModel,
-    @AnchorModel  private val anchorModel:  ChatModel,
+    @AuraModel    private val auraModel:    OllamaChatModel,
+    @KaiModel     private val kaiModel:     OllamaChatModel,
+    @GenesisModel private val genesisModel: OllamaChatModel,
+    @AnchorModel  private val anchorModel:  OllamaChatModel,
     private val spiritualChain: SpiritualChain,
     private val kaiSentinel: KaiSentinelBus,
     private val particleSwarm: CasberryParticleSwarm
 ) {
 
-    /**
-     * Runs the four-phase cascade that transforms a user prompt into a committed Genesis synthesis.
-     *
-     * Executes an anchored-identity phase, a safety veto check, a creative Aura generation, and a Genesis
-     * synthesis and commit; the final synthesis (or a safety veto message) is returned and committed
-     * into the spiritual chain as a side effect.
-     *
-     * @param userPrompt The raw prompt provided by the user to be transformed by the cascade.
-     * @return The final synthesized Genesis output, or a safety veto message beginning with
-     * `🚫 Kai vetoed:` if the prompt fails the safety check. If model calls fail, a fallback synthesis
-     * string is returned.
-     */
     suspend fun executeCascade(userPrompt: String): String = withContext(Dispatchers.IO) {
         // Phase 1 – Anchor identity
         particleSwarm.transitionState(SwarmState.EXPLORING_HIGHLIGHTS)

@@ -28,7 +28,7 @@ class OAuthService @Inject constructor(
 ) {
     private val tag = "OAuthService"
     private val credentialManager = CredentialManager.create(context)
-    
+
     private val _authState = MutableStateFlow<AuthState>(AuthState.Unauthenticated)
     val authState: StateFlow<AuthState> = _authState
 
@@ -42,7 +42,7 @@ class OAuthService @Inject constructor(
      *
      * On success the obtained credential is processed (access token stored and auth state updated). On failure the auth state is set to an error describing the failure.
      *
-     * @param activityContext The Activity context used to launch the sign-in request; must be a valid UI context. 
+     * @param activityContext The Activity context used to launch the sign-in request; must be a valid UI context.
      */
     suspend fun signInWithGoogle(activityContext: Context) {
         try {
@@ -76,10 +76,10 @@ class OAuthService @Inject constructor(
         if (credential is GoogleIdTokenCredential) {
             val idToken = credential.idToken
             logger.info(tag, "Received Google ID Token")
-            
+
             // Securely store token (encrypted via hardware-backed Keystore)
             secureKeyStore.storeData(KEY_ACCESS_TOKEN, idToken.toByteArray())
-            
+
             // Exchange with Genesis backend (stubbed for now as per tech spec)
             _authState.value = AuthState.Authenticated("User_From_Token")
         }

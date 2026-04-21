@@ -269,9 +269,9 @@ class KaiSystemViewModel @Inject constructor(
 
     private fun parseLogLine(line: String): LogEntry? {
         if (line.isBlank()) return null
-        
+
         // High-importance filter for the Monitoring HUD
-        if (line.contains("AOC", ignoreCase = true) || 
+        if (line.contains("AOC", ignoreCase = true) ||
             line.contains("CHRE", ignoreCase = true) ||
             line.contains("USF", ignoreCase = true) ||
             line.contains("Calculated CCT", ignoreCase = true)) {

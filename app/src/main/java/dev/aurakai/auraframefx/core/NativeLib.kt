@@ -115,7 +115,7 @@ object NativeLib {
             Timber.e("🛡️ NativeLib: Unknown capability ID %d. VETOING by default.", capabilityInt)
             return false
         }
-        
+
         val box = pandoraBox ?: run {
             return false
         }

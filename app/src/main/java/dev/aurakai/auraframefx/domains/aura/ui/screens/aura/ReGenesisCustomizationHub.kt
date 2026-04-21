@@ -132,7 +132,7 @@ fun ReGenesisCustomizationHub(
         ) {
             UnityEngineTracker(
                 state = transmutationState,
-                onTransmuteClicked = { 
+                onTransmuteClicked = {
                     transmutationEngine.transmuteCatalysts(listOf("UX_INTENT", "HAPTIC_SYNTH", "COLOR_SOUL"))
                 }
             )
@@ -157,12 +157,12 @@ private fun CategoryCard(
     }
 
     val alpha by animateFloatAsState(
-        targetValue = if (isVisible) 1f else 0f, 
+        targetValue = if (isVisible) 1f else 0f,
         animationSpec = tween(800, easing = FastOutSlowInEasing),
         label = "alpha"
     )
     val slideY by animateFloatAsState(
-        targetValue = if (isVisible) 0f else 50f, 
+        targetValue = if (isVisible) 0f else 50f,
         animationSpec = tween(800, easing = FastOutSlowInEasing),
         label = "slideY"
     )
@@ -233,7 +233,7 @@ private fun CategoryCard(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     )
                 }
-                
+
                 Icon(
                     imageVector = Icons.Default.AutoAwesome,
                     contentDescription = null,

@@ -98,7 +98,7 @@ fun RootToolsTogglesScreen(
                                 }
                             )
                         }
-                        
+
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             ActionButton(
                                 text = "RECOVERY",
@@ -172,7 +172,7 @@ fun RootToolsTogglesScreen(
                         subtitle = "Cloak root from sensitive system apps",
                         icon = Icons.Default.Security,
                         checked = magiskEnabled,
-                        onCheckedChange = { 
+                        onCheckedChange = {
                             magiskEnabled = it
                             scope.launch {
                                 val cmd = if (it) "magisk --daemon" else "magisk --stop"

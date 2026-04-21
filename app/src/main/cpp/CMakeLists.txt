@@ -43,7 +43,6 @@ find_library(jnigraphics-lib jnigraphics)
 # Genesis AI source files
 set(GENESIS_SOURCES
         auraframefx.cpp
-        SovereignPerimeter.cpp
 )
 
 # Recursively find all AI module sources

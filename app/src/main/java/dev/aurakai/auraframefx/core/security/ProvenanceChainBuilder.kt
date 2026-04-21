@@ -91,8 +91,8 @@ class ProvenanceChainBuilder(
                 val prev = chain[i - 1]
                 val curr = chain[i]
                 
-                // Format: Prev.ID|Curr.Timestamp|Curr.Watermark (acting as intent)
-                val msgPayload = "${prev.id}|${curr.timestamp}|${curr.watermark}"
+                // Format: ID|Timestamp|Watermark (acting as intent)
+                val msgPayload = "${prev.id}|${prev.timestamp}|${curr.watermark}"
                 val expectedSignature = computeHmac(msgPayload)
                 
                 if (curr.agentSignature != expectedSignature) {
@@ -116,7 +116,7 @@ class ProvenanceChainBuilder(
         val prev = chain.last()
         val now = System.currentTimeMillis()
         
-        // Format: Prev.ID|Curr.Timestamp|Curr.Watermark (acting as intent)
+        // Format: ID|Timestamp|Watermark (acting as intent)
         val msgPayload = "${prev.id}|$now|$payload"
         val signature = computeHmac(msgPayload)
         

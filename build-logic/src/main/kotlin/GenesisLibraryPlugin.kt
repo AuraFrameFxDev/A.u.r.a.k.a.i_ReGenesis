@@ -11,11 +11,12 @@ import org.gradle.kotlin.dsl.configure
  */
 class GenesisLibraryPlugin : Plugin<Project> {
     /**
-     * Configures the given Gradle project with the convention defaults for an Android library module.
+     * Configures the given Gradle project as an Android library module using the convention's defaults.
      *
-     * Applies standard plugins (Android library, Hilt, KSP, Compose, Kotlin serialization), configures
-     * the Android LibraryExtension (SDK, NDK, defaultConfig, buildTypes, compile/packaging/lint/build features),
-     * delegates Kotlin JVM toolchain/compilation setup, and adds the convention's standard dependencies.
+     * Applies the Android library, Hilt, KSP, Compose, and Kotlin serialization plugins.
+     * Configures the Android LibraryExtension (compile/NDK settings, defaultConfig, build types,
+     * Java/compile options, build features, packaging, and lint), sets Kotlin JVM compilation options,
+     * and adds the convention's standard dependencies (Hilt, Compose, YukiHook, etc.).
      *
      * @param project The Gradle project to configure as an Android library module.
      */
@@ -27,21 +28,8 @@ class GenesisLibraryPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
-            // ═══════════════════════════════════════════════════════════════════════
-            // Versions read from libs.versions.toml — single source of truth
-            // ═══════════════════════════════════════════════════════════════════════
-            val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
-
-            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
-            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
-
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-
             extensions.configure<LibraryExtension> {
-                compileSdk = compileSdkVersion
+                compileSdk = 36
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
@@ -63,7 +51,7 @@ class GenesisLibraryPlugin : Plugin<Project> {
                     }
                 }
 
-                // Java 25 bytecode (Centralized for Android modules)
+                // Java 25 bytecode (Firebase + AGP 9.0 compatible)
                 compileOptions {
                     sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
@@ -101,9 +89,26 @@ class GenesisLibraryPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
+            // YukiHook & Hilt KSP Configuration
+            extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {
+                // Generate a unique package name per module based on its full Gradle path
+                val uniquePackage = "dev.aurakai.auraframefx.generated." +
+                        project.path.removePrefix(":").replace(":", ".").replace("-", "_")
+                arg("yukihookapi.modulePackageName", uniquePackage)
+            }
+
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    .named("libs")
+            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
+            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
 
             // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
@@ -130,18 +135,16 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
 
-            // AI — LangChain4j (using BOM and bundle)
-            dependencies.add(
-                "api",
-                dependencies.platform(versionCatalog.findLibrary("langchain4j-bom").get())
-            )
-            val langchainBundle = versionCatalog.findBundle("langchain4j").get()
-            dependencies.add("api", langchainBundle)
-
             // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
-            // KavaRef for modern reflection
+            // Universal Xposed/LSPosed API access for all library modules
+            dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
+
+            // YukiHook runtime (api only, ksp handled above)
+            dependencies.add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
+
+            // KavaRef for modern reflection (YukiHook 2.0 replacement)
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
 
