@@ -274,7 +274,7 @@ configurations.all {
         // CVE fixes
         force("org.jdom:jdom2:2.0.6.1")
         force("org.bitbucket.b_c:jose4j:0.9.6")
-        force("org.apache.commons:commons-lang3:3.17.0")
+        force("org.apache.commons:commons-lang3:3.20.0")
         force("com.google.guava:guava:33.3.0-jre")
         force("org.bouncycastle:bcprov-jdk18on:1.78")
         force("org.bouncycastle:bcpkix-jdk18on:1.78")
