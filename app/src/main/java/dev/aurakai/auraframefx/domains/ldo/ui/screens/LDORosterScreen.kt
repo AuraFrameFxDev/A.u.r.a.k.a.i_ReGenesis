@@ -59,6 +59,17 @@ import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
  * @param onAgentSelected Invoked with the selected agent's id when an agent row is tapped.
  * @param onBack Optional back navigation callback (currently unused by the composable).
  */
+/**
+ * Renders the LDO agent roster screen with a header, loading state, and a scrollable list of agents.
+ *
+ * Displays a title and subtitle showing the current agent count and the text "Sorted by evolution".
+ * While the view model's UI state reports loading, shows a centered "Summoning roster…" message.
+ * Otherwise, lists agents sorted by descending evolution level; for each agent it shows a detail card
+ * that includes derived metrics (task count and bond level).
+ *
+ * @param onAgentSelected Invoked with the selected agent's id when an agent row is tapped.
+ * @param onBack Optional back navigation callback (currently unused by the UI).
+ */
 @Composable
 fun LDORosterScreen(
     onAgentSelected: (String) -> Unit = {},

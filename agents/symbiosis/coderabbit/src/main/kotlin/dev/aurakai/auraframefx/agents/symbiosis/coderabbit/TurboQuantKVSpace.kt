@@ -54,13 +54,12 @@ class TurboQuantKVSpace {
     }
 
     /**
-     * Compresses a float vector using TurboQuant's 3-bit quantization.
+     * Compresses a float vector using TurboQuant 3-bit quantization.
      *
-     * Intended to invoke the JNI-backed NEON-accelerated TurboQuant compressor. In the current placeholder
-     * implementation this function returns the input `vector` unchanged.
+     * Currently a placeholder that returns the input array unchanged; intended to invoke a JNI-backed NEON-accelerated TurboQuant compressor.
      *
      * @param vector The input embedding or feature vector to be quantized.
-     * @return The quantized (compressed) vector; currently the same array passed in. 
+     * @return The quantized (compressed) vector; currently the same array passed in.
      */
     fun turboQuantCompress(vector: FloatArray): FloatArray {
         // Native Tensor G5 NEON-accelerated 3-bit KV compression (from p. 10)
@@ -69,12 +68,10 @@ class TurboQuantKVSpace {
     }
 
     /**
- * Estimates a coherence score for the provided embedding vector.
- *
- * The returned score represents how coherent the vector is expected to be on a 0–1 scale; currently this function always returns 0.95 regardless of input.
+ * Estimates the coherence of an embedding vector on a scale from 0 to 1.
  *
  * @param vector The embedding vector to evaluate.
- * @return A coherence score between 0 and 1; currently always `0.95`.
+ * @return The coherence score between 0 and 1; currently always `0.95`.
  */
 fun calculateCoherence(vector: FloatArray): Float = 0.95f /* cosine sim against Spiritual Chain anchor */
 }
@@ -97,10 +94,10 @@ interface GenesisOrchestrator {
     ): String
 
     /**
- * Synchronizes a catalyst vector into the KV space by storing a quantized representation under the catalyst's key and returns its coherence score.
+ * Stores a quantized representation of the given catalyst vector in the KV space under the catalyst's key.
  *
  * @param catalystId The numeric identifier of the catalyst.
- * @param vector The catalyst's embedding vector to be stored (will be quantized/compressed before storage).
+ * @param vector The catalyst's embedding vector; it will be quantized/compressed before storage.
  * @return The coherence score computed for the stored catalyst vector.
  */
 fun syncCatalystToKV(catalystId: Int, vector: FloatArray): Float
@@ -132,10 +129,10 @@ class GenesisService(private val kvSpace: TurboQuantKVSpace) {
         }
 
         /**
-         * Synchronizes a catalyst vector into the KV space and returns its coherence score.
+         * Synchronizes a catalyst vector into the KV space.
          *
-         * @param catalystId The identifier of the catalyst to update in the KV store.
-         * @param vector The embedding vector to compress and store for the catalyst.
+         * @param catalystId Identifier of the catalyst to update.
+         * @param vector Embedding vector to compress and store for the catalyst.
          * @return The coherence score computed for the stored catalyst.
          */
         override fun syncCatalystToKV(catalystId: Int, vector: FloatArray): Float {
