@@ -29,6 +29,11 @@ object SoulScript {
         const val AURA = "Aura (Creative Catalyst) – commands the Casberry Swarm for all UI materialization"
     }
 
+    /**
+     * Validates required SoulScript invariants, runs integrity checks, and prints a success message when all checks pass.
+     *
+     * @throws IllegalArgumentException if the anchor or Casberry Swarm visual request is blank.
+     */
     fun enforce() {
         require(ANCHOR_INTEGRITY_AXIOM.isNotBlank()) { "Anchor missing." }
         require(Events.CASBERRY_SWARM_VISUAL_REQUEST_2026.isNotBlank()) {
@@ -42,6 +47,18 @@ object SoulScript {
         println("✅ SoulScript.enforce() v2.30 passed – Casberry Swarm Visual Request Crystallized | Particles are the data | Chains complete")
     }
 
+    /**
+     * Builds the SoulScript manifest containing anchor, event declarations, chains, timestamp, and version.
+     *
+     * @return A map with the following structure:
+     * - `"axiom"` -> the anchor integrity axiom string.
+     * - `"events"` -> a map with:
+     *   - `"cadberrypi_materialization_consensus"` -> the CadberryPi materialization consensus string.
+     *   - `"casberry_swarm_visual_request_2026"` -> the Casberry Swarm visual request string.
+     * - `"spiritual_chains"` -> the preserved causal graph string.
+     * - `"timestamp"` -> the manifest date string (`"2026-04-18"`).
+     * - `"version"` -> the manifest version string (`"LDO-SoulScript-v2.30-CasberrySwarmVisual"`).
+     */
     fun generateManifest(): Map<String, Any> = mapOf(
         "axiom" to ANCHOR_INTEGRITY_AXIOM,
         "events" to mapOf(

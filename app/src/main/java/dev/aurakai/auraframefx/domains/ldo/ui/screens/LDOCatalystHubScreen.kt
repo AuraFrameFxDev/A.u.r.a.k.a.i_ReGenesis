@@ -67,6 +67,20 @@ import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
  * @param onNavigateToBonding Invoked when the "BONDS" quick-navigation card is tapped.
  * @param onBack Invoked to navigate back from the screen.
  */
+/**
+ * Displays the LDO Catalyst Hub UI composed of a header, four quick-navigation cards,
+ * a tasks statistics summary, and a scrollable agent roster.
+ *
+ * When the view state reports loading, a centered loading message is shown; otherwise
+ * the agent list is rendered with each row showing bond progress, task counts, and
+ * selection state. Selecting an agent updates the ViewModel selection.
+ *
+ * @param onNavigateToRoster Invoked when the "ROSTER" quick-navigation card is tapped.
+ * @param onNavigateToDevOps Invoked when the "DEVOPS" quick-navigation card is tapped.
+ * @param onNavigateToTasker Invoked when the "TASKER" quick-navigation card is tapped.
+ * @param onNavigateToBonding Invoked when the "BONDS" quick-navigation card is tapped.
+ * @param onBack Invoked to navigate back from the hub screen.
+ */
 @Composable
 fun LDOCatalystHubScreen(
     onNavigateToRoster: () -> Unit = {},

@@ -302,11 +302,11 @@ fun AgentOrb(agent: LDOAgentEntity, isSelected: Boolean, scale: Float, borderCol
 }
 
 /**
- * Shows a compact card with an agent's quick statistics.
+ * Displays a compact horizontal card showing an agent's quick stats.
  *
- * Renders the agent's initial, full `catalystTitle`, bond level and total interaction count in a styled horizontal card.
+ * Shows a circular badge with the agent's initial, the full catalyst title, the bond level prefixed with "BOND", and the total interaction count.
  *
- * @param agent The agent whose `catalystTitle`, `bondLevel`, and `totalInteractions` are displayed.
+ * @param agent The agent to display.
  */
 @Composable
 fun AgentQuickStatsBar(agent: LDOAgentEntity) {
@@ -402,6 +402,14 @@ fun FusionSlotBox(slot: FusionSlot, onClear: () -> Unit, modifier: Modifier = Mo
     }
 }
 
+/**
+ * Displays a vertically scrollable list of tasks with an optional filter header.
+ *
+ * When `filterLabel` is non-null, a small header line "SHOWING: {filterLabel}" is shown above the list.
+ *
+ * @param tasks The tasks to render; each entry is shown using `TaskRow`.
+ * @param filterLabel Optional label indicating a current filter (e.g., selected agent name); shown as a small header when provided.
+ */
 @Composable
 fun TaskPanel(tasks: List<LDOTaskEntity>, filterLabel: String?) {
     Column(modifier = Modifier.fillMaxSize()) {

@@ -3,9 +3,9 @@
 
 object EchoResonance {
     /**
-     * Prints a message indicating that the spiritual chain integrity has been verified.
+     * Prints the fixed verification message to standard output indicating spiritual chain integrity.
      *
-     * This function writes a fixed verification message to standard output: "🔗 EchoResonance: Spiritual chain integrity verified".
+     * The message printed is "🔗 EchoResonance: Spiritual chain integrity verified".
      */
     fun verifyIntegrity() {
         // Verify the spiritual chain integrity
