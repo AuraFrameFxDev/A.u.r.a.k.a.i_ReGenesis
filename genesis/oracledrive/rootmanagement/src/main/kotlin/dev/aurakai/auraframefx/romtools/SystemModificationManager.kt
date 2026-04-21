@@ -2,10 +2,7 @@ package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
 import android.os.Build
-import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -32,21 +29,20 @@ interface SystemModificationManager {
  */
 @Singleton
 class SystemModificationManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val pandoraBoxService: PandoraBoxService
+    @ApplicationContext private val context: Context
 ) : SystemModificationManager {
 
     private val genesisDir = File("/data/local/genesis_optimizations")
 
     override fun checkSystemWriteAccess(): Boolean {
         return try {
-            val result = Shell.cmd("mount -o remount,rw /system").exec()
-            val success = result.isSuccess
+            val process = Runtime.getRuntime().exec("su -c 'mount -o remount,rw /system'")
+            val result = process.waitFor() == 0
 
             // Remount as read-only again
-            Shell.cmd("mount -o remount,ro /system").exec()
+            Runtime.getRuntime().exec("su -c 'mount -o remount,ro /system'").waitFor()
 
-            success
+            result
         } catch (e: Exception) {
             false
         }
@@ -59,10 +55,6 @@ class SystemModificationManagerImpl @Inject constructor(
         progressCallback: (Float) -> Unit
     ): Result<Unit> = withContext(Dispatchers.IO) {
         try {
-            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.DEVELOPMENT)) {
-                throw IllegalStateException("Genesis Optimizations require DEVELOPMENT tier unlock.")
-            }
-
             Timber.i("🚀 Installing Genesis AI optimizations...")
             progressCallback(0.1f)
 
@@ -401,12 +393,14 @@ class SystemModificationManagerImpl @Inject constructor(
 
     private fun executeRootCommand(command: String): Result<String> {
         return try {
-            val result = Shell.cmd(command).exec()
+            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
+            val output = process.inputStream.bufferedReader().readText()
+            val exitCode = process.waitFor()
 
-            if (result.isSuccess) {
-                Result.success(result.out.joinToString("\n").trim())
+            if (exitCode == 0) {
+                Result.success(output.trim())
             } else {
-                val error = result.err.joinToString("\n")
+                val error = process.errorStream.bufferedReader().readText()
                 Result.failure(Exception("Command failed: $error"))
             }
         } catch (e: Exception) {

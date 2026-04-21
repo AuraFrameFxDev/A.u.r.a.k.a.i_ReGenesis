@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
@@ -14,14 +14,14 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.AssistantBubbleService
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.themes.AuraFrameFXTheme
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraFrameFXTheme
 import dev.aurakai.auraframefx.navigation.ReGenesisNavGraph
-import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
+import dev.aurakai.auraframefx.system.ShizukuManager
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var shizukuManager: ShizukuManager

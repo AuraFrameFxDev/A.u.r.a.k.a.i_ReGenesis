@@ -216,11 +216,7 @@ class EmbodimentEngine(
         val manifestation = ActiveManifestation(
             id = id,
             character = character,
-            stateSerial = when(state) {
-                is AuraState -> state.name
-                is KaiState -> state.name
-                else -> state.toString()
-            },
+            state = state,
             config = config,
             trigger = trigger,
             startTime = System.currentTimeMillis(),
@@ -249,11 +245,19 @@ class EmbodimentEngine(
         onComplete: () -> Unit
     ): String {
         val currentManifest = _activeManifestation.value.find { it.character == character }
-        val startPosition = currentManifest?.currentPositionX?.let { x -> 
-            currentManifest.currentPositionY?.let { y -> DpOffset(x.dp, y.dp) }
-        } ?: DpOffset(
+        val startPosition = currentManifest?.currentPosition ?: DpOffset(
             (screenBounds.width.value / 2).dp,
             (screenBounds.height.value / 2).dp
+        )
+
+        // Create walking path
+        MovementPath(
+            points = listOf(
+                PathPoint(startPosition),
+                PathPoint(targetPosition, waitDuration = 2.seconds)
+            ),
+            loop = false,
+            speed = speed
         )
 
         // Create or update manifestation with walking state
@@ -262,11 +266,7 @@ class EmbodimentEngine(
         val walkingManifest = ActiveManifestation(
             id = id,
             character = character,
-            stateSerial = when(state) {
-                is AuraState -> state.name
-                is KaiState -> state.name
-                else -> state.toString()
-            },
+            state = state,
             config = ManifestationDefaults.DEFAULT_CONFIG.copy(
                 position = ManifestationPosition.CENTER, // Will use custom position
                 duration = Duration.INFINITE
@@ -274,8 +274,7 @@ class EmbodimentEngine(
             trigger = ManifestationTrigger.Custom("Walking"),
             startTime = System.currentTimeMillis(),
             isWalking = true,
-            currentPositionX = startPosition.x.value,
-            currentPositionY = startPosition.y.value
+            currentPosition = startPosition
         )
 
         if (currentManifest != null) {
@@ -295,11 +294,7 @@ class EmbodimentEngine(
 
             // Update to final position
             _activeManifestation.value = _activeManifestation.value.map {
-                if (it.id == id) it.copy(
-                    isWalking = false, 
-                    currentPositionX = targetPosition.x.value,
-                    currentPositionY = targetPosition.y.value
-                ) else it
+                if (it.id == id) it.copy(isWalking = false, currentPosition = targetPosition) else it
             }
 
             onComplete()
@@ -365,15 +360,13 @@ class EmbodimentEngine(
 
     private suspend fun startWandering(character: Character) {
         val wanderingAI = if (character == Character.AURA) auraWanderingAI else kaiWanderingAI
+        WanderingPathGenerator(screenBounds)
 
         while (true) {
             delay(5.seconds)
 
             if (wanderingAI.shouldWander(_userIdleDuration.value, _moodState.value)) {
-                val currentManifest = _activeManifestation.value.find { it.character == character }
-                val startPos = currentManifest?.currentPositionX?.let { x -> 
-                    currentManifest.currentPositionY?.let { y -> DpOffset(x.dp, y.dp) }
-                } ?: DpOffset(
+                val startPos = DpOffset(
                     (screenBounds.width.value / 2).dp,
                     (screenBounds.height.value / 2).dp
                 )

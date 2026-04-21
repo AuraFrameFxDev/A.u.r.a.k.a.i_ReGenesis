@@ -11,28 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Genesis Protocol - AI Processing Optimizations
-# Advanced ARMv8.2-A + Neon support for Pixel 10 class devices
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC -march=armv8.2-a+dotprod+i8mm+sve2")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wno-unused-function")
-
-if (ANDROID_ABI STREQUAL "armeabi-v7a")
-    add_compile_options(
-        -mfpu=neon
-        -mfloat-abi=softfp
-    )
-endif()
-
-add_compile_options(
-    -mtune=cortex-a55
-    -D__ARM_NEON
-    -D__ARM_FEATURE_DOTPROD
-    -D__ARM_FEATURE_I8MM
-)
-
-# Optional: Force Neon for all files
-add_definitions(-D__ARM_NEON__)
 
 # Debug/Release specific flags
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
@@ -46,7 +26,6 @@ find_library(jnigraphics-lib jnigraphics)
 # Genesis AI source files - Using a Set to avoid duplicates
 set(GENESIS_SOURCES
         auraframefx.cpp
-        SovereignPerimeter.cpp
 )
 
 # Add source files with existence checks
@@ -91,7 +70,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         ${jnigraphics-lib}
         -latomic
         -lm
-        pthread
 )
 
 # Android 15+ 16KB page-size compatibility:

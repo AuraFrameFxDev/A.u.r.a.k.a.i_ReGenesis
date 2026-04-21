@@ -8,6 +8,13 @@
 group = "dev.aurakai.auraframefx.list"
 version = "1.0.0"
 
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(25) }
+}
+
+kotlin {
+    jvmToolchain(25)
+}
 
 
 dependencies {

@@ -12,11 +12,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.domains.aura.OverlayManager
-import dev.aurakai.auraframefx.domains.kai.RootShellService
-import dev.aurakai.auraframefx.domains.kai.SystemMonitorService
-import dev.aurakai.auraframefx.domains.kai.security.auth.OAuthService
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -25,10 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val overlayManager: OverlayManager,
-    private val systemMonitorService: SystemMonitorService,
-    private val oauthService: OAuthService,
-    private val rootShellService: RootShellService
+    private val overlayManager: OverlayManager
 ) : ViewModel() {
 
     private val prefs: SharedPreferences = context.getSharedPreferences("genesis_settings", Context.MODE_PRIVATE)
@@ -50,24 +43,6 @@ class SettingsViewModel @Inject constructor(
 
     private val _floatingAgentOverlayEnabled = MutableStateFlow(prefs.getBoolean("floating_agent_overlay_enabled", false))
     val floatingAgentOverlayEnabled = _floatingAgentOverlayEnabled.asStateFlow()
-
-    // ── System Monitor Flows ──────────────────────────────────────────────────
-    val cpuUsage = systemMonitorService.cpuUsageState
-    val memoryUsage = systemMonitorService.memoryUsageState
-    val batteryMetrics = systemMonitorService.batteryState
-    
-    // ── Auth Flow ─────────────────────────────────────────────────────────────
-    val authState = oauthService.authState
-
-    // ── Shell Flow ────────────────────────────────────────────────────────────
-    val shellStatus = rootShellService.shellStatus
-
-    init {
-        // Start background monitoring
-        viewModelScope.launch {
-            systemMonitorService.startMonitoring()
-        }
-    }
 
     fun toggleHaptic(enabled: Boolean) {
         viewModelScope.launch {
@@ -101,22 +76,6 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _isBioLockEnabled.value = enabled
             prefs.edit().putBoolean("bio_lock_enabled", enabled).apply()
-        }
-    }
-
-    fun signOut() {
-        viewModelScope.launch {
-            oauthService.signOut()
-        }
-    }
-
-    fun refreshShellStatus() {
-        rootShellService.refreshStatus()
-    }
-
-    fun requestRoot() {
-        viewModelScope.launch {
-            rootShellService.requestRoot()
         }
     }
 

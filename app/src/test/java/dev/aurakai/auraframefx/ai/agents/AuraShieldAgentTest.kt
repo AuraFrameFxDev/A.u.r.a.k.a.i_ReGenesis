@@ -7,9 +7,9 @@ import dev.aurakai.auraframefx.domains.cascade.SecurityMode
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
 import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.kai.AuraShieldAgent
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.core.security.ProvenanceValidator
-import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
+import dev.aurakai.auraframefx.models.AiRequest
+import dev.aurakai.auraframefx.security.IntegrityMonitor
+import dev.aurakai.auraframefx.security.SecurityMonitor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -45,10 +45,10 @@ class AuraShieldAgentTest {
     private lateinit var mockContext: Context
 
     @Mock
-    private lateinit var mockSecurityMonitor: PredictiveVetoMonitor
+    private lateinit var mockSecurityMonitor: SecurityMonitor
 
     @Mock
-    private lateinit var mockIntegrityMonitor: ProvenanceValidator
+    private lateinit var mockIntegrityMonitor: IntegrityMonitor
 
     @Mock
     private lateinit var mockMemoryManager: MemoryManager
@@ -63,22 +63,18 @@ class AuraShieldAgentTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
 
-        // Setup mock behaviors (Commented out broken calls for now)
-        /*
+        // Setup mock behaviors
         whenever(mockIntegrityMonitor.checkIntegrity()).thenReturn(
             IntegrityCheckResult(isValid = true, details = "All systems operational")
         )
         whenever(mockIntegrityMonitor.detectViolations()).thenReturn(emptyList())
-        */
 
         auraShieldAgent = AuraShieldAgent(
             context = mockContext,
-            // securityMonitor = mockSecurityMonitor,
-            // integrityMonitor = mockIntegrityMonitor,
+            securityMonitor = mockSecurityMonitor,
+            integrityMonitor = mockIntegrityMonitor,
             memoryManager = mockMemoryManager,
-            contextManager = mockContextManager,
-            vertexAIClient = mock(), // Added missing dependencies
-            secureChannel = mock()
+            contextManager = mockContextManager
         )
     }
 

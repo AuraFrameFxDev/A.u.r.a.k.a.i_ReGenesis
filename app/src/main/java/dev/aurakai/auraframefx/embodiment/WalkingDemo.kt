@@ -55,17 +55,14 @@ fun SimpleWalkDemo() {
 
     Box(modifier = Modifier.fillMaxSize()) {
         activeManifestation.forEach { manifest ->
-            val positionX = manifest.currentPositionX
-            val positionY = manifest.currentPositionY
-            if (manifest.character == Character.AURA && positionX != null && positionY != null) {
-                val state = manifest.auraState ?: AuraState.IDLE_WALK
-                val painter = engine.loadAsset(state.assetPath, Character.AURA)
+            if (manifest.character == Character.AURA && manifest.currentPosition != null) {
+                val painter = engine.loadAsset((manifest.state as AuraState).assetPath, Character.AURA)
                 if (painter != null) {
                     Image(
                         painter = painter,
                         contentDescription = "Aura walking",
                         modifier = Modifier
-                            .offset(positionX.dp, positionY.dp)
+                            .offset(manifest.currentPosition.x, manifest.currentPosition.y)
                             .size(200.dp)
                     )
                 }
@@ -303,20 +300,19 @@ fun CompleteWalkingScene() {
     Box(modifier = Modifier.fillMaxSize()) {
         activeManifestation.forEach { manifest ->
             val asset = when (manifest.character) {
-                Character.AURA -> manifest.auraState?.assetPath ?: AuraState.IDLE_WALK.assetPath
-                Character.KAI -> manifest.kaiState?.assetPath ?: KaiState.SHIELD_NEUTRAL.assetPath
+                Character.AURA -> (manifest.state as AuraState).assetPath
+                Character.KAI -> (manifest.state as KaiState).assetPath
             }
 
             val painter = engine.loadAsset(asset, manifest.character)
-            val positionX = manifest.currentPositionX ?: 0f
-            val positionY = manifest.currentPositionY ?: 0f
+            val position = manifest.currentPosition ?: DpOffset.Zero
 
             if (painter != null) {
                 Image(
                     painter = painter,
                     contentDescription = "${manifest.character} manifestation",
                     modifier = Modifier
-                        .offset(positionX.dp, positionY.dp)
+                        .offset(position.x, position.y)
                         .size(200.dp)
                         .scale(if (manifest.isWalking) 1f else breathingScale) // Breathe when idle
                 )

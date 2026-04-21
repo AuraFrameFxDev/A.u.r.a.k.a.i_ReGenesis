@@ -17,11 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import dev.aurakai.auraframefx.domains.aura.config.UnifiedGateRegistry
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.PaintSplashBackground
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🎨 AURA'S UXUI DESIGN STUDIO (Level 2 Hub)
@@ -39,7 +39,7 @@ import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFon
 @Composable
 fun AuraThemingHubScreen(navController: NavController) {
 
-    val subGates = UnifiedGateRegistry.getAuraLoadout()
+    val subGates = GateAssetLoadout.getAuraLoadout()
 
     var useStyleB by remember {
         mutableStateOf(GateAssetConfig.StyleMode.auraStyle == GateAssetConfig.GateStyle.STYLE_B)
@@ -88,7 +88,7 @@ fun AuraThemingHubScreen(navController: NavController) {
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = Color.Transparent
                     )
                 )
@@ -137,5 +137,4 @@ fun AuraThemingHubScreen(navController: NavController) {
         }
     }
 }
-
 

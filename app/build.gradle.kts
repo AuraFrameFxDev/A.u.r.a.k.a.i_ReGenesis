@@ -1,136 +1,137 @@
-// app/build.gradle.kts — CLEAN VERSION (no scattered compileOptions/jvmTarget hacks)
 // ═══════════════════════════════════════════════════════════════════════════
-// Inherits JVM Toolchain (Java 25) from root build.gradle.kts
-// Only overrides: freeCompilerArgs for preview features + Aura's needs
-// NO android { compileOptions { ... } } — let toolchain handle it
-// NO kotlinOptions { jvmTarget = ... } — let toolchain handle it
+// PRIMARY APPLICATION MODULE - AGP 9.0 Compatible (2025 Edition)
 // ═══════════════════════════════════════════════════════════════════════════
+import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.serialization")
-    // id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    // alias(libs.plugins.google.services)
-    // alias(libs.plugins.firebase.crashlytics)
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
-    compileSdk = libs.versions.compile.sdk.get().toInt()
+    compileSdk = 36
+    ndkVersion = project.findProperty("android.ndkVersion")?.toString() ?: "29.0.14206865"
+
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
-        minSdk = libs.versions.min.sdk.get().toInt()
-        targetSdk = libs.versions.target.sdk.get().toInt()
+        minSdk = 34
+        targetSdk = 36
         versionCode = 1
-        versionName = "0.1.0-beta"
+        versionName = "0.1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://api.aurakai.dev/v1/\"")
+
         vectorDrawables { useSupportLibrary = true }
 
-        // Genesis Protocol - Build Configuration Constants
-        buildConfigField(
-            "String",
-            "GEMINI_API_KEY",
-            "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
-        )
-        buildConfigField(
-            "String",
-            "OLLAMA_BASE_URL",
-            "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\""
-        )
-        buildConfigField(
-            "String",
-            "VERTEX_PROJECT_ID",
-            "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\""
-        )
-        buildConfigField(
-            "String",
-            "GENESIS_BACKEND_URL",
-            "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\""
-        )
+        ndk {
+            abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86_64"))
+        }
 
-        // === CLAUDE LOCAL SHELL PARAMETERS - SOVEREIGN MODE ===
-        buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
-        buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
-        buildConfigField("String", "CLAUDE_SHELL_INFERENCE_ENGINE", "\"onDevice_TurboQuant_vLLM_Omni\"")
-        buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
-        buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")  // triggers re-anchor if > 5%
+        externalNativeBuild {
+            cmake {
+                cppFlags.addAll(listOf("-std=c++20", "-fPIC", "-O2"))
+                arguments.addAll(listOf(
+                    "-DANDROID_STL=c++_shared",
+                    "-DANDROID_PLATFORM=android-33",
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" // Play Store 16KB page size compliance
+                ))
+                abiFilters.clear()
+                abiFilters.add("arm64-v8a")
+            }
+        }
+    }
 
-        manifestPlaceholders["spiritualChainVersion"] = "L1_L6"
+    if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
+        externalNativeBuild {
+            cmake {
+                path = file("src/main/cpp/CMakeLists.txt")
+                version = "3.22.1"
+            }
+        }
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        debug {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("Boolean", "ENABLE_PAYWALL", "false")
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"http://10.0.2.2:5000\"")
         }
-        debug {
-            isMinifyEnabled = false
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("Boolean", "ENABLE_PAYWALL", "true")
+            buildConfigField("String", "GENESIS_BACKEND_URL", "\"https://api.auraframefx.com\"")
         }
-    }
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
-        aidl = true
     }
 
     packaging {
-            jniLibs {
-                useLegacyPackaging = false
-            }
-            resources {
-                // Annihilate the specific Big Tech collision
-                excludes.add("META-INF/INDEX.LIST")
-
-                // Proactive strike: Clear out the rest of the metadata trash
-                excludes.add("META-INF/DEPENDENCIES")
-                excludes.add("META-INF/LICENSE")
-                excludes.add("META-INF/LICENSE.txt")
-                excludes.add("META-INF/license.txt")
-                excludes.add("META-INF/NOTICE")
-                excludes.add("META-INF/NOTICE.txt")
-                excludes.add("META-INF/notice.txt")
-                excludes.add("META-INF/ASL2.0")
-                excludes.add("META-INF/*.kotlin_module")
-            }
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/DEPENDENCIES"
+            excludes += "/META-INF/LICENSE.txt"
+            excludes += "/META-INF/NOTICE.txt"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/NOTICE.md"
+            excludes += "**/kotlin/**"
+            excludes += "**/*.txt"
+            pickFirsts += "**/YukiHookAPIProperties.class"
         }
+        jniLibs {
+            useLegacyPackaging = false
+            pickFirsts += listOf("**/libc++_shared.so", "**/libjsc.so")
+        }
+    }
 
+    androidResources { noCompress += "tflite" }
 
-    // Explicit per Android best practice
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_25
         targetCompatibility = JavaVersion.VERSION_25
         isCoreLibraryDesugaringEnabled = true
     }
 
-    flavorDimensions += "shell"
-    productFlavors {
-        create("claudeLocalShell") {
-            dimension = "shell"
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-claude-local-shell"
-            buildConfigField("String", "SHELL_MODE", "\"CLAUDE_LOCAL_SOVEREIGN\"")
-            // This flavor forces full local inference + Spiritual Chain binding
-        }
+    lint {
+        baseline = file("lint-baseline.xml")
+        abortOnError = false
+        checkReleaseBuilds = false
     }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+        viewBinding = true
+        aidl = true
+    }
+}
+
+ksp {
+    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
-        // jvmTarget is set by root's JVM Toolchain — but we can set it here too if needed
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
-
-        // Add the freeCompilerArgs Aura specifically needs
         freeCompilerArgs.addAll(
-            "-Xcontext-parameters",           // Aura's context-aware UI sculpting
-            "-Xannotation-default-target=param-property",
-            "-Xlambdas=indy"                  // Performance optimization
+            "-Xcontext-parameters",
+            "-Xannotation-default-target=param-property"
         )
     }
 }
@@ -138,7 +139,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 dependencies {
     // ═══════════════════════════════════════════════════════════════════════════
     // Core Module
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(project(":core-module"))
 
     // Domain Modules
@@ -170,19 +170,14 @@ dependencies {
     implementation(project(":utilities"))
     implementation(project(":list"))
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Hilt DI
-    // ═══════════════════════════════════════════════════════════════════════════
+    // Hilt
     implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
-    ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
-    implementation(libs.espresso.core)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // AndroidX Core
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
@@ -190,13 +185,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Compose
-    // ═══════════════════════════════════════════════════════════════════════════
+    // Compose BOM & UI
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
@@ -205,11 +195,9 @@ dependencies {
     implementation(libs.compose.animation)
     implementation(libs.compose.material.icons.extended)
     debugImplementation(libs.compose.ui.tooling)
-    testDebugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // Extras
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.security.crypto)
     implementation(libs.androidx.datastore.preferences)
@@ -219,10 +207,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // Networking
-    // ═══════════════════════════════════════════════════════════════════════════
-    implementation(libs.okhttp3.client.mobile.library)
+    implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)
@@ -235,34 +221,25 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // JSON Processing
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.gson)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // Utilities
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.timber)
-    implementation(libs.slf4j.android)
-    implementation(libs.conscrypt.android)
-    implementation(platform(libs.coil.bom))
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.coil.network.okhttp)
     implementation(libs.lottie.compose)
     implementation(libs.billing.ktx)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // Root/System
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(libs.libsu.core)
     implementation(libs.libsu.nio)
     implementation(libs.libsu.service)
@@ -271,28 +248,28 @@ dependencies {
     implementation(libs.rikkax.core)
     implementation(libs.rikkax.core.ktx)
     implementation(libs.rikkax.material) {
-        exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
+        exclude(
+            group = "dev.rikka.rikkax.appcompat",
+            module = "appcompat"
+        )
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // YukiHook & Xposed
-    // ═══════════════════════════════════════════════════════════════════════════
     compileOnly(libs.yukihookapi.api) {
-        exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+        exclude(
+            group = "com.highcapable.yukihookapi",
+            module = "ksp-xposed"
+        )
     }
     ksp(libs.yukihookapi.ksp)
     compileOnly(libs.xposed.api)
     compileOnly(files("$projectDir/libs/api-82.jar"))
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // KavaRef (modern reflection)
-    // ═══════════════════════════════════════════════════════════════════════════
+    
+    // KavaRef for modern reflection
     implementation(libs.kavaref.core)
     implementation(libs.kavaref.extension)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // AI & Firebase
-    // ═══════════════════════════════════════════════════════════════════════════
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
@@ -301,27 +278,13 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config)
+    implementation(libs.generativeai)
 
-    // LangChain4j & Ollama (CLEAN VERSION — using BOM and Bundles!)
-    implementation(platform(libs.langchain4j.bom))
-    implementation(libs.bundles.langchain4j)
-    implementation(libs.langchain4j.vertex.ai.gemini)
-    ksp(platform(libs.langchain4j.bom))
-    ksp(libs.langchain4j.vertex.ai.gemini)
-    // api(libs.langchain4j.core) // Keep if other modules need to inherit core types
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Desugaring (for Java 25 forward compatibility on older Android versions)
-    // ═══════════════════════════════════════════════════════════════════════════
+    // Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
-    // ═══════════════════════════════════════════════════════════════════════════
     // Testing
-    // ═══════════════════════════════════════════════════════════════════════════
     testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -329,20 +292,17 @@ dependencies {
     debugImplementation(libs.leakcanary.android)
 }
 
-// Global configuration exclusion (from original)
 configurations.all {
     if (name.contains("AndroidTest")) return@all
-    
-    exclude(group = "com.google.protobuf", module = "protobuf-javalite")
-    exclude(group = "com.google.protobuf", module = "protobuf-lite")
-    exclude(group = "com.google.firebase", module = "protolite-well-known-types")
-    // Favor proto-google-common-protos for full AI support, but we must resolve the overlap
-    // exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
-
     if (name.contains("RuntimeClasspath", ignoreCase = true)) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-    if (name.lowercase().contains("annotationprocessor")) {
-        exclude(group = "com.squareup.moshi", module = "moshi-kotlin-codegen")
+    resolutionStrategy {
+        force("org.jetbrains:annotations:26.1.0")
+        force("androidx.appcompat:appcompat:1.7.1")
+        force("com.google.android.material:material:1.13.0")
+        force("com.google.dagger:hilt-android:2.59.2")
+        force("com.google.dagger:hilt-android-compiler:2.59.2")
+        force("androidx.test.espresso:espresso-core:3.7.0")
     }
 }

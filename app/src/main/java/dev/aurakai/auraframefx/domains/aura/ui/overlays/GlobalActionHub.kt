@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Adjust
+import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material3.Icon
@@ -34,12 +34,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.core.identity.AgentType
-import dev.aurakai.auraframefx.core.theme.getAgentColor
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.getAgentColor
 
 /**
  * ⚡ GLOBAL ACTION HUB (5-Action Protocol)
+ * Persistent interaction bar for Voice, Connect, Assign, Design, Create.
+ * Adapts its "ChromaCore" energy based on the active agent.
  */
 @Composable
 fun GlobalActionHub(
@@ -47,13 +48,7 @@ fun GlobalActionHub(
     onActionClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val agentType = try {
-        AgentType.valueOf(activeAgentName.uppercase())
-    } catch (_: Exception) {
-        AgentType.SYSTEM
-    }
-    
-    val agentColor = getAgentColor(agentType)
+    val agentColor = getAgentColor(activeAgentName)
     val animatedColor by animateColorAsState(targetValue = agentColor, label = "agentColor")
 
     Box(
@@ -62,6 +57,7 @@ fun GlobalActionHub(
             .padding(bottom = 24.dp, start = 16.dp, end = 16.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
+        // 🧪 BLURRED GLASS CONTAINER
         Row(
             modifier = Modifier
                 .height(72.dp)
@@ -89,6 +85,7 @@ fun GlobalActionHub(
             ActionHubItem("VOICE", Icons.Default.Mic, animatedColor) { onActionClick("voice") }
             ActionHubItem("CONNECT", Icons.Default.Link, animatedColor) { onActionClick("connect") }
 
+            // Central Pulse (Authority Core)
             Box(
                 modifier = Modifier
                     .size(56.dp)
@@ -106,8 +103,16 @@ fun GlobalActionHub(
                 )
             }
 
-            ActionHubItem("ASSIGN", Icons.AutoMirrored.Filled.Assignment, animatedColor) { onActionClick("assign") }
-            ActionHubItem("CREATE", Icons.Default.AddCircle, animatedColor) { onActionClick("create") }
+            ActionHubItem(
+                "ASSIGN",
+                Icons.Default.Assignment,
+                animatedColor
+            ) { onActionClick("assign") }
+            ActionHubItem(
+                "CREATE",
+                Icons.Default.AddCircle,
+                animatedColor
+            ) { onActionClick("create") }
         }
     }
 }

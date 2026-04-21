@@ -107,6 +107,14 @@ class GenesisLibraryPlugin : Plugin<Project> {
             // Configure Kotlin JVM toolchain and compilation options
             GenesisJvmConfig.configureKotlinJvm(project)
 
+            // YukiHook & Hilt KSP Configuration
+            extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {
+                // Generate a unique package name per module based on its full Gradle path
+                val uniquePackage = "dev.aurakai.auraframefx.generated." +
+                        project.path.removePrefix(":").replace(":", ".").replace("-", "_")
+                arg("yukihookapi.modulePackageName", uniquePackage)
+            }
+
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
@@ -157,9 +165,18 @@ class GenesisLibraryPlugin : Plugin<Project> {
             // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
-            // KavaRef for modern reflection
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.2")
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.2")
+            // Universal Xposed/LSPosed API access for all library modules
+            dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
+
+            // YukiHook runtime (api only, ksp handled above)
+            dependencies.add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
+
+            // KavaRef for modern reflection (YukiHook 2.0 replacement)
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
+            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
+            // EzXHelper for simplified Xposed development
+            dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
         }
     }
 }

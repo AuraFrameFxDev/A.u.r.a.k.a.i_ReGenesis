@@ -6,18 +6,23 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.core.models.AgentDomain
+import dev.aurakai.auraframefx.domains.aura.ui.components.backgrounds.DataRibbonsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.effects.HoloHUDOverlay
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 
 enum class BackgroundType {
     DATA_RIBBONS,
@@ -48,19 +53,22 @@ fun CyberpunkScreenScaffold(
             BackgroundType.DATA_RIBBONS -> {
                 DataRibbonsBackground(
                     baseColor = agentDomain.primaryColor,
-                    accentColor = if (agentDomain == AgentDomain.AURA) Color.Cyan else Color.White
+                    accentColor = if (agentDomain == AgentDomain.AURA) Color.Cyan else Color.White // Basic logic for accent
                 )
             }
 
             BackgroundType.FORTRESS_GRID -> {
+                // Reuse existing HexagonGridBackground but tweaked for "Fortress"
                 HexagonGridBackground(
                     primaryColor = agentDomain.primaryColor,
-                    secondaryColor = Color.Red,
+                    secondaryColor = Color.Red, // Kai heat map
                     accentColor = Color.Cyan
                 )
             }
-            
+            // For now, mapping other types to existing or DataRibbons as fallback/placeholder
+            // Ideally we would implement ChaosLightning and CommandCenter separately
             BackgroundType.CHAOS_LIGHTNING -> {
+                // Placeholder: Using DataRibbons but more chaotic params if possible, or just default
                 DataRibbonsBackground(
                     baseColor = agentDomain.primaryColor,
                     accentColor = Color.Magenta,
@@ -71,6 +79,7 @@ fun CyberpunkScreenScaffold(
             }
 
             BackgroundType.COMMAND_CENTER -> {
+                // Placeholder: Cleaner look
                 HexagonGridBackground(
                     primaryColor = agentDomain.primaryColor,
                     secondaryColor = Color(0xFF00C2A8),
@@ -80,6 +89,7 @@ fun CyberpunkScreenScaffold(
             }
 
             BackgroundType.CONSTELLATION -> {
+                // Calm background
                 DataRibbonsBackground(
                     baseColor = agentDomain.primaryColor,
                     ribbons = 3,
@@ -128,7 +138,7 @@ fun CyberpunkScreenScaffold(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Black.copy(alpha = 0.3f)
+                    containerColor = Color.Black.copy(alpha = 0.3f) // More transparent
                 )
             )
 
@@ -143,3 +153,4 @@ fun CyberpunkScreenScaffold(
         }
     }
 }
+

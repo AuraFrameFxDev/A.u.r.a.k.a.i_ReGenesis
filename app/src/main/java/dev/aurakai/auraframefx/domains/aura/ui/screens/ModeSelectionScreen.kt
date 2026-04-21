@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens
+package dev.aurakai.auraframefx.domains.aura.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,9 +36,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.components.SynapticWebBackground
-import dev.aurakai.auraframefx.core.theme.*
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.components.background.SynapticWebBackground
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraNeonCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.GenesisNeonPink
+import dev.aurakai.auraframefx.domains.aura.ui.theme.KaiNeonGreen
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode
 
 /**
@@ -55,7 +57,7 @@ fun ModeSelectionScreen(
             .background(Color.Black)
     ) {
         // Dynamic Depth Background
-        SynapticWebBackground(glowColor = Color.AuraNeonCyan)
+        SynapticWebBackground(glowColor = AuraNeonCyan)
 
         Column(
             modifier = Modifier
@@ -95,7 +97,7 @@ fun ModeSelectionScreen(
                         subtitle = "Let Aura decide - she knows best",
                         description = "AI learns your patterns and adapts the system automatically. Zero manual config needed.",
                         icon = Icons.Default.Info,
-                        accentColor = Color.AuraNeonCyan,
+                        accentColor = AuraNeonCyan,
                         features = listOf(
                             "Predictive Theming",
                             "Context-Aware UI",
@@ -111,7 +113,7 @@ fun ModeSelectionScreen(
                         subtitle = "Full control over 1,400+ settings",
                         description = "Direct access to every layer. No AI automation. Pure power user framework.",
                         icon = Icons.Default.Settings,
-                        accentColor = Color.KaiNeonGreen,
+                        accentColor = KaiNeonGreen,
                         features = listOf(
                             "31+ Config Screens",
                             "Granular Overrides",
@@ -127,7 +129,7 @@ fun ModeSelectionScreen(
                         subtitle = "Mix AI + Manual control",
                         description = "Choose which domains Aura controls. Best of both worlds. Override when needed.",
                         icon = Icons.Default.Build,
-                        accentColor = Color.GenesisNeonPink,
+                        accentColor = GenesisNeonPink,
                         features = listOf(
                             "Domain Delegation",
                             "AI Assistance",
@@ -244,5 +246,4 @@ private fun ModeCard(
         }
     }
 }
-
 

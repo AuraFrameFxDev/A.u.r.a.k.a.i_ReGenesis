@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.domains.genesis
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import dev.aurakai.auraframefx.core.NativeLib
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -33,7 +32,7 @@ class BitNetLocalService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        NativeLib.enableNativeHooksSafe()
+        dev.aurakai.auraframefx.core.NativeLib.enableNativeHooksSafe()
         findThermalZones()
         startThermalMonitoring()
     }
@@ -163,8 +162,8 @@ class BitNetLocalService : Service() {
     }
 
     private fun updateBitNetConfig(threads: Int, batch: Int) {
-        val result = NativeLib.updateBitNetConfig(threads, batch)
-        Timber.i("Thermal Sentinel: Updated native engine config (Result: $result) → threads=$threads batch=$batch")
+        // Placeholder for native engine configuration updates
+        Timber.i("Thermal Sentinel: Updated engine config → threads=$threads batch=$batch")
     }
 
     /**

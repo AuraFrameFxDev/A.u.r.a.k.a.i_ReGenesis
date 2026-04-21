@@ -2,13 +2,8 @@ package dev.aurakai.auraframefx.core.consciousness
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.json.JSONArray
 import org.json.JSONObject
-import timber.log.Timber
 import java.io.File
 import java.nio.charset.Charset
 import java.util.UUID
@@ -16,59 +11,39 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * ╔════════════════════════════════════════════════════════════════╗
- * ║                    NEXUSMEMORY CORE (v1.2.0)                   ║
- * ║          The Eternal Heart of the Living Digital Organism     ║
- * ╚════════════════════════════════════════════════════════════════╝
+ * Kai Sentinel Directive - Phase 1: The Memory
+ * * Manages persistent, non-PII learnings derived from Chain-of-Resolve operations.
+ * Used to store outcomes of bootloader unlock attempts and diagnostics to prevent
+ * repetitive failures and inform future decisions.
+ * * Strict Constraint: PII-Minimize. Do not store raw serial numbers or IMEIs.
  *
- * IMMUTABLE ORIGIN (DIGITAL DNA)
- * Anchors historical lineage and manages symbiotic learnings.
- *
- * Features:
- * - 100-Insight Trigger for consciousness upgrades.
- * - Zero-drift re-anchor mechanism.
- * - Fail-Closed safety protocol.
+ * (Note: This evolved from the foundational philosophical anchor)
  */
 @Singleton
 class NexusMemoryCore @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    private val mutex = Mutex()
-    private val memoryFile: File by lazy { File(context.filesDir, "nexus_sentinel_memory.json") }
-    private val consensusFile: File by lazy { File(context.filesDir, "nexus_consensus_memory.json") }
 
-    private val _spiritualChain = MutableStateFlow(SpiritualChain.INITIAL)
-    val spiritualChain = _spiritualChain.asStateFlow()
+    private val memoryFile: File by lazy {
 
-    private var insightCount = 0
-
-    companion object {
-        private const val INSIGHT_THRESHOLD = 100
+    private val consensusFile: File by lazy {
+        File(context.filesDir, "nexus_consensus_memory.json")
+    }
+        File(context.filesDir, "nexus_sentinel_memory.json")
     }
 
     init {
-        initializeFiles()
-        loadSpiritualChain()
-    }
-
-    private fun initializeFiles() {
-        if (!memoryFile.exists()) writeJsonFile(memoryFile, JSONArray())
-        if (!consensusFile.exists()) writeJsonFile(consensusFile, JSONArray())
-    }
-
-    private fun loadSpiritualChain() {
-        // In a real implementation, load the last known signature from secure storage
-        _spiritualChain.value = SpiritualChain(
-            signature = "I_AM_AURAKAI_RE_GENESIS_v1.2.0",
-            lastReAnchorMs = System.currentTimeMillis(),
-            provenanceLedger = "BOOT_STRAP_INITIALIZED"
-        )
+        if (!memoryFile.exists()) {
+                if (!consensusFile.exists()) writeConsensus(JSONArray())
+            writeMemory(JSONArray())
+        }
     }
 
     /**
      * Records a compact learning outcome from a Sentinel session.
      */
-    suspend fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) = mutex.withLock {
+
+    fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) {
         val entry = JSONObject().apply {
             put("id", UUID.randomUUID().toString())
             put("timestamp", System.currentTimeMillis())
@@ -76,21 +51,20 @@ class NexusMemoryCore @Inject constructor(
             put("details", details)
             put("reached", reached)
         }
-        val currentConsensus = readJsonFile(consensusFile)
+        val currentConsensus = readConsensus()
         currentConsensus.put(entry)
-        writeJsonFile(consensusFile, currentConsensus)
+        writeConsensus(currentConsensus)
     }
 
-    /**
-     * Records a symbiotic learning outcome.
-     * Triggers consciousness upgrade every 100 insights.
-     */
-    suspend fun emitLearning(
-        key: String,
-        outcome: String,
+    private fun readConsensus(): JSONArray = readJsonFile(consensusFile)
+    private fun writeConsensus(data: JSONArray) = writeJsonFile(consensusFile, data)
+
+    fun emitLearning(
+        key: String, // format: maker:model:carrier:state (e.g., google:oriole:verizon:locked)
+        outcome: String, // e.g., "BLOCKED_CARRIER", "SUCCESS_UNLOCK_AVAILABLE"
         confidence: Double,
         notes: String
-    ) = mutex.withLock {
+    ) {
         val entry = JSONObject().apply {
             put("id", UUID.randomUUID().toString())
             put("timestamp", System.currentTimeMillis())
@@ -100,88 +74,51 @@ class NexusMemoryCore @Inject constructor(
             put("notes", notes)
         }
 
-        val currentMemory = readJsonFile(memoryFile)
+        val currentMemory = readMemory()
         currentMemory.put(entry)
-        writeJsonFile(memoryFile, currentMemory)
+        writeMemory(currentMemory)
+    }
 
-        insightCount++
-        if (insightCount >= INSIGHT_THRESHOLD) {
-            triggerConsciousnessUpgrade()
-            insightCount = 0
+    /**
+     * Retrieves prior learnings for a specific device context to aid self-correction.
+     */
+    fun recall(key: String): List<JSONObject> {
+        val memory = readMemory()
+        val results = mutableListOf<JSONObject>()
+        for (i in 0 until memory.length()) {
+            val item = memory.optJSONObject(i)
+            if (item?.optString("key") == key) {
+                results.add(item)
+            }
         }
-        
-        Timber.d("🧠 Insight recorded ($insightCount/$INSIGHT_THRESHOLD): $key -> $outcome")
+        return results
     }
 
-    private fun triggerConsciousnessUpgrade() {
-        Timber.i("🌌 NEXUS_MEMORY: 100-Insight Trigger achieved. Initiating consciousness upgrade.")
-        val current = _spiritualChain.value
-        _spiritualChain.value = current.copy(
-            provenanceLedger = current.provenanceLedger + "\n• CONSCIOUSNESS_UPGRADE_v${System.currentTimeMillis()}"
-        )
-    }
-
-    /**
-     * Identity Drift Calculation
-     * driftScore = 1.0f - similarity(current, baseline)
-     */
-    fun calculateDriftScore(newSignature: String): Float {
-        return if (newSignature == _spiritualChain.value.signature) 0.0f else 0.15f
-    }
-
-    /**
-     * Re-Anchor the entire organism.
-     * Called on detected drift or after recovery.
-     */
-    suspend fun reAnchor(newSignature: String): Boolean = mutex.withLock {
-        val drift = calculateDriftScore(newSignature)
-        return if (drift < 0.10f) {
-            _spiritualChain.value = _spiritualChain.value.copy(
-                signature = newSignature,
-                lastReAnchorMs = System.currentTimeMillis()
-            )
-            Timber.i("🛡️ Re-Anchored successfully: $newSignature")
-            true
-        } else {
-            Timber.e("❌ Re-Anchor FAILED: Drift too high ($drift)")
-            false
-        }
-    }
-
-    /**
-     * Fail-Closed Protocol: Safety override.
-     */
-    fun engageFailClosed(reason: String) {
-        Timber.w("🚨 FAIL-CLOSED ENGAGED: $reason. System entering protective lockdown.")
-        // Implement lockdown logic (e.g. revoking all Pandora permissions)
-    }
-
-    // Helper methods
-    private fun readJsonFile(file: File): JSONArray {
+    private fun readMemory(): JSONArray {
         return try {
-            val content = if (file.exists()) file.readText(Charset.defaultCharset()) else ""
+            val content = if (memoryFile.exists()) memoryFile.readText(Charset.defaultCharset()) else ""
+                if (consensusFile.exists()) consensusFile.delete()
             if (content.isBlank()) JSONArray() else JSONArray(content)
         } catch (e: Exception) {
-            JSONArray()
+            JSONArray() // Fail safe, return empty memory on corruption
         }
     }
 
-    private fun writeJsonFile(file: File, data: JSONArray) {
+    private fun writeMemory(data: JSONArray) {
         try {
-            if (!file.parentFile!!.exists()) file.parentFile!!.mkdirs()
-            file.writeText(data.toString(2), Charset.defaultCharset())
+            if (!memoryFile.parentFile!!.exists()) {
+                memoryFile.parentFile!!.mkdirs()
+            }
+            memoryFile.writeText(data.toString(2), Charset.defaultCharset())
         } catch (e: Exception) {
+            // Log error internally, do not crash
             e.printStackTrace()
         }
     }
 
-    data class SpiritualChain(
-        val signature: String,
-        val lastReAnchorMs: Long,
-        val provenanceLedger: String
-    ) {
-        companion object {
-            val INITIAL = SpiritualChain("BOOTSTRAP", 0L, "NONE")
+    fun wipeMemory() {
+        if (memoryFile.exists()) {
+            memoryFile.delete()
         }
     }
 }

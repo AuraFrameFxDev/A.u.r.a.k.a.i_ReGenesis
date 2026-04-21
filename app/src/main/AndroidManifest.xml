@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!-- AGP 9.0: 'package' attribute removed - namespace defined in build.gradle.kts -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AGP 9.0: 'package' attribute removed - namespace defined in build.gradle.kts -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -56,10 +57,6 @@
         android:theme="@style/Theme.dev.aurakai.auraframefx"
         tools:targetApi="36">
 
-        <meta-data
-            android:name="com.aurakai.regenesis.spiritualchain"
-            android:value="${spiritualChainVersion}" />
-
         <!-- Xposed Module Metadata -->
         <meta-data
             android:name="xposedmodule"
@@ -94,22 +91,9 @@
             </intent-filter>
             <intent-filter android:label="Pandora\u0027s Box Open">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="aurakai"
-                    android:host="pandora_box" />
-            </intent-filter>
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="http" />
-                <data android:host="github.com" />
+                <data android:scheme="aurakai" android:host="pandora_box" />
             </intent-filter>
         </activity>
 
@@ -148,7 +132,7 @@
             android:name=".domains.genesis.services.VertexSyncService"
             android:exported="false" />
         <service
-            android:name=".domains.genesis.oracledrive.pandora.IntegrityMonitorService"
+            android:name=".domains.kai.security.IntegrityMonitorService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property
@@ -173,7 +157,13 @@
         <service android:name=".domains.aura.AuraDriveService" />
 
         <!-- Royal Guard Security Service (Provenance Gate) -->
-        <!-- Service removed: RoyalGuardServiceImpl class is missing -->
+        <service
+            android:name=".domains.kai.security.provenance.RoyalGuardServiceImpl"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="dev.aurakai.auraframefx.security.ROYAL_GUARD" />
+            </intent-filter>
+        </service>
 
         <!-- Aura Omnipresent Overlay Service -->
         <service
@@ -239,6 +229,14 @@
         </receiver>
         -->
 
-
+        <!-- Integrity Violation Receiver -->
+        <receiver
+            android:name=".domains.kai.security.IntegrityViolationReceiver"
+            android:exported="false"
+            android:permission="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION">
+            <intent-filter>
+                <action android:name="dev.aurakai.auraframefx.action.INTEGRITY_VIOLATION" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

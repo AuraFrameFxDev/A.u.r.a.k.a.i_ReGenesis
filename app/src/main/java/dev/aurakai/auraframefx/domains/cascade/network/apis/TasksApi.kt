@@ -19,7 +19,7 @@ import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiClient
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ApiResponse
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientError
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ClientException
-import dev.aurakai.auraframefx.domains.aura.MultiValueMap
+import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.MultiValueMap
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.RequestConfig
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.RequestMethod
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ResponseType
@@ -27,7 +27,7 @@ import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerErro
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.ServerException
 import dev.aurakai.auraframefx.domains.cascade.network.infrastructure.Success
 import dev.aurakai.auraframefx.domains.genesis.models.TaskScheduleRequest
-import dev.aurakai.auraframefx.domains.kai.TaskStatus
+import dev.aurakai.auraframefx.domains.genesis.models.TaskStatus
 import okhttp3.Call
 import okhttp3.HttpUrl
 import java.io.IOException
@@ -217,7 +217,7 @@ class TasksApi(
             method = RequestMethod.GET,
             path = "/tasks/{taskId}".replace(
                 "{" + "taskId" + "}",
-                encodeURIComponent(taskId)
+                encodeURIComponent(taskId.toString())
             ),
             query = localVariableQuery,
             headers = localVariableHeaders,

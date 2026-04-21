@@ -37,7 +37,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil3.compose.AsyncImage
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🔮 GENESIS ORACLE DRIVE HUB (Level 2 Hub)
@@ -148,7 +148,7 @@ fun OracleDriveHubScreen(navController: NavController) {
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = Color.Transparent
                     )
                 )
@@ -197,5 +197,4 @@ fun OracleDriveHubScreen(navController: NavController) {
         }
     }
 }
-
 

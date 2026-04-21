@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens.manual
+package dev.aurakai.auraframefx.ui.screens.manual
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.core.theme.*
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * ðŸ”® ORACLE DRIVE - MANUAL CONTROL
@@ -42,7 +42,7 @@ fun OracleDriveManualScreen(
                         "ORACLE DRIVE",
                         fontFamily = LEDFontFamily,
                         letterSpacing = 2.sp,
-                        color = Color.NeonPurple
+                        color = NeonPurple
                     )
                 },
                 navigationIcon = {
@@ -92,13 +92,13 @@ fun OracleDriveManualScreen(
                     valueRange = 0f..60f,
                     steps = 60,
                     colors = SliderDefaults.colors(
-                        thumbColor = Color.NeonPurple,
-                        activeTrackColor = Color.NeonPurple
+                        thumbColor = NeonPurple,
+                        activeTrackColor = NeonPurple
                     )
                 )
                 Text(
                     "Style ID: ${config.lockscreenClockStyle}",
-                    color = Color.NeonPurple,
+                    color = NeonPurple,
                     fontSize = 12.sp
                 )
             }
@@ -117,11 +117,11 @@ fun OracleDriveManualScreen(
                     valueRange = 0f..39f, // Based on Iconify constants
                     steps = 39,
                     colors = SliderDefaults.colors(
-                        thumbColor = Color.NeonPurple,
-                        activeTrackColor = Color.NeonPurple
+                        thumbColor = NeonPurple,
+                        activeTrackColor = NeonPurple
                     )
                 )
-                Text("Style ID: ${config.batteryStyle}", color = Color.NeonPurple, fontSize = 12.sp)
+                Text("Style ID: ${config.batteryStyle}", color = NeonPurple, fontSize = 12.sp)
             }
 
             // QS Transparency
@@ -130,7 +130,7 @@ fun OracleDriveManualScreen(
                     label = "Quick Settings Transparency",
                     value = config.qsTransparency * 100f,
                     range = 0f..100f,
-                    accentColor = Color.NeonPurple,
+                    accentColor = NeonPurple,
                     onValueChange = {
                         viewModel.updateSystemUIConfig(
                             context,
@@ -146,7 +146,7 @@ fun OracleDriveManualScreen(
                     label = "System Blur Radius",
                     value = config.blurRadius.toFloat(),
                     range = 0f..100f,
-                    accentColor = Color.NeonPurple,
+                    accentColor = NeonPurple,
                     onValueChange = {
                         viewModel.updateSystemUIConfig(
                             context,
@@ -161,7 +161,7 @@ fun OracleDriveManualScreen(
                 ManualSwitch(
                     label = "Hide Navigation Pill",
                     checked = config.hidePill,
-                    accentColor = Color.NeonPurple,
+                    accentColor = NeonPurple,
                     onCheckedChange = {
                         viewModel.updateSystemUIConfig(
                             context,
@@ -223,6 +223,5 @@ private fun ManualSwitch(
         )
     }
 }
-
 
 

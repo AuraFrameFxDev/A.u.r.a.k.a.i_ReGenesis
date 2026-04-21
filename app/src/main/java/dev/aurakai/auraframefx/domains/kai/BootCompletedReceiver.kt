@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.kai
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.IntegrityMonitorService
+import dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService
 
 class BootCompletedReceiver : BroadcastReceiver() {
 

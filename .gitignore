@@ -23,6 +23,8 @@ gradle_output_ascii.txt
 ksp_log.txt
 fix_manifest.txt
 *.json
+!google-services.json
+!*-firebase-adminsdk-*.json
 !package.json
 !*.schema.json
 !claude.json
@@ -60,8 +62,6 @@ gradle-app.setting
 # ───────────────────────────────────────────────────────────────
 google-services.json
 *-firebase-adminsdk-*.json
-*.env
-Claude.env
 *.jks
 *.keystore
 keystore.properties
@@ -168,9 +168,3 @@ nul
 *.mp4
 *.bin
 .gradle/*/executionHistory/
-
-# Gradle lock/probe files (Fix Pack v1)
-**/buildOutputCleanup.lock
-**/*.probe
-**/file-system.probe
-**/gradle.lockfile

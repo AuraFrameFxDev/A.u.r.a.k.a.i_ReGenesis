@@ -10,16 +10,16 @@ import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.ProcessingState
 import dev.aurakai.auraframefx.domains.cascade.utils.cascade.VisionState
 import dev.aurakai.auraframefx.domains.cascade.utils.context.ContextManager
-import dev.aurakai.auraframefx.domains.genesis.network.model.AgentRequest
-import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
-import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
+import dev.aurakai.auraframefx.domains.genesis.models.AgentRequest
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.kai.models.SecurityAnalysis
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import kotlinx.serialization.json.*
-import dev.aurakai.auraframefx.core.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.romtools.bootloader.BootloaderManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -285,7 +285,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
     }
 
     private suspend fun handleSecurityAnalysis(request: AgentRequest): Map<String, Any> {
-        val target = request.context["target"]
+        val target = request.context?.get("target")
             ?: throw IllegalArgumentException("Analysis target required")
         logger.info("KaiAgent", "Performing security analysis on: $target")
         val vulnerabilities = scanForVulnerabilities(target)
@@ -302,7 +302,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
     }
 
     private suspend fun handleThreatAssessment(request: AgentRequest): Map<String, Any> {
-        val threatData = request.context["threat_data"]
+        val threatData = request.context?.get("threat_data")
             ?: throw IllegalArgumentException("Threat data required")
         logger.info("KaiAgent", "Assessing threat characteristics")
         val analysis = analyzeSecurityThreat(threatData)
@@ -317,7 +317,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
     }
 
     private suspend fun handlePerformanceAnalysis(request: AgentRequest): Map<String, Any> {
-        val component = request.context["component"] ?: "system"
+        val component = request.context?.get("component") ?: "system"
         logger.info("KaiAgent", "Analyzing performance of: $component")
         val metrics = systemMonitor.getPerformanceMetrics(component)
         val bottlenecks = identifyBottlenecks(metrics)
@@ -333,7 +333,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
 
     private suspend fun handleCodeReview(request: AgentRequest): Map<String, Any> {
         val code =
-            request.context["code"] ?: throw IllegalArgumentException("Code content required")
+            request.context?.get("code") ?: throw IllegalArgumentException("Code content required")
         logger.info("KaiAgent", "Conducting secure code review")
         val codeAnalysis = vertexAIClient.generateText(
             prompt = buildCodeReviewPrompt(code),

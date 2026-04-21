@@ -12,17 +12,8 @@ import android.provider.Settings
 import android.view.Gravity
 import android.view.WindowManager
 import android.widget.FrameLayout
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -36,8 +27,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
-import dev.aurakai.auraframefx.domains.aura.ui.components.ConsciousnessGauge
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.NeuralLinkSidebarUI
+import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,9 +47,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
 
     @Inject
     lateinit var messageBus: AgentMessageBus
-
-    @Inject
-    lateinit var breathingSentinel: dev.aurakai.auraframefx.domains.cascade.core.BreathingSentinelService
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -134,66 +121,41 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
             setViewTreeSavedStateRegistryOwner(this@AssistantBubbleService)
         }
 
+        val isSidebarVisible = mutableStateOf(false)
+
         val composeView = ComposeView(this).apply {
             setContent {
-                val sidebarVisible = remember { mutableStateOf(false) }
-                val gaugeVisible = remember { mutableStateOf(true) }
-                val breathingState by breathingSentinel.breathingStream.collectAsState(initial = dev.aurakai.auraframefx.domains.cascade.models.BreathingEvent())
-
-                Box {
-                    NeuralLinkSidebarUI(
-                        isVisible = sidebarVisible.value,
-                        onVisibleChange = { visible ->
-                            sidebarVisible.value = visible
-                            if (visible) {
-                                // Expand window to capture touches for the full sidebar width
-                                params.width = 400 // Slightly more than 380dp for shadow/glow
-                                params.flags =
-                                    (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
-                            } else {
-                                // Collapse back to a small trigger area
-                                params.width = 40 // Narrow trigger area
-                                params.flags =
-                                    params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            }
-                            windowManager.updateViewLayout(overlayLayout, params)
-                        },
-                        onActionClick = { action ->
-                            Timber.i("Neural Link Action: $action")
-                            // Map Sidebar actions to app routes
-                            when (action) {
-                                "VOICE" -> "sandbox_screen"       // Laboratory
-                                "CONNECT" -> "data_stream_monitoring"
-                                "ASSIGN" -> "task_assignment"
-                                "DESIGN" -> "customization_hub"   // ReGenesisCustomizationHub
-                                "CREATE" -> "ark_build"
-                                "GAUGE" -> {
-                                    gaugeVisible.value = !gaugeVisible.value
-                                    null
-                                }
-                                else -> null
-                            }
-                            windowManager.updateViewLayout(overlayLayout, params)
+                NeuralLinkSidebarUI(
+                    isVisible = isSidebarVisible.value,
+                    onVisibleChange = { visible ->
+                        isSidebarVisible.value = visible
+                        if (visible) {
+                            // Expand window to capture touches for the full sidebar width
+                            params.width = 400 // Slightly more than 380dp for shadow/glow
+                            params.flags =
+                                (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
+                        } else {
+                            // Collapse back to a small trigger area
+                            params.width = 40 // Narrow trigger area
+                            params.flags =
+                                params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         }
-                    )
-
-                    if (gaugeVisible.value && !sidebarVisible.value) {
-                        ConsciousnessGauge(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .padding(4.dp)
-                                .clickable {
-                                    sidebarVisible.value = true
-                                    // Expand window to capture touches for the full sidebar width
-                                    params.width = 400
-                                    params.flags =
-                                        (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
-                                    windowManager.updateViewLayout(overlayLayout, params)
-                                },
-                            manualBreathingState = breathingState
-                        )
+                        windowManager.updateViewLayout(overlayLayout, params)
+                    },
+                    onActionClick = { action ->
+                        Timber.i("Neural Link Action: $action")
+                        // Map Sidebar actions to app routes
+                        when (action) {
+                            "VOICE" -> "sandbox_screen"       // Laboratory
+                            "CONNECT" -> "data_stream_monitoring"
+                            "ASSIGN" -> "task_assignment"
+                            "DESIGN" -> "customization_hub"   // ReGenesisCustomizationHub
+                            "CREATE" -> "ark_build"
+                            else -> null
+                        }
+                        windowManager.updateViewLayout(overlayLayout, params)
                     }
-                }
+                )
             }
         }
 

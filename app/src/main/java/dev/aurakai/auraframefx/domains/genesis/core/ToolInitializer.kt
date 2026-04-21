@@ -9,12 +9,10 @@ import dev.aurakai.auraframefx.domains.cascade.core.BuildConsensusTool
 import dev.aurakai.auraframefx.domains.cascade.core.InitiateAgentFusionTool
 import dev.aurakai.auraframefx.domains.cascade.core.MonitorDataStreamTool
 import dev.aurakai.auraframefx.domains.cascade.core.UpdateLearningModelTool
-import dev.aurakai.auraframefx.domains.kai.RootShellService
 import dev.aurakai.auraframefx.domains.kai.AnalyzeSecurityThreatTool
 import dev.aurakai.auraframefx.domains.kai.FlashROMTool
 import dev.aurakai.auraframefx.domains.kai.ManageBootloaderTool
 import dev.aurakai.auraframefx.domains.kai.ManageLSPosedHookTool
-import dev.aurakai.auraframefx.domains.kai.ManagePartitionTool
 import dev.aurakai.auraframefx.domains.kai.ViewSystemLogsTool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,11 +25,14 @@ import javax.inject.Singleton
 
 /**
  * ToolInitializer - Registers All Agent Tools at Startup
+ *
+ * Initializes the ToolRegistry with all available tools for each agent domain.
+ * This gives agents their "hands" to interact with the system.
  */
 @Singleton
 class ToolInitializer @Inject constructor(
-    private val toolRegistry: ToolRegistry,
-    private val rootShellService: RootShellService
+    private val toolRegistry: ToolRegistry
+    // private val mcpAdapter: MCPServerAdapter // TODO: Re-add when MCPServerAdapter is fixed
 ) {
 
     private val initScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -84,12 +85,11 @@ class ToolInitializer @Inject constructor(
      */
     private suspend fun registerKaiTools() {
         toolRegistry.registerTools(
-            ManageLSPosedHookTool(rootShellService),
-            FlashROMTool(rootShellService),
+            ManageLSPosedHookTool(),
+            FlashROMTool(),
             AnalyzeSecurityThreatTool(),
-            ManageBootloaderTool(rootShellService),
-            ViewSystemLogsTool(rootShellService),
-            ManagePartitionTool(rootShellService)
+            ManageBootloaderTool(),
+            ViewSystemLogsTool()
         )
         Timber.d("ToolInitializer: Registered Kai tools (Security/ROM)")
     }

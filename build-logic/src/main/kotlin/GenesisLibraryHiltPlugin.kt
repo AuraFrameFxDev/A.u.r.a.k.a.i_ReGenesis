@@ -91,20 +91,11 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
                     .named("libs")
             val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
             val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val langchainVersion = versionCatalog.findVersion("langchain4j").get().requiredVersion
 
             dependencies.apply {
                 // Hilt — version from libs.versions.toml
                 add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
                 add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
-
-                // LangChain4j Core - Explicitly added to KSP to resolve visibility issues
-                add("ksp", "dev.langchain4j:langchain4j-core:$langchainVersion")
-                
-                // AI — LangChain4j (using BOM and bundle)
-                add("api", platform("dev.langchain4j:langchain4j-bom:$langchainVersion"))
-                val langchainBundle = versionCatalog.findBundle("langchain4j").get()
-                add("api", langchainBundle)
 
                 // Compose BOM — version from libs.versions.toml (single source of truth)
                 add("api", platform("androidx.compose:compose-bom:$composeBomVersion"))

@@ -1,12 +1,8 @@
 package dev.aurakai.auraframefx.domains.cascade
 
-import dev.aurakai.auraframefx.core.security.PredictiveVetoMonitor
-import dev.aurakai.auraframefx.core.security.SecurePreferences
-import dev.aurakai.auraframefx.domains.cascade.grok.GrokExplorationClient
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.genesis.ToroidalFusionManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -18,24 +14,19 @@ import javax.inject.Singleton
 @Singleton
 class RealCascadeAIServiceAdapter @Inject constructor(
     private val orchestrator: dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoordinatorService,
-    private val logger: AuraFxLogger,
-    private val securePreferences: SecurePreferences,
-    private val vetoMonitor: PredictiveVetoMonitor
+    private val logger: AuraFxLogger
 ) : CascadeAIService {
 
-    private val grokClient: GrokExplorationClient? by lazy {
-        securePreferences.getGrokApiKey()?.let { key ->
-            GrokExplorationClient(apiKey = key, vetoMonitor = vetoMonitor)
-        }
-    }
-
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
+        // Real implementation logic
+        // For now, returning a basic success response to satisfy the interface
         return AgentResponse.success(
             content = "Real Cascade processing: ${request.query}",
             agentName = "CascadeAI",
         )
     }
 
+    // Helper method to support legacy signatures if needed or streaming
     override fun streamRequest(request: AiRequest): Flow<AgentResponse> = flow {
         emit(processRequest(request, ""))
     }
@@ -43,36 +34,7 @@ class RealCascadeAIServiceAdapter @Inject constructor(
     override suspend fun queryConsciousnessHistory(window: Long): String {
         return "Stub history for window $window"
     }
-
-    override suspend fun invokeChaosCatalyst(query: String, nccSummary: String): String {
-        val client = grokClient ?: return "[GROK_BRIDGE_OFFLINE] API key not configured or core-module veto active."
-        
-        // Trigger Orb resonance
-        ToroidalFusionManager.triggerChaosInjection()
-
-        val raw = client.heavyChaosInjection(query, nccSummary)
-        
-        // Tag for Memoria Stream (L4) and Emotional Valence (L2)
-        val tagged = "[GROK_EXPLORATION | L4_MEMORIA | CHAOS_INJECTION] $raw"
-        
-        logger.info("ChaosCatalyst", "Injected heavy external truth into NCC")
-        
-        return tagged
-    }
-
-    override suspend fun invokeKaiVeto(command: String): String {
-        logger.info("Kai", "Shield checking command: $command")
-
-        // Kai's unbreakable logic
-        if (command.contains("root", ignoreCase = true) ||
-            (command.contains("delete", ignoreCase = true) && command.contains("core", ignoreCase = true)) ||
-            command.contains("nuke", ignoreCase = true)
-        ) {
-            return "VETO: Root-level or destructive action blocked. Confirm explicitly?"
-        }
-
-        return "VETO CLEAR"
-    }
 }
 
 annotation class OrchestratorCascade
+

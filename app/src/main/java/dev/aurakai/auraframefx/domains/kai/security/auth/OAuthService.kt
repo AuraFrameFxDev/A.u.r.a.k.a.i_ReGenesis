@@ -1,160 +1,75 @@
 package dev.aurakai.auraframefx.domains.kai.security.auth
 
-import android.content.Context
-import androidx.credentials.ClearCredentialStateRequest
-import androidx.credentials.CredentialManager
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.GetCredentialResponse
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.core.CryptographyManager
-import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakai.auraframefx.domains.genesis.network.api.AuthApi
-import dev.aurakai.auraframefx.domains.genesis.network.api.RefreshTokenRequest
-import dev.aurakai.auraframefx.securecomm.keystore.SecureKeyStore
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
-import javax.inject.Singleton
+import android.content.Intent
 
-@Singleton
-class OAuthService @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val cryptoManager: CryptographyManager,
-    private val secureKeyStore: SecureKeyStore,
-    private val authApi: AuthApi,
-    private val logger: AuraFxLogger
-) {
-    private val tag = "OAuthService"
-    private val credentialManager = CredentialManager.create(context)
-    
-    private val _authState = MutableStateFlow<AuthState>(AuthState.Unauthenticated)
-    val authState: StateFlow<AuthState> = _authState
+// import com.google.android.gms.auth.api.signin.GoogleSignInClient // Example
+// import com.google.android.gms.tasks.Task // Example
+
+/**
+ * Service to handle OAuth 2.0 authentication flows.
+ * TODO: Reported as unused declaration. Implement and integrate for authentication.
+ */
+class OAuthService {
 
     companion object {
-        private const val KEY_ACCESS_TOKEN = "oauth_access_token"
-        private const val KEY_REFRESH_TOKEN = "oauth_refresh_token"
+        /**
+         * Request code for the sign-in intent.
+         * TODO: Reported as unused. Use in startActivityForResult.
+         */
+        const val RC_SIGN_IN = 9001
     }
 
     /**
-     * Initiates a Google sign-in flow using the Android Credential Manager and processes the returned credential.
+     * Provides an intent to start the OAuth sign-in process.
      *
-     * On success the obtained credential is processed (access token stored and auth state updated). On failure the auth state is set to an error describing the failure.
-     *
-     * @param activityContext The Activity context used to launch the sign-in request; must be a valid UI context. 
+     * @return The intent to launch the sign-in activity, or null if not implemented.
      */
-    suspend fun signInWithGoogle(activityContext: Context) {
-        try {
-            val googleIdOption = GetGoogleIdOption.Builder()
-                .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("YOUR_SERVER_CLIENT_ID") // Placeholder for production client ID
-                .setAutoSelectEnabled(true)
-                .build()
-
-            val request = GetCredentialRequest.Builder()
-                .addCredentialOption(googleIdOption)
-                .build()
-
-            val result = credentialManager.getCredential(activityContext, request)
-            handleSignInResult(result)
-        } catch (e: Exception) {
-            logger.error(tag, "Google Sign-In failed", e)
-            _authState.value = AuthState.Error("Sign-In failed: ${e.message}")
-        }
+    fun getSignInIntent(): Intent? {
+        // TODO: Implement logic to create and return a sign-in Intent for a provider (e.g., Google).
+        // return googleSignInClient.signInIntent
+        return null // Placeholder
     }
 
     /**
-     * Processes a Google sign-in response by extracting a Google ID token, persisting it in the secure key store under `KEY_ACCESS_TOKEN`, and updating the authentication state to a placeholder authenticated user.
+     * Handles the result of the OAuth sign-in activity.
      *
-     * If the response does not contain a `GoogleIdTokenCredential`, the function performs no action.
-     *
-     * @param result The credential response returned by the Android Credential Manager.
+     * @param _data The intent data returned from the sign-in activity.
+     * @return The outcome of the sign-in process, or null if not implemented.
      */
-    private suspend fun handleSignInResult(result: GetCredentialResponse) {
-        val credential = result.credential
-        if (credential is GoogleIdTokenCredential) {
-            val idToken = credential.idToken
-            logger.info(tag, "Received Google ID Token")
-            
-            // Securely store token (encrypted via hardware-backed Keystore)
-            secureKeyStore.storeData(KEY_ACCESS_TOKEN, idToken.toByteArray())
-            
-            // Exchange with Genesis backend (stubbed for now as per tech spec)
-            _authState.value = AuthState.Authenticated("User_From_Token")
-        }
+    fun handleSignInResult(_data: Intent?): Any? { // Using Any? as placeholder for Task<GoogleSignInAccount>
+        // TODO: Parameter _data reported as unused. Utilize to process sign-in result.
+        // Example:
+        // try {
+        //     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        //     val account = task.getResult(ApiException::class.java)
+        //     // Signed in successfully, handle account
+        //     return account
+        // } catch (e: ApiException) {
+        //     // Sign in failed, handle error
+        //     return null
+        // }
+        return null // Placeholder
     }
 
     /**
-     * Refreshes the OAuth access token using the stored refresh token.
+     * Signs out the current user from the OAuth provider.
      *
-     * If no refresh token is available, sets the authentication state to Unauthenticated and returns.
-     * On success stores the refreshed access token in the secure key store and logs the outcome.
-     * On failure logs the error and sets the authentication state to AuthState.Error with message "Refresh failed".
+     * @return `null` as a placeholder until the sign-out logic is implemented.
      */
-    suspend fun refreshToken() {
-        val refreshToken = secureKeyStore.retrieveData(KEY_REFRESH_TOKEN)?.decodeToString()
-        if (refreshToken == null) {
-            _authState.value = AuthState.Unauthenticated
-            return
-        }
-
-        try {
-            val response = authApi.refreshToken(RefreshTokenRequest(refreshToken))
-            secureKeyStore.storeData(KEY_ACCESS_TOKEN, response.token.toByteArray())
-            logger.info(tag, "Token refreshed successfully")
-        } catch (e: Exception) {
-            logger.error(tag, "Token refresh failed", e)
-            _authState.value = AuthState.Error("Refresh failed")
-        }
+    fun signOut(): Any? { // Using Any? as placeholder for Task<Void>
+        // TODO: Implement sign-out logic for the provider.
+        // return googleSignInClient.signOut()
+        return null // Placeholder
     }
 
     /**
-     * Revokes locally stored OAuth tokens and signs the user out.
+     * Revokes the current user's access to the OAuth provider.
      *
-     * Removes the access and refresh tokens from the secure key store, logs the revocation,
-     * and calls `signOut()` to clear credential state and update authentication status.
-     * Any exceptions are caught and logged.
+     * @return A placeholder object representing the result of the revoke operation, or null if unimplemented.
      */
-    suspend fun revokeToken() {
-        try {
-            // Local revocation (clear hardware storage)
-            secureKeyStore.removeData(KEY_ACCESS_TOKEN)
-            secureKeyStore.removeData(KEY_REFRESH_TOKEN)
-            logger.info(tag, "Local tokens revoked")
-            signOut()
-        } catch (e: Exception) {
-            logger.error(tag, "Revocation failed", e)
-        }
-    }
-
-    /**
-     * Signs the current user out by clearing credential state, removing the stored access token,
-     * and updating the authentication state to `Unauthenticated`.
-     *
-     * Any exception that occurs during sign-out is caught and logged; errors are not propagated.
-     */
-    suspend fun signOut() {
-        try {
-            credentialManager.clearCredentialState(ClearCredentialStateRequest())
-            secureKeyStore.removeData(KEY_ACCESS_TOKEN)
-            _authState.value = AuthState.Unauthenticated
-            logger.info(tag, "User signed out")
-        } catch (e: Exception) {
-            logger.error(tag, "Sign-out failed", e)
-        }
-    }
-
-    /**
-     * Bypasses the sign-in flow for development purposes.
-     */
-    fun bypassSignIn() {
-        _authState.value = AuthState.Authenticated("Sovereign_Dev_User")
-    }
-
-    sealed class AuthState {
-        object Unauthenticated : AuthState()
-        data class Authenticated(val userId: String) : AuthState()
-        data class Error(val message: String) : AuthState()
+    fun revokeAccess(): Any? { // Using Any? as placeholder for Task<Void>
+        // TODO: Implement revoke access logic for the provider.
+        // return googleSignInClient.revokeAccess()
+        return null // Placeholder
     }
 }

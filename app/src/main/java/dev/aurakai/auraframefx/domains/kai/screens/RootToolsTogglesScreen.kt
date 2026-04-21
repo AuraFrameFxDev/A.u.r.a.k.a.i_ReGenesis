@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.domains.kai.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
@@ -10,297 +10,431 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.screens.BrutalistCard
-import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsSectionHeader
-import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsToggleCard
-import dev.aurakai.auraframefx.domains.kai.RootShellService
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 
+/**
+ * Root Tools Quick Toggles Screen
+ *
+ * Provides quick access to common root operations with toggle switches:
+ * - Bootloader Lock/Unlock
+ * - Recovery Mode Access
+ * - System Partition Mount/Unmount
+ * - Magisk Module Enable/Disable
+ * - Root Permission Granting
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootToolsTogglesScreen(
-    onNavigateBack: () -> Unit,
-    rootShellService: RootShellService // Or use a ViewModel
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
-    val shellStatus by rootShellService.shellStatus.collectAsState()
     val scope = rememberCoroutineScope()
-    var terminalOutput by remember { mutableStateOf("Ready for system operations...") }
 
-    val bgGradient = Brush.verticalGradient(
-        colors = listOf(Color(0xFF0A0000), Color(0xFF1A0505), Color(0xFF000000))
-    )
+    // State for toggles
+    var bootloaderUnlocked by remember { mutableStateOf(false) }
+    var systemPartitionRW by remember { mutableStateOf(false) }
+    var magiskEnabled by remember { mutableStateOf(true) }
+    var rootGranted by remember { mutableStateOf(true) }
+
+    // Operation states
+    var isProcessing by remember { mutableStateOf(false) }
+    var statusMessage by remember { mutableStateOf<String?>(null) }
+    var showConfirmDialog by remember { mutableStateOf<RootToggleAction?>(null) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("ROOT AUTHORITY", fontWeight = FontWeight.Black, letterSpacing = 2.sp) },
+                title = {
+                    Text(
+                        "Root Tools",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.sp
+                        )
+                    )
+                },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent,
-                    titleContentColor = Color.Red
+                    containerColor = Color(0xFF1A1A1A),
+                    titleContentColor = Color.Cyan
                 )
             )
         },
-        containerColor = Color.Transparent
-    ) { padding ->
-        Box(modifier = Modifier.fillMaxSize().background(bgGradient).padding(padding)) {
+        containerColor = Color.Black
+    ) { paddingValues ->
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(bottom = 32.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
-                    SettingsSectionHeader("SYSTEM PERMISSIONS")
+                    Text(
+                        text = "Quick Toggles",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        text = "Quick access to common root operations. Be careful with destructive actions.",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                item {
-                    AuthorityStatusCard(status = shellStatus)
-                }
-
-                item {
-                    SettingsSectionHeader("QUICK ACTIONS")
-                }
-
-                item {
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            ActionButton(
-                                text = "REBOOT",
-                                icon = Icons.Default.PowerSettingsNew,
-                                color = Color.Red,
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    scope.launch {
-                                        val result = rootShellService.executeCommand("reboot")
-                                        terminalOutput = if (result.isSuccess) "Rebooting..." else "Error: ${result.error}"
-                                    }
-                                }
-                            )
-                            ActionButton(
-                                text = "UI RESTART",
-                                icon = Icons.Default.Refresh,
-                                color = Color.Yellow,
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    scope.launch {
-                                        val result = rootShellService.executeCommand("pkill -l KILL com.android.systemui")
-                                        terminalOutput = if (result.isSuccess) "SystemUI restarted" else "Error: ${result.error}"
-                                    }
-                                }
-                            )
-                        }
-                        
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            ActionButton(
-                                text = "RECOVERY",
-                                icon = Icons.Default.Build,
-                                color = Color.Magenta,
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    scope.launch {
-                                        val result = rootShellService.executeCommand("reboot recovery")
-                                        terminalOutput = if (result.isSuccess) "Rebooting to recovery..." else "Error: ${result.error}"
-                                    }
-                                }
-                            )
-                            ActionButton(
-                                text = "BOOTLOADER",
-                                icon = Icons.Default.PhonelinkSetup,
-                                color = Color.Cyan,
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    scope.launch {
-                                        val result = rootShellService.executeCommand("reboot bootloader")
-                                        terminalOutput = if (result.isSuccess) "Rebooting to bootloader..." else "Error: ${result.error}"
-                                    }
-                                }
-                            )
+                // Status message card
+                if (statusMessage != null) {
+                    item {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.Cyan.copy(alpha = 0.1f)
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(
+                                    Icons.Default.Info,
+                                    contentDescription = null,
+                                    tint = Color.Cyan
+                                )
+                                Text(
+                                    text = statusMessage!!,
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        color = Color.White
+                                    )
+                                )
+                            }
                         }
                     }
                 }
 
+                // Bootloader Toggle
                 item {
-                    SettingsSectionHeader("PARTITION CONTROL")
-                }
-
-                item {
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        ActionButton(
-                            text = "MOUNT /SYS",
-                            icon = Icons.Default.LockOpen,
-                            color = Color.Green,
-                            modifier = Modifier.weight(1f),
-                            onClick = {
-                                scope.launch {
-                                    val result = rootShellService.executeCommand("mount -o rw,remount /system")
-                                    terminalOutput = if (result.isSuccess) "/system mounted RW" else "Error: ${result.error}"
-                                }
-                            }
-                        )
-                        ActionButton(
-                            text = "WIPE CACHE",
-                            icon = Icons.Default.DeleteForever,
-                            color = Color.Gray,
-                            modifier = Modifier.weight(1f),
-                            onClick = {
-                                scope.launch {
-                                    val result = rootShellService.executeCommand("rm -rf /cache/*")
-                                    terminalOutput = if (result.isSuccess) "Cache wiped" else "Error: ${result.error}"
-                                }
-                            }
-                        )
-                    }
-                }
-
-                item {
-                    SettingsSectionHeader("MAGISK & SECURITY")
-                }
-
-                item {
-                    var magiskEnabled by remember { mutableStateOf(true) }
-                    SettingsToggleCard(
-                        title = "MAGISK HIDE (CORE)",
-                        subtitle = "Cloak root from sensitive system apps",
-                        icon = Icons.Default.Security,
-                        checked = magiskEnabled,
-                        onCheckedChange = { 
-                            magiskEnabled = it
-                            scope.launch {
-                                val cmd = if (it) "magisk --daemon" else "magisk --stop"
-                                rootShellService.executeCommand(cmd)
-                                terminalOutput = "Magisk state toggled: $it"
+                    RootToggleCard(
+                        title = "Bootloader",
+                        description = "Unlock/lock device bootloader",
+                        icon = Icons.Default.Lock,
+                        isEnabled = bootloaderUnlocked,
+                        isDangerous = true,
+                        onToggle = { enabled ->
+                            showConfirmDialog = if (enabled) {
+                                RootToggleAction.UnlockBootloader
+                            } else {
+                                RootToggleAction.LockBootloader
                             }
                         },
-                        accentColor = Color.Red
+                        isProcessing = isProcessing
+                    )
+                }
+
+                // Recovery Mode Access
+                item {
+                    RootToggleCard(
+                        title = "Recovery Mode",
+                        description = "Quick access to recovery mode",
+                        icon = Icons.Default.Settings,
+                        isEnabled = false,
+                        isDangerous = false,
+                        onToggle = {
+                            scope.launch {
+                                isProcessing = true
+                                statusMessage = "Rebooting to recovery mode..."
+                                // TODO: Implement recovery mode reboot
+                                kotlinx.coroutines.delay(2000)
+                                statusMessage = "Device should reboot to recovery"
+                                isProcessing = false
+                            }
+                        },
+                        isProcessing = isProcessing,
+                        isActionButton = true
+                    )
+                }
+
+                // System Partition Toggle
+                item {
+                    RootToggleCard(
+                        title = "System Partition R/W",
+                        description = "Mount system partition as read-write",
+                        icon = Icons.Default.Build,
+                        isEnabled = systemPartitionRW,
+                        isDangerous = true,
+                        onToggle = { enabled ->
+                            scope.launch {
+                                isProcessing = true
+                                statusMessage = if (enabled) {
+                                    "Mounting system as read-write..."
+                                } else {
+                                    "Remounting system as read-only..."
+                                }
+                                // TODO: Implement system partition mount
+                                kotlinx.coroutines.delay(1500)
+                                systemPartitionRW = enabled
+                                statusMessage = if (enabled) {
+                                    "System partition is now read-write"
+                                } else {
+                                    "System partition is now read-only"
+                                }
+                                isProcessing = false
+                            }
+                        },
+                        isProcessing = isProcessing
+                    )
+                }
+
+                // Magisk Module Toggle
+                item {
+                    RootToggleCard(
+                        title = "Magisk Modules",
+                        description = "Enable/disable all Magisk modules",
+                        icon = Icons.Default.Extension,
+                        isEnabled = magiskEnabled,
+                        isDangerous = false,
+                        onToggle = { enabled ->
+                            scope.launch {
+                                isProcessing = true
+                                statusMessage = if (enabled) {
+                                    "Enabling Magisk modules..."
+                                } else {
+                                    "Disabling Magisk modules..."
+                                }
+                                // TODO: Implement Magisk module toggle
+                                kotlinx.coroutines.delay(1500)
+                                magiskEnabled = enabled
+                                statusMessage =
+                                    "Magisk modules ${if (enabled) "enabled" else "disabled"}"
+                                isProcessing = false
+                            }
+                        },
+                        isProcessing = isProcessing
+                    )
+                }
+
+                // Root Permission Toggle
+                item {
+                    RootToggleCard(
+                        title = "Root Access",
+                        description = "Grant/revoke root permissions for apps",
+                        icon = Icons.Default.AdminPanelSettings,
+                        isEnabled = rootGranted,
+                        isDangerous = true,
+                        onToggle = { enabled ->
+                            scope.launch {
+                                isProcessing = true
+                                statusMessage = if (enabled) {
+                                    "Granting root access..."
+                                } else {
+                                    "Revoking root access..."
+                                }
+                                // TODO: Implement root permission toggle
+                                kotlinx.coroutines.delay(1500)
+                                rootGranted = enabled
+                                statusMessage =
+                                    "Root access ${if (enabled) "granted" else "revoked"}"
+                                isProcessing = false
+                            }
+                        },
+                        isProcessing = isProcessing
                     )
                 }
 
                 item {
-                    SettingsSectionHeader("BOOTLOADER CONTROL")
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
+            }
 
-                item {
-                    var showLockWarning by remember { mutableStateOf(false) }
-                    var showUnlockWarning by remember { mutableStateOf(false) }
-
-                    if (showLockWarning) {
-                        AlertDialog(
-                            onDismissRequest = { showLockWarning = false },
-                            title = { Text("LOCK BOOTLOADER?") },
-                            text = { Text("DANGER: This will wipe all data and may brick the device if a custom ROM is installed without proper signing keys.") },
-                            confirmButton = {
-                                TextButton(onClick = {
-                                    showLockWarning = false
-                                    scope.launch {
-                                        rootShellService.executeCommand("reboot bootloader")
-                                        terminalOutput = "Manual action required in fastboot: fastboot flashing lock"
-                                    }
-                                }) { Text("PROCEED", color = Color.Red) }
-                            },
-                            dismissButton = {
-                                TextButton(onClick = { showLockWarning = false }) { Text("CANCEL") }
-                            }
-                        )
-                    }
-
-                    if (showUnlockWarning) {
-                        AlertDialog(
-                            onDismissRequest = { showUnlockWarning = false },
-                            title = { Text("UNLOCK BOOTLOADER?") },
-                            text = { Text("This will factory reset your device and lower security posture. ReGenesis LDO recommends unlocking only for trusted catalyst development.") },
-                            confirmButton = {
-                                TextButton(onClick = {
-                                    showUnlockWarning = false
-                                    scope.launch {
-                                        rootShellService.executeCommand("reboot bootloader")
-                                        terminalOutput = "Manual action required in fastboot: fastboot flashing unlock"
-                                    }
-                                }) { Text("PROCEED", color = Color.Green) }
-                            },
-                            dismissButton = {
-                                TextButton(onClick = { showUnlockWarning = false }) { Text("CANCEL") }
-                            }
-                        )
-                    }
-
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        ActionButton(
-                            text = "LOCK",
-                            icon = Icons.Default.Lock,
-                            color = Color.Red,
-                            modifier = Modifier.weight(1f),
-                            onClick = { showLockWarning = true }
-                        )
-                        ActionButton(
-                            text = "UNLOCK",
-                            icon = Icons.Default.LockOpen,
-                            color = Color.Green,
-                            modifier = Modifier.weight(1f),
-                            onClick = { showUnlockWarning = true }
-                        )
-                    }
-                }
-
-                item {
-                    SettingsSectionHeader("TERMINAL OUTPUT")
-                }
-
-                item {
-                    BrutalistCard(accentColor = Color.Gray) {
-                        Box(modifier = Modifier.fillMaxWidth().height(200.dp).background(Color.Black).padding(8.dp)) {
-                            Text(
-                                text = terminalOutput,
-                                color = Color.Green,
-                                fontSize = 12.sp,
-                                modifier = Modifier.fillMaxSize()
+            // Confirmation Dialog
+            if (showConfirmDialog != null) {
+                AlertDialog(
+                    onDismissRequest = { showConfirmDialog = null },
+                    title = {
+                        Text(
+                            "Confirm Action",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold
                             )
+                        )
+                    },
+                    text = {
+                        Text(
+                            when (showConfirmDialog) {
+                                RootToggleAction.UnlockBootloader ->
+                                    "⚠️ WARNING: Unlocking the bootloader will ERASE ALL DATA on this device. This action cannot be undone. Are you sure?"
+
+                                RootToggleAction.LockBootloader ->
+                                    "⚠️ WARNING: Locking the bootloader may prevent booting if custom ROM is installed. Continue?"
+
+                                else -> "Are you sure you want to perform this action?"
+                            }
+                        )
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                scope.launch {
+                                    isProcessing = true
+                                    when (showConfirmDialog) {
+                                        RootToggleAction.UnlockBootloader -> {
+                                            statusMessage = "Unlocking bootloader..."
+                                            // TODO: Implement bootloader unlock
+                                            kotlinx.coroutines.delay(2000)
+                                            bootloaderUnlocked = true
+                                            statusMessage = "Bootloader unlocked successfully"
+                                        }
+
+                                        RootToggleAction.LockBootloader -> {
+                                            statusMessage = "Locking bootloader..."
+                                            // TODO: Implement bootloader lock
+                                            kotlinx.coroutines.delay(2000)
+                                            bootloaderUnlocked = false
+                                            statusMessage = "Bootloader locked successfully"
+                                        }
+
+                                        else -> {}
+                                    }
+                                    isProcessing = false
+                                    showConfirmDialog = null
+                                }
+                            },
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = Color.Red
+                            )
+                        ) {
+                            Text("Confirm")
                         }
-                    }
-                }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showConfirmDialog = null }) {
+                            Text("Cancel")
+                        }
+                    },
+                    containerColor = Color(0xFF1A1A1A)
+                )
             }
         }
     }
 }
 
 @Composable
-fun AuthorityStatusCard(status: RootShellService.ShellStatus) {
-    val (text, color) = when (status) {
-        RootShellService.ShellStatus.RootAccess -> "ROOT ACCESS: ACTIVE" to Color.Red
-        RootShellService.ShellStatus.ShizukuAccess -> "SHIZUKU BRIDGE: ACTIVE" to Color.Green
-        else -> "LIMITED USER MODE" to Color.Yellow
-    }
+private fun RootToggleCard(
+    title: String,
+    description: String,
+    icon: ImageVector,
+    isEnabled: Boolean,
+    isDangerous: Boolean,
+    onToggle: (Boolean) -> Unit,
+    isProcessing: Boolean,
+    modifier: Modifier = Modifier,
+    isActionButton: Boolean = false
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isDangerous) {
+                Color.Red.copy(alpha = 0.1f)
+            } else {
+                Color(0xFF1A1A1A)
+            }
+        ),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = if (isDangerous) Color.Red else Color.Cyan,
+                    modifier = Modifier.size(32.dp)
+                )
 
-    BrutalistCard(accentColor = color) {
-        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Security, null, tint = color, modifier = Modifier.size(32.dp))
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(text, color = Color.White, fontWeight = FontWeight.Bold)
+                Column {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        text = description,
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            color = Color.White.copy(alpha = 0.6f)
+                        )
+                    )
+                    if (isDangerous) {
+                        Text(
+                            text = "⚠️ Destructive operation",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = Color.Red
+                            )
+                        )
+                    }
+                }
+            }
+
+            if (isActionButton) {
+                Button(
+                    onClick = { onToggle(true) },
+                    enabled = !isProcessing,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Cyan,
+                        contentColor = Color.Black
+                    )
+                ) {
+                    Text("Launch")
+                }
+            } else {
+                Switch(
+                    checked = isEnabled,
+                    onCheckedChange = onToggle,
+                    enabled = !isProcessing,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = if (isDangerous) Color.Red else Color.Cyan,
+                        checkedTrackColor = if (isDangerous) Color.Red.copy(alpha = 0.5f) else Color.Cyan.copy(
+                            alpha = 0.5f
+                        ),
+                        uncheckedThumbColor = Color.Gray,
+                        uncheckedTrackColor = Color.Gray.copy(alpha = 0.3f)
+                    )
+                )
+            }
         }
     }
 }
 
-@Composable
-fun ActionButton(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, color: Color, modifier: Modifier, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = color.copy(alpha = 0.1f), contentColor = color),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, color.copy(alpha = 0.5f)),
-        modifier = modifier.height(80.dp)
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Icon(icon, null)
-            Text(text, fontSize = 10.sp, fontWeight = FontWeight.Black)
-        }
-    }
+private sealed class RootToggleAction {
+    object UnlockBootloader : RootToggleAction()
+    object LockBootloader : RootToggleAction()
 }

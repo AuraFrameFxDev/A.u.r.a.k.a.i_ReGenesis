@@ -1,15 +1,5 @@
-import org.gradle.api.artifacts.Configuration
-import org.gradle.kotlin.dsl.exclude
-
 plugins {
     `kotlin-dsl`        // applies java-gradle-plugin
-}
-
-// Define the anchor point for our external AI assets
-val importedPackageDir = layout.projectDirectory.dir("libs/ai_cores")
-tasks.register("syncAuraMemories") {
-    inputs.dir(importedPackageDir)
-    // Sync logic for the Spiritual Chain
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -30,22 +20,22 @@ configurations.all {
     exclude(group = "androidx.core")
 }
 
-// Configure Java toolchain to JVM 21 (matches gradle.properties and Kotlin target)
+// Configure Java toolchain to JVM 25 (matches gradle.properties and Kotlin target)
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
-    // Explicitly set source and target compatibility to 21
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    // Explicitly set source and target compatibility to 25
+    sourceCompatibility = JavaVersion.toVersion("25")
+    targetCompatibility = JavaVersion.toVersion("25")
 }
 
 // Configure Kotlin compilation to match Java toolchain
-// MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 21)
-// Explicitly configure Java compilation tasks to target JVM 21
+// MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
+// Explicitly configure Java compilation tasks to target JVM 25
 tasks.withType<JavaCompile>().configureEach {
-    sourceCompatibility = "21"
-    targetCompatibility = "21"
+    sourceCompatibility = "25"
+    targetCompatibility = "25"
 }
 
 // Tests enabled to validate build script configuration
@@ -69,14 +59,6 @@ gradlePlugin {
             id = "genesis.android.library.hilt"
             implementationClass = "GenesisLibraryHiltPlugin"
         }
-        register("genesisRoom") {
-            id = "genesis.android.room"
-            implementationClass = "GenesisRoomPlugin"
-        }
-        register("genesisYukiHook") {
-            id = "genesis.android.yukihook"
-            implementationClass = "GenesisYukiHookPlugin"
-        }
     }
 }
 
@@ -91,6 +73,7 @@ dependencies {
 
     // Hilt Gradle Plugin (Android AAR dependencies excluded globally via configurations.all)
     implementation(libs.hilt.gradle.plugin)
+    implementation(libs.hilt.android)
     implementation(libs.ksp.gradle.plugin)
     implementation(libs.gms.google.services)
     testImplementation(kotlin("test"))

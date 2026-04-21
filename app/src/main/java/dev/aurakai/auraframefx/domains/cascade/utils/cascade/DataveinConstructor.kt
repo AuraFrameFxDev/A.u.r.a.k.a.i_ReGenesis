@@ -293,7 +293,6 @@ object DataveinConstructor {
      *
      * Clear old packets from buffers (called during low-memory situations)
      */
-    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     suspend fun flush() = mutex.withLock {
         venousChannels.values.forEach { channel ->
             while (!channel.isEmpty) {
@@ -333,7 +332,7 @@ fun constructFromResponse(
     payload = DataPayload.Response(
         content = response.content,
         confidence = response.confidence.toDouble(),
-        metadata = response.metadata
+        metadata = response.metadata.mapValues { it.value.toString() }
     ),
     priority = priority
 )

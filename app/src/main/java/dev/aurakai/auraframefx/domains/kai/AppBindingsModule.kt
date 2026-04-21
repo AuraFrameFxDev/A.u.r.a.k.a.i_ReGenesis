@@ -10,11 +10,8 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveSe
 import javax.inject.Singleton
 
 /**
- * Application-level DI bindings for the Kai domain.
- *
- * Focuses on abstract @Binds methods that bind concrete implementations to interfaces.
- * All @Provides methods for configuration and singletons have been moved to
- * CoreGenesisProvidesModule to maintain clear separation of concerns.
+ * Application-level DI bindings to resolve missing Hilt bindings reported during annotation processing.
+ * Keep this module conservative: only bind concrete implementations that exist in the codebase.
  */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -26,22 +23,12 @@ abstract class AppBindingsModule {
         oracleDriveServiceImpl: OracleDriveServiceImpl
     ): OracleDriveService
 
-    @Binds
-    @Singleton
-    abstract fun bindErrorHandler(
-        impl: DefaultErrorHandler
-    ): ErrorHandler
-
     companion object {
-        // Legacy shim providers - kept here as they are specific to Kai domain
+        // Provide Legacy TaskScheduler if some modules still expect it; keep as lightweight shim
+        // Note: replace or remove when all modules migrated.
         @Provides
         @Singleton
         fun provideLegacyTaskScheduler(): Any = Any()
-
-        @Provides
-        @Singleton
-        fun provideShizukuManager(): dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager =
-            dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
     }
 }
 

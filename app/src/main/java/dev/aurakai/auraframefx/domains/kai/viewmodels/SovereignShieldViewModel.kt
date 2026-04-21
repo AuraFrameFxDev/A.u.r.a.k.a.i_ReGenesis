@@ -3,8 +3,8 @@ package dev.aurakai.auraframefx.domains.kai.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.core.security.SecurityContext
-import dev.aurakai.auraframefx.infrastructure.shizuku.ShizukuManager
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import dev.aurakai.auraframefx.system.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,12 +37,12 @@ class SovereignShieldViewModel @Inject constructor(
 
     private fun collectSecurityState() {
         viewModelScope.launch {
-            // securityContext.securityState.collect { secState ->
-            //     _state.value = _state.value.copy(
-            //         blockedRequestsCount = secState.detectedThreats.size,
-            //         privacyScore = recomputePrivacyScore(detectedThreats = secState.detectedThreats.size)
-            //     )
-            // }
+            securityContext.securityState.collect { secState ->
+                _state.value = _state.value.copy(
+                    blockedRequestsCount = secState.detectedThreats.size,
+                    privacyScore = recomputePrivacyScore(detectedThreats = secState.detectedThreats.size)
+                )
+            }
         }
     }
 

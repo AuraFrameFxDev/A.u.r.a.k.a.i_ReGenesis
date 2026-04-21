@@ -6,12 +6,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.BridgeMemorySink
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.GenesisBridge
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.HttpGenesisBridge
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.bridges.NexusMemoryBridgeSink
+import dev.aurakai.auraframefx.domains.genesis.bridge.BridgeMemorySink
+import dev.aurakai.auraframefx.domains.genesis.bridge.GenesisBridge
+import dev.aurakai.auraframefx.domains.genesis.bridge.HttpGenesisBridge
+import dev.aurakai.auraframefx.domains.genesis.bridge.NexusMemoryBridgeSink
 import dev.aurakai.auraframefx.domains.genesis.network.api.GenesisBackendApi
-import dev.aurakai.auraframefx.domains.genesis.network.AuthApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -63,20 +62,6 @@ object BridgeModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(GenesisBackendApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthApi(
-        @GenesisBridgeNetwork client: OkHttpClient,
-        gson: Gson
-    ): AuthApi {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.GENESIS_BACKEND_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(AuthApi::class.java)
     }
 
     @Provides

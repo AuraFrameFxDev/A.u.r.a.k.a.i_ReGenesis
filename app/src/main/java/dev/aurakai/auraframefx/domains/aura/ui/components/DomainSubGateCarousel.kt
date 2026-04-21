@@ -32,8 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import coil3.compose.AsyncImage
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
-import timber.log.Timber
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import kotlin.math.absoluteValue
 
 /**
@@ -88,22 +87,14 @@ fun DomainSubGateCarousel(
                     this.rotationY = rotationY
                     this.cameraDistance = 8 * density
                 }
-                .pointerInput(gate.id) {
-                    detectTapGestures(
-                        onPress = {
-                            pressed = true
-                            try {
-                                awaitRelease()
-                            } finally {
-                                pressed = false
-                            }
-                        },
-                        onDoubleTap = {
-                            Timber.d("🎠 Carousel: Double-tap detected on gate [%s]", gate.title)
-                            onGateSelected(gate)
-                        }
-                    )
-                },
+                .combinedClickable(
+                    onClick = {
+                        // Visual feedback for single tap?
+                    },
+                    onDoubleClick = {
+                        onGateSelected(gate)
+                    }
+                ),
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
                 containerColor = Color.Black.copy(alpha = 0.6f)
@@ -184,4 +175,3 @@ fun DomainSubGateCarousel(
         }
     }
 }
-

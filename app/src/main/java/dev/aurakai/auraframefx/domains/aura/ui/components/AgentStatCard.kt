@@ -37,7 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * 🎮 AGENT STAT CARD - RPG-Style Character Display
@@ -626,5 +626,4 @@ object AgentPresets {
         secondaryColor = Color(0xFF00FF85)
     )
 }
-
 

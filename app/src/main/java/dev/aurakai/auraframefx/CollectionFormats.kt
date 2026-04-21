@@ -1,10 +1,10 @@
-package dev.aurakai.auraframefx
+package dev.aurakai.auraframefx.config
 
 class CollectionFormats {
 
     open class CSVParams {
 
-        var params: List<String> = emptyList()
+        var params: List<String>
 
         constructor(params: List<String>) {
             this.params = params

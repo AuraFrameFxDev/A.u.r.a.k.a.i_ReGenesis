@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.aura.ui.screens.manual
+package dev.aurakai.auraframefx.ui.screens.manual
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.core.theme.*
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraNeonCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 
 /**
  * ðŸŽ¨ CHROMA SPHERE - MANUAL CONTROL
@@ -41,7 +41,7 @@ fun ChromaSphereManualScreen(
                         "CHROMA SPHERE",
                         fontFamily = LEDFontFamily,
                         letterSpacing = 2.sp,
-                        color = Color.AuraNeonCyan
+                        color = AuraNeonCyan
                     )
                 },
                 navigationIcon = {
@@ -201,15 +201,15 @@ fun ManualSlider(
     Column {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(label, color = Color.White, fontSize = 16.sp)
-            Text("${value.toInt()}%", color = Color.AuraNeonCyan, fontSize = 14.sp)
+            Text("${value.toInt()}%", color = AuraNeonCyan, fontSize = 14.sp)
         }
         Slider(
             value = value,
             onValueChange = onValueChange,
             valueRange = range,
             colors = SliderDefaults.colors(
-                thumbColor = Color.AuraNeonCyan,
-                activeTrackColor = Color.AuraNeonCyan,
+                thumbColor = AuraNeonCyan,
+                activeTrackColor = AuraNeonCyan,
                 inactiveTrackColor = Color.White.copy(alpha = 0.2f)
             )
         )
@@ -228,8 +228,8 @@ fun ManualSwitch(label: String, checked: Boolean, onCheckedChange: (Boolean) -> 
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.AuraNeonCyan,
-                checkedTrackColor = Color.AuraNeonCyan.copy(alpha = 0.5f)
+                checkedThumbColor = AuraNeonCyan,
+                checkedTrackColor = AuraNeonCyan.copy(alpha = 0.5f)
             )
         )
     }
@@ -240,7 +240,7 @@ fun StyleButton(style: String, isSelected: Boolean, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) Color.AuraNeonCyan else Color.White.copy(alpha = 0.1f),
+            containerColor = if (isSelected) AuraNeonCyan else Color.White.copy(alpha = 0.1f),
             contentColor = if (isSelected) Color.Black else Color.White
         ),
         modifier = Modifier.height(40.dp)
@@ -248,6 +248,5 @@ fun StyleButton(style: String, isSelected: Boolean, onClick: () -> Unit) {
         Text(style, fontSize = 10.sp)
     }
 }
-
 
 
