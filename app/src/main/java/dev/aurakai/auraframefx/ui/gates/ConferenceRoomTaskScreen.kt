@@ -1,14 +1,11 @@
-package dev.aurakai.auraframefx.ui.gates
+﻿package dev.aurakai.auraframefx.ui.gates
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // ConferenceRoomTaskScreen.kt
-// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
 // Holographic command-center table background (Image 1) + neon chess board
 // drag-drop task assignment (Image 6).
 //
 // Replaces/wraps the plain TaskAssignmentScreen.
-// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -43,7 +40,6 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import kotlin.math.*
 
-// ── Task data ─────────────────────────────────────────────────────────────────
 
 data class AgentTask(
     val id: String,
@@ -63,7 +59,6 @@ enum class TaskPriority(val label: String, val color: Color) {
 
 enum class TaskStatus { UNASSIGNED, ASSIGNED, IN_PROGRESS, COMPLETE }
 
-// ── Main Screen ───────────────────────────────────────────────────────────────
 
 @Composable
 fun ConferenceRoomTaskScreen(
@@ -97,7 +92,6 @@ fun ConferenceRoomTaskScreen(
 
         Column(modifier = Modifier.fillMaxSize()) {
 
-            // ─── Header ────────────────────────────────────────────────────
             Row(
                 modifier = Modifier.fillMaxWidth().padding(12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -119,7 +113,6 @@ fun ConferenceRoomTaskScreen(
                 }
             }
 
-            // ─── Agent assignment strip ────────────────────────────────────
             LazyRow(
                 modifier = Modifier.fillMaxWidth().height(80.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp),
@@ -135,7 +128,6 @@ fun ConferenceRoomTaskScreen(
                 }
             }
 
-            // ─── Main view ─────────────────────────────────────────────────
             Box(modifier = Modifier.fillMaxSize().weight(1f)) {
                 when (viewMode) {
                     0 -> TaskBoardView(
@@ -161,7 +153,6 @@ fun ConferenceRoomTaskScreen(
     }
 }
 
-// ── Task Board View ───────────────────────────────────────────────────────────
 
 @Composable
 private fun TaskBoardView(
@@ -237,7 +228,6 @@ private fun TaskCard(task: AgentTask, isSelected: Boolean, onClick: () -> Unit) 
     }
 }
 
-// ── Neon Chess Task Board (Image 6) ──────────────────────────────────────────
 
 @Composable
 private fun NeonChessTaskBoard(
@@ -331,7 +321,6 @@ private fun NeonChessTaskBoard(
     }
 }
 
-// ── Supporting composables ────────────────────────────────────────────────────
 
 @Composable
 private fun AgentAssignChip(agent: AgentStats, isSelected: Boolean, taskCount: Int, onClick: () -> Unit) {
@@ -350,7 +339,6 @@ private fun AgentAssignChip(agent: AgentStats, isSelected: Boolean, taskCount: I
             Text(agent.name.first().toString(), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Cyan)
         }
         Text(agent.name, fontSize = 7.sp, color = Color.Cyan.copy(0.8f), textAlign = TextAlign.Center, maxLines = 1)
-        if (taskCount > 0) Text("×$taskCount", fontSize = 7.sp, color = Color.White.copy(0.5f))
     }
 }
 

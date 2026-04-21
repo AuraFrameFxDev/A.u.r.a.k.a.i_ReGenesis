@@ -15,6 +15,10 @@ import dev.aurakai.auraframefx.domains.kai.security.SecurePreferences
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class PandoraPreferences
+
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class PandoraBoxModule {

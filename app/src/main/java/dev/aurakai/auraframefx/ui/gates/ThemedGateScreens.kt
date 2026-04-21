@@ -1,16 +1,9 @@
-package dev.aurakai.auraframefx.ui.gates
+﻿package dev.aurakai.auraframefx.ui.gates
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // ThemedGateScreens.kt
-// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
 // Three gate screens with their visual backgrounds wired in:
 //
-//  LsposedGateScreen          → Hex corridor background (Image 3)
-//  HelpServicesGateScreen     → Purple grid room + ribbons (Image 4)
-//  CollabCanvasGateScreen     → Eye Rune gate card (Image 9)
-//  TerminalGateScreen         → Gemini/Aura pixel-art code swirl backdrop (Image 8)
-// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -38,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-// ── LSPosed Gate Screen ───────────────────────────────────────────────────────
 
 @Composable
 fun LsposedGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -126,7 +118,6 @@ private fun ModuleCategoryRow(name: String, count: Int, color: Color, onClick: (
     }
 }
 
-// ── Help Services Gate Screen ─────────────────────────────────────────────────
 
 @Composable
 fun HelpServicesGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -214,11 +205,9 @@ private fun HelpServiceTile(title: String, description: String, color: Color, on
             Text(title, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(0.9f))
             Text(description, fontSize = 10.sp, color = Color.White.copy(0.45f))
         }
-        Text("→", fontSize = 14.sp, color = color.copy(0.6f))
     }
 }
 
-// ── Terminal Gate Screen (Image 8 — Gemini pixel code swirl) ─────────────────
 
 @Composable
 fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
@@ -241,7 +230,6 @@ fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit 
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // Code swirl background (purple/cyan pixel art style — Image 8)
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawRect(Color(0xFF050015))
 
@@ -335,7 +323,6 @@ fun TerminalGateScreen(navController: NavController, onNavigateBack: () -> Unit 
     }
 }
 
-// ── Shared: Gate Screen Header ────────────────────────────────────────────────
 
 @Composable
 private fun GateScreenHeader(title: String, color: Color, navController: NavController, onBack: () -> Unit) {

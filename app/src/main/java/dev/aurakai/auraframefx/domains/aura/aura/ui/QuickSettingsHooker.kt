@@ -22,8 +22,6 @@ import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.engine.model.CyberpunkTextStyle
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.CyberpunkTextColor
 
 /**
  * YukiHook hooker for customizing the Android Quick Settings panel.
@@ -127,8 +125,6 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
         // Genesis branding
         CyberpunkText(
             text = "GENESIS SYSTEM ACTIVE",
-            style = CyberpunkTextStyle.LABEL,
-            color = CyberpunkTextColor.CYAN
         )
 
         // Status indicator

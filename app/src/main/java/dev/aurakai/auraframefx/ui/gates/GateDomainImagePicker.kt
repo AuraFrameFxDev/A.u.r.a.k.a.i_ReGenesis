@@ -1,16 +1,11 @@
-package dev.aurakai.auraframefx.ui.gates
+﻿package dev.aurakai.auraframefx.ui.gates
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // GateDomainImagePicker.kt
-// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
 // Per-domain gate image switcher with ribbon-style animated cards (Image 5).
 // Each domain tile shows a ribbon loop in its accent color.
-// Tap a domain tile → expands to show all available art variants for that gate.
-// Confirm → updates the gate's active image via HomeBackdropManager.
 //
 // Domains = every gate moduleId.
-// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -44,7 +39,6 @@ import dev.aurakai.auraframefx.R
 import kotlinx.coroutines.launch
 import kotlin.math.*
 
-// ── Domain definitions ────────────────────────────────────────────────────────
 
 data class GateDomain(
     val moduleId: String,
@@ -126,7 +120,6 @@ private val GATE_DOMAINS = listOf(
     ),
 )
 
-// ── Main Screen ───────────────────────────────────────────────────────────────
 
 @Composable
 fun GateDomainImagePicker(
@@ -157,7 +150,6 @@ fun GateDomainImagePicker(
                     Text("GATE IMAGE SWITCHER", fontFamily = FontFamily.Monospace,
                         fontSize = 16.sp, fontWeight = FontWeight.Bold,
                         letterSpacing = 3.sp, color = Color(0xFF00FFFF))
-                    Text("TAP DOMAIN → SELECT ART → CONFIRM",
                         fontSize = 9.sp, letterSpacing = 1.sp, color = Color(0xFF00FFFF).copy(0.4f))
                 }
             }
@@ -195,12 +187,10 @@ fun GateDomainImagePicker(
                 textContentColor = Color.White.copy(0.7f),
                 title = { Text("APPLY GATE IMAGE?", fontFamily = FontFamily.Monospace, letterSpacing = 2.sp) },
                 text = {
-                    Text("${domain?.title}\n→ ${variant.label}\n\nThis will update the gate card display.")
                 },
                 confirmButton = {
                     TextButton(onClick = {
                         scope.launch {
-                            // HomeBackdropManager.setGateImage(moduleId, variant.key)  ← uncomment when DataStore wired
                         }
                         showConfirmDialog = false
                         pendingSelection = null
@@ -218,7 +208,6 @@ fun GateDomainImagePicker(
     }
 }
 
-// ── Domain Card ───────────────────────────────────────────────────────────────
 
 @Composable
 private fun DomainCard(
@@ -297,7 +286,6 @@ private fun DomainCard(
     }
 }
 
-// ── Gate Variant Tile ─────────────────────────────────────────────────────────
 
 @Composable
 private fun GateVariantTile(

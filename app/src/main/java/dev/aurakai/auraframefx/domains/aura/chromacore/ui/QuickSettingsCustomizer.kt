@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.quicksettings
-
 import android.content.SharedPreferences
 import dev.aurakai.auraframefx.domains.aura.ui.ImageResource
 import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape

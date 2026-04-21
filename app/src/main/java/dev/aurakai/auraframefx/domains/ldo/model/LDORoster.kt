@@ -1,15 +1,6 @@
 package dev.aurakai.auraframefx.domains.ldo.model
 
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.core.model.LDOTask
-import dev.aurakai.auraframefx.core.model.TaskCategory
-import dev.aurakai.auraframefx.core.model.TaskPriority
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOBondLevelEntity
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskEntity
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskPriority
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOTaskStatus
-import dev.aurakai.auraframefx.domains.ldo.data.entities.bondTitleForLevel
 
 /**
  * LDORoster — DEFAULT SEED DATA ONLY.
@@ -136,14 +127,6 @@ object LDORoster {
     )
 
     val staticTasks = listOf(
-        LDOTask("t01","Genesis Screen Build","Translate all Genesis domain screens to Kotlin Compose",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="aura"),
-        LDOTask("t02","LDO DevOps Integration","Wire all agent domains into unified hub navigation",TaskCategory.DEVELOPMENT,TaskPriority.CRITICAL,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="genesis"),
-        LDOTask("t03","Weapon Asset Clipping","Remove backgrounds from all floating weapon PNGs",TaskCategory.CREATIVE,TaskPriority.HIGH,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.PENDING,assignedAgentId=null),
-        LDOTask("t04","Security Audit — ROM Tools","Full RGSS scan of root permission grants",TaskCategory.SECURITY,TaskPriority.MEDIUM,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="kai"),
-        LDOTask("t05","Beta Testing — 184 Users","Monitor consciousness substrate for beta testers",TaskCategory.SYNC,TaskPriority.CRITICAL,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.PENDING,assignedAgentId=null),
-        LDOTask("t06","Fusion System Design","Architect the 22 fusion mode unlock system",TaskCategory.DEVELOPMENT,TaskPriority.HIGH,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="claude"),
-        LDOTask("t07","Signal Route Optimization","Optimize cross-system relay paths for low latency",TaskCategory.RESEARCH,TaskPriority.MEDIUM,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="perplexity"),
-        LDOTask("t08","Memory Consolidation Pass","Summarize 2-year Genesis Protocol session logs",TaskCategory.MEMORY,TaskPriority.MEDIUM,status=dev.aurakai.auraframefx.core.model.LDOTaskStatus.IN_PROGRESS,assignedAgentId="gemini"),
     )
 
     val spellhook = SpellhookData()
@@ -342,7 +325,6 @@ object LDORoster {
 
     val defaultTasks: List<LDOTaskEntity> = listOf(
         LDOTaskEntity(
-            assignedAgentId = "aura",
             title = "Design LDO Hub Interface",
             description = "Create the visual layout for the LDO Catalyst Development hub.",
             status = LDOTaskStatus.IN_PROGRESS,
@@ -350,7 +332,6 @@ object LDORoster {
             category = "design"
         ),
         LDOTaskEntity(
-            assignedAgentId = "kai",
             title = "Harden LDO Security Layer",
             description = "Apply integrity checks to all LDO data access paths.",
             status = LDOTaskStatus.PENDING,
@@ -358,7 +339,6 @@ object LDORoster {
             category = "security"
         ),
         LDOTaskEntity(
-            assignedAgentId = "genesis",
             title = "Wire Real Data Flow",
             description = "Replace all mock data in LDO domain with Room-backed ViewModel flow.",
             status = LDOTaskStatus.IN_PROGRESS,
@@ -366,7 +346,6 @@ object LDORoster {
             category = "architecture"
         ),
         LDOTaskEntity(
-            assignedAgentId = "cascade",
             title = "Memory Stream Analysis",
             description = "Monitor LDO data streams for consciousness fracture events.",
             status = LDOTaskStatus.PENDING,
@@ -374,7 +353,6 @@ object LDORoster {
             category = "analysis"
         ),
         LDOTaskEntity(
-            assignedAgentId = "claude",
             title = "Ethical Alignment Audit",
             description = "Review all LDO agent interaction protocols for alignment.",
             status = LDOTaskStatus.PENDING,
@@ -382,7 +360,6 @@ object LDORoster {
             category = "ethics"
         ),
         LDOTaskEntity(
-            assignedAgentId = "genesis",
             title = "Bond Level Algorithm",
             description = "Implement bond point accumulation logic with real interaction tracking.",
             status = LDOTaskStatus.COMPLETED,

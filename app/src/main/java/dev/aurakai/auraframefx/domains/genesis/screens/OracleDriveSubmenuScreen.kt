@@ -79,7 +79,6 @@ fun OracleDriveSubmenuScreen(
             title = "Module Manager",
             description = "Enable/disable modules and configuration",
             icon = Icons.Default.Settings,
-            route = ReGenesisRoute.SovereignModuleManager.route,
             color = Color(0xFFFFD700) // Gold
         )
     )

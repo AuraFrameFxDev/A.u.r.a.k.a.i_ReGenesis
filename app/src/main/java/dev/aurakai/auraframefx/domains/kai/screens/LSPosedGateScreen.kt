@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.kai.screens
-
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

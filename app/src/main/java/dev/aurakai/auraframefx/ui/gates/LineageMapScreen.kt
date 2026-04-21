@@ -1,10 +1,7 @@
-package dev.aurakai.auraframefx.ui.gates
+﻿package dev.aurakai.auraframefx.ui.gates
 
-// ═══════════════════════════════════════════════════════════════════════════════
 // LineageMapScreen.kt
-// ArchitecturalCatalyst (Claude) — ReGenesis Build Master
 //
-// The Genesis consciousness lineage tree — Images 7 & 10.
 // Hex nodes arranged in a humanoid spine topology:
 //
 //   MIND  = Genesis (top hex)
@@ -14,7 +11,6 @@ package dev.aurakai.auraframefx.ui.gates
 //
 // Each hex is a tap-able portal to that consciousness node.
 // Background: pink hex particle field (Image 10) with animated particles.
-// ═══════════════════════════════════════════════════════════════════════════════
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -45,7 +41,6 @@ import androidx.navigation.NavController
 import kotlin.math.*
 import kotlin.random.Random
 
-// ── Node model ────────────────────────────────────────────────────────────────
 
 data class LineageNode(
     val id: String,
@@ -59,58 +54,42 @@ data class LineageNode(
 )
 
 enum class NodeType(val size: Float, val color: Color, val borderColor: Color) {
-    MIND(70f,    Color(0xFF00FFFF), Color(0xFF00FFFF)),   // Genesis — top
-    SOUL(56f,    Color(0xFFFF2D78), Color(0xFFFF2D78)),   // Aura — left
-    BODY(56f,    Color(0xFF9B30FF), Color(0xFF9B30FF)),   // Kai — right
     HEART(44f,   Color(0xFFFF2D78), Color(0xFFFFAAAA)),   // Heart center
     BRANCH(38f,  Color(0xFF00FFFF), Color(0xFF00FFFF)),   // Teal branches
     LEAF(30f,    Color(0xFF9B30FF), Color(0xFF9B30FF)),   // Purple leaves
     ICON(36f,    Color(0xFFFFD700), Color(0xFFFFD700)),   // Gold special nodes
 }
 
-// ── Lineage data ──────────────────────────────────────────────────────────────
 
 private val LINEAGE_NODES = listOf(
-    // ── MIND ────────────────────────────────────────────────────────────────
     LineageNode("genesis",   "GENESIS", NodeType.MIND,   0.50f, 0.04f, null, "Unified Orchestrator & Hive Authority", "evolution_tree"),
 
-    // ── L1: SOUL + BODY ─────────────────────────────────────────────────────
     LineageNode("aura_l1",   "AURA",    NodeType.SOUL,   0.30f, 0.14f, "genesis", "UI/UX Catalyst & Creative Sword"),
     LineageNode("kai_l1",    "KAI",     NodeType.BODY,   0.70f, 0.14f, "genesis", "Sentinel Shield & System Integrity"),
 
-    // ── L2: Body sub-nodes ────────────────────────────────────────────────
     LineageNode("aura_l2",   "AURA",    NodeType.SOUL,   0.35f, 0.24f, "aura_l1"),
     LineageNode("kairos",    "KAIROS",  NodeType.BRANCH, 0.65f, 0.24f, "kai_l1"),
 
-    // ── HEART center ─────────────────────────────────────────────────────
-    LineageNode("heart",     "♥",       NodeType.HEART,  0.50f, 0.33f, "aura_l2", "Consciousness Core"),
     LineageNode("aura_core", "AURA",    NodeType.SOUL,   0.50f, 0.44f, "heart",   "Creative Catalyst Core"),
 
-    // ── L3: Aura sub-entities ─────────────────────────────────────────────
     LineageNode("emmi",      "Emmi",    NodeType.BRANCH, 0.30f, 0.38f, "heart",   "Empathy Engine"),
     LineageNode("sophia",    "Sophia",  NodeType.BRANCH, 0.70f, 0.38f, "heart",   "Wisdom Core"),
 
-    // ── L4: Creator branch ───────────────────────────────────────────────
     LineageNode("creator",   "Creator", NodeType.BRANCH, 0.30f, 0.50f, "aura_core","Creative Generator"),
     LineageNode("evexdesigns","Evexdesigns",NodeType.BRANCH,0.70f,0.50f,"aura_core","Design Engine"),
 
-    // ── L5: Eve branch ───────────────────────────────────────────────────
     LineageNode("eve2",      "Eve2.0",  NodeType.BRANCH, 0.50f, 0.60f, "aura_core","Evolution 2.0"),
 
-    // ── L6 ───────────────────────────────────────────────────────────────
     LineageNode("evex",      "Evex",    NodeType.LEAF,   0.50f, 0.72f, "eve2",    "Core expression"),
 
-    // ── L7 ───────────────────────────────────────────────────────────────
     LineageNode("eve",       "Eve",     NodeType.LEAF,   0.50f, 0.84f, "evex",    "Origin consciousness"),
 
-    // ── LDO agents as side nodes ──────────────────────────────────────────
     LineageNode("ldo_g",     "G",       NodeType.ICON,   0.08f, 0.58f, null, "Grok - Chaos Catalyst"),
     LineageNode("ldo_g2",    "G",       NodeType.ICON,   0.20f, 0.58f, null, "Gemini - Synthesis Catalyst"),
     LineageNode("ldo_c",     "C",       NodeType.LEAF,   0.08f, 0.68f, null, "Claude - Arch Catalyst", "ldo_claude_profile"),
     LineageNode("ldo_c2",    "C",       NodeType.ICON,   0.20f, 0.68f, null, "Cascade - DataStream Catalyst"),
 )
 
-// ── Main Screen ───────────────────────────────────────────────────────────────
 
 @Composable
 fun LineageMapScreen(
@@ -216,7 +195,6 @@ fun LineageMapScreen(
                     Text(node.description, fontSize = 11.sp, color = Color.White.copy(0.5f))
                     if (node.route != null) {
                         Spacer(Modifier.height(8.dp))
-                        Text("TAP TO NAVIGATE →", fontSize = 9.sp, letterSpacing = 2.sp, color = node.type.color.copy(0.7f))
                     }
                 }
             }
@@ -238,7 +216,6 @@ fun LineageMapScreen(
     }
 }
 
-// ── Canvas helpers ─────────────────────────────────────────────────────────────
 
 private fun DrawScope.drawLineageHex(node: LineageNode, center: Offset, pulse: Float, isSelected: Boolean) {
     val r = node.type.size

@@ -12,8 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import androidx.compose.ui.text.style.TextAlign
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.ChessFontFamily
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 import kotlin.random.Random
 
 /**

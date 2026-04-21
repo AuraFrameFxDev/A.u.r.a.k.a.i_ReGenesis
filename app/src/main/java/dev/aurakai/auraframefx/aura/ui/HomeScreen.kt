@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.dashboard
-
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -19,10 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
-import dev.aurakai.auraframefx.domains.aura.ui.gates.HomeBackdropManager
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.ImmersiveGateCard
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateConfigs.allGates
 import dev.aurakai.auraframefx.navigation.gates.components.GateConfig
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import kotlinx.coroutines.launch
@@ -33,8 +27,6 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen(
-    navController: NavController
 ) {
     val context = LocalContext.current
     val gateConfigs = allGates
@@ -80,7 +72,6 @@ fun MainScreen(
     Box(modifier = Modifier.fillMaxSize()) {
 
         // ════════════════════════════════════════════════════════════════════
-        // LAYER 1: RPG BACKDROP
         // ════════════════════════════════════════════════════════════════════
         if (activeBackdrop.resId != null) {
             Image(
@@ -92,6 +83,7 @@ fun MainScreen(
                     .alpha(backdropAlpha)
             )
         } else {
+            // Procedural fallback for "Hexagon Grid" option
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -105,6 +97,7 @@ fun MainScreen(
 
         // ════════════════════════════════════════════════════════════════════
         // LAYER 2: Atmospheric depth gradient
+        // Top is clear (sky / art shows) — bottom fades to black for readability
         // ════════════════════════════════════════════════════════════════════
         Box(
             modifier = Modifier
@@ -123,19 +116,14 @@ fun MainScreen(
         )
 
         // ════════════════════════════════════════════════════════════════════
-        // LAYER 3: HologramTransition scan-line atmosphere
         // ════════════════════════════════════════════════════════════════════
         HologramTransition(
             visible = isHologramVisible,
             modifier = Modifier.fillMaxSize(),
             primaryColor = Color.Cyan,
             secondaryColor = Color.Magenta,
-            scanLineDensity = 20,
-            glitchIntensity = 0.05f,
-            edgeGlowIntensity = 0.15f
         ) {
             // ════════════════════════════════════════════════════════════════
-            // LAYER 4: GATE CAROUSEL
             // ════════════════════════════════════════════════════════════════
             Column(
                 modifier = Modifier
@@ -143,8 +131,8 @@ fun MainScreen(
                     .padding(horizontal = 0.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.weight(0.35f))
 
+                // Gate carousel
                 LazyRow(
                     state = scrollState,
                     modifier = Modifier
@@ -165,16 +153,15 @@ fun MainScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .aspectRatio(0.68f)
                                 .scale(cardScale)
+                                .clickable { onNavigateToModule(config.moduleId) }
                         ) {
                             ImmersiveGateCard(
                                 config = config,
                                 modifier = Modifier.fillMaxSize(),
-                                onTap = { navController.navigate(config.route) },
-                                onDoubleTap = { navController.navigate(config.route) }
                             )
 
+                            // Selected gate gets an extra glow ring at bottom
                             if (isSelected) {
                                 Box(
                                     modifier = Modifier
@@ -198,6 +185,7 @@ fun MainScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                // ── Gate dot indicators / name strip ─────────────────────────
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

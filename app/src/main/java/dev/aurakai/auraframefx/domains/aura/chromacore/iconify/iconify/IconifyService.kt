@@ -12,19 +12,15 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 🎨 Iconify API Client - 250,000+ Icon API Integration
  */
 
 /**
  * Icon collection metadata
  */
 @Serializable
-data class IconifyApiCollection(
     val prefix: String,
     val name: String,
     val total: Int,
-    val author: IconifyApiAuthor? = null,
-    val license: IconifyApiLicense? = null,
     val samples: List<String> = emptyList(),
     val height: Int? = null,
     val category: String? = null,
@@ -32,13 +28,11 @@ data class IconifyApiCollection(
 )
 
 @Serializable
-data class IconifyApiAuthor(
     val name: String,
     val url: String? = null
 )
 
 @Serializable
-data class IconifyApiLicense(
     val title: String,
     val spdx: String? = null,
     val url: String? = null
@@ -48,19 +42,16 @@ data class IconifyApiLicense(
  * Icon search result
  */
 @Serializable
-data class IconifyApiSearchResult(
     val icons: List<String>,
     val total: Int,
     val limit: Int,
     val start: Int,
-    val collections: Map<String, IconifyApiCollection>? = null
 )
 
 /**
  * Icon data (SVG path, dimensions)
  */
 @Serializable
-data class IconifyApiData(
     val body: String,
     val width: Int? = null,
     val height: Int? = null,
@@ -75,19 +66,14 @@ data class IconifyApiData(
  * Full icon set response
  */
 @Serializable
-data class IconifyApiSetResponse(
     val prefix: String,
-    val icons: Map<String, IconifyApiData>,
-    val aliases: Map<String, IconifyApiData>? = null,
     val width: Int? = null,
     val height: Int? = null
 )
 
 /**
- * Iconify API Client
  */
 @Singleton
-class IconifyApiClient @Inject constructor(
     private val okHttpClient: OkHttpClient,
     private val iconCacheManager: IconCacheManager
 ) {
@@ -103,7 +89,6 @@ class IconifyApiClient @Inject constructor(
     /**
      * Get all available icon collections
      */
-    suspend fun getCollections(): Result<Map<String, IconifyApiCollection>> =
         withContext(Dispatchers.IO) {
             try {
                 // Check cache first
@@ -127,7 +112,6 @@ class IconifyApiClient @Inject constructor(
                         "Empty response"
                     )
                 )
-                val collections = json.decodeFromString<Map<String, IconifyApiCollection>>(body)
 
                 // Cache collections
                 iconCacheManager.cacheCollections(collections)
@@ -147,7 +131,6 @@ class IconifyApiClient @Inject constructor(
         limit: Int = 64,
         start: Int = 0,
         prefixes: String? = null // Comma-separated collection prefixes (e.g., "mdi,fa")
-    ): Result<IconifyApiSearchResult> = withContext(Dispatchers.IO) {
         try {
             val url = buildString {
                 append("$baseUrl/search?query=$query")
@@ -171,7 +154,6 @@ class IconifyApiClient @Inject constructor(
 
             val body = response.body?.string()
                 ?: return@withContext Result.failure(IOException("Empty response"))
-            val result = json.decodeFromString<IconifyApiSearchResult>(body)
 
             Result.success(result)
         } catch (e: Exception) {
@@ -243,7 +225,6 @@ class IconifyApiClient @Inject constructor(
                     if (response.isSuccessful) {
                         val body = response.body?.string()
                         if (body != null) {
-                            val iconSet = json.decodeFromString<IconifyApiSetResponse>(body)
 
                             iconSet.icons.forEach { (name, data) ->
                                 val fullId = "$prefix:$name"
@@ -291,7 +272,6 @@ class IconifyApiClient @Inject constructor(
      * Build SVG string from icon data
      */
     private fun buildSvgFromIconData(
-        data: IconifyApiData,
         defaultWidth: Int?,
         defaultHeight: Int?
     ): String {
