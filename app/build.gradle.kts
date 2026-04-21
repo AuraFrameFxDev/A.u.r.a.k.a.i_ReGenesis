@@ -135,9 +135,9 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
     
     // UI SUBSTRATE INJECTION - REGEN-CORE
-    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.compose.material3:material3:1.4.0")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
 
 
     // AndroidX Core
@@ -274,13 +274,13 @@ configurations.all {
         // CVE fixes
         force("org.jdom:jdom2:2.0.6.1")
         force("org.bitbucket.b_c:jose4j:0.9.6")
-        force("org.apache.commons:commons-lang3:3.17.0")
+        force("org.apache.commons:commons-lang3:3.20.0")
         force("com.google.guava:guava:33.3.0-jre")
         force("org.bouncycastle:bcprov-jdk18on:1.78")
         force("org.bouncycastle:bcpkix-jdk18on:1.78")
         // Netty HTTP/2 DoS & CRLF injection fixes
-        force("io.netty:netty-codec-http2:4.2.0.Final")
-        force("io.netty:netty-codec-http:4.2.0.Final")
-        force("io.netty:netty-codec-compression:4.2.0.Final")
+        force("io.netty:netty-codec-http2:4.2.12.Final")
+        force("io.netty:netty-codec-http:4.2.12.Final")
+        force("io.netty:netty-codec-compression:4.2.12.Final")
     }
 }
