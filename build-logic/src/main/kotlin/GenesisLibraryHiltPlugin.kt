@@ -1,8 +1,11 @@
+
 import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.getByType
 
 /**
  * ===================================================================
@@ -18,15 +21,13 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("com.google.dagger.hilt.android")
 
-            val versionCatalog = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java).named("libs")
+            val versionCatalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
 
             val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
             val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
 
             val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
             val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val yukihookVersion = versionCatalog.findVersion("yukihook").get().requiredVersion
-            val xposedVersion = versionCatalog.findVersion("xposed").get().requiredVersion
 
             extensions.configure<LibraryExtension> {
                 compileSdk = compileSdkVersion
@@ -88,22 +89,15 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             GenesisCommonConfig.configure(project)
 
             // 5. Dependencies
-            val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-
-            dependencies.add("api", dependencies.platform("androidx.compose:compose-bom:$composeBomVersion"))
-            dependencies.add("api", "androidx.compose.runtime:runtime")
-            dependencies.add("api", "androidx.compose.ui:ui")
-            dependencies.add("api", "androidx.compose.material3:material3")
-
-                // Compose BOM — version from libs.versions.toml (single source of truth)
+            dependencies.apply {
                 add("api", platform("androidx.compose:compose-bom:$composeBomVersion"))
                 add("api", "androidx.compose.runtime:runtime")
                 add("api", "androidx.compose.ui:ui")
                 add("api", "androidx.compose.material3:material3")
+
+                // Hilt Dependency Injection
+                add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+                add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
                 // YukiHook & Xposed
                 val yukiDep = add("implementation", "com.highcapable.yukihookapi:api:1.3.1")

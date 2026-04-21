@@ -1,5 +1,6 @@
 
 import org.gradle.api.Project
+import org.gradle.api.JavaVersion
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.jvm.toolchain.JavaToolchainService
@@ -21,6 +22,8 @@ object GenesisJvmConfig {
      * - Enables modern Java features with backward compatibility via desugaring
      */
     const val JVM_VERSION = 25
+    const val JVM_VERSION_INT = 25
+    val KOTLIN_JVM_TARGET = JvmTarget.JVM_25
 
     /**
      * Configure the Kotlin JVM toolchain and Kotlin compilation options for the given Gradle project.

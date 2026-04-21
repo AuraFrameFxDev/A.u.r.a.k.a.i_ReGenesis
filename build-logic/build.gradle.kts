@@ -50,6 +50,11 @@ tasks.matching { it.name.contains("Test", ignoreCase = true) }.configureEach {
     enabled = false
 }
 
+dependencies {
+    implementation(libs.gradle.plugin)
+    implementation(libs.kotlin.gradle.plugin)
+}
+
 gradlePlugin {
     plugins {
         register("genesisApplication") {

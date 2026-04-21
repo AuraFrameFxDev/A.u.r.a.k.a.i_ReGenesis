@@ -2,7 +2,6 @@ import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -40,7 +39,7 @@ extensions.configure<ApplicationExtension> {
     // Native CMake Configuration
     externalNativeBuild {
         cmake {
-            path = "src/main/cpp/CMakeLists.txt"   // ← Fixed: String, not file()
+            path = file("src/main/cpp/CMakeLists.txt")
             version = "3.22.1"
         }
     }
@@ -99,8 +98,9 @@ extensions.configure<ApplicationExtension> {
             buildConfigField("String", "SHELL_MODE", "\"CLAUDE_LOCAL_SOVEREIGN\"")
         }
     }
+}
 
-    dependencies {
+dependencies {
         // Core project modules
         implementation(project(":core-module"))
         implementation(project(":trinity:aura"))
@@ -212,4 +212,3 @@ extensions.configure<ApplicationExtension> {
         androidTestImplementation(libs.androidx.compose.ui.test.junit4)
         debugImplementation(libs.leakcanary.android)
     }
-}

@@ -7,14 +7,14 @@ billingKtx = "8.3.0"
 coilSvg = "3.4.0"
 core = "1.7.0"
 core-ktx = "1.15.0"
-appcompat = "1.7.0"
-datastore = "1.1.2"
+appcompat = "1.7.1"
+datastore = "1.2.1"
 gson = "2.13.2"
 gradle = "9.4.0-milestone-2"
 gradleCore = "9.4.0-milestone-2"
 foojayResolver = "1.0.0"
 googleServices = "4.4.4"
-firebaseCrashlyticsPlugin = "3.0.6"
+firebaseCrashlyticsPlugin = "3.0.7"
 hilt-android = "2.59.2"
 hilt = "2.59.2"
 hiltAndroidTestingVersion = "2.59.2"
@@ -72,6 +72,7 @@ shizuku = "13.1.5"
 rikkax = "1.4.1"
 rikkax-material = "2.7.2"
 timber = "5.0.1"
+org-json = "20251224"
 # YukiHook + KavaRef
 protobuf-java = "4.34.1"
 # Testing
@@ -252,8 +253,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 okhttp-sse = { group = "com.squareup.okhttp3", name = "okhttp-sse", version.ref = "okhttp" }
-
-
+org-json = { group = "org.json", name = "json", version.ref = "org-json" }
 
 # ============================================================================
 # Kotlinx Libraries
@@ -353,6 +353,13 @@ networking-retrofit = [
     "moshi",
     "moshi-kotlin"
 ]
+networking-ktor = [
+    "ktor-client-core",
+    "ktor-client-okhttp",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-logging"
+]
 kotlinx = [
     "kotlinx-coroutines-core",
     "kotlinx-coroutines-android",
@@ -390,7 +397,6 @@ langchain4j = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

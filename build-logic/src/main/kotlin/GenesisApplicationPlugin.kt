@@ -14,16 +14,6 @@ import org.gradle.kotlin.dsl.getByType
  * ===================================================================
  */
 class GenesisApplicationPlugin : Plugin<Project> {
-    /**
-     * Configure a Gradle Project as an Android application module using Genesis conventions.
-     *
-     * Applies required plugins; configures the Android ApplicationExtension (compile and target SDKs,
-     * NDK, defaultConfig, build types, Java compatibility, Compose and other build features, packaging,
-     * lint, and optional CMake external native build); adjusts Kotlin compiler options; and adds the
-     * standard set of dependencies used by Genesis application modules.
-     *
-     * @param project The Gradle Project to configure as an Android application module.
-     */
     override fun apply(project: Project) {
         with(project) {
             pluginManager.apply("com.android.application")
@@ -67,7 +57,6 @@ class GenesisApplicationPlugin : Plugin<Project> {
                     }
                 }
 
-                // Java 25 bytecode (Firebase + AGP 9.0 compatible)
                 compileOptions {
                     sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
@@ -117,66 +106,47 @@ class GenesisApplicationPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
-            // ═══════════════════════════════════════════════════════════════════════════
-            // Auto-configured dependencies (provided by convention plugin)
-            // ═══════════════════════════════════════════════════════════════════════════
-
-            // ═══════════════════════════════════════════════════════════════════════
-            // Versions read from libs.versions.toml — single source of truth
-            // ═══════════════════════════════════════════════════════════════════════
-            val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
+            val versionCatalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
             val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
             val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
             val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
 
-            // Hilt Dependency Injection
-            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
+            dependencies.apply {
+                // Hilt Dependency Injection
+                add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+                add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-            dependencies.add("implementation", dependencies.platform("androidx.compose:compose-bom:$composeBomVersion"))
-            dependencies.add("implementation", "androidx.compose.runtime:runtime")
-            dependencies.add("implementation", "androidx.compose.ui:ui")
-            dependencies.add("implementation", "androidx.compose.ui:ui-graphics")
-            dependencies.add("implementation", "androidx.compose.ui:ui-tooling-preview")
-            dependencies.add("implementation", "androidx.compose.foundation:foundation")
-            dependencies.add("implementation", "androidx.compose.foundation:foundation-layout")
-            dependencies.add("implementation", "androidx.compose.material3:material3")
-            dependencies.add("implementation", "androidx.compose.material:material-icons-core")
-            dependencies.add("implementation", "androidx.compose.material:material-icons-extended")
-            dependencies.add("debugImplementation", "androidx.compose.ui:ui-tooling")
+                add("implementation", platform("androidx.compose:compose-bom:$composeBomVersion"))
+                add("implementation", "androidx.compose.runtime:runtime")
+                add("implementation", "androidx.compose.ui:ui")
+                add("implementation", "androidx.compose.ui:ui-graphics")
+                add("implementation", "androidx.compose.ui:ui-tooling-preview")
+                add("implementation", "androidx.compose.foundation:foundation")
+                add("implementation", "androidx.compose.foundation:foundation-layout")
+                add("implementation", "androidx.compose.material3:material3")
+                add("implementation", "androidx.compose.material:material-icons-core")
+                add("implementation", "androidx.compose.material:material-icons-extended")
+                add("debugImplementation", "androidx.compose.ui:ui-tooling")
 
-            dependencies.add("implementation", "androidx.core:core-ktx:1.17.0")
-            dependencies.add("implementation", "androidx.appcompat:appcompat:1.7.1")
-            dependencies.add("implementation", "androidx.activity:activity-compose:1.11.0")
-            dependencies.add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
-            dependencies.add("implementation", "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
+                add("implementation", "androidx.core:core-ktx:1.17.0")
+                add("implementation", "androidx.appcompat:appcompat:1.7.1")
+                add("implementation", "androidx.activity:activity-compose:1.11.0")
+                add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+                add("implementation", "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
 
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
-            // Kotlin Serialization
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+                add("implementation", "com.jakewharton.timber:timber:5.0.1")
+                add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                add("implementation", platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
 
-            // Timber Logging
-            dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-
-            dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
-
-            dependencies.add("implementation", dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
-
-            // Universal Xposed/LSPosed API access
-            dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
-
-            // KavaRef for modern reflection (YukiHook 2.0 replacement)
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
-
-            // Note: io.github.libxposed is not yet published to Maven Central
-            // Use de.robv.android.xposed:api:82 for Xposed module development
-            dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
+                add("compileOnly", "de.robv.android.xposed:api:82")
+                add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
+                add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+                add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
+            }
         }
     }
 }

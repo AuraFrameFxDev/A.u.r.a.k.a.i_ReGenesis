@@ -77,6 +77,9 @@ includeIfExists(":aura:reactivedesign:collabcanvas")
 includeIfExists(":aura:reactivedesign:chromacore")
 includeIfExists(":aura:reactivedesign:customization")
 
+// --- Trinity ---
+includeIfExists(":trinity:aura")
+
 
 // --- Kai → SentinelsFortress ---
 include(":kai")
