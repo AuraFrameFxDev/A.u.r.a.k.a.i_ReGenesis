@@ -9,19 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.shadow // Added import
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonBlue // Added import
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.NeonPink // Added import
+import dev.aurakai.auraframefx.core.theme.*
 
 @Composable
 fun StaticOrb(
     modifier: Modifier = Modifier,
     color: Color = Color.Gray,
     text: String = "Orb",
-) {
+) { // Renamed to staticOrb
+    // TODO: Implement the actual Static Orb UI, potentially with different states or appearances
     Box(
         modifier = modifier
             .size(80.dp)
@@ -46,8 +46,6 @@ fun StaticOrb(
 
 @Preview(showBackground = true)
 @Composable
-fun StaticOrbPreview() {
+fun StaticOrbPreview() { // Renamed
     StaticOrb(color = Color.Magenta, text = "Static")
 }
-
-

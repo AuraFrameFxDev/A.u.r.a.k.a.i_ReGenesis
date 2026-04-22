@@ -3,12 +3,12 @@ package dev.aurakai.auraframefx.domains.kai.system
 import javax.inject.Inject
 import javax.inject.Singleton
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
-import dev.aurakai.auraframefx.domains.aura.SystemOverlayConfig
+import dev.aurakai.auraframefx.core.models.OverlayTheme
 import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
+import dev.aurakai.auraframefx.core.models.OverlayAnimation
+import dev.aurakai.auraframefx.core.models.OverlayTransition
 import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
-import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
-import dev.aurakai.auraframefx.domains.aura.ui.effects.OverlayAnimation
-import dev.aurakai.auraframefx.domains.aura.ui.effects.OverlayTransition
+import dev.aurakai.auraframefx.domains.aura.SystemOverlayConfig
 
 @Singleton
 class SystemOverlayManagerImpl @Inject constructor() : SystemOverlayManager {

@@ -8,43 +8,36 @@ import javax.crypto.SecretKey
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 
 /**
- * Extension functions for KaiSecurityContext
  */
 
 /**
  * Check if the security context is in a secure state
  */
-fun KaiSecurityContext.isSecureExt(): Boolean {
     return securityState.value.errorState == false &&
-            securityState.value.threatLevel != ThreatLevel.CRITICAL &&
             encryptionStatus.value == EncryptionStatus.ACTIVE
 }
 
 /**
  * Check if the security context is NOT secure
  */
-fun KaiSecurityContext.isNotSecure(): Boolean {
     return !this.isSecure()
 }
 
 /**
  * Get the current threat count
  */
-fun KaiSecurityContext.getThreatCount(): Int {
     return securityState.value.detectedThreats.size
 }
 
 /**
  * Check if encryption is ready for use
  */
-fun KaiSecurityContext.isEncryptionReady(): Boolean {
     return encryptionStatus.value == EncryptionStatus.ACTIVE
 }
 
 /**
  * Safely encrypt data with null handling
  */
-fun KaiSecurityContext.safeEncrypt(data: String?): EncryptedData? {
     if (data == null) return null
     return encrypt(data)
 }
@@ -52,7 +45,6 @@ fun KaiSecurityContext.safeEncrypt(data: String?): EncryptedData? {
 /**
  * Safely decrypt data with null handling
  */
-fun KaiSecurityContext.safeDecrypt(encryptedData: EncryptedData?): String? {
     if (encryptedData == null) return null
     return decrypt(encryptedData)
 }
@@ -60,14 +52,12 @@ fun KaiSecurityContext.safeDecrypt(encryptedData: EncryptedData?): String? {
 /**
  * Check if a specific threat type is present
  */
-fun KaiSecurityContext.hasThreatType(type: ThreatType): Boolean {
     return securityState.value.detectedThreats.any { it.type == type }
 }
 
 /**
  * Get threats by severity level
  */
-fun KaiSecurityContext.getThreatsBySeverity(severity: ThreatSeverity): List<SecurityThreat> {
     return securityState.value.detectedThreats.filter { it.severity == severity }
 }
 

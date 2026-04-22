@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.romtools
 
-import com.topjohnwu.superuser.Shell
 import javax.inject.Inject
 import javax.inject.Singleton
 import timber.log.Timber
@@ -16,15 +15,27 @@ class RecoveryManagerImpl @Inject constructor() : RecoveryManager {
     
     override fun checkRecoveryAccess(): Boolean {
         // Real check for recovery environment or system property
-        return Shell.cmd("[ -d /cache/recovery ] || [ -d /system/recovery ]").exec().isSuccess
+        return try {
+            val process = Runtime.getRuntime()
+                .exec("su -c '[ -d /cache/recovery ] || [ -d /system/recovery ]'")
+            process.waitFor() == 0
+        } catch (e: Exception) {
+            false
+        }
     }
     
     override fun isCustomRecoveryInstalled(): Boolean {
         // Real detection targeting popular custom recoveries
-        val result = Shell.cmd("grep -E \"TWRP|OrangeFox|SkyHawk|LineageOS Recovery\" /proc/version || [ -f /sbin/twrp ] || [ -f /system/bin/twrp ]").exec()
-        val isInstalled = result.isSuccess
-        if (isInstalled) Timber.i("Custom recovery detected")
-        return isInstalled
+        val cmd =
+            "su -c 'grep -E \"TWRP|OrangeFox|SkyHawk|LineageOS Recovery\" /proc/version || [ -f /sbin/twrp ] || [ -f /system/bin/twrp ]'"
+        return try {
+            val process = Runtime.getRuntime().exec(cmd)
+            val result = process.waitFor() == 0
+            if (result) Timber.i("Custom recovery detected")
+            result
+        } catch (e: Exception) {
+            false
+        }
     }
     
     override suspend fun installCustomRecovery(): Result<Unit> {

@@ -9,7 +9,6 @@ package dev.aurakai.auraframefx.domains.kai.security
  * @property allowedCollections Set of Firestore collection paths the agent can access
  * @property allowedStoragePaths Set of allowed Cloud Storage paths the agent can access
  */
-data class AgentCapabilityPolicy(
     val httpAllowlist: List<String> = emptyList(),
     val firebaseScopes: Set<String> = emptySet(),
     val maxDocumentSize: Long = 1_000_000, // 1MB default
@@ -31,7 +30,6 @@ data class AgentCapabilityPolicy(
         const val SCOPE_AUTH_MANAGE = "auth.manage"
 
         // Predefined policies for different agent types
-        val AURA_POLICY = AgentCapabilityPolicy(
             httpAllowlist = listOf(
                 "api.vertexai.google.com",
                 "generativelanguage.googleapis.com"
@@ -55,7 +53,6 @@ data class AgentCapabilityPolicy(
             )
         )
 
-        val KAI_POLICY = AgentCapabilityPolicy(
             firebaseScopes = setOf(
                 SCOPE_FIRESTORE_READ,
                 SCOPE_CONFIG_READ,
@@ -71,7 +68,6 @@ data class AgentCapabilityPolicy(
             )
         )
 
-        val GENESIS_POLICY = AgentCapabilityPolicy(
             firebaseScopes = setOf(
                 SCOPE_FIRESTORE_READ,
                 SCOPE_FIRESTORE_WRITE,
@@ -86,7 +82,6 @@ data class AgentCapabilityPolicy(
             allowedStoragePaths = setOf("*")  // Allow all storage paths
         )
 
-        val CASCADE_POLICY = AgentCapabilityPolicy(
             firebaseScopes = setOf(
                 SCOPE_FIRESTORE_READ,
                 SCOPE_CONFIG_READ
@@ -97,7 +92,6 @@ data class AgentCapabilityPolicy(
             )
         )
 
-        val CLAUDE_POLICY = AgentCapabilityPolicy(
             httpAllowlist = listOf(
                 "api.anthropic.com",
                 "generativelanguage.googleapis.com"

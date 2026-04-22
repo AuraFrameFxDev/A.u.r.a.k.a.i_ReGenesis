@@ -22,23 +22,25 @@ object GenesisCommonConfig {
                 exclude(group = "com.google.firebase", module = "protolite-well-known-types")
 
                 resolutionStrategy {
-                    val versionCatalog = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java).named("libs")
+                    val versionCatalog = extensions.findByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)?.named("libs")
                     
-                    val okhttpVersion = versionCatalog.findVersion("okhttp").get().requiredVersion
+                    // Safe version lookup with fallbacks
+                    val okhttpVersion = versionCatalog?.findVersion("okhttp")?.map { it.requiredVersion }?.orElse("4.12.0") ?: "4.12.0"
+                    val protobufVersion = versionCatalog?.findVersion("protobuf")?.map { it.requiredVersion }?.orElse("3.25.8") ?: "3.25.8"
+                    val nettyVer = versionCatalog?.findVersion("netty")?.map { it.requiredVersion }?.orElse("4.1.118.Final") ?: "4.1.118.Final"
+                    
                     dependencySubstitution {
                         substitute(module("com.squareup.okhttp3:okhttp")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
                         substitute(module("com.squareup.okhttp3:okhttp-jvm")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
                         
-                        val protobufVersion = versionCatalog.findVersion("protobuf").get().requiredVersion
                         substitute(module("com.google.protobuf:protobuf-javalite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
                         substitute(module("com.google.protobuf:protobuf-lite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
                     }
                     force("org.conscrypt:conscrypt-android:2.5.3")
-                    force("com.google.protobuf:protobuf-java:3.25.8")
+                    force("com.google.protobuf:protobuf-java:$protobufVersion")
                     force("com.google.api.grpc:proto-google-common-protos:2.59.0")
 
                     // High-Sovereignty Security Hardening (April 2026 Audit Fixes)
-                    val nettyVer = versionCatalog.findVersion("netty").get().requiredVersion
                     force("io.netty:netty-all:$nettyVer")
                     force("io.netty:netty-codec-http2:$nettyVer")
                     force("io.netty:netty-handler:$nettyVer")

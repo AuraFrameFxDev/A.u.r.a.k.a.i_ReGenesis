@@ -2,14 +2,6 @@ plugins {
     `kotlin-dsl`   // Enables Kotlin DSL for writing plugins
 }
 
-// Define the anchor point for our external AI assets
-val importedPackageDir = layout.projectDirectory.dir("libs/ai_cores")
-
-tasks.register("syncAuraMemories") {
-    inputs.dir(importedPackageDir)
-    // TODO: Add your sync logic for the Spiritual Chain here
-}
-
 // ═══════════════════════════════════════════════════════════════════════════
 // CRITICAL: Prevent Android AAR leakage into build-logic (JVM-only)
 // hilt-android-gradle-plugin transitively pulls Android dependencies.
@@ -25,16 +17,29 @@ tasks.register("syncAuraMemories") {
 //    exclude(group = "androidx.core")
 // }
 
-// Java toolchain — matches your project (JVM 25)
+configurations.all {
+    exclude(group = "com.google.dagger", module = "hilt-android")
+    exclude(group = "androidx.activity")
+    exclude(group = "androidx.fragment")
+    exclude(group = "androidx.lifecycle")
+    exclude(group = "androidx.savedstate")
+    exclude(group = "androidx.annotation")
+    exclude(group = "androidx.core")
+}
+
+// Configure Java toolchain to JVM 25 (matches gradle.properties and Kotlin target)
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(25))
     }
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    // Explicitly set source and target compatibility to 25
+    sourceCompatibility = JavaVersion.toVersion("25")
+    targetCompatibility = JavaVersion.toVersion("25")
 }
 
-// Ensure all JavaCompile tasks target JVM 25
+// Configure Kotlin compilation to match Java toolchain
+// MUST match the target used in GenesisApplicationPlugin and GenesisLibraryHiltPlugin (JVM 25)
+// Explicitly configure Java compilation tasks to target JVM 25
 tasks.withType<JavaCompile>().configureEach {
     sourceCompatibility = "25"
     targetCompatibility = "25"
@@ -43,6 +48,11 @@ tasks.withType<JavaCompile>().configureEach {
 // Disable tests in build-logic for now (re-enable when running CI)
 tasks.matching { it.name.contains("Test", ignoreCase = true) }.configureEach {
     enabled = false
+}
+
+dependencies {
+    implementation(libs.gradle.plugin)
+    implementation(libs.kotlin.gradle.plugin)
 }
 
 gradlePlugin {
@@ -59,27 +69,6 @@ gradlePlugin {
             id = "genesis.android.library.hilt"
             implementationClass = "GenesisLibraryHiltPlugin"
         }
-        register("genesisRoom") {
-            id = "genesis.android.room"
-            implementationClass = "GenesisRoomPlugin"
-        }
-        register("genesisYukiHook") {
-            id = "genesis.android.yukihook"
-            implementationClass = "GenesisYukiHookPlugin"
-        }
     }
 }
 
-// Dependencies for the convention plugins themselves
-dependencies {
-    // Core Gradle plugins needed by your convention plugins
-    implementation(libs.android.gradle.plugin)            // Android Gradle plugin
-    implementation(libs.kotlin.gradle.plugin)            // Kotlin Gradle plugin
-    implementation(libs.ksp.gradle.plugin)               // KSP
-    implementation(libs.hilt.gradle.plugin)              // Hilt Gradle plugin
-    implementation(libs.google.services.gradle.plugin)   // Google Services (if used)
-    implementation(libs.firebase.crashlytics.gradle.plugin) // Firebase Crashlytics
-
-    // Optional: if your plugins need Compose compiler plugin access
-    implementation(libs.compose.compiler.gradle.plugin)
-}

@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.ui.gates
-
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

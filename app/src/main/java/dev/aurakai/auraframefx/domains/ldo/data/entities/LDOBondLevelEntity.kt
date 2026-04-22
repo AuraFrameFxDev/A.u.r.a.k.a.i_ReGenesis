@@ -6,13 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ldo_bond_levels")
 data class LDOBondLevelEntity(
     @PrimaryKey val agentId: String,
-    val bondLevel: Int,
-    val bondPoints: Int,
-    val maxBondPoints: Int,
-    val bondTitle: String,
-    val interactionCount: Int,
-    val resonanceScore: Float = 0f,
-    val lastInteractionAt: Long = System.currentTimeMillis()
+    val level: Int = 0,
+    val experience: Long = 0L,
+    val lastInteractionMs: Long = System.currentTimeMillis(),
+    val resonanceScore: Float = 0f
 )
 
 fun bondTitleForLevel(level: Int): String = when (level) {

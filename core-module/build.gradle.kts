@@ -5,7 +5,9 @@ import com.android.build.api.dsl.LibraryExtension
 
 plugins {
     id("genesis.android.library")
-    // Hilt, KSP, and Serialization are applied by the convention plugin.
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 extensions.configure<LibraryExtension> {
@@ -20,18 +22,18 @@ dependencies {
     // - Hilt (android + compiler via KSP)
     // - Timber, Coroutines
     // - Compose enabled by default
-    // - LangChain4j (BOM + Bundle as API)
     // - Java 25 bytecode target
     // ═══════════════════════════════════════════════════════════════════════
     
     // Expose core KTX as API (types leak to consumers)
     api(libs.androidx.core.ktx)
 
-    // Security
-    implementation(libs.androidx.security.crypto)
+    // Compose UI
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
 
-    // Unit test dependencies
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
+

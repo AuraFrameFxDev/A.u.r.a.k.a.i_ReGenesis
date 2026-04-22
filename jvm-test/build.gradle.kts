@@ -11,3 +11,6 @@ dependencies {
     testImplementation(gradleTestKit())
 }
 
+kotlin {
+    jvmToolchain(24)
+}

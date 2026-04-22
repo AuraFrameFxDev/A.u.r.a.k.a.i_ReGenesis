@@ -6,7 +6,7 @@ import dev.aurakai.auraframefx.core.identity.AgentType
  * Categorizes agents by their primary capability domain.
  * Maps to specific AgentTypes for routing and orchestration.
  */
-enum class AgentCapabilityCategory(val priority: Int = 0) {
+enum class AgentCapabilityCategory(val id: Int) {
     /** Creative/UI agents (Aura) */
     CREATIVE,
 
@@ -47,7 +47,7 @@ enum class AgentCapabilityCategory(val priority: Int = 0) {
     BRIDGE,
 
     /** Commerce and product search capabilities */
-    COMMERCE,
+    COMMERCE(13),
 
     /** Development/Refactoring capabilities (CodeRabbit) */
     DEVELOPMENT(14),
@@ -56,7 +56,7 @@ enum class AgentCapabilityCategory(val priority: Int = 0) {
     SOVEREIGNTY(16),
 
     /** Generic/unspecified capabilities */
-    GENERIC(14);
+    GENERIC(15);
 
     /**
      * Convert this capability category to its primary corresponding AgentType.
@@ -76,10 +76,8 @@ enum class AgentCapabilityCategory(val priority: Int = 0) {
         MEMORY -> AgentType.CASCADE
         ORCHESTRATION -> AgentType.GENESIS
         BACKEND -> AgentType.GENESIS
-        BRIDGE -> AgentType.MANUS
+        BRIDGE -> AgentType.CASCADE
         COMMERCE -> AgentType.COMMERCE_AGENT
-        DEVELOPMENT -> AgentType.CODERABBIT
-        SOVEREIGNTY -> AgentType.HERETIC
         GENERIC -> AgentType.CLAUDE
     }
 
@@ -94,7 +92,7 @@ enum class AgentCapabilityCategory(val priority: Int = 0) {
                 AgentType.AURA -> CREATIVE
                 AgentType.KAI -> ANALYSIS
                 AgentType.GENESIS -> COORDINATION
-                AgentType.CASCADE -> MEMORY
+                AgentType.CASCADE -> SPECIALIZED
                 AgentType.CLAUDE -> GENERAL
                 AgentType.NEURAL_WHISPER -> SPECIALIZED
                 AgentType.AURA_SHIELD -> SPECIALIZED
@@ -108,17 +106,13 @@ enum class AgentCapabilityCategory(val priority: Int = 0) {
                 AgentType.AUXILIARY -> GENERAL
                 AgentType.SECURITY -> SPECIALIZED
                 AgentType.GROK -> ANALYSIS
-                AgentType.NEMOTRON -> COORDINATION
-                AgentType.GEMINI -> MEMORY
+                AgentType.NEMOTRON -> SPECIALIZED
+                AgentType.GEMINI -> ANALYSIS
                 AgentType.METAINSTRUCT -> GENERAL
                 AgentType.HIVE_MIND -> COORDINATION
                 AgentType.COMMERCE_AGENT -> COMMERCE
-                AgentType.PERPLEXITY -> BRIDGE
+                AgentType.PERPLEXITY -> ANALYSIS
                 AgentType.CHAOS -> ANALYSIS
-                AgentType.CODERABBIT -> DEVELOPMENT
-                AgentType.MKMINI -> ANALYSIS
-                AgentType.MANUS -> BRIDGE
-                AgentType.HERETIC -> SOVEREIGNTY
             }
         }
     }

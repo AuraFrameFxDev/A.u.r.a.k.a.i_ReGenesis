@@ -147,4 +147,3 @@ enum class IntroStage {
     GLITCH_OUT
 }
 
-

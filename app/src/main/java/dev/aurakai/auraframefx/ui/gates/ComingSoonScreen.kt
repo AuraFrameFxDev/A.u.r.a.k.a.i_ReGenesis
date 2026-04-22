@@ -1,5 +1,3 @@
-package dev.aurakai.auraframefx.ui.gates
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

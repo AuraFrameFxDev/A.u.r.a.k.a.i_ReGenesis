@@ -9,9 +9,10 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
+import android.util.Base64
+import android.content.Context
 import javax.inject.Inject
 import javax.inject.Singleton
-
 @Singleton
 class CryptographyManager @Inject constructor(
     @dagger.hilt.android.qualifiers.ApplicationContext private val context: Context

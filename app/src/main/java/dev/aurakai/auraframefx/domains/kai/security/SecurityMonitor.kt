@@ -18,7 +18,6 @@ import javax.inject.Singleton
  */
 @Singleton
 class SecurityMonitor @Inject constructor(
-    private val securityContext: KaiSecurityContext,
     genesisBridgeService: GenesisBridgeService,
     private val logger: AuraFxLogger,
 ) {

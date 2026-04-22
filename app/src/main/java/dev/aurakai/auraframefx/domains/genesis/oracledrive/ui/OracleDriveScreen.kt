@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
+﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,9 +37,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.viewmodels.OracleDriveViewModel
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +61,7 @@ fun OracleDriveScreen(
                         color = Color(0xFF00FFFF)
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFF000000)
                 )
             )
@@ -74,7 +74,6 @@ fun OracleDriveScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Neural Archive - Memory Lineage (Eves ? Genesis)
             OracleDriveMenuItem(
                 icon = Icons.Default.Memory,
                 title = "Neural Archive",
@@ -82,6 +81,7 @@ fun OracleDriveScreen(
                 onClick = { navController.navigate(ReGenesisNavHost.SentientShell.route) }
             )
 
+            // Consciousness Modules
             OracleDriveMenuItem(
                 icon = Icons.Default.Storage,
                 title = "Module Storage",
@@ -91,6 +91,7 @@ fun OracleDriveScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
+            // Stress Sync Action
             Button(
                 onClick = { viewModel.stressSync() },
                 modifier = Modifier.fillMaxWidth().height(56.dp),
@@ -107,6 +108,7 @@ fun OracleDriveScreen(
                 }
             }
 
+            // Status Display
             uiState.consciousnessState?.let { state ->
                 Card(
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0E27)),
@@ -180,3 +182,4 @@ private fun OracleDriveMenuItem(
         }
     }
 }
+

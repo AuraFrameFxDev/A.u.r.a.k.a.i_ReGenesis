@@ -10,6 +10,16 @@ import org.gradle.kotlin.dsl.configure
  * ===================================================================
  */
 class GenesisLibraryPlugin : Plugin<Project> {
+    /**
+     * Configures the given Gradle project as an Android library module using the convention's defaults.
+     *
+     * Applies the Android library, Hilt, KSP, Compose, and Kotlin serialization plugins.
+     * Configures the Android LibraryExtension (compile/NDK settings, defaultConfig, build types,
+     * Java/compile options, build features, packaging, and lint), sets Kotlin JVM compilation options,
+     * and adds the convention's standard dependencies (Hilt, Compose, YukiHook, etc.).
+     *
+     * @param project The Gradle project to configure as an Android library module.
+     */
     override fun apply(project: Project) {
         with(project) {
             pluginManager.apply("com.android.library")
@@ -18,21 +28,12 @@ class GenesisLibraryPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
-            val versionCatalog = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java).named("libs")
-
-            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
-            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
-
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-
             extensions.configure<LibraryExtension> {
-                compileSdk = compileSdkVersion
-                buildToolsVersion = "36.1.0"
+                compileSdk = 36
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
-                    minSdk = minSdkVersion
+                    minSdk = 34
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
                     ndk {
@@ -50,6 +51,7 @@ class GenesisLibraryPlugin : Plugin<Project> {
                     }
                 }
 
+                // Java 25 bytecode (Firebase + AGP 9.0 compatible)
                 compileOptions {
                     sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
@@ -87,6 +89,23 @@ class GenesisLibraryPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
+            // ═══════════════════════════════════════════════════════════════════════════
+            // Auto-configured dependencies (provided by convention plugin)
+            // ═══════════════════════════════════════════════════════════════════════════
+            // Note: KSP configuration is handled by apply-yukihook-conventions.gradle.kts
+
+            // ═══════════════════════════════════════════════════════════════════════
+            // Versions read from libs.versions.toml — single source of truth
+            // ═══════════════════════════════════════════════════════════════════════
+            val versionCatalog =
+                extensions.findByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    ?.named("libs")
+            
+            // Safe version lookup with fallbacks
+            val hiltVersion = versionCatalog?.findVersion("hilt")?.map { it.requiredVersion }?.orElse("2.59.2") ?: "2.59.2"
+            val composeBomVersion = versionCatalog?.findVersion("compose-bom")?.map { it.requiredVersion }?.orElse("2026.03.01") ?: "2026.03.01"
+
+            // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
             dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
@@ -111,13 +130,21 @@ class GenesisLibraryPlugin : Plugin<Project> {
 
             dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
 
-            dependencies.add("api", dependencies.platform(versionCatalog.findLibrary("langchain4j-bom").get()))
-            dependencies.add("api", versionCatalog.findBundle("langchain4j").get())
-
+            // Core Library Desugaring (for Java 25 APIs on older Android)
             dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
 
+            // Universal Xposed/LSPosed API access for all library modules
+            dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
+
+            // YukiHook runtime (api only, ksp handled above)
+            dependencies.add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
+
+            // KavaRef for modern reflection (YukiHook 2.0 replacement)
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
             dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+
+            // EzXHelper for simplified Xposed development
+            dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
         }
     }
 }

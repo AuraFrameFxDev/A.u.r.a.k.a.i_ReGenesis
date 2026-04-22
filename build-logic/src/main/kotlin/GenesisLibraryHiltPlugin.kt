@@ -1,8 +1,11 @@
+
 import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.getByType
 
 /**
  * ===================================================================
@@ -18,15 +21,13 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("com.google.dagger.hilt.android")
 
-            val versionCatalog = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java).named("libs")
-
-            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
-            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
-
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val yukihookVersion = versionCatalog.findVersion("yukihook").get().requiredVersion
-            val xposedVersion = versionCatalog.findVersion("xposed").get().requiredVersion
+            val versionCatalog = extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            
+            // Safe version lookups with fallbacks
+            val compileSdkVersion = versionCatalog?.findVersion("compile-sdk")?.map { it.requiredVersion.toInt() }?.orElse(36) ?: 36
+            val minSdkVersion = versionCatalog?.findVersion("min-sdk")?.map { it.requiredVersion.toInt() }?.orElse(33) ?: 33
+            val hiltVersion = versionCatalog?.findVersion("hilt")?.map { it.requiredVersion }?.orElse("2.59.2") ?: "2.59.2"
+            val composeBomVersion = versionCatalog?.findVersion("compose-bom")?.map { it.requiredVersion }?.orElse("2026.03.01") ?: "2026.03.01"
 
             extensions.configure<LibraryExtension> {
                 compileSdk = compileSdkVersion
@@ -87,23 +88,30 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
-            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
+            // 5. Dependencies
+            dependencies.apply {
+                add("api", platform("androidx.compose:compose-bom:$composeBomVersion"))
+                add("api", "androidx.compose.runtime:runtime")
+                add("api", "androidx.compose.ui:ui")
+                add("api", "androidx.compose.material3:material3")
 
-            dependencies.add("api", dependencies.platform("androidx.compose:compose-bom:$composeBomVersion"))
-            dependencies.add("api", "androidx.compose.runtime:runtime")
-            dependencies.add("api", "androidx.compose.ui:ui")
-            dependencies.add("api", "androidx.compose.material3:material3")
+                // Hilt Dependency Injection
+                add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+                add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-            dependencies.add("implementation", "androidx.core:core-ktx:1.17.0")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-            dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-            
-            dependencies.add("implementation", "com.highcapable.yukihookapi:api:$yukihookVersion")
-            dependencies.add("ksp", "com.highcapable.yukihookapi:ksp-xposed:$yukihookVersion")
-            dependencies.add("compileOnly", "de.robv.android.xposed:api:$xposedVersion")
+                // YukiHook & Xposed
+                val yukiDep = add("implementation", "com.highcapable.yukihookapi:api:1.3.1")
+                (yukiDep as? org.gradle.api.artifacts.ExternalModuleDependency)?.exclude(
+                    mapOf("group" to "com.highcapable.yukihookapi", "module" to "ksp-xposed")
+                )
+                add("ksp", "com.highcapable.yukihookapi:ksp-xposed:1.3.1")
+                add("compileOnly", "de.robv.android.xposed:api:82")
 
-            dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                // Core
+                add("implementation", "androidx.core:core-ktx:1.13.1")
+                add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                add("implementation", "com.jakewharton.timber:timber:5.0.1")
+            }
         }
     }
 }

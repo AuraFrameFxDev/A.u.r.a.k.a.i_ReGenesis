@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.kai.security.provenance
 
-import dev.aurakai.auraframefx.domains.kai.security.AndroidKeystoreManager
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,7 +10,6 @@ import javax.inject.Singleton
  * Every request originating from within the system (GenesisBridgeService,
  * GenesisOrchestrator, etc.) must carry a valid chain before the hard gate
  * is enabled. This builder constructs those chains using hardware-backed
- * HMAC keys via [AndroidKeystoreManager].
  */
 @Singleton
 class ProvenanceChainBuilder @Inject constructor(

@@ -37,7 +37,8 @@ allprojects {
             options.compilerArgs.addAll(
                 listOf(
                     "-Xlint:all",
-                    "-Werror"
+                    "-Werror",
+                    "--release", "25"
                 )
             )
         }

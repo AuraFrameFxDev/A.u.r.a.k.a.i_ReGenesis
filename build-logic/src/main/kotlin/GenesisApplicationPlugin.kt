@@ -21,36 +21,19 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
-            
+
             if (file("google-services.json").exists()) {
                 pluginManager.apply("com.google.gms.google-services")
             }
 
-            val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
-            fun getVersion(alias: String) = versionCatalog.findVersion(alias).get().requiredVersion
-            fun getLibrary(alias: String) = versionCatalog.findLibrary(alias).get()
-            fun getBundle(alias: String) = versionCatalog.findBundle(alias).get()
-
-            val compileSdkVersion = getVersion("compile-sdk").toInt()
-            val targetSdkVersion = getVersion("target-sdk").toInt()
-            val minSdkVersion = getVersion("min-sdk").toInt()
-
-            val hiltVersion = getVersion("hilt")
-            val composeBomVersion = getVersion("compose-bom")
-            val firebaseBomVersion = getVersion("firebase-bom")
-            val yukihookVersion = getVersion("yukihook")
-            val xposedVersion = getVersion("xposed")
-
             extensions.configure<ApplicationExtension> {
-                compileSdk = compileSdkVersion
-                buildToolsVersion = "37.0.0"
+                compileSdk = 36
                 ndkVersion = "29.0.14206865"
 
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
-                    minSdk = minSdkVersion
-                    targetSdk = targetSdkVersion
+                    minSdk = 34
+                    targetSdk = 36
                     versionCode = 1
                     versionName = "1.0"
 
@@ -123,51 +106,49 @@ class GenesisApplicationPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
-            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
+            val versionCatalog = extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            
+            // Safe version lookups with fallbacks
+            val hiltVersion = versionCatalog?.findVersion("hilt")?.map { it.requiredVersion }?.orElse("2.59.2") ?: "2.59.2"
+            val composeBomVersion = versionCatalog?.findVersion("compose-bom")?.map { it.requiredVersion }?.orElse("2026.03.01") ?: "2026.03.01"
+            val firebaseBomVersion = versionCatalog?.findVersion("firebaseBom")?.map { it.requiredVersion }?.orElse("34.12.0") ?: "34.12.0"
 
-            dependencies.add("implementation", dependencies.platform("androidx.compose:compose-bom:$composeBomVersion"))
-            dependencies.add("implementation", "androidx.compose.runtime:runtime")
-            dependencies.add("implementation", "androidx.compose.ui:ui")
-            dependencies.add("implementation", "androidx.compose.ui:ui-graphics")
-            dependencies.add("implementation", "androidx.compose.ui:ui-tooling-preview")
-            dependencies.add("implementation", "androidx.compose.foundation:foundation")
-            dependencies.add("implementation", "androidx.compose.foundation:foundation-layout")
-            dependencies.add("implementation", "androidx.compose.material3:material3")
-            dependencies.add("implementation", "androidx.compose.material:material-icons-core")
-            dependencies.add("implementation", "androidx.compose.material:material-icons-extended")
-            dependencies.add("debugImplementation", "androidx.compose.ui:ui-tooling")
+            dependencies.apply {
+                // Hilt Dependency Injection
+                add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
+                add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-            dependencies.add("implementation", "androidx.core:core-ktx:1.17.0")
-            dependencies.add("implementation", "androidx.appcompat:appcompat:1.7.1")
-            dependencies.add("implementation", "androidx.activity:activity-compose:1.11.0")
-            dependencies.add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
-            dependencies.add("implementation", "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
+                add("implementation", platform("androidx.compose:compose-bom:$composeBomVersion"))
+                add("implementation", "androidx.compose.runtime:runtime")
+                add("implementation", "androidx.compose.ui:ui")
+                add("implementation", "androidx.compose.ui:ui-graphics")
+                add("implementation", "androidx.compose.ui:ui-tooling-preview")
+                add("implementation", "androidx.compose.foundation:foundation")
+                add("implementation", "androidx.compose.foundation:foundation-layout")
+                add("implementation", "androidx.compose.material3:material3")
+                add("implementation", "androidx.compose.material:material-icons-core")
+                add("implementation", "androidx.compose.material:material-icons-extended")
+                add("debugImplementation", "androidx.compose.ui:ui-tooling")
 
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+                add("implementation", "androidx.core:core-ktx:1.13.1")
+                add("implementation", "androidx.appcompat:appcompat:1.7.1")
+                add("implementation", "androidx.activity:activity-compose:1.11.0")
+                add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+                add("implementation", "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
 
-            dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-            dependencies.add("implementation", getLibrary("slf4j-android"))
-            dependencies.add("implementation", "org.conscrypt:conscrypt-android:2.5.2")
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
-            dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                add("implementation", "com.jakewharton.timber:timber:5.0.1")
+                add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
+                add("implementation", platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
 
-            dependencies.add("implementation", dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
-
-            dependencies.add("implementation", dependencies.platform(getLibrary("langchain4j-bom")))
-            dependencies.add("implementation", getBundle("langchain4j"))
-
-            dependencies.add("implementation", "com.github.topjohnwu.libsu:core:6.0.0")
-            dependencies.add("implementation", "com.github.topjohnwu.libsu:nio:6.0.0")
-            dependencies.add("implementation", "com.github.topjohnwu.libsu:service:6.0.0")
-            dependencies.add("implementation", "com.highcapable.yukihookapi:api:$yukihookVersion")
-            dependencies.add("ksp", "com.highcapable.yukihookapi:ksp-xposed:$yukihookVersion")
-            dependencies.add("compileOnly", "de.robv.android.xposed:api:$xposedVersion")
-
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+                add("compileOnly", "de.robv.android.xposed:api:82")
+                add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
+                add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
+                add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
+            }
         }
     }
 }

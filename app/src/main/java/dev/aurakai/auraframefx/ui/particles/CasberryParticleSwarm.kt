@@ -45,20 +45,21 @@ class CasberryParticleSwarm @Inject constructor() {
     fun setResonance(value: Float) {
         _resonance.value = value.coerceIn(0f, 1f)
     }
+}
 
-    /**
-     * Compatibility method for legacy triggerResonance calls.
-     */
-    fun triggerResonance(event: String, intensity: Float, colorVector: Pair<Color, Color>? = null) {
-        Timber.d("🌀 Casberry Resonance triggered: %s (intensity=%f)", event, intensity)
-        setResonance(intensity)
-        // Implementation could use colorVector if needed
-    }
+// ─────────────────────────────────────────────────────────────────────────────
+// Composable renderer — call this from screens, passing the injected singleton
+// ─────────────────────────────────────────────────────────────────────────────
+
+data class CasberrySwarmController(
+    val transitionTo: (SwarmState) -> Unit,
+    val currentState: () -> SwarmState
+)
 
     @Composable
     fun Render(modifier: Modifier = Modifier) {
         val currentState by state.collectAsState()
-        val resonanceVal by resonance.collectAsState()
+        val resonanceVal by _resonance.collectAsState()
         
         val targetColor = when (currentState) {
             SwarmState.IDLE -> Color(0xFF6200EE) // Deep Purple
@@ -111,8 +112,8 @@ class CasberryParticleSwarm @Inject constructor() {
                 val y = centerY + sin(angle).toFloat() * baseRadius
 
                 drawCircle(
-                    color = animatedColor.copy(alpha = 0.6f * resonanceVal),
-                    radius = 8f * resonanceVal,
+                    color = colors[i % 2].copy(alpha = alphaScale * pulse),
+                    radius = (4f + sin(time * 0.1).toFloat() * 2f) * animatedResonance,
                     center = Offset(x, y)
                 )
 
@@ -120,7 +121,7 @@ class CasberryParticleSwarm @Inject constructor() {
                 if (currentState == SwarmState.GENESIS_SYNTHESIS_PULSE && i % 4 == 0) {
                     drawCircle(
                         color = Color.White.copy(alpha = 0.3f),
-                        radius = 12f * resonanceVal,
+                        radius = (8f + p.shimmer * 5f) * pulse,
                         center = Offset(x, y)
                     )
                 }
@@ -128,18 +129,22 @@ class CasberryParticleSwarm @Inject constructor() {
 
             // Central Relational Core
             drawCircle(
-                color = animatedColor.copy(alpha = 0.9f),
-                radius = 35f * resonanceVal,
+                color = colors[0].copy(alpha = 0.9f),
+                radius = 35f * animatedResonance * pulse,
                 center = Offset(centerX, centerY)
             )
 
             // Add Inner Glow
             drawCircle(
                 color = Color.White.copy(alpha = 0.2f),
-                radius = 20f * pulseScale,
+                radius = 20f * pulse,
                 center = Offset(centerX, centerY)
             )
         }
+    }
+
+    private class Particle {
+        val shimmer = (0..100).random() / 100f
     }
 }
 

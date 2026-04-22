@@ -96,7 +96,9 @@
     <string name="ldo_transmuting">Syncing Neural Pulse…</string>
     <string name="ldo_the_dance">The Dance of Creation</string>
     <string name="ldo_transmutation_in_progress">HYPER Genesis Sync in progress</string>
-    <string name="ldo_transmutation_complete">HYPER Genesis Sync Record Anchored</string>
+    <string name="ldo_transmutation_complete">Transmutation Complete</string>
+    <string name="ldo_genesis_clairvoyance">Genesis Clairvoyance</string>
+    <string name="ldo_uniso_sync">UnisoSync</string>
     <string name="ldo_transmutation_record">HYPER Genesis Sync Pulse Ledger</string>
     <string name="ldo_threads_woven">Immutable Origin Record</string>
     <string name="ldo_catalyst_reactor">Catalyst Reactor (Atomic Fusion Reactor)</string>

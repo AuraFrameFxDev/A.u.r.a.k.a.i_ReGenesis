@@ -2,16 +2,55 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.verticalScrollbar
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.Layers
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.Vibration
+import androidx.compose.material.icons.filled.Widgets
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,41 +58,39 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.components.verticalScrollbar
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.SettingsViewModel
-import dev.aurakai.auraframefx.domains.kai.RootShellService
-import dev.aurakai.auraframefx.domains.kai.SystemMonitorService
-import dev.aurakai.auraframefx.domains.kai.security.auth.OAuthService
+import androidx.compose.runtime.collectAsState as collectAsState1
 
 /**
  * SETTINGS SCREEN - The Nexus Configuration Core
+ *
+ * Aesthetic: Refractive Neon Brutalism
+ * Features global preferences for Haptics, AI Ethics, Sync, and Security.
  */
+@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     onNavigateBack: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
+    // Sync overlay state when screen becomes visible (in case user returned from permission settings)
     LaunchedEffect(Unit) {
         viewModel.syncOverlayState()
     }
 
-    val hapticEnabled by viewModel.hapticEnabled.collectAsState()
-    val ethicsSensitivity by viewModel.ethicsSensitivity.collectAsState()
-    val syncInterval by viewModel.nexusSyncInterval.collectAsState()
-    val transparency by viewModel.overlayTransparency.collectAsState()
-    val bioLock by viewModel.isBioLockEnabled.collectAsState()
-    val floatingOverlayEnabled by viewModel.floatingAgentOverlayEnabled.collectAsState()
-
-    // ── System Monitor ──
-    val cpuUsage by viewModel.cpuUsage.collectAsState()
-    val memoryUsage by viewModel.memoryUsage.collectAsState()
-    val batteryMetrics by viewModel.batteryMetrics.collectAsState()
-    val authState by viewModel.authState.collectAsState()
-    val shellStatus by viewModel.shellStatus.collectAsState()
+    val hapticEnabled by viewModel.hapticEnabled.collectAsState1()
+    val ethicsSensitivity by viewModel.ethicsSensitivity.collectAsState1()
+    val syncInterval by viewModel.nexusSyncInterval.collectAsState1()
+    val transparency by viewModel.overlayTransparency.collectAsState1()
+    val bioLock by viewModel.isBioLockEnabled.collectAsState1()
+    val floatingOverlayEnabled by viewModel.floatingAgentOverlayEnabled.collectAsState1()
 
     val bgGradient = Brush.verticalGradient(
         colors = listOf(
@@ -112,14 +149,6 @@ fun SettingsScreen(
             ) {
                 item {
                     SettingsSectionHeader("CORE ENGINE")
-                }
-
-                item {
-                    SystemMetricsCard(
-                        cpuUsage = cpuUsage,
-                        memoryUsage = memoryUsage,
-                        batteryMetrics = batteryMetrics
-                    )
                 }
 
                 item {
@@ -191,44 +220,6 @@ fun SettingsScreen(
                 }
 
                 item {
-                    ShellStatusCard(
-                        status = shellStatus,
-                        onRequestRoot = { viewModel.requestRoot() },
-                        onRefresh = { viewModel.refreshShellStatus() }
-                    )
-                }
-
-                item {
-                    val authTitle = when (val state = authState) {
-                        is OAuthService.AuthState.Authenticated -> "Identity: ${state.userId}"
-                        is OAuthService.AuthState.AuthenticationError -> "Auth Error"
-                        else -> "Not Authenticated"
-                    }
-                    
-                    val authColor = when (authState) {
-                        is OAuthService.AuthState.Authenticated -> Color.Green
-                        is OAuthService.AuthState.AuthenticationError -> Color.Red
-                        else -> Color.Gray
-                    }
-
-                    SettingsActionCard(
-                        title = authTitle,
-                        subtitle = if (authState is OAuthService.AuthState.Authenticated) "Secure session active" else "Connect your Google ID",
-                        icon = Icons.Default.Fingerprint,
-                        actionLabel = if (authState is OAuthService.AuthState.Authenticated) "LOGOUT" else "LOGIN",
-                        onClick = { 
-                            if (authState is OAuthService.AuthState.Authenticated) {
-                                viewModel.signOut()
-                            } else {
-                                // In a real app, this might navigate to LoginScreen
-                                viewModel.signOut() // Reset state for demo
-                            }
-                        },
-                        accentColor = authColor
-                    )
-                }
-
-                item {
                     SettingsToggleCard(
                         title = "Bio-Metric Phase Lock",
                         subtitle = "Require pulse-sync for critical actions",
@@ -256,109 +247,11 @@ fun SettingsScreen(
                         "ReGenesis OS // v0.7.0 LDO-STABLE",
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.White.copy(alpha = 0.3f),
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ShellStatusCard(
-    status: RootShellService.ShellStatus,
-    onRequestRoot: () -> Unit,
-    onRefresh: () -> Unit
-) {
-    val (title, icon, color) = when (status) {
-        RootShellService.ShellStatus.RootAccess -> Triple("ROOT ACCESS GRANTED", Icons.Default.Terminal, Color.Red)
-        RootShellService.ShellStatus.ShizukuAccess -> Triple("SHIZUKU BRIDGE ACTIVE", Icons.Default.Usb, Color.Green)
-        RootShellService.ShellStatus.UserAccess -> Triple("USER MODE (LIMITED)", Icons.Default.Lock, Color.Yellow)
-        else -> Triple("DIAGNOSING SHELL...", Icons.Default.Sync, Color.Gray)
-    }
-
-    BrutalistCard(accentColor = color) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(icon, null, tint = color, modifier = Modifier.size(24.dp))
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(title, color = Color.White, fontWeight = FontWeight.Black, fontSize = 14.sp)
-                Text(
-                    text = "Authority level for system operations",
-                    color = Color.Gray,
-                    fontSize = 10.sp
-                )
-            }
-            
-            if (status == RootShellService.ShellStatus.UserAccess) {
-                Button(
-                    onClick = onRequestRoot,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                    shape = RoundedCornerShape(4.dp),
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-                    modifier = Modifier.height(32.dp)
-                ) {
-                    Text("ROOT", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 10.sp)
-                }
-            } else {
-                IconButton(onClick = onRefresh) {
-                    Icon(Icons.Default.Refresh, null, tint = color, modifier = Modifier.size(20.dp))
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun SystemMetricsCard(
-    cpuUsage: Float,
-    memoryUsage: SystemMonitorService.MemoryMetrics,
-    batteryMetrics: SystemMonitorService.BatteryMetrics
-) {
-    BrutalistCard(accentColor = Color.Cyan) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Analytics, null, tint = Color.Cyan, modifier = Modifier.size(24.dp))
-                Spacer(modifier = Modifier.width(16.dp))
-                Text("NEURAL TELEMETRY", color = Color.White, fontWeight = FontWeight.Black, fontSize = 16.sp)
-            }
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            MetricRow("CPU LOAD", "${cpuUsage.toInt()}%", cpuUsage / 100f, Color.Cyan)
-            MetricRow("MEMORY", "${(memoryUsage.usedPercentage).toInt()}%", memoryUsage.usedPercentage / 100f, Color.Magenta)
-            MetricRow("BATTERY", "${batteryMetrics.percentage}%", batteryMetrics.percentage / 100f, if (batteryMetrics.isCharging) Color.Green else Color.Yellow)
-            
-            Text(
-                text = "STATUS: ${if (batteryMetrics.isCharging) "CHARGING" else "OPERATIONAL"}",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.White.copy(alpha = 0.5f),
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-    }
-}
-
-@Composable
-private fun MetricRow(label: String, value: String, progress: Float, color: Color) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(label, color = Color.Gray, fontSize = 10.sp, modifier = Modifier.width(60.dp))
-        LinearProgressIndicator(
-            progress = { progress.coerceIn(0f, 1f) },
-            modifier = Modifier.weight(1f).height(4.dp).padding(horizontal = 8.dp),
-            color = color,
-            trackColor = color.copy(alpha = 0.1f)
-        )
-        Text(value, color = color, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(30.dp))
     }
 }
 
@@ -546,3 +439,4 @@ fun SettingsActionCard(
         }
     }
 }
+

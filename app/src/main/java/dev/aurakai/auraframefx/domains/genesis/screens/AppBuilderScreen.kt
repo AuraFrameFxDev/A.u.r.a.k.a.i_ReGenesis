@@ -1,4 +1,4 @@
-package dev.aurakai.auraframefx.domains.genesis.screens
+﻿package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
@@ -51,7 +51,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -60,7 +59,6 @@ import dev.aurakai.auraframefx.domains.genesis.fusion.InterfaceForgeViewModel
 import kotlinx.coroutines.delay
 
 /**
- * 🛠️ APP BUILDER (Interface Forge)
  *
  * Collaborative environment for Aura (Design) and Claude (Architecture)
  * to generate application structures and code modules.
@@ -300,7 +298,6 @@ fun ForgeExecution(
 // Error display
         if (forgeState is ForgeState.Error) {
             Text(
-                text = "⚠️ ${forgeState.message}",
                 color = Color(0xFFFF4444),
                 fontFamily = LEDFontFamily,
                 fontSize = 14.sp,
@@ -353,7 +350,6 @@ fun ForgeExecution(
 
         if (forgeState is ForgeState.Success) {
             Text(
-                "✅ FORGE SUCCESSFUL",
                 color = Color(0xFF00FF85),
                 fontFamily = LEDFontFamily,
                 modifier = Modifier.padding(top = 24.dp)

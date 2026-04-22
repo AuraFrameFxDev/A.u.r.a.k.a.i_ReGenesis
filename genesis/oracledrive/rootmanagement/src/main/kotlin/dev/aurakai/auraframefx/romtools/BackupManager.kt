@@ -1,10 +1,7 @@
 package dev.aurakai.auraframefx.romtools
 
 import android.content.Context
-import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -41,8 +38,7 @@ interface BackupManager {
  */
 @Singleton
 class BackupManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val pandoraBoxService: PandoraBoxService
+    @ApplicationContext private val context: Context
 ) : BackupManager {
 
     private fun getBackupBaseDir() = File(context.getExternalFilesDir(null), "backups").apply {
@@ -64,10 +60,6 @@ class BackupManagerImpl @Inject constructor(
      */
     override suspend fun createFullBackup(): Result<BackupInfo> = withContext(Dispatchers.IO) {
         try {
-            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.DEVELOPMENT)) {
-                throw IllegalStateException("Full Backup requires DEVELOPMENT tier unlock.")
-            }
-
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
             val backupName = "genesis_backup_$timestamp"
             val backupDir = File(userBackupDir, backupName)
@@ -188,10 +180,6 @@ class BackupManagerImpl @Inject constructor(
         progressCallback: (Float) -> Unit
     ): Result<BackupInfo> = withContext(Dispatchers.IO) {
         try {
-            if (!pandoraBoxService.isCapabilityUnlocked(AgentCapabilityCategory.ROOT)) {
-                throw IllegalStateException("Nandroid Backup requires ROOT tier unlock.")
-            }
-
             progressCallback(0.1f)
 
             // Check for root access
@@ -491,18 +479,25 @@ class BackupManagerImpl @Inject constructor(
     // ============================================================================
 
     private fun checkRootAccess(): Boolean {
-        return Shell.getShell().isRoot
+        return try {
+            val process = Runtime.getRuntime().exec("su -c 'echo test'")
+            process.waitFor() == 0
+        } catch (e: Exception) {
+            false
+        }
     }
 
     private fun executeRootCommand(command: String): Result<String> {
         return try {
-            val result = Shell.cmd(command).exec()
+            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
+            val output = process.inputStream.bufferedReader().readText()
+            val exitCode = process.waitFor()
 
-            if (result.isSuccess) {
-                Result.success(result.out.joinToString("\n").trim())
+            if (exitCode == 0) {
+                Result.success(output)
             } else {
-                val error = result.err.joinToString("\n")
-                Result.failure(Exception("Command failed: $error"))
+                val error = process.errorStream.bufferedReader().readText()
+                Result.failure(Exception("Command failed (exit $exitCode): $error"))
             }
         } catch (e: Exception) {
             Result.failure(e)

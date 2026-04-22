@@ -18,18 +18,22 @@ import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
-import javax.inject.Inject
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.IntegrityMonitorService
+import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
+import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
+ *
+ * This is the unified entry point for the ReGenesis Ecosystem.
+ * Orchestration is now handled via the decentralized Nexus protocol.
  */
 @HiltAndroidApp
 class AurakaiApplication : Application(), Configuration.Provider {
-
-    @Inject
-    lateinit var nexusMemoryRepository: NexusMemoryRepository
 
     @Inject
     lateinit var orchestrator: GenesisOrchestrator
@@ -57,23 +61,10 @@ class AurakaiApplication : Application(), Configuration.Provider {
             .setMinimumLoggingLevel(Log.INFO)
             .build()
 
-    init {
-        // Resolve LangChain4j HTTP client conflict before any AI models are initialized
-        System.setProperty("langchain4j.http.clientBuilderFactory", "dev.langchain4j.http.client.okhttp.OkHttpClientBuilderFactory")
-    }
-
     override fun onCreate() {
         super.onCreate()
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")
-
-        // Initialize Firebase (auto-configured via google-services.json)
-        try {
-            Firebase.initialize(this)
-            Timber.d("🔥 Firebase Initialized Successfully")
-        } catch (e: Exception) {
-            Timber.w(e, "⚠️ Firebase initialization warning (may be already initialized)")
-        }
 
         // Wire NexusMemoryCore bridge
         NexusMemoryCore.setRepository(nexusMemoryRepository)
@@ -123,10 +114,10 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeNativeAIPlatform() {
         try {
-            dev.aurakai.auraframefx.domains.genesis.core.NativeLib.initializeAISafe()
-            Timber.d("✅ Native AI platform initialized")
-        } catch (e: Exception) {
-            Timber.e(e, "❌ Native AI initialization error: ${e.message}")
+            val ok = NativeLib.tryInitializeAICore()
+            Timber.i("✅ Native AI platform init result: %s", ok)
+        } catch (t: Throwable) {
+            Timber.e(t, "❌ Native AI initialization error: ${t.message} (swallowed to prevent startup crash)")
         }
     }
 
@@ -146,20 +137,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun setupLogging() {
         if (BuildConfig.DEBUG) {
-            Timber.plant(object : Timber.DebugTree() {
-                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                    // Filter noisy hardware sensor hub spam (AOC/CHRE/USF)
-                    if (tag != null && (
-                        tag.contains("AOC", ignoreCase = true) ||
-                        tag.contains("CHRE", ignoreCase = true) ||
-                        tag.contains("USF", ignoreCase = true) ||
-                        message.contains("Calculated CCT", ignoreCase = true)
-                    )) {
-                        if (priority < Log.WARN) return
-                    }
-                    super.log(priority, tag, message, t)
-                }
-            })
+            Timber.plant(Timber.DebugTree())
         }
     }
 }

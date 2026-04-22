@@ -22,7 +22,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private lateinit var dataStoreManager: dev.aurakai.auraframefx.data.DataStoreManager
     private lateinit var memoryManager: dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
-    private lateinit var securityContext: dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
     private lateinit var logger: dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 
     private val scope = CoroutineScope(Dispatchers.IO + Job())

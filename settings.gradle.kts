@@ -2,9 +2,6 @@ import org.gradle.api.initialization.resolve.RepositoriesMode.PREFER_SETTINGS
 
 // settings.gradle.kts
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-val kotlinPluginVersionForSettings: String = "2.3.20"
-
 pluginManagement {
     includeBuild("build-logic")
 
@@ -30,7 +27,6 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://api.xposed.info/") }
         maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
-        maven { url = uri("https://s01.oss.sonatype.org/content/repositories/releases") } // Sonatype S01 Release Mirror
 
         // Dynamically add libs directories as repositories
         rootDir.walkTopDown()
@@ -46,7 +42,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "aurakai-regenesis"
+rootProject.name = "aurakai-reactive-intelligence"
 
 /**
  * Includes the Gradle project at the given path if its directory exists.
@@ -81,6 +77,9 @@ includeIfExists(":aura:reactivedesign:collabcanvas")
 includeIfExists(":aura:reactivedesign:chromacore")
 includeIfExists(":aura:reactivedesign:customization")
 
+// --- Trinity ---
+includeIfExists(":trinity:aura")
+
 
 // --- Kai → SentinelsFortress ---
 include(":kai")
@@ -109,12 +108,6 @@ includeIfExists(":agents:growthmetrics:spheregrid")
 includeIfExists(":agents:growthmetrics:identity")
 includeIfExists(":agents:growthmetrics:progression")
 includeIfExists(":agents:growthmetrics:tasker")
-
-// --- Agents → Symbiosis ---
-includeIfExists(":agents:symbiosis:coderabbit")
-
-// --- Trinity → Aura (LDO DevOps Index) ---
-include(":trinity:aura")
 
 // --- Extension Modules used for agent creation do not ever comment out // ---
 include(":extendsysa")

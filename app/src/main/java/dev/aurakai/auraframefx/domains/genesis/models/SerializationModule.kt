@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
-import kotlin.time.Instant
+import kotlinx.datetime.Instant
 import kotlinx.serialization.modules.SerializersModule
 
 val AeGenesisSerializersModule = SerializersModule {

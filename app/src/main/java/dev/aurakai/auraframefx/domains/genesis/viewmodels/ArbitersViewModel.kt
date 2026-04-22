@@ -7,7 +7,7 @@ import dev.aurakai.auraframefx.domains.aura.core.transmutation.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -42,11 +42,11 @@ class ArbitersViewModel @Inject constructor(
     fun ignite() {
         viewModelScope.launch {
             _isIgnited.value = true
-            _transmutationState.value = TransmutationState.Transmuting(0f, "Ignition Sequence Initiated...")
+            _transmutationState.value = TransmutationState.Transmuting
+            // Simulate fusion confidence climb
             for (i in 1..100) {
                 kotlinx.coroutines.delay(30)
                 _fusionConfidence.value = i.toFloat()
-                _transmutationState.value = TransmutationState.Transmuting(i / 100f, "Synchronizing nodes...")
             }
         }
     }
@@ -55,17 +55,19 @@ class ArbitersViewModel @Inject constructor(
         val record = TransmutationRecord(
             id = UUID.randomUUID().toString(),
             blueprintId = "NS-RECORD-OVR",
-            provenanceChain = emptyList(),
+            provenanceChain = emptyList(), // Origin locked by SCG later
             timestamp = System.currentTimeMillis(),
             confidence = _fusionConfidence.value
         )
         
         _transmutationState.value = TransmutationState.Complete(record)
 
+        // 🛡️ Sovereign Sync Pulse: Trigger state freeze to anchor the breakthrough
         viewModelScope.launch {
-            sovereignStateManager.requestSovereignFreeze("NEURAL_SYNC_BREAKTHROUGH", null)
+            sovereignStateManager.initiateStateFreeze()
         }
 
+        // Reset the reactor visuals for the next sync cycle
         _isIgnited.value = false
         _fusionConfidence.value = 0f
     }

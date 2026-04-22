@@ -130,7 +130,6 @@ open class IconCacheManager @Inject constructor(
     /**
      * Cache icon collections metadata
      */
-    suspend fun cacheCollections(collections: Map<String, IconifyApiCollection>) =
         withContext(Dispatchers.IO) {
             try {
                 val jsonString = json.encodeToString(collections)
@@ -144,12 +143,10 @@ open class IconCacheManager @Inject constructor(
     /**
      * Get cached collections
      */
-    suspend fun getCachedCollections(): Map<String, IconifyApiCollection>? = withContext(Dispatchers.IO) {
         try {
             if (!collectionsFile.exists()) return@withContext null
 
             val jsonString = collectionsFile.readText()
-            val collections = json.decodeFromString<Map<String, IconifyApiCollection>>(jsonString)
 
             Timber.d("Loaded ${collections.size} collections from cache")
             collections

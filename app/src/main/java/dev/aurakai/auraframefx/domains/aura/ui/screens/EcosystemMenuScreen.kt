@@ -5,7 +5,6 @@ package dev.aurakai.auraframefx.domains.aura.ui.screens
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -13,20 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.core.models.HomeScreenTransitionType
-import dev.aurakai.auraframefx.domains.aura.ui.components.DigitalTransitionRow
+import dev.aurakai.auraframefx.domains.aura.animations.HomeScreenTransitionType
+import dev.aurakai.auraframefx.domains.aura.animations.DigitalTransitionRow
 import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
 
+/**
+ * Displays the Ecosystem Menu screen with a holographic transition and transition type selector.
+ *
+ * @param transitionType The currently selected home screen transition type.
+ * @param showHologram Whether to display the hologram transition effect.
+ */
 /**
  * Displays the Ecosystem Menu screen with a holographic transition effect and a transition type selector.
  *
  * @param transitionType The currently selected home screen transition type.
  * @param showHologram Whether to display the holographic transition effect.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EcosystemMenuScreen(
-    onNavigateBack: () -> Unit,
     transitionType: HomeScreenTransitionType = HomeScreenTransitionType.DIGITAL_DECONSTRUCT,
     showHologram: Boolean = true,
 ) {
@@ -36,7 +39,7 @@ fun EcosystemMenuScreen(
                 title = { Text("Ecosystem Hub", fontWeight = androidx.compose.ui.text.font.FontWeight.Black) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        androidx.compose.material3.Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -49,21 +52,19 @@ fun EcosystemMenuScreen(
         containerColor = Color.Black
     ) { innerPadding ->
         Box(
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            HologramTransition(visible = showHologram) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Ecosystem Command Center",
-                        style = androidx.compose.material3.MaterialTheme.typography.headlineSmall,
-                        color = Color(0xFFE94560)
-                    )
-                    DigitalTransitionRow(
-                        currentType = transitionType,
-                        onTypeSelected = {}
-                    )
-                }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Ecosystem Command Center",
+                    style = androidx.compose.material3.MaterialTheme.typography.headlineSmall,
+                    color = Color(0xFFE94560)
+                )
+                DigitalTransitionRow(
+                    currentType = transitionType,
+                    onTypeSelected = {}
+                )
             }
         }
     }

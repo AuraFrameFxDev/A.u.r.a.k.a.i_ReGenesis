@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Construction
@@ -31,14 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-import dev.aurakai.auraframefx.domains.aura.ui.components.GlitchText
-import dev.aurakai.auraframefx.domains.aura.ui.components.HexagonGrid
-import dev.aurakai.auraframefx.domains.aura.ui.components.SparkleButton
-
 /**
- * 🎨 STUB SCREEN - Beautiful placeholder for routes not yet implemented
+ * ðŸŽ¨ STUB SCREEN - Beautiful placeholder for routes not yet implemented
  * 
- * ReGenesis LDO Edition: Features HexagonGrid, GlitchText, and SparkleButton
+ * Temporary neon blue cards matching the holographic aesthetic
+ * Will be replaced with personality-matched gate cards later
  */
 @Composable
 fun StubScreen(
@@ -50,11 +48,16 @@ fun StubScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF0A0A0F),
+                        Color(0xFF0F1420),
+                        Color(0xFF12192B)
+                    )
+                )
+            )
     ) {
-        // Geometric Background
-        HexagonGrid(color = Color(0xFF00D9FF).copy(alpha = 0.05f))
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -65,11 +68,11 @@ fun StubScreen(
             // Holographic card frame
             Box(
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(200.dp)
                     .background(
                         brush = Brush.radialGradient(
                             colors = listOf(
-                                Color(0xFF00D9FF).copy(alpha = 0.2f),
+                                Color(0xFF00D9FF).copy(alpha = 0.3f),
                                 Color.Transparent
                             )
                         )
@@ -80,71 +83,87 @@ fun StubScreen(
                     Icons.Default.Construction,
                     contentDescription = iconName,
                     tint = Color(0xFF00D9FF),
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(100.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Title with Glitch effect
-            GlitchText(
-                text = title.uppercase(),
+            // Title
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Black,
+                    fontSize = 28.sp
+                ),
                 color = Color.White,
-                glitchColor = Color(0xFF00D9FF)
+                textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Subtitle
+            // Icon name
             Text(
-                text = "SUB-SYSTEM: $iconName",
+                text = iconName,
                 style = MaterialTheme.typography.labelMedium.copy(
-                    letterSpacing = 2.sp,
-                    fontWeight = FontWeight.Bold
+                    letterSpacing = 1.sp
                 ),
-                color = Color(0xFF00D9FF).copy(alpha = 0.7f)
+                color = Color(0xFF00D9FF)
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Status Card
+            // Description or coming soon
             Card(
-                modifier = Modifier.fillMaxWidth(0.85f),
+                modifier = Modifier.fillMaxWidth(0.9f),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.White.copy(alpha = 0.03f)
-                ),
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF00D9FF).copy(alpha = 0.2f))
+                    containerColor = Color(0xFF00D9FF).copy(alpha = 0.1f)
+                )
             ) {
                 Column(
-                    modifier = Modifier.padding(20.dp),
-                    horizontalAlignment = Alignment.Start
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "› INITIALIZING NEURAL PATHWAY...",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = Color.Green.copy(alpha = 0.6f)
+                        text = "ðŸš§ COMING SOON",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = Color(0xFF00D9FF)
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
-                        text = description ?: "This system logic is currently being forged in Aura's Lab. Deployment scheduled for next cycle.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.6f),
-                        lineHeight = 18.sp
+                        text = description ?: "This feature is currently under development",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White.copy(alpha = 0.7f),
+                        textAlign = TextAlign.Center
                     )
                 }
             }
 
-            // Navigation
+            // Back Button
             if (navController != null) {
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(32.dp))
 
-                SparkleButton(
-                    text = "Return to Gate",
+                Button(
                     onClick = { navController.popBackStack() },
-                    color = Color(0xFF00D9FF)
-                )
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF00D9FF).copy(alpha = 0.2f)
+                    )
+                ) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color(0xFF00D9FF)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "BACK",
+                        color = Color.White
+                    )
+                }
             }
         }
     }

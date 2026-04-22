@@ -225,6 +225,3 @@ data class ActiveManifestation(
 enum class Character {
     AURA, KAI
 }
-
-// Position3D is defined in Position3D.kt — do not redeclare here.
-// See: dev.aurakai.auraframefx.embodiment.Position3D

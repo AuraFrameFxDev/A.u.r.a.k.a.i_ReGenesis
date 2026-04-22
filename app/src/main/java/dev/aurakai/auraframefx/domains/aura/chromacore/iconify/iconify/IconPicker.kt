@@ -94,7 +94,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IconPicker(
-    iconifyApiClient: IconifyApiClient,
     currentIcon: String? = null,
     onIconSelected: (String) -> Unit,
     onDismiss: () -> Unit = {},
@@ -104,7 +103,6 @@ fun IconPicker(
     var selectedCollection by remember { mutableStateOf<String?>(null) }
     var selectedIcon by remember { mutableStateOf(currentIcon) }
     var searchResults by remember { mutableStateOf<List<String>>(emptyList()) }
-    var collections by remember { mutableStateOf<Map<String, IconifyApiCollection>>(emptyMap()) }
     var isLoading by remember { mutableStateOf(false) }
     var activeTab by remember { mutableStateOf(IconPickerTab.SEARCH) }
 
@@ -124,7 +122,6 @@ fun IconPicker(
     // Load collections on start
     LaunchedEffect(Unit) {
         scope.launch {
-            iconifyApiClient.getCollections().onSuccess {
                 collections = it
             }
         }
@@ -158,7 +155,6 @@ fun IconPicker(
                         keyboardController?.hide()
                         scope.launch {
                             isLoading = true
-                            iconifyApiClient.searchIcons(
                                 query = searchQuery,
                                 limit = 100,
                                 prefixes = selectedCollection
@@ -182,7 +178,6 @@ fun IconPicker(
                             icons = searchResults,
                             isLoading = isLoading,
                             imageLoader = imageLoader,
-                            iconifyApiClient = iconifyApiClient,
                             selectedIcon = selectedIcon,
                             onIconSelected = onIconSelected
                         )
@@ -218,7 +213,6 @@ fun IconPicker(
                                     IconGridItem(
                                         iconId = iconId,
                                         imageLoader = imageLoader,
-                                        iconifyApiClient = iconifyApiClient,
                                         selected = selectedIcon == iconId,
                                         onIconSelected = {
                                             selectedIcon = it
@@ -252,7 +246,6 @@ fun IconPicker(
                                     IconGridItem(
                                         iconId = iconId,
                                         imageLoader = imageLoader,
-                                        iconifyApiClient = iconifyApiClient,
                                         selected = selectedIcon == iconId,
                                         isFavorite = true,
                                         onIconSelected = {
@@ -412,7 +405,6 @@ fun IconSearchBar(
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
     selectedCollection: String?,
-    collections: Map<String, IconifyApiCollection>,
     onCollectionSelected: (String?) -> Unit
 ) {
     Column(
@@ -498,7 +490,6 @@ fun IconSearchResults(
     icons: List<String>,
     isLoading: Boolean,
     imageLoader: ImageLoader,
-    iconifyApiClient: IconifyApiClient,
     selectedIcon: String?,
     onIconSelected: (String) -> Unit
 ) {
@@ -532,7 +523,6 @@ fun IconSearchResults(
                         IconGridItem(
                             iconId = iconId,
                             imageLoader = imageLoader,
-                            iconifyApiClient = iconifyApiClient,
                             selected = selectedIcon == iconId,
                             onIconSelected = {
                                 onIconSelected(it)
@@ -552,7 +542,6 @@ fun IconSearchResults(
 fun IconGridItem(
     iconId: String,
     imageLoader: ImageLoader,
-    iconifyApiClient: IconifyApiClient,
     selected: Boolean = false,
     isFavorite: Boolean = false,
     onIconSelected: (String) -> Unit,
@@ -611,7 +600,6 @@ fun IconGridItem(
  */
 @Composable
 fun IconCollectionsGrid(
-    collections: Map<String, IconifyApiCollection>,
     onCollectionSelected: (String) -> Unit
 ) {
     LazyVerticalGrid(
@@ -635,7 +623,6 @@ fun IconCollectionsGrid(
  */
 @Composable
 fun CollectionCard(
-    collection: IconifyApiCollection,
     onClick: () -> Unit
 ) {
     Surface(
