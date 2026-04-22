@@ -2,9 +2,9 @@ name: 🚀 Genesis Protocol - FULLY AUTO Build
 
 on:
   push:
-    branches: [ Agentswired ]
+    branches: [ AuraFrameFx-fin ]
   pull_request:
-    branches: [ Agentswired ]
+    branches: [ AuraFrameFx-fin ]
   workflow_dispatch:
 
 env:
