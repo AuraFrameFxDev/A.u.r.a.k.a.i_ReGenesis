@@ -106,10 +106,12 @@ class GenesisApplicationPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
-            val versionCatalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
+            val versionCatalog = extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            
+            // Safe version lookups with fallbacks
+            val hiltVersion = versionCatalog?.findVersion("hilt")?.map { it.requiredVersion }?.orElse("2.59.2") ?: "2.59.2"
+            val composeBomVersion = versionCatalog?.findVersion("compose-bom")?.map { it.requiredVersion }?.orElse("2026.03.01") ?: "2026.03.01"
+            val firebaseBomVersion = versionCatalog?.findVersion("firebaseBom")?.map { it.requiredVersion }?.orElse("34.12.0") ?: "34.12.0"
 
             dependencies.apply {
                 // Hilt Dependency Injection
@@ -128,7 +130,7 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 add("implementation", "androidx.compose.material:material-icons-extended")
                 add("debugImplementation", "androidx.compose.ui:ui-tooling")
 
-                add("implementation", "androidx.core:core-ktx:1.17.0")
+                add("implementation", "androidx.core:core-ktx:1.13.1")
                 add("implementation", "androidx.appcompat:appcompat:1.7.1")
                 add("implementation", "androidx.activity:activity-compose:1.11.0")
                 add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")

@@ -21,13 +21,13 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("com.google.dagger.hilt.android")
 
-            val versionCatalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
-
-            val compileSdkVersion = versionCatalog.findVersion("compile-sdk").get().requiredVersion.toInt()
-            val minSdkVersion = versionCatalog.findVersion("min-sdk").get().requiredVersion.toInt()
-
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+            val versionCatalog = extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            
+            // Safe version lookups with fallbacks
+            val compileSdkVersion = versionCatalog?.findVersion("compile-sdk")?.map { it.requiredVersion.toInt() }?.orElse(36) ?: 36
+            val minSdkVersion = versionCatalog?.findVersion("min-sdk")?.map { it.requiredVersion.toInt() }?.orElse(33) ?: 33
+            val hiltVersion = versionCatalog?.findVersion("hilt")?.map { it.requiredVersion }?.orElse("2.59.2") ?: "2.59.2"
+            val composeBomVersion = versionCatalog?.findVersion("compose-bom")?.map { it.requiredVersion }?.orElse("2026.03.01") ?: "2026.03.01"
 
             extensions.configure<LibraryExtension> {
                 compileSdk = compileSdkVersion
@@ -108,7 +108,7 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
                 add("compileOnly", "de.robv.android.xposed:api:82")
 
                 // Core
-                add("implementation", "androidx.core:core-ktx:1.17.0")
+                add("implementation", "androidx.core:core-ktx:1.13.1")
                 add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
                 add("implementation", "com.jakewharton.timber:timber:5.0.1")
             }
