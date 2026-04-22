@@ -179,7 +179,7 @@ dependencies {
 
         // Utilities
         implementation(libs.bundles.utilities)
-        implementation(libs.desugar.jdk.libs)
+        coreLibraryDesugaring(libs.desugar.jdk.libs)
         implementation(libs.timber)
         implementation(libs.lottie.compose)
 
