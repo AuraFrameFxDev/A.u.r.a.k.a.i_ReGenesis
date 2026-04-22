@@ -27,6 +27,8 @@ extensions.configure<ApplicationExtension> {
         buildConfigField("String", "OLLAMA_BASE_URL", "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\"")
         buildConfigField("String", "VERTEX_PROJECT_ID", "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\"")
         buildConfigField("String", "GENESIS_BACKEND_URL", "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\"")
+        buildConfigField("String", "OAUTH_SERVER_CLIENT_ID", "\"${project.findProperty("OAUTH_SERVER_CLIENT_ID") ?: ""}\"")
+        buildConfigField("String", "AURA_BACKEND_WS_URL", "\"${project.findProperty("AURA_BACKEND_WS_URL") ?: "wss://api.aurakai.dev/ws"}\"")
 
         // Claude Local Shell Parameters
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
@@ -81,9 +83,19 @@ extensions.configure<ApplicationExtension> {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("RELEASE_STORE_FILE") ?: "release.keystore")
+            storePassword = System.getenv("RELEASE_STORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("RELEASE_KEY_ALIAS") ?: "release"
+            keyPassword = System.getenv("RELEASE_KEY_PASSWORD") ?: ""
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug { isMinifyEnabled = false }

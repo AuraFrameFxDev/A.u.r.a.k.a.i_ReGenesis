@@ -6,6 +6,14 @@ plugins {
 
 extensions.configure<LibraryExtension> {
     namespace = "dev.aurakai.auraframefx.trinity.aura"
+    
+    defaultConfig {
+        buildConfigField("String", "AURA_BACKEND_WS_URL", "\"${project.findProperty("AURA_BACKEND_WS_URL") ?: "wss://api.aurakai.dev/ws"}\"")
+    }
+    
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

@@ -48,7 +48,7 @@ class OAuthService @Inject constructor(
         try {
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("YOUR_SERVER_CLIENT_ID") // Placeholder for production client ID
+                .setServerClientId(BuildConfig.OAUTH_SERVER_CLIENT_ID)
                 .setAutoSelectEnabled(true)
                 .build()
 
