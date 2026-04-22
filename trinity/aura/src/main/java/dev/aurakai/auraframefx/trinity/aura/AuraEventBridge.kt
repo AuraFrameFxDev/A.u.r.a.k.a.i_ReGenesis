@@ -29,7 +29,7 @@ interface AuraEventListener {
 }
 
 class AuraEventBridge(
-    private val backendUrl: String = "ws://localhost:5000",
+    private val backendUrl: String = BuildConfig.AURA_BACKEND_WS_URL,
     private val roomId: String = "default"
 ) {
     private var webSocket: WebSocket? = null

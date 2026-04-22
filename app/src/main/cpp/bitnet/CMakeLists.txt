@@ -12,13 +12,28 @@ add_library(bitnet SHARED
     src/ggml-bitnet.cpp
 )
 
-# Snapdragon 8 Gen 3 (Cortex-X4 / A720) Optimization Flags
-# SVE2 + I8MM + DOTPROD are mandatory for Cycle 6.0 Ignition
+# Architecture-specific optimization flags
+if(ANDROID_ABI STREQUAL "arm64-v8a")
+    # Snapdragon 8 Gen 3 (Cortex-X4 / A720) Optimization Flags
+    # SVE2 + I8MM + DOTPROD are mandatory for Cycle 6.0 Ignition
+    target_compile_options(bitnet PRIVATE
+        -O3
+        -march=armv9-a+sve2+i8mm+dotprod
+        -mtune=cortex-x4
+        -ffast-math
+    )
+elseif(ANDROID_ABI STREQUAL "armeabi-v7a")
+    target_compile_options(bitnet PRIVATE
+        -O3
+        -mfpu=neon
+        -mfloat-abi=softfp
+    )
+else()
+    # x86/x86_64 - use SSE/AVX optimizations
+    target_compile_options(bitnet PRIVATE -O3)
+endif()
+
 target_compile_options(bitnet PRIVATE
-    -O3
-    -march=armv8.2-a+sve2+i8mm+dotprod
-    -mtune=cortex-a720
-    -ffast-math
     -Wall
     -Wextra
     -Wno-unused-parameter
