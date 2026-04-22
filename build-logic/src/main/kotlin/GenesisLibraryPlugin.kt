@@ -89,26 +89,21 @@ class GenesisLibraryPlugin : Plugin<Project> {
             GenesisJvmConfig.configureKotlinJvm(project)
             GenesisCommonConfig.configure(project)
 
-            // YukiHook & Hilt KSP Configuration
-            extensions.configure(com.google.devtools.ksp.gradle.KspExtension::class.java) {
-                // Generate a unique package name per module based on its full Gradle path
-                val uniquePackage = "dev.aurakai.auraframefx.generated." +
-                        project.path.removePrefix(":").replace(":", ".").replace("-", "_")
-                arg("yukihookapi.modulePackageName", uniquePackage)
-            }
-
             // ═══════════════════════════════════════════════════════════════════════════
             // Auto-configured dependencies (provided by convention plugin)
             // ═══════════════════════════════════════════════════════════════════════════
+            // Note: KSP configuration is handled by apply-yukihook-conventions.gradle.kts
 
             // ═══════════════════════════════════════════════════════════════════════
             // Versions read from libs.versions.toml — single source of truth
             // ═══════════════════════════════════════════════════════════════════════
             val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
+                extensions.findByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
+                    ?.named("libs")
+            
+            // Safe version lookup with fallbacks
+            val hiltVersion = versionCatalog?.findVersion("hilt")?.map { it.requiredVersion }?.orElse("2.59.2") ?: "2.59.2"
+            val composeBomVersion = versionCatalog?.findVersion("compose-bom")?.map { it.requiredVersion }?.orElse("2026.03.01") ?: "2026.03.01"
 
             // Hilt Dependency Injection
             dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")

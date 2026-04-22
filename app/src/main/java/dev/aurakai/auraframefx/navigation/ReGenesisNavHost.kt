@@ -503,5 +503,30 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.AiChatBeta.route) { StubScreen("AI Chat (Beta)", "ChatBubble", navController) }
         composable(ReGenesisRoute.SettingsBeta.route) { StubScreen("Settings (Beta)", "Settings", navController) }
         composable(ReGenesisRoute.GateImagePicker.route) { StubScreen("Gate Image Picker", "Image", navController) }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // NEW ROUTES FOR 7-TAB ARCHITECTURE (Dashboard, Cascade, Nexus)
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        // Dashboard - Live Monitoring
+        composable(ReGenesisRoute.CascadeVision.route) { StubScreen("Cascade Vision", "Visibility", navController) }
+        composable(ReGenesisRoute.ThermalMonitor.route) { StubScreen("Thermal Monitor", "Thermostat", navController) }
+        composable(ReGenesisRoute.AgentSwarm.route) { StubScreen("Agent Swarm", "Hub", navController) }
+
+        // Cascade Memory - L1-L6 Persistence
+        composable(ReGenesisRoute.NexusMemoryCore.route) { StubScreen("Nexus Memory Core", "Storage", navController) }
+        composable(ReGenesisRoute.SpiritualChain.route) { StubScreen("Spiritual Chain", "Link", navController) }
+        composable(ReGenesisRoute.TurboQuant.route) { StubScreen("TurboQuant", "Compress", navController) }
+        composable(ReGenesisRoute.SynapseMonitor.route) { StubScreen("Synapse Monitor", "Memory", navController) }
+        composable(ReGenesisRoute.IdentityResonance.route) { StubScreen("Identity Resonance", "Fingerprint", navController) }
+
+        // Nexus - Agent Swarm (additional routes)
+        composable(ReGenesisRoute.AgentHub.route) { EcosystemMenuScreen(onNavigateBack = { navController.popBackStack() }) }
+        composable(ReGenesisRoute.AgentCreation.route) { StubScreen("Agent Creation", "AddCircle", navController) }
+        composable(ReGenesisRoute.AgentMonitoring.route) { StubScreen("Agent Monitoring", "Insights", navController) }
+        composable(ReGenesisRoute.AgentNeuralExplorer.route) { StubScreen("Neural Explorer", "Explore", navController) }
+
+        // Echo Resonance (shared between Dashboard and Cascade)
+        composable(ReGenesisRoute.EchoResonance.route) { StubScreen("Echo Resonance", "AcUnit", navController) }
     }
 }

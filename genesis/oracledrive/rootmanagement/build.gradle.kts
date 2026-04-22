@@ -42,7 +42,7 @@ dependencies {
     implementation(libs.libsu.service)
 
     // Unit Test dependencies
-    testImplementation(libs.kotlin.test)
+    testImplementation(kotlin("test"))
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)

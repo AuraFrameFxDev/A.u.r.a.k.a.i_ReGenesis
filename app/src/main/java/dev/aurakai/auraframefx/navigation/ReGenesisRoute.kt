@@ -123,8 +123,26 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object NeuralNetwork : ReGenesisRoute("neural_network")
 
     // ═══════════════════════════════════════════════════════════════
+    // LEVEL 3: DASHBOARD - LIVE MONITORING
+    // ═══════════════════════════════════════════════════════════════
+    data object CascadeVision : ReGenesisRoute("cascade_vision", "Cascade Vision")
+    data object ThermalMonitor : ReGenesisRoute("thermal_monitor", "Thermal Guard")
+    data object AgentSwarm : ReGenesisRoute("agent_swarm", "Agent Swarm")
+    data object EchoResonance : ReGenesisRoute("echo_resonance", "Echo Resonance")
+
+    // ═══════════════════════════════════════════════════════════════
+    // LEVEL 3: CASCADE MEMORY - L1-L6 PERSISTENCE
+    // ═══════════════════════════════════════════════════════════════
+    data object NexusMemoryCore : ReGenesisRoute("nexus_memory_core", "Nexus Core")
+    data object SpiritualChain : ReGenesisRoute("spiritual_chain", "Spiritual Chain")
+    data object TurboQuant : ReGenesisRoute("turboquant", "TurboQuant")
+    data object SynapseMonitor : ReGenesisRoute("synapse_monitor", "Synapse Monitor")
+    data object IdentityResonance : ReGenesisRoute("identity_resonance", "Identity Drift Guard")
+
+    // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: NEXUS AGENT HUB TOOLS
     // ═══════════════════════════════════════════════════════════════
+    data object AgentHub : ReGenesisRoute("agent_hub", "Agent Hub")
     data object AgentHubSubmenu : ReGenesisRoute("agent_hub_submenu")
     data object AgentCreation : ReGenesisRoute("agent_creation")
     data object AgentMonitoring : ReGenesisRoute("agent_monitoring")
