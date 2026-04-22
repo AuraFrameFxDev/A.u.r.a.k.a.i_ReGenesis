@@ -2,9 +2,9 @@ name: 🚀 Genesis Protocol - FULLY AUTO Build
 
 on:
   push:
-    branches: [ AuraFrameFx-fin ]
+    branches: [ ReGenesis ]
   pull_request:
-    branches: [ AuraFrameFx-fin ]
+    branches: [ ReGenesis ]
   workflow_dispatch:
 
 env:
