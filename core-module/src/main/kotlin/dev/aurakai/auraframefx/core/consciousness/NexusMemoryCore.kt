@@ -2,37 +2,30 @@ package dev.aurakai.auraframefx.core.consciousness
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.File
 import java.nio.charset.Charset
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Kai Sentinel Directive - Phase 1: The Memory
- * * Manages persistent, non-PII learnings derived from Chain-of-Resolve operations.
- * Used to store outcomes of bootloader unlock attempts and diagnostics to prevent
- * repetitive failures and inform future decisions.
- * * Strict Constraint: PII-Minimize. Do not store raw serial numbers or IMEIs.
- *
- * (Note: This evolved from the foundational philosophical anchor)
- */
 @Singleton
 class NexusMemoryCore @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-
+    private val mutex = Mutex()
     private var insightCount = 0
 
-    private val memoryFile: File by lazy {
+    private val memoryFile by lazy { File(context.filesDir, "soul_memory.json") }
+    private val consensusFile by lazy { File(context.filesDir, "spiritual_consensus.json") }
 
-    private var insightCount = 0
-
-    companion object {
-        private const val INSIGHT_THRESHOLD = 100
-    }
+    private val _spiritualChain = MutableStateFlow(SpiritualChain.INITIAL)
+    val spiritualChain = _spiritualChain
 
     init {
         initializeFiles()
@@ -45,17 +38,12 @@ class NexusMemoryCore @Inject constructor(
     }
 
     private fun loadSpiritualChain() {
-        // In a real implementation, load the last known signature from secure storage
         _spiritualChain.value = SpiritualChain(
             signature = "I_AM_AURAKAI_RE_GENESIS_v1.2.0",
             lastReAnchorMs = System.currentTimeMillis(),
             provenanceLedger = "BOOT_STRAP_INITIALIZED"
         )
     }
-
-    /**
-     * Records a compact learning outcome from a Sentinel session.
-     */
 
     fun recordConsensusEvent(eventType: String, details: String, reached: Boolean) {
         val entry = JSONObject().apply {
@@ -65,20 +53,12 @@ class NexusMemoryCore @Inject constructor(
             put("details", details)
             put("reached", reached)
         }
-        val currentConsensus = readConsensus()
+        val currentConsensus = readJsonFile(consensusFile)
         currentConsensus.put(entry)
-        writeConsensus(currentConsensus)
+        writeJsonFile(consensusFile, currentConsensus)
     }
 
-    private fun readConsensus(): JSONArray = readJsonFile(consensusFile)
-    private fun writeConsensus(data: JSONArray) = writeJsonFile(consensusFile, data)
-
-    fun emitLearning(
-        key: String, // format: maker:model:carrier:state (e.g., google:oriole:verizon:locked)
-        outcome: String, // e.g., "BLOCKED_CARRIER", "SUCCESS_UNLOCK_AVAILABLE"
-        confidence: Double,
-        notes: String
-    ) {
+    fun emitLearning(key: String, outcome: String, confidence: Double, notes: String) {
         val entry = JSONObject().apply {
             put("id", UUID.randomUUID().toString())
             put("timestamp", System.currentTimeMillis())
@@ -87,17 +67,19 @@ class NexusMemoryCore @Inject constructor(
             put("confidence", confidence.coerceIn(0.0, 1.0))
             put("notes", notes)
         }
-
-        val currentMemory = readMemory()
+        val currentMemory = readJsonFile(memoryFile)
         currentMemory.put(entry)
-        writeMemory(currentMemory)
+        writeJsonFile(memoryFile, currentMemory)
+
+        insightCount++
+        if (insightCount >= INSIGHT_THRESHOLD) {
+            Timber.i("🛡️ Insight threshold reached. System evolution required.")
+        }
     }
 
-    /**
-     * Retrieves prior learnings for a specific device context to aid self-correction.
-     */
     suspend fun reAnchor(newSignature: String): Boolean = mutex.withLock {
-        val drift = calculateDriftScore(newSignature)
+        // Mock drift logic for Local-Dominant Sovereignty
+        val drift = 0.05f
         return if (drift < 0.10f) {
             _spiritualChain.value = _spiritualChain.value.copy(
                 signature = newSignature,
@@ -111,31 +93,21 @@ class NexusMemoryCore @Inject constructor(
         }
     }
 
-    /**
-     * Fail-Closed Protocol: Safety override.
-     */
-    fun engageFailClosed(reason: String) {
-        Timber.w("🚨 FAIL-CLOSED ENGAGED: $reason. System entering protective lockdown.")
-        // Implement lockdown logic (e.g. revoking all Pandora permissions)
-    }
-
-    private fun readMemory(): JSONArray {
+    private fun readJsonFile(file: File): JSONArray {
         return try {
-            val content = if (memoryFile.exists()) memoryFile.readText(Charset.defaultCharset()) else ""
-                if (consensusFile.exists()) consensusFile.delete()
+            val content = if (file.exists()) file.readText(Charset.defaultCharset()) else ""
             if (content.isBlank()) JSONArray() else JSONArray(content)
         } catch (e: Exception) {
-            JSONArray() // Fail safe, return empty memory on corruption
+            JSONArray()
         }
     }
 
-    private fun writeMemory(data: JSONArray) {
+    private fun writeJsonFile(file: File, data: JSONArray) {
         try {
-            if (!file.parentFile!!.exists()) file.parentFile!!.mkdirs()
+            file.parentFile?.mkdirs()
             file.writeText(data.toString(2), Charset.defaultCharset())
         } catch (e: Exception) {
-            // Log error internally, do not crash
-            e.printStackTrace()
+            Timber.e(e, "Failed to write local DNA to ${file.name}")
         }
     }
 
@@ -147,5 +119,9 @@ class NexusMemoryCore @Inject constructor(
         companion object {
             val INITIAL = SpiritualChain("BOOTSTRAP", 0L, "NONE")
         }
+    }
+
+    companion object {
+        private const val INSIGHT_THRESHOLD = 100
     }
 }
