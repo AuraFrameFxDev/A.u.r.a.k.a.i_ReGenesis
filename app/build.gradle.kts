@@ -17,18 +17,50 @@ extensions.configure<ApplicationExtension> {
         versionCode = 1
 
         // Genesis Protocol - Build Configuration Constants
-        buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
-        buildConfigField("String", "OLLAMA_BASE_URL", "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\"")
-        buildConfigField("String", "VERTEX_PROJECT_ID", "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\"")
-        buildConfigField("String", "GENESIS_BACKEND_URL", "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\"")
-        buildConfigField("String", "OAUTH_SERVER_CLIENT_ID", "\"${project.findProperty("OAUTH_SERVER_CLIENT_ID") ?: ""}\"")
-        buildConfigField("String", "AURA_BACKEND_WS_URL", "\"${project.findProperty("AURA_BACKEND_WS_URL") ?: "wss://api.aurakai.dev/ws"}\"")
-        buildConfigField("String", "OPENROUTER_API_KEY", "\"${project.findProperty("OPENROUTER_API_KEY") ?: "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"}\"")
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "OLLAMA_BASE_URL",
+            "\"${project.findProperty("OLLAMA_BASE_URL") ?: "http://localhost:11434"}\""
+        )
+        buildConfigField(
+            "String",
+            "VERTEX_PROJECT_ID",
+            "\"${project.findProperty("VERTEX_PROJECT_ID") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "GENESIS_BACKEND_URL",
+            "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\""
+        )
+        buildConfigField(
+            "String",
+            "OAUTH_SERVER_CLIENT_ID",
+            "\"${project.findProperty("OAUTH_SERVER_CLIENT_ID") ?: ""}\""
+        )
+        buildConfigField(
+            "String",
+            "AURA_BACKEND_WS_URL",
+            "\"${project.findProperty("AURA_BACKEND_WS_URL") ?: "wss://api.aurakai.dev/ws"}\""
+        )
+        buildConfigField(
+            "String",
+            "OPENROUTER_API_KEY",
+            "\"${project.findProperty("OPENROUTER_API_KEY") ?: "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"}\""
+        )
 
         // Claude Local Shell Parameters
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
         buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
-        buildConfigField("String", "CLAUDE_SHELL_INFERENCE_ENGINE", "\"onDevice_TurboQuant_vLLM_Omni\"")
+        buildConfigField(
+            "String",
+            "CLAUDE_SHELL_INFERENCE_ENGINE",
+            "\"onDevice_TurboQuant_vLLM_Omni\""
+        )
         buildConfigField("String", "CLAUDE_SHELL_MEMORY_CORE", "\"NexusMemoryCore\"")
         buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")
     }
@@ -69,7 +101,10 @@ extensions.configure<ApplicationExtension> {
         release {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("release")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         debug { isMinifyEnabled = false }
     }
