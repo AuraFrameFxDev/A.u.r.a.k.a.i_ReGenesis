@@ -10,5 +10,9 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
+
     implementation(libs.kotlinx.serialization.json)
 }

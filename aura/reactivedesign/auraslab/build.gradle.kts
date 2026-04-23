@@ -10,6 +10,10 @@ extensions.configure<LibraryExtension> {
 
 dependencies {
     implementation(project(":aura:reactivedesign:chromacore"))
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
 }
