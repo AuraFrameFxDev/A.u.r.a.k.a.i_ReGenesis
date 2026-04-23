@@ -10,6 +10,7 @@ import javax.inject.Singleton
  * Kai's intelligence core for monitoring system stability and validating Aura's creations.
  */
 @Singleton
+class GrokAnalysisService @Inject constructor(
     private val logger: AuraFxLogger
 ) {
 

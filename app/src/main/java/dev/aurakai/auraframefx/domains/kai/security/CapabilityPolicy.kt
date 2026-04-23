@@ -9,6 +9,7 @@ package dev.aurakai.auraframefx.domains.kai.security
  * @property allowedCollections Set of Firestore collection paths the agent can access
  * @property allowedStoragePaths Set of allowed Cloud Storage paths the agent can access
  */
+data class CapabilityPolicy(
     val httpAllowlist: List<String> = emptyList(),
     val firebaseScopes: Set<String> = emptySet(),
     val maxDocumentSize: Long = 1_000_000, // 1MB default

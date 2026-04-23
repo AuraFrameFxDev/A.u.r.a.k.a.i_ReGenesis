@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis
 
+import dagger.Binds
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
@@ -25,7 +26,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object AgentModule {
+abstract class AgentModule {
 
     @Binds
     @Singleton

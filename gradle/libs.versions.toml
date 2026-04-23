@@ -366,11 +366,17 @@ kotlinx = [
     "kotlinx-serialization-json",
     "kotlinx-datetime"
 ]
+datastore = [
+    "androidx-datastore-core",
+    "androidx-datastore-preferences"
+]
 firebase = [
     "firebase-analytics",
     "firebase-crashlytics",
     "firebase-auth",
     "firebase-firestore",
+    "firebase-storage",
+    "firebase-config",
     "firebase-messaging"
 ]
 utilities = [

@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify
 
-import androidx.compose.runtime.Composable
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * 🎨 ICONIFY SERVICE — ChromaCore Icon Management
@@ -11,7 +12,8 @@ import androidx.compose.runtime.Composable
  * Stub implementation — replace with real Iconify integration when the
  * Iconify Android SDK is added to the dependency tree.
  */
-class IconifyService {
+@Singleton
+class IconifyService @Inject constructor() {
 
     /** Returns a list of all available icon IDs from the Iconify registry */
     fun getAllIconIds(): List<String> = emptyList()

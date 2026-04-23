@@ -27,6 +27,7 @@ import javax.inject.Singleton
 @Singleton
 class KaiSecurityContext @Inject constructor(
     @param:ApplicationContext private val context: Context,
+    private val keystoreManager: KeystoreManager
 ) {
     companion object {
         private const val TAG = "SecurityContext"
