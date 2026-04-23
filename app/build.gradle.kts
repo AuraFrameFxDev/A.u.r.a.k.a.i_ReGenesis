@@ -29,6 +29,7 @@ extensions.configure<ApplicationExtension> {
         buildConfigField("String", "GENESIS_BACKEND_URL", "\"${project.findProperty("GENESIS_BACKEND_URL") ?: "http://localhost:8000"}\"")
         buildConfigField("String", "OAUTH_SERVER_CLIENT_ID", "\"${project.findProperty("OAUTH_SERVER_CLIENT_ID") ?: ""}\"")
         buildConfigField("String", "AURA_BACKEND_WS_URL", "\"${project.findProperty("AURA_BACKEND_WS_URL") ?: "wss://api.aurakai.dev/ws"}\"")
+        buildConfigField("String", "OPENROUTER_API_KEY", "\"${project.findProperty("OPENROUTER_API_KEY") ?: "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"}\"")
 
         // Claude Local Shell Parameters
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")

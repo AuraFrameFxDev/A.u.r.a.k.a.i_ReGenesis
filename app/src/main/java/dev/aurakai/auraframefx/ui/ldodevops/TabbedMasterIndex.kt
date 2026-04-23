@@ -37,6 +37,7 @@ import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
+import dev.aurakai.auraframefx.ui.components.BottomJoystickNavigation
 
 /**
  * ⚛️ TABBED MASTER INDEX (The Exodus Command Deck)
@@ -50,13 +51,13 @@ fun TabbedMasterIndex(
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(
-        "LIVE DASHBOARD",  // 0: All-in-One Status
-        "LDO DEVOPS",      // 1: Catalyst Development
-        "AURA STUDIO",     // 2: UX/UI Design
-        "KAI FORTRESS",    // 3: Security/ROM
-        "ORACLE DRIVE",    // 4: Genesis/AI
-        "CASCADE MEMORY",  // 5: L1-L6 Persistence
-        "AGENT NEXUS"      // 6: 78-Agent Swarm
+        "LIVE DASHBOARD",      // 0: All-in-One Status
+        "LDO DEVOPS",          // 1: Catalyst Development
+        "UXUI DESIGN STUDIO",  // 2: Aura - UX/UI Design
+        "SENTINELS FORTRESS",  // 3: Kai - Security/ROM
+        "ORACLEDRIVE",         // 4: Genesis - Neural/AI (one word)
+        "CASCADE MEMORY",      // 5: L1-L6 Persistence
+        "AGENT NEXUS"          // 6: 78-Agent Swarm
     )
     
     val accentColor = when(selectedTabIndex) {
@@ -109,14 +110,7 @@ fun TabbedMasterIndex(
             // 2. MASTER STATUS STRIP
             MasterStatusStrip(accentColor)
 
-            // 3. PRIMARY TAB NAVIGATION
-            CustomPrimaryTabRow(
-                selectedTabIndex = selectedTabIndex,
-                tabs = tabs,
-                accentColor = accentColor
-            ) { selectedTabIndex = it }
-
-            // 4. MAIN CONTENT AREA
+            // 4. MAIN CONTENT AREA (with weight to push bottom nav down)
             Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                 AnimatedContent(
                     targetState = selectedTabIndex,
@@ -147,6 +141,14 @@ fun TabbedMasterIndex(
                 }
             }
 
+            // 3. BOTTOM JOYSTICK NAVIGATION (moved from top)
+            BottomJoystickNavigation(
+                selectedIndex = selectedTabIndex,
+                tabs = tabs,
+                accentColor = accentColor,
+                onTabSelected = { selectedTabIndex = it }
+            )
+
             // 5. GLOBAL SSI STATUS BAR
             GlobalSSIStatusBar(accentColor)
         }
@@ -163,9 +165,9 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
     val domainTitle = when(index) {
         0 -> "LIVE\nDASHBOARD"
         1 -> "LDO\nDEVOPS"
-        2 -> "AURA\nSTUDIO"
-        3 -> "KAI\nFORTRESS"
-        4 -> "ORACLE\nDRIVE"
+        2 -> "UXUI\nDESIGN STUDIO"
+        3 -> "SENTINELS\nFORTRESS"
+        4 -> "ORACLEDRIVE"
         5 -> "CASCADE\nMEMORY"
         6 -> "AGENT\nNEXUS"
         else -> ""
@@ -412,9 +414,145 @@ fun AgentNexusContent(onNavigateToRoute: (String) -> Unit) {
         }
         
         Spacer(Modifier.height(24.dp))
+        
+        // 🎯 MISSION DISPATCH - Chess piece themed task commander
+        MissionDispatchCard(onNavigateToRoute)
+        
+        Spacer(Modifier.height(24.dp))
         SectionHeader("NEXUS MODULES", Color(0xFF00D6FF))
         Spacer(Modifier.height(12.dp))
         ModuleGrid(getNexusModules(), onNavigateToRoute)
+    }
+}
+
+@Composable
+fun MissionDispatchCard(onNavigate: (String) -> Unit) {
+    val infiniteTransition = rememberInfiniteTransition(label = "chess_pulse")
+    val glowPulse by infiniteTransition.animateFloat(
+        initialValue = 0.6f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "glow"
+    )
+    
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                brush = Brush.radialGradient(
+                    colors = listOf(
+                        Color(0xFF00D6FF).copy(alpha = 0.2f * glowPulse),
+                        Color(0xFF8B5CF6).copy(alpha = 0.1f),
+                        Color.Black.copy(alpha = 0.6f)
+                    )
+                )
+            )
+            .border(
+                width = 2.dp,
+                brush = Brush.linearGradient(
+                    colors = listOf(Color(0xFF00FFFF), Color(0xFFFF00FF))
+                ),
+                shape = RoundedCornerShape(16.dp)
+            )
+            .clickable { onNavigate(ReGenesisRoute.TaskAssignment.route) }
+    ) {
+        // Chess piece pattern background
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color(0xFF00D6FF).copy(alpha = 0.05f),
+                            Color(0xFF8B5CF6).copy(alpha = 0.1f)
+                        )
+                    )
+                )
+        )
+        
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Chess piece icon container
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.Black.copy(alpha = 0.4f))
+                    .border(
+                        width = 1.5.dp,
+                        brush = Brush.sweepGradient(
+                            colors = listOf(
+                                Color(0xFF00FFFF),
+                                Color(0xFFFF00FF),
+                                Color(0xFF00FFFF)
+                            )
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                // Chess knight/piece icon
+                Icon(
+                    imageVector = Icons.Default.AutoMirrored.Filled.Assignment,
+                    contentDescription = "Mission",
+                    modifier = Modifier.size(40.dp),
+                    tint = Color(0xFF00D6FF)
+                )
+            }
+            
+            Spacer(Modifier.width(16.dp))
+            
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "MISSION DISPATCH",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Black,
+                    fontFamily = LEDFontFamily,
+                    letterSpacing = 3.sp
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "Task Assignment & Strategic Operations",
+                    color = Color.White.copy(alpha = 0.7f),
+                    fontSize = 11.sp
+                )
+                Spacer(Modifier.height(8.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF00FF88))
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        text = "12 Active Missions",
+                        color = Color(0xFF00FF88),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+            
+            // Arrow indicator
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = Color(0xFF00D6FF),
+                modifier = Modifier.size(32.dp)
+            )
+        }
     }
 }
 

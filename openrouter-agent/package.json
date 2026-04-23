@@ -1,0 +1,22 @@
+{
+  "name": "aurakai-openrouter-agent",
+  "version": "0.1.0",
+  "description": "A.U.R.A.K.A.I ReGenesis - OpenRouter Agent",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/headless.js",
+    "dev": "tsx src/headless.ts"
+  },
+  "dependencies": {
+    "@openrouter/sdk": "^1.0.0",
+    "eventemitter3": "^5.0.1",
+    "zod": "^3.22.4",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
