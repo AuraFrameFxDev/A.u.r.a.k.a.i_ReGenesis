@@ -9,5 +9,6 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
-    // Module-specific dependencies
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
 }

@@ -51,7 +51,7 @@ room = "2.8.4"
 securityCrypto = "1.1.0"
 credentials = "1.6.0"
 work = "2.11.2"
-compose-bom = "2026.03.01"
+compose-bom = "2026.04.01"
 compose-material-icons = "1.7.4"
 firebaseBom = "34.12.0"
 retrofit = "3.0.0"
@@ -80,21 +80,21 @@ rikkax-material = "2.7.2"
 timber = "5.0.1"
 org-json = "20251224"
 # YukiHook + KavaRef
-protobuf-java = "4.34.1"
+protobuf = "4.34.1"
 # Testing
 mockk = "1.14.9"
-androidxTestCore = "1.5.0"
-androidxTestRunner = "1.5.2"
-androidxTestRules = "1.5.0"
-androidxTestExtJunit = "1.1.5"
-androidxTestExtTruth = "1.5.0"
-espressoCore = "3.6.1"
+androidxTestCore = "1.6.1"
+androidxTestRunner = "1.6.1"
+androidxTestRules = "1.6.1"
+androidxTestExtJunit = "1.2.1"
+androidxTestExtTruth = "1.6.1"
+espressoCore = "3.6.0"
 kotlinxCoroutinesTest = "1.10.2"
 turbine = "1.1.0"
 kotlin-compose = "1.82"
 robolectric = "4.12.1"
-androidxJunit = "1.3.0"
-espresso = "3.7.0"
+androidxJunit = "1.2.1"
+espresso = "3.6.0"
 benchmark = "1.4.1"
 material3 = "1.4.0"
 foundationLayout = "1.10.6"
@@ -110,7 +110,7 @@ uiGeometry = "1.10.6"
 androidxAnimation = "1.10.6"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.5.1"
-langchain4j = "1.13.0"
+langchain4j = "1.13.1"
 material = "3.2.0"
 netty = "4.1.132.Final"
 jdom = "2.0.6.1"
@@ -128,9 +128,9 @@ langchain4j-http-client = { group = "dev.langchain4j", name = "langchain4j-http-
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai" }
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini" }
-langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version.ref = "langchain4j" }
+langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version = "1.13.0-beta23" }
 langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp" }
-protobuf-java = { group = "com.google.protobuf", name = "protobuf-java", version.ref = "protobuf-java" }
+protobuf-java = { group = "com.google.protobuf", name = "protobuf-java", version.ref = "protobuf" }
 
 # Build & Gradle Plugins
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
@@ -218,8 +218,8 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 compose-animation = { module = "androidx.compose.animation:animation" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIconsExtended" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconsExtended" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -297,7 +297,7 @@ androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4
 # Security Hardened Libraries
 netty-all = { group = "io.netty", name = "netty-all", version.ref = "netty" }
 jdom2 = { group = "org.jdom", name = "jdom2", version.ref = "jdom" }
-jose4j = { group = "bitbucket.org.b_c", name = "jose4j", version.ref = "jose4j" }
+jose4j = { group = "org.bitbucket.b_c", name = "jose4j", version.ref = "jose4j" }
 
 
 

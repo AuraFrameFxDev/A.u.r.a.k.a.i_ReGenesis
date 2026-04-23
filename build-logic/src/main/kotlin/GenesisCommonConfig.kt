@@ -25,10 +25,22 @@ object GenesisCommonConfig {
                     val versionCatalog = extensions.findByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)?.named("libs")
                     
                     // Safe version lookup with fallbacks
-                    val okhttpVersion = versionCatalog?.findVersion("okhttp")?.map { it.requiredVersion }?.orElse("4.12.0") ?: "4.12.0"
+                    val okhttpVersion = versionCatalog?.findVersion("okhttp")?.map { it.requiredVersion }?.orElse("5.3.2") ?: "5.3.2"
                     val protobufVersion = versionCatalog?.findVersion("protobuf")?.map { it.requiredVersion }?.orElse("3.25.8") ?: "3.25.8"
                     val nettyVer = versionCatalog?.findVersion("netty")?.map { it.requiredVersion }?.orElse("4.1.118.Final") ?: "4.1.118.Final"
                     
+                    eachDependency {
+                        if (requested.group == "androidx.lifecycle") {
+                            useVersion("2.10.0")
+                        }
+                        if (requested.group == "org.jetbrains.kotlin") {
+                            useVersion("2.3.20")
+                        }
+                        if (requested.group == "com.squareup.okhttp3") {
+                            useVersion(okhttpVersion)
+                        }
+                    }
+
                     dependencySubstitution {
                         substitute(module("com.squareup.okhttp3:okhttp")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
                         substitute(module("com.squareup.okhttp3:okhttp-jvm")).using(module("com.squareup.okhttp3:okhttp-android:$okhttpVersion"))
@@ -36,6 +48,7 @@ object GenesisCommonConfig {
                         substitute(module("com.google.protobuf:protobuf-javalite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
                         substitute(module("com.google.protobuf:protobuf-lite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
                     }
+                    force("androidx.annotation:annotation:1.9.1")
                     force("org.conscrypt:conscrypt-android:2.5.3")
                     force("com.google.protobuf:protobuf-java:$protobufVersion")
                     force("com.google.api.grpc:proto-google-common-protos:2.59.0")

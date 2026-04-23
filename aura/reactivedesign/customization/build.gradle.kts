@@ -9,5 +9,6 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
-    implementation(libs.compose.material.icons.extended)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
 }
