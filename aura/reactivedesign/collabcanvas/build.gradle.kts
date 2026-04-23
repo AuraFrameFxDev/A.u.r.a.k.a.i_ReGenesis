@@ -42,10 +42,24 @@ dependencies {
 
 // Ensure BuildConfig is generated before KSP runs
 afterEvaluate {
+    // Re-configure KSP args in afterEvaluate to ensure they take effect
+    extensions.configure<com.google.devtools.ksp.gradle.KspExtension> {
+        arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.aura.reactivedesign.collabcanvas")
+    }
+
+    // Ensure KSP tasks depend on BuildConfig generation
     tasks.named("kspDebugKotlin") {
         dependsOn("generateDebugBuildConfig")
     }
     tasks.named("kspReleaseKotlin") {
         dependsOn("generateReleaseBuildConfig")
+    }
+}
+
+// Add BuildConfig as a source directory for KSP (Android library syntax)
+extensions.configure<LibraryExtension> {
+    sourceSets["main"].java {
+        directories += "build/generated/source/buildConfig/debug"
+        directories += "build/generated/source/buildConfig/release"
     }
 }
