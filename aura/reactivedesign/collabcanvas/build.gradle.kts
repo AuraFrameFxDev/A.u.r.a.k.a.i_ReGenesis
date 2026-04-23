@@ -39,3 +39,8 @@ dependencies {
     implementation(libs.gson)
     testImplementation(libs.junit)
 }
+
+// Ensure BuildConfig is generated before KSP runs
+tasks.matching { it.name.startsWith("ksp") && it.name.contains("Kotlin") }.configureEach {
+    dependsOn(tasks.matching { it.name.contains("generate") && it.name.contains("BuildConfig") })
+}

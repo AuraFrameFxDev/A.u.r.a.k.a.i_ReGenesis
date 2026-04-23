@@ -26,10 +26,18 @@ plugins {
 // Specific module configurations are handled by convention plugins in build-logic
 subprojects {
     // ═══════════════════════════════════════════════════════════════════════════
-    // CRITICAL: Global YukiHook KSP Exclusion
+    // CRITICAL: Global YukiHook KSP Exclusion (only for non-KSP configurations)
     // ═══════════════════════════════════════════════════════════════════════════
     configurations.all {
-        if (!name.lowercase().contains("ksp") && !name.contains("lint", ignoreCase = true)) {
+        // Only exclude from runtime configurations, never from KSP/annotation processing
+        val isRuntimeConfig = name.lowercase().let {
+            it.contains("implementation") || it.contains("api") || it.contains("runtime")
+                    || it.contains("compile") || it.contains("classpath")
+        }
+        val isKspConfig = name.lowercase().contains("ksp")
+        val isLintConfig = name.contains("lint", ignoreCase = true)
+
+        if (isRuntimeConfig && !isKspConfig && !isLintConfig) {
             exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
         }
     }
