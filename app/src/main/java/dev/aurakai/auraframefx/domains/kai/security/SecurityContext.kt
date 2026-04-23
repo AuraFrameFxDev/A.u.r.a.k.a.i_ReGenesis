@@ -25,6 +25,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+class KaiSecurityContext @Inject constructor(
     @param:ApplicationContext private val context: Context,
 ) {
     companion object {
