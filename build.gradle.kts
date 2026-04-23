@@ -50,24 +50,19 @@ subprojects {
                 targetCompatibility = JavaVersion.VERSION_25
             }
 
-            packaging {
-                resources {
-                    pickFirsts += "**/YukiHookAPIProperties.class"
-                }
-            }
-        }
-    }
 
-    plugins.withId("com.android.library") {
-        extensions.configure<com.android.build.api.dsl.LibraryExtension> {
-            compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
-            }
+            plugins.withId("com.android.library") {
+                extensions.configure<com.android.build.api.dsl.LibraryExtension> {
+                    compileOptions {
+                        sourceCompatibility = JavaVersion.VERSION_25
+                        targetCompatibility = JavaVersion.VERSION_25
+                    }
 
-            packaging {
-                resources {
-                    pickFirsts += "**/YukiHookAPIProperties.class"
+                    packaging {
+                        resources {
+                            pickFirsts += "**/YukiHookAPIProperties.class"
+                        }
+                    }
                 }
             }
         }
