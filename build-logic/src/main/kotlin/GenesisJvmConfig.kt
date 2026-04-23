@@ -48,7 +48,6 @@ object GenesisJvmConfig {
                         "-Xannotation-default-target=param-property",
                         "-Xjdk-release=$JVM_VERSION_INT",
                         "-Xenable-preview",
-                        "-Xcontext-receivers",
                         "-opt-in=kotlin.RequiresOptIn",
                         "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",

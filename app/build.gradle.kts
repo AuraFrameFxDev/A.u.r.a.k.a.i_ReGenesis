@@ -156,7 +156,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-
+    implementation(libs.espresso.core)
     // AndroidX & Jetpack
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

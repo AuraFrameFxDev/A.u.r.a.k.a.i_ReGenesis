@@ -30,8 +30,7 @@ dependencies {
 
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material3)
+    implementation(libs.bundles.compose.ui)
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)

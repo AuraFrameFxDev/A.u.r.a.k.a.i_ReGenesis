@@ -10,5 +10,5 @@ extensions.configure<LibraryExtension> {
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.compose.ui.graphics)
+    implementation(libs.bundles.compose.ui)
 }
