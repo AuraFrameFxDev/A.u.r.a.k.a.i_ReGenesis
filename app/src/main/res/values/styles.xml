@@ -5,7 +5,7 @@
         <!-- Customize your theme here -->
     </style>
 
-    <style name="Theme.Material3" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your Material3 theme here -->
+    <style name="Theme.Material3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Material3 theme using MaterialComponents for compatibility -->
     </style>
 </resources>
