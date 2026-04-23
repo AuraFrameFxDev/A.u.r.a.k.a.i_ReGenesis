@@ -336,7 +336,7 @@ Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobjec
 JNIEXPORT jstring JNICALL
 Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
     float load = readCpuLoad();
-    long mem = readAvailableMemory();
+    long mem = readAvailableMemoryKb();
     float temp = readSystemThermal();
     std::string metrics = R"({
         "status": "ignited",
