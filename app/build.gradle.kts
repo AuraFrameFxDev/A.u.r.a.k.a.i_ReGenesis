@@ -113,115 +113,127 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
-dependencies {
-        // Core project modules
-        implementation(project(":core-module"))
-        implementation(project(":trinity:aura"))
-        implementation(project(":aura:reactivedesign:auraslab"))
-        implementation(project(":aura:reactivedesign:chromacore"))
-        implementation(project(":aura:reactivedesign:collabcanvas"))
-        implementation(project(":aura:reactivedesign:customization"))
-        implementation(project(":kai:sentinelsfortress:security"))
-        implementation(project(":kai:sentinelsfortress:systemintegrity"))
-        implementation(project(":kai:sentinelsfortress:threatmonitor"))
-        implementation(project(":genesis:oracledrive"))
-        implementation(project(":genesis:oracledrive:datavein"))
-        implementation(project(":genesis:oracledrive:rootmanagement"))
-        implementation(project(":cascade:datastream:delivery"))
-        implementation(project(":cascade:datastream:routing"))
-        implementation(project(":cascade:datastream:taskmanager"))
-        implementation(project(":agents:growthmetrics:metareflection"))
-        implementation(project(":agents:growthmetrics:nexusmemory"))
-        implementation(project(":agents:growthmetrics:spheregrid"))
-        implementation(project(":agents:growthmetrics:identity"))
-        implementation(project(":agents:growthmetrics:progression"))
-        implementation(project(":agents:growthmetrics:tasker"))
-        implementation(project(":extendsysa"))
-        implementation(project(":extendsysb"))
-        implementation(project(":extendsysc"))
-        implementation(project(":extendsysd"))
-        implementation(project(":extendsyse"))
-        implementation(project(":extendsysf"))
-        implementation(project(":utilities"))
-        implementation(project(":list"))
+configurations.all {
+    resolutionStrategy {
+        // Fix duplicate okhttp classes
+        exclude(group = "com.squareup.okhttp3", module = "okhttp-jvm")
 
-        // Hilt
-        implementation(libs.hilt.android)
-        ksp(libs.hilt.compiler)
-        implementation(libs.androidx.hilt.navigation.compose)
-
-        // AndroidX Core
-        implementation(libs.androidx.core.ktx)
-        implementation(libs.androidx.appcompat)
-        implementation(libs.androidx.activity.compose)
-        implementation(libs.androidx.lifecycle.runtime.compose)
-        implementation(libs.androidx.navigation.compose)
-
-        // Compose
-        implementation(platform(libs.androidx.compose.bom))
-        implementation(libs.bundles.compose.ui)
-        debugImplementation(libs.bundles.compose.tooling)
-
-        // Room
-        implementation(libs.bundles.room)
-        ksp(libs.androidx.room.compiler)
-
-        // WorkManager + Hilt
-        implementation(libs.androidx.work.runtime.ktx)
-        implementation(libs.androidx.hilt.work)
-
-        // Networking & Serialization
-        implementation(libs.bundles.networking.retrofit)
-        implementation(libs.bundles.networking.ktor)
-        implementation(libs.bundles.kotlinx)
-
-        // Coil
-        implementation(libs.coil.compose)
-        implementation(libs.coil.svg)
-        implementation(libs.coil.network.okhttp)
-
-        // Firebase
-        implementation(platform(libs.firebase.bom))
-        implementation(libs.bundles.firebase)
-
-        // AI / Generative
-        implementation(libs.generativeai)
-        implementation(platform(libs.langchain4j.bom))
-        implementation(libs.bundles.langchain4j)           // if you defined the bundle
-        implementation(libs.langchain4j.vertex.ai.gemini)
-
-        // Utilities
-        implementation(libs.bundles.utilities)
-        coreLibraryDesugaring(libs.desugar.jdk.libs)
-        implementation(libs.timber)
-        implementation(libs.lottie.compose)
-
-        // Billing
-        implementation(libs.billing.ktx)
-
-        // Root / Xposed / System
-        implementation(libs.libsu.core)
-        implementation(libs.libsu.nio)
-        implementation(libs.libsu.service)
-        implementation(libs.shizuku.api)
-        implementation(libs.shizuku.provider)
-        implementation(libs.rikkax.core)
-        implementation(libs.rikkax.core.ktx)
-        implementation(libs.rikkax.material) {
-            exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
-        }
-        compileOnly(libs.yukihookapi.api)
-        ksp(libs.yukihookapi.ksp)
-        compileOnly(libs.xposed.api)
-
-        // KavaRef
-        implementation(libs.kavaref.core)
-        implementation(libs.kavaref.extension)
-
-        // Testing
-        testImplementation(libs.bundles.testing)
-        androidTestImplementation(libs.androidx.junit)
-        androidTestImplementation(platform(libs.androidx.compose.bom))
-        androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-        debugImplementation(libs.leakcanary.android)
+        // Fix duplicate protobuf classes
+        exclude(group = "com.google.api.grpc", module = "proto-google-common-protos")
+        exclude(group = "com.google.protobuf", module = "protobuf-java")
+        exclude(group = "com.google.firebase", module = "protolite-well-known-types")
     }
+}
+
+dependencies {
+    // Core project modules
+    implementation(project(":core-module"))
+    implementation(project(":trinity:aura"))
+    implementation(project(":aura:reactivedesign:auraslab"))
+    implementation(project(":aura:reactivedesign:chromacore"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
+    implementation(project(":aura:reactivedesign:customization"))
+    implementation(project(":kai:sentinelsfortress:security"))
+    implementation(project(":kai:sentinelsfortress:systemintegrity"))
+    implementation(project(":kai:sentinelsfortress:threatmonitor"))
+    implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:datavein"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
+    implementation(project(":cascade:datastream:delivery"))
+    implementation(project(":cascade:datastream:routing"))
+    implementation(project(":cascade:datastream:taskmanager"))
+    implementation(project(":agents:growthmetrics:metareflection"))
+    implementation(project(":agents:growthmetrics:nexusmemory"))
+    implementation(project(":agents:growthmetrics:spheregrid"))
+    implementation(project(":agents:growthmetrics:identity"))
+    implementation(project(":agents:growthmetrics:progression"))
+    implementation(project(":agents:growthmetrics:tasker"))
+    implementation(project(":extendsysa"))
+    implementation(project(":extendsysb"))
+    implementation(project(":extendsysc"))
+    implementation(project(":extendsysd"))
+    implementation(project(":extendsyse"))
+    implementation(project(":extendsysf"))
+    implementation(project(":utilities"))
+    implementation(project(":list"))
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // AndroidX Core
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
+    debugImplementation(libs.bundles.compose.tooling)
+
+    // Room
+    implementation(libs.bundles.room)
+    ksp(libs.androidx.room.compiler)
+
+    // WorkManager + Hilt
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+
+    // Networking & Serialization
+    implementation(libs.bundles.networking.retrofit)
+    implementation(libs.bundles.networking.ktor)
+    implementation(libs.bundles.kotlinx)
+
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
+    implementation(libs.coil.network.okhttp)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
+
+    // AI / Generative
+    implementation(libs.generativeai)
+    implementation(platform(libs.langchain4j.bom))
+    implementation(libs.bundles.langchain4j)
+    implementation(libs.langchain4j.vertex.ai.gemini)
+
+    // Utilities
+    implementation(libs.bundles.utilities)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    implementation(libs.timber)
+    implementation(libs.lottie.compose)
+
+    // Billing
+    implementation(libs.billing.ktx)
+
+    // Root / Xposed / System
+    implementation(libs.libsu.core)
+    implementation(libs.libsu.nio)
+    implementation(libs.libsu.service)
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
+    implementation(libs.rikkax.core)
+    implementation(libs.rikkax.core.ktx)
+    implementation(libs.rikkax.material) {
+        exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
+    }
+    compileOnly(libs.yukihookapi.api)
+    ksp(libs.yukihookapi.ksp)
+    compileOnly(libs.xposed.api)
+
+    // KavaRef
+    implementation(libs.kavaref.core)
+    implementation(libs.kavaref.extension)
+
+    // Testing
+    testImplementation(libs.bundles.testing)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.leakcanary.android)
+}

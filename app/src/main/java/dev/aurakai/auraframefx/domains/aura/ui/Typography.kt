@@ -26,117 +26,121 @@ import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.R
 
 /**
- * 🎨 WARPEN - The LDO Display/Header Font
- * Sci-fi, angular, cyberpunk aesthetic
+ * 🎨 COPIXEL - The LDO Display/Header Font
+ * Pixel-style, sci-fi aesthetic for titles and LED-style UI text
  */
-val WarpenFontFamily = FontFamily(
-    Font(R.font.warpen, FontWeight.Normal),
-    Font(R.font.warpen, FontWeight.Bold),
-    Font(R.font.warpen, FontWeight.Medium)
+val LEDFontFamily = FontFamily(
+    Font(R.font.copixel, FontWeight.Normal)
 )
 
-// Placeholder for body font - will be updated when provided
-val pixelifySans = FontFamily(
-    Font(R.font.pixelifysans_medium, FontWeight.Medium)
+/**
+ * 📝 CORPTA - The LDO Body/Regular Font
+ * Clean, readable for body text and UI elements
+ */
+val CorptaFontFamily = FontFamily(
+    Font(R.font.corpta, FontWeight.Normal)
 )
 
 /**
  * 🎨 AuraFrameFX Typography System
- * - Warpen: Headers, displays, LED-style UI text
- * - Body font: Will be added when provided
+ * - COPIXEL: Headers, displays, LED-style UI text
+ * - CORPTA: Body text and UI elements
  */
 val AppTypography = Typography(
     // ═════════════════════════════════════════════════════════════════
-    // DISPLAY styles - WARPEN (Header font)
+    // DISPLAY styles - COPIXEL (Header font)
     // ═════════════════════════════════════════════════════════════════
     displayLarge = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 57.sp,
         letterSpacing = 2.sp
     ),
     displayMedium = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 45.sp,
         letterSpacing = 1.5.sp
     ),
     displaySmall = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
         letterSpacing = 1.sp
     ),
     // ═════════════════════════════════════════════════════════════════
-    // HEADLINE styles - WARPEN
+    // HEADLINE styles - COPIXEL
     // ═════════════════════════════════════════════════════════════════
     headlineLarge = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 32.sp,
         letterSpacing = 2.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 28.sp,
         letterSpacing = 1.5.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         letterSpacing = 1.sp
     ),
     // ═════════════════════════════════════════════════════════════════
-    // TITLE styles - WARPEN for consistency
+    // TITLE styles - COPIXEL for consistency
     // ═════════════════════════════════════════════════════════════════
     titleLarge = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         letterSpacing = 1.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         letterSpacing = 0.5.sp
     ),
     titleSmall = TextStyle(
-        fontFamily = WarpenFontFamily,
+        fontFamily = LEDFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = 0.5.sp
     ),
+    // ═════════════════════════════════════════════════════════════════
+    // BODY styles - CORPTA (Body font)
+    // ═════════════════════════════════════════════════════════════════
     bodyLarge = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
+        fontFamily = CorptaFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
     bodyMedium = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
+        fontFamily = CorptaFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
     bodySmall = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
+        fontFamily = CorptaFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
     labelLarge = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
+        fontFamily = CorptaFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
     labelMedium = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
+        fontFamily = CorptaFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
+        fontFamily = CorptaFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 11.sp
     )
 )

@@ -8,43 +8,43 @@ import dev.aurakai.auraframefx.core.identity.AgentType
  */
 enum class AgentCapabilityCategory(val id: Int) {
     /** Creative/UI agents (Aura) */
-    CREATIVE,
+    CREATIVE(0),
 
     /** Analytical/reasoning agents (Kai, Claude) */
-    ANALYSIS,
+    ANALYSIS(1),
 
     /** Coordination/orchestration agents (Genesis) */
-    COORDINATION,
+    COORDINATION(2),
 
     /** Specialized/niche agents (NeuralWhisper, AuraShield) */
-    SPECIALIZED,
+    SPECIALIZED(3),
 
     /** General-purpose agents */
-    GENERAL,
+    GENERAL(4),
 
     /** UI-focused capabilities */
-    UI,
+    UI(5),
 
     /** UX-focused capabilities */
-    UX,
+    UX(6),
 
     /** Security capabilities */
-    SECURITY,
+    SECURITY(7),
 
     /** Root/system-level capabilities */
-    ROOT,
+    ROOT(8),
 
     /** Memory management capabilities */
-    MEMORY,
+    MEMORY(9),
 
     /** Orchestration capabilities */
-    ORCHESTRATION,
+    ORCHESTRATION(10),
 
     /** Backend capabilities */
-    BACKEND,
+    BACKEND(11),
 
     /** Bridge/communication capabilities */
-    BRIDGE,
+    BRIDGE(12),
 
     /** Commerce and product search capabilities */
     COMMERCE(13),
@@ -78,6 +78,8 @@ enum class AgentCapabilityCategory(val id: Int) {
         BACKEND -> AgentType.GENESIS
         BRIDGE -> AgentType.CASCADE
         COMMERCE -> AgentType.COMMERCE_AGENT
+        DEVELOPMENT -> AgentType.CLAUDE
+        SOVEREIGNTY -> AgentType.CHAOS
         GENERIC -> AgentType.CLAUDE
     }
 
