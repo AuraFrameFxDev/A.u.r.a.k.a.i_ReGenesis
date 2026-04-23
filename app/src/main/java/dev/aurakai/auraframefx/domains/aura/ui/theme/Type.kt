@@ -12,7 +12,19 @@ val ChessFontFamily = FontFamily(
     Font(R.font.chesstype)
 )
 
+/**
+ * 🎨 WARPEN - The LDO Display/Header Font
+ * Sci-fi, angular, cyberpunk aesthetic
+ * Used throughout the app for LED-style UI text
+ */
 val LEDFontFamily = FontFamily(
+    Font(R.font.warpen, FontWeight.Normal),
+    Font(R.font.warpen, FontWeight.Bold),
+    Font(R.font.warpen, FontWeight.Medium)
+)
+
+// Legacy LED font - kept for reference
+val LegacyLEDFontFamily = FontFamily(
     Font(R.font.enhanced_led_board_7)
 )
 

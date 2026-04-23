@@ -25,55 +25,89 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.R
 
+/**
+ * 🎨 WARPEN - The LDO Display/Header Font
+ * Sci-fi, angular, cyberpunk aesthetic
+ */
+val WarpenFontFamily = FontFamily(
+    Font(R.font.warpen, FontWeight.Normal),
+    Font(R.font.warpen, FontWeight.Bold),
+    Font(R.font.warpen, FontWeight.Medium)
+)
+
+// Placeholder for body font - will be updated when provided
 val pixelifySans = FontFamily(
     Font(R.font.pixelifysans_medium, FontWeight.Medium)
 )
 
+/**
+ * 🎨 AuraFrameFX Typography System
+ * - Warpen: Headers, displays, LED-style UI text
+ * - Body font: Will be added when provided
+ */
 val AppTypography = Typography(
+    // ═════════════════════════════════════════════════════════════════
+    // DISPLAY styles - WARPEN (Header font)
+    // ═════════════════════════════════════════════════════════════════
     displayLarge = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 57.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 57.sp,
+        letterSpacing = 2.sp
     ),
     displayMedium = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 45.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 45.sp,
+        letterSpacing = 1.5.sp
     ),
     displaySmall = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 36.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 36.sp,
+        letterSpacing = 1.sp
     ),
+    // ═════════════════════════════════════════════════════════════════
+    // HEADLINE styles - WARPEN
+    // ═════════════════════════════════════════════════════════════════
     headlineLarge = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 32.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 32.sp,
+        letterSpacing = 2.sp
     ),
     headlineMedium = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 28.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 28.sp,
+        letterSpacing = 1.5.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 24.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+        letterSpacing = 1.sp
     ),
+    // ═════════════════════════════════════════════════════════════════
+    // TITLE styles - WARPEN for consistency
+    // ═════════════════════════════════════════════════════════════════
     titleLarge = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 22.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 22.sp,
+        letterSpacing = 1.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        letterSpacing = 0.5.sp
     ),
     titleSmall = TextStyle(
-        fontFamily = pixelifySans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 14.sp
+        fontFamily = WarpenFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        letterSpacing = 0.5.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = pixelifySans,
