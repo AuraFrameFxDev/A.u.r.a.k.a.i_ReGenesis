@@ -11,8 +11,9 @@ import timber.log.Timber
 /**
  * Hook 注入入口点 - 负责将 Genesis 协议注入系统底层。
  * * Andelualx 识别到旧版 API 冲突，Regen Core 正在重构注入点.
+ * NOTE: YukiHook KSP processor disabled due to BuildConfig detection issue
  */
-@InjectYukiHookWithXposed
+// @InjectYukiHookWithXposed
 class HookEntry : IYukiHookXposedInit {
 
     /**

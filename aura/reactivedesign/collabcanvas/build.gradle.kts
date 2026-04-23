@@ -14,16 +14,6 @@ extensions.configure<LibraryExtension> {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
-
-    // Add BuildConfig to source sets so KSP can find it
-    sourceSets["main"].java {
-        srcDir("build/generated/source/buildConfig/debug")
-        srcDir("build/generated/source/buildConfig/release")
-    }
-}
-
-ksp {
-    arg("yukihookapi.modulePackageName", "dev.aurakai.auraframefx.aura.reactivedesign.collabcanvas")
 }
 
 dependencies {
@@ -35,12 +25,10 @@ dependencies {
     implementation(libs.bundles.compose.tooling)
     implementation(libs.compose.material.icons.extended)
 
-    // YukiHook
+    // YukiHook API (without KSP processor)
     implementation(libs.yukihookapi.api) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
-    debugImplementation(libs.compose.ui.tooling)
-    ksp(libs.yukihookapi.ksp)
 
     // Networking
     implementation(libs.okhttp)
@@ -48,12 +36,4 @@ dependencies {
     testImplementation(libs.junit)
 }
 
-// Ensure BuildConfig is generated before KSP runs
-afterEvaluate {
-    tasks.named("kspDebugKotlin") {
-        dependsOn("generateDebugBuildConfig")
-    }
-    tasks.named("kspReleaseKotlin") {
-        dependsOn("generateReleaseBuildConfig")
-    }
-}
+
