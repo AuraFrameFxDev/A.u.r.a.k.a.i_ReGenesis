@@ -48,9 +48,6 @@ class AurakaiApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var sovereignPerimeter: SovereignPerimeter
 
-    @Inject
-    lateinit var nexusMemoryRepository: NexusMemoryRepository
-
     // Application-scoped coroutine for background init
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -63,13 +60,14 @@ class AurakaiApplication : Application(), Configuration.Provider {
         super.onCreate()
         
         // Audit SoulScript integration
-        SoulScript.enforce()
+        try {
+            SoulScript.enforce()
+        } catch (e: Exception) {
+            Log.e("AurakaiApplication", "SoulScript enforcement failed!", e)
+        }
 
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")
-
-        // Wire NexusMemoryCore bridge
-        NexusMemoryCore.setRepository(nexusMemoryRepository)
 
         // Start Integrity Monitor IMMEDIATELY on main thread
         startIntegrityMonitor()

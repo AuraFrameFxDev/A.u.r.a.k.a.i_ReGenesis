@@ -173,7 +173,7 @@ extensions.configure<ApplicationExtension> {
 dependencies {
     // Project Modules
     implementation(project(":core-module"))
-    implementation(project(":trinity:aura"))
+    testImplementation(project(":trinity:aura"))
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:collabcanvas"))

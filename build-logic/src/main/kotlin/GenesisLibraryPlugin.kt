@@ -19,8 +19,6 @@ class GenesisLibraryPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             pluginManager.apply("com.android.library")
-            // Hilt is temporarily disabled due to AGP 9.x incompatibility
-            // pluginManager.apply("com.google.dagger.hilt.android")
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
