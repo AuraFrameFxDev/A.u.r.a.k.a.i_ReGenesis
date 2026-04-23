@@ -2,6 +2,7 @@ import com.android.build.api.dsl.LibraryExtension
 
 plugins {
     id("genesis.android.library.hilt")
+    kotlin("plugin.serialization")
 }
 
 extensions.configure<LibraryExtension> {
@@ -43,6 +44,9 @@ dependencies {
     implementation(libs.libsu.core)
     implementation(libs.libsu.nio)
     implementation(libs.libsu.service)
+
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // Unit Test dependencies
     testImplementation(kotlin("test"))

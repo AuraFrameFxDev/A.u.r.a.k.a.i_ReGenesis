@@ -12,7 +12,9 @@ dependencies {
     implementation(project(":core-module"))
     implementation(project(":kai:sentinelsfortress:security"))
     implementation(project(":genesis:oracledrive"))
+    implementation(project(":genesis:oracledrive:rootmanagement"))
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.kotlinx.serialization.json)
     ksp(libs.androidx.room.compiler)
 }
