@@ -32,12 +32,14 @@ dependencies {
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.ui)
+    implementation(libs.bundles.compose.tooling)
     implementation(libs.compose.material.icons.extended)
 
     // YukiHook
     implementation(libs.yukihookapi.api) {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
+    debugImplementation(libs.compose.ui.tooling)
     ksp(libs.yukihookapi.ksp)
 
     // Networking

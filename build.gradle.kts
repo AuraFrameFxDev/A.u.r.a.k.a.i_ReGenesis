@@ -19,26 +19,29 @@ plugins {
 
 
     // OWASP Dependency Check
-    id("org.owasp.dependencycheck") version "10.0.4"
+    id("org.owasp.dependencycheck") version "12.2.1"
 }
 
 // Global configurations and task overrides
 // Specific module configurations are handled by convention plugins in build-logic
-subprojects {
+subprojects { subproject ->
     // ═══════════════════════════════════════════════════════════════════════════
     // CRITICAL: Global YukiHook KSP Exclusion (only for non-KSP configurations)
+    // Skip for collabcanvas module which needs YukiHook
     // ═══════════════════════════════════════════════════════════════════════════
-    configurations.all {
-        // Only exclude from runtime configurations, never from KSP/annotation processing
-        val isRuntimeConfig = name.lowercase().let {
-            it.contains("implementation") || it.contains("api") || it.contains("runtime")
-                    || it.contains("compile") || it.contains("classpath")
-        }
-        val isKspConfig = name.lowercase().contains("ksp")
-        val isLintConfig = name.contains("lint", ignoreCase = true)
+    if (!subproject.path.contains("collabcanvas")) {
+        configurations.all {
+            // Only exclude from runtime configurations, never from KSP/annotation processing
+            val isRuntimeConfig = name.lowercase().let {
+                it.contains("implementation") || it.contains("api") || it.contains("runtime")
+                        || it.contains("compile") || it.contains("classpath")
+            }
+            val isKspConfig = name.lowercase().contains("ksp")
+            val isLintConfig = name.contains("lint", ignoreCase = true)
 
-        if (isRuntimeConfig && !isKspConfig && !isLintConfig) {
-            exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+            if (isRuntimeConfig && !isKspConfig && !isLintConfig) {
+                exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
+            }
         }
     }
 
