@@ -52,6 +52,21 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 packaging {
                     resources {
                         excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                        excludes += "google/type/color.proto"
+                        excludes += "google/type/datetime.proto"
+                        excludes += "google/type/dayofweek.proto"
+                        excludes += "google/type/money.proto"
+                        excludes += "google/type/postal_address.proto"
+                        excludes += "google/type/timeofday.proto"
+                        excludes += "google/api/*.proto"
+                        excludes += "google/rpc/*.proto"
+                        excludes += "google/cloud/audit/*.proto"
+                        excludes += "google/logging/type/*.proto"
+                        excludes += "google/longrunning/*.proto"
+                        excludes += "google/geo/type/*.proto"
+                        excludes += "google/protobuf/*.proto"
+                        excludes += "META-INF/INDEX.LIST"
+                        excludes += "META-INF/DEPENDENCIES"
                         pickFirsts += "**/YukiHookAPIProperties.class"
                     }
                 }

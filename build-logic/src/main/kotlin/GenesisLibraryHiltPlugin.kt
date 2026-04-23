@@ -46,6 +46,12 @@ class GenesisLibraryHiltPlugin : Plugin<Project> {
                 packaging {
                     resources {
                         excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                        excludes += "google/type/color.proto"
+                        excludes += "google/type/datetime.proto"
+                        excludes += "google/type/dayofweek.proto"
+                        excludes += "google/type/money.proto"
+                        excludes += "google/type/postal_address.proto"
+                        excludes += "google/type/timeofday.proto"
                         pickFirsts += "**/YukiHookAPIProperties.class"
                     }
                 }

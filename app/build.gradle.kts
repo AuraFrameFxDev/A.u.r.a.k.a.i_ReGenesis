@@ -4,17 +4,42 @@
 import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
-    id("genesis.android.application")          // High-Sovereignty Convention Plugin
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.firebaseCrashlytics)
 }
 
+configurations.all {
+    resolutionStrategy {
+        val protobufVersion = libs.versions.protobuf.get()
+        val okhttpVersion = libs.versions.okhttp.get()
+
+        force("com.google.protobuf:protobuf-java:$protobufVersion")
+        force("com.google.api.grpc:proto-google-common-protos:2.59.0")
+        force("com.squareup.okhttp3:okhttp-android:$okhttpVersion")
+        
+        exclude(group = "com.google.protobuf", module = "protobuf-lite")
+        exclude(group = "com.google.protobuf", module = "protobuf-javalite")
+        exclude(group = "com.google.firebase", module = "protolite-well-known-types")
+        exclude(group = "com.squareup.okhttp3", module = "okhttp-jvm")
+    }
+}
+
 extensions.configure<ApplicationExtension> {
     namespace = "dev.aurakai.auraframefx"
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "dev.aurakai.auraframefx"
+        minSdk = 34
+        targetSdk = 36
         versionCode = 1
+        versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Genesis Protocol - Build Configuration Constants
         buildConfigField(
@@ -65,6 +90,17 @@ extensions.configure<ApplicationExtension> {
         buildConfigField("float", "CLAUDE_SHELL_DRIFT_THRESHOLD", "0.05f")
     }
 
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     externalNativeBuild {
         cmake {
             path = file("src/main/cpp/CMakeLists.txt")
@@ -82,9 +118,23 @@ extensions.configure<ApplicationExtension> {
                     "META-INF/LICENSE",
                     "META-INF/LICENSE.txt",
                     "META-INF/NOTICE",
-                    "META-INF/*.kotlin_module"
+                    "META-INF/*.kotlin_module",
+                    "google/type/color.proto",
+                    "google/type/datetime.proto",
+                    "google/type/dayofweek.proto",
+                    "google/type/money.proto",
+                    "google/type/postal_address.proto",
+                    "google/type/timeofday.proto",
+                    "google/api/*.proto",
+                    "google/rpc/*.proto",
+                    "google/cloud/audit/*.proto",
+                    "google/logging/type/*.proto",
+                    "google/longrunning/*.proto",
+                    "google/geo/type/*.proto",
+                    "google/protobuf/*.proto"
                 )
             )
+            pickFirsts.add("**/YukiHookAPIProperties.class")
         }
     }
 

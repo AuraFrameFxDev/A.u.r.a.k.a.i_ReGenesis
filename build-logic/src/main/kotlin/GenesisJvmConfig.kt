@@ -21,9 +21,9 @@ object GenesisJvmConfig {
      * - Maximum target supported by Kotlin 2.2.x/2.3.x
      * - Enables modern Java features with backward compatibility via desugaring
      */
-    const val JVM_VERSION = 25
-    const val JVM_VERSION_INT = 25
-    val KOTLIN_JVM_TARGET = JvmTarget.JVM_25
+    const val JVM_VERSION = 21
+    const val JVM_VERSION_INT = 21
+    val KOTLIN_JVM_TARGET = JvmTarget.JVM_21
 
     /**
      * Configure the Kotlin JVM toolchain and Kotlin compilation options for the given Gradle project.
@@ -56,10 +56,10 @@ object GenesisJvmConfig {
                 }
             }
 
-            // Explicitly configure Java compilation tasks to target JVM 25
+            // Explicitly configure Java compilation tasks to target JVM 21
             tasks.withType<JavaCompile>().configureEach {
-                sourceCompatibility = JavaVersion.VERSION_25.toString()
-                targetCompatibility = JavaVersion.VERSION_25.toString()
+                sourceCompatibility = JavaVersion.VERSION_21.toString()
+                targetCompatibility = JavaVersion.VERSION_21.toString()
             }
 
             // Configure toolchain - use afterEvaluate so extensions are ready
