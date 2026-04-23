@@ -9,7 +9,7 @@ core = "1.7.0"
 core-ktx = "1.18.0"
 appcompat = "1.7.1"
 datastore = "1.2.1"
-gson = "2.13.2"
+gson = "2.14.0"
 gradle = "9.4.0-milestone-2"
 gradleCore = "9.4.0-milestone-2"
 foojayResolver = "1.0.0"
@@ -28,15 +28,15 @@ junitJupiterParams = "5.11.4"
 junitJupiterVersion = "6.0.3"
 junitVintage = "6.0.3"
 junitVintageEngine = "5.11.4"
-kotlin = "2.1.20"
-ksp = "2.1.20-1.0.31"
+kotlin = "2.3.21"
+ksp = "2.3.6"
 material3WindowSizeClass = "1.4.0"
 materialIconsExtended = "1.7.8"
 robolectricVersion = "4.16.1"
 runner = "1.7.0"
 runtimeLivedata = "1.11.0"
 truth = "1.7.0"
-yukihook = "1.2.1"
+yukihook = "1.3.1"
 kavaref = "1.0.2"
 compile-sdk = "36"
 min-sdk = "34"
@@ -44,14 +44,14 @@ target-sdk = "36"
 
 # Jetpack & Compose
 activity-compose = "1.13.0"
-lifecycle = "2.8.4"
+lifecycle = "2.10.0"
 navigation-compose = "2.9.8"
 hilt-navigation-compose = "1.3.0"
 room = "2.8.4"
 securityCrypto = "1.1.0"
 credentials = "1.6.0"
 work = "2.11.2"
-compose-bom = "2025.01.00"
+compose-bom = "2026.03.01"
 compose-material-icons = "1.7.4"
 firebaseBom = "34.12.0"
 retrofit = "3.0.0"
@@ -223,13 +223,13 @@ compose-material-icons-extended = { group = "androidx.compose.material", name = 
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "23.2.0" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.0.5" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version = "24.01" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
-firebase-config = { module = "com.google.firebase:firebase-config" }
+firebase-config = { module = "com.google.firebase:firebase-config", version = "23.0.1" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 
 # Google AI
