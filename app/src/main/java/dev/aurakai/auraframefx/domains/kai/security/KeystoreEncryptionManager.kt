@@ -10,6 +10,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class KeystoreEncryptionManager @Inject constructor(
+    private val keystoreManager: KeystoreManager
 ) : EncryptionManager {
 
     override fun encrypt(data: ByteArray): ByteArray {

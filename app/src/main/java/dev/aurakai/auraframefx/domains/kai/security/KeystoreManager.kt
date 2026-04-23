@@ -17,6 +17,7 @@ import javax.inject.Singleton
  * Manages Android Keystore operations for secure cryptographic key storage.
  */
 @Singleton
+class KeystoreManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     companion object {

@@ -1,15 +1,9 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.aurakai.auraframefx.core.security.KeystoreManager
-import dev.aurakai.auraframefx.domains.kai.security.AndroidKeystoreManager
-import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
-import dev.aurakai.auraframefx.domains.kai.security.KeystoreEncryptionManager
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -20,6 +14,7 @@ object SecurityModule {
     @Provides
     @Singleton
     fun provideEncryptionManager(
+        keystoreManager: KeystoreManager
     ): EncryptionManager {
         // Default to Keystore-backed encryption for KAI domain
         return KeystoreEncryptionManager(keystoreManager)
