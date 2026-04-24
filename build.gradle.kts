@@ -7,7 +7,7 @@ plugins {
     // Base plugins with versions from libs.versions.toml
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    id("org.jetbrains.kotlin.plugin.parcelize") version "2.3.20" apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
 
     // Android plugins
     alias(libs.plugins.android.application) apply false
@@ -19,17 +19,26 @@ plugins {
 
 
     // OWASP Dependency Check
-    id("org.owasp.dependencycheck") version "10.0.4"
+    id("org.owasp.dependencycheck") version "12.2.1"
 }
 
 // Global configurations and task overrides
 // Specific module configurations are handled by convention plugins in build-logic
 subprojects {
+
     // ═══════════════════════════════════════════════════════════════════════════
-    // CRITICAL: Global YukiHook KSP Exclusion
+    // CRITICAL: Global YukiHook KSP Exclusion (only for non-KSP configurations)
     // ═══════════════════════════════════════════════════════════════════════════
     configurations.all {
-        if (!name.lowercase().contains("ksp") && !name.contains("lint", ignoreCase = true)) {
+        // Only exclude from runtime configurations, never from KSP/annotation processing
+        val isRuntimeConfig = name.lowercase().let {
+            it.contains("implementation") || it.contains("api") || it.contains("runtime")
+                    || it.contains("compile") || it.contains("classpath")
+        }
+        val isKspConfig = name.lowercase().contains("ksp")
+        val isLintConfig = name.contains("lint", ignoreCase = true)
+
+        if (isRuntimeConfig && !isKspConfig && !isLintConfig) {
             exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
         }
     }
@@ -38,8 +47,8 @@ subprojects {
     plugins.withId("com.android.application") {
         extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
 
             packaging {
@@ -53,8 +62,8 @@ subprojects {
     plugins.withId("com.android.library") {
         extensions.configure<com.android.build.api.dsl.LibraryExtension> {
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_25
-                targetCompatibility = JavaVersion.VERSION_25
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
         }
     }

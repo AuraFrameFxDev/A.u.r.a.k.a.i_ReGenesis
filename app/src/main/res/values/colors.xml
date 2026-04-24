@@ -61,4 +61,28 @@
     <color name="surface">@color/light_surface</color>
     <color name="surface_variant">@color/light_surface_variant</color>
     <color name="background">@color/light_background</color>
+
+    <!-- Material3 v1.2+ Fixed Colors (required for compatibility) -->
+    <color name="primary_fixed">@color/light_primary</color>
+    <color name="primary_fixed_dim">@color/light_primary_dark</color>
+    <color name="on_primary_fixed">@color/light_on_primary</color>
+    <color name="on_primary_fixed_variant">@color/light_on_primary</color>
+    <color name="secondary_fixed">@color/light_secondary</color>
+    <color name="secondary_fixed_dim">@color/light_secondary_container</color>
+    <color name="on_secondary_fixed">@color/light_on_secondary</color>
+    <color name="on_secondary_fixed_variant">@color/light_on_secondary</color>
+    <color name="tertiary_fixed">@color/light_tertiary</color>
+    <color name="tertiary_fixed_dim">@color/light_tertiary_container</color>
+    <color name="on_tertiary_fixed">@color/light_on_tertiary</color>
+    <color name="on_tertiary_fixed_variant">@color/light_on_tertiary</color>
+
+    <!-- Material3 v1.2+ Surface Colors -->
+    <color name="surface_bright">@color/light_surface</color>
+    <color name="surface_dim">@color/light_surface_variant</color>
+    <color name="surface_container">@color/light_surface</color>
+    <color name="surface_container_low">@color/light_surface</color>
+    <color name="surface_container_lowest">@color/light_background</color>
+    <color name="surface_container_high">@color/light_surface_variant</color>
+    <color name="surface_container_highest">@color/light_surface_variant</color>
+    <color name="outline_variant">@color/light_outline_variant</color>
 </resources>

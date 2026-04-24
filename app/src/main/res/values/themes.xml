@@ -12,6 +12,27 @@
         <item name="android:textColor">@color/light_on_surface</item>
         <item name="android:textColorPrimary">@color/light_on_surface</item>
         <item name="android:textColorSecondary">@color/light_on_surface_variant</item>
+        <!-- Material3 v1.2+ Color Attributes -->
+        <item name="colorPrimaryFixed">@color/primary_fixed</item>
+        <item name="colorPrimaryFixedDim">@color/primary_fixed_dim</item>
+        <item name="colorOnPrimaryFixed">@color/on_primary_fixed</item>
+        <item name="colorOnPrimaryFixedVariant">@color/on_primary_fixed_variant</item>
+        <item name="colorSecondaryFixed">@color/secondary_fixed</item>
+        <item name="colorSecondaryFixedDim">@color/secondary_fixed_dim</item>
+        <item name="colorOnSecondaryFixed">@color/on_secondary_fixed</item>
+        <item name="colorOnSecondaryFixedVariant">@color/on_secondary_fixed_variant</item>
+        <item name="colorTertiaryFixed">@color/tertiary_fixed</item>
+        <item name="colorTertiaryFixedDim">@color/tertiary_fixed_dim</item>
+        <item name="colorOnTertiaryFixed">@color/on_tertiary_fixed</item>
+        <item name="colorOnTertiaryFixedVariant">@color/on_tertiary_fixed_variant</item>
+        <item name="colorSurfaceBright">@color/surface_bright</item>
+        <item name="colorSurfaceDim">@color/surface_dim</item>
+        <item name="colorSurfaceContainer">@color/surface_container</item>
+        <item name="colorSurfaceContainerLow">@color/surface_container_low</item>
+        <item name="colorSurfaceContainerLowest">@color/surface_container_lowest</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_container_highest</item>
+        <item name="colorOutlineVariant">@color/outline_variant</item>
     </style>
 
     <!-- Theme overlay for action bar -->

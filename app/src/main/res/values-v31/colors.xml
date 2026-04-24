@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material3 Dynamic Color System Colors for API 31+ (Android 12+) -->
+    <!-- These are required when using Material3 components with dynamic colors -->
+
+    <!-- Dynamic Primary Fixed Colors -->
+    <color name="m3_sys_color_dynamic_primary_fixed">@color/primary_fixed</color>
+    <color name="m3_sys_color_dynamic_primary_fixed_dim">@color/primary_fixed_dim</color>
+    <color name="m3_sys_color_dynamic_on_primary_fixed">@color/on_primary_fixed</color>
+    <color name="m3_sys_color_dynamic_on_primary_fixed_variant">@color/on_primary_fixed_variant</color>
+
+    <!-- Dynamic Secondary Fixed Colors -->
+    <color name="m3_sys_color_dynamic_secondary_fixed">@color/secondary_fixed</color>
+    <color name="m3_sys_color_dynamic_secondary_fixed_dim">@color/secondary_fixed_dim</color>
+    <color name="m3_sys_color_dynamic_on_secondary_fixed">@color/on_secondary_fixed</color>
+    <color name="m3_sys_color_dynamic_on_secondary_fixed_variant">@color/on_secondary_fixed_variant</color>
+
+    <!-- Dynamic Tertiary Fixed Colors -->
+    <color name="m3_sys_color_dynamic_tertiary_fixed">@color/tertiary_fixed</color>
+    <color name="m3_sys_color_dynamic_tertiary_fixed_dim">@color/tertiary_fixed_dim</color>
+    <color name="m3_sys_color_dynamic_on_tertiary_fixed">@color/on_tertiary_fixed</color>
+    <color name="m3_sys_color_dynamic_on_tertiary_fixed_variant">@color/on_tertiary_fixed_variant</color>
+
+    <!-- Dynamic Dark Surface Colors -->
+    <color name="m3_sys_color_dynamic_dark_surface_bright">@color/surface_bright</color>
+    <color name="m3_sys_color_dynamic_dark_surface_dim">@color/surface_dim</color>
+    <color name="m3_sys_color_dynamic_dark_surface_container">@color/surface_container</color>
+    <color name="m3_sys_color_dynamic_dark_surface_container_low">@color/surface_container_low</color>
+    <color name="m3_sys_color_dynamic_dark_surface_container_lowest">@color/surface_container_lowest</color>
+    <color name="m3_sys_color_dynamic_dark_surface_container_high">@color/surface_container_high</color>
+    <color name="m3_sys_color_dynamic_dark_surface_container_highest">@color/surface_container_highest</color>
+    <color name="m3_sys_color_dynamic_dark_outline_variant">@color/outline_variant</color>
+
+    <!-- Dynamic Light Surface Colors (for completeness) -->
+    <color name="m3_sys_color_dynamic_light_surface_bright">@color/surface_bright</color>
+    <color name="m3_sys_color_dynamic_light_surface_dim">@color/surface_dim</color>
+    <color name="m3_sys_color_dynamic_light_surface_container">@color/surface_container</color>
+    <color name="m3_sys_color_dynamic_light_surface_container_low">@color/surface_container_low</color>
+    <color name="m3_sys_color_dynamic_light_surface_container_lowest">@color/surface_container_lowest</color>
+    <color name="m3_sys_color_dynamic_light_surface_container_high">@color/surface_container_high</color>
+    <color name="m3_sys_color_dynamic_light_surface_container_highest">@color/surface_container_highest</color>
+    <color name="m3_sys_color_dynamic_light_outline_variant">@color/outline_variant</color>
+</resources>

@@ -10,7 +10,11 @@ extensions.configure<LibraryExtension> {
 
 dependencies {
     implementation(project(":core-module"))
-    
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
+
     // Root/System Operations
     implementation(libs.libsu.core)
     implementation(libs.libsu.nio)

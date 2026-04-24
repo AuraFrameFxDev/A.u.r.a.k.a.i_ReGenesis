@@ -5,8 +5,8 @@ import com.android.build.api.dsl.LibraryExtension
 
 plugins {
     id("genesis.android.library")
+    id("com.google.devtools.ksp")//Hilt is temporarily disabled due to AGP 9.x incompatibility
     id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
@@ -24,7 +24,7 @@ dependencies {
     // - Compose enabled by default
     // - Java 25 bytecode target
     // ═══════════════════════════════════════════════════════════════════════
-    
+
     // Expose core KTX as API (types leak to consumers)
     api(libs.androidx.core.ktx)
 

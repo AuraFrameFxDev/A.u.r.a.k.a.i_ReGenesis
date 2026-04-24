@@ -22,7 +22,7 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://api.xposed.info/") }
         maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
-        
+
         // Static libs repository for local jars
         maven {
             url = uri("${rootDir}/libs")

@@ -1,30 +1,25 @@
 package dev.aurakai.auraframefx.core
 
 import android.app.Application
-import android.util.Log
 import android.content.Intent
+import android.util.Log
 import androidx.work.Configuration
-import com.google.firebase.Firebase
-import com.google.firebase.initialize
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
+import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
+import dev.aurakai.auraframefx.core.soulscript.SoulScript
+import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
+import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
+import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
-import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
-import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.IntegrityMonitorService
-import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
-import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.domain.repository.NexusMemoryRepository
+import javax.inject.Inject
 
 /**
  * 🌐 AURAKAI CORE APPLICATION
@@ -63,11 +58,16 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        
+        // Audit SoulScript integration
+        try {
+            SoulScript.enforce()
+        } catch (e: Exception) {
+            Log.e("AurakaiApplication", "SoulScript enforcement failed!", e)
+        }
+
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")
-
-        // Wire NexusMemoryCore bridge
-        NexusMemoryCore.setRepository(nexusMemoryRepository)
 
         // Start Integrity Monitor IMMEDIATELY on main thread
         startIntegrityMonitor()

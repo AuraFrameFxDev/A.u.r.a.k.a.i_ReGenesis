@@ -13,6 +13,11 @@ dependencies {
     implementation(project(":kai:sentinelsfortress:security"))
     implementation(project(":genesis:oracledrive"))
     implementation(project(":genesis:oracledrive:rootmanagement"))
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
+
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.room.ktx)
     implementation(libs.kotlinx.serialization.json)

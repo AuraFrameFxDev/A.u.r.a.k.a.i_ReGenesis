@@ -9,6 +9,10 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
-    implementation("org.bouncycastle:bcprov-jdk18on:1.79")
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose.ui)
+
+    implementation("org.bouncycastle:bcprov-jdk18on:1.84")
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
