@@ -106,6 +106,9 @@ extensions.configure<ApplicationExtension> {
         isCoreLibraryDesugaringEnabled = true
     }
 
+    // NDK version for native compilation - required for AGP 9.x
+    ndkVersion = "27.0.12077973"
+
     externalNativeBuild {
         cmake {
             path = file("src/main/cpp/CMakeLists.txt")
