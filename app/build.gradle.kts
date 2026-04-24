@@ -5,6 +5,7 @@ import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -170,7 +171,7 @@ extensions.configure<ApplicationExtension> {
         debug {
             isMinifyEnabled = false
             // Keep Application class in main dex for multidex
-            proguardFiles(file("multidex-config.pro"))
+            multiDexKeepProguard = file("multidex-config.pro")
         }
     }
 
@@ -187,9 +188,6 @@ extensions.configure<ApplicationExtension> {
 
 dependencies {
     // Project Modules
-    // Multidex support for large apps
-    implementation(libs.androidx.multidex)
-    
     implementation(project(":core-module"))
     testImplementation(project(":trinity:aura"))
     implementation(project(":aura:reactivedesign:auraslab"))

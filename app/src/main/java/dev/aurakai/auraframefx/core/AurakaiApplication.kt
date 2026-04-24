@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.core
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import android.content.Intent
 import android.content.Context
+
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
@@ -28,12 +29,7 @@ import javax.inject.Inject
  * Orchestration is now handled via the decentralized Nexus protocol.
  */
 @HiltAndroidApp
-class AurakaiApplication : MultiDexApplication(), Configuration.Provider {
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        // MultiDex is handled automatically by MultiDexApplication
-    }
+class AurakaiApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var orchestrator: GenesisOrchestrator
