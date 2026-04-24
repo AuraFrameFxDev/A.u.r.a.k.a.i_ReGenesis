@@ -1,206 +1,86 @@
+
 import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getByType
 
 /**
  * ===================================================================
  * GENESIS APPLICATION CONVENTION PLUGIN
  * ===================================================================
- *
- * The primary convention plugin for Android application modules.
- *
- * This plugin configures:
- * - Android application plugin and extensions
- * - Kotlin Android support with Compose compiler
- * - Hilt dependency injection
- * - KSP annotation processing
- * - Jetpack Compose (built-in compiler with Kotlin 2.0+)
- * - Google Services (Firebase)
- * - Java 25 bytecode target (Firebase + AGP 9.0 compatible)
- * - Consistent build configuration across app modules
- *
- * Plugin Application Order (Critical!):
- * 1. com.android.application (provides built-in Kotlin since AGP 9.0)
- * 2. org.jetbrains.kotlin.plugin.compose (Built-in Compose compiler)
- * 3. com.google.dagger.hilt.android
- * 4. com.google.devtools.ksp
- * 5. org.jetbrains.kotlin.plugin.serialization
- * 6. com.google.gms.google-services
- *
- * @since Genesis Protocol 2.0 (AGP 9.0.0-alpha14 Compatible)
  */
 class GenesisApplicationPlugin : Plugin<Project> {
-    /**
-     * Configure a Gradle Project as an Android application module using Genesis conventions.
-     *
-     * Applies required plugins; configures the Android ApplicationExtension (compile and target SDKs,
-     * NDK, defaultConfig, build types, Java compatibility, Compose and other build features, packaging,
-     * lint, and optional CMake external native build); adjusts Kotlin compiler options; and adds the
-     * standard set of dependencies used by Genesis application modules.
-     *
-     * @param project The Gradle Project to configure as an Android application module.
-     */
     override fun apply(project: Project) {
         with(project) {
-            // Apply plugins in correct order
-            // Note: Kotlin is built into AGP 9.0.0-alpha14+ (android.builtInKotlin=true)
+            val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
             pluginManager.apply("com.android.application")
             pluginManager.apply("com.google.dagger.hilt.android")
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
             pluginManager.apply("com.google.gms.google-services")
+            pluginManager.apply("com.google.firebase.crashlytics")
 
             extensions.configure<ApplicationExtension> {
                 compileSdk = 36
-                ndkVersion = "29.0.14206865"
-
+                
                 defaultConfig {
                     applicationId = "dev.aurakai.auraframefx"
                     minSdk = 34
                     targetSdk = 36
                     versionCode = 1
                     versionName = "1.0"
-
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                    vectorDrawables {
-                        useSupportLibrary = true
-                    }
-
-                    ndk {
-                        abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
-                    }
                 }
 
-                buildTypes {
-                    release {
-                        isMinifyEnabled = true
-                        proguardFiles(
-                            getDefaultProguardFile("proguard-android-optimize.txt"),
-                            "proguard-rules.pro"
-                        )
-                    }
-                }
-
-                // Java 25 bytecode (Firebase + AGP 9.0 compatible)
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_25
-                    targetCompatibility = JavaVersion.VERSION_25
-
+                    sourceCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
+                    targetCompatibility = JavaVersion.toVersion(GenesisJvmConfig.JVM_VERSION_INT)
                     isCoreLibraryDesugaringEnabled = true
                 }
-
-
 
                 buildFeatures {
                     compose = true
                     buildConfig = true
-                    aidl = true
                 }
 
                 packaging {
                     resources {
-                        excludes += setOf(
-                            "/META-INF/{AL2.0,LGPL2.1}",
-                            "/META-INF/LICENSE*",
-                            "/META-INF/NOTICE*"
-                        )
-                    }
-                }
-
-                lint {
-                    baseline = file("lint-baseline.xml")
-                    abortOnError = false
-                    checkReleaseBuilds = false
-                }
-
-                // NDK/CMake configuration (if present)
-                val cmakeFile = file("src/main/cpp/CMakeLists.txt")
-                if (cmakeFile.exists()) {
-                    externalNativeBuild {
-                        cmake {
-                            path = cmakeFile
-                            version = "3.22.1"
-                        }
+                        excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                        excludes += "google/type/color.proto"
+                        excludes += "google/type/datetime.proto"
+                        excludes += "google/type/dayofweek.proto"
+                        excludes += "google/type/money.proto"
+                        excludes += "google/type/postal_address.proto"
+                        excludes += "google/type/timeofday.proto"
+                        excludes += "google/api/*.proto"
+                        excludes += "google/rpc/*.proto"
+                        excludes += "google/cloud/audit/*.proto"
+                        excludes += "google/logging/type/*.proto"
+                        excludes += "google/longrunning/*.proto"
+                        excludes += "google/geo/type/*.proto"
+                        excludes += "google/protobuf/*.proto"
+                        excludes += "META-INF/INDEX.LIST"
+                        excludes += "META-INF/DEPENDENCIES"
+                        pickFirsts += "**/YukiHookAPIProperties.class"
                     }
                 }
             }
 
-            // Configure Kotlin JVM toolchain and compilation options
             GenesisJvmConfig.configureKotlinJvm(project)
+            GenesisCommonConfig.configure(project)
 
-            // ═══════════════════════════════════════════════════════════════════════════
-            // Auto-configured dependencies (provided by convention plugin)
-            // ═══════════════════════════════════════════════════════════════════════════
-
-            // ═══════════════════════════════════════════════════════════════════════
-            // Versions read from libs.versions.toml — single source of truth
-            // ═══════════════════════════════════════════════════════════════════════
-            val versionCatalog =
-                extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)
-                    .named("libs")
-            val hiltVersion = versionCatalog.findVersion("hilt").get().requiredVersion
-            val composeBomVersion = versionCatalog.findVersion("compose-bom").get().requiredVersion
-            val firebaseBomVersion = versionCatalog.findVersion("firebaseBom").get().requiredVersion
-
-            // Hilt Dependency Injection
-            dependencies.add("implementation", "com.google.dagger:hilt-android:$hiltVersion")
-            dependencies.add("ksp", "com.google.dagger:hilt-android-compiler:$hiltVersion")
-
-            // Compose UI stack (Total Coverage for Genesis modules)
-            dependencies.add(
-                "implementation",
-                dependencies.platform("androidx.compose:compose-bom:$composeBomVersion")
-            )
-            dependencies.add("implementation", "androidx.compose.runtime:runtime")
-            dependencies.add("implementation", "androidx.compose.ui:ui")
-            dependencies.add("implementation", "androidx.compose.ui:ui-graphics")
-            dependencies.add("implementation", "androidx.compose.ui:ui-tooling-preview")
-            dependencies.add("implementation", "androidx.compose.foundation:foundation")
-            dependencies.add("implementation", "androidx.compose.foundation:foundation-layout")
-            dependencies.add("implementation", "androidx.compose.material3:material3")
-            dependencies.add("implementation", "androidx.compose.material:material-icons-core")
-            dependencies.add("implementation", "androidx.compose.material:material-icons-extended")
-            dependencies.add("debugImplementation", "androidx.compose.ui:ui-tooling")
-
-            // Core Android libraries
-            dependencies.add("implementation", "androidx.core:core-ktx:1.17.0")
-            dependencies.add("implementation", "androidx.appcompat:appcompat:1.7.1")
-            dependencies.add("implementation", "androidx.activity:activity-compose:1.11.0")
-            dependencies.add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
-            dependencies.add("implementation", "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
-
-            // Kotlin Coroutines
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-
-            // Kotlin Serialization
-            dependencies.add("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-
-            // Timber Logging
-            dependencies.add("implementation", "com.jakewharton.timber:timber:5.0.1")
-
-            // Core Library Desugaring (for Java 25 APIs on older Android)
-            dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.5")
-
-            // Firebase BOM — version from libs.versions.toml
-            dependencies.add(
-                "implementation",
-                dependencies.platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
-            )
-
-            // Universal Xposed/LSPosed API access
-            dependencies.add("compileOnly", "de.robv.android.xposed:api:82")
-            
-            // KavaRef for modern reflection (YukiHook 2.0 replacement)
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-core:1.0.1")
-            dependencies.add("implementation", "com.highcapable.kavaref:kavaref-extension:1.0.1")
-
-            // Note: io.github.libxposed is not yet published to Maven Central
-            // Use de.robv.android.xposed:api:82 for Xposed module development
-            dependencies.add("implementation", "com.github.kyuubiran:EzXHelper:2.2.0")
+            dependencies {
+                add("coreLibraryDesugaring", catalog.findLibrary("desugar-jdk-libs").get())
+                add("implementation", catalog.findLibrary("hilt-android").get())
+                add("ksp", catalog.findLibrary("hilt-compiler").get())
+                add("implementation", catalog.findLibrary("timber").get())
+            }
         }
     }
 }
