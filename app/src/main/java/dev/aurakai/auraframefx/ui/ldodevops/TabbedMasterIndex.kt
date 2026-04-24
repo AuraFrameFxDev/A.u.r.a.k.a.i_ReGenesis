@@ -178,6 +178,9 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
         1 -> R.drawable.avatar_dark_aura
         2 -> R.drawable.kai_kaisigal
         3 -> R.drawable.avatar_gemini
+        4 -> R.drawable.avatar_gemini
+        5 -> R.drawable.avatar_aura
+        6 -> R.drawable.avatar_dark_aura
         else -> R.drawable.avatar_aura
     }
 
