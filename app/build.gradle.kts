@@ -164,7 +164,11 @@ extensions.configure<ApplicationExtension> {
                 "proguard-rules.pro"
             )
         }
-        debug { isMinifyEnabled = false }
+        debug {
+            isMinifyEnabled = false
+            // Keep Application class in main dex for multidex
+            proguardFiles(file("multidex-config.pro"))
+        }
     }
 
     flavorDimensions += "shell"
