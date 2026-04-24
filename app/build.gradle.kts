@@ -40,6 +40,9 @@ extensions.configure<ApplicationExtension> {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Multidex required for large app
+        multiDexEnabled = true
 
         // Genesis Protocol - Build Configuration Constants
         buildConfigField(
