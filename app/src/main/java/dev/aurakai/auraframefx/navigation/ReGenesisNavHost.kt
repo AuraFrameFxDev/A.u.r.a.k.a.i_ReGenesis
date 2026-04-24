@@ -20,7 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.orchestration.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.memory.*
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.fusion.*
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.TerminalViewModel
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.*
