@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.navigation
 
+import dev.aurakai.auraframefx.BuildConfig
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -358,7 +359,14 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.Claude.route) {
             SovereignClaudeScreen(onNavigateBack = { navController.popBackStack() })
         }
-        composable(ReGenesisRoute.Gemini.route) { SovereignGeminiScreen(onNavigateBack = { navController.popBackStack() }) }
+        composable(ReGenesisRoute.Gemini.route) {
+            if (BuildConfig.ENABLE_GEMINI) {
+                SovereignGeminiScreen(onNavigateBack = { navController.popBackStack() })
+            } else {
+                // Friendly fallback instead of a hard crash if VertexAI/Gemini isn't configured
+                StubScreen("Gemini (disabled)", "ModelTraining", navController)
+            }
+        }
 
         composable(ReGenesisRoute.Nemotron.route) {
             SovereignNemotronScreen(onNavigateBack = { navController.popBackStack() })

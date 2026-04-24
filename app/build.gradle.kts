@@ -78,6 +78,11 @@ extensions.configure<ApplicationExtension> {
             "\"${project.findProperty("OPENROUTER_API_KEY") ?: "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"}\""
         )
 
+        // Fail-safe flags for VertexAI / Gemini activation
+        buildConfigField("boolean", "ENABLE_GEMINI", "false")
+        buildConfigField("String", "VERTEX_LOCATION", "\"us-central1\"")
+        buildConfigField("String", "GEMINI_MODEL", "\"gemini-1.5-flash\"")
+
         // Claude Local Shell Parameters
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
         buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
