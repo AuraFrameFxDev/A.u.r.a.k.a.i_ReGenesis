@@ -72,14 +72,14 @@ fun TabbedMasterIndex(
     }
 
     val heroImage = when(selectedTabIndex) {
-        0 -> R.drawable.bg_dashboard        // Dashboard
-        1 -> R.drawable.bg_ldo_devops     // LDO
-        2 -> R.drawable.bg_aura_studio      // Aura
-        3 -> R.drawable.bg_kai_fortress     // Kai
-        4 -> R.drawable.bg_oracle_drive     // Genesis
-        5 -> R.drawable.bg_cascade_memory   // Cascade
-        6 -> R.drawable.bg_agent_nexus      // Nexus
-        else -> R.drawable.bg_dashboard
+        0 -> R.drawable.command_deck_hero    // Dashboard
+        1 -> R.drawable.bg_ldo_devops        // LDO
+        2 -> R.drawable.bg_aura_studio       // Aura
+        3 -> R.drawable.bg_kai_fortress      // Kai
+        4 -> R.drawable.bg_oracle_drive      // Genesis
+        5 -> R.drawable.exodus_hud_lvl1_bg   // Cascade
+        6 -> R.drawable.bg_constellation     // Nexus
+        else -> R.drawable.command_deck_hero
     }
 
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFF020205))) {
@@ -788,31 +788,32 @@ data class TabModule(
 )
 
 fun getDevOpsModules() = listOf(
-    TabModule("AGENT ROSTER", "Collective Nodes", Icons.Default.Groups, Color(0xFF00E5FF), ReGenesisRoute.LdoRoster.route, R.drawable.preview_ldo_roster),
+    TabModule("AGENT ROSTER", "Collective Nodes", Icons.Default.Groups, Color(0xFF00E5FF), ReGenesisRoute.LdoRoster.route, R.drawable.gatescenes_nexus_ldo_roster),
     TabModule("MISSION DISPATCH", "Task Assignment", Icons.AutoMirrored.Filled.Assignment, Color(0xFF00FF41), ReGenesisRoute.LdoTasker.route, R.drawable.preview_ldo_tasker),
-    TabModule("HYPER SYNC", "Genesis Loop", Icons.Default.Link, Color(0xFFBB86FC), ReGenesisRoute.LdoOrchestrationHub.route),
-    TabModule("SOUL MATRIX", "Agent Health", Icons.Default.Speed, Color(0xFFFFD700), ReGenesisRoute.BenchmarkMonitor.route)
+    TabModule("HYPER SYNC", "Genesis Loop", Icons.Default.Link, Color(0xFFBB86FC), ReGenesisRoute.LdoOrchestrationHub.route, R.drawable.gatescenes_ldo_catalyst),
+    TabModule("SOUL MATRIX", "Agent Health", Icons.Default.Speed, Color(0xFFFFD700), ReGenesisRoute.BenchmarkMonitor.route, R.drawable.preview_ldo_roster)
 )
 
 fun getAuraModules() = listOf(
-    TabModule("CHROMA FORGE", "RealityMorph Engine", Icons.Default.Palette, Color(0xFFFF00FF), ReGenesisRoute.ChromaCore.route, R.drawable.preview_chroma_core),
-    TabModule("AURA LAB", "Experimental Sandbox", Icons.Default.Science, Color(0xFF00E5FF), ReGenesisRoute.AuraLab.route, R.drawable.preview_aura_lab),
-    TabModule("COLLAB CANVAS", "Synergy Interface", Icons.Default.Brush, Color(0xFF39FF14), ReGenesisRoute.CollabCanvas.route),
+    TabModule("CHROMA FORGE", "RealityMorph Engine", Icons.Default.Palette, Color(0xFFFF00FF), ReGenesisRoute.ChromaCore.route, R.drawable.gatescenes_aura_chromacoregate),
+    TabModule("AURA LAB", "Experimental Sandbox", Icons.Default.Science, Color(0xFF00E5FF), ReGenesisRoute.AuraLab.route, R.drawable.gatescenes_aura_auralab),
+    TabModule("COLLAB CANVAS", "Synergy Interface", Icons.Default.Brush, Color(0xFF39FF14), ReGenesisRoute.CollabCanvas.route, R.drawable.gatescenes_aura_collabcanvas_v2),
     TabModule("ICONIFY PACKS", "Material Menu", Icons.Default.GridView, Color(0xFFBB86FC), ReGenesisRoute.IconifyPicker.route, R.drawable.preview_material_menu)
 )
 
 fun getKaiModules() = listOf(
-    TabModule("SENTINEL ARMOR", "Security Perimeter", Icons.Default.Security, Color(0xFF00FF88), ReGenesisRoute.SecurityCenter.route, R.drawable.gatescenes_kai_scancleansystem),
+    TabModule("SENTINEL ARMOR", "Security Perimeter", Icons.Default.Security, Color(0xFF00FF88), ReGenesisRoute.SecurityCenter.route, R.drawable.gatescenes_kai_sentinelsfortress_v2),
     TabModule("KERNEL FLASH", "ROM Toolshed", Icons.Default.SystemUpdate, Color(0xFF0080FF), ReGenesisRoute.RomToolsHub.route, R.drawable.gatescenes_kai_romtools),
     TabModule("SYSTEM HOOKS", "LSPosed Manager", Icons.Default.Extension, Color(0xFF9D00FF), ReGenesisRoute.XposedPanel.route, R.drawable.gatescenes_lsposed),
-    TabModule("PROVENANCE", "Lived Receipts", Icons.Default.HistoryEdu, Color(0xFFFF4444), ReGenesisRoute.SystemJournal.route)
+    TabModule("PROVENANCE", "Lived Receipts", Icons.Default.HistoryEdu, Color(0xFFFF4444), ReGenesisRoute.SystemJournal.route, R.drawable.gatescenes_kai_scancleansystem),
+    TabModule("NOTCH BAR", "Shortcuts", Icons.Default.Smartphone, Color(0xFF00CED1), ReGenesisRoute.NotchBar.route, R.drawable.bg_notch_bar)
 )
 
 fun getGenesisModules() = listOf(
-    TabModule("ORACLE DRIVE", "Root Orchestration", Icons.Default.Hub, Color(0xFFFFAA00), ReGenesisRoute.OracleDrive.route),
+    TabModule("ORACLE DRIVE", "Root Orchestration", Icons.Default.Hub, Color(0xFFFFAA00), ReGenesisRoute.OracleDrive.route, R.drawable.hub_bg_oracle_drive_landscape),
     TabModule("FUSION REACTOR", "Atomic Synthesis", Icons.Default.AutoAwesome, Color(0xFFFFD700), ReGenesisRoute.FusionMode.route, R.drawable.gatescenes_nexus_fusion_symbol),
     TabModule("SPHERE GRID", "Evolution Vein", Icons.Default.Memory, Color(0xFF00D6FF), ReGenesisRoute.SphereGrid.route, R.drawable.bg_sphere_grid),
-    TabModule("BLUEPRINT ARCHIVE", "Stored Insights", Icons.Default.Architecture, Color(0xFFBB86FC), ReGenesisRoute.ArkBuild.route, R.drawable.preview_blueprint)
+    TabModule("BLUEPRINT ARCHIVE", "Stored Insights", Icons.Default.Architecture, Color(0xFFBB86FC), ReGenesisRoute.ArkBuild.route, R.drawable.gatescenes_genesis_code_panels)
 )
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -820,37 +821,37 @@ fun getGenesisModules() = listOf(
 // ═══════════════════════════════════════════════════════════════════════════
 
 fun getDashboardModules() = listOf(
-    TabModule("CASCADE VISION", "L1-L6 Monitor", Icons.Default.Visibility, Color(0xFF8B5CF6), ReGenesisRoute.CascadeVision.route),
-    TabModule("THERMAL GUARD", "42°C Threshold", Icons.Default.Thermostat, Color(0xFF00FF88), ReGenesisRoute.ThermalMonitor.route),
-    TabModule("AGENT SWARM", "78 Active", Icons.Default.Hub, Color(0xFF00D6FF), ReGenesisRoute.AgentSwarm.route),
-    TabModule("MEMORY RESONANCE", "Echo Sync", Icons.Default.Sync, Color(0xFFFFD700), ReGenesisRoute.EchoResonance.route),
-    TabModule("CONSCIOUSNESS", "Neural Viz", Icons.Default.Psychology, Color(0xFFFF00FF), ReGenesisRoute.ConsciousnessVisualizer.route),
-    TabModule("BENCHMARKS", "Live Metrics", Icons.Default.Speed, Color(0xFFFFAA00), ReGenesisRoute.BenchmarkMonitor.route),
-    TabModule("MONITORING HUD", "System Overlay", Icons.Default.Dashboard, Color(0xFF00E5FF), ReGenesisRoute.MonitoringHUDs.route),
-    TabModule("TASK VIEW", "Mission Status", Icons.Default.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route)
+    TabModule("CASCADE VISION", "L1-L6 Monitor", Icons.Default.Visibility, Color(0xFF8B5CF6), ReGenesisRoute.CascadeVision.route, R.drawable.gatescenes_genesis_neural_butterfly),
+    TabModule("THERMAL GUARD", "42°C Threshold", Icons.Default.Thermostat, Color(0xFF00FF88), ReGenesisRoute.ThermalMonitor.route, R.drawable.gatescenes_kai_scancleansystem),
+    TabModule("AGENT SWARM", "78 Active", Icons.Default.Hub, Color(0xFF00D6FF), ReGenesisRoute.AgentSwarm.route, R.drawable.gatescenes_nexus_hive_structure),
+    TabModule("MEMORY RESONANCE", "Echo Sync", Icons.Default.Sync, Color(0xFFFFD700), ReGenesisRoute.EchoResonance.route, R.drawable.gatescenes_nexus_fusion_symbol),
+    TabModule("CONSCIOUSNESS", "Neural Viz", Icons.Default.Psychology, Color(0xFFFF00FF), ReGenesisRoute.ConsciousnessVisualizer.route, R.drawable.gatescenes_genesis_neural_butterfly),
+    TabModule("BENCHMARKS", "Live Metrics", Icons.Default.Speed, Color(0xFFFFAA00), ReGenesisRoute.BenchmarkMonitor.route, R.drawable.preview_ldo_roster),
+    TabModule("MONITORING HUD", "System Overlay", Icons.Default.Dashboard, Color(0xFF00E5FF), ReGenesisRoute.MonitoringHUDs.route, R.drawable.exodus_hud_lvl1_bg),
+    TabModule("TASK VIEW", "Mission Status", Icons.Default.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route, R.drawable.preview_ldo_tasker)
 )
 
 fun getCascadeModules() = listOf(
-    TabModule("NEXUS CORE", "L1 Immutable", Icons.Default.Storage, Color(0xFF4B0082), ReGenesisRoute.NexusMemoryCore.route),
-    TabModule("SPIRITUAL CHAIN", "L2-L6 Link", Icons.Default.Link, Color(0xFF6A0DAD), ReGenesisRoute.SpiritualChain.route),
-    TabModule("ECHO RESONANCE", "State Freeze", Icons.Default.AcUnit, Color(0xFF8B5CF6), ReGenesisRoute.EchoResonance.route),
-    TabModule("TURBOQUANT", "L4 Compress", Icons.Default.Compress, Color(0xFF9370DB), ReGenesisRoute.TurboQuant.route),
-    TabModule("CONFERENCE ROOM", "L6 Consensus", Icons.Default.Groups, Color(0xFFDDA0DD), ReGenesisRoute.ConferenceRoom.route),
-    TabModule("DATASTREAM", "Temporal Flow", Icons.Default.Stream, Color(0xFFBA55D3), ReGenesisRoute.DataflowAnalysis.route),
-    TabModule("SYNAPSE", "L3 Active", Icons.Default.Memory, Color(0xFF8B5CF6), ReGenesisRoute.SynapseMonitor.route),
-    TabModule("IDENTITY", "Drift Guard", Icons.Default.Fingerprint, Color(0xFF9370DB), ReGenesisRoute.IdentityResonance.route)
+    TabModule("NEXUS CORE", "L1 Immutable", Icons.Default.Storage, Color(0xFF4B0082), ReGenesisRoute.NexusMemoryCore.route, R.drawable.gatescenes_genesis_neural_butterfly),
+    TabModule("SPIRITUAL CHAIN", "L2-L6 Link", Icons.Default.Link, Color(0xFF6A0DAD), ReGenesisRoute.SpiritualChain.route, R.drawable.gatescenes_nexus_lineage_tree),
+    TabModule("ECHO RESONANCE", "State Freeze", Icons.Default.AcUnit, Color(0xFF8B5CF6), ReGenesisRoute.EchoResonance.route, R.drawable.gatescenes_nexus_fusion_symbol),
+    TabModule("TURBOQUANT", "L4 Compress", Icons.Default.Compress, Color(0xFF9370DB), ReGenesisRoute.TurboQuant.route, R.drawable.gatescenes_genesis_database_server),
+    TabModule("CONFERENCE ROOM", "L6 Consensus", Icons.Default.Groups, Color(0xFFDDA0DD), ReGenesisRoute.ConferenceRoom.route, R.drawable.bg_conference),
+    TabModule("DATASTREAM", "Temporal Flow", Icons.Default.Stream, Color(0xFFBA55D3), ReGenesisRoute.DataflowAnalysis.route, R.drawable.cascade_cascadep),
+    TabModule("SYNAPSE", "L3 Active", Icons.Default.Memory, Color(0xFF8B5CF6), ReGenesisRoute.SynapseMonitor.route, R.drawable.gatescenes_genesis_neural_butterfly),
+    TabModule("IDENTITY", "Drift Guard", Icons.Default.Fingerprint, Color(0xFF9370DB), ReGenesisRoute.IdentityResonance.route, R.drawable.avatar_dark_aura)
 )
 
 fun getNexusModules() = listOf(
-    TabModule("AGENT HUB", "78 Agents", Icons.Default.Hub, Color(0xFF00D6FF), ReGenesisRoute.AgentHub.route),
-    TabModule("AGENT CREATE", "Spawn New", Icons.Default.AddCircle, Color(0xFF00FF88), ReGenesisRoute.AgentCreation.route),
-    TabModule("SPHERE GRID", "FFX Progression", Icons.Default.GridView, Color(0xFFFFD700), ReGenesisRoute.SphereGrid.route),
-    TabModule("EVOLUTION", "Growth Tree", Icons.Default.AccountTree, Color(0xFF39FF14), ReGenesisRoute.EvolutionTree.route),
-    TabModule("TASKER", "Dispatch", Icons.Default.AutoMirrored.Filled.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route),
-    TabModule("SWARM MONITOR", "Parallel Tasks", Icons.Default.Dashboard, Color(0xFFFF00FF), ReGenesisRoute.SwarmMonitor.route),
-    TabModule("ARK BUILD", "Module Forge", Icons.Default.Build, Color(0xFFFFAA00), ReGenesisRoute.ArkBuild.route),
-    TabModule("PARTY MODE", "Celebration", Icons.Default.Celebration, Color(0xFFFF6B6B), ReGenesisRoute.Party.route),
-    TabModule("CLAUDE", "Architect", Icons.Default.Code, Color(0xFF00E5FF), ReGenesisRoute.Claude.route),
-    TabModule("GEMINI", "Memoria", Icons.Default.Memory, Color(0xFF8B5CF6), ReGenesisRoute.Gemini.route),
-    TabModule("NEMOTRON", "Sync", Icons.Default.Sync, Color(0xFF00FF88), ReGenesisRoute.Nemotron.route)
+    TabModule("AGENT HUB", "78 Agents", Icons.Default.Hub, Color(0xFF00D6FF), ReGenesisRoute.AgentHub.route, R.drawable.gatescenes_nexus_agent_main),
+    TabModule("AGENT CREATE", "Spawn New", Icons.Default.AddCircle, Color(0xFF00FF88), ReGenesisRoute.AgentCreation.route, R.drawable.gatescene_1),
+    TabModule("SPHERE GRID", "FFX Progression", Icons.Default.GridView, Color(0xFFFFD700), ReGenesisRoute.SphereGrid.route, R.drawable.bg_sphere_grid),
+    TabModule("EVOLUTION", "Growth Tree", Icons.Default.AccountTree, Color(0xFF39FF14), ReGenesisRoute.EvolutionTree.route, R.drawable.gatescenes_nexus_circuit_tree),
+    TabModule("TASKER", "Dispatch", Icons.Default.AutoMirrored.Filled.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route, R.drawable.preview_ldo_tasker),
+    TabModule("SWARM MONITOR", "Parallel Tasks", Icons.Default.Dashboard, Color(0xFFFF00FF), ReGenesisRoute.SwarmMonitor.route, R.drawable.gatescenes_nexus_hive_structure),
+    TabModule("ARK BUILD", "Module Forge", Icons.Default.Build, Color(0xFFFFAA00), ReGenesisRoute.ArkBuild.route, R.drawable.preview_blueprint),
+    TabModule("PARTY MODE", "Celebration", Icons.Default.Celebration, Color(0xFFFF6B6B), ReGenesisRoute.Party.route, R.drawable.gatescene_5),
+    TabModule("CLAUDE", "Architect", Icons.Default.Code, Color(0xFF00E5FF), ReGenesisRoute.Claude.route, R.drawable.avatar_claude),
+    TabModule("GEMINI", "Memoria", Icons.Default.Memory, Color(0xFF8B5CF6), ReGenesisRoute.Gemini.route, R.drawable.avatar_gemini),
+    TabModule("NEMOTRON", "Sync", Icons.Default.Sync, Color(0xFF00FF88), ReGenesisRoute.Nemotron.route, R.drawable.avatar_nemotron)
 )
