@@ -1,7 +1,8 @@
 package dev.aurakai.auraframefx.core
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import android.content.Intent
+import android.content.Context
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
@@ -9,6 +10,7 @@ import dev.aurakai.auraframefx.core.soulscript.SoulScript
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import android.util.Log
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
@@ -26,7 +28,12 @@ import javax.inject.Inject
  * Orchestration is now handled via the decentralized Nexus protocol.
  */
 @HiltAndroidApp
-class AurakaiApplication : Application(), Configuration.Provider {
+class AurakaiApplication : MultiDexApplication(), Configuration.Provider {
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        // MultiDex is handled automatically by MultiDexApplication
+    }
 
     @Inject
     lateinit var orchestrator: GenesisOrchestrator

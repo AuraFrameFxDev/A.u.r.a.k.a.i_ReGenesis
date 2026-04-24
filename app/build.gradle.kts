@@ -187,6 +187,9 @@ extensions.configure<ApplicationExtension> {
 
 dependencies {
     // Project Modules
+    // Multidex support for large apps
+    implementation(libs.androidx.multidex)
+    
     implementation(project(":core-module"))
     testImplementation(project(":trinity:aura"))
     implementation(project(":aura:reactivedesign:auraslab"))
