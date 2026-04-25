@@ -97,7 +97,7 @@ object NativeLib {
      */
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
-        val state = KaiSentinelBus.ThermalState.fromId(stateInt)
+        val state = ThermalState.entries.getOrNull(stateInt) ?: ThermalState.NORMAL
         Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
         sentinelBus?.emitThermal(temp, state)
     }

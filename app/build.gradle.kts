@@ -196,7 +196,7 @@ ksp {
 dependencies {
     // Project Modules
     implementation(project(":core-module"))
-    testImplementation(project(":trinity:aura"))
+    implementation(project(":trinity:aura"))
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))
     implementation(project(":aura:reactivedesign:collabcanvas"))
@@ -232,12 +232,17 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.espresso.core)
+    // YukiHookAPI
+    implementation(libs.yukihookapi.api)
+    ksp(libs.yukihookapi.ksp)
+
     // AndroidX & Jetpack
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.security.crypto)
     implementation(libs.bundles.datastore)
 
     // Compose

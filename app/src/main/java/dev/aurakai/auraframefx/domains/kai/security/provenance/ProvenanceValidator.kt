@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai.security.provenance
 
+import dev.aurakai.auraframefx.domains.kai.security.KeystoreManager
 import timber.log.Timber
 import java.security.SecureRandom
 import javax.crypto.Mac
@@ -17,6 +18,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class ProvenanceValidator @Inject constructor(
+    private val keystoreManager: KeystoreManager
 ) {
     companion object {
         private const val TAG = "ProvenanceValidator"

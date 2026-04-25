@@ -92,7 +92,7 @@ class AetherForgeEngine(
         agentLedger.saveAgent(updatedAgent)
         _activeAgents.value = _activeAgents.value + (agentId to updatedAgent)
 
-        Timber.d("⚡ $agentName gained $finalAmount XP from $source")
+        Timber.d("⚡ ${agent.agentName} gained $finalAmount XP from $source")
         
         return levelUpResult
     }
@@ -117,7 +117,7 @@ class AetherForgeEngine(
         // Check for ability unlocks at this level
         val unlockedAbilities = checkAbilityUnlocks(newAgent)
 
-        Timber.d("🎉 LEVEL UP! $newAgent.agentName is now Level $newLevel!")
+        Timber.d("🎉 LEVEL UP! ${newAgent.agentName} is now Level $newLevel!")
         
         return LevelUpResult(
             previousLevel = agent.level,
@@ -160,7 +160,7 @@ class AetherForgeEngine(
         agentLedger.saveAgent(updatedAgent)
         _activeAgents.value = _activeAgents.value + (agentId to updatedAgent)
         
-        Timber.d("📈 $updatedAgent.agentName increased $stat to ${getStatValue(updatedAgent, stat)}")
+        Timber.d("📈 ${updatedAgent.agentName} increased $stat to ${getStatValue(updatedAgent, stat)}")
         return true
     }
 
