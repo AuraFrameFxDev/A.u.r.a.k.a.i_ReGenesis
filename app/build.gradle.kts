@@ -230,6 +230,7 @@ dependencies {
     implementation(project(":extendsysf"))
     implementation(project(":utilities"))
     implementation(project(":list"))
+    implementation(libs.androidx.compose.foundation.layout)
 
     // Hilt
     implementation(libs.hilt.android)

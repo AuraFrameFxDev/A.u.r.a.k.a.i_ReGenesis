@@ -3,14 +3,14 @@ package dev.aurakai.auraframefx.domains.aura.ui.components
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextColor
-import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkTextStyle
 
 @Composable
 fun CyberpunkText(
     text: String,
     color: CyberpunkTextColor,
-    style: CyberpunkTextStyle,
+    style: TextStyle,
     modifier: Modifier = Modifier,
     enableGlitch: Boolean = false, // Parameter based on usage, actual glitch effect not implemented in stub
 ) {

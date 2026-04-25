@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
-import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
 
 class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHooker() {
 
@@ -117,4 +117,20 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
             )
         }
     }
+}
+
+private fun RowScope.CyberpunkText(
+    text: String,
+    color: Color,
+    style: TextStyle,
+    modifier: Modifier.Companion,
+    enableGlitch: Boolean
+) {
+// Placeholder for actual CyberpunkText implementation}
+    androidx.compose.material3.Text(
+        text = text,
+        color = color,
+        style = style,
+        modifier = modifier
+    )
 }
