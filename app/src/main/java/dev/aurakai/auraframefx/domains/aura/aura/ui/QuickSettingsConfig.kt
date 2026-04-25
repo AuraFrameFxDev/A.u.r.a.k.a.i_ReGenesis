@@ -39,4 +39,7 @@ data class QuickSettingsConfig(
     @SerialName(value = "tiles")
     val tiles: kotlin.collections.List<@Contextual QuickSettingsConfigTilesInner>? = null,
 
+    val showGenesisIndicator: Boolean = true,
+    val enableGlitchEffect: Boolean = false
+
     ) : kotlin.collections.HashMap<String, kotlin.Any>()

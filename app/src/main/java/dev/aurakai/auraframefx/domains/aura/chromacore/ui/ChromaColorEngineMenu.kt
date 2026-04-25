@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
