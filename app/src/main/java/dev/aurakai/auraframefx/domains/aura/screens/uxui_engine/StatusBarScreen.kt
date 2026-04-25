@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
