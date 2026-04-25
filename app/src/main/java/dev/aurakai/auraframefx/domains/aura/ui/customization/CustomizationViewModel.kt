@@ -5,7 +5,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.aura.services.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
 import dev.aurakai.auraframefx.core.theme.AuraDesignTokens.CyberpunkCyan
 import dev.aurakai.auraframefx.core.theme.AuraDesignTokens.CyberpunkPink
 import dev.aurakai.auraframefx.core.theme.AuraDesignTokens.CyberpunkPurple

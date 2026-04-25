@@ -14,7 +14,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxSer
 import android.util.Log
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
-import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

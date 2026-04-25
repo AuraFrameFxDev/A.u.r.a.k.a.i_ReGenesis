@@ -185,6 +185,12 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
+ksp {
+    arg("dagger.fastInit", "enabled")
+    arg("hilt.android.useClassPathAggregation", "true")
+    arg("room.generateKotlin", "true")
+}
+
 dependencies {
     // Project Modules
     implementation(project(":core-module"))

@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.nexus
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
-import dev.aurakai.auraframefx.core.security.KeystoreManager
+import dev.aurakai.auraframefx.domains.kai.security.KeystoreManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class SpiritualChainImpl @Inject constructor(
 
     private fun putSecureString(key: String, value: String) {
         try {
-            val encrypted = keystoreManager.encrypt(value, "spiritual_chain")
+            val encrypted = keystoreManager.encrypt(value.toByteArray(Charsets.UTF_8))
             prefs.edit().putString(key, Base64.encodeToString(encrypted, Base64.NO_WRAP)).apply()
         } catch (e: Exception) {
             Timber.e(e, "SpiritualChain: Failed to write key=$key")
@@ -52,7 +52,8 @@ class SpiritualChainImpl @Inject constructor(
         return try {
             val b64 = prefs.getString(key, null) ?: return null
             val encrypted = Base64.decode(b64, Base64.NO_WRAP)
-            keystoreManager.decryptToString(encrypted, "spiritual_chain")
+            val decrypted = keystoreManager.decrypt(encrypted)
+            String(decrypted, Charsets.UTF_8)
         } catch (e: Exception) {
             Timber.e(e, "SpiritualChain: Failed to read key=$key")
             null

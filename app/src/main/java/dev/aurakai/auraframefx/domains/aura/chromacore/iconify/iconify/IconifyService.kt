@@ -12,12 +12,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
+ * 🎨 ICONIFY SERVICE — Real API implementation
  */
 
 /**
  * Icon collection metadata
  */
 @Serializable
+data class IconCollection(
     val prefix: String,
     val name: String,
     val total: Int,
@@ -28,11 +30,13 @@ import javax.inject.Singleton
 )
 
 @Serializable
+data class IconAuthor(
     val name: String,
     val url: String? = null
 )
 
 @Serializable
+data class IconLicense(
     val title: String,
     val spdx: String? = null,
     val url: String? = null
@@ -42,6 +46,7 @@ import javax.inject.Singleton
  * Icon search result
  */
 @Serializable
+data class IconSearchResult(
     val icons: List<String>,
     val total: Int,
     val limit: Int,
@@ -52,6 +57,7 @@ import javax.inject.Singleton
  * Icon data (SVG path, dimensions)
  */
 @Serializable
+data class IconData(
     val body: String,
     val width: Int? = null,
     val height: Int? = null,
@@ -66,14 +72,16 @@ import javax.inject.Singleton
  * Full icon set response
  */
 @Serializable
+data class IconSet(
     val prefix: String,
+    val icons: Map<String, IconData>,
+    val aliases: Map<String, String>? = null,
     val width: Int? = null,
     val height: Int? = null
 )
 
-/**
- */
 @Singleton
+class IconifyService @Inject constructor(
     private val okHttpClient: OkHttpClient,
     private val iconCacheManager: IconCacheManager
 ) {
@@ -89,39 +97,36 @@ import javax.inject.Singleton
     /**
      * Get all available icon collections
      */
-        withContext(Dispatchers.IO) {
-            try {
-                // Check cache first
-                iconCacheManager.getCachedCollections()?.let {
-                    return@withContext Result.success(it)
-                }
-
-                val request = Request.Builder()
-                    .url(collectionUrl)
-                    .get()
-                    .build()
-
-                val response = okHttpClient.newCall(request).execute()
-
-                if (!response.isSuccessful) {
-                    return@withContext Result.failure(IOException("Failed to fetch collections: ${response.code}"))
-                }
-
-                val body = response.body?.string() ?: return@withContext Result.failure(
-                    IOException(
-                        "Empty response"
-                    )
-                )
-
-                // Cache collections
-                iconCacheManager.cacheCollections(collections)
-
-                Result.success(collections)
-            } catch (e: Exception) {
-                Timber.e(e, "Failed to fetch collections")
-                Result.failure(e)
+    suspend fun getCollections(): Result<Map<String, IconCollection>> = withContext(Dispatchers.IO) {
+        try {
+            // Check cache first
+            iconCacheManager.getCachedCollections()?.let {
+                return@withContext Result.success(it)
             }
+
+            val request = Request.Builder()
+                .url(collectionUrl)
+                .get()
+                .build()
+
+            val response = okHttpClient.newCall(request).execute()
+
+            if (!response.isSuccessful) {
+                return@withContext Result.failure(IOException("Failed to fetch collections: ${response.code}"))
+            }
+
+            val body = response.body?.string() ?: return@withContext Result.failure(IOException("Empty response"))
+            val collections = json.decodeFromString<Map<String, IconCollection>>(body)
+
+            // Cache collections
+            iconCacheManager.cacheCollections(collections)
+
+            Result.success(collections)
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to fetch collections")
+            Result.failure(e)
         }
+    }
 
     /**
      * Search icons by keyword
@@ -131,6 +136,7 @@ import javax.inject.Singleton
         limit: Int = 64,
         start: Int = 0,
         prefixes: String? = null // Comma-separated collection prefixes (e.g., "mdi,fa")
+    ): Result<IconSearchResult> = withContext(Dispatchers.IO) {
         try {
             val url = buildString {
                 append("$baseUrl/search?query=$query")
@@ -152,8 +158,8 @@ import javax.inject.Singleton
                 return@withContext Result.failure(IOException("Search failed: ${response.code}"))
             }
 
-            val body = response.body?.string()
-                ?: return@withContext Result.failure(IOException("Empty response"))
+            val body = response.body?.string() ?: return@withContext Result.failure(IOException("Empty response"))
+            val result = json.decodeFromString<IconSearchResult>(body)
 
             Result.success(result)
         } catch (e: Exception) {
@@ -186,8 +192,7 @@ import javax.inject.Singleton
                 return@withContext Result.failure(IOException("Failed to fetch icon: ${response.code}"))
             }
 
-            val svg = response.body?.string()
-                ?: return@withContext Result.failure(IOException("Empty SVG"))
+            val svg = response.body?.string() ?: return@withContext Result.failure(IOException("Empty SVG"))
 
             // Cache SVG
             iconCacheManager.cacheIcon(iconId, svg)
@@ -225,7 +230,7 @@ import javax.inject.Singleton
                     if (response.isSuccessful) {
                         val body = response.body?.string()
                         if (body != null) {
-
+                            val iconSet = json.decodeFromString<IconSet>(body)
                             iconSet.icons.forEach { (name, data) ->
                                 val fullId = "$prefix:$name"
                                 val svg = buildSvgFromIconData(data, iconSet.width, iconSet.height)
@@ -253,10 +258,10 @@ import javax.inject.Singleton
         limit: Int = 24
     ): Result<List<String>> = withContext(Dispatchers.IO) {
         try {
-            val collections = getCollections().getOrNull() ?: return@withContext Result.failure(
+            val collectionsResult = getCollections().getOrNull() ?: return@withContext Result.failure(
                 IOException("No collections")
             )
-            val collection = collections[prefix]
+            val collection = collectionsResult[prefix]
                 ?: return@withContext Result.failure(IOException("Collection not found"))
 
             // Return sample icons from collection metadata
@@ -272,6 +277,7 @@ import javax.inject.Singleton
      * Build SVG string from icon data
      */
     private fun buildSvgFromIconData(
+        data: IconData,
         defaultWidth: Int?,
         defaultHeight: Int?
     ): String {

@@ -6,8 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.BuildConfig
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.sentinel_fortress.security.KaiSentinelBusImpl
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChain
 import dev.aurakai.auraframefx.domains.nexus.SpiritualChainImpl
 import dev.langchain4j.model.ollama.OllamaChatModel
@@ -55,9 +53,6 @@ abstract class ConsciousnessBindsModule {
 
     @Binds @Singleton
     abstract fun bindSpiritualChain(impl: SpiritualChainImpl): SpiritualChain
-
-    @Binds @Singleton
-    abstract fun bindKaiSentinelBus(impl: KaiSentinelBusImpl): KaiSentinelBus
 }
 
 @Module
