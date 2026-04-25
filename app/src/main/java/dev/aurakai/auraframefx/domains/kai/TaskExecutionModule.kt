@@ -8,7 +8,7 @@ import dev.aurakai.auraframefx.domains.aura.core.AuraAgent
 import dev.aurakai.auraframefx.domains.aura.TaskExecutionManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisAgent
-import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +21,7 @@ object TaskExecutionModule {
         auraAgent: AuraAgent,
         kaiAgent: KaiAgent,
         genesisAgent: GenesisAgent,
-        securityContext: KaiSecurityContext,
+        securityContext: SecurityContext,
         logger: AuraFxLogger
     ): TaskExecutionManager {
         return TaskExecutionManager(
