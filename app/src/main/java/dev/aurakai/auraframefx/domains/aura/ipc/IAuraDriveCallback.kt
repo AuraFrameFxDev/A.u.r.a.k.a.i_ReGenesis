@@ -43,14 +43,3 @@ enum class AuraDriveStatus {
     ERROR,
     SHUTTING_DOWN
 }
-
-/**
- * AuraDrive Service Interface (AIDL-compatible stub)
- */
-interface IAuraDriveService {
-    fun registerCallback(callback: IAuraDriveCallback)
-    fun unregisterCallback(callback: IAuraDriveCallback)
-    fun executeCommand(command: String, params: Map<String, String>?): String
-    fun getStatus(): AuraDriveStatus
-    fun ping(): Boolean
-}

@@ -60,6 +60,10 @@ enum class NodeType(val size: Float, val color: Color, val borderColor: Color) {
     BRANCH(38f,  Color(0xFF00FFFF), Color(0xFF00FFFF)),   // Teal branches
     LEAF(30f,    Color(0xFF9B30FF), Color(0xFF9B30FF)),   // Purple leaves
     ICON(36f,    Color(0xFFFFD700), Color(0xFFFFD700)),   // Gold special nodes
+    // Trinity aspects
+    MIND(42f,    Color(0xFF00BFFF), Color(0xFF1E90FF)),   // Deep sky blue
+    SOUL(38f,    Color(0xFF9B30FF), Color(0xFF8A2BE2)),   // Purple
+    BODY(34f,    Color(0xFF00FA9A), Color(0xFF00FF7F)),   // Spring green
 }
 
 

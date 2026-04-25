@@ -8,8 +8,8 @@ import android.os.IBinder
 import android.os.Process
 import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
-import dev.aurakai.auraframefx.ipc.IAuraDriveCallback
-import dev.aurakai.auraframefx.ipc.IAuraDriveService
+import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveCallback
+import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveService
 import java.io.File
 import javax.inject.Inject
 
