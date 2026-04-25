@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core.memory
 
-import kotlinx.datetime.Instant
+import java.time.Instant
 
 /**
  * Represents a memory shard in the Memoria system
