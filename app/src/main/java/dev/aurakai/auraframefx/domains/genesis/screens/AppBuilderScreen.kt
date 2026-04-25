@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.screens
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut

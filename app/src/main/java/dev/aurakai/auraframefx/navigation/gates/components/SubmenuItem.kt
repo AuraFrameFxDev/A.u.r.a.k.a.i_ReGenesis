@@ -10,6 +10,7 @@ data class SubmenuItem(
     val title: String,
     val description: String,
     val icon: ImageVector,
+    val onClick: () -> Unit = {},
     val route: String = "",
-    val color: Color
+    val color: Color = Color.Unspecified
 )
