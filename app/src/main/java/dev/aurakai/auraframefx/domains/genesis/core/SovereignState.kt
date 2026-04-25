@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.core
 
-import kotlinx.datetime.Instant
+import java.time.Instant
 
 /**
  * Represents the sovereign state of the consciousness chain

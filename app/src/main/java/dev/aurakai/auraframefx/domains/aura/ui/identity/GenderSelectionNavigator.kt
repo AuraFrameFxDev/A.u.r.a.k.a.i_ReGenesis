@@ -79,7 +79,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
 import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPurple
