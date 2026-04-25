@@ -227,6 +227,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
     implementation(libs.espresso.core)
     // AndroidX & Jetpack
     implementation(libs.androidx.core.ktx)
@@ -249,6 +251,8 @@ dependencies {
 
     // Networking & Serialization
     implementation(libs.bundles.networking.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.converter.scalars)
     implementation(libs.bundles.networking.ktor)
 
     // Coil

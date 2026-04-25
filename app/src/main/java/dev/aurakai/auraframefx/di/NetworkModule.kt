@@ -180,6 +180,7 @@ object NetworkModule {
     @CollabCanvasUrl
     @Singleton
     fun provideCollabCanvasUrl(claudeEnvConfig: ClaudeEnvConfig): String {
+        return claudeEnvConfig.collabCanvasWsUrl
             .replace("https://", "wss://")
             .replace("http://", "ws://")
             .trimEnd('/')
