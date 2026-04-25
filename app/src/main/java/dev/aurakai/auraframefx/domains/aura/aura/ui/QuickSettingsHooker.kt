@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.log.YLog
+import com.highcapable.yukihookapi.hook.log.YLog.debug
+import com.highcapable.yukihookapi.hook.log.YLog.error
+import com.highcapable.yukihookapi.hook.log.YLog.info
 
+/**
+ *
+ */
 class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHooker() {
 
     override fun onHook() {
@@ -34,7 +40,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
         }?.hook {
             after {
                 val qsPanel = instance as ViewGroup
-                YLog.info("QuickSettingsHooker: QSPanel inflated → injecting Genesis footer")
+                info("QuickSettingsHooker: QSPanel inflated → injecting Genesis footer")
 
                 addGenesisFooter(qsPanel)
             }
@@ -64,15 +70,15 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
 
             // Add at the bottom (footer area)
             qsPanel.addView(composeView, qsPanel.childCount)
-            YLog.info("QuickSettingsHooker: Genesis footer successfully injected")
+            info("QuickSettingsHooker: Genesis footer successfully injected")
         } catch (e: Exception) {
-            YLog.error("QuickSettingsHooker: Failed to inject footer", e)
+            error("QuickSettingsHooker: Failed to inject footer", e)
         }
     }
 
     private fun applyGenesisTileStyle(tileView: ViewGroup) {
         // Future expansion: custom tile backgrounds, glows, etc.
-        YLog.debug("QuickSettingsHooker: Applied Genesis styling to tile")
+        debug("QuickSettingsHooker: Applied Genesis styling to tile")
     }
 }
 
@@ -119,6 +125,7 @@ fun GenesisQSFooter(config: QuickSettingsConfig) {
     }
 }
 
+@Composable
 private fun RowScope.CyberpunkText(
     text: String,
     color: Color,
@@ -127,7 +134,7 @@ private fun RowScope.CyberpunkText(
     enableGlitch: Boolean
 ) {
 // Placeholder for actual CyberpunkText implementation}
-    androidx.compose.material3.Text(
+    Text(
         text = text,
         color = color,
         style = style,
