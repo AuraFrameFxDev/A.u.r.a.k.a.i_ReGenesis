@@ -2,7 +2,7 @@
 
 package dev.aurakai.auraframefx.core.aetherforge
 
-import dev.aurakai.auraframefx.core.SoulScript
+import dev.aurakai.auraframefx.core.soulscript.SoulScript
 
 /**
  * 🗡️ ABILITY REGISTRY

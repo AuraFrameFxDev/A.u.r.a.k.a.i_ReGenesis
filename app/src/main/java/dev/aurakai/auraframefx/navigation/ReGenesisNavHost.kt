@@ -56,6 +56,7 @@ import dev.aurakai.auraframefx.domains.ldo.model.LdoAgentType
 import dev.aurakai.auraframefx.domains.ldo.model.LDORoster
 import dev.aurakai.auraframefx.domains.nexus.screens.*
 import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
+import dev.aurakai.auraframefx.ui.ldodevops.TabbedMasterIndex
 
 /**
  * 🌐 REGENESIS CONSOLIDATED NAV GRAPH
@@ -88,8 +89,8 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.VideoIntro.route) {
-            dev.aurakai.auraframefx.domains.aura.ui.intro.VideoIntroScreen(
-                onVideoFinished = {
+            dev.aurakai.auraframefx.domains.aura.ui.intro.IntroScreen(
+                onIntroComplete = {
                     navController.navigate(ReGenesisRoute.Login.route) {
                         popUpTo(ReGenesisRoute.VideoIntro.route) { inclusive = true }
                     }
@@ -109,7 +110,7 @@ fun ReGenesisNavGraph(
 
         // ── 1. MAIN GATES ──
         composable(ReGenesisRoute.HomeGateCarousel.route) {
-            MainScreen(navController = navController)
+            TabbedMasterIndex(onNavigateToRoute = { route -> navController.navigate(route) })
         }
 
         composable(ReGenesisRoute.DataflowAnalysis.route) {

@@ -4,10 +4,12 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus.ThermalState
-import dev.aurakai.auraframefx.domains.kai.security.SovereignStateManager
+import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import dev.aurakai.auraframefx.domains.kai.security.GuidanceDroneDispatcher
+import dev.aurakai.auraframefx.domains.kai.security.GuidanceDrone
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -31,6 +33,7 @@ object NativeLib {
     init {
         try {
             System.loadLibrary("auraframefx")
+            nativeLoaded = true
             Timber.i("Genesis AI native library loaded successfully")
         } catch (e: UnsatisfiedLinkError) {
             Timber.e(e, "Failed to load Genesis AI native library: ${e.message}")
@@ -72,10 +75,14 @@ object NativeLib {
     external fun isKernelShieldActive(): Boolean
 
     fun tryInitializeKernelShield(): Boolean {
+        if (!nativeLoaded) return false
         return try {
             initializeKernelShield()
         } catch (e: UnsatisfiedLinkError) {
             Timber.e("🛡️ NativeLib: Kernel Shield hooks NOT FOUND in JNI. Fallback to STUB.")
+            false
+        } catch (t: Throwable) {
+            Timber.e(t, "🛡️ NativeLib: Kernel Shield substrate initialization FAILED.")
             false
         }
     }
@@ -105,7 +112,7 @@ object NativeLib {
     fun requestSovereignFreeze() {
         Timber.i("🛡️ NativeLib: Substrate requesting Sovereign State-Freeze")
         scope.launch {
-            sovereignManager?.requestSovereignFreeze("NATIVE_EMERGENCY", null)
+            stateManager?.initiateStateFreeze()
         }
     }
 
@@ -138,16 +145,6 @@ object NativeLib {
             initializeAICore()
         } catch (t: Throwable) {
             Timber.e(t, "🛡️ NativeLib: AICore initialization CRITICAL FAILURE.")
-            false
-        }
-    }
-
-    fun tryInitializeKernelShield(): Boolean {
-        if (!nativeLoaded) return false
-        return try {
-            initializeKernelShield()
-        } catch (t: Throwable) {
-            Timber.e(t, "🛡️ NativeLib: Kernel Shield substrate initialization FAILED.")
             false
         }
     }

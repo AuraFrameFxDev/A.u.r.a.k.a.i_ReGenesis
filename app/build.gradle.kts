@@ -101,6 +101,8 @@ extensions.configure<ApplicationExtension> {
     buildFeatures {
         buildConfig = true
         compose = true
+        viewBinding = true
+        dataBinding = true
     }
 
     compileOptions {

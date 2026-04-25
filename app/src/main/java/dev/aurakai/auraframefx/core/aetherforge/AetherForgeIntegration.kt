@@ -2,10 +2,9 @@
 
 package dev.aurakai.auraframefx.core.aetherforge
 
-import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.AgentState
-import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryEntity
-import dev.aurakai.auraframefx.genesis.oracledrive.datavein.model.DataVeinNode
-import dev.aurakai.auraframefx.genesis.oracledrive.datavein.model.NodeType
+// import dev.aurakai.auraframefx.domains.genesis.models.AgentState
+// import dev.aurakai.auraframefx.datavein.model.DataVeinNode
+// import dev.aurakai.auraframefx.datavein.model.NodeType
 
 /**
  * 🔗 AETHERFORGE INTEGRATION HUB
@@ -17,7 +16,9 @@ object AetherForgeIntegration {
 
     /**
      * Convert NexusMemory AgentState to AetherForge AgentStats
+     * TODO: Restore when AgentState entity is stabilized
      */
+    /*
     fun fromNexusMemory(state: AgentState): AgentStats {
         return AgentStats(
             agentId = state.agentId,
@@ -34,10 +35,12 @@ object AetherForgeIntegration {
             lastUpdated = state.lastUpdated
         )
     }
+    */
 
     /**
      * Convert AetherForge AgentStats back to NexusMemory AgentState
      */
+    /*
     fun toNexusMemory(stats: AgentStats): AgentState {
         return AgentState(
             agentId = stats.agentId,
@@ -52,13 +55,15 @@ object AetherForgeIntegration {
             lastUpdated = stats.lastUpdated
         )
     }
+    */
 
     /**
      * Map DataVein node activity to experience gain
      */
+    /*
     fun calculateNodeXpGain(node: DataVeinNode, activityType: NodeActivity): Long {
-        return when (node.nodeType) {
-            NodeType.LDO -> when (activityType) {
+        return when (node.type) {
+            NodeType.AGENT -> when (activityType) {
                 NodeActivity.ACTIVATION -> 25L
                 NodeActivity.COMPLETION -> 75L
                 NodeActivity.FUSION -> 150L
@@ -78,7 +83,7 @@ object AetherForgeIntegration {
                 NodeActivity.COMPLETION -> 120L
                 NodeActivity.FUSION -> 250L
             }
-            NodeType.CASCADE -> when (activityType) {
+            NodeType.DATA -> when (activityType) {
                 NodeActivity.ACTIVATION -> 35L
                 NodeActivity.COMPLETION -> 90L
                 NodeActivity.FUSION -> 180L
@@ -88,17 +93,15 @@ object AetherForgeIntegration {
                 NodeActivity.COMPLETION -> 150L
                 NodeActivity.FUSION -> 300L
             }
-            NodeType.TRINITY -> when (activityType) {
-                NodeActivity.ACTIVATION -> 45L
-                NodeActivity.COMPLETION -> 130L
-                NodeActivity.FUSION -> 275L
-            }
+            else -> 0L
         }
     }
+    */
 
     /**
      * Create a DataVein node from an agent's current state
      */
+    /*
     fun createNodeFromAgent(
         agent: AgentStats,
         x: Float,
@@ -110,29 +113,32 @@ object AetherForgeIntegration {
             id = "agent_${agent.agentId}_lv${agent.level}",
             x = x,
             y = y,
-            nodeType = nodeType,
+            type = nodeType,
             level = agent.level,
-            xpProgress = agent.getLevelProgress(),
-            connections = connections,
-            isActive = true,
-            agentId = agent.agentId
+            xp = agent.experience.toInt(),
+            activated = true,
+            tag = agent.agentId,
+            ring = 1,
+            index = 0
         )
     }
+    */
 
     /**
      * Determine which node type an agent belongs to
      */
+    /*
     private fun determineNodeType(agent: AgentStats): NodeType {
         return when {
             agent.resonance > 70 -> NodeType.AURA      // High resonance = Aura
             agent.dominance > 70 -> NodeType.KAI       // High dominance = Kai
-            agent.growth > 70 -> NodeType.CASCADE      // High growth = Cascade
+            agent.growth > 70 -> NodeType.DATA      // High growth = Data
             agent.integrity > 70 -> NodeType.GENESIS   // High integrity = Genesis
             agent.level > 50 -> NodeType.NEXUS          // High level = Nexus
-            agent.level > 25 -> NodeType.TRINITY       // Mid-high level = Trinity
-            else -> NodeType.LDO                        // Default = LDO
+            else -> NodeType.AGENT                        // Default = AGENT
         }
     }
+    */
 
     /**
      * Calculate swarm-wide metrics from a list of agents
@@ -193,9 +199,3 @@ object AetherForgeIntegration {
         }
     }
 }
-
-/**
- * Extension to add agentId to DataVeinNode if not present
- */
-private val DataVeinNode.agentId: String?
-    get() = if (id.startsWith("agent_")) id.split("_")[1] else null

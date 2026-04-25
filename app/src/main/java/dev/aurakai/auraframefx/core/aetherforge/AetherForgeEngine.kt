@@ -2,7 +2,7 @@
 
 package dev.aurakai.auraframefx.core.aetherforge
 
-import dev.aurakai.auraframefx.core.SoulScript
+import dev.aurakai.auraframefx.core.soulscript.SoulScript
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
