@@ -27,23 +27,23 @@ class AuraDriveService : Service() {
     @Inject
     lateinit var secureFileManager: dev.aurakai.auraframefx.oracle.drive.utils.SecureFileManager
 
-    private val binder = object : IAuraDriveService.Stub() {
-        override fun getServiceVersion(): String = "1.0.0-GENESIS"
+    private val binder = object : android.os.Binder() {
+        fun getServiceVersion(): String = "1.0.0-GENESIS"
 
-        override fun registerCallback(callback: IAuraDriveCallback?) {
+        fun registerCallback(callback: IAuraDriveCallback?) {
             Log.d(TAG, "Callback registered")
         }
 
-        override fun unregisterCallback(callback: IAuraDriveCallback?) {
+        fun unregisterCallback(callback: IAuraDriveCallback?) {
             Log.d(TAG, "Callback unregistered")
         }
 
-        override fun executeCommand(command: String?, params: Bundle?): String {
+        fun executeCommand(command: String?, params: Bundle?): String {
             Log.d(TAG, "Executing command: $command")
             return "Execution results for $command"
         }
 
-        override fun getOracleDriveStatus(): String {
+        fun getOracleDriveStatus(): String {
             Log.d(TAG, "Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
             return "Oracle Drive Active - R.G.S.F. Nominal (UID: ${Process.myUid()}) "
         }

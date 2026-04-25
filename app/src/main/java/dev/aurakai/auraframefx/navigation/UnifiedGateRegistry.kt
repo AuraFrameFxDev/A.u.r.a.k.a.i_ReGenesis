@@ -8,20 +8,20 @@ import dev.aurakai.auraframefx.domains.aura.config.SubGateCard
  */
 object UnifiedGateRegistry {
     
-    fun getAuraLoadout(): GateAssetLoadout {
-        return GateAssetLoadout()
+    fun getAuraLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
+        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
     }
     
-    fun getKaiLoadout(): GateAssetLoadout {
-        return GateAssetLoadout()
+    fun getKaiLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
+        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
     }
     
-    fun getNexusLoadout(): GateAssetLoadout {
-        return GateAssetLoadout()
+    fun getNexusLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
+        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
     }
     
-    fun getGenesisLoadout(): GateAssetLoadout {
-        return GateAssetLoadout()
+    fun getGenesisLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
+        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
     }
     
     const val gate_artwork_editor = "gate_artwork_editor"

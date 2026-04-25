@@ -150,6 +150,7 @@ fun GateDomainImagePicker(
                     Text("GATE IMAGE SWITCHER", fontFamily = FontFamily.Monospace,
                         fontSize = 16.sp, fontWeight = FontWeight.Bold,
                         letterSpacing = 3.sp, color = Color(0xFF00FFFF))
+                    Text("Select domain variant", fontFamily = FontFamily.Monospace,
                         fontSize = 9.sp, letterSpacing = 1.sp, color = Color(0xFF00FFFF).copy(0.4f))
                 }
             }
