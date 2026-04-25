@@ -266,6 +266,7 @@ dependencies {
     implementation(libs.bundles.networking.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.bundles.networking.ktor)
 
     // Coil
