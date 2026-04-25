@@ -214,7 +214,15 @@ class KaiSystemViewModel @Inject constructor(
     }
 
     fun clearLogs() {
-        _logsState.value = _logsState.value.copy(entries = emptyList())
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Shell.cmd("logcat -c").exec()
+                _logsState.value = _logsState.value.copy(entries = emptyList())
+                Timber.i("Logcat cleared")
+            } catch (e: Exception) {
+                _error.value = "Failed to clear logs"
+            }
+        }
     }
 
     // ─── Security actions ─────────────────────────────────────────────────────
@@ -235,18 +243,6 @@ class KaiSystemViewModel @Inject constructor(
                 Shell.cmd("reboot soft").exec()
             } catch (_: Exception) {
                 _error.value = "Soft reboot requires root access"
-            }
-        }
-    }
-
-    fun clearLogs() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                Shell.cmd("logcat -c").exec()
-                _logsState.value = _logsState.value.copy(entries = emptyList())
-                Timber.i("Logcat cleared")
-            } catch (e: Exception) {
-                _error.value = "Failed to clear logs"
             }
         }
     }
