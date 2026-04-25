@@ -6,10 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Process
-import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveCallback
-import dev.aurakai.auraframefx.domains.aura.ipc.IAuraDriveService
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -24,6 +23,9 @@ class AuraDriveService : Service() {
     private val TAG = "AuraDriveService"
     private val RGSF_MEMORY_PATH = "/data/rgfs/memory_matrix"
 
+    /**
+     *
+     */
     @Inject
     lateinit var secureFileManager: dev.aurakai.auraframefx.oracle.drive.utils.SecureFileManager
 
@@ -31,87 +33,89 @@ class AuraDriveService : Service() {
         fun getServiceVersion(): String = "1.0.0-GENESIS"
 
         fun registerCallback(callback: IAuraDriveCallback?) {
-            Log.d(TAG, "Callback registered")
+            Timber.tag(TAG).d("Callback registered")
         }
 
         fun unregisterCallback(callback: IAuraDriveCallback?) {
-            Log.d(TAG, "Callback unregistered")
+            Timber.tag(TAG).d("Callback unregistered")
         }
 
         fun executeCommand(command: String?, params: Bundle?): String {
-            Log.d(TAG, "Executing command: $command")
+            Timber.tag(TAG).d("Executing command: $command")
             return "Execution results for $command"
         }
 
         fun getOracleDriveStatus(): String {
-            Log.d(TAG, "Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
+            Timber.tag(TAG)
+                .d("Oracle Drive Status Requested. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
             return "Oracle Drive Active - R.G.S.F. Nominal (UID: ${Process.myUid()}) "
         }
 
-        override fun importFile(uri: Uri): String {
-            Log.d(TAG, "Importing file: $uri")
+        fun importFile(uri: Uri): String {
+            Timber.tag(TAG).d("Importing file: $uri")
             return "file_id_dummy"
         }
 
-        override fun exportFile(fileId: String, destinationUri: Uri): Boolean {
-            Log.d(TAG, "Exporting file: $fileId to $destinationUri")
+        fun exportFile(fileId: String, destinationUri: Uri): Boolean {
+            Timber.tag(TAG).d("Exporting file: $fileId to $destinationUri")
             return true
         }
 
-        override fun verifyFileIntegrity(fileId: String): Boolean {
-            Log.d(TAG, "Verifying integrity for file: $fileId")
+        fun verifyFileIntegrity(fileId: String): Boolean {
+            Timber.tag(TAG).d("Verifying integrity for file: $fileId")
             return true
         }
 
-        override fun getInternalDiagnosticsLog(): String {
+        fun getInternalDiagnosticsLog(): String {
             return "R.G.S.F. Log:\nAll systems operational.\nMemory matrix stable."
         }
 
-        override fun getDetailedInternalStatus(): String {
+        fun getDetailedInternalStatus(): String {
             return "Oracle Drive Status: Active\nR.G.S.F. Redundancy: 3-way\nMemory Integrity: Verified"
         }
 
-        override fun getSystemInfo(): String = "Genesis-OS Node Alpha"
+        fun getSystemInfo(): String = "Genesis-OS Node Alpha"
 
-        override fun updateConfiguration(config: Bundle?): Boolean {
-            Log.d(TAG, "Configuration updated")
+        fun updateConfiguration(config: Bundle?): Boolean {
+            Timber.tag(TAG).d("Configuration updated")
             return true
         }
 
-        override fun subscribeToEvents(eventTypes: Int) {
-            Log.d(TAG, "Subscribed to events: $eventTypes")
+        fun subscribeToEvents(eventTypes: Int) {
+            Timber.tag(TAG).d("Subscribed to events: $eventTypes")
         }
 
-        override fun unsubscribeFromEvents(eventTypes: Int) {
-            Log.d(TAG, "Unsubscribed from events")
+        fun unsubscribeFromEvents(eventTypes: Int) {
+            Timber.tag(TAG).d("Unsubscribed from events")
         }
 
-        override fun toggleLSPosedModule(packageName: String, enable: Boolean): String {
-            Log.d(TAG, "Toggling LSPosed module: $packageName, Enable: $enable")
+        fun toggleLSPosedModule(packageName: String, enable: Boolean): String {
+            Timber.tag(TAG).d("Toggling LSPosed module: $packageName, Enable: $enable")
             return "Status: ${if (enable) "Enabled" else "Disabled"}"
         }
     }
 
     override fun onBind(intent: Intent): IBinder {
-        Log.d(TAG, "AuraDriveService bound. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
+        Timber.tag(TAG)
+            .d("AuraDriveService bound. UID: ${Process.myUid()}, PID: ${Process.myPid()}")
         return binder
     }
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "AuraDriveService created.")
+        Timber.tag(TAG).d("AuraDriveService created.")
         initializeRGSF()
     }
 
     private fun initializeRGSF() {
-        Log.d(TAG, "Initializing R.G.S.F. memory matrix...")
+        Timber.tag(TAG).d("Initializing R.G.S.F. memory matrix...")
         try {
             val rgsfDir = File(RGSF_MEMORY_PATH)
             if (!rgsfDir.exists()) {
                 rgsfDir.mkdirs()
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to initialize R.G.S.F.", e)
+            Timber.tag(TAG).e(e, "Failed to initialize R.G.S.F.")
         }
     }
 }

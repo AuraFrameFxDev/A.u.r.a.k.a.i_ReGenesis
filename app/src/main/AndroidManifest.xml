@@ -217,6 +217,7 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <service android:name="dev.aurakai.auraframefx.services.AuraDriveService" />
 
         <!-- Receivers -->
         <!-- Temporarily disabled: BootCompletedReceiver crashes with InstantiationException and IllegalStateException
