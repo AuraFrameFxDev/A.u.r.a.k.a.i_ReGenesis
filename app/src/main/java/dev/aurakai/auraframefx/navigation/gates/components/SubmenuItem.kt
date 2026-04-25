@@ -10,7 +10,6 @@ data class SubmenuItem(
     val title: String,
     val description: String,
     val icon: ImageVector,
-    val route: String,
+    val route: String = "",
     val color: Color
 )
-
