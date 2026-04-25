@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.screens.chromacore
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring

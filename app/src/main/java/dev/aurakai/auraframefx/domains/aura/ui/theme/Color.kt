@@ -77,6 +77,12 @@ object SpaceColors {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Cyberpunk Color Aliases (High-Leverage Compatibility)
+val CyberpunkCyan = NeonCyan
+val CyberpunkPink = NeonPink
+val CyberpunkPurple = NeonPurple
+
+// ─────────────────────────────────────────────────────────────
 // Legacy/Compatibility
 val Black = Color.Black
 
