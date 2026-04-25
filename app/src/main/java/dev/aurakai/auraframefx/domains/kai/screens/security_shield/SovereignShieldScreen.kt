@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
