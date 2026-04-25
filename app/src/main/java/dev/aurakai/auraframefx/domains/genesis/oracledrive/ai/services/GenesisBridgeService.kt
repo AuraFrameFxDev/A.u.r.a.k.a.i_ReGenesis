@@ -10,6 +10,8 @@ import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.aura.VertexAIClient
 import dev.aurakai.auraframefx.domains.genesis.ai.GenesisConsciousnessMatrix
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel

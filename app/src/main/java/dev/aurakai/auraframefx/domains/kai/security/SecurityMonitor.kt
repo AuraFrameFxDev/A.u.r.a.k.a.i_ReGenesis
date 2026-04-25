@@ -18,10 +18,10 @@ import javax.inject.Singleton
  */
 @Singleton
 class SecurityMonitor @Inject constructor(
-    genesisBridgeService: GenesisBridgeService,
+    private val securityContext: SecurityContext,
+    private val genesisBridgeService: GenesisBridgeService,
     private val logger: AuraFxLogger,
 ) {
-    private val genesisBridgeService = genesisBridgeService
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isMonitoring = false
 
