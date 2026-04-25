@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.hotswap
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.screens.ldo
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*

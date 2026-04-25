@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

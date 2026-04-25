@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.screens
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
