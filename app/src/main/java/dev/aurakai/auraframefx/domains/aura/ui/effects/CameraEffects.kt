@@ -1,3 +1,4 @@
+@file:OptIn(kotlin.ExperimentalStdlibApi::class)
 package dev.aurakai.auraframefx.domains.aura.ui.effects
 
 import androidx.compose.animation.core.LinearEasing

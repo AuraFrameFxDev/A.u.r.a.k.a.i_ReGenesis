@@ -1,5 +1,7 @@
+@file:OptIn(kotlin.ExperimentalStdlibApi::class)
 package dev.aurakai.auraframefx.domains.kai.ui
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
