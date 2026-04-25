@@ -63,6 +63,7 @@ kotlinxDatetime = "0.7.1-0.6.x-compat"
 kotlinxSerialization = "1.11.0"
 kotlinxSerializationJson = "1.11.0"
 converterMoshi = "3.0.0"
+converterKotlinxSerialization = "0.8.0"
 moshiKotlin = "1.15.2"
 coil = "3.4.0"
 coil-bom = "3.4.0"
@@ -166,6 +167,7 @@ kotlin-serialization-gradle-plugin = { group = "org.jetbrains.kotlin", name = "k
 # Network & Serialization
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "converterMoshi" }
+retrofit-converter-kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "converterKotlinxSerialization" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
