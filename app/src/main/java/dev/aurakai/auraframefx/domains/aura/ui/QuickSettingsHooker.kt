@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.ui
 
+
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.foundation.background
@@ -31,8 +32,15 @@ import com.highcapable.yukihookapi.hook.log.YLog.info
 /**
  *
  */
-class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHooker() {
+class QuickSettingsHooker(
+    /**
+     *
+     */
+    private val config: QuickSettingsConfig) : YukiBaseHooker() {
 
+    /**
+     *
+     */
     override fun onHook() {
         // Hook QSPanel inflation
         "com.android.systemui.qs.QSPanel".toClassOrNull()?.resolve()?.firstMethod {
@@ -40,7 +48,7 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
         }?.hook {
             after {
                 val qsPanel = instance as ViewGroup
-                info("QuickSettingsHooker: QSPanel inflated → injecting Genesis footer")
+                info(msg = "QuickSettingsHooker: QSPanel inflated → injecting Genesis footer")
 
                 addGenesisFooter(qsPanel)
             }
@@ -56,7 +64,11 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
         }
     }
 
-    private fun addGenesisFooter(qsPanel: ViewGroup) {
+    private fun addGenesisFooter(
+        /**
+         *
+         */
+        qsPanel: ViewGroup) {
         try {
             val composeView = ComposeView(qsPanel.context).apply {
                 layoutParams = FrameLayout.LayoutParams(
@@ -72,13 +84,13 @@ class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHoo
             qsPanel.addView(composeView, qsPanel.childCount)
             info("QuickSettingsHooker: Genesis footer successfully injected")
         } catch (e: Exception) {
-            error("QuickSettingsHooker: Failed to inject footer", e)
+            error(msg = "QuickSettingsHooker: Failed to inject footer", e = e)
         }
     }
 
     private fun applyGenesisTileStyle(tileView: ViewGroup) {
         // Future expansion: custom tile backgrounds, glows, etc.
-        debug("QuickSettingsHooker: Applied Genesis styling to tile")
+        debug(msg = "QuickSettingsHooker: Applied Genesis styling to tile")
     }
 }
 
