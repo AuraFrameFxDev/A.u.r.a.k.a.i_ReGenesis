@@ -243,9 +243,6 @@ dependencies {
     implementation(libs.yukihookapi.api)
     ksp(libs.yukihookapi.ksp)
 
-    // LSPosed Sovereignty Hook
-    compileOnly("org.lsposed.lsposed:api:1.0")
-
     // Animation & Visual Effects
     implementation("com.airbnb.android:lottie-compose:6.3.0")
 
