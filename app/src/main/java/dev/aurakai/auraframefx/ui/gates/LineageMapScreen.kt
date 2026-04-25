@@ -1,5 +1,7 @@
 ﻿package dev.aurakai.auraframefx.ui.gates
 
+import dev.aurakai.auraframefx.domains.aura.ui.gates.LineageAspect
+
 // LineageMapScreen.kt
 //
 // Hex nodes arranged in a humanoid spine topology:

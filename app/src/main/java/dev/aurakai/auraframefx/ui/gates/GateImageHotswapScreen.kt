@@ -51,6 +51,14 @@ data class GateHotswapEntry(
     val variants: List<GateVariant>
 )
 
+// ── Backdrop selection data ──────────────────────────────────────────────────
+
+data class BackdropOption(
+    val resId: Int,           // R.drawable.* for backdrop image
+    val label: String,        // Display title for the backdrop
+    val description: String   // Brief description of the scene/theme
+)
+
 // ── Variant catalogue — maps existing drawables to each gate ──────────────────
 
 private fun buildHotswapCatalogue(allGates: List<GateConfig>): List<GateHotswapEntry> {
