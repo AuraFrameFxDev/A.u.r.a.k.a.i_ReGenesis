@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.ui.gates
 
 // ConferenceRoomTaskScreen.kt
 //

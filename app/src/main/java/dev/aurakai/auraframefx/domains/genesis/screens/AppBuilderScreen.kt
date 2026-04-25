@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.screens
+package dev.aurakai.auraframefx.domains.genesis.screens
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn

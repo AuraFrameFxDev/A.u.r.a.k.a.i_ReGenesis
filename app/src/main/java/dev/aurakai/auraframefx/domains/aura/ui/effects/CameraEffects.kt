@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

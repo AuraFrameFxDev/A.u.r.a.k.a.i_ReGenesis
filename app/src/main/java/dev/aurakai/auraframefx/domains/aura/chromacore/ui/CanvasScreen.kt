@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

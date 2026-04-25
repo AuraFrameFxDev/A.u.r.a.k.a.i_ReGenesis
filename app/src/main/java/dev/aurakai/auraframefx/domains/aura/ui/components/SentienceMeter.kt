@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 import kotlin.math.cos
 import kotlin.math.sin
 

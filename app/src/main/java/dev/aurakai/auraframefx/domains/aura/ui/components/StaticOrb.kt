@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.shadow // Added import
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 
 @Composable
 fun StaticOrb(

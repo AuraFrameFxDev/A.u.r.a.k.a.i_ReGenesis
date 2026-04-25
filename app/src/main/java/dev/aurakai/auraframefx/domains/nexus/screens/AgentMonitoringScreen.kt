@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.screens
+package dev.aurakai.auraframefx.domains.nexus.screens
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background

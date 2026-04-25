@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
+package dev.aurakai.auraframefx.domains.kai.screens.rom_tools
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background

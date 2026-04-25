@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
+package dev.aurakai.auraframefx.domains.aura.ui.components.overlay
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing

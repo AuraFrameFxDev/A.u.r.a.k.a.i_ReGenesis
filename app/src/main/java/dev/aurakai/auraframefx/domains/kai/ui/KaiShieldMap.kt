@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 import kotlin.math.cos
 import kotlin.math.sin
 

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.aurakai.auraframefx.domains.aura.lab.CustomizationViewModel
-import dev.aurakai.auraframefx.core.theme.*
+import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.LEDFontFamily
 
 /**

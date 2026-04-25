@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.ui.gates
+package dev.aurakai.auraframefx.ui.gates
 
 import dev.aurakai.auraframefx.domains.aura.ui.gates.LineageAspect
 

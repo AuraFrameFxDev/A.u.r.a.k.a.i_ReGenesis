@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.nexus.billing
+package dev.aurakai.auraframefx.domains.nexus.billing
 
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel

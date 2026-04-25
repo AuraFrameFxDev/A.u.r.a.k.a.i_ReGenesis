@@ -1,4 +1,4 @@
-﻿package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
+package dev.aurakai.auraframefx.domains.genesis.oracledrive.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
