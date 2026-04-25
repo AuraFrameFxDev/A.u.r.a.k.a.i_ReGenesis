@@ -30,6 +30,10 @@ dependencies {
         exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
     }
 
+    // KavaRef
+    implementation(libs.kavaref.core)
+    implementation(libs.kavaref.extension)
+
     // Networking
     implementation(libs.okhttp)
     implementation(libs.gson)

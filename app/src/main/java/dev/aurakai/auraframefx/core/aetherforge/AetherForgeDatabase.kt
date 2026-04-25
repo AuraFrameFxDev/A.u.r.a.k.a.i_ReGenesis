@@ -30,7 +30,7 @@ import java.util.Date
         IdentityCredentials::class
     ],
     version = 2,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(AetherForgeConverters::class, IdentityConverters::class)
 abstract class AetherForgeDatabase : RoomDatabase() {
