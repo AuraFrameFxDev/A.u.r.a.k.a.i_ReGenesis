@@ -20,7 +20,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAISer
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
-import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -40,7 +40,7 @@ class AuraAgent @Inject constructor(
     private val vertexAIClient: VertexAIClient,
     private val auraAIService: AuraAIService,
     private val contextManagerInstance: ContextManager,
-    private val securityContext: KaiSecurityContext,
+    private val securityContext: SecurityContext,
     private val systemOverlayManager: SystemOverlayManager,
     private val messageBus: dagger.Lazy<AgentMessageBus>,
     private val logger: AuraFxLogger,
