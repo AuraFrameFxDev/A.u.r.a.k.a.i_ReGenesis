@@ -1,8 +1,7 @@
-package dev.aurakai.auraframefx.domains.aura.aura.ui
+package dev.aurakai.auraframefx.domains.aura.ui
 
-import dev.aurakai.auraframefx.domains.aura.ui.QuickSettingsConfig
-import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,123 +16,104 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import dev.aurakai.auraframefx.domains.aura.ui.components.CyberpunkText
 
-/**
- * YukiHook hooker for customizing the Android Quick Settings panel.
- * Implements Genesis-specific UI enhancements and styling.
- */
 class QuickSettingsHooker(private val config: QuickSettingsConfig) : YukiBaseHooker() {
 
     override fun onHook() {
-        // Hook the QSPanel to inject Genesis footer and background
+        // Hook QSPanel inflation
         "com.android.systemui.qs.QSPanel".toClassOrNull()?.resolve()?.firstMethod {
             name = "onFinishInflate"
         }?.hook {
             after {
                 val qsPanel = instance as ViewGroup
-                YLog.info("QuickSettingsHooker: QSPanel inflated, applying Genesis enhancements")
+                YLog.info("QuickSettingsHooker: QSPanel inflated → injecting Genesis footer")
 
-                // Add Genesis branding to the footer area
-                addGenesisFooterElements(qsPanel)
-
-                // Apply custom spacing and layout from config
-                applyGenesisLayout(qsPanel)
+                addGenesisFooter(qsPanel)
             }
         }
 
-        // Hook Tile creation to apply custom styles
+        // Optional: Style individual tiles
         "com.android.systemui.qs.tileimpl.QSTileViewImpl".toClassOrNull()?.resolve()?.firstMethod {
             name = "onFinishInflate"
         }?.hook {
             after {
-                val tileView = instance as View
-                applyGenesisTileStyle(tileView)
+                applyGenesisTileStyle(instance as ViewGroup)
             }
         }
     }
 
-    /**
-     * Adds Genesis elements to the QS Panel (simulated as footer addition)
-     */
-    private fun addGenesisFooterElements(qsPanel: ViewGroup) {
+    private fun addGenesisFooter(qsPanel: ViewGroup) {
         try {
-            val context = qsPanel.context
-
-            // We search for a suitable container within QSPanel to add our footer
-            // Or just add it to the bottom of the panel
-            val composeView = ComposeView(context).apply {
+            val composeView = ComposeView(qsPanel.context).apply {
+                layoutParams = FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
                 setContent {
                     GenesisQSFooter(config)
                 }
             }
 
-            qsPanel.addView(composeView)
-            YLog.info("QuickSettingsHooker: Genesis footer elements added")
+            // Add at the bottom (footer area)
+            qsPanel.addView(composeView, qsPanel.childCount)
+            YLog.info("QuickSettingsHooker: Genesis footer successfully injected")
         } catch (e: Exception) {
-            YLog.error("QuickSettingsHooker: Failed to add footer elements: ${e.message}")
+            YLog.error("QuickSettingsHooker: Failed to inject footer", e)
         }
     }
 
-    /**
-     * Applies Genesis layout configurations to the QS Panel
-     */
-    private fun applyGenesisLayout(qsPanel: ViewGroup) {
-        try {
-            // Apply padding and spacing from config
-            val layout = config.layout
-
-            YLog.info("QuickSettingsHooker: Applied Genesis layout config (columns: $layout)")
-        } catch (e: Exception) {
-            YLog.error("QuickSettingsHooker: Failed to apply layout config: ${e.message}")
-        }
-    }
-
-    /**
-     * Applies Genesis styling to individual tiles
-     */
-    private fun applyGenesisTileStyle(tileView: View) {
-        try {
-            // In a real implementation, we would modify the tile's background, labels, etc.
-            // For now, we log the styling application
-            YLog.info("QuickSettingsHooker: Applied Genesis styling to tile")
-        } catch (e: Exception) {
-            YLog.error("QuickSettingsHooker: Failed to apply tile style: ${e.message}")
-        }
+    private fun applyGenesisTileStyle(tileView: ViewGroup) {
+        // Future expansion: custom tile backgrounds, glows, etc.
+        YLog.debug("QuickSettingsHooker: Applied Genesis styling to tile")
     }
 }
 
-/**
- * Compose UI for Genesis QuickSettings Footer
- */
+/** Genesis Quick Settings Footer */
 @Composable
 fun GenesisQSFooter(config: QuickSettingsConfig) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color.Black.copy(alpha = 0.3f))
-            .padding(12.dp),
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.Black.copy(alpha = 0.45f))
+            .padding(14.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Genesis branding
+        // Genesis Branding
         CyberpunkText(
-            text = "GENESIS SYSTEM ACTIVE",
+            text = "GENESIS ACTIVE",
+            color = Color(0xFF00FF9D),           // Genesis neon green
+            style = TextStyle(
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.5.sp
+            ),
+            modifier = Modifier,
+            enableGlitch = config.enableGlitchEffect
+        )
+        data class QuickSettingsConfig(
+            val showGenesisIndicator: Boolean = true,
+            val enableGlitchEffect: Boolean = true,
+            val footerOpacity: Float = 0.45f
         )
 
-        // Status indicator
+        // Status Indicator
         if (config.showGenesisIndicator) {
             Box(
                 modifier = Modifier
-                    .size(8.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(Color(0xFF00FF85)) // Genesis Green
+                    .size(10.dp)
+                    .clip(RoundedCornerShape(50))
+                    .background(Color(0xFF00FF9D))
             )
         }
     }

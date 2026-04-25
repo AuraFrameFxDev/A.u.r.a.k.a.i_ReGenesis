@@ -8,6 +8,7 @@ data class QuickSettingsConfig(
     val background: ImageResource? = null,
     val layout: LayoutConfig = LayoutConfig(),
     val showGenesisIndicator: Boolean = true,
+    val enableGlitchEffect: Boolean,
 ) {
     companion object {
         val DEFAULT = QuickSettingsConfig()

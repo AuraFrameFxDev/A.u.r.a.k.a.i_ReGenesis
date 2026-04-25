@@ -50,7 +50,7 @@ class QuickSettingsCustomizer @Inject constructor(
         }
 
         val config = _currentConfig.value?.copy(tiles = currentTiles)
-            ?: QuickSettingsConfig(tiles = currentTiles)
+            ?: QuickSettingsConfig(tiles = currentTiles,)
 
         _currentConfig.value = config
     }
@@ -82,7 +82,7 @@ class QuickSettingsCustomizer @Inject constructor(
         }
 
         val config = _currentConfig.value?.copy(tiles = currentTiles)
-            ?: QuickSettingsConfig(tiles = currentTiles)
+            ?: QuickSettingsConfig(tiles = currentTiles,)
 
         _currentConfig.value = config
     }
@@ -108,7 +108,7 @@ class QuickSettingsCustomizer @Inject constructor(
         }
 
         val config = _currentConfig.value?.copy(background = image)
-            ?: QuickSettingsConfig(background = image)
+            ?: QuickSettingsConfig(background = image,)
 
         _currentConfig.value = config
     }
@@ -182,7 +182,7 @@ class QuickSettingsCustomizer @Inject constructor(
 
         _currentConfig.value = QuickSettingsConfig(
             tiles = tiles,
-            background = background
+            background = background,
         )
     }
 }
