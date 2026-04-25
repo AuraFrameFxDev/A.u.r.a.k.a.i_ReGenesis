@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBr
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
-import dev.aurakaAi.auraframefx.core.security.SecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 
 import javax.inject.Singleton
 
