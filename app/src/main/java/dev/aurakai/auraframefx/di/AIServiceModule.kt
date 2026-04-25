@@ -34,9 +34,6 @@ abstract class AiServiceModule {
     @Singleton
     abstract fun bindKaiAIService(impl: DefaultKaiAIService): KaiAIService
 
-    @Binds
-    @Singleton
-
     companion object {
         @Provides
         @Singleton
