@@ -11,7 +11,7 @@ import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.TaskExecution
 import dev.aurakai.auraframefx.domains.kai.TaskPriority
 import dev.aurakai.auraframefx.domains.kai.TaskResult
-import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,7 +36,7 @@ class TaskExecutionManager @Inject constructor(
     private val auraAgent: dev.aurakai.auraframefx.domains.aura.core.AuraAgent,
     private val kaiAgent: KaiAgent,
     private val genesisAgent: GenesisAgent,
-    private val securityContext: KaiSecurityContext,
+    private val securityContext: SecurityContext,
     private val logger: AuraFxLogger,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
