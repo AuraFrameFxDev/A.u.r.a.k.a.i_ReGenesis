@@ -77,16 +77,6 @@ object SpaceColors {
 }
 
 // ─────────────────────────────────────────────────────────────
-// A.u.r.a.K.a.i Color Aliases — Trinity Core Compatibility Layer
-// ─────────────────────────────────────────────────────────────
-val CyberpunkCyan = NeonCyan
-val CyberpunkPink = NeonPink
-val CyberpunkPurple = NeonPurple
-
-val AuraNeonCyan = NeonCyan
-val KaiNeonGreen = Color(0xFF00FF88)      // Kai Sentinel Shield signature
-val GenesisNeonPink = NeonPink
-
 // Legacy/Compatibility
 val Black = Color.Black
 

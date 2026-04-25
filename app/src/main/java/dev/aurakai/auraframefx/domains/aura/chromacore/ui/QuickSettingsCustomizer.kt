@@ -49,7 +49,7 @@ class QuickSettingsCustomizer @Inject constructor(
         }
 
         val config = _currentConfig.value?.copy(tiles = currentTiles)
-            ?: QuickSettingsConfig(tiles = currentTiles,)
+            ?: QuickSettingsConfig(tiles = currentTiles, enableGlitchEffect = false)
 
         _currentConfig.value = config
     }
@@ -81,7 +81,7 @@ class QuickSettingsCustomizer @Inject constructor(
         }
 
         val config = _currentConfig.value?.copy(tiles = currentTiles)
-            ?: QuickSettingsConfig(tiles = currentTiles,)
+            ?: QuickSettingsConfig(tiles = currentTiles, enableGlitchEffect = false)
 
         _currentConfig.value = config
     }
@@ -107,7 +107,7 @@ class QuickSettingsCustomizer @Inject constructor(
         }
 
         val config = _currentConfig.value?.copy(background = image)
-            ?: QuickSettingsConfig(background = image,)
+            ?: QuickSettingsConfig(background = image, enableGlitchEffect = false)
 
         _currentConfig.value = config
     }
@@ -134,11 +134,11 @@ class QuickSettingsCustomizer @Inject constructor(
             .apply()
 
         // Reset to default configuration
-        _currentConfig.value = QuickSettingsConfig()
+        _currentConfig.value = QuickSettingsConfig(enableGlitchEffect = false)
     }
 
     /**
-     * Loads the saved Quick Settings configuration from SharedPreferences.
+     * Loads configuration from SharedPreferences.
      */
     private fun loadConfiguration() {
         val tiles = mutableListOf<QuickSettingsTileConfig>()
@@ -196,6 +196,7 @@ class QuickSettingsCustomizer @Inject constructor(
         _currentConfig.value = QuickSettingsConfig(
             tiles = tiles,
             background = background,
+            enableGlitchEffect = false
         )
     }
 }

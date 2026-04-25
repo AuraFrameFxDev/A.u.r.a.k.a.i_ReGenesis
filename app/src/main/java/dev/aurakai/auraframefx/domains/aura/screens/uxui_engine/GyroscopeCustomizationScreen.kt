@@ -1,3 +1,4 @@
+@file:OptIn(kotlin.ExperimentalStdlibApi::class)
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.animation.core.FastOutSlowInEasing
