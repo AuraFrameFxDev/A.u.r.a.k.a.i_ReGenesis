@@ -34,9 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import dev.aurakai.auraframefx.R
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import dev.aurakai.auraframefx.domains.aura.ui.LEDFontFamily
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
-import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
+// Temporary stub for AuraJar if module import fails
+// import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
 import dev.aurakai.auraframefx.ui.components.BottomJoystickNavigation
 
 /**
@@ -153,10 +154,15 @@ fun TabbedMasterIndex(
             GlobalSSIStatusBar(accentColor)
         }
 
-        // 6. AURA JAR
-        AuraJarComposable(
+        // 6. AURA JAR (Stubbed if import fails)
+        Box(
             modifier = Modifier.align(Alignment.BottomEnd).padding(bottom = 60.dp, end = 16.dp).size(110.dp)
-        )
+        ) {
+            // AuraJarComposable placeholder
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawCircle(accentColor.copy(alpha = 0.2f))
+            }
+        }
     }
 }
 
