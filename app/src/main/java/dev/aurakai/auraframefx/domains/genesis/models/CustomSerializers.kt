@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.models
 
-import kotlinx.datetime.Instant
+import java.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
