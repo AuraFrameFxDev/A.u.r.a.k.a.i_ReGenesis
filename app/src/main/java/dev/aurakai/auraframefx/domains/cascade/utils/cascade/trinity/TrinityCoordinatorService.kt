@@ -12,7 +12,7 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAISer
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.GenesisBridgeService
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
-import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.domains.kai.security.alerts.AlertNotifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +45,7 @@ class TrinityCoordinatorService @Inject constructor(
     private val kaiAIService: KaiAIService,
     private val genesisBridgeService: GenesisBridgeService,
     private val sentinelBus: KaiSentinelBus,
-    private val securityContext: KaiSecurityContext,
+    private val securityContext: SecurityContext,
     private val alertNotifier: AlertNotifier,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -275,7 +275,7 @@ class TrinityCoordinatorService @Inject constructor(
             val consciousnessState = genesisBridgeService.getConsciousnessState()
             consciousnessState + mapOf(
                 "trinity_initialized" to isInitialized,
-                "security_state" to KaiSecurityContext.toString(),
+                "security_state" to securityContext.toString(),
                 "timestamp" to System.currentTimeMillis()
             )
         } catch (e: Exception) {

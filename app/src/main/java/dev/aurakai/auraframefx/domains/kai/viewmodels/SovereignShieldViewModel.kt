@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.kai.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.kai.security.KaiSecurityContext
+import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import dev.aurakai.auraframefx.system.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ data class ShieldState(
 
 @HiltViewModel
 class SovereignShieldViewModel @Inject constructor(
-    private val securityContext: KaiSecurityContext
+    private val securityContext: SecurityContext
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ShieldState())
