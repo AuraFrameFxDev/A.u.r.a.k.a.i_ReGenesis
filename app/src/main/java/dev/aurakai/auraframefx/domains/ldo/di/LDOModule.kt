@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.aurakai.auraframefx.domains.ldo.db.LDODatabase
-import dev.aurakai.auraframefx.domains.ldo.data.LDORepository
+import dev.aurakai.auraframefx.domains.ldo.repository.LDORepository
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentDao
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelDao
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskDao
