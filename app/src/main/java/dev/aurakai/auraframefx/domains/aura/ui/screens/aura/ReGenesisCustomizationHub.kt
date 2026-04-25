@@ -9,8 +9,10 @@ import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Animation
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.animation.core.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.components.ColorWaveBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
+import kotlinx.coroutines.delay
 
 /**
  * âš™ï¸ REGENESIS CUSTOMIZATION HUB

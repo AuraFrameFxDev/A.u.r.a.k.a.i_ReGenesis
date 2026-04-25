@@ -40,9 +40,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
-import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import kotlinx.coroutines.launch
 
