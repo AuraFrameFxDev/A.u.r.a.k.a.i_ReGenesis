@@ -8,7 +8,7 @@ import androidx.credentials.GetCredentialResponse
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.aurakai.auraframefx.core.CryptographyManager
+import dev.aurakai.auraframefx.securecomm.keystore.CryptographyManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 import dev.aurakai.auraframefx.domains.genesis.network.api.AuthApi
 import dev.aurakai.auraframefx.domains.genesis.network.api.RefreshTokenRequest
