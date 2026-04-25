@@ -11,6 +11,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyPickerScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconifyCategoryDetailScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.ColorBlendrScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.PixelLauncherEnhancedScreen
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute.ColorBlendr
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute.IconifyCategory
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute.IconifyPicker
