@@ -11,6 +11,9 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyAp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.CyberpunkCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.CyberpunkPink
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.CyberpunkPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink
 import dev.aurakai.auraframefx.domains.cascade.utils.GyroscopeManager
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommand
 import dev.aurakai.auraframefx.domains.cascade.utils.VoiceCommandManager

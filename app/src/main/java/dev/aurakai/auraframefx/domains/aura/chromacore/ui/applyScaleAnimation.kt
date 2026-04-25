@@ -18,35 +18,33 @@ private fun applyGenesisShowAnimation(
     lockScreenHooker: LockScreenHooker, applySlideAnimation: () -> Unit,
     applyFadeAnimation: () -> Unit,
     applyScaleAnimation: () -> Unit
-) {
-    try {
-        // Some generated models may not expose an `animationType` property directly.
-        // To avoid compile-time failures, derive the animation type from the
-        // animation object's string representation and map to our enum.
-        val animationType = try {
-            val animObj = lockScreenHooker.config.animation
-            run {
-                // Use the object's toString() (or name-like) value and try to map it
-                val nameLike = animObj.toString()
-                LockScreenConfigAnimation.AnimationType.entries.firstOrNull {
-                    it.name.equals(nameLike, ignoreCase = true) ||
-                            it.name.equals(
-                                nameLike.removePrefix("AnimationType."),
-                                ignoreCase = true
-                            )
-                } ?: LockScreenConfigAnimation.AnimationType.Zoom
-            }
-        } catch (t: Throwable) {
-            YLog.warn("Failed to resolve animation type via toString(), defaulting to Zoom: ${t.message}")
-            LockScreenConfigAnimation.AnimationType.Zoom
+) = try {
+    // Some generated models may not expose an `animationType` property directly.
+    // To avoid compile-time failures, derive the animation type from the
+    // animation object's string representation and map to our enum.
+    val animationType = try {
+        val animObj = lockScreenHooker.config.animation
+        run {
+            // Use the object's toString() (or name-like) value and try to map it
+            val nameLike = animObj.toString()
+            return@run LockScreenConfigAnimation.AnimationType.entries.firstOrNull {
+                nameLike.name.equals(nameLike, ignoreCase = true) ||
+                        nameLike.name.equals(
+                            nameLike.removePrefix("AnimationType."),
+                            ignoreCase = true
+                        )
+            } ?: LockScreenConfigAnimation.AnimationType.Zoom
         }
-
-        when (animationType) {
-            LockScreenConfigAnimation.AnimationType.Slide -> applySlideAnimation()
-            LockScreenConfigAnimation.AnimationType.Fade -> applyFadeAnimation()
-            LockScreenConfigAnimation.AnimationType.Zoom -> applyScaleAnimation()
-        }
-    } catch (e: Exception) {
-        YLog.error("Error applying animation", e)
+    } catch (t: Throwable) {
+        YLog.warn("Failed to resolve animation type via toString(), defaulting to Zoom: ${t.message}")
+        LockScreenConfigAnimation.AnimationType.Zoom
     }
+
+    when (animationType) {
+        LockScreenConfigAnimation.AnimationType.Slide -> applySlideAnimation()
+        LockScreenConfigAnimation.AnimationType.Fade -> applyFadeAnimation()
+        LockScreenConfigAnimation.AnimationType.Zoom -> applyScaleAnimation()
+    }
+} catch (e: Exception) {
+    YLog.error("Error applying animation", e)
 }

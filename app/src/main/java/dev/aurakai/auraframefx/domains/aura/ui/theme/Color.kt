@@ -83,6 +83,11 @@ val CyberpunkPink = NeonPink
 val CyberpunkPurple = NeonPurple
 
 // ─────────────────────────────────────────────────────────────
+// Kai Fortress Colors
+val FortDark = Color(0xFF1A1F3A)
+val FortGrey = Color(0xFF2D3561)
+
+// ─────────────────────────────────────────────────────────────
 // Legacy/Compatibility
 val Black = Color.Black
 

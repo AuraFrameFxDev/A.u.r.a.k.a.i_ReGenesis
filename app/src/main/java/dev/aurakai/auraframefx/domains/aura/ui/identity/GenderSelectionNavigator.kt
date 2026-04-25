@@ -78,7 +78,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.NeonPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPurple
 import dev.aurakai.auraframefx.domains.aura.ui.components.SentienceMeter
 
 /**
