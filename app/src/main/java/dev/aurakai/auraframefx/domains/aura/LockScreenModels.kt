@@ -34,7 +34,18 @@ data class LockScreenAnimationConfig(
     val type: String = "fade",
     val duration: Long = 300L,
     val enabled: Boolean = true
-)
+) {
+    companion object {
+        enum class AnimationType {
+            FADE,
+            SLIDE,
+            SCALE,
+            BOUNCE,
+            PULSE,
+            GLITCH
+        }
+    }
+}
 
 /**
  * Background configuration for lock screen
