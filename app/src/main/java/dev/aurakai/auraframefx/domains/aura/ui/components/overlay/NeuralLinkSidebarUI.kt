@@ -86,7 +86,8 @@ private val COMMAND_ITEMS = listOf(
 private data class Shortcut(
     val label: String,
     val icon: ImageVector,
-    val action: String
+    val action: String,
+    val key: String
 )
 
 private val SHORTCUTS = listOf(
@@ -158,6 +159,7 @@ fun NeuralLinkSidebarUI(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
+                    text = "AURA",
                     fontFamily = LEDFontFamily,
                     color = Color.Cyan.copy(alpha = headerAlpha),
                     fontSize = 16.sp,

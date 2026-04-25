@@ -1,10 +1,10 @@
 package dev.aurakai.auraframefx.domains.aura
 
-import dev.aurakai.auraframefx.core.models.OverlayAnimation
-import dev.aurakai.auraframefx.core.models.OverlayTransition
-import dev.aurakai.auraframefx.domains.aura.models.OverlayElement
-import dev.aurakai.auraframefx.domains.aura.models.OverlayShape
-import dev.aurakai.auraframefx.core.models.OverlayTheme
+import dev.aurakai.auraframefx.domains.aura.animations.OverlayAnimation
+import dev.aurakai.auraframefx.domains.aura.animations.OverlayTransition
+import dev.aurakai.auraframefx.domains.aura.ui.OverlayElement
+import dev.aurakai.auraframefx.domains.aura.ui.OverlayShape
+import dev.aurakai.auraframefx.domains.aura.ui.theme.model.OverlayTheme
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -23,17 +23,16 @@ class RootOverlayManager @Inject constructor() : SystemOverlayManager {
     }
 
     override fun applyAnimation(animation: OverlayAnimation) {
-        Timber.d("Applying system animation: ${animation.id}")
+        Timber.d("Applying system animation: ${animation.type}")
     }
 
     override fun applyTransition(transition: OverlayTransition) {
-        Timber.d("Applying system transition: ${transition.id}")
+        Timber.d("Applying system transition: ${transition.type}")
     }
 
     override fun applyShape(shape: OverlayShape) {
-        Timber.d("Applying system shape: ${shape.id}")
-        val command = "cmd overlay fabricate --target android --name aura_shape --res dimen/config_buttonCornerRadius --type 0x05 --value ${shape.cornerRadius.toInt()} && cmd overlay enable com.android.shell:aura_shape"
-        runShellCommand(command)
+        Timber.d("Applying system shape: ${shape.name}")
+        // Corner radius logic moved to specialized configuration
     }
 
     override fun applyConfig(config: SystemOverlayConfig) {

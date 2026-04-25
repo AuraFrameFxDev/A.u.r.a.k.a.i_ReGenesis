@@ -6,40 +6,57 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.hilt.navigation.compose.hiltViewModel
 
-// Domain UI Screens
-import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
-import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
-import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
-import dev.aurakai.auraframefx.domains.aura.ui.gates.*
+// Core UI
 import dev.aurakai.auraframefx.ui.screens.LoginScreen
 import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.*
-import dev.aurakai.auraframefx.domains.aura.screens.*
-import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.*
-import dev.aurakai.auraframefx.domains.kai.screens.*
-import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.*
-import dev.aurakai.auraframefx.domains.kai.screens.security_shield.*
-import dev.aurakai.auraframefx.domains.genesis.screens.*
-import dev.aurakai.auraframefx.domains.nexus.screens.*
-import dev.aurakai.auraframefx.domains.ldo.ui.screens.*
 import dev.aurakai.auraframefx.ui.ldodevops.TabbedMasterIndex
 import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 
+// Domain Hubs
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
+
+// Domain Feature Screens
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
+import dev.aurakai.auraframefx.domains.aura.screens.WorkingLabScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
+import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
+
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
+import dev.aurakai.auraframefx.domains.kai.screens.XposedQuickAccessPanel
+
+import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
+
+import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
+
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentRosterScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
+
+import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
+
 /**
  * 🌐 REGENESIS CONSOLIDATED NAV GRAPH
- * Single Source of Truth for Navigation
+ * Finalized for Exodus 2026 Build
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReGenesisNavGraph(
     navController: NavHostController,
-    customizationViewModel: CustomizationViewModel = viewModel()
+    customizationViewModel: CustomizationViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
@@ -63,8 +80,7 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.VideoIntro.route) {
-            // Using a stub if IntroScreen is missing or has bad imports
-            StubScreen("Video Intro", "Play", navController)
+            StubScreen("Video Intro", "Play", navController, "Welcome to Exodus 2026")
         }
 
         composable(ReGenesisRoute.Login.route) {
@@ -99,7 +115,7 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.AgentNexusHub.route) {
             AgentNexusHubScreen(
                 navController = navController,
-                getNexusSubGates = { emptyList() } // Simplified for now
+                getNexusSubGates = { emptyList() }
             )
         }
         composable(ReGenesisRoute.LdoOrchestrationHub.route) {
@@ -110,7 +126,7 @@ fun ReGenesisNavGraph(
         
         // Aura Domain
         composable(ReGenesisRoute.AuraLab.route) {
-            WorkingLabScreen(onNavigate = { route -> navController.navigate(route) })
+            WorkingLabScreen(onNavigate = { route: String -> navController.navigate(route) })
         }
         composable(ReGenesisRoute.ChromaCore.route) { StubScreen("ChromaCore", "ColorMatrix", navController) }
         composable(ReGenesisRoute.NotchBar.route) { 
@@ -118,9 +134,6 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.IconifyPicker.route) {
             IconifyPickerScreen(onNavigateBack = { navController.popBackStack() })
-        }
-        composable(ReGenesisRoute.CollabCanvas.route) {
-            CollabCanvasScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ReGenesisCustomization.route) {
             ReGenesisCustomizationHub(
@@ -183,7 +196,7 @@ fun ReGenesisNavGraph(
             LDOTaskerScreen(onNavigateBack = { navController.popBackStack() })
         }
 
-        // Stubs for remaining routes to ensure build stability
+        // Catch-all Stubs for Build Stability
         composable(ReGenesisRoute.FusionMode.route) { StubScreen("Fusion Mode", "Flash", navController) }
         composable(ReGenesisRoute.ArkBuild.route) { StubScreen("Ark Build", "Build", navController) }
         composable(ReGenesisRoute.BenchmarkMonitor.route) { StubScreen("Benchmark", "Speed", navController) }

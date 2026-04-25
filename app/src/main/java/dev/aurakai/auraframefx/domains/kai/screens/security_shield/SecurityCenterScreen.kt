@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -107,6 +109,13 @@ fun SecurityCenterScreen(
 
             item {
                 val threatColor = when (state.threatLevel) {
+                    ThreatLevel.NONE -> Color(0xFF00FFD4)
+                    ThreatLevel.INFO -> Color.Cyan
+                    ThreatLevel.LOW -> Color.Green
+                    ThreatLevel.MEDIUM -> Color.Yellow
+                    ThreatLevel.WARNING -> Color(0xFFFF8C00)
+                    ThreatLevel.HIGH, ThreatLevel.CRITICAL -> Color.Red
+                    ThreatLevel.AI_ERROR -> Color.Magenta
                 }
                 SecurityStatusCard(
                     title = "Threat Level",

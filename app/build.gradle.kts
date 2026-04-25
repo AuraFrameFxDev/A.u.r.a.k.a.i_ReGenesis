@@ -187,6 +187,12 @@ extensions.configure<ApplicationExtension> {
     }
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xcontext-parameters")
+    }
+}
+
 ksp {
     arg("dagger.fastInit", "enabled")
     arg("hilt.android.useClassPathAggregation", "true")

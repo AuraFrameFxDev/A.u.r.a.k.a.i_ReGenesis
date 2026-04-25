@@ -1,22 +1,11 @@
 package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,51 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
-import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
+import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
+import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
-/**
- * Screen 6 â€” LDO Roster
- * Full agent roster showing all stats in a detailed card format.
- * Sorted by evolution level. All data from Room via LDOViewModel.
- */
-/**
- * Displays the LDO agent roster UI and lets the user select an agent.
- *
- * Shows a header with agent count, a loading state message while data is loading, and a scrollable list
- * of agents sorted by descending evolution level. For each agent the UI computes the task count by
- * counting tasks whose `assignedAgentId` matches the agent's id and looks up the agent's bond level
- * (defaulting to 0 if not found). Tapping an agent selects it in the provided view model and triggers
- * the `onAgentSelected` callback.
- *
- * @param onAgentSelected Callback invoked with the selected agent's id when an agent is tapped.
- * @param onBack Callback intended for back navigation (currently not used by this composable).
- */
-/**
- * Displays the LDO agent roster screen with a header, loading state, and a scrollable list of agents.
- *
- * When not loading, agents are shown in a list sorted by descending evolution level. For each agent the UI
- * displays a computed `taskCount` (number of tasks whose `assignedAgentId` equals the agent's id) and a
- * `bondLevel` (looked up from the state's bond levels, defaulting to 0 if not found). Tapping an agent selects it
- * and invokes the provided `onAgentSelected` callback with the agent's id.
- *
- * @param onAgentSelected Invoked with the selected agent's id when an agent row is tapped.
- * @param onBack Optional back navigation callback (currently unused by the composable).
- */
-/**
- * Renders the LDO agent roster screen with a header, loading state, and a scrollable list of agents.
- *
- * Displays a title and subtitle showing the current agent count and the text "Sorted by evolution".
- * While the view model's UI state reports loading, shows a centered "Summoning roster…" message.
- * Otherwise, lists agents sorted by descending evolution level; for each agent it shows a detail card
- * that includes derived metrics (task count and bond level).
- *
- * @param onAgentSelected Invoked with the selected agent's id when an agent row is tapped.
- * @param onBack Optional back navigation callback (currently unused by the UI).
- */
 @Composable
 fun LDORosterScreen(
-    onAgentSelected: (String) -> Unit = {},
     onBack: () -> Unit = {},
     viewModel: LDOViewModel = hiltViewModel()
 ) {
@@ -84,44 +33,21 @@ fun LDORosterScreen(
             .background(Color.Black)
     ) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-
             Text(
-                "LDO AGENT ROSTER",
+                "AGENT ROSTER",
                 color = Color(0xFFFFD700),
                 fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                letterSpacing = 2.sp
-            )
-            Text(
-                "${state.agents.size} agents Â· Sorted by evolution",
-                color = Color.White.copy(alpha = 0.5f),
-                fontSize = 12.sp
+                fontSize = 20.sp
             )
 
-            HorizontalDivider(
-                color = Color(0xFFFFD700).copy(alpha = 0.3f),
-                modifier = Modifier.padding(vertical = 12.dp)
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
             if (state.isLoading) {
-                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Summoning rosterâ€¦", color = Color.White.copy(alpha = 0.4f))
-                }
+                Text("Loading roster…", color = Color.White.copy(0.5f))
             } else {
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    items(
-                        state.agents.sortedByDescending { it.evolutionLevel },
-                        key = { it.id }
-                    ) { agent ->
-                        RosterDetailCard(
-                            agent = agent,
-                            taskCount = state.tasks.count { it.assignedAgentId == agent.id },
-                            bondLevel = state.bondLevels.find { it.agentId == agent.id }?.bondLevel ?: 0,
-                            onClick = {
-                                viewModel.selectAgent(agent.id)
-                                onAgentSelected(agent.id)
-                            }
-                        )
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(state.agents) { agent ->
+                        RosterCard(agent)
                     }
                 }
             }
@@ -130,121 +56,28 @@ fun LDORosterScreen(
 }
 
 @Composable
-private fun RosterDetailCard(
-    agent: LDOAgentEntity,
-    taskCount: Int,
-    bondLevel: Int,
-    onClick: () -> Unit
-) {
+private fun RosterCard(agent: LDOAgentEntity) {
     val agentColor = Color(agent.colorHex)
-
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A0A)),
-        border = androidx.compose.foundation.BorderStroke(1.dp, agentColor.copy(alpha = 0.3f))
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF111111))
     ) {
-        Column(modifier = Modifier.padding(14.dp)) {
-
-            // Name + level row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(agentColor.copy(0.2f))
             ) {
-                Column {
-                    Text(
-                        agent.displayName,
-                        color = agentColor,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
-                    )
-                    Text(
-                        agent.role,
-                        color = Color.White.copy(alpha = 0.6f),
-                        fontSize = 12.sp
-                    )
-                }
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        "Lv.${agent.evolutionLevel}",
-                        color = agentColor,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
-                    )
-                    Text(
-                        "${agent.skillPoints} SP",
-                        color = Color.White.copy(alpha = 0.5f),
-                        fontSize = 11.sp
-                    )
-                }
+                Text(agent.displayName.take(1), modifier = Modifier.align(Alignment.Center), color = agentColor)
             }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // Stat bars
-            CompactStatBar("PP", agent.processingPower, agentColor)
-            CompactStatBar("KB", agent.knowledgeBase, agentColor)
-            CompactStatBar("SP", agent.speed, agentColor)
-            CompactStatBar("AC", agent.accuracy, agentColor)
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Footer metrics
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                RosterMetric("TASKS", taskCount.toString(), Color.White)
-                RosterMetric("DONE", agent.tasksCompleted.toString(), Color(0xFF00FF85))
-                RosterMetric("BOND", "Lv.$bondLevel", Color(0xFFFF6B6B))
-                RosterMetric("HOURS", "${agent.hoursActive.toInt()}h", Color(0xFF00E5FF))
+            Spacer(Modifier.width(12.dp))
+            Column {
+                Text(agent.displayName, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(agent.role, color = Color.Gray, fontSize = 12.sp)
             }
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Special ability
-            Text(
-                "âš¡ ${agent.specialAbility}",
-                color = agentColor.copy(alpha = 0.7f),
-                fontSize = 11.sp
-            )
         }
-    }
-}
-
-@Composable
-private fun CompactStatBar(label: String, value: Float, color: Color) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            label,
-            color = Color.White.copy(alpha = 0.4f),
-            fontSize = 10.sp,
-            modifier = Modifier.padding(end = 6.dp)
-        )
-        LinearProgressIndicator(
-            progress = { value },
-            modifier = Modifier.weight(1f).height(4.dp),
-            color = color,
-            trackColor = Color.White.copy(alpha = 0.06f)
-        )
-        Text(
-            "${(value * 100).toInt()}",
-            color = color,
-            fontSize = 10.sp,
-            modifier = Modifier.padding(start = 6.dp)
-        )
-    }
-}
-
-@Composable
-private fun RosterMetric(label: String, value: String, color: Color) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(value, color = color, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-        Text(label, color = Color.White.copy(alpha = 0.35f), fontSize = 9.sp)
     }
 }

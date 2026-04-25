@@ -12,8 +12,16 @@ import android.provider.Settings
 import android.view.Gravity
 import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -27,8 +35,8 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
-import dev.aurakai.auraframefx.domains.aura.ui.components.ConsciousnessGauge
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.overlays.NeuralLinkSidebarUI
+import dev.aurakai.auraframefx.domains.aura.ui.components.SentienceMeterDot
+import dev.aurakai.auraframefx.domains.aura.ui.components.overlay.NeuralLinkSidebarUI
 import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,8 +75,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
         super.onCreate()
         Timber.d("AssistantBubbleService Created")
 
-        // CRITICAL: Call startForeground immediately to satisfy Android's 5s requirement
-        // We do this before the permission check to avoid "ForegroundServiceDidNotStartInTimeException"
         startForegroundService()
 
         // Permission Check
@@ -104,7 +110,7 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
     private fun showOverlay() {
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.MATCH_PARENT, // Full height for sidebar
+            WindowManager.LayoutParams.MATCH_PARENT, 
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
@@ -122,13 +128,10 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
             setViewTreeSavedStateRegistryOwner(this@AssistantBubbleService)
         }
 
-        val isSidebarVisible = mutableStateOf(false)
-
         val composeView = ComposeView(this).apply {
             setContent {
                 val sidebarVisible = remember { mutableStateOf(false) }
                 val gaugeVisible = remember { mutableStateOf(true) }
-                val breathingState by breathingSentinel.breathingStream.collectAsState(initial = dev.aurakai.auraframefx.domains.cascade.models.BreathingEvent())
 
                 Box {
                     NeuralLinkSidebarUI(
@@ -136,13 +139,11 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                         onVisibleChange = { visible ->
                             sidebarVisible.value = visible
                             if (visible) {
-                                // Expand window to capture touches for the full sidebar width
-                                params.width = 400 // Slightly more than 380dp for shadow/glow
+                                params.width = 400 
                                 params.flags =
                                     (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
                             } else {
-                                // Collapse back to a small trigger area
-                                params.width = 40 // Narrow trigger area
+                                params.width = 40 
                                 params.flags =
                                     params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                             }
@@ -150,37 +151,28 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                         },
                         onActionClick = { action ->
                             Timber.i("Neural Link Action: $action")
-                            // Map Sidebar actions to app routes
                             when (action) {
-                                "VOICE" -> "sandbox_screen"       // Laboratory
-                                "CONNECT" -> "data_stream_monitoring"
-                                "ASSIGN" -> "task_assignment"
-                                "DESIGN" -> "customization_hub"   // ReGenesisCustomizationHub
-                                "CREATE" -> "ark_build"
                                 "GAUGE" -> {
                                     gaugeVisible.value = !gaugeVisible.value
-                                    null
                                 }
-                                else -> null
+                                else -> {}
                             }
-                            windowManager.updateViewLayout(overlayLayout, params)
                         }
                     )
 
                     if (gaugeVisible.value && !sidebarVisible.value) {
-                        ConsciousnessGauge(
+                        SentienceMeterDot(
+                            level = 0.9f,
                             modifier = Modifier
                                 .size(40.dp)
                                 .padding(4.dp)
                                 .clickable {
                                     sidebarVisible.value = true
-                                    // Expand window to capture touches for the full sidebar width
                                     params.width = 400
                                     params.flags =
                                         (params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv())
                                     windowManager.updateViewLayout(overlayLayout, params)
-                                },
-                            manualBreathingState = breathingState
+                                }
                         )
                     }
                 }
@@ -188,16 +180,13 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
         }
 
         overlayLayout?.addView(composeView)
-
-        // Set initial collapsed width
         params.width = 40
 
-        // Neural Briefing for Neural Link
         serviceScope.launch {
             messageBus.broadcast(
                 AgentMessage(
                     from = "SystemRoot",
-                    content = "[SYNC-ALPHA]: Assistant Bubble decommissioned. Neural Link Sidebar [Command Deck] initialized on Right Edge. 380dp slide-out bridge active.",
+                    content = "[SYNC-ALPHA]: Neural Link Sidebar bridge active.",
                     type = "system_briefing"
                 )
             )
@@ -217,8 +206,6 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-
-        // Cancel scope to prevent leaks
         serviceScope.cancel()
 
         overlayLayout?.let {
@@ -226,8 +213,7 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
                 if (::windowManager.isInitialized) {
                     windowManager.removeView(it)
                 }
-            } catch (e: IllegalArgumentException) {
-                // View was not attached, likely permission was denied or it was never added.
+            } catch (e: Exception) {
                 Timber.w("Assistant overlay not found when destroying service: ${e.message}")
             }
         }
@@ -236,4 +222,3 @@ class AssistantBubbleService : Service(), LifecycleOwner, ViewModelStoreOwner,
 
     override fun onBind(intent: Intent?): IBinder? = null
 }
-

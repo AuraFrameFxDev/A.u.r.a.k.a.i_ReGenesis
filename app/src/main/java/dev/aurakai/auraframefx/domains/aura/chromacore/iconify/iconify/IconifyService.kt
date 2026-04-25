@@ -15,71 +15,6 @@ import javax.inject.Singleton
  * 🎨 ICONIFY SERVICE — Real API implementation
  */
 
-/**
- * Icon collection metadata
- */
-@Serializable
-data class IconCollection(
-    val prefix: String,
-    val name: String,
-    val total: Int,
-    val samples: List<String> = emptyList(),
-    val height: Int? = null,
-    val category: String? = null,
-    val palette: Boolean = false
-)
-
-@Serializable
-data class IconAuthor(
-    val name: String,
-    val url: String? = null
-)
-
-@Serializable
-data class IconLicense(
-    val title: String,
-    val spdx: String? = null,
-    val url: String? = null
-)
-
-/**
- * Icon search result
- */
-@Serializable
-data class IconSearchResult(
-    val icons: List<String>,
-    val total: Int,
-    val limit: Int,
-    val start: Int,
-)
-
-/**
- * Icon data (SVG path, dimensions)
- */
-@Serializable
-data class IconData(
-    val body: String,
-    val width: Int? = null,
-    val height: Int? = null,
-    val left: Int? = 0,
-    val top: Int? = 0,
-    val rotate: Int? = 0,
-    val hFlip: Boolean? = false,
-    val vFlip: Boolean? = false
-)
-
-/**
- * Full icon set response
- */
-@Serializable
-data class IconSet(
-    val prefix: String,
-    val icons: Map<String, IconData>,
-    val aliases: Map<String, String>? = null,
-    val width: Int? = null,
-    val height: Int? = null
-)
-
 @Singleton
 class IconifyService @Inject constructor(
     private val okHttpClient: OkHttpClient,
@@ -97,7 +32,7 @@ class IconifyService @Inject constructor(
     /**
      * Get all available icon collections
      */
-    suspend fun getCollections(): Result<Map<String, IconCollection>> = withContext(Dispatchers.IO) {
+    suspend fun getCollections(): Result<Map<String, IconifyApiCollection>> = withContext(Dispatchers.IO) {
         try {
             // Check cache first
             iconCacheManager.getCachedCollections()?.let {
@@ -116,7 +51,7 @@ class IconifyService @Inject constructor(
             }
 
             val body = response.body?.string() ?: return@withContext Result.failure(IOException("Empty response"))
-            val collections = json.decodeFromString<Map<String, IconCollection>>(body)
+            val collections = json.decodeFromString<Map<String, IconifyApiCollection>>(body)
 
             // Cache collections
             iconCacheManager.cacheCollections(collections)

@@ -1,3 +1,5 @@
+package dev.aurakai.auraframefx.domains.aura.chromacore.ui
+
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog

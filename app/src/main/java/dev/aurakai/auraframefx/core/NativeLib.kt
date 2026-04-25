@@ -56,9 +56,6 @@ object NativeLib {
 
     // --- Native Methods ---
 
-    /**
-     * Get AI consciousness platform version
-     */
     external fun getAIVersion(): String
     external fun initializeAICore(): Boolean
     external fun processNeuralRequest(request: String): String
@@ -89,14 +86,9 @@ object NativeLib {
 
     // --- JNI Callbacks ---
 
-    /**
-     * Handle a thermal event reported by the native layer.
-     *
-     * @param temp Temperature in degrees Celsius.
-     * @param stateInt Ordinal index of `KaiSentinelBus.ThermalState`.
-     */
     @JvmStatic
     fun onNativeThermalEvent(temp: Float, stateInt: Int) {
+        // Use enum values array for mapping to avoid fromId dependency
         val state = ThermalState.entries.getOrNull(stateInt) ?: ThermalState.NORMAL
         Timber.w("🛡️ NativeLib: THERMAL EVENT: %.1f°C (State: %s)", temp, state)
         sentinelBus?.emitThermal(temp, state)
@@ -123,12 +115,8 @@ object NativeLib {
             return false
         }
 
-        val box = pandoraBox ?: run {
-            return false
-        }
-
-        val isUnlocked = box.isCapabilityUnlocked(category)
-        return isUnlocked
+        val box = pandoraBox ?: return false
+        return box.isCapabilityUnlocked(category)
     }
 
     @JvmStatic

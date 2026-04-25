@@ -1,7 +1,4 @@
-//
-// Used as: the gate card for Personal Screen & Shortcuts / Notch Bar domain.
-// Also exported as a standalone composable for use anywhere a circuit card
-// art piece is needed (e.g. a "quick settings" floating card).
+package dev.aurakai.auraframefx.ui.gates
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -12,10 +9,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -205,240 +200,54 @@ private fun DrawScope.drawCircuitTraces(w: Float, h: Float, pulse: Float) {
 fun NotchBarGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
     val infiniteTransition = rememberInfiniteTransition(label = "notch_screen")
     val electricPulse by infiniteTransition.animateFloat(
-        0f, 1f, infiniteRepeatable(tween(1200, easing = FastOutSlowInEasing), RepeatMode.Reverse),
+        initialValue = 0f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(1200, easing = FastOutSlowInEasing), RepeatMode.Reverse),
         label = "pulse"
     )
 
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFF000000))) {
-        // Circuit pattern full-screen backdrop
         Canvas(modifier = Modifier.fillMaxSize()) {
             val traceColor = Color(0xFFFF3300).copy(alpha = 0.06f)
             val traceColor2 = Color(0xFF00CED1).copy(alpha = 0.05f)
-            // Background circuit grid
             for (x in 0..(size.width / 40f).toInt() + 1)
                 drawLine(traceColor, Offset(x * 40f, 0f), Offset(x * 40f, size.height), 0.5f)
             for (y in 0..(size.height / 40f).toInt() + 1)
                 drawLine(traceColor2, Offset(0f, y * 40f), Offset(size.width, y * 40f), 0.5f)
-            // Diagonal corner neon sparks
-            drawLine(Color(0xFF00CED1).copy(alpha = 0.3f + electricPulse * 0.3f),
-                Offset(0f, 0f), Offset(size.width * 0.3f, 0f), 3f)
-            drawLine(Color(0xFFFF3300).copy(alpha = 0.3f + electricPulse * 0.3f),
-                Offset(size.width, 0f), Offset(size.width * 0.7f, 0f), 3f)
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
-            // Header
             Row(modifier = Modifier.fillMaxWidth().padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 IconButton(onClick = onNavigateBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFF00CED1)) }
                 Column {
-                    Text("NOTCH BAR", fontFamily = FontFamily.Monospace, fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold, letterSpacing = 5.sp,
-                        color = Color(0xFF00CED1))
-                    Text("PERSONAL SCREEN & SHORTCUTS", fontSize = 8.sp,
-                        letterSpacing = 2.sp, color = Color(0xFFFF6600).copy(0.7f))
-                }
-                Spacer(Modifier.weight(1f))
-                IconButton(onClick = { navController.navigate("gate_image_picker") }) {
-                    Icon(Icons.Default.SwapHoriz, null, tint = Color(0xFF00CED1).copy(0.6f))
+                    Text("NOTCH BAR", fontFamily = FontFamily.Monospace, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF00CED1))
                 }
             }
 
-            // Centered gate card art
-            Box(modifier = Modifier.fillMaxWidth().weight(0.4f).padding(horizontal = 40.dp),
-                contentAlignment = Alignment.Center) {
-                NotchBarGateCard(
-                    modifier = Modifier.fillMaxWidth().aspectRatio(0.65f),
-                    isActive = true
-                )
-                // "NOTCH BAR" text overlay at bottom of card
-                Text(
-                    "NOTCH BAR",
-                    fontFamily = FontFamily.Monospace, fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold, letterSpacing = 4.sp,
-                    color = Color(0xFF00BFFF),
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 20.dp)
-                )
-            }
-
-            // Shortcut grid
             val shortcuts = listOf(
                 Triple("STATUS BAR",    Icons.Default.BarChart,     Color(0xFFFF3300)),
                 Triple("QUICK TILES",   Icons.Default.GridView,     Color(0xFF00CED1)),
                 Triple("NOTCH STYLE",   Icons.Default.Smartphone,   Color(0xFFFFD700)),
-                Triple("GESTURES",      Icons.Default.TouchApp,     Color(0xFF9B30FF)),
-                Triple("BRIGHTNESS",    Icons.Default.WbSunny,      Color(0xFFFF9B00)),
             )
-                modifier = Modifier.fillMaxSize().padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(bottom = 24.dp)
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize().padding(12.dp)
             ) {
+                items(shortcuts) { (label, icon, color) ->
                     Box(
-                        modifier = Modifier.aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(1.dp, color.copy(0.4f), RoundedCornerShape(8.dp))
-                            .background(color.copy(0.06f))
-                            .clickable { }
-                            .padding(8.dp),
+                        modifier = Modifier.aspectRatio(1f).padding(4.dp).clip(RoundedCornerShape(8.dp)).background(color.copy(0.1f)).border(1.dp, color, RoundedCornerShape(8.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Icon(icon, label, tint = color, modifier = Modifier.size(24.dp))
-                            Text(label, fontSize = 8.sp, fontWeight = FontWeight.Bold,
-                                letterSpacing = 0.5.sp, color = Color.White.copy(0.7f),
-                                textAlign = TextAlign.Center, maxLines = 2)
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(icon, null, tint = color)
+                            Text(label, color = Color.White, fontSize = 10.sp)
                         }
                     }
                 }
             }
         }
     }
-}
-
-
-@Composable
-fun CollabCanvasGateScreen(navController: NavController, onNavigateBack: () -> Unit = {}) {
-    val infiniteTransition = rememberInfiniteTransition(label = "collab")
-    val paintSplash by infiniteTransition.animateFloat(
-        0f, 1f, infiniteRepeatable(tween(3000, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "paint"
-    )
-    val eyePulse by infiniteTransition.animateFloat(
-        0.6f, 1f, infiniteRepeatable(tween(1400, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "eye"
-    )
-    val orbitAngle by infiniteTransition.animateFloat(
-        0f, 2f * PI.toFloat(),
-        infiniteRepeatable(tween(8000, easing = LinearEasing), RepeatMode.Restart),
-        label = "orbit"
-    )
-
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        // Layer 1: Eye Rune canvas background
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val cx = size.width / 2f; val cy = size.height * 0.4f
-
-            // Black void
-            drawRect(Color(0xFF000000))
-
-            drawEyeRunePaintSplash(cx, cy, paintSplash, orbitAngle)
-
-            // Circuit board border lines
-            val cBorder = Color(0xFFFF2D78).copy(0.15f)
-            for (i in 1..4) drawLine(cBorder, Offset(0f, i * size.height / 5f), Offset(size.width * 0.1f, i * size.height / 5f), 1f)
-            for (i in 1..4) drawLine(cBorder, Offset(size.width * 0.9f, i * size.height / 5f), Offset(size.width, i * size.height / 5f), 1f)
-
-            // Eye rune symbol
-            drawEyeRune(Offset(cx, cy), eyePulse)
-        }
-
-        // Layer 2: Content
-        Column(modifier = Modifier.fillMaxSize()) {
-            Row(modifier = Modifier.fillMaxWidth().padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onNavigateBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color(0xFFFF2D78))
-                }
-                Text("COLLAB CANVAS", fontFamily = FontFamily.Monospace,
-                    fontSize = 18.sp, fontWeight = FontWeight.Bold,
-                    letterSpacing = 4.sp, color = Color(0xFFFF2D78))
-                Spacer(Modifier.weight(1f))
-                IconButton(onClick = { navController.navigate("gate_image_picker") }) {
-                    Icon(Icons.Default.SwapHoriz, null, tint = Color(0xFFFF2D78).copy(0.6f))
-                }
-            }
-
-            Spacer(Modifier.height(250.dp)) // Eye rune space
-
-            // Collaboration tools
-            Column(modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                val collabItems = listOf(
-                    "Live Collaborative Drawing" to Color(0xFFFF2D78),
-                    "Shared UI Mockups"           to Color(0xFF00BFFF),
-                    "Agent Vision Board"          to Color(0xFF9B30FF),
-                    "Color Palette Sync"          to Color(0xFFFF9B00),
-                    "Export & Share"              to Color(0xFF00FF80),
-                )
-                collabItems.forEach { (label, color) ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(1.dp, color.copy(0.3f), RoundedCornerShape(8.dp))
-                            .background(color.copy(0.07f))
-                            .clickable { }
-                            .padding(14.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(label, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(0.85f))
-                    }
-                }
-            }
-        }
-    }
-}
-
-private fun DrawScope.drawEyeRunePaintSplash(cx: Float, cy: Float, t: Float, angle: Float) {
-    // Magenta paint blob top-left
-    drawCircle(Color(0xFFFF2D78).copy(alpha = 0.3f + t * 0.2f), radius = 120f,
-        center = Offset(cx - 80f, cy - 100f))
-    // Blue paint blob top-right
-    drawCircle(Color(0xFF1E90FF).copy(alpha = 0.25f + t * 0.15f), radius = 100f,
-        center = Offset(cx + 80f, cy - 80f))
-    // Paint drips
-    for (i in 0..5) {
-        val px = cx - 100f + i * 30f
-        drawLine(Color(0xFFFF2D78).copy(alpha = 0.4f),
-            Offset(px, cy - 120f), Offset(px + 5f, cy - 60f), strokeWidth = 8f,
-            cap = StrokeCap.Round)
-    }
-    // Circuit border frame
-    val borderColor = Color(0xFFFF2D78).copy(0.4f + t * 0.2f)
-    drawRect(Color(0xFF000000))
-    drawRoundRect(borderColor, Offset(20f, 20f), Size(size.width - 40f, size.height * 0.7f),
-        CornerRadius(8f), style = Stroke(width = 2f))
-    // Orbiting particles
-    for (i in 0..5) {
-        val a = angle + i * (2 * PI.toFloat() / 6)
-        val r = 140f + i * 10f
-        val px = cx + r * cos(a); val py = cy + r * sin(a) * 0.5f
-        drawCircle(Color(0xFFFF2D78).copy(0.6f), radius = 4f, center = Offset(px, py))
-    }
-}
-
-private fun DrawScope.drawEyeRune(center: Offset, pulse: Float) {
-    val r = 70f
-    // Outer eye oval
-    drawOval(Color(0xFF00BFFF).copy(alpha = 0.7f + pulse * 0.2f),
-        topLeft = Offset(center.x - r, center.y - r * 0.5f),
-        size = Size(r * 2, r), style = Stroke(2.5f))
-    // Iris
-    drawCircle(Color(0xFFFF2D78).copy(0.5f), radius = r * 0.4f, center = center)
-    drawCircle(Color(0xFF00BFFF).copy(0.8f + pulse * 0.1f), radius = r * 0.4f,
-        center = center, style = Stroke(2f))
-    // Pupil
-    drawCircle(Color(0xFF000000), radius = r * 0.2f, center = center)
-    drawCircle(Color.White.copy(0.9f), radius = r * 0.08f,
-        center = Offset(center.x + r * 0.1f, center.y - r * 0.1f))
-
-    // Rune cross-hash below eye
-    val runeY = center.y + r * 0.7f
-    drawLine(Color(0xFF00BFFF).copy(0.6f),
-        Offset(center.x, runeY), Offset(center.x, runeY + r * 0.5f), 2.5f)
-    drawLine(Color(0xFF00BFFF).copy(0.4f),
-        Offset(center.x - r * 0.3f, runeY + r * 0.2f),
-        Offset(center.x + r * 0.3f, runeY + r * 0.2f), 2f)
-    // Anchor swirl
-    drawCircle(Color(0xFF00BFFF).copy(0.3f), radius = r * 0.15f,
-        center = Offset(center.x, runeY + r * 0.5f), style = Stroke(1.5f))
-
-    // Radiating glow
-    drawCircle(Color(0xFF00BFFF).copy(alpha = (1f - pulse) * 0.3f),
-        radius = r * 1.4f * pulse, center = center, style = Stroke(1f))
 }

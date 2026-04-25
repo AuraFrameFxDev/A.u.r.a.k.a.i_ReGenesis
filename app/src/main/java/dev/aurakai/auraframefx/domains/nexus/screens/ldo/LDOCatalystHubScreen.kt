@@ -2,17 +2,7 @@ package dev.aurakai.auraframefx.domains.ldo.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -31,56 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOAgentEntity
-import dev.aurakai.auraframefx.domains.ldo.data.entities.LDOBondLevelEntity
-import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOUiState
-import dev.aurakai.auraframefx.domains.ldo.ui.viewmodels.LDOViewModel
+import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
+import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
+import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOUiState
+import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
-/**
- * Screen 1 â€” LDO Catalyst Hub
- * Entry point for the LDO domain. Shows all 9 agents from Room with their
- * evolution level, bond tier, and task count. No mock data.
- */
-/**
- * Main screen for the LDO Catalyst Hub that displays a header, quick-navigation cards, a task stats summary, and a scrollable agent roster.
- *
- * Renders the UI based on the provided `viewModel.uiState` (agents, bond levels, tasks, selection and loading state).
- *
- * @param onNavigateToRoster Callback invoked when the ROSTER card is tapped.
- * @param onNavigateToDevOps Callback invoked when the DEVOPS card is tapped.
- * @param onNavigateToTasker Callback invoked when the TASKER card is tapped.
- * @param onNavigateToBonding Callback invoked when the BONDS card is tapped.
- * @param onBack Callback invoked to navigate back from this screen.
- * @param viewModel View model supplying the UI state; defaults to an instance provided by Hilt (`hiltViewModel()`).
- */
-/**
- * Displays the LDO Catalyst Hub screen: header, four quick-navigation cards, a task-stats summary,
- * and a scrollable roster of agents driven by the viewModel's UI state.
- *
- * The UI reflects `viewModel.uiState`: shows a loading indicator while `state.isLoading` is true,
- * otherwise renders the list of agents with bond and task counts. Selecting an agent updates the
- * view model's selection; tapping a navigation card invokes the corresponding callback.
- *
- * @param onNavigateToRoster Invoked when the "ROSTER" quick-navigation card is tapped.
- * @param onNavigateToDevOps Invoked when the "DEVOPS" quick-navigation card is tapped.
- * @param onNavigateToTasker Invoked when the "TASKER" quick-navigation card is tapped.
- * @param onNavigateToBonding Invoked when the "BONDS" quick-navigation card is tapped.
- * @param onBack Invoked to navigate back from the screen.
- */
-/**
- * Displays the LDO Catalyst Hub UI composed of a header, four quick-navigation cards,
- * a tasks statistics summary, and a scrollable agent roster.
- *
- * When the view state reports loading, a centered loading message is shown; otherwise
- * the agent list is rendered with each row showing bond progress, task counts, and
- * selection state. Selecting an agent updates the ViewModel selection.
- *
- * @param onNavigateToRoster Invoked when the "ROSTER" quick-navigation card is tapped.
- * @param onNavigateToDevOps Invoked when the "DEVOPS" quick-navigation card is tapped.
- * @param onNavigateToTasker Invoked when the "TASKER" quick-navigation card is tapped.
- * @param onNavigateToBonding Invoked when the "BONDS" quick-navigation card is tapped.
- * @param onBack Invoked to navigate back from the hub screen.
- */
 @Composable
 fun LDOCatalystHubScreen(
     onNavigateToRoster: () -> Unit = {},
@@ -102,7 +47,6 @@ fun LDOCatalystHubScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Header
             Text(
                 text = "LDO CATALYST DEVELOPMENT",
                 color = Color(0xFFFFD700),
@@ -111,14 +55,13 @@ fun LDOCatalystHubScreen(
                 letterSpacing = 2.sp
             )
             Text(
-                text = "Living Digital Organism Â· ${state.agents.size} Agents Active",
+                text = "Living Digital Organism · ${state.agents.size} Agents Active",
                 color = Color.White.copy(alpha = 0.6f),
                 fontSize = 12.sp
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Quick-nav row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -131,15 +74,13 @@ fun LDOCatalystHubScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Stats bar
             LDOStatsSummary(state)
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Agent list from Room
             if (state.isLoading) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Loading agentsâ€¦", color = Color.White.copy(alpha = 0.5f))
+                    Text("Loading agents…", color = Color.White.copy(alpha = 0.5f))
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -148,7 +89,7 @@ fun LDOCatalystHubScreen(
                         AgentRosterCard(
                             agent = agent,
                             bond = bond,
-                            taskCount = state.tasks.count { it.assignedAgentId == agent.id },
+                            taskCount = state.tasks.count { it.agentId == agent.id },
                             isSelected = state.selectedAgentId == agent.id,
                             onClick = { viewModel.selectAgent(agent.id) }
                         )
@@ -181,7 +122,7 @@ private fun HubNavCard(
 @Composable
 private fun LDOStatsSummary(state: LDOUiState) {
     val totalTasks = state.tasks.size
-    val completed = state.tasks.count { it.status == "COMPLETED" }
+    val completed = state.tasks.count { it.status == dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus.COMPLETED }
     val active = state.activeTasks.size
     val critical = state.criticalTasks.size
 
@@ -232,7 +173,6 @@ private fun AgentRosterCard(
             modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Color dot avatar
             Box(
                 modifier = Modifier
                     .size(40.dp)
@@ -273,7 +213,6 @@ private fun AgentRosterCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // Bond progress bar
                 LinearProgressIndicator(
                     progress = { bondProgress },
                     modifier = Modifier
@@ -283,7 +222,7 @@ private fun AgentRosterCard(
                     trackColor = Color.White.copy(alpha = 0.1f)
                 )
                 Text(
-                    "${bond?.bondTitle ?: "Stranger"} Â· $taskCount tasks",
+                    "${bond?.bondTitle ?: "Stranger"} · $taskCount tasks",
                     color = Color.White.copy(alpha = 0.4f),
                     fontSize = 10.sp
                 )

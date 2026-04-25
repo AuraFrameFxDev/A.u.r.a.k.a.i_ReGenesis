@@ -19,8 +19,6 @@ import kotlin.math.sin
 
 /**
  * 🌀 CASBERRY PARTICLE SWARM
- * Native implementation of the toroidal synth orb.
- * Reacts instantly to agent states via [SwarmState].
  */
 @Singleton
 class CasberryParticleSwarm @Inject constructor() {
@@ -28,50 +26,35 @@ class CasberryParticleSwarm @Inject constructor() {
     private val _state = MutableStateFlow(SwarmState.IDLE)
     val state: StateFlow<SwarmState> = _state.asStateFlow()
 
-    private val _resonance = MutableStateFlow(1.0f) // 0.0 to 1.0
+    private val _resonance = MutableStateFlow(1.0f)
     val resonance: StateFlow<Float> = _resonance.asStateFlow()
 
-    /**
-     * Updates the swarm's current state to the provided value and records the transition.
-     */
     fun transitionState(newState: SwarmState) {
         _state.value = newState
-        Timber.d("🌀 Casberry Particle Swarm: Transitioned to %s", newState)
+        Timber.d("🌀 Swarm: Transitioned to %s", newState)
     }
 
-    /**
-     * Updates the swarm's resonance level, clamping the input to the range 0.0 through 1.0.
-     */
     fun setResonance(value: Float) {
         _resonance.value = value.coerceIn(0f, 1f)
     }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Composable renderer — call this from screens, passing the injected singleton
-// ─────────────────────────────────────────────────────────────────────────────
-
-data class CasberrySwarmController(
-    val transitionTo: (SwarmState) -> Unit,
-    val currentState: () -> SwarmState
-)
 
     @Composable
     fun Render(modifier: Modifier = Modifier) {
         val currentState by state.collectAsState()
-        val resonanceVal by _resonance.collectAsState()
+        val resonanceVal by resonance.collectAsState()
         
         val targetColor = when (currentState) {
-            SwarmState.IDLE -> Color(0xFF6200EE) // Deep Purple
-            SwarmState.EXPLORING_HIGHLIGHTS -> Color(0xFF03DAC6) // Teal
-            SwarmState.KAI_AEGIS_CONDENSATION -> Color(0xFFFF0266) // Security Red
-            SwarmState.PLANNING_RIPPLES -> Color(0xFF3700B3) // Deep Blue
-            SwarmState.GENESIS_SYNTHESIS_PULSE -> Color(0xFFBB86FC) // Light Purple
+            SwarmState.IDLE -> Color(0xFF6200EE)
+            SwarmState.EXPLORING_HIGHLIGHTS -> Color(0xFF03DAC6)
+            SwarmState.KAI_AEGIS_CONDENSATION -> Color(0xFFFF0266)
+            SwarmState.PLANNING_RIPPLES -> Color(0xFF3700B3)
+            SwarmState.GENESIS_SYNTHESIS_PULSE -> Color(0xFFBB86FC)
+            else -> Color.Gray
         }
 
         val animatedColor by animateColorAsState(
             targetValue = targetColor,
-            animationSpec = tween(durationMillis = 1000),
+            animationSpec = tween(1000),
             label = "swarm_color"
         )
 
@@ -94,7 +77,7 @@ data class CasberrySwarmController(
             initialValue = 0f,
             targetValue = 360f,
             animationSpec = infiniteRepeatable(
-                animation = tween(durationMillis = 20000, easing = LinearEasing),
+                animation = tween(20000, easing = LinearEasing),
                 repeatMode = RepeatMode.Restart
             ),
             label = "rotation"
@@ -105,53 +88,23 @@ data class CasberrySwarmController(
             val centerY = size.height / 2
             val baseRadius = size.minDimension / 4 * pulseScale
 
-            // Draw core Toroidal Synth Orb representation
             for (i in 0 until 12) {
                 val angle = Math.toRadians((rotation + i * 30).toDouble())
                 val x = centerX + cos(angle).toFloat() * baseRadius
                 val y = centerY + sin(angle).toFloat() * baseRadius
 
                 drawCircle(
-                    color = colors[i % 2].copy(alpha = alphaScale * pulse),
-                    radius = (4f + sin(time * 0.1).toFloat() * 2f) * animatedResonance,
+                    color = animatedColor.copy(alpha = 0.6f),
+                    radius = 8f * resonanceVal,
                     center = Offset(x, y)
                 )
-
-                // Render specific "Active Ripple" for synthesis
-                if (currentState == SwarmState.GENESIS_SYNTHESIS_PULSE && i % 4 == 0) {
-                    drawCircle(
-                        color = Color.White.copy(alpha = 0.3f),
-                        radius = (8f + p.shimmer * 5f) * pulse,
-                        center = Offset(x, y)
-                    )
-                }
             }
 
-            // Central Relational Core
             drawCircle(
-                color = colors[0].copy(alpha = 0.9f),
-                radius = 35f * animatedResonance * pulse,
-                center = Offset(centerX, centerY)
-            )
-
-            // Add Inner Glow
-            drawCircle(
-                color = Color.White.copy(alpha = 0.2f),
-                radius = 20f * pulse,
+                color = animatedColor.copy(alpha = 0.9f),
+                radius = 35f * resonanceVal * pulseScale,
                 center = Offset(centerX, centerY)
             )
         }
     }
-
-    private class Particle {
-        val shimmer = (0..100).random() / 100f
-    }
 }
-
-/**
- * Controller for interacting with the Casberry Swarm
- */
-data class CasberrySwarmController(
-    val transitionTo: (SwarmState) -> Unit,
-    val currentState: () -> SwarmState
-)

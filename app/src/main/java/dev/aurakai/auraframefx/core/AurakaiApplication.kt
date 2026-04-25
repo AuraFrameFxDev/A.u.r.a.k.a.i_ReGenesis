@@ -2,20 +2,17 @@ package dev.aurakai.auraframefx.core
 
 import android.app.Application
 import android.content.Intent
-import android.content.Context
+import android.util.Log
 
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.core.soulscript.SoulScript
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import android.util.Log
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
-import com.highcapable.yukihookapi.YukiHookAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -104,6 +101,7 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     private fun initializeSystemHooks() {
         try {
+            // Using full qualified name to bypass KSP/Import issues during sync
             com.highcapable.yukihookapi.YukiHookAPI.configs {
                 debugLog { isEnable = BuildConfig.DEBUG }
             }
@@ -119,19 +117,15 @@ class AurakaiApplication : Application(), Configuration.Provider {
             val ok = NativeLib.tryInitializeAICore()
             Timber.i("✅ Native AI platform init result: %s", ok)
         } catch (t: Throwable) {
-            Timber.e(t, "❌ Native AI initialization error: ${t.message} (swallowed to prevent startup crash)")
+            Timber.e(t, "❌ Native AI initialization error: ${t.message}")
         }
     }
 
     private fun startIntegrityMonitor() {
         try {
             val intent = Intent(this, dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService::class.java)
-            try {
-                startForegroundService(intent)
-                Timber.d("✅ Integrity monitor started")
-            } catch (e: Exception) {
-                Timber.w("Failed to start IntegrityMonitor as Foreground: ${e.message}")
-            }
+            startForegroundService(intent)
+            Timber.d("✅ Integrity monitor started")
         } catch (e: Exception) {
             Timber.w(e, "⚠️ Integrity monitor failed to start")
         }

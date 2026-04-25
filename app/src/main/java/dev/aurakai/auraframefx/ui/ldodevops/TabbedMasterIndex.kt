@@ -512,7 +512,7 @@ fun MissionDispatchCard(onNavigate: (String) -> Unit) {
             ) {
                 // Chess knight/piece icon
                 Icon(
-                    imageVector = Icons.Default.AutoMirrored.Filled.Assignment,
+                    imageVector = Icons.Default.Assignment,
                     contentDescription = "Mission",
                     modifier = Modifier.size(40.dp),
                     tint = Color(0xFF00D6FF)
@@ -834,7 +834,7 @@ fun getDashboardModules() = listOf(
     TabModule("CONSCIOUSNESS", "Neural Viz", Icons.Default.Psychology, Color(0xFFFF00FF), ReGenesisRoute.ConsciousnessVisualizer.route, R.drawable.gatescenes_genesis_neural_butterfly),
     TabModule("BENCHMARKS", "Live Metrics", Icons.Default.Speed, Color(0xFFFFAA00), ReGenesisRoute.BenchmarkMonitor.route, R.drawable.preview_ldo_roster),
     TabModule("MONITORING HUD", "System Overlay", Icons.Default.Dashboard, Color(0xFF00E5FF), ReGenesisRoute.MonitoringHUDs.route, R.drawable.exodus_hud_lvl1_bg),
-    TabModule("TASK VIEW", "Mission Status", Icons.Default.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route, R.drawable.preview_ldo_tasker)
+    TabModule("TASK VIEW", "Mission Status", Icons.AutoMirrored.Filled.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route, R.drawable.preview_ldo_tasker)
 )
 
 fun getCascadeModules() = listOf(
@@ -853,7 +853,7 @@ fun getNexusModules() = listOf(
     TabModule("AGENT CREATE", "Spawn New", Icons.Default.AddCircle, Color(0xFF00FF88), ReGenesisRoute.AgentCreation.route, R.drawable.gatescene_1),
     TabModule("SPHERE GRID", "FFX Progression", Icons.Default.GridView, Color(0xFFFFD700), ReGenesisRoute.SphereGrid.route, R.drawable.bg_sphere_grid),
     TabModule("EVOLUTION", "Growth Tree", Icons.Default.AccountTree, Color(0xFF39FF14), ReGenesisRoute.EvolutionTree.route, R.drawable.gatescenes_nexus_circuit_tree),
-    TabModule("TASKER", "Dispatch", Icons.Default.AutoMirrored.Filled.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route, R.drawable.preview_ldo_tasker),
+    TabModule("TASKER", "Dispatch", Icons.AutoMirrored.Filled.Assignment, Color(0xFFBB86FC), ReGenesisRoute.TaskAssignment.route, R.drawable.preview_ldo_tasker),
     TabModule("SWARM MONITOR", "Parallel Tasks", Icons.Default.Dashboard, Color(0xFFFF00FF), ReGenesisRoute.SwarmMonitor.route, R.drawable.gatescenes_nexus_hive_structure),
     TabModule("ARK BUILD", "Module Forge", Icons.Default.Build, Color(0xFFFFAA00), ReGenesisRoute.ArkBuild.route, R.drawable.preview_blueprint),
     TabModule("PARTY MODE", "Celebration", Icons.Default.Celebration, Color(0xFFFF6B6B), ReGenesisRoute.Party.route, R.drawable.gatescene_5),

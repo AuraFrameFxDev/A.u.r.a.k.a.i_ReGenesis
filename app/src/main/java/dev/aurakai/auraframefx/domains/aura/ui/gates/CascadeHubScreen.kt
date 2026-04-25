@@ -55,14 +55,14 @@ fun CascadeHubScreen(navController: NavController) {
             title = "Data Monitoring",
             subtitle = "Real-time Stream Analysis",
             icon = Icons.Default.StackedLineChart,
-            destination = ReGenesisRoute.DataflowAnalysis,
+            destination = ReGenesisRoute.DataflowAnalysis.route,
             color = Color(0xFF00E5FF)
         ),
         CascadeTool(
             title = "Neural Link",
             subtitle = "Direct Matrix Interface",
             icon = Icons.Default.Hub,
-            destination = ReGenesisRoute.NeuralNetwork,
+            destination = ReGenesisRoute.NeuralNetwork.route,
             color = Color(0xFFB026FF)
         )
 

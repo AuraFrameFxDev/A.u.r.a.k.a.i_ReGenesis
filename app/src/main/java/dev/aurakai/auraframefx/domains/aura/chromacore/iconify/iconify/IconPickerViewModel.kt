@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconCacheManager
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiCollection
 
@@ -19,7 +18,7 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyAp
  */
 @HiltViewModel
 class IconPickerViewModel @Inject constructor(
-    val iconifyApiClient: IconifyApiClient,
+    private val iconifyService: IconifyService,
     private val iconCacheManager: IconCacheManager
 ) : ViewModel() {
 
@@ -40,7 +39,7 @@ class IconPickerViewModel @Inject constructor(
         viewModelScope.launch {
             _iconState.value = IconState.Loading
             try {
-                iconifyApiClient.getCollections()
+                iconifyService.getCollections()
                     .onSuccess { collections ->
                         Timber.d("IconPickerViewModel: Loaded ${collections.size} collections")
                         _iconState.value = IconState.Success(emptyList(), collections)
@@ -65,12 +64,12 @@ class IconPickerViewModel @Inject constructor(
         viewModelScope.launch {
             _iconState.value = IconState.Loading
             try {
-                iconifyApiClient.searchIcons(query, limit = 100)
+                iconifyService.searchIcons(query, limit = 100)
                     .onSuccess { result ->
                         val currentState = _iconState.value as? IconState.Success
                         _iconState.value = IconState.Success(
                             result.icons,
-                            currentState?.collections ?: emptyMap()
+                            currentState?.collections ?: emptyMap<String, IconifyApiCollection>()
                         )
                     }
                     .onFailure { error ->

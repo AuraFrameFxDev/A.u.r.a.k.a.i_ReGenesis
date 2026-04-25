@@ -5,69 +5,32 @@ import android.security.keystore.KeyProperties
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
-import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 
-/**
- */
-
-/**
- * Check if the security context is in a secure state
- */
-    return securityState.value.errorState == false &&
-            encryptionStatus.value == EncryptionStatus.ACTIVE
-}
-
-/**
- * Check if the security context is NOT secure
- */
+fun SecurityContext.isDegraded(): Boolean {
     return !this.isSecure()
 }
 
-/**
- * Get the current threat count
- */
+fun SecurityContext.threatCount(): Int {
     return securityState.value.detectedThreats.size
 }
 
-/**
- * Check if encryption is ready for use
- */
+fun SecurityContext.canEncrypt(): Boolean {
     return encryptionStatus.value == EncryptionStatus.ACTIVE
 }
 
-/**
- * Safely encrypt data with null handling
- */
+fun SecurityContext.safeEncrypt(data: String?): EncryptedData? {
     if (data == null) return null
     return encrypt(data)
 }
 
-/**
- * Safely decrypt data with null handling
- */
-    if (encryptedData == null) return null
-    return decrypt(encryptedData)
-}
-
-/**
- * Check if a specific threat type is present
- */
+fun SecurityContext.hasThreat(type: ThreatType): Boolean {
     return securityState.value.detectedThreats.any { it.type == type }
 }
 
-/**
- * Get threats by severity level
- */
+fun SecurityContext.getThreatsBySeverity(severity: ThreatSeverity): List<SecurityThreat> {
     return securityState.value.detectedThreats.filter { it.severity == severity }
 }
 
-/**
- * Android Keystore Helper Extensions
- */
-
-/**
- * Generate a new AES secret key in Android Keystore
- */
 fun generateKeystoreSecretKey(alias: String): SecretKey {
     val keyGenerator = KeyGenerator.getInstance(
         KeyProperties.KEY_ALGORITHM_AES,
@@ -88,9 +51,6 @@ fun generateKeystoreSecretKey(alias: String): SecretKey {
     return keyGenerator.generateKey()
 }
 
-/**
- * Retrieve an existing secret key from Android Keystore
- */
 fun getKeystoreSecretKey(alias: String): SecretKey? {
     return try {
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
@@ -101,9 +61,6 @@ fun getKeystoreSecretKey(alias: String): SecretKey? {
     }
 }
 
-/**
- * Check if a key exists in Android Keystore
- */
 fun keystoreContainsKey(alias: String): Boolean {
     return try {
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
@@ -114,9 +71,6 @@ fun keystoreContainsKey(alias: String): Boolean {
     }
 }
 
-/**
- * Delete a key from Android Keystore
- */
 fun deleteKeystoreKey(alias: String): Boolean {
     return try {
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
