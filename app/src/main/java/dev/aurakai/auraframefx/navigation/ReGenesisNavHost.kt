@@ -26,12 +26,15 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 
 // Domain Feature Screens
 import dev.aurakai.auraframefx.domains.aura.screens.VideoIntroScreen
+import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignRecoveryScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.XposedQuickAccessPanel
@@ -130,7 +133,9 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.AuraLab.route) {
             WorkingLabScreen(onNavigate = { route: String -> navController.navigate(route) })
         }
-        composable(ReGenesisRoute.ChromaCore.route) { StubScreen("ChromaCore", "ColorMatrix", navController) }
+        composable(ReGenesisRoute.ChromaCore.route) { 
+            ChromaCoreColorsScreen(navController = navController, onNavigateBack = { navController.popBackStack() })
+        }
         composable(ReGenesisRoute.NotchBar.route) { 
             NotchBarGateScreen(navController = navController, onNavigateBack = { navController.popBackStack() }) 
         }
@@ -206,7 +211,11 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.ArkBuild.route) { StubScreen("Ark Build", "Build", navController) }
         composable(ReGenesisRoute.BenchmarkMonitor.route) { StubScreen("Benchmark", "Speed", navController) }
         composable(ReGenesisRoute.SphereGrid.route) { StubScreen("Sphere Grid", "Apps", navController) }
-        composable(ReGenesisRoute.SovereignRecovery.route) { StubScreen("Recovery", "Restore", navController) }
-        composable(ReGenesisRoute.SovereignModuleManager.route) { StubScreen("Module Manager", "Extension", navController) }
+        composable(ReGenesisRoute.SovereignRecovery.route) { 
+            SovereignRecoveryScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.SovereignModuleManager.route) { 
+            SovereignModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
+        }
     }
 }

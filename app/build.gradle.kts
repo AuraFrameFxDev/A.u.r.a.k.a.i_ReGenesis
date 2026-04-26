@@ -87,6 +87,9 @@ extensions.configure<ApplicationExtension> {
         buildConfigField("String", "VERTEX_LOCATION", "\"us-central1\"")
         buildConfigField("String", "GEMINI_MODEL", "\"gemini-1.5-flash\"")
 
+        // SoulScript splash video flag (disabled until video asset added)
+        buildConfigField("boolean", "ENABLE_SOULSCRIPT_VIDEO", "false")
+
         // Claude Local Shell Parameters
         buildConfigField("boolean", "CLAUDE_LOCAL_SHELL_ENABLED", "true")
         buildConfigField("String", "CLAUDE_SHELL_PERSISTENCE", "\"SpiritualChain_L1_L6\"")
@@ -246,6 +249,11 @@ dependencies {
 
     // Animation & Visual Effects
     implementation("com.airbnb.android:lottie-compose:6.3.0")
+
+    // Media3 (ExoPlayer) for video playback
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-common:1.3.1")
 
     // AndroidX & Jetpack
     implementation(libs.androidx.core.ktx)
