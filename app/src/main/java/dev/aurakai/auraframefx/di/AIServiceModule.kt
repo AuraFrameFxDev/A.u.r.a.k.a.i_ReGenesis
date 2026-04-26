@@ -8,15 +8,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
+import dev.aurakai.auraframefx.domains.cascade.RealCascadeAIServiceAdapter
 import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClient
+import dev.aurakai.auraframefx.domains.genesis.ai.clients.VertexAIClientImpl
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousness
 import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.models.OracleSyncResult
 import dev.aurakai.auraframefx.domains.genesis.models.VertexAIConfig
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultAuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.DefaultKaiAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.KaiAIService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,17 +27,13 @@ abstract class AiServiceModule {
 
     @Binds
     @Singleton
-    abstract fun bindAuraAIService(impl: DefaultAuraAIService): AuraAIService
+    abstract fun bindVertexAIClient(impl: VertexAIClientImpl): VertexAIClient
 
     @Binds
     @Singleton
-    abstract fun bindKaiAIService(impl: DefaultKaiAIService): KaiAIService
+    abstract fun bindCascadeAIService(impl: RealCascadeAIServiceAdapter): CascadeAIService
 
     companion object {
-        @Provides
-        @Singleton
-        fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
-
         @Provides
         @Singleton
         fun provideVertexAIConfig(): VertexAIConfig = VertexAIConfig(
