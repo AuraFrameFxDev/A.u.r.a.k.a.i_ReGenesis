@@ -196,7 +196,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 ksp {
-    arg("dagger.fastInit", "enabled")
     arg("hilt.android.useClassPathAggregation", "true")
     arg("room.generateKotlin", "true")
 }
