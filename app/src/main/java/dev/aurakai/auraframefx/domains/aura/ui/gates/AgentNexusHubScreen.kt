@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
-import dev.aurakai.auraframefx.navigation.UnifiedGateRegistry
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.StarfieldBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -51,11 +51,10 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgentNexusHubScreen(
-    navController: NavController,
-    getNexusSubGates: () -> List<dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard>
+    controller: NavController
 ) {
 
-    val subGates = getNexusSubGates()
+    val subGates = GateAssetLoadout.getNexusSubGates()
 
     var useStyleB by remember {
         mutableStateOf(GateAssetConfig.StyleMode.nexusStyle == GateAssetConfig.GateStyle.STYLE_B)
@@ -95,7 +94,7 @@ fun AgentNexusHubScreen(
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.popBackStack() }) {
+                        IconButton(onClick = { controller.popBackStack() }) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                         }
                     },
@@ -138,7 +137,7 @@ fun AgentNexusHubScreen(
                 DomainSubGateCarousel(
                     subGates = subGates,
                     onGateSelected = { gate ->
-                        navController.navigate(gate.route)
+                        controller.navigate(gate.route)
                     },
                     useStyleB = useStyleB,
                     cardHeight = 280.dp,

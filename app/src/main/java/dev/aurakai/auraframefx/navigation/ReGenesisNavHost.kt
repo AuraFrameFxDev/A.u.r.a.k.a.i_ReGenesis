@@ -18,7 +18,7 @@ import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 
 // Domain Hubs
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
-import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
@@ -26,16 +26,16 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 
 // Domain Feature Screens
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
-import dev.aurakai.auraframefx.domains.aura.screens.WorkingLabScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
 import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemJournalScreen
-import dev.aurakai.auraframefx.domains.kai.screens.XposedQuickAccessPanel
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.XposedQuickAccessPanel
 
-import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveMainScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
 
@@ -58,10 +58,8 @@ fun ReGenesisNavGraph(
     navController: NavHostController,
     customizationViewModel: CustomizationViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-
     LaunchedEffect(Unit) {
-        customizationViewModel.start(context)
+        customizationViewModel.startGyroscope()
     }
 
     NavHost(
@@ -99,27 +97,24 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.DataflowAnalysis.route) {
-            CascadeHubScreen(navController = navController)
+            CascadeHubScreen(navController)
         }
 
         // ── 2. DOMAIN HUBS ──
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            AuraThemingHubScreen(navController = navController)
+            AuraThemingHubScreen(navController)
         }
         composable(ReGenesisRoute.SentinelFortress.route) {
-            KaiSentinelHubScreen(navController = navController)
+            KaiSentinelHubScreen(navController)
         }
         composable(ReGenesisRoute.OracleDriveHub.route) {
-            OracleDriveHubScreen(navController = navController)
+            OracleDriveHubScreen(navController)
         }
         composable(ReGenesisRoute.AgentNexusHub.route) {
-            AgentNexusHubScreen(
-                navController = navController,
-                getNexusSubGates = { emptyList() }
-            )
+            AgentNexusHubScreen(navController)
         }
         composable(ReGenesisRoute.LdoOrchestrationHub.route) {
-            LDOOrchestrationHubScreen(navController = navController)
+            LDOOrchestrationHubScreen(navController)
         }
 
         // ── 3. FEATURE SCREENS ──
@@ -153,18 +148,21 @@ fun ReGenesisNavGraph(
             SecurityCenterScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.SystemJournal.route) { 
-            SystemJournalScreen(onNavigateBack = { navController.popBackStack() }) 
+            SystemJournalScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.XposedPanel.route) {
-             XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
+             XposedQuickAccessPanel(navController = navController)
         }
 
         // Genesis Domain
         composable(ReGenesisRoute.OracleDrive.route) {
-            OracleDriveScreen(navController = navController)
+            OracleDriveMainScreen(navController)
         }
         composable(ReGenesisRoute.Terminal.route) {
-            TerminalScreen(navController = navController)
+            TerminalScreen()
         }
         composable(ReGenesisRoute.ConferenceRoom.route) {
             ConferenceRoomScreen()
@@ -181,7 +179,7 @@ fun ReGenesisNavGraph(
             TaskAssignmentScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.AgentHub.route) { 
-            AgentHubSubmenuScreen(onNavigateBack = { navController.popBackStack() }) 
+            AgentHubSubmenuScreen(navController = navController)
         }
 
         // LDO Domain
@@ -193,7 +191,7 @@ fun ReGenesisNavGraph(
             )
         }
         composable(ReGenesisRoute.LdoTasker.route) {
-            LDOTaskerScreen(onNavigateBack = { navController.popBackStack() })
+            LDOTaskerScreen(onBack = { navController.popBackStack() })
         }
 
         // Catch-all Stubs for Build Stability

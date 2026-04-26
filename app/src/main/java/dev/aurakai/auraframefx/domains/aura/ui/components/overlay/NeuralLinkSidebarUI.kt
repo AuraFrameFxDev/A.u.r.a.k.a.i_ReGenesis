@@ -90,8 +90,7 @@ private data class Shortcut(
     val key: String
 )
 
-private val SHORTCUTS = listOf(
-)
+private val SHORTCUTS = listOf<Shortcut>()
 
 
 /**

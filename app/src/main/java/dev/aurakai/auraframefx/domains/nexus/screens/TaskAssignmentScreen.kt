@@ -97,6 +97,7 @@ fun TaskAssignmentScreen(
     ) {
         // Header
         Text(
+            text = "AGENT TASKS",
             style = MaterialTheme.typography.headlineMedium,
             color = Color(0xFF4169E1),
             fontWeight = FontWeight.Bold
@@ -321,6 +322,7 @@ fun TaskAssignmentScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
+                        text = "No active tasks",
                         style = MaterialTheme.typography.bodyLarge,
                         color = Color.White.copy(alpha = 0.6f)
                     )

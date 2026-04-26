@@ -1,27 +1,27 @@
 package dev.aurakai.auraframefx.navigation
 
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
-import dev.aurakai.auraframefx.domains.aura.config.SubGateCard
+import dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard
 
 /**
  * UnifiedGateRegistry — Central registry for all gate configurations
  */
 object UnifiedGateRegistry {
     
-    fun getAuraLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
-        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+    fun getAuraLoadout(): List<SubGateCard> {
+        return GateAssetLoadout.getAuraLoadout()
     }
     
-    fun getKaiLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
-        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+    fun getKaiLoadout(): List<SubGateCard> {
+        return GateAssetLoadout.getKaiLoadout()
     }
     
-    fun getNexusLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
-        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+    fun getNexusLoadout(): List<SubGateCard> {
+        return GateAssetLoadout.getNexusSubGates()
     }
     
-    fun getGenesisLoadout(): dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout {
-        return dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
+    fun getGenesisLoadout(): List<SubGateCard> {
+        return GateAssetLoadout.getGenesisLoadout()
     }
     
     const val gate_artwork_editor = "gate_artwork_editor"
@@ -46,18 +46,3 @@ data class GateStyle(
     val mode: StyleMode = StyleMode.FULL,
     val accentColor: Long = 0xFF00FFFF
 )
-
-/**
- * Toggle style extension for gates
- */
-fun GateAssetLoadout.toggleAuraStyle(): GateAssetLoadout {
-    return this
-}
-
-fun GateAssetLoadout.toggleKaiStyle(): GateAssetLoadout {
-    return this
-}
-
-fun GateAssetLoadout.toggleNexusStyle(): GateAssetLoadout {
-    return this
-}

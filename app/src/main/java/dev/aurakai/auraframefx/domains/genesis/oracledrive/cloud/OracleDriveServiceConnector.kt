@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
-import dev.aurakai.auraframefx.ipc.IAuraDriveService
+import dev.aurakai.auraframefx.oracledrive.connector.IAuraDriveService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +28,7 @@ class OracleDriveServiceConnector(private val context: Context) {
          * @param service The binder interface to the connected service.
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            auraDriveService = IAuraDriveService.Stub.asInterface(service)
+            auraDriveService = IAuraDriveService.Companion.Stub.asInterface(service)
             _isServiceConnected.value = true
         }
 
@@ -92,14 +92,13 @@ class OracleDriveServiceConnector(private val context: Context) {
     /**
      * Toggles the LSPosed module on the connected Oracle Drive service using the service's internal logic.
      *
-     * The `packageName` and `enable` parameters are ignored by the remote service.
-     *
-     * @return The result string from the service, or null if the service is unavailable or a remote exception occurs.
+     * @return The result as a string, or null if the service is unavailable or a remote exception occurs.
      */
     suspend fun toggleModuleOnOracleDrive(packageName: String, enable: Boolean): String? =
         withContext(Dispatchers.IO) {
             try {
-                auraDriveService?.toggleLSPosedModule(packageName, enable)
+                val result = auraDriveService?.toggleLSPosedModule() ?: false
+                result.toString()
             } catch (e: RemoteException) {
                 null
             }
@@ -127,7 +126,7 @@ class OracleDriveServiceConnector(private val context: Context) {
      */
     suspend fun getInternalDiagnosticsLog(): String? = withContext(Dispatchers.IO) {
         try {
-            auraDriveService?.getInternalDiagnosticsLog()
+            auraDriveService?.getInternalDiagnosticsLog()?.joinToString("\n")
         } catch (e: RemoteException) {
             null
         }

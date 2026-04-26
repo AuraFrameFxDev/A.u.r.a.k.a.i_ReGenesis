@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
 
 /**
  * 🎨 ICON PICKER — ChromaCore Icon Browser
@@ -31,7 +32,9 @@ fun IconPicker(
     modifier: Modifier = Modifier
 ) {
     var searchQuery by remember { mutableStateOf("") }
-    val icons = remember { iconifyService.getAllIconIds() }
+    val icons = remember { 
+        listOf("mdi:home", "mdi:settings", "mdi:user", "mdi:search", "mdi:check", "mdi:close", "mdi:menu", "mdi:arrow-back")
+    }
 
     Column(
         modifier = modifier

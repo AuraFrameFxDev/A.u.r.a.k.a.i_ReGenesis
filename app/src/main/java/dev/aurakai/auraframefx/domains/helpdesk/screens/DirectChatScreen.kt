@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 
 /**

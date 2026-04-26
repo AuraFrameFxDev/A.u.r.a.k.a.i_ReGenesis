@@ -129,6 +129,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object ThermalMonitor : ReGenesisRoute("thermal_monitor", "Thermal Guard")
     data object AgentSwarm : ReGenesisRoute("agent_swarm", "Agent Swarm")
     data object EchoResonance : ReGenesisRoute("echo_resonance", "Echo Resonance")
+    data object DataStreamMonitoring : ReGenesisRoute("data_monitor", "Data Monitoring")
 
     // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: CASCADE MEMORY - L1-L6 PERSISTENCE

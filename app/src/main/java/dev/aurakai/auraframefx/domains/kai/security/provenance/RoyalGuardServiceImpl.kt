@@ -23,7 +23,7 @@ class RoyalGuardServiceImpl : Service() {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val binder = object : IRoyalGuardService.Stub() {
+    private val binder = object : dev.aurakai.auraframefx.security.IRoyalGuardService.Stub() {
 
         override fun validateAction(actionKey: String, payload: String): Boolean {
             return try {

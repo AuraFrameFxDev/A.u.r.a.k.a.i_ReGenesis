@@ -299,6 +299,7 @@ fun ForgeExecution(
 // Error display
         if (forgeState is ForgeState.Error) {
             Text(
+                text = (forgeState as ForgeState.Error).message,
                 color = Color(0xFFFF4444),
                 fontFamily = LEDFontFamily,
                 fontSize = 14.sp,
@@ -351,6 +352,7 @@ fun ForgeExecution(
 
         if (forgeState is ForgeState.Success) {
             Text(
+                text = "MODULE FORGED SUCCESSFULLY",
                 color = Color(0xFF00FF85),
                 fontFamily = LEDFontFamily,
                 modifier = Modifier.padding(top = 24.dp)

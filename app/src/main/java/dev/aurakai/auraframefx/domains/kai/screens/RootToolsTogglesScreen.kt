@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.kai.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -7,29 +8,28 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.screens.BrutalistCard
 import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsSectionHeader
 import dev.aurakai.auraframefx.domains.aura.ui.screens.SettingsToggleCard
-import dev.aurakai.auraframefx.domains.kai.RootShellService
+import dev.aurakai.auraframefx.domains.kai.services.RootShellService
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootToolsTogglesScreen(
     onNavigateBack: () -> Unit,
-    rootShellService: RootShellService // Or use a ViewModel
+    rootShellService: RootShellService
 ) {
     val scope = rememberCoroutineScope()
     var terminalOutput by remember { mutableStateOf("Ready for system operations...") }
+    val shellStatus by rootShellService.shellStatus.collectAsState(initial = RootShellService.ShellStatus.Unknown)
 
     val bgGradient = Brush.verticalGradient(
         colors = listOf(Color(0xFF0A0000), Color(0xFF1A0505), Color(0xFF000000))
@@ -40,7 +40,7 @@ fun RootToolsTogglesScreen(
             TopAppBar(
                 title = { Text("ROOT AUTHORITY", fontWeight = FontWeight.Black, letterSpacing = 2.sp) },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                     }
                 },
@@ -267,6 +267,9 @@ fun RootToolsTogglesScreen(
                     }
                 }
             }
+        }
+    }
+}
 
 @Composable
 fun AuthorityStatusCard(status: RootShellService.ShellStatus) {
@@ -299,9 +302,4 @@ fun ActionButton(text: String, icon: androidx.compose.ui.graphics.vector.ImageVe
             Text(text, fontSize = 10.sp, fontWeight = FontWeight.Black)
         }
     }
-}
-
-private sealed class RootToggleAction {
-    object UnlockBootloader : RootToggleAction()
-    object LockBootloader : RootToggleAction()
 }

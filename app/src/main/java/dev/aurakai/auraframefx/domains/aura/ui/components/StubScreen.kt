@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 /**
  * ðŸŽ¨ STUB SCREEN - Beautiful placeholder for routes not yet implemented
@@ -42,7 +42,7 @@ import androidx.navigation.NavController
 fun StubScreen(
     title: String,
     iconName: String,
-    navController: NavController? = null,
+    controller: NavHostController? = null,
     description: String? = null
 ) {
     Box(
@@ -144,11 +144,11 @@ fun StubScreen(
             }
 
             // Back Button
-            if (navController != null) {
+            if (controller != null) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Button(
-                    onClick = { navController.popBackStack() },
+                    onClick = { controller.popBackStack() },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF00D9FF).copy(alpha = 0.2f)
                     )

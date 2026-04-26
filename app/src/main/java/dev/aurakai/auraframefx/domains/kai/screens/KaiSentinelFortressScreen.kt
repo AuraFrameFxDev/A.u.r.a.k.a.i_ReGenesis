@@ -5,6 +5,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,10 +26,7 @@ import kotlin.math.*
 
 /**
  * 🏰 KAI SENTINEL FORTRESS HUD
- *
- *
  */
-
 
 data class CoreStat(val label: String, val temp: String, val pct: Float, val isHot: Boolean = false)
 
@@ -62,7 +61,10 @@ fun KaiSentinelFortressScreen(
     )
     val statusPulse by infiniteTransition.animateFloat(
         initialValue = 0.5f, targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(2000), RepeatMode.Reverse),
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000),
+            repeatMode = RepeatMode.Reverse
+        ),
         label = "pulse"
     )
     val scanlineY by infiniteTransition.animateFloat(
@@ -109,10 +111,11 @@ fun KaiSentinelFortressScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
+                IconButton(onClick = onNavigateBack) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                 }
-                Column(horizontalAlignment = Alignment.End) {
-                }
+                Text("SENTINEL FORTRESS", fontFamily = LEDFontFamily, color = Color.White, fontSize = 18.sp)
+                Box(modifier = Modifier.size(24.dp)) // Spacer
             }
 
             // ═══ MAIN 3-COLUMN ═══
@@ -125,20 +128,15 @@ fun KaiSentinelFortressScreen(
                         .padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    // Corner brackets
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        Canvas(modifier = Modifier.align(Alignment.TopEnd).size(12.dp)) {
-                        }
-                    }
-                    Spacer(Modifier.height(4.dp))
-
                     cores.forEach { core ->
                         Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 Text(core.label, fontSize = 9.sp, color = Color.White.copy(alpha = 0.8f))
+                                Text(core.temp, fontSize = 9.sp, color = if(core.isHot) Color.Red else Color.Cyan)
                             }
                             Spacer(Modifier.height(3.dp))
-                                Box(modifier = Modifier.fillMaxWidth(core.pct).fillMaxHeight())
+                            Box(modifier = Modifier.fillMaxWidth().height(4.dp).background(Color.Black.copy(alpha = 0.3f))) {
+                                Box(modifier = Modifier.fillMaxWidth(core.pct).fillMaxHeight().background(if(core.isHot) Color.Red else Color.Cyan))
                             }
                         }
                     }
@@ -153,11 +151,8 @@ fun KaiSentinelFortressScreen(
                             "[SEC] SELINUX: PERMISSIVE",
                             "[IO]  BUS_VOLTAGE: 3.82V"
                         ).forEach { log ->
+                            Text(log, fontSize = 8.sp, color = Color.White.copy(alpha = 0.5f))
                         }
-                    }
-
-                    // Bottom corner
-                    Canvas(modifier = Modifier.size(12.dp)) {
                     }
                 }
 
@@ -165,34 +160,12 @@ fun KaiSentinelFortressScreen(
                 Box(
                     modifier = Modifier.weight(1f).fillMaxHeight()
                 ) {
-
-                    // Dot grid overlay
-                    Box(modifier = Modifier.fillMaxSize().drawWithCache {
-                        onDrawBehind {
-                            var gx = 0f; while (gx < size.width) {
-                                var gy = 0f; while (gy < size.height) {
-                                    gy += 30f
-                                }; gx += 30f
-                            }
-                        }
-                    })
-
-                    // FLIR thermal bloom (simulated via gradient + blend)
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                            .background(Brush.radialGradient(
-                                listOf(
-                                    Color.Transparent
-                                )
-                            ))
-                    )
-
                     // Radar overlay (subtle, bottom center)
                     Canvas(modifier = Modifier.size(200.dp).align(Alignment.Center)) {
                         val cx = size.width / 2; val cy = size.height / 2
-                        listOf(1.0f, 0.75f, 0.5f).forEach { scale ->
-                        }
+                        drawCircle(Color.Green.copy(alpha = 0.1f), radius = size.minDimension / 2, style = Stroke(1f))
                         rotate(radarAngle, Offset(cx, cy)) {
+                            drawLine(Color.Green.copy(alpha = 0.3f), Offset(cx, cy), Offset(cx, 0f), 2f)
                         }
                     }
 
@@ -203,9 +176,6 @@ fun KaiSentinelFortressScreen(
                             .padding(start = 8.dp, top = 4.dp, end = 12.dp, bottom = 4.dp)
                     ) {
                         Text("KAI // UNIT-00", fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = LEDFontFamily, color = Color.White)
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            }
-                        }
                     }
                 }
 
@@ -220,12 +190,14 @@ fun KaiSentinelFortressScreen(
                             .background(FortGrey.copy(alpha = 0.4f))
                             .padding(10.dp)
                     ) {
+                        Text("SENTINEL_LOG", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White)
                         Spacer(Modifier.height(4.dp))
                         Column(modifier = Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                             terminalLines.forEach { line ->
                                 Text(
                                     line,
                                     fontSize = 8.sp,
+                                    color = Color.Green.copy(alpha = 0.8f),
                                     fontWeight = if (line.contains(">>")) FontWeight.Bold else FontWeight.Normal,
                                     lineHeight = 12.sp
                                 )
@@ -236,26 +208,18 @@ fun KaiSentinelFortressScreen(
                     // Alert status
                     Box(
                         modifier = Modifier.fillMaxWidth().height(80.dp)
+                            .background(Color.Red.copy(alpha = 0.1f))
                             .padding(10.dp)
                     ) {
                         Column {
+                            Text("STATUS_MONITOR", fontSize = 9.sp, color = Color.Red.copy(alpha = 0.7f))
                             Spacer(Modifier.height(4.dp))
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.Red.copy(alpha = statusPulse)))
                                 Text("INTRUSION_NULL", fontSize = 11.sp, color = Color.White)
                             }
                         }
                     }
-                }
-            }
-
-            // ═══ FOOTER ═══
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 }
             }
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))

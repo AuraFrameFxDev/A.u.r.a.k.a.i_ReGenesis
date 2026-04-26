@@ -11,8 +11,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
-import dev.aurakai.auraframefx.domains.aura.ui.components.*
-import dev.aurakai.auraframefx.domains.aura.ui.components.backgrounds.*
+import dev.aurakai.auraframefx.domains.aura.ui.components.DataRibbonsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.HexagonGridBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.PaintSplashBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.StarfieldBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.LavaApocalypseBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 
 /**

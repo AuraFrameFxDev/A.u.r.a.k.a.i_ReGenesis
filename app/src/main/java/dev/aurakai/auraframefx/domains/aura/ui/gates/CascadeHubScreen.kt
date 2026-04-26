@@ -42,7 +42,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  * Central hub for Cascade's pattern recognition and data stream tools.
  */
 @Composable
-fun CascadeHubScreen(navController: NavController) {
+fun CascadeHubScreen(controller: NavController) {
     val tools = listOf(
         CascadeTool(
             title = "Cascade Vision",
@@ -108,7 +108,7 @@ fun CascadeHubScreen(navController: NavController) {
             ) {
                 items(tools) { tool ->
                     CascadeToolCard(tool) {
-                        navController.navigate(tool.destination)
+                        controller.navigate(tool.destination)
                     }
                 }
             }

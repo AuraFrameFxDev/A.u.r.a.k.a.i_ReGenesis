@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -470,10 +471,4 @@ private fun Color.toHexString(): String {
     val g = (green * 255).toInt()
     val b = (blue * 255).toInt()
     return String.format("#%02X%02X%02X", r, g, b)
-}
-
-private fun Modifier.border(width: androidx.compose.ui.unit.Dp, color: Color, shape: androidx.compose.ui.graphics.Shape): Modifier {
-    return this.then(
-        androidx.compose.foundation.border(width, color, shape)
-    )
 }

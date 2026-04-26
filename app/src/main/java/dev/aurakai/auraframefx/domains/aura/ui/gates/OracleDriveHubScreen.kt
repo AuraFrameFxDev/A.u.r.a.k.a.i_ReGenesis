@@ -53,7 +53,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OracleDriveHubScreen(navController: NavController) {
+fun OracleDriveHubScreen(controller: NavController) {
 
     val subGates = remember {
         listOf(
@@ -133,7 +133,7 @@ fun OracleDriveHubScreen(navController: NavController) {
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.popBackStack() }) {
+                        IconButton(onClick = { controller.popBackStack() }) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                         }
                     },
@@ -175,7 +175,7 @@ fun OracleDriveHubScreen(navController: NavController) {
                 DomainSubGateCarousel(
                     subGates = subGates,
                     onGateSelected = { gate ->
-                        navController.navigate(gate.route)
+                        controller.navigate(gate.route)
                     },
                     useStyleB = useStyleB,
                     cardHeight = 280.dp,

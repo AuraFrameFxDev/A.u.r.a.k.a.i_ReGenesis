@@ -67,8 +67,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.aurakai.auraframefx.domains.aura.ui.theme.*
-import dev.aurakai.auraframefx.domains.aura.ui.components.IconPicker
-import dev.aurakai.auraframefx.domains.aura.services.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
+import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconPicker
 
 /**
  * Position model for UI components
@@ -167,7 +168,7 @@ fun ComponentEditor(
     component: UIComponent,
     onUpdate: (UIComponent) -> Unit,
     onClose: () -> Unit = {},
-    iconifyApiClient: IconifyApiClient? = null,
+    iconifyService: IconifyService? = null,
     modifier: Modifier = Modifier
 ) {
     var editingComponent by remember { mutableStateOf(component) }
@@ -617,7 +618,7 @@ fun ComponentEditor(
     }
 
     // Icon Picker Dialog
-    if (showIconPicker && iconifyApiClient != null) {
+    if (showIconPicker && iconifyService != null) {
         Dialog(onDismissRequest = { showIconPicker = false }) {
             Surface(
                 modifier = Modifier
@@ -627,7 +628,7 @@ fun ComponentEditor(
                 color = Color(0xFF1A1A1A)
             ) {
                 IconPicker(
-                    iconifyApiClient = iconifyApiClient,
+                    iconifyService = iconifyService,
                     currentIcon = editingComponent.iconId,
                     onIconSelected = { iconId ->
                         editingComponent = editingComponent.copy(iconId = iconId)

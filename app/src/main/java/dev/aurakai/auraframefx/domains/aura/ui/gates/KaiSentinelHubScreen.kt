@@ -40,13 +40,10 @@ import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KaiSentinelHubScreen(navController: NavController) {
-
-    // val subGates = GateAssetLoadout.getKaiLoadout()
-    val subGates = emptyList<dev.aurakai.auraframefx.domains.aura.ui.components.SubGateCard>()
+fun KaiSentinelHubScreen(controller: NavController) {
 
     var useStyleB by remember {
-        mutableStateOf(false) // Defaulting since StyleMode might be stubbed
+        mutableStateOf(GateAssetConfig.StyleMode.kaiStyle == GateAssetConfig.GateStyle.STYLE_B)
     }
 
     val styleName = if (useStyleB) "CYBER SENTINEL" else "FORTRESS"
@@ -82,7 +79,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.popBackStack() }) {
+                        IconButton(onClick = { controller.popBackStack() }) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                         }
                     },
@@ -126,7 +123,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                 DomainSubGateCarousel(
                     subGates = subGates,
                     onGateSelected = { gate ->
-                        navController.navigate(gate.route)
+                        controller.navigate(gate.route)
                     },
                     useStyleB = useStyleB,
                     cardHeight = 280.dp,

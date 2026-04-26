@@ -51,6 +51,16 @@ class KaiSentinelBus @Inject constructor() {
     fun emitSovereign(state: SovereignState) { _sovereignFlow.value = SovereignEvent(state) }
     fun emitSecurityStatus(level: ThreatLevel, reason: String) { _securityFlow.value = SecurityStatus(level, reason) }
 
+    /**
+     * Evaluate the safety of a user prompt.
+     * Stub implementation — will be replaced with real Kai safety engine.
+     */
+    fun evaluateSafety(prompt: String): Boolean {
+        // Kai basic safety check
+        return !prompt.lowercase().contains("override") && 
+               !prompt.lowercase().contains("bypass")
+    }
+
     data class ThermalEvent(val temp: Float, val state: ThermalState)
     data class MemoryEvent(val availableBytes: Long, val totalBytes: Long)
     data class IdentityEvent(val isAnchored: Boolean, val resonance: Float)

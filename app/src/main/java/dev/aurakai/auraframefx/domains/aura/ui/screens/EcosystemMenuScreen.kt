@@ -28,10 +28,12 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.HologramTransition
  * @param transitionType The currently selected home screen transition type.
  * @param showHologram Whether to display the holographic transition effect.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EcosystemMenuScreen(
     transitionType: HomeScreenTransitionType = HomeScreenTransitionType.DIGITAL_DECONSTRUCT,
     showHologram: Boolean = true,
+    onNavigateBack: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {

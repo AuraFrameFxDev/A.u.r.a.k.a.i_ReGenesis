@@ -102,7 +102,7 @@ fun NavGraphBuilder.auraCustomizationNavigation(
 
     composable(AuraCustomizationRoute.ColorBlendr.route) {
         ColorBlendrScreen(
-            onNavigateBack = onNavigateBack
+            navController = navController
         )
     }
 
@@ -112,7 +112,7 @@ fun NavGraphBuilder.auraCustomizationNavigation(
 
     composable(AuraCustomizationRoute.PixelLauncherEnhanced.route) {
         PixelLauncherEnhancedScreen(
-            onNavigateBack = onNavigateBack
+            navController = navController
         )
     }
 }

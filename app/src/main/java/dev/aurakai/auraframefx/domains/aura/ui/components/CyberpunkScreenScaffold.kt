@@ -21,6 +21,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
+import dev.aurakai.auraframefx.domains.aura.ui.components.DataRibbonsBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.HexagonGridBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.HoloHUDOverlay
 
 enum class BackgroundType {
     DATA_RIBBONS,

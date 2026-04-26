@@ -37,7 +37,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuraThemingHubScreen(navController: NavController) {
+fun AuraThemingHubScreen(controller: NavController) {
 
     val subGates = GateAssetLoadout.getAuraLoadout()
 
@@ -72,7 +72,7 @@ fun AuraThemingHubScreen(navController: NavController) {
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.popBackStack() }) {
+                        IconButton(onClick = { controller.popBackStack() }) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                         }
                     },
@@ -115,7 +115,7 @@ fun AuraThemingHubScreen(navController: NavController) {
                 DomainSubGateCarousel(
                     subGates = subGates,
                     onGateSelected = { gate ->
-                        navController.navigate(gate.route)
+                        controller.navigate(gate.route)
                     },
                     useStyleB = useStyleB,
                     cardHeight = 280.dp,

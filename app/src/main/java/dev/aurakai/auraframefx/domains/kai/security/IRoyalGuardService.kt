@@ -1,11 +1,8 @@
 package dev.aurakai.auraframefx.domains.kai.security
 
-import android.os.IBinder
-import android.os.IInterface
-
-/**
- * Interface for Royal Guard Service
- */
+// import android.os.IInterface
+// Deprecated: use dev.aurakai.auraframefx.security.IRoyalGuardService from AIDL
+/*
 interface IRoyalGuardService : IInterface {
     fun verifyProvenance(data: String): Boolean
     fun getSecurityStatus(): String
@@ -18,3 +15,4 @@ interface IRoyalGuardService : IInterface {
         const val TRANSACTION_authenticate = 3
     }
 }
+*/

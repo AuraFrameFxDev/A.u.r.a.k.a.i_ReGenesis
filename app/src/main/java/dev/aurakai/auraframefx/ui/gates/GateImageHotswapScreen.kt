@@ -51,14 +51,6 @@ data class GateHotswapEntry(
     val variants: List<GateVariant>
 )
 
-// ── Backdrop selection data ──────────────────────────────────────────────────
-
-data class BackdropOption(
-    val resId: Int,           // R.drawable.* for backdrop image
-    val label: String,        // Display title for the backdrop
-    val description: String   // Brief description of the scene/theme
-)
-
 // ── Variant catalogue — maps existing drawables to each gate ──────────────────
 
 private fun buildHotswapCatalogue(allGates: List<GateConfig>): List<GateHotswapEntry> {
@@ -298,11 +290,11 @@ private fun SectionHeader(title: String, subtitle: String) {
 
 @Composable
 private fun BackdropOptionCard(
-    option: BackdropOption,
+    option: dev.aurakai.auraframefx.ui.gates.BackdropOption,
     isActive: Boolean,
     onClick: () -> Unit
 ) {
-    val accentColor = Color(option.accentColor)
+    val accentColor = Color(option.accentColor.toULong())
     val borderBrush = if (isActive) {
         Brush.linearGradient(listOf(accentColor, accentColor.copy(alpha = 0.5f)))
     } else {

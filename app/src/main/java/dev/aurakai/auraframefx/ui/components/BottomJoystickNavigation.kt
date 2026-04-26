@@ -15,7 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
@@ -225,7 +229,9 @@ fun BottomNavItem(
                                 Color.Transparent
                             )
                         )
-                    } else Color.Transparent
+                    } else {
+                        SolidColor(Color.Transparent)
+                    }
                 )
                 .border(
                     width = if (isSelected) 2.dp else 0.dp,
@@ -307,13 +313,8 @@ fun FloatingJoystickButton(
             .size(60.dp * pulse)
             .clip(CircleShape)
             .background(
-                brush = Brush.radialGradient(
-                    colors = listOf(
-                        Color(0xFF00FFFF).copy(alpha = 0.3f),
-                        Color(0xFFFF00FF).copy(alpha = 0.1f),
-                        Color.Transparent
-                    )
-                )
+                color = Color(0xFF00FFFF),
+                shape = CircleShape
             )
             .border(
                 width = 2.dp,

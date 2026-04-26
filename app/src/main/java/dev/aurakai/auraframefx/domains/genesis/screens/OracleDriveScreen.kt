@@ -14,8 +14,8 @@ import androidx.navigation.NavHostController
  * OracleDriveScreen — Cloud storage and backup management
  */
 @Composable
-fun OracleDriveScreen(
-    navController: NavHostController,
+fun OracleDriveMainScreen(
+    nav: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Box(

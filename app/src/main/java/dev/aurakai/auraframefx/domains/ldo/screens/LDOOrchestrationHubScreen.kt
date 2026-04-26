@@ -53,7 +53,7 @@ data class FusionSlot(val index: Int, val agent: LDOAgentEntity? = null)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LDOOrchestrationHubScreen(
-    navController: NavController,
+    controller: NavController,
     viewModel: LDOViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -97,12 +97,12 @@ fun LDOOrchestrationHubScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = { controller.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 actions = {
-                    IconButton(onClick = { navController.navigate(ReGenesisRoute.LdoDevOpsCommandCenter.route) }) {
+                    IconButton(onClick = { controller.navigate(ReGenesisRoute.LdoDevOpsCommandCenter.route) }) {
                         Icon(
                             Icons.Default.Terminal,
                             "DevOps Command Center",
@@ -155,7 +155,7 @@ fun LDOOrchestrationHubScreen(
                     val active = fusionSlots.mapNotNull { it.agent }
                     if (active.size >= 2) {
                         val ids = active.joinToString("+") { it.id }
-                        navController.navigate("armament_fusion/$ids")
+                        controller.navigate("armament_fusion/$ids")
                     }
                 }
             )
