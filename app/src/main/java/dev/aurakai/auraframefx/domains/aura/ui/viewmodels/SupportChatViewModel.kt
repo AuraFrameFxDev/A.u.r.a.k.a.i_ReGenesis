@@ -22,6 +22,7 @@ class SupportChatViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             val userMessage = ChatMessage(
                 id = System.currentTimeMillis().toString(),
+                sender = "User",
                 content = content,
                 role = "user"
             )
@@ -32,6 +33,7 @@ class SupportChatViewModel @Inject constructor() : ViewModel() {
 
             val aiMessage = ChatMessage(
                 id = (System.currentTimeMillis() + 1).toString(),
+                sender = "Assistant",
                 content = "I'm here to help! How can I assist you?",
                 role = "assistant"
             )
