@@ -2,17 +2,12 @@ package dev.aurakai.auraframefx.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.hilt.navigation.compose.hiltViewModel
 
 // Core UI
 import dev.aurakai.auraframefx.ui.screens.LoginScreen
-import dev.aurakai.auraframefx.ui.screens.SoulScriptSplashScreen
 import dev.aurakai.auraframefx.ui.ldodevops.TabbedMasterIndex
 import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 
@@ -29,7 +24,6 @@ import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsS
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
-import dev.aurakai.auraframefx.domains.aura.ui.customization.CustomizationViewModel
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
@@ -58,13 +52,8 @@ import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReGenesisNavGraph(
-    navController: NavHostController,
-    customizationViewModel: CustomizationViewModel = hiltViewModel()
+    navController: NavHostController
 ) {
-    LaunchedEffect(Unit) {
-        customizationViewModel.startGyroscope()
-    }
-
     NavHost(
         navController = navController,
         startDestination = ReGenesisRoute.Login.route,
