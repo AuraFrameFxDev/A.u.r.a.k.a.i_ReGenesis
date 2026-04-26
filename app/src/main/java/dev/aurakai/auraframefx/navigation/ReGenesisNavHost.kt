@@ -68,19 +68,9 @@ fun ReGenesisNavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.Splash.route,
+        startDestination = ReGenesisRoute.VideoIntro.route,
     ) {
-        // ── 0. SPLASH & AUTH GATES ──
-        composable(ReGenesisRoute.Splash.route) {
-            SoulScriptSplashScreen(
-                onSplashFinished = {
-                    navController.navigate(ReGenesisRoute.VideoIntro.route) {
-                        popUpTo(ReGenesisRoute.Splash.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
+        // ── 0. INTRO & AUTH GATES ──
         composable(ReGenesisRoute.VideoIntro.route) {
             VideoIntroScreen(
                 onComplete = {
