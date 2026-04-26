@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.firebaseCrashlytics)
+    id("kotlin-parcelize")
 }
 
 configurations.all {
