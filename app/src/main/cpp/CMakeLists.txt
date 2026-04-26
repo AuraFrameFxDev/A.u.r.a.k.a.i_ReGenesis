@@ -40,7 +40,7 @@ list(REMOVE_DUPLICATES GENESIS_SOURCES)
 # Create the Genesis AI library
 add_library(${CMAKE_PROJECT_NAME} SHARED ${GENESIS_SOURCES})
 
-# Include directories
+# Include directories - minimal NDK paths to avoid header conflicts
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/ai
@@ -71,8 +71,11 @@ elseif (ANDROID_ABI STREQUAL "armeabi-v7a")
         -mfloat-abi=softfp
     )
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE __ARM_NEON__)
+elseif (ANDROID_ABI STREQUAL "x86_64")
+    # x86_64 optimizations
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -O3)
 else()
-    # Generic optimizations for x86/x86_64
+    # Generic optimizations for other architectures
     target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -O3)
 endif()
 
