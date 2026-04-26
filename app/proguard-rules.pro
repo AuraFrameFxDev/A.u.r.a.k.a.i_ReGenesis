@@ -53,6 +53,13 @@
     @dagger.* <methods>;
 }
 
+# Keep all Hilt-generated component classes and their inner classes (nest mates fix)
+-keep class dev.aurakai.auraframefx.core.AurakaiApplication_HiltComponents { *; }
+-keep class dev.aurakai.auraframefx.core.AurakaiApplication_HiltComponents$* { *; }
+-keep class * extends dagger.hilt.internal.GeneratedComponent { *; }
+-keep class * extends dagger.hilt.android.internal.managers.ActivityComponentManager { *; }
+-keep class * extends dagger.hilt.android.internal.managers.FragmentComponentManager { *; }
+
 # Keep Room database entities, DAOs, and database classes.
 -keep class dev.aurakai.auraframefx.data.database.entities.** { *; }
 
