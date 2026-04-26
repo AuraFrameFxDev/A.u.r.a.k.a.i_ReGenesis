@@ -25,6 +25,7 @@ import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 
 // Domain Feature Screens
+import dev.aurakai.auraframefx.domains.aura.screens.VideoIntroScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
@@ -78,7 +79,13 @@ fun ReGenesisNavGraph(
         }
 
         composable(ReGenesisRoute.VideoIntro.route) {
-            StubScreen("Video Intro", "Play", navController, "Welcome to Exodus 2026")
+            VideoIntroScreen(
+                onComplete = {
+                    navController.navigate(ReGenesisRoute.Login.route) {
+                        popUpTo(ReGenesisRoute.VideoIntro.route) { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable(ReGenesisRoute.Login.route) {
