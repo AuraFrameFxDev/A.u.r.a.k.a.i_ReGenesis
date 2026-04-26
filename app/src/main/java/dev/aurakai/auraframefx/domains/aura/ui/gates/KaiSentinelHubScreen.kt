@@ -23,7 +23,8 @@ import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.DomainSubGateCarousel
 import dev.aurakai.auraframefx.domains.aura.ui.components.IcyTundraBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.gate_artwork_editor.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetConfig
+import dev.aurakai.auraframefx.domains.aura.config.GateAssetLoadout
 
 /**
  * 🛡️ KAI SENTINEL HUB (Level 2 Hub)
@@ -121,7 +122,7 @@ fun KaiSentinelHubScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // 🎠 SUB-GATE CAROUSEL
-                val subGates = UnifiedGateRegistry.getKaiLoadout()
+                val subGates = GateAssetLoadout.getKaiLoadout()
                 DomainSubGateCarousel(
                     subGates = subGates,
                     onGateSelected = { gate ->

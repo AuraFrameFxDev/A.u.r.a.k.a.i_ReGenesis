@@ -36,7 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.domains.aura.ui.components.SynapticWebBackground
+import dev.aurakai.auraframefx.domains.aura.ui.components.background.SynapticWebBackground
 import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.models.ReGenesisMode

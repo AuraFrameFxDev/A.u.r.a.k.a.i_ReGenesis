@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyService
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconifyApiClient
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.CyberpunkCyan
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.CyberpunkPink
-import dev.aurakai.auraframefx.domains.aura.ui.theme.AuraDesignTokens.CyberpunkPurple
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkCyan
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPink
+import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonTeal
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink

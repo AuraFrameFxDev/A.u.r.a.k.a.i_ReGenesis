@@ -187,7 +187,7 @@ private fun SearchBar(
 }
 
 @Composable
-private fun IconGrid(
+private fun ColumnScope.IconGrid(
     icons: List<IconData>,
     onIconClick: (IconData) -> Unit
 ) {

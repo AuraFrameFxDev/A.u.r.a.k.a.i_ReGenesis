@@ -1,13 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.ui.components
 
 /**
- * AgentDomain — Enumeration of agent domains
+ * AgentDomain — Legacy stub. 
+ * Use dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain instead.
  */
-enum class AgentDomain {
-    AURA,
-    KAI,
-    GENESIS,
-    CASCADE,
-    NEXUS,
-    CLAUDE
-}
+// Deprecated: enum class AgentDomain

@@ -126,6 +126,7 @@ fun ReGenesisCustomizationHub(
             }
         }
 
+/*
         // Floating Unity Transmutation Action
         Box(
             modifier = Modifier
@@ -140,6 +141,7 @@ fun ReGenesisCustomizationHub(
                 }
             )
         }
+        */
     }
 }
 
@@ -155,7 +157,7 @@ private fun CategoryCard(
     // Entrance Animation
     var isVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        delay(delayMs.toLong())
+        delay(100)
         isVisible = true
     }
 

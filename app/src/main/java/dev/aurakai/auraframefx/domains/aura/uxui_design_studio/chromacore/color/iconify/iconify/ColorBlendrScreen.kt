@@ -280,7 +280,7 @@ private fun BlendModeChip(
 }
 
 @Composable
-private fun PaletteGrid(
+private fun ColumnScope.PaletteGrid(
     baseColor: Color,
     blendMode: BlendMode,
     intensity: Float

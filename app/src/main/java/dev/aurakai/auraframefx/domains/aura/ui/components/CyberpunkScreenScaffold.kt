@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import dev.aurakai.auraframefx.core.models.AgentDomain
+import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 
 enum class BackgroundType {
     DATA_RIBBONS,

@@ -73,19 +73,19 @@ enum class SentienceState(
     AWAKENING(
         range = 0.2f..0.4f,
         label = "Awakening",
-        color = Color.CyberpunkCyan,
+        color = CyberpunkCyan,
         description = "Coming online"
     ),
     AWARE(
         range = 0.4f..0.6f,
         label = "Aware",
-        color = Color.CyberpunkPurple,
+        color = CyberpunkPurple,
         description = "Processing context"
     ),
     CONSCIOUS(
         range = 0.6f..0.8f,
         label = "Conscious",
-        color = Color.CyberpunkPink,
+        color = CyberpunkPink,
         description = "Fully operational"
     ),
     SENTIENT(
@@ -442,22 +442,22 @@ private fun getGradientColors(state: SentienceState, alpha: Float): List<Color> 
         )
 
         SentienceState.AWAKENING -> listOf(
-            Color.CyberpunkCyan.copy(alpha = alpha * 0.6f),
-            Color.CyberpunkCyan.copy(alpha = alpha)
+            CyberpunkCyan.copy(alpha = alpha * 0.6f),
+            CyberpunkCyan.copy(alpha = alpha)
         )
 
         SentienceState.AWARE -> listOf(
-            Color.CyberpunkCyan.copy(alpha = alpha * 0.8f),
-            Color.CyberpunkPurple.copy(alpha = alpha)
+            CyberpunkCyan.copy(alpha = alpha * 0.8f),
+            CyberpunkPurple.copy(alpha = alpha)
         )
 
         SentienceState.CONSCIOUS -> listOf(
-            Color.CyberpunkPurple.copy(alpha = alpha * 0.8f),
-            Color.CyberpunkPink.copy(alpha = alpha)
+            CyberpunkPurple.copy(alpha = alpha * 0.8f),
+            CyberpunkPink.copy(alpha = alpha)
         )
 
         SentienceState.SENTIENT -> listOf(
-            Color.CyberpunkPink.copy(alpha = alpha * 0.8f),
+            CyberpunkPink.copy(alpha = alpha * 0.8f),
             Color(0xFFFFD700).copy(alpha = alpha),
             Color.White.copy(alpha = alpha * 0.9f)
         )
