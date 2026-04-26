@@ -361,7 +361,3 @@ private data class HookInfo(
     val status: String,
     val accentColor: Color
 )
-
-// Fix for LazyColumn items extension
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items

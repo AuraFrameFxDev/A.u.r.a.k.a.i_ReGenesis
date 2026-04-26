@@ -138,7 +138,7 @@ fun KaiSentinelFortressScreen(
                                 Text(core.label, fontSize = 9.sp, color = Color.White.copy(alpha = 0.8f))
                             }
                             Spacer(Modifier.height(3.dp))
-                                Box(modifier = Modifier.fillMaxWidth(core.pct).fillMaxHeight()
+                                Box(modifier = Modifier.fillMaxWidth(core.pct).fillMaxHeight())
                             }
                         }
                     }
