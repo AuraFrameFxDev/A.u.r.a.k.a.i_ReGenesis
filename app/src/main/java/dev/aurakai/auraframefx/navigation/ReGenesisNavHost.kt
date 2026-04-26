@@ -25,7 +25,6 @@ import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 
 // Domain Feature Screens
-import dev.aurakai.auraframefx.domains.aura.screens.VideoIntroScreen
 import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
@@ -68,19 +67,9 @@ fun ReGenesisNavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.VideoIntro.route,
+        startDestination = ReGenesisRoute.Login.route,
     ) {
-        // ── 0. INTRO & AUTH GATES ──
-        composable(ReGenesisRoute.VideoIntro.route) {
-            VideoIntroScreen(
-                onComplete = {
-                    navController.navigate(ReGenesisRoute.Login.route) {
-                        popUpTo(ReGenesisRoute.VideoIntro.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
+        // ── 0. AUTH GATES ──
         composable(ReGenesisRoute.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
