@@ -18,8 +18,8 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import dev.aurakai.auraframefx.BuildConfig
+import androidx.compose.runtime.snapshotFlow
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.snapshotFlow
 
 @Composable
 fun SoulScriptSplashScreen(
