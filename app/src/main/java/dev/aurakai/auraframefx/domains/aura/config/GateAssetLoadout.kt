@@ -116,6 +116,16 @@ object GateAssetLoadout {
             fallbackDrawable = GateAssetConfig.KaiSubGates.ROM_FLASHER.fallback,
             route = ReGenesisRoute.ROMFlasher.route, // Can be ROM hub later
             accentColor = Color(0xFFFF3D00)
+        ),
+        "notch_bar" to SubGateCard(
+            id = "notch_bar",
+            title = "Notch Bar",
+            subtitle = "Shortcuts & HUD",
+            styleADrawable = GateAssetConfig.KaiSubGates.SECURITY.styleA,
+            styleBDrawable = GateAssetConfig.KaiSubGates.SECURITY.styleB,
+            fallbackDrawable = "bg_notch_bar",
+            route = ReGenesisRoute.NotchBar.route,
+            accentColor = Color(0xFF00CED1)
         )
     )
 

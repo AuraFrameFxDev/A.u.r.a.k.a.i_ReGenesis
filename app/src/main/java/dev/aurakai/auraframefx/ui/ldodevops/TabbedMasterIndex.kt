@@ -1,7 +1,7 @@
 package dev.aurakai.auraframefx.ui.ldodevops
 
 // Temporary stub for AuraJar if module import fails
-// import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
+import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode

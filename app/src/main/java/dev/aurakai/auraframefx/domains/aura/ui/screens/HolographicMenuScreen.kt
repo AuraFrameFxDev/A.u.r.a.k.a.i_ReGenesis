@@ -18,6 +18,7 @@ import dev.aurakai.auraframefx.embodiment.KaiState
 import dev.aurakai.auraframefx.embodiment.Character
 import dev.aurakai.auraframefx.embodiment.ScreenBounds
 import dev.aurakai.auraframefx.embodiment.ActiveManifestation
+import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.embodiment.rememberEmbodimentEngine
 import androidx.compose.ui.graphics.painter.Painter
 
@@ -329,12 +330,12 @@ fun CenterMainMenu(
     onMenuItemClick: (String) -> Unit
 ) {
     val menuItems = listOf(
-        MenuItem("HOME", Icons.Default.Home) { onMenuItemClick("home") },
-        MenuItem("PROFILE", Icons.Default.Person) { onMenuItemClick("profile") },
-        MenuItem("PROJECTS", Icons.Default.Build) { onMenuItemClick("projects") },
-        MenuItem("COMMUNITY", Icons.Default.Face) { onMenuItemClick("community") },
-        MenuItem("SETTINGS", Icons.Default.Settings) { onMenuItemClick("settings") },
-        MenuItem("LOGOUT", Icons.Default.ExitToApp) { onMenuItemClick("logout") }
+        MenuItem("HOME", Icons.Default.Home) { onMenuItemClick(ReGenesisRoute.HomeGateCarousel.route) },
+        MenuItem("PROFILE", Icons.Default.Person) { onMenuItemClick(ReGenesisRoute.LdoRoster.route) },
+        MenuItem("PROJECTS", Icons.Default.Build) { onMenuItemClick(ReGenesisRoute.LdoOrchestrationHub.route) },
+        MenuItem("COMMUNITY", Icons.Default.Face) { onMenuItemClick(ReGenesisRoute.AgentNexusHub.route) },
+        MenuItem("SETTINGS", Icons.Default.Settings) { onMenuItemClick(ReGenesisRoute.UISettings.route) },
+        MenuItem("LOGOUT", Icons.Default.ExitToApp) { onMenuItemClick(ReGenesisRoute.Login.route) }
     )
 
     // Floating animation
