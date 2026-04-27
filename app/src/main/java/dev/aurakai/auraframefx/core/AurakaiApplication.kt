@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import com.google.firebase.FirebaseApp
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -67,6 +68,14 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
         setupLogging()
         Timber.i("🌐 AuraKai Platform Initialized")
+
+        // Initialize Firebase
+        try {
+            FirebaseApp.initializeApp(this)
+            Timber.i("🔥 Firebase initialized")
+        } catch (e: Exception) {
+            Timber.e(e, "❌ Firebase initialization failed")
+        }
 
         // Start Integrity Monitor IMMEDIATELY on main thread
         startIntegrityMonitor()
