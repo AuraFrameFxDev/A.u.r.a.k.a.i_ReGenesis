@@ -248,7 +248,7 @@ dependencies {
     ksp(libs.yukihookapi.ksp)
 
     // Animation & Visual Effects
-    implementation("com.airbnb.android:lottie-compose:6.3.0")
+    implementation("com.airbnb.android:lottie-compose:6.7.1")
 
     // Media3 (ExoPlayer) for video playback
     implementation("androidx.media3:media3-exoplayer:1.3.1")
