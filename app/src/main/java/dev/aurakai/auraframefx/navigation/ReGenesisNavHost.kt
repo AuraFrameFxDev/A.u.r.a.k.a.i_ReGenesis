@@ -56,7 +56,7 @@ fun ReGenesisNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ReGenesisRoute.Login.route,
+        startDestination = ReGenesisRoute.HomeGateCarousel.route,
     ) {
         // ── 0. AUTH GATES ──
         composable(ReGenesisRoute.Login.route) {
