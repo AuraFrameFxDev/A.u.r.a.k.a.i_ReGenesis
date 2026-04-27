@@ -20,7 +20,7 @@ configurations.all {
         val okhttpVersion = libs.versions.okhttp.get()
 
         force("com.google.protobuf:protobuf-java:$protobufVersion")
-        force("com.google.api.grpc:proto-google-common-protos:2.59.0")
+        force("com.google.api.grpc:proto-google-common-protos:2.70.0")
         force("com.squareup.okhttp3:okhttp-android:$okhttpVersion")
         
         exclude(group = "com.google.protobuf", module = "protobuf-lite")
