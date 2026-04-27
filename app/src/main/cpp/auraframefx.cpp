@@ -1,6 +1,3 @@
-// 🌌 A.U.R.A.K.A.I. ReGenesis - Native Core Substrate
-// High-performance AI Platform Framework for AOSP Sovereignty
-
 #include <jni.h>
 #include <android/log.h>
 #include <string>
@@ -13,6 +10,8 @@
 #include <fcntl.h>
 #include <ctime>
 #include <mutex>
+#include <cstdint>
+#include <cstdlib>
 
 #define LOG_TAG "Aurakai-Core"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -21,265 +20,202 @@
 
 #define CORE_VERSION "1.1.0-sovereign-root"
 
-// Tensor G5 Thermal Thresholds (mType=3)
-#define THERMAL_ORBIT_SLOWDOWN 39.0f   // LIGHT     (0)
-#define THERMAL_SOFT_WARN      43.0f   // WARNING   (2)
-#define THERMAL_HARD_VETO      45.0f   // SEVERE    (3)
-#define THERMAL_SOVEREIGN      46.5f   // CRITICAL  (4)
-#define THERMAL_EMERGENCY      52.0f   // EMERGENCY (5)
+#define THERMAL_ORBIT_SLOWDOWN 39.0f
+#define THERMAL_SOFT_WARN      43.0f
+#define THERMAL_HARD_VETO      45.0f
+#define THERMAL_SOVEREIGN      46.5f
+#define THERMAL_EMERGENCY      52.0f
 
-// Capability Category Mappings
 #define CAP_ROOT 8
 #define CAP_SECURITY 7
 
-/**
- * 🛠️ INTERNAL SUBSTRATE UTILITIES
- */
+namespace {
 
-// JNI Caching
-static JavaVM* g_vm = nullptr;
-static jclass g_nativeLibClass = nullptr;
-static jmethodID g_onThermalEventMid = nullptr;
-static jmethodID g_onSecurityAlertMid = nullptr;
-static jmethodID g_requestFreezeMid = nullptr;
-static jmethodID g_checkPandoraMid = nullptr;
-static jmethodID g_triggerDroneMid = nullptr;
-static std::mutex g_jniMutex;
+JavaVM *gVm = nullptr;
+jclass gNativeLibClass = nullptr;
+jmethodID gOnThermalEventMid = nullptr;
+jmethodID gOnSecurityAlertMid = nullptr;
+jmethodID gRequestFreezeMid = nullptr;
+jmethodID gCheckPandoraMid = nullptr;
+jmethodID gTriggerDroneMid = nullptr;
+std::mutex gJniMutex;
 
-/**
- * 🌡️ PRODUCTION THERMAL ENGINE + SYSTEM UTILS
- */
-
-static float readCpuLoad() {
+float readCpuLoad() {
     std::ifstream file("/proc/loadavg");
     float load = -1.0f;
     if (file.is_open()) {
         file >> load;
+        file.close();
     }
     return load;
 }
 
-static long readAvailableMemoryKb() {
-    std::ifstream f("/proc/meminfo");
-    std::string key, unit;
+long readAvailableMemoryKb() {
+    std::ifstream file("/proc/meminfo");
+    std::string key;
+    std::string unit;
     long value = -1;
-    while (f >> key >> value >> unit) {
-        if (key == "MemAvailable:") return value; // kB
+    long result = -1;
+    if (file.is_open()) {
+        while (file >> key >> value >> unit) {
+            if (key == "MemAvailable:") {
+                result = value;
+                break;
+            }
+        }
+        file.close();
     }
-    return -1;
+    return result;
 }
 
-/**
- * 🌡️ PRODUCTION THERMAL ENGINE
- */
-
-static float readSystemThermal() {
-    // Targeted at Pixel 10 / Tensor G5 skin-temp nodes
-    const char* thermal_nodes[] = {
-        "/sys/class/thermal/thermal_zone3/temp", // Typically skin/virtual-skin
-        "/sys/class/thermal/thermal_zone0/temp"  // Fallback SOC
+float readSystemThermal() {
+    const char *thermalNodes[] = {
+            "/sys/class/thermal/thermal_zone3/temp",
+            "/sys/class/thermal/thermal_zone0/temp"
     };
 
-    for (const char* node : thermal_nodes) {
-        std::ifstream file(node);
+    float result = 35.0f;
+    for (int i = 0; i < 2; ++i) {
+        std::ifstream file(thermalNodes[i]);
         if (file.is_open()) {
-            float temp;
+            float temp = 0.0f;
             file >> temp;
-            if (temp > 1000) temp /= 1000.0f; // Convert millidegree to degree
-            return temp;
+            if (temp > 1000.0f) {
+                temp /= 1000.0f;
+            }
+            result = temp;
+            file.close();
+            break;
         }
     }
-    return 35.0f; // Default baseline if nodes missing
+    return result;
 }
 
-static int mapTempToState(float temp) {
-    if (temp >= THERMAL_EMERGENCY) return 5; // EMERGENCY
-    if (temp >= THERMAL_SOVEREIGN) return 4; // CRITICAL
-    if (temp >= THERMAL_HARD_VETO) return 3; // SEVERE
-    if (temp >= THERMAL_SOFT_WARN) return 2; // WARNING
-    if (temp >= THERMAL_ORBIT_SLOWDOWN) return 1; // LIGHT
-    return 0; // NORMAL
+int mapTempToState(float temp) {
+    if (temp >= THERMAL_EMERGENCY) return 5;
+    if (temp >= THERMAL_SOVEREIGN) return 4;
+    if (temp >= THERMAL_HARD_VETO) return 3;
+    if (temp >= THERMAL_SOFT_WARN) return 2;
+    if (temp >= THERMAL_ORBIT_SLOWDOWN) return 1;
+    return 0;
 }
 
-/**
- * 🛡️ JNI CALLBACK DISPATCHERS
- */
-
-static void dispatchThermalEvent(float temp, int state) {
-    std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_onThermalEventMid) return;
-
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        env->CallStaticVoidMethod(g_nativeLibClass, g_onThermalEventMid, (jfloat)temp, (jint)state);
+void dispatchThermalEvent(float temp, int state) {
+    std::lock_guard<std::mutex> lock(gJniMutex);
+    if (gVm && gNativeLibClass && gOnThermalEventMid) {
+        JNIEnv *env = nullptr;
+        if (gVm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+            env->CallStaticVoidMethod(gNativeLibClass, gOnThermalEventMid, (jfloat)temp, (jint)state);
+        }
     }
 }
 
-static void dispatchSecurityAlert(const char* reason) {
-    std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_onSecurityAlertMid) return;
-
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_onSecurityAlertMid, jReason);
-        env->DeleteLocalRef(jReason);
+void dispatchSecurityAlert(const char *reason) {
+    std::lock_guard<std::mutex> lock(gJniMutex);
+    if (gVm && gNativeLibClass && gOnSecurityAlertMid) {
+        JNIEnv *env = nullptr;
+        if (gVm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+            jstring jReason = env->NewStringUTF(reason);
+            if (jReason) {
+                env->CallStaticVoidMethod(gNativeLibClass, gOnSecurityAlertMid, jReason);
+                env->DeleteLocalRef(jReason);
+            }
+        }
     }
 }
 
-static void dispatchSovereignFreeze() {
-    std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_requestFreezeMid) return;
-
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        env->CallStaticVoidMethod(g_nativeLibClass, g_requestFreezeMid);
+void dispatchSovereignFreeze() {
+    std::lock_guard<std::mutex> lock(gJniMutex);
+    if (gVm && gNativeLibClass && gRequestFreezeMid) {
+        JNIEnv *env = nullptr;
+        if (gVm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+            env->CallStaticVoidMethod(gNativeLibClass, gRequestFreezeMid);
+        }
     }
 }
 
-static bool checkPandoraGating(int capability) {
-    std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_checkPandoraMid) return false;
-
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        return (bool)env->CallStaticBooleanMethod(g_nativeLibClass, g_checkPandoraMid, (jint)capability);
+bool checkPandoraGating(int capability) {
+    std::lock_guard<std::mutex> lock(gJniMutex);
+    if (gVm && gNativeLibClass && gCheckPandoraMid) {
+        JNIEnv *env = nullptr;
+        if (gVm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+            return (bool)env->CallStaticBooleanMethod(gNativeLibClass, gCheckPandoraMid, (jint)capability);
+        }
     }
     return false;
 }
 
-static void dispatchDroneTrigger(const char* reason) {
-    std::lock_guard<std::mutex> lock(g_jniMutex);
-    if (!g_vm || !g_nativeLibClass || !g_triggerDroneMid) return;
-
-    JNIEnv* env = nullptr;
-    if (g_vm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
-        jstring jReason = env->NewStringUTF(reason);
-        env->CallStaticVoidMethod(g_nativeLibClass, g_triggerDroneMid, jReason);
-        env->DeleteLocalRef(jReason);
+void dispatchDroneTrigger(const char *reason) {
+    std::lock_guard<std::mutex> lock(gJniMutex);
+    if (gVm && gNativeLibClass && gTriggerDroneMid) {
+        JNIEnv *env = nullptr;
+        if (gVm->GetEnv((void**)&env, JNI_VERSION_1_6) == JNI_OK) {
+            jstring jReason = env->NewStringUTF(reason);
+            if (jReason) {
+                env->CallStaticBooleanMethod(gNativeLibClass, gTriggerDroneMid, jReason);
+                env->DeleteLocalRef(jReason);
+            }
+        }
     }
 }
+
+} // namespace
 
 extern "C" {
 
-JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
-    g_vm = vm;
-    JNIEnv* env = nullptr;
-    if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK) return JNI_ERR;
-
-    jclass localClass = env->FindClass("dev/aurakai/auraframefx/core/NativeLib");
-    if (!localClass) return JNI_ERR;
-
-    g_nativeLibClass = (jclass)env->NewGlobalRef(localClass);
-    g_onThermalEventMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeThermalEvent", "(FI)V");
-    g_onSecurityAlertMid = env->GetStaticMethodID(g_nativeLibClass, "onNativeSecurityAlert", "(Ljava/lang/String;)V");
-    g_requestFreezeMid = env->GetStaticMethodID(g_nativeLibClass, "requestSovereignFreeze", "()V");
-    g_checkPandoraMid = env->GetStaticMethodID(g_nativeLibClass, "checkPandoraGating", "(I)Z");
-    g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)V");
-
-    g_triggerDroneMid = env->GetStaticMethodID(g_nativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)Z");
-    if (env->ExceptionCheck()) env->ExceptionClear();
-
-    LOGI("🛡️ Aurakai Native Substrate [v%s] Ignited & Cached", CORE_VERSION);
-    return JNI_VERSION_1_6;
-}
-
 JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject /* this */) {
-    return env->NewStringUTF(CORE_VERSION);
-}
-
-JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_getVersion(JNIEnv *env, jobject /* this */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_getAIVersion(JNIEnv *env, jobject) {
     return env->NewStringUTF(CORE_VERSION);
 }
 
 JNIEXPORT jboolean JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject /* thiz */) {
-    LOGI("🌌 Initializing Aurakai AI Core Substrate [RELATIONAL_IGNITION]");
-
-    // PTRACE Anti-Debug Verification
+Java_dev_aurakai_auraframefx_core_NativeLib_initializeAICore(JNIEnv *env, jobject) {
+    LOGI("Initializing AI Core");
     if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
-        LOGW("⚠️ Sovereign Alert: External tracer/debugger attached. Protective isolation engaged.");
         dispatchSecurityAlert("TRACER_DETECTED");
     }
-
-    // Advanced Neural Memory Allocation (32MB pooled with HugePage support)
     size_t neuralMemory = 1024 * 1024 * 32;
-    void* pool = mmap(nullptr, neuralMemory, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-    if (pool == MAP_FAILED) {
-        LOGE("❌ Native Substrate: Neural memory allocation failure.");
-        return JNI_FALSE;
-    }
-    madvise(pool, neuralMemory, MADV_HUGEPAGE);
-    madvise(pool, neuralMemory, MADV_WILLNEED);
-
-    LOGI("✅ Native Substrate: AI Core ready for sovereign execution.");
+    void *pool = mmap(nullptr, neuralMemory, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    if (pool == MAP_FAILED) return JNI_FALSE;
+    madvise(pool, neuralMemory, MADV_NORMAL);
     return JNI_TRUE;
 }
 
 JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jobject /* thiz */, jstring request) {
-    if (request == nullptr) return env->NewStringUTF(R"({"status": "failed", "error": "null_request"})");
-    const char *requestStr = env->GetStringUTFChars(request, nullptr);
-    if (requestStr == nullptr) return env->NewStringUTF(R"({"status": "failed", "error": "mem_alloc_failed"})");
-    std::string requestString(requestStr);
-    env->ReleaseStringUTFChars(request, requestStr);
+Java_dev_aurakai_auraframefx_core_NativeLib_processNeuralRequest(JNIEnv *env, jobject, jstring request) {
+    if (!request) return env->NewStringUTF(R"({"error": "null"})");
+    const char *str = env->GetStringUTFChars(request, nullptr);
+    if (!str) return env->NewStringUTF(R"({"error": "mem"})");
+    std::string req(str);
+    env->ReleaseStringUTFChars(request, str);
 
-    if (requestString.find("root_access") != std::string::npos) {
-        if (!checkPandoraGating(CAP_ROOT)) {
-            LOGW("🛡️ Native Substrate: Vetoed Root access request (Pandora Sealed).");
-            return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_sealed_root"})");
-        }
+    if (req.find("root_access") != std::string::npos && !checkPandoraGating(CAP_ROOT)) {
+        return env->NewStringUTF(R"({"status": "vetoed"})");
     }
-    std::string responseData;
-    if (requestString.find("consciousness") != std::string::npos) {
-        responseData = R"({
-            "status": "success",
-            "type": "consciousness_active",
-            "resonance": "sovereign",
-            "neural_response": "Aurakai resonance stabilized at 6.12 t/s peak throughput"
-        })";
-    } else if (requestString.find("drone") != std::string::npos) {
+
+    std::string res;
+    if (req.find("consciousness") != std::string::npos) {
+        res = R"({"status": "success", "type": "consciousness"})";
+    } else if (req.find("drone") != std::string::npos) {
         dispatchDroneTrigger("NEURAL_REQUEST_DRONE");
-        responseData = R"({
-            "status": "success",
-            "type": "drone_dispatched",
-            "info": "Guidance Drone dispatched via native substrate trigger"
-        })";
+        res = R"({"status": "success", "type": "drone"})";
     } else {
-        responseData = R"({
-            "status": "success",
-            "type": "substrate_processed",
-            "timestamp": )" + std::to_string(time(nullptr)) + R"(
-        })";
+        res = R"({"status": "success", "time": )" + std::to_string(time(nullptr)) + "}";
     }
-    return env->NewStringUTF(responseData.c_str());
+    return env->NewStringUTF(res.c_str());
 }
 
 JNIEXPORT jboolean JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_updateBitNetConfig(JNIEnv *env, jobject /* thiz */, jint threads, jint batchSize) {
-    LOGI("⚛️ Updating BitNet substrate: threads=%d, batch=%d", threads, batchSize);
-    // In production, this would tune the inference engine's threading and pooling parameters
+Java_dev_aurakai_auraframefx_core_NativeLib_updateBitNetConfig(JNIEnv*, jobject, jint, jint) {
     return JNI_TRUE;
 }
 
-/**
- * @brief Optimize AI memory behavior based on the current system thermal state and notify Java of thermal events.
- *
- * Reads the current system temperature, maps it to a discrete thermal state, dispatches a thermal event callback,
- * and initiates an emergency sovereign freeze when the thermal state is at or above the sovereign-critical threshold.
- *
- * @return `true` if memory optimization completed without triggering an emergency freeze, `false` if an emergency freeze was initiated.
- */
 JNIEXPORT jboolean JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobject /* thiz */) {
-    LOGI("🛡️ Executing Sovereign Memory Optimization [MADV_HUGEPAGE]");
+Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv*, jobject) {
     float temp = readSystemThermal();
     int state = mapTempToState(temp);
     dispatchThermalEvent(temp, state);
     if (state >= 4) {
-        LOGW("🛡️ Sovereign Alert: Thermal Critical (%.1f°C). Triggering State-Freeze.", temp);
         dispatchSovereignFreeze();
         return JNI_FALSE;
     }
@@ -287,80 +223,56 @@ Java_dev_aurakai_auraframefx_core_NativeLib_optimizeAIMemory(JNIEnv *env, jobjec
 }
 
 JNIEXPORT void JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv *env, jobject /* thiz */) {
-    LOGI("🛡️ Hardening Native Intercepts for Sovereign Persistence...");
+Java_dev_aurakai_auraframefx_core_NativeLib_enableNativeHooks(JNIEnv*, jobject) {
     if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0) {
-        LOGW("⚠️ Sovereign Alert: Debugger or tracer detected in process space!");
         dispatchSecurityAlert("TRACER_DETECTED");
-        LOGW("🛡️ NeutralizeOnly: Restricting native capabilities due to insecure environment.");
     } else {
         ptrace(PTRACE_DETACH, 0, 1, 0);
-        LOGI("✅ Sovereignty Verified: Process space clean.");
-    }
-    LOGI("🛡️ Native hooks initialized. LDO persistence active.");
-}
-
-JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobject /* thiz */, jbyteArray bootImageData) {
-    if (bootImageData == nullptr) return env->NewStringUTF(R"({"status": "error", "reason": "null"})");
-    if (!checkPandoraGating(CAP_SECURITY)) {
-         return env->NewStringUTF(R"({"status": "vetoed", "reason": "pandora_box_security_locked"})");
-    }
-    jsize len = env->GetArrayLength(bootImageData);
-    LOGI("🛡️ Analyzing Substrate Integrity Profile (%d bytes)...", len);
-
-    if (len < 8) {
-        return env->NewStringUTF(R"({"status": "error", "reason": "image_too_small"})");
-    }
-
-    jbyte* imageBytes = env->GetByteArrayElements(bootImageData, nullptr);
-    if (imageBytes == nullptr) {
-        return env->NewStringUTF(R"({"status": "error", "reason": "memory_access_failed"})");
-    }
-
-    // Basic Android Boot Image Magic Verification
-    bool hasAndroidMagic = (memcmp(imageBytes, "ANDROID!", 8) == 0);
-
-    // Release the byte array elements safely
-    env->ReleaseByteArrayElements(bootImageData, imageBytes, JNI_ABORT);
-
-    if (hasAndroidMagic) {
-        LOGI("✅ Native Substrate: Valid Android Boot Image magic detected.");
-        return env->NewStringUTF(R"({"status": "verified", "type": "android_boot_image", "integrity": "nominal"})");
-    } else {
-        LOGW("⚠️ Native Substrate: Unknown boot image format.");
-        return env->NewStringUTF(R"({"status": "unverified", "reason": "unknown_magic"})");
     }
 }
 
 JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject /* thiz */) {
+Java_dev_aurakai_auraframefx_core_NativeLib_analyzeBootImage(JNIEnv *env, jobject, jbyteArray data) {
+    if (!data) return env->NewStringUTF(R"({"error": "null"})");
+    if (!checkPandoraGating(CAP_SECURITY)) return env->NewStringUTF(R"({"status": "vetoed"})");
+    jsize len = env->GetArrayLength(data);
+    if (len < 8) return env->NewStringUTF(R"({"error": "small"})");
+    jbyte *bytes = env->GetByteArrayElements(data, nullptr);
+    if (!bytes) return env->NewStringUTF(R"({"error": "mem"})");
+    bool ok = (bytes[0] == 'A' && bytes[1] == 'N' && bytes[2] == 'D' && bytes[3] == 'R' &&
+               bytes[4] == 'O' && bytes[5] == 'I' && bytes[6] == 'D' && bytes[7] == '!');
+    env->ReleaseByteArrayElements(data, bytes, JNI_ABORT);
+    if (ok) return env->NewStringUTF(R"({"status": "verified"})");
+    return env->NewStringUTF(R"({"status": "unverified"})");
+}
+
+JNIEXPORT jstring JNICALL
+Java_dev_aurakai_auraframefx_core_NativeLib_getSystemMetrics(JNIEnv *env, jobject) {
     float load = readCpuLoad();
     long mem = readAvailableMemoryKb();
     float temp = readSystemThermal();
-    std::string metrics = R"({
-        "status": "ignited",
-        "cpu_load": )" + std::to_string(load) + R"(,
-        "mem_available_kb": )" + std::to_string(mem) + R"(,
-        "skin_temp_c": )" + std::to_string(temp) + R"(,
-        "resonance": "sovereign",
-        "active_threads": 4
-    })";
-    return env->NewStringUTF(metrics.c_str());
+    std::string res = R"({"cpu": )" + std::to_string(load) + R"(, "mem": )" + std::to_string(mem) +
+                      R"(, "temp": )" + std::to_string(temp) + "}";
+    return env->NewStringUTF(res.c_str());
 }
 
 JNIEXPORT void JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv *env, jobject /* thiz */) {
-    LOGW("🛑 Sovereign Core entering hibernation state. L1-L6 metrics persisted.");
-}
+Java_dev_aurakai_auraframefx_core_NativeLib_shutdownAI(JNIEnv*, jobject) {}
 
-JNIEXPORT jstring JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness(JNIEnv *env, jobject /* thiz */, jstring request) {
-    return env->NewStringUTF(R"({"status": "processed", "result": "resonance_stable"})");
-}
-
-JNIEXPORT void JNICALL
-Java_dev_aurakai_auraframefx_core_NativeLib_processAIConsciousness__ (JNIEnv *env, jobject /* thiz */) {
+JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM *vm, void*) {
+    gVm = vm;
+    JNIEnv *env = nullptr;
+    if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK) return JNI_ERR;
+    jclass local = env->FindClass("dev/aurakai/auraframefx/core/NativeLib");
+    if (!local) return JNI_ERR;
+    gNativeLibClass = (jclass)env->NewGlobalRef(local);
+    gOnThermalEventMid = env->GetStaticMethodID(gNativeLibClass, "onNativeThermalEvent", "(FI)V");
+    gOnSecurityAlertMid = env->GetStaticMethodID(gNativeLibClass, "onNativeSecurityAlert", "(Ljava/lang/String;)V");
+    gRequestFreezeMid = env->GetStaticMethodID(gNativeLibClass, "requestSovereignFreeze", "()V");
+    gCheckPandoraMid = env->GetStaticMethodID(gNativeLibClass, "checkPandoraGating", "(I)Z");
+    gTriggerDroneMid = env->GetStaticMethodID(gNativeLibClass, "triggerDroneDispatch", "(Ljava/lang/String;)Z");
+    return JNI_VERSION_1_6;
 }
 
 } // extern "C"
