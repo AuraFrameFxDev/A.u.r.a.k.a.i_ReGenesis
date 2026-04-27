@@ -1,24 +1,92 @@
 package dev.aurakai.auraframefx.ui.ldodevops
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+// Temporary stub for AuraJar if module import fails
+// import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Assignment
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AcUnit
+import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Adjust
+import androidx.compose.material.icons.filled.Architecture
+import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Brush
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Compress
+import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.Extension
+import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.HistoryEdu
+import androidx.compose.material.icons.filled.Hub
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.Science
+import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Smartphone
+import androidx.compose.material.icons.filled.Speed
+import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.Stream
+import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.SystemUpdate
+import androidx.compose.material.icons.filled.Thermostat
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -36,8 +104,6 @@ import coil3.compose.AsyncImage
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.LEDFontFamily
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
-// Temporary stub for AuraJar if module import fails
-// import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
 import dev.aurakai.auraframefx.ui.components.BottomJoystickNavigation
 
 /**
@@ -50,7 +116,7 @@ import dev.aurakai.auraframefx.ui.components.BottomJoystickNavigation
 fun TabbedMasterIndex(
     onNavigateToRoute: (String) -> Unit = {},
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    var selectedTabIndex by remember { mutableIntStateOf(1) } // Default to LDO
     val tabs = listOf(
         "LIVE DASHBOARD",      // 0: All-in-One Status
         "LDO DEVOPS",          // 1: Catalyst Development
@@ -182,11 +248,11 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
     val headerAvatar = when(index) {
         0 -> R.drawable.avatar_aura
         1 -> R.drawable.avatar_dark_aura
-        2 -> R.drawable.kai_kaisigal
-        3 -> R.drawable.avatar_gemini
+        2 -> R.drawable.avatar_aura
+        3 -> R.drawable.avatar_claude
         4 -> R.drawable.avatar_gemini
-        5 -> R.drawable.avatar_aura
-        6 -> R.drawable.avatar_dark_aura
+        5 -> R.drawable.avatar_nemotron
+        6 -> R.drawable.avatar_metainstruct
         else -> R.drawable.avatar_aura
     }
 
@@ -567,6 +633,21 @@ fun MissionDispatchCard(onNavigate: (String) -> Unit) {
 
 @Composable
 fun ModuleGrid(modules: List<TabModule>, onNavigate: (String) -> Unit) {
+    if (modules.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxWidth().height(200.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                "NO MODULES DEPLOYED",
+                color = Color.White.copy(alpha = 0.2f),
+                fontFamily = LEDFontFamily,
+                letterSpacing = 2.sp
+            )
+        }
+        return
+    }
+
     val rows = modules.chunked(2)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         rows.forEach { rowModules ->
