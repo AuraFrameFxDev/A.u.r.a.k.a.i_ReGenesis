@@ -27,7 +27,7 @@ dependencies {
     implementation(libs.okhttp)
 
     // JSON parsing
-    implementation(libs.org.json)
+    implementation(libs.gson)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)

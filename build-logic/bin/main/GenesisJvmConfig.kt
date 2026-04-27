@@ -11,9 +11,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
  * Centralized JVM toolchain and compilation configuration for all Genesis modules.
  */
 object GenesisJvmConfig {
-    const val JVM_VERSION = 21
-    const val JVM_VERSION_INT = 21
-    val KOTLIN_JVM_TARGET = JvmTarget.JVM_21
+    const val JVM_VERSION = 25
+    const val JVM_VERSION_INT = 25
+    val KOTLIN_JVM_TARGET = JvmTarget.JVM_25
 
     fun configureKotlinJvm(project: Project) {
         with(project) {
