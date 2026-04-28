@@ -704,15 +704,9 @@ fun MissionDispatchCard(onNavigate: (String) -> Unit) {
 
 @Composable
 fun ModuleGrid(modules: List<TabModule>, onNavigate: (String) -> Unit) {
-    val rows = modules.chunked(2)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        rows.forEach { rowModules ->
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                rowModules.forEach { module ->
-                    ModuleTabCard(module, onNavigate, Modifier.weight(1f))
-                }
-                if (rowModules.size == 1) Spacer(Modifier.weight(1f))
-            }
+        modules.forEach { module ->
+            ModuleTabCard(module, onNavigate, Modifier.fillMaxWidth())
         }
     }
 }
@@ -721,7 +715,7 @@ fun ModuleGrid(modules: List<TabModule>, onNavigate: (String) -> Unit) {
 fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .height(if (module.previewImage != null) 160.dp else 110.dp)
+            .height(if (module.previewImage != null) 110.dp else 85.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White.copy(alpha = 0.04f))
             .border(1.5.dp, module.color.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
@@ -734,7 +728,7 @@ fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Mod
                 modifier = Modifier
                     .fillMaxSize()
                     .alpha(0.8f),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.FillWidth
             )
             // Cyberpunk Scrim
             Box(
@@ -743,32 +737,33 @@ fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Mod
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black.copy(0.85f)),
-                            startY = 150f
+                            startY = 50f
                         )
                     )
             )
         }
 
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(14.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(42.dp)
                     .background(Color.Black.copy(alpha = 0.4f), CircleShape)
                     .border(0.5.dp, module.color.copy(alpha = 0.3f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(module.icon, null, tint = module.color, modifier = Modifier.size(18.dp))
+                Icon(module.icon, null, tint = module.color, modifier = Modifier.size(24.dp))
             }
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = module.title,
                     color = Color.White,
-                    fontSize = 11.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.ExtraBold,
                     letterSpacing = 1.5.sp,
                     fontFamily = LEDFontFamily
@@ -776,10 +771,16 @@ fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Mod
                 Text(
                     text = module.subtitle,
                     color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 8.sp,
-                    lineHeight = 10.sp
+                    fontSize = 10.sp,
+                    lineHeight = 12.sp
                 )
             }
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = Color.White.copy(alpha = 0.3f),
+                modifier = Modifier.size(20.dp)
+            )
         }
     }
 }
