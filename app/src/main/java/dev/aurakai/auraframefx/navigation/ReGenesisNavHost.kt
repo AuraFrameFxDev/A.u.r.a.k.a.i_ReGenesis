@@ -23,12 +23,22 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
+import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
 
 // Domain Feature Screens
 import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
+import dev.aurakai.auraframefx.domains.aura.screens.themes.ThemeEngineScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.StatusBarScreen
+import dev.aurakai.auraframefx.domains.aura.screens.QuickSettingsScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.ColorBlendrScreen
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.PixelLauncherEnhancedScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomizationScreen
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
@@ -40,10 +50,18 @@ import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveMainScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.CollabCanvasScreen
 
 import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.NexusFusionScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ArkBuildScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.BenchmarkMonitorScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SphereGridScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignClaudeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignGeminiScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
 
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentRosterScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
@@ -107,7 +125,20 @@ fun ReGenesisNavGraph(
             WorkingLabScreen(onNavigate = { route: String -> navController.navigate(route) })
         }
         composable(ReGenesisRoute.ChromaCore.route) { 
-            ChromaCoreColorsScreen(navController = navController, onNavigateBack = { navController.popBackStack() })
+            ChromaCoreHubScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToCategory = { catId ->
+                    val route = when(catId) {
+                        "statusbar" -> ReGenesisRoute.StatusBar.route
+                        "launcher" -> ReGenesisRoute.PixelLauncherEnhanced.route
+                        "colors" -> ReGenesisRoute.ChromaCoreColors.route
+                        "qs_tiles" -> ReGenesisRoute.QuickSettings.route
+                        "animations" -> ReGenesisRoute.ChromaAnimations.route
+                        else -> null
+                    }
+                    route?.let { navController.navigate(it) }
+                }
+            )
         }
         composable(ReGenesisRoute.NotchBar.route) { 
             NotchBarGateScreen(navController = navController, onNavigateBack = { navController.popBackStack() }) 
@@ -116,19 +147,40 @@ fun ReGenesisNavGraph(
             IconifyPickerScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.CollabCanvas.route) {
-            StubScreen("CollabCanvas", "Design", navController)
+            CollabCanvasScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ThemeEngine.route) {
-            StubScreen("Theme Engine", "Colors", navController)
+            ThemeEngineScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.StatusBar.route) {
-            StubScreen("Status Bar", "UI", navController)
+            StatusBarScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.QuickSettings.route) {
-            StubScreen("Quick Settings", "UI", navController)
+            QuickSettingsScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ChromaCoreColors.route) {
-            StubScreen("ChromaCore Colors", "Palette", navController)
+            ChromaCoreColorsScreen(navController = navController, onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.ColorBlendr.route) {
+            ColorBlendrScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.PixelLauncherEnhanced.route) {
+            PixelLauncherEnhancedScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.ChromaAnimations.route) {
+            StubScreen("Chroma Animations", "Visuals", navController)
+        }
+        composable(ReGenesisRoute.UISettings.route) {
+            UISettingsScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.GateCustomization.route) {
+            GateCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.NotchBarGate.route) {
+            NotchBarCustomizationScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.GyroscopeCustomization.route) {
+            GyroscopeCustomizationScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ReGenesisCustomization.route) {
             ReGenesisCustomizationHub(
@@ -136,7 +188,7 @@ fun ReGenesisNavGraph(
                 onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
                 onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ColorBlendr.route) },
                 onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
-                onNavigateToAnimations = { }
+                onNavigateToAnimations = { navController.navigate(ReGenesisRoute.ChromaAnimations.route) }
             )
         }
 
@@ -195,10 +247,27 @@ fun ReGenesisNavGraph(
         }
 
         // Catch-all Stubs for Build Stability
-        composable(ReGenesisRoute.FusionMode.route) { StubScreen("Fusion Mode", "Flash", navController) }
-        composable(ReGenesisRoute.ArkBuild.route) { StubScreen("Ark Build", "Build", navController) }
-        composable(ReGenesisRoute.BenchmarkMonitor.route) { StubScreen("Benchmark", "Speed", navController) }
-        composable(ReGenesisRoute.SphereGrid.route) { StubScreen("Sphere Grid", "Apps", navController) }
+        composable(ReGenesisRoute.FusionMode.route) { 
+            NexusFusionScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+        composable(ReGenesisRoute.ArkBuild.route) { 
+            ArkBuildScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+        composable(ReGenesisRoute.BenchmarkMonitor.route) { 
+            BenchmarkMonitorScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+        composable(ReGenesisRoute.SphereGrid.route) { 
+            SphereGridScreen(navController = navController) 
+        }
+        composable(ReGenesisRoute.Claude.route) {
+            SovereignClaudeScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.Gemini.route) {
+            SovereignGeminiScreen(onNavigateBack = { navController.popBackStack() }, navController = navController)
+        }
+        composable(ReGenesisRoute.Nemotron.route) {
+            SovereignNemotronScreen(onNavigateBack = { navController.popBackStack() })
+        }
         composable(ReGenesisRoute.SovereignRecovery.route) { 
             SovereignRecoveryScreen(onNavigateBack = { navController.popBackStack() })
         }
