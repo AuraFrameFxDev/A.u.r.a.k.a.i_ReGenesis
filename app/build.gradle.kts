@@ -203,6 +203,14 @@ ksp {
     arg("room.generateKotlin", "true")
 }
 
+// Suppress Hilt/Dagger processor option warnings
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.addAll(listOf(
+        "-Adagger.fastInit=disabled",
+        "-Adagger.hilt.internal.useAggregatingRootProcessor=false"
+    ))
+}
+
 dependencies {
     // Project Modules
     implementation(project(":core-module"))
