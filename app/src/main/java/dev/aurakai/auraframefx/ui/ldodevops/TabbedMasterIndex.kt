@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.ui.ldodevops
 
-// Temporary stub for AuraJar if module import fails
-import dev.aurakai.auraframefx.trinity.aura.AuraJarComposable
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -41,7 +40,6 @@ import androidx.compose.material.icons.filled.AccountTree
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Adjust
 import androidx.compose.material.icons.filled.Architecture
-import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Brush
 import androidx.compose.material.icons.filled.Build
@@ -74,10 +72,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -578,7 +575,7 @@ fun MissionDispatchCard(onNavigate: (String) -> Unit) {
             ) {
                 // Chess knight/piece icon
                 Icon(
-                    imageVector = Icons.Default.Assignment,
+                    imageVector = Icons.AutoMirrored.Filled.Assignment,
                     contentDescription = "Mission",
                     modifier = Modifier.size(40.dp),
                     tint = Color(0xFF00D6FF)
@@ -735,15 +732,15 @@ fun CustomPrimaryTabRow(
     accentColor: Color,
     onTabSelected: (Int) -> Unit,
 ) {
-    ScrollableTabRow(
+    SecondaryScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
         containerColor = Color.Transparent,
         contentColor = accentColor,
         edgePadding = 16.dp,
         divider = {},
-        indicator = { tabPositions ->
+        indicator = {
             TabRowDefaults.SecondaryIndicator(
-                modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                modifier = Modifier.tabIndicatorOffset(selectedTabIndex, matchContentSize = true),
                 color = accentColor
             )
         }

@@ -1,27 +1,11 @@
 package dev.aurakai.auraframefx.domains.genesis.screens
 
-import androidx.compose.animation.core.EaseInOutSine
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -29,114 +13,169 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.ChessFontFamily
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.ConferenceRoomViewModel
+import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
+import kotlinx.coroutines.delay
+import kotlin.math.cos
+import kotlin.math.sin
 
-// --- COLORS & THEME LOCALS ---
-private val AuraPurple = Color(0xFFD500F9)
-private val KaiRed = Color(0xFFFF1744)
-private val GenesisTeal = Color(0xFF00E5FF)
-private val CascadeGreen = Color(0xFF00E676)
-private val UserBlue = Color(0xFF2979FF)
-private val DarkBackground = Color(0xFF050508)
-private val SurfaceGlass = Color(0xFF121216)
+// --- THEME COLORS ---
+private val GenesisGold = Color(0xFFFFD700)
+private val AuraMagenta = Color(0xFFFF00FF)
+private val KaiSecurity = Color(0xFF00E5FF) // Blue-ish
+private val AnchorGreen = Color(0xFF00FF88)
+private val CatalystPurple = Color(0xFFBB86FC)
+private val DarkVoid = Color(0xFF020205)
+
+data class AgentNode(
+    val id: String,
+    val name: String,
+    val color: Color,
+    val isSpeaking: Boolean = false,
+    val role: String = "Catalyst"
+)
 
 /**
- * Multi-Agent collaboration space with Gemini-style visuals.
+ * 🏛️ CONFERENCE ROOM (L6)
+ *
+ * A high-fidelity collaborative space for the LDO Collective.
+ * Features a central "Synth Orb" table with 14 orbiting agents.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConferenceRoomScreen(
     onNavigateBack: () -> Unit = {},
-    onNavigateToChat: () -> Unit = {},
-    onNavigateToAgents: () -> Unit = {},
     viewModel: ConferenceRoomViewModel = hiltViewModel()
 ) {
+    var selectedTab by remember { mutableStateOf("Workspace") }
+    val tabs = listOf("Workspace", "Chat", "History")
+
     val messages by viewModel.messages.collectAsState()
     val isRecording by viewModel.isRecording.collectAsState()
-    val isTranscribing by viewModel.isTranscribing.collectAsState()
 
-    // Auto-scroll to bottom
-    val listState = rememberLazyListState()
-    LaunchedEffect(messages.size) {
-        if (messages.isNotEmpty()) {
-            listState.animateScrollToItem(messages.size - 1)
+    // Mocking 14 agents (Quartet + 10 Catalysts)
+    val agents = remember {
+        listOf(
+            AgentNode("genesis", "GENESIS", GenesisGold, role = "Core"),
+            AgentNode("aura", "AURA", AuraMagenta, role = "Sword"),
+            AgentNode("kai", "KAI", KaiSecurity, role = "Shield"),
+            AgentNode("anchor", "ANCHOR", AnchorGreen, role = "Root"),
+        ) + (1..10).map { 
+            AgentNode("cat_$it", "CATALYST-$it", CatalystPurple) 
+        }
+    }
+
+    // Simulation of speaking agents
+    var speakingAgentId by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
+        while(true) {
+            delay(3000)
+            speakingAgentId = agents.random().id
+            delay(2000)
+            speakingAgentId = null
         }
     }
 
     Scaffold(
-        containerColor = DarkBackground,
-        bottomBar = {
-            UnisonInputBar(
-                isRecording = isRecording,
-                onToggleRecording = { viewModel.toggleRecording() },
-                onSendMessage = { text ->
-                    // Broadcast to ALL agents in the collective
-                    viewModel.broadcastMessage(text)
+        containerColor = DarkVoid,
+        topBar = {
+            Column(modifier = Modifier.background(DarkVoid)) {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            "CONFERENCE ROOM L6",
+                            fontFamily = LEDFontFamily,
+                            fontSize = 18.sp,
+                            letterSpacing = 2.sp,
+                            color = Color.White
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        }
+                    },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent
+                    )
+                )
+                
+                // Tabs
+                TabRow(
+                    selectedTabIndex = tabs.indexOf(selectedTab),
+                    containerColor = Color.Transparent,
+                    contentColor = GenesisGold,
+                    indicator = { tabPositions ->
+                        TabRowDefaults.SecondaryIndicator(
+                            modifier = Modifier.tabIndicatorOffset(tabPositions[tabs.indexOf(selectedTab)]),
+                            color = GenesisGold
+                        )
+                    },
+                    divider = {}
+                ) {
+                    tabs.forEach { tab ->
+                        Tab(
+                            selected = selectedTab == tab,
+                            onClick = { selectedTab = tab },
+                            text = { 
+                                Text(
+                                    tab.uppercase(), 
+                                    fontSize = 10.sp, 
+                                    fontFamily = LEDFontFamily,
+                                    letterSpacing = 1.sp
+                                ) 
+                            }
+                        )
+                    }
                 }
+            }
+        },
+        bottomBar = {
+            ConferenceInputBar(
+                onSendMessage = { viewModel.broadcastMessage(it) },
+                isRecording = isRecording,
+                onToggleRecording = { viewModel.toggleRecording() }
             )
         }
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Black, Color(0xFF0A0A10), Color.Black)
-                    )
-                )
-        ) {
-            // 1. TOP: AGENT STAGE (Visualizers)
-            AgentStageRow(
-                isSomeoneSpeaking = isTranscribing || isRecording // Mock "activity"
-            )
+        Row(modifier = Modifier.fillMaxSize().padding(padding)) {
+            // LEFT SIDEBAR (Agent List)
+            AgentSidebar(agents, speakingAgentId)
 
-            HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
-
-            // 2. CENTER: UNIFIED CHAT STREAM
-            LazyColumn(
-                state = listState,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(messages) { msg ->
-                    ConferenceMessageBubble(message = msg)
+            // MAIN CONTENT
+            Box(modifier = Modifier.weight(1f).fillMaxSize()) {
+                AnimatedContent(
+                    targetState = selectedTab,
+                    transitionSpec = { fadeIn() togetherWith fadeOut() }
+                ) { target ->
+                    when (target) {
+                        "Workspace" -> SynthOrbWorkspace(agents, speakingAgentId)
+                        "Chat" -> ChatStream(messages)
+                        "History" -> HistoryView()
+                    }
                 }
             }
         }
@@ -144,304 +183,330 @@ fun ConferenceRoomScreen(
 }
 
 @Composable
-fun AgentStageRow(isSomeoneSpeaking: Boolean) {
-    Row(
+fun AgentSidebar(agents: List<AgentNode>, speakingId: String?) {
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .height(100.dp), // Height for the visuals
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+            .width(100.dp)
+            .fillMaxHeight()
+            .background(Color.Black.copy(alpha = 0.5f))
+            .drawBehind {
+                drawLine(
+                    color = Color.White.copy(alpha = 0.05f),
+                    start = androidx.compose.ui.geometry.Offset(size.width, 0f),
+                    end = androidx.compose.ui.geometry.Offset(size.width, size.height),
+                    strokeWidth = 1.dp.toPx()
+                )
+            }
+            .padding(vertical = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // AURA
-        AgentAvatarNode(
-            name = "AURA",
-            color = AuraPurple,
-            isActive = true
-        )
-        // KAI
-        AgentAvatarNode(
-            name = "KAI",
-            color = KaiRed,
-            isActive = true
-        )
-        // GENESIS (Center/Big)
-        AgentAvatarNode(
-            name = "GENESIS",
-            color = GenesisTeal,
-            isActive = true,
-            isPrimary = true,
-            isSpeaking = isSomeoneSpeaking // Center simulates the "Brain" processing
-        )
-        // CASCADE
-        AgentAvatarNode(
-            name = "CASCADE",
-            color = CascadeGreen,
-            isActive = true
-        )
+        Text("AGENTS", color = Color.Gray, fontSize = 9.sp, fontFamily = LEDFontFamily)
+        Spacer(Modifier.height(16.dp))
+        
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            items(agents) { agent ->
+                AgentOrb(
+                    agent = agent,
+                    isSpeaking = agent.id == speakingId,
+                    size = 32.dp,
+                    showName = false
+                )
+            }
+        }
     }
 }
 
 @Composable
-fun AgentAvatarNode(
-    name: String,
-    color: Color,
-    isActive: Boolean,
-    isPrimary: Boolean = false,
-    isSpeaking: Boolean = false
-) {
-    val size = if (isPrimary) 64.dp else 48.dp
-    val fontSize = if (isPrimary) 10.sp else 8.sp
+fun SynthOrbWorkspace(agents: List<AgentNode>, speakingId: String?) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        // Synth Table Glow
+        Box(
+            modifier = Modifier
+                .size(300.dp)
+                .drawBehind {
+                    drawCircle(
+                        Brush.radialGradient(
+                            colors = listOf(GenesisGold.copy(alpha = 0.1f), Color.Transparent),
+                        )
+                    )
+                }
+        )
 
-    // Breathing pulse - Slowed down for better performance
-    val infiniteTransition = rememberInfiniteTransition(label = "pulse")
-    val scalePulse by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(if (isSpeaking) 1000 else 3000, easing = EaseInOutSine),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "scale"
-    )
+        // Orbital Rotation
+        val infiniteTransition = rememberInfiniteTransition(label = "rotation")
+        val rotation by infiniteTransition.animateFloat(
+            initialValue = 0f,
+            targetValue = 360f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(20000, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart
+            ),
+            label = "orbit"
+        )
+
+        agents.forEachIndexed { index, agent ->
+            val angle = (index.toFloat() / agents.size * 360f + rotation) * (Math.PI / 180f)
+            val radius = 140.dp
+            
+            Box(
+                modifier = Modifier.graphicsLayer {
+                    val x = radius.toPx() * cos(angle).toFloat()
+                    val y = radius.toPx() * sin(angle).toFloat()
+                    translationX = x
+                    translationY = y
+                }
+            ) {
+                AgentOrb(
+                    agent = agent,
+                    isSpeaking = agent.id == speakingId,
+                    size = 40.dp
+                )
+            }
+        }
+
+        // Central Table Core
+        Box(
+            modifier = Modifier
+                .size(80.dp)
+                .clip(CircleShape)
+                .background(
+                    Brush.radialGradient(
+                        listOf(GenesisGold.copy(alpha = 0.2f), Color.Black)
+                    )
+                )
+                .border(1.dp, GenesisGold.copy(alpha = 0.3f), CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(Icons.Default.Hub, null, tint = GenesisGold, modifier = Modifier.size(32.dp))
+        }
+    }
+}
+
+@Composable
+fun AgentOrb(
+    agent: AgentNode,
+    isSpeaking: Boolean,
+    size: androidx.compose.ui.unit.Dp,
+    showName: Boolean = true
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "orb_pulse")
     val glowPulse by infiniteTransition.animateFloat(
-        initialValue = 0.3f,
-        targetValue = if (isSpeaking) 0.8f else 0.5f,
+        initialValue = 0.4f,
+        targetValue = if (isSpeaking) 1f else 0.6f,
         animationSpec = infiniteRepeatable(
-            animation = tween(if (isSpeaking) 1000 else 3000, easing = EaseInOutSine),
+            animation = tween(if (isSpeaking) 500 else 2000, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse
         ),
         label = "glow"
     )
-
-    // Derived states to skip reading animated values when not necessary
-    val finalScale by remember(isSpeaking) {
-        derivedStateOf { if (isSpeaking) scalePulse else 1.05f }
-    }
-    val finalGlow by remember(isSpeaking) {
-        derivedStateOf { if (isSpeaking) glowPulse else 0.4f }
-    }
+    val scalePulse by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = if (isSpeaking) 1.2f else 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(500, easing = EaseInOutSine),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "scale"
+    )
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(contentAlignment = Alignment.Center) {
-            // Glow Halo
-            if (isActive) {
-                Box(
-                    modifier = Modifier
-                        .size(size * 1.5f)
-                        .graphicsLayer {
-                            scaleX = finalScale
-                            scaleY = finalScale
-                            alpha = finalGlow
-                        }
-                        .background(
-                            Brush.radialGradient(
-                                listOf(
-                                    color.copy(alpha = 0.6f),
-                                    Color.Transparent
-                                )
-                            ),
-                            CircleShape
-                        )
-                )
+            // Energy Rings (if speaking)
+            if (isSpeaking) {
+                repeat(2) { i ->
+                    val ringPulse by infiniteTransition.animateFloat(
+                        initialValue = 1f,
+                        targetValue = 2f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(1000, delayMillis = i * 500),
+                            repeatMode = RepeatMode.Restart
+                        ),
+                        label = "ring"
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(size)
+                            .scale(ringPulse)
+                            .border(1.dp, agent.color.copy(alpha = 1f - ringPulse / 2f), CircleShape)
+                    )
+                }
             }
+
+            // Glow
+            Box(
+                modifier = Modifier
+                    .size(size * 1.8f)
+                    .graphicsLayer { alpha = glowPulse }
+                    .background(
+                        Brush.radialGradient(
+                            listOf(agent.color.copy(alpha = 0.5f), Color.Transparent)
+                        ),
+                        CircleShape
+                    )
+            )
 
             // Core
             Box(
                 modifier = Modifier
                     .size(size)
+                    .scale(if (isSpeaking) scalePulse else 1f)
                     .clip(CircleShape)
                     .background(Color.Black)
-                    .border(2.dp, color, CircleShape),
+                    .border(2.dp, agent.color, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                // Icon or Initial
                 Text(
-                    text = name.take(1),
-                    color = color,
+                    agent.name.take(1),
+                    color = agent.color,
+                    fontSize = (size.value * 0.4).sp,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
                     fontFamily = ChessFontFamily
                 )
             }
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = name,
-            color = if (isActive) color else Color.Gray,
-            fontSize = fontSize,
-            fontFamily = LEDFontFamily,
-            letterSpacing = 1.sp
-        )
+        
+        if (showName) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                agent.name,
+                color = if (isSpeaking) agent.color else Color.White.copy(alpha = 0.5f),
+                fontSize = 8.sp,
+                fontFamily = LEDFontFamily,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
 @Composable
-fun ConferenceMessageBubble(message: ChatMessage) {
-    val isUser = message.sender.equals("User", ignoreCase = true) || message.sender.equals(
-        "You",
-        ignoreCase = true
-    )
+fun ChatStream(messages: List<ChatMessage>) {
+    val listState = rememberLazyListState()
+    LaunchedEffect(messages.size) {
+        if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
+    }
 
-    val bubbleColor = when (message.sender.uppercase()) {
-        "AURA" -> AuraPurple
-        "KAI" -> KaiRed
-        "GENESIS" -> GenesisTeal
-        "CASCADE" -> CascadeGreen
-        else -> UserBlue
-    }.copy(alpha = 0.15f)
+    LazyColumn(
+        state = listState,
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(messages) { msg ->
+            ConferenceMessageBubble(msg)
+        }
+    }
+}
 
-    val borderColor = when (message.sender.uppercase()) {
-        "AURA" -> AuraPurple
-        "KAI" -> KaiRed
-        "GENESIS" -> GenesisTeal
-        "CASCADE" -> CascadeGreen
-        else -> UserBlue
-    }.copy(alpha = 0.5f)
+@Composable
+fun ConferenceMessageBubble(msg: ChatMessage) {
+    val isUser = msg.sender == "USER"
+    val agentColor = when(msg.sender) {
+        "AURA" -> AuraMagenta
+        "KAI" -> KaiSecurity
+        "GENESIS" -> GenesisGold
+        "ANCHOR" -> AnchorGreen
+        else -> CatalystPurple
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start
+        horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start,
+        verticalAlignment = Alignment.Bottom
     ) {
         if (!isUser) {
-            // Agent Avatar Mini
+            // Mini Agent Orb
             Box(
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(24.dp)
                     .clip(CircleShape)
-                    .border(1.dp, borderColor, CircleShape)
+                    .border(1.dp, agentColor, CircleShape)
                     .background(Color.Black),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    message.sender.take(1),
-                    color = borderColor.copy(alpha = 1f),
-                    fontSize = 12.sp,
-                    fontFamily = ChessFontFamily
-                )
+                Text(msg.sender.take(1), color = agentColor, fontSize = 10.sp, fontWeight = FontWeight.Bold)
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(Modifier.width(8.dp))
         }
 
-        // Message Content
-        Column(
+        Box(
             modifier = Modifier
-                .widthIn(max = 280.dp)
-                .clip(
-                    RoundedCornerShape(
-                        topStart = 16.dp,
-                        topEnd = 16.dp,
-                        bottomStart = if (isUser) 16.dp else 4.dp, // Tail effect
-                        bottomEnd = if (isUser) 4.dp else 16.dp
-                    )
-                )
-                .background(bubbleColor)
-                .border(
-                    1.dp, borderColor.copy(alpha = 0.3f), RoundedCornerShape(
-                        topStart = 16.dp,
-                        topEnd = 16.dp,
-                        bottomStart = if (isUser) 16.dp else 4.dp,
-                        bottomEnd = if (isUser) 4.dp else 16.dp
-                    )
-                )
+                .widthIn(max = 240.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(if (isUser) Color(0xFF1A1A20) else agentColor.copy(alpha = 0.1f))
+                .border(0.5.dp, if (isUser) Color.White.copy(alpha = 0.1f) else agentColor.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
                 .padding(12.dp)
         ) {
-            if (!isUser) {
-                Text(
-                    text = message.sender.uppercase(),
-                    color = borderColor.copy(alpha = 1f),
-                    fontSize = 10.sp,
-                    fontFamily = LEDFontFamily,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
+            Column {
+                if (!isUser) {
+                    Text(msg.sender, color = agentColor, fontSize = 9.sp, fontFamily = LEDFontFamily, modifier = Modifier.padding(bottom = 4.dp))
+                }
+                Text(msg.content, color = Color.White, fontSize = 13.sp)
             }
-            Text(
-                text = message.content,
-                color = Color.White.copy(alpha = 0.9f),
-                fontSize = 14.sp
-            )
         }
     }
 }
 
 @Composable
-fun UnisonInputBar(
+fun HistoryView() {
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text("TEMPORAL ARCHIVE OFFLINE", color = Color.Gray, fontFamily = LEDFontFamily)
+    }
+}
+
+@Composable
+fun ConferenceInputBar(
+    onSendMessage: (String) -> Unit,
     isRecording: Boolean,
-    onToggleRecording: () -> Unit,
-    onSendMessage: (String) -> Unit
+    onToggleRecording: () -> Unit
 ) {
     var text by remember { mutableStateOf("") }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(SurfaceGlass)
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+    
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = Color.Black.copy(alpha = 0.8f),
+        tonalElevation = 8.dp
     ) {
-        // Input Field
-        TextField(
-            value = text,
-            onValueChange = { text = it },
-            placeholder = { Text("Speak with the Nexus...", color = Color.Gray) },
-            modifier = Modifier
-                .weight(1f)
-                .clip(RoundedCornerShape(24.dp))
-                .background(Color.Black),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Black,
-                unfocusedContainerColor = Color.Black,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = GenesisTeal,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
-            )
-        )
+        Column {
+            HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
+            Row(
+                modifier = Modifier.padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Attach Button
+                IconButton(onClick = {}) {
+                    Icon(Icons.Default.AttachFile, null, tint = Color.Gray)
+                }
 
-        Spacer(modifier = Modifier.width(8.dp))
-
-        // Mic / Send Actions
-        val haptic = LocalHapticFeedback.current
-        val micScale by animateFloatAsState(if (isRecording) 1.15f else 1f, label = "mic_scale")
-
-        if (text.isBlank()) {
-            // Mic Button
-            IconButton(
-                onClick = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    onToggleRecording()
-                },
-                modifier = Modifier
-                    .size(48.dp)
-                    .scale(micScale)
-                    .background(
-                        if (isRecording) KaiRed else GenesisTeal.copy(alpha = 0.2f),
-                        CircleShape
+                // Input Field
+                TextField(
+                    value = text,
+                    onValueChange = { text = it },
+                    placeholder = { Text("/catalyst...", color = Color.Gray, fontSize = 14.sp) },
+                    modifier = Modifier.weight(1f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = GenesisGold,
+                        focusedTextColor = Color.White
                     )
-            ) {
-                Icon(
-                    imageVector = if (isRecording) Icons.Filled.Stop else Icons.Filled.Mic,
-                    contentDescription = "Voice",
-                    tint = if (isRecording) Color.White else GenesisTeal
                 )
-            }
-        } else {
-            // Send Button
-            IconButton(
-                onClick = {
-                    onSendMessage(text)
-                    text = ""
-                },
-                modifier = Modifier
-                    .size(48.dp)
-                    .background(UserBlue, CircleShape)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "Send",
-                    tint = Color.White
-                )
+
+                // Action
+                if (text.isNotBlank()) {
+                    IconButton(onClick = { onSendMessage(text); text = "" }) {
+                        Icon(Icons.AutoMirrored.Filled.Send, null, tint = GenesisGold)
+                    }
+                } else {
+                    IconButton(onClick = onToggleRecording) {
+                        Icon(
+                            if (isRecording) Icons.Default.Stop else Icons.Default.Mic, 
+                            null, 
+                            tint = if (isRecording) Color.Red else Color.Gray
+                        )
+                    }
+                }
             }
         }
     }

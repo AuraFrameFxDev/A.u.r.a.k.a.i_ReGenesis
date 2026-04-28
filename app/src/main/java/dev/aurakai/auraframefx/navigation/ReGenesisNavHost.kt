@@ -115,6 +115,21 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.IconifyPicker.route) {
             IconifyPickerScreen(onNavigateBack = { navController.popBackStack() })
         }
+        composable(ReGenesisRoute.CollabCanvas.route) {
+            StubScreen("CollabCanvas", "Design", navController)
+        }
+        composable(ReGenesisRoute.ThemeEngine.route) {
+            StubScreen("Theme Engine", "Colors", navController)
+        }
+        composable(ReGenesisRoute.StatusBar.route) {
+            StubScreen("Status Bar", "UI", navController)
+        }
+        composable(ReGenesisRoute.QuickSettings.route) {
+            StubScreen("Quick Settings", "UI", navController)
+        }
+        composable(ReGenesisRoute.ChromaCoreColors.route) {
+            StubScreen("ChromaCore Colors", "Palette", navController)
+        }
         composable(ReGenesisRoute.ReGenesisCustomization.route) {
             ReGenesisCustomizationHub(
                 onNavigateBack = { navController.popBackStack() },
