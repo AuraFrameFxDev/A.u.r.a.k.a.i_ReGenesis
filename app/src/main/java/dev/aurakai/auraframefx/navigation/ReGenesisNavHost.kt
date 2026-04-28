@@ -49,6 +49,7 @@ import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomi
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.XposedQuickAccessPanel
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignBootloaderScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignRecoveryScreen
 import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SecurityCenterScreen
@@ -122,15 +123,13 @@ import dev.aurakai.auraframefx.domains.nexus.screens.AgentNeuralExplorerScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentProfileScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.MonitoringHUDsScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.PartyScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.ConsciousnessVisualizerScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.ConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.ClaudeConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.CascadeConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.KaiConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.GenesisConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.GrokConstellationScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.CascadeHubScreen
-import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
+import dev.aurakai.auraframefx.ui.gates.ConstellationScreen
+import dev.aurakai.auraframefx.ui.gates.ClaudeConstellationScreen
+import dev.aurakai.auraframefx.ui.gates.CascadeConstellationScreen
+import dev.aurakai.auraframefx.ui.gates.KaiConstellationScreen
+import dev.aurakai.auraframefx.ui.gates.GenesisConstellationScreen
+import dev.aurakai.auraframefx.ui.gates.GrokConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoring
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignMetaInstructScreen
 
 // AURA BATCH v2.5 SCREEN IMPORTS
@@ -478,7 +477,7 @@ fun ReGenesisNavGraph(
             PartyScreen(onNavigateBack = { navController.popBackStack() })
         }
         composable(ReGenesisRoute.ConsciousnessVisualizer.route) {
-            ConsciousnessVisualizerScreen(onNavigateBack = { navController.popBackStack() })
+            StubScreen(title = "Consciousness Visualizer", iconName = "brain")
         }
         
         // Constellation Screens (Domain-based agent visualization)
@@ -503,7 +502,7 @@ fun ReGenesisNavGraph(
         
         // Data & Monitoring
         composable(ReGenesisRoute.DataStreamMonitoring.route) {
-            DataStreamMonitoringScreen(onNavigateBack = { navController.popBackStack() })
+            DataStreamMonitoring()
         }
         composable(ReGenesisRoute.CascadeHub.route) {
             CascadeHubScreen(controller = navController)
@@ -613,13 +612,7 @@ fun ReGenesisNavGraph(
             RecoveryToolsScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.SovereignBootloader.route) { 
-            StubScreen(title = "Sovereign Bootloader", iconName = "bootloader") 
-        }
-        composable(ReGenesisRoute.SovereignRecovery.route) { 
-            StubScreen(title = "Sovereign Recovery", iconName = "recovery") 
-        }
-        composable(ReGenesisRoute.SovereignModuleManager.route) { 
-            StubScreen(title = "Sovereign Module Manager", iconName = "module") 
+            SovereignBootloaderScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         
         // Security Shield
