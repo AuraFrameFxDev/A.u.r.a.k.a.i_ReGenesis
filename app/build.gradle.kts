@@ -205,10 +205,7 @@ ksp {
 
 // Suppress Hilt/Dagger processor option warnings
 tasks.withType<JavaCompile>().configureEach {
-    options.compilerArgs.addAll(listOf(
-        "-Adagger.fastInit=disabled",
-        "-Adagger.hilt.internal.useAggregatingRootProcessor=false"
-    ))
+    options.compilerArgs.add("-Xlint:-processing")
 }
 
 dependencies {
