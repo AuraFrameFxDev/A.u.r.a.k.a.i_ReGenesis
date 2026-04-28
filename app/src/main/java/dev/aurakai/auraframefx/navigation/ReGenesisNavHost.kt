@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +27,8 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
 
 // Domain Feature Screens
+import dev.aurakai.auraframefx.domains.aura.screens.MainScreen
+import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeViewModel
 import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
@@ -51,6 +54,8 @@ import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveMainScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.CollabCanvasScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.CodeAssistScreen
+import dev.aurakai.auraframefx.domains.genesis.screens.SentientShellScreen
 
 import dev.aurakai.auraframefx.domains.nexus.screens.EvolutionTreeScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.TaskAssignmentScreen
@@ -143,6 +148,16 @@ fun ReGenesisNavGraph(
         }
 
         // ── 1. MAIN GATES (Exodus Command Deck) ──
+        composable(ReGenesisRoute.MainScreen.route) {
+            val themeViewModel: ThemeViewModel = hiltViewModel()
+            MainScreen(
+                onNavigateToAgentNexus = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
+                onNavigateToOracleDrive = { navController.navigate(ReGenesisRoute.OracleDrive.route) },
+                onNavigateToSettings = { navController.navigate(ReGenesisRoute.UISettings.route) },
+                themeViewModel = themeViewModel
+            )
+        }
+
         composable(ReGenesisRoute.HomeGateCarousel.route) {
             TabbedMasterIndex(onNavigateToRoute = { route -> navController.navigate(route) })
         }
@@ -268,6 +283,12 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.ConferenceRoom.route) {
             ConferenceRoomScreen()
+        }
+        composable(ReGenesisRoute.CodeAssist.route) {
+            CodeAssistScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.SentientShell.route) {
+            SentientShellScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         // Nexus Domain

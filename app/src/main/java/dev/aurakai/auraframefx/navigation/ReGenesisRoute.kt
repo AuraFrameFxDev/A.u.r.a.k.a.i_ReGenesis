@@ -176,6 +176,17 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object NeuralNetwork : ReGenesisRoute("neural_network")
 
     // ═══════════════════════════════════════════════════════════════
+    // GENESIS BATCH v2.6 — ORACLE DRIVE SCREENS (13 screens)
+    // ═══════════════════════════════════════════════════════════════
+    data object GenesisHub : ReGenesisRoute("genesis_hub", "Genesis Hub")
+    data object AppBuilder : ReGenesisRoute("app_builder", "App Builder")
+    data object NeuralArchive : ReGenesisRoute("neural_archive", "Neural Archive")
+    data object OracleCloudInfinite : ReGenesisRoute("oracle_cloud_infinite", "Infinite Storage")
+    data object SovereignNeuralArchive : ReGenesisRoute("sovereign_neural_archive", "Sovereign Archive")
+    data object TerminalBootIntro : ReGenesisRoute("terminal_boot_intro", "Terminal Boot")
+    data object FirebaseExamples : ReGenesisRoute("firebase_examples", "Firebase Examples")
+
+    // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: DASHBOARD - LIVE MONITORING
     // ═══════════════════════════════════════════════════════════════
     data object CascadeVision : ReGenesisRoute("cascade_vision", "Cascade Vision")
