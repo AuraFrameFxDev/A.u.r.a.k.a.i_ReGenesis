@@ -97,6 +97,12 @@ import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOFusionScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOBondingScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDODevOpsHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOCatalystHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOProgressionScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDORosterScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOWorldTreeScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentProfileIntroScreen
 
 import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
 
@@ -432,12 +438,35 @@ fun ReGenesisNavGraph(
             ModuleCreationScreen(onNavigateBack = { navController.popBackStack() }) 
         }
 
-        // LDO Catalyst (2 screens)
+        // LDO Catalyst (9 screens) - Complete Batch
         composable(ReGenesisRoute.LdoArmamentFusion.route) { 
             ArmamentFusionScreen(navController = navController) 
         }
         composable(ReGenesisRoute.LdoFusion.route) { 
             LDOFusionScreen() 
+        }
+        composable(ReGenesisRoute.LdoDevOpsHub.route) {
+            LDODevOpsHubScreen(onBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.LdoProgression.route) {
+            LDOProgressionScreen(onBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.LdoWorldTree.route) {
+            LDOWorldTreeScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.LDOCatalystHub.route) {
+            LDOCatalystHubScreen(
+                onNavigateToRoster = { navController.navigate(ReGenesisRoute.LdoRoster.route) },
+                onNavigateToDevOps = { navController.navigate(ReGenesisRoute.LdoDevOpsHub.route) },
+                onNavigateToTasker = { navController.navigate(ReGenesisRoute.LdoTasker.route) }
+            )
+        }
+        composable(ReGenesisRoute.LdoAgentProfile.route) { backStackEntry ->
+            val agentId = backStackEntry.arguments?.getString("agentId")
+            LDOAgentProfileIntroScreen(
+                agentId = agentId,
+                onBack = { navController.popBackStack() }
+            )
         }
 
         // ═══════════════════════════════════════════════════════════════════════

@@ -233,6 +233,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     // LEVEL 3: LDO CATALYST DEVELOPMENT
     // ═══════════════════════════════════════════════════════════════
     data object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")
+    data object LDOCatalystHub : ReGenesisRoute("ldo_catalyst_hub", "LDO Catalyst Hub")
     data object LdoDevOpsHub : ReGenesisRoute("ldo_devops_hub")
     data object LdoDevOpsGrid : ReGenesisRoute("ldo_devops_grid", "DevOps Grid")
     data object LdoDbgVerifier : ReGenesisRoute("ldo_dbg_verifier", "LDO-DBG Verifier")
