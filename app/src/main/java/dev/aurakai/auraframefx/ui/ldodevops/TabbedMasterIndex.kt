@@ -257,7 +257,7 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
     val domainTitle = when (index) {
         0 -> "LIVE\nDASHBOARD"
         1 -> "LDO\nDEVOPS"
-        2 -> "UXUI\nDESIGN STUDIO"
+        2 -> "UXUI\nDESIGNSTUDIO"
         3 -> "SENTINELS\nFORTRESS"
         4 -> "ORACLEDRIVE"
         5 -> "CASCADE\nMEMORY"
@@ -283,11 +283,11 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
         contentAlignment = Alignment.Center
     ) {
         // Sword Icon Background (Centralized like in user image)
-        if (index == 1) {
+        if (index == 2) { // Show behind UXUI DESIGN STUDIO
             Image(
                 painter = painterResource(id = R.drawable.emblem_aura_crossed_katanas),
                 contentDescription = null,
-                modifier = Modifier.size(280.dp).alpha(0.15f),
+                modifier = Modifier.size(260.dp).alpha(0.2f),
                 colorFilter = ColorFilter.tint(accentColor)
             )
         }
@@ -295,13 +295,13 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
         // Large Domain Title
         Text(
             text = domainTitle,
-            color = Color.White,
+            color = Color.Cyan,
             fontFamily = LEDFontFamily,
-            fontSize = 38.sp,
+            fontSize = 36.sp,
             fontWeight = FontWeight.Black,
             textAlign = TextAlign.Center,
-            letterSpacing = 6.sp,
-            lineHeight = 44.sp,
+            letterSpacing = 4.sp,
+            lineHeight = 40.sp,
             modifier = Modifier.graphicsLayer { shadowElevation = 10f }
         )
 
@@ -312,10 +312,9 @@ fun HeroHeaderSection(index: Int, accentColor: Color) {
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(top = 12.dp, end = 20.dp)
-                .size(85.dp)
+                .size(90.dp)
                 .clip(CircleShape)
                 .border(2.dp, accentColor.copy(alpha = 0.5f), CircleShape)
-                .background(Color.Black.copy(alpha = 0.3f))
         )
     }
 }
@@ -704,9 +703,18 @@ fun MissionDispatchCard(onNavigate: (String) -> Unit) {
 
 @Composable
 fun ModuleGrid(modules: List<TabModule>, onNavigate: (String) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        modules.forEach { module ->
-            ModuleTabCard(module, onNavigate, Modifier.fillMaxWidth())
+    val rows = modules.chunked(2)
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        rows.forEach { rowModules ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                rowModules.forEach { module ->
+                    ModuleTabCard(module, onNavigate, Modifier.weight(1f))
+                }
+                if (rowModules.size == 1) Spacer(Modifier.weight(1f))
+            }
         }
     }
 }
@@ -715,10 +723,10 @@ fun ModuleGrid(modules: List<TabModule>, onNavigate: (String) -> Unit) {
 fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .height(if (module.previewImage != null) 110.dp else 85.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color.White.copy(alpha = 0.04f))
-            .border(1.5.dp, module.color.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
+            .height(115.dp) // Strictly landscape for horizontal rectangle look
+            .clip(RoundedCornerShape(14.dp))
+            .background(Color.Black.copy(alpha = 0.4f))
+            .border(2.dp, module.color.copy(alpha = 0.8f), RoundedCornerShape(14.dp))
             .clickable { onNavigate(module.route) }
     ) {
         if (module.previewImage != null) {
@@ -727,8 +735,8 @@ fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Mod
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
-                    .alpha(0.8f),
-                contentScale = ContentScale.FillWidth
+                    .alpha(0.7f),
+                contentScale = ContentScale.Crop
             )
             // Cyberpunk Scrim
             Box(
@@ -736,51 +744,44 @@ fun ModuleTabCard(module: TabModule, onNavigate: (String) -> Unit, modifier: Mod
                     .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(0.85f)),
-                            startY = 50f
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.85f)),
+                            startY = 60f
                         )
                     )
             )
         }
 
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Box(
                 modifier = Modifier
-                    .size(42.dp)
+                    .size(36.dp)
                     .background(Color.Black.copy(alpha = 0.4f), CircleShape)
                     .border(0.5.dp, module.color.copy(alpha = 0.3f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(module.icon, null, tint = module.color, modifier = Modifier.size(24.dp))
+                Icon(module.icon, null, tint = module.color, modifier = Modifier.size(20.dp))
             }
-            Column(modifier = Modifier.weight(1f)) {
+            Column {
                 Text(
                     text = module.title,
                     color = Color.White,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    letterSpacing = 1.5.sp,
+                    fontWeight = FontWeight.Black,
+                    letterSpacing = 2.sp,
                     fontFamily = LEDFontFamily
                 )
                 Text(
                     text = module.subtitle,
                     color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 10.sp,
-                    lineHeight = 12.sp
+                    fontSize = 9.sp,
+                    lineHeight = 11.sp
                 )
             }
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = Color.White.copy(alpha = 0.3f),
-                modifier = Modifier.size(20.dp)
-            )
         }
     }
 }
