@@ -46,7 +46,7 @@ import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomizationScreen
-import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
+import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.XposedQuickAccessPanel
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
@@ -317,7 +317,7 @@ fun ReGenesisNavGraph(
             )
         }
         composable(ReGenesisRoute.XposedPanel.route) {
-             XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
+             XposedQuickAccessPanel(navController = navController)
         }
 
         // Genesis Domain
@@ -587,7 +587,7 @@ fun ReGenesisNavGraph(
         
         // Genesis Hubs
         composable(ReGenesisRoute.GenesisHub.route) { 
-            GenesisHubScreen() 
+            GenesisHubScreen()
         }
         
         // AI & Code Screens
