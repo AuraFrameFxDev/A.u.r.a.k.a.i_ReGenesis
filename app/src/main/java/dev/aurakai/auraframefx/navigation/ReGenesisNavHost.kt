@@ -109,7 +109,6 @@ import dev.aurakai.auraframefx.domains.kai.screens.KaiSphereGridScreen
 import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
 import dev.aurakai.auraframefx.domains.kai.screens.RootToolsScreen
-import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
 import dev.aurakai.auraframefx.domains.kai.screens.KaiDossierScreen
 import dev.aurakai.auraframefx.domains.kai.screens.KaiLDOArmamentPickerScreen
 import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelIntegrityScreen
@@ -468,13 +467,13 @@ fun ReGenesisNavGraph(
             ModuleManagerScreen() 
         }
         composable(ReGenesisRoute.RootTools.route) { 
-            RootToolsScreen() 
+            RootToolsScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.ROMToolsSubmenu.route) { 
-            ROMToolsSubmenuScreen() 
+            ROMToolsSubmenuScreen(navController = navController) 
         }
         composable(ReGenesisRoute.RootToolsToggles.route) { 
-            RootToolsTogglesScreen() 
+            StubScreen(title = "Root Tools Toggles", iconName = "toggles") 
         }
         composable(ReGenesisRoute.LogsViewer.route) { 
             LogsViewerScreen() 
