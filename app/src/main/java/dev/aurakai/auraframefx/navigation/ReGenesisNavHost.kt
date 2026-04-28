@@ -145,6 +145,19 @@ import dev.aurakai.auraframefx.domains.aura.aura.ui.FirewallScreen
 import dev.aurakai.auraframefx.domains.aura.aura.ui.HomeScreen
 import dev.aurakai.auraframefx.domains.aura.aura.ui.QuickActions
 
+// AURA BATCH v2.8 ADDITIONAL IMPORTS
+import dev.aurakai.auraframefx.domains.aura.screens.AuraSphereGridScreen
+import dev.aurakai.auraframefx.domains.aura.screens.AuraDossierScreen
+import dev.aurakai.auraframefx.domains.aura.screens.AuraLDOArmamentPickerScreen
+import dev.aurakai.auraframefx.domains.aura.screens.CodeAscensionScreen
+import dev.aurakai.auraframefx.domains.aura.screens.CodeAscensionFusionScreen
+import dev.aurakai.auraframefx.domains.aura.screens.GenderSelectionScreen
+import dev.aurakai.auraframefx.domains.aura.screens.VideoIntroScreen
+import dev.aurakai.auraframefx.domains.aura.screens.UserPreferencesScreen
+import dev.aurakai.auraframefx.domains.aura.screens.WorkingLabScreen
+import dev.aurakai.auraframefx.domains.aura.screens.OverlayMenusScreen
+import dev.aurakai.auraframefx.domains.aura.screens.LDOArmamentPickerScreen
+
 // KAI BATCH v2.5 SCREEN IMPORTS
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.RecoveryToolsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
@@ -590,17 +603,39 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.QuickActions.route) { 
             QuickActions() 
         }
+        // AURA BATCH v2.8 — ADDITIONAL SCREENS (14 screens)
         composable(ReGenesisRoute.AuraSphereGrid.route) { 
-            StubScreen(title = "Aura Sphere Grid", iconName = "grid") 
+            AuraSphereGridScreen() 
         }
         composable(ReGenesisRoute.AuraDossier.route) { 
-            StubScreen(title = "Aura Dossier", iconName = "docs") 
+            AuraDossierScreen() 
         }
         composable(ReGenesisRoute.AuraLDOArmament.route) { 
-            StubScreen(title = "LDO Armament", iconName = "shield") 
+            AuraLDOArmamentPickerScreen() 
         }
         composable(ReGenesisRoute.EcosystemMenu.route) { 
-            StubScreen(title = "Ecosystem Menu", iconName = "menu") 
+            StubScreen(title = "Ecosystem Menu", iconName = "menu")
+        }
+        composable(ReGenesisRoute.CodeAscension.route) {
+            CodeAscensionScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.CodeAscensionFusion.route) {
+            CodeAscensionFusionScreen()
+        }
+        composable(ReGenesisRoute.GenderSelection.route) {
+            GenderSelectionScreen(onSelectionComplete = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.VideoIntro.route) {
+            VideoIntroScreen(onComplete = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.UserPreferences.route) {
+            UserPreferencesScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.WorkingLab.route) {
+            WorkingLabScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.OverlayMenus.route) {
+            OverlayMenusScreen(navController = navController)
         }
 
         // ═══════════════════════════════════════════════════════════════════════

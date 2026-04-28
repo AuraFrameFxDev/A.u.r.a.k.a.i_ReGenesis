@@ -84,6 +84,8 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object AuraLDOArmament : ReGenesisRoute("aura_ldo_armament", "LDO Armament")
     data object QuickActions : ReGenesisRoute("quick_actions", "Quick Actions")
     data object EcosystemMenu : ReGenesisRoute("ecosystem_menu", "Ecosystem Menu")
+    data object WorkingLab : ReGenesisRoute("working_lab", "Working Lab")
+    data object OverlayMenus : ReGenesisRoute("overlay_menus", "Overlay Menus")
 
     // --- ICONIFY INTEGRATION ---
     data object IconifyHub : ReGenesisRoute("aura/iconify_hub", "Iconify Hub")
