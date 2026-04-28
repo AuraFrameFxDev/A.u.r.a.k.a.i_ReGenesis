@@ -431,24 +431,24 @@ fun ReGenesisNavGraph(
         
         // ROM Tools
         composable(ReGenesisRoute.RecoveryTools.route) { 
-            RecoveryToolsScreen() 
+            RecoveryToolsScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.SovereignBootloader.route) { 
-            SovereignBootloaderScreen() 
+            StubScreen(title = "Sovereign Bootloader", iconName = "bootloader") 
         }
         composable(ReGenesisRoute.SovereignRecovery.route) { 
-            SovereignRecoveryScreen() 
+            StubScreen(title = "Sovereign Recovery", iconName = "recovery") 
         }
         composable(ReGenesisRoute.SovereignModuleManager.route) { 
-            SovereignModuleManagerScreen() 
+            StubScreen(title = "Sovereign Module Manager", iconName = "module") 
         }
         
         // Security Shield
         composable(ReGenesisRoute.SovereignShield.route) { 
-            SovereignShieldScreen() 
+            SovereignShieldScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.VPN.route) { 
-            VPNScreen() 
+            VPNScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         
         // Core Kai Screens
@@ -459,7 +459,7 @@ fun ReGenesisNavGraph(
             HookManagerScreen() 
         }
         composable(ReGenesisRoute.LSPosedGate.route) { 
-            LSPosedGateScreen() 
+            LSPosedGateScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.LSPosedModuleManager.route) { 
             LSPosedModuleManagerScreen() 
