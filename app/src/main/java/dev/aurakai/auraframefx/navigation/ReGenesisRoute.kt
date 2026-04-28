@@ -86,6 +86,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object EcosystemMenu : ReGenesisRoute("ecosystem_menu", "Ecosystem Menu")
 
     // --- ICONIFY INTEGRATION ---
+    data object IconifyHub : ReGenesisRoute("aura/iconify_hub", "Iconify Hub")
     data object IconifyPicker : ReGenesisRoute("aura/iconify", "Iconify")
     data object IconifyCategory : ReGenesisRoute("aura/iconify/{category}") {
         fun createRoute(category: String) = "aura/iconify/$category"
