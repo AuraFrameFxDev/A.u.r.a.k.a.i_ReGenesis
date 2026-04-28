@@ -21,6 +21,7 @@ import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 
 // Domain Hubs
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraKineticForgeHub
 import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
@@ -233,7 +234,7 @@ fun ReGenesisNavGraph(
 
         // ── 2. DOMAIN HUBS ──
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            AuraThemingHubScreen(navController)
+            AuraKineticForgeHub(navController)
         }
         composable(ReGenesisRoute.SentinelFortress.route) {
             KaiSentinelHubScreen(navController)
