@@ -158,6 +158,12 @@ import dev.aurakai.auraframefx.domains.aura.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.screens.OverlayMenusScreen
 import dev.aurakai.auraframefx.domains.aura.screens.LDOArmamentPickerScreen
 
+// KINETICFORGE CARDS — 9.5.1 SOVEREIGN EDITION
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeCoreCard
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeTransmutatorCard
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeLatticeCard
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeCardContainer
+
 // KAI BATCH v2.5 SCREEN IMPORTS
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.RecoveryToolsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
@@ -636,6 +642,28 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.OverlayMenus.route) {
             OverlayMenusScreen(navController = navController)
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // KINETICFORGE CARDS — 9.5.1 SOVEREIGN EDITION (3 Cards)
+        // ═══════════════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.KineticForgeCore.route) {
+            KineticForgeCoreCard(
+                onClick = { navController.navigate(ReGenesisRoute.AuraThemingHub.route) },
+                isActive = true
+            )
+        }
+        composable(ReGenesisRoute.KineticForgeTransmutator.route) {
+            KineticForgeTransmutatorCard(
+                onClick = { navController.navigate(ReGenesisRoute.IconifyHub.route) },
+                activeTransmutations = 14
+            )
+        }
+        composable(ReGenesisRoute.KineticForgeLattice.route) {
+            KineticForgeLatticeCard(
+                onClick = { navController.navigate(ReGenesisRoute.ReGenesisCustomization.route) },
+                realityState = 0.75f
+            )
         }
 
         // ═══════════════════════════════════════════════════════════════════════
