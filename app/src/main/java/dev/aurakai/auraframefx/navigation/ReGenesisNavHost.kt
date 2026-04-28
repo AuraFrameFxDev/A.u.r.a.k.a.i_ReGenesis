@@ -65,8 +65,62 @@ import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
 
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentRosterScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOFusionScreen
 
 import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
+
+// LIVEUI v2.4 CRITICAL SCREEN IMPORTS
+import dev.aurakai.auraframefx.domains.aura.aura.ui.AIFeaturesScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.DeviceOptimizerScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.CanvasScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.OverlayScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.LiveROMEditorScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SentinelsFortressScreen
+import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentCreationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ModuleCreationScreen
+
+// AURA BATCH v2.5 SCREEN IMPORTS
+import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.FusionModeScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.UIEngineScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.PrivacyGuardScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.ProfileScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.SecureCommScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.SecurityScannerScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.VPNManagerScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.FirewallScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.HomeScreen
+import dev.aurakai.auraframefx.domains.aura.aura.ui.QuickActions
+
+// KAI BATCH v2.5 SCREEN IMPORTS
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.RecoveryToolsScreen
+import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.HookManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LSPosedGateScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LSPosedModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LSPosedSubmenuScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiRGSSScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelFortressScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSphereGridScreen
+import dev.aurakai.auraframefx.domains.kai.screens.LogsViewerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.ROMToolsSubmenuScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RootToolsScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RootToolsTogglesScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiDossierScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiLDOArmamentPickerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.KaiSentinelIntegrityScreen
+import dev.aurakai.auraframefx.domains.kai.screens.PowerOfNoScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RoyalGuardDomainExpansionScreen
+import dev.aurakai.auraframefx.domains.kai.screens.RoyalGuardOSScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignBootloaderScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignRecoveryScreen
+import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.SovereignShieldScreen
+import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
 
 /**
  * 🌐 REGENESIS CONSOLIDATED NAV GRAPH
@@ -273,6 +327,192 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.SovereignModuleManager.route) { 
             SovereignModuleManagerScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // LIVEUI v2.4 CRITICAL SCREENS (11 screens wired)
+        // ═══════════════════════════════════════════════════════════════════════
+        
+        // AURA AI + Overlay Engine (4 screens)
+        composable(ReGenesisRoute.AuraAIFeatures.route) { 
+            AIFeaturesScreen() 
+        }
+        composable(ReGenesisRoute.AuraDeviceOptimizer.route) { 
+            DeviceOptimizerScreen() 
+        }
+        composable(ReGenesisRoute.AuraCanvasEditor.route) { 
+            CanvasScreen() 
+        }
+        composable(ReGenesisRoute.AuraSystemOverlays.route) { 
+            OverlayScreen() 
+        }
+
+        // KAI Security + ROM Tools (3 screens)
+        composable(ReGenesisRoute.LiveROMEditor.route) { 
+            LiveROMEditorScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+        composable(ReGenesisRoute.SentinelFortress.route) { 
+            SentinelsFortressScreen(navController = navController, onBack = { navController.popBackStack(); true })
+        }
+        composable(ReGenesisRoute.SystemOverrides.route) { 
+            SystemOverridesScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+
+        // NEXUS Agent Hub (2 screens)
+        composable(ReGenesisRoute.AgentCreation.route) { 
+            AgentCreationScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+        composable(ReGenesisRoute.ModuleCreation.route) { 
+            ModuleCreationScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+
+        // LDO Catalyst (2 screens)
+        composable(ReGenesisRoute.LdoArmamentFusion.route) { 
+            ArmamentFusionScreen(navController = navController) 
+        }
+        composable(ReGenesisRoute.LdoFusion.route) { 
+            LDOFusionScreen() 
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // AURA BATCH v2.5 — HIGH PRIORITY SCREENS (15 screens)
+        // ═══════════════════════════════════════════════════════════════════════
+        
+        // Core Aura Screens
+        composable(ReGenesisRoute.AgentAdvancement.route) { 
+            AgentAdvancementScreen(onBack = { navController.popBackStack() }) 
+        }
+        composable(ReGenesisRoute.FusionMode.route) { 
+            FusionModeScreen() 
+        }
+        composable(ReGenesisRoute.UIEngine.route) { 
+            UIEngineScreen() 
+        }
+        composable(ReGenesisRoute.PrivacyGuard.route) { 
+            PrivacyGuardScreen() 
+        }
+        composable(ReGenesisRoute.ProfileScreen.route) { 
+            ProfileScreen() 
+        }
+        composable(ReGenesisRoute.SecureComm.route) { 
+            SecureCommScreen() 
+        }
+        composable(ReGenesisRoute.SecurityScanner.route) { 
+            SecurityScannerScreen() 
+        }
+        composable(ReGenesisRoute.VPNManager.route) { 
+            VPNManagerScreen() 
+        }
+        composable(ReGenesisRoute.Firewall.route) { 
+            FirewallScreen() 
+        }
+        composable(ReGenesisRoute.BetaScreens.route) { 
+            HomeScreen(navController = navController) 
+        }
+        composable(ReGenesisRoute.QuickActions.route) { 
+            QuickActions() 
+        }
+        composable(ReGenesisRoute.AuraSphereGrid.route) { 
+            StubScreen(title = "Aura Sphere Grid", iconName = "grid") 
+        }
+        composable(ReGenesisRoute.AuraDossier.route) { 
+            StubScreen(title = "Aura Dossier", iconName = "docs") 
+        }
+        composable(ReGenesisRoute.AuraLDOArmament.route) { 
+            StubScreen(title = "LDO Armament", iconName = "shield") 
+        }
+        composable(ReGenesisRoute.EcosystemMenu.route) { 
+            StubScreen(title = "Ecosystem Menu", iconName = "menu") 
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // KAI BATCH v2.5 — HIGH PRIORITY SCREENS (23 screens)
+        // ═══════════════════════════════════════════════════════════════════════
+        
+        // ROM Tools
+        composable(ReGenesisRoute.RecoveryTools.route) { 
+            RecoveryToolsScreen() 
+        }
+        composable(ReGenesisRoute.SovereignBootloader.route) { 
+            SovereignBootloaderScreen() 
+        }
+        composable(ReGenesisRoute.SovereignRecovery.route) { 
+            SovereignRecoveryScreen() 
+        }
+        composable(ReGenesisRoute.SovereignModuleManager.route) { 
+            SovereignModuleManagerScreen() 
+        }
+        
+        // Security Shield
+        composable(ReGenesisRoute.SovereignShield.route) { 
+            SovereignShieldScreen() 
+        }
+        composable(ReGenesisRoute.VPN.route) { 
+            VPNScreen() 
+        }
+        
+        // Core Kai Screens
+        composable(ReGenesisRoute.BootloaderManager.route) { 
+            BootloaderManagerScreen() 
+        }
+        composable(ReGenesisRoute.HookManager.route) { 
+            HookManagerScreen() 
+        }
+        composable(ReGenesisRoute.LSPosedGate.route) { 
+            LSPosedGateScreen() 
+        }
+        composable(ReGenesisRoute.LSPosedModuleManager.route) { 
+            LSPosedModuleManagerScreen() 
+        }
+        composable(ReGenesisRoute.LSPosedSubmenu.route) { 
+            LSPosedSubmenuScreen() 
+        }
+        composable(ReGenesisRoute.ModuleManager.route) { 
+            ModuleManagerScreen() 
+        }
+        composable(ReGenesisRoute.RootTools.route) { 
+            RootToolsScreen() 
+        }
+        composable(ReGenesisRoute.ROMToolsSubmenu.route) { 
+            ROMToolsSubmenuScreen() 
+        }
+        composable(ReGenesisRoute.RootToolsToggles.route) { 
+            RootToolsTogglesScreen() 
+        }
+        composable(ReGenesisRoute.LogsViewer.route) { 
+            LogsViewerScreen() 
+        }
+        
+        // Advanced Kai Screens
+        composable(ReGenesisRoute.KaiDomainExpansion.route) { 
+            KaiDomainExpansionScreen() 
+        }
+        composable(ReGenesisRoute.KaiRGSS.route) { 
+            KaiRGSSScreen() 
+        }
+        composable(ReGenesisRoute.KaiSentinelFortress.route) { 
+            KaiSentinelFortressScreen() 
+        }
+        composable(ReGenesisRoute.KaiSphereGrid.route) { 
+            KaiSphereGridScreen() 
+        }
+        composable(ReGenesisRoute.KaiDossier.route) { 
+            KaiDossierScreen() 
+        }
+        composable(ReGenesisRoute.KaiLDOArmament.route) { 
+            KaiLDOArmamentPickerScreen() 
+        }
+        composable(ReGenesisRoute.KaiSentinelIntegrity.route) { 
+            KaiSentinelIntegrityScreen() 
+        }
+        composable(ReGenesisRoute.PowerOfNo.route) { 
+            PowerOfNoScreen() 
+        }
+        composable(ReGenesisRoute.RoyalGuardDomain.route) { 
+            RoyalGuardDomainExpansionScreen() 
+        }
+        composable(ReGenesisRoute.RoyalGuardOS.route) { 
+            RoyalGuardOSScreen() 
         }
     }
 }

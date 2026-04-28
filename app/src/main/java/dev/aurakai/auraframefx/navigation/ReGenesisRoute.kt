@@ -57,6 +57,33 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object InstantColorPicker : ReGenesisRoute("instant_color_picker", "Color Picker")
     data object NotchBarGate : ReGenesisRoute("notch_bar_gate")
 
+    // ═══════════════════════════════════════════════════════════════
+    // LIVEUI v2.4 CRITICAL SCREENS (AURA AI + Overlay Engine)
+    // ═══════════════════════════════════════════════════════════════
+    data object AuraAIFeatures : ReGenesisRoute("aura_ai_features", "AI Features")
+    data object AuraDeviceOptimizer : ReGenesisRoute("aura_device_optimizer", "Device Optimizer")
+    data object AuraCanvasEditor : ReGenesisRoute("aura_canvas_editor", "Canvas Editor")
+    data object AuraSystemOverlays : ReGenesisRoute("aura_system_overlays", "System Overlays")
+
+    // ═══════════════════════════════════════════════════════════════
+    // AURA BATCH v2.5 — HIGH PRIORITY SCREENS
+    // ═══════════════════════════════════════════════════════════════
+    data object AgentAdvancement : ReGenesisRoute("agent_advancement", "Agent Advancement")
+    data object UIEngine : ReGenesisRoute("ui_engine", "UI Engine")
+    data object PrivacyGuard : ReGenesisRoute("privacy_guard", "Privacy Guard")
+    data object ProfileScreen : ReGenesisRoute("profile_screen", "Profile")
+    data object SecureComm : ReGenesisRoute("secure_comm", "Secure Communications")
+    data object SecurityScanner : ReGenesisRoute("security_scanner", "Security Scanner")
+    data object VPNManager : ReGenesisRoute("vpn_manager", "VPN Manager")
+    data object CodeAscension : ReGenesisRoute("code_ascension", "Code Ascension")
+    data object CodeAscensionFusion : ReGenesisRoute("code_ascension_fusion", "Code Ascension Fusion")
+    data object BetaScreens : ReGenesisRoute("beta_screens", "Beta Screens")
+    data object AuraSphereGrid : ReGenesisRoute("aura_sphere_grid", "Aura Sphere Grid")
+    data object AuraDossier : ReGenesisRoute("aura_dossier", "Aura Dossier")
+    data object AuraLDOArmament : ReGenesisRoute("aura_ldo_armament", "LDO Armament")
+    data object QuickActions : ReGenesisRoute("quick_actions", "Quick Actions")
+    data object EcosystemMenu : ReGenesisRoute("ecosystem_menu", "Ecosystem Menu")
+
     // --- ICONIFY INTEGRATION ---
     data object IconifyPicker : ReGenesisRoute("aura/iconify", "Iconify")
     data object IconifyCategory : ReGenesisRoute("aura/iconify/{category}") {
@@ -105,6 +132,33 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object HotSwap : ReGenesisRoute("hotswap")
 
     // ═══════════════════════════════════════════════════════════════
+    // KAI BATCH v2.5 — HIGH PRIORITY SCREENS
+    // ═══════════════════════════════════════════════════════════════
+    data object RecoveryTools : ReGenesisRoute("recovery_tools", "Recovery Tools")
+    data object BootloaderManager : ReGenesisRoute("bootloader_manager", "Bootloader Manager")
+    data object HookManager : ReGenesisRoute("hook_manager", "Hook Manager")
+    data object LSPosedGate : ReGenesisRoute("lsposed_gate", "LSPosed Gate")
+    data object LSPosedModuleManager : ReGenesisRoute("lsposed_module_manager", "LSPosed Module Manager")
+    data object LSPosedSubmenu : ReGenesisRoute("lsposed_submenu", "LSPosed Submenu")
+    data object ModuleManager : ReGenesisRoute("module_manager", "Module Manager")
+    data object KaiDomainExpansion : ReGenesisRoute("kai_domain_expansion", "Domain Expansion")
+    data object KaiRGSS : ReGenesisRoute("kai_rgss", "Royal Guard System")
+    data object KaiSentinelFortress : ReGenesisRoute("kai_sentinel_fortress", "Sentinel Fortress")
+    data object KaiSphereGrid : ReGenesisRoute("kai_sphere_grid", "Kai Sphere Grid")
+    data object LogsViewer : ReGenesisRoute("logs_viewer", "Logs Viewer")
+    data object ROMToolsSubmenu : ReGenesisRoute("rom_tools_submenu", "ROM Tools")
+    data object RootToolsToggles : ReGenesisRoute("root_tools_toggles", "Root Toggles")
+    data object KaiDossier : ReGenesisRoute("kai_dossier", "Kai Dossier")
+    data object KaiLDOArmament : ReGenesisRoute("kai_ldo_armament", "LDO Armament")
+    data object KaiSentinelIntegrity : ReGenesisRoute("kai_sentinel_integrity", "Sentinel Integrity")
+    data object PowerOfNo : ReGenesisRoute("power_of_no", "Power of No")
+    data object RoyalGuardDomain : ReGenesisRoute("royal_guard_domain", "Royal Guard Domain")
+    data object RoyalGuardOS : ReGenesisRoute("royal_guard_os", "Royal Guard OS")
+    data object SovereignBootloader : ReGenesisRoute("sovereign_bootloader", "Sovereign Bootloader")
+    data object SovereignRecovery : ReGenesisRoute("sovereign_recovery", "Sovereign Recovery")
+    data object SovereignModuleManager : ReGenesisRoute("sovereign_module_manager", "Module Manager")
+
+    // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: GENESIS AI & ORCHESTRATION
     // ═══════════════════════════════════════════════════════════════
     data object OracleDrive : ReGenesisRoute("oracle_drive", "Oracle Drive")
@@ -116,8 +170,6 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object Trinity : ReGenesisRoute("trinity", "Trinity Core")
     data object OracleCloudStorage : ReGenesisRoute("oracle_cloud_storage")
     data object AgentBridgeHub : ReGenesisRoute("agent_bridge_hub")
-    data object SovereignRecovery : ReGenesisRoute("sovereign_recovery")
-    data object SovereignModuleManager : ReGenesisRoute("sovereign_module_manager")
     data object ModuleCreation : ReGenesisRoute("module_creation")
     data object PandoraBox : ReGenesisRoute("pandora_box")
     data object NeuralNetwork : ReGenesisRoute("neural_network")
@@ -178,6 +230,7 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object LdoTasker : ReGenesisRoute("ldo_tasker")
     data object MultiAgentTask : ReGenesisRoute("multi_agent_task")
     data object LdoFusion : ReGenesisRoute("ldo_fusion")
+    data object LdoArmamentFusion : ReGenesisRoute("ldo_armament_fusion", "Armament Fusion")
     data object LdoWorldTree : ReGenesisRoute("ldo_world_tree")
     data object LdoAgentProfile : ReGenesisRoute("ldo_agent_profile/{agentId}") {
         const val ARG = "agentId"

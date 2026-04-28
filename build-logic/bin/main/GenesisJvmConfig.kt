@@ -34,8 +34,8 @@ object GenesisJvmConfig {
             }
 
             tasks.withType<JavaCompile>().configureEach {
-                sourceCompatibility = JavaVersion.VERSION_21.toString()
-                targetCompatibility = JavaVersion.VERSION_21.toString()
+                sourceCompatibility = JVM_VERSION_INT.toString()
+                targetCompatibility = JVM_VERSION_INT.toString()
             }
 
             // Configure toolchain safely

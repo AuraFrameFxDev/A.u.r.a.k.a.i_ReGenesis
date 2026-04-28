@@ -22,6 +22,9 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
+    <!-- LiveUI v2.4 Pixel 10 Tensor G5 Sensor Optimization -->
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
+
     <!-- Optional Permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

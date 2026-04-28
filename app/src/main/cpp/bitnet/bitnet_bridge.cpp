@@ -12,7 +12,7 @@
 #define JNI_TAG "BitNetJNI"
 
 // Static instance for the session
-static BitNetModel* model = nullptr;
+static bitNetModel* model = nullptr;
 
 /**
  * Returns temperature in Celsius from the specified sysfs zone.
@@ -90,7 +90,7 @@ Java_dev_aurakai_auraframefx_domains_genesis_BitNetLocalService_generateLocalRes
 
     // Lazy initialization of the model
     if (!model) {
-        model = new BitNetModel("/sdcard/models/bitnet-100b.gguf");
+        model = new bitNetModel("/sdcard/models/bitnet-100b.gguf");
 
         // Thermal/Performance Optimization: Pin to Big Cores (e.g., cores 4-7 on Snapdragon)
         cpu_set_t set;

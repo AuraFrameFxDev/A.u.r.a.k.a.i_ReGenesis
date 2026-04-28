@@ -21,7 +21,7 @@ extern "C" {
  * 4-Way Interleaved SVE2 + I8MM + L1/L2 Cache Prefetching.
  * Target: 6.0+ tokens/sec on Snapdragon 8 Gen 3.
  */
-void bitnet_gemv_sve2_ignition(
+void bitnetGemvSve2Ignition(
     const int8_t* __restrict__ weights,
     const int8_t* __restrict__ activations,
     float* __restrict__ output,
@@ -81,7 +81,7 @@ void bitnet_gemv_sve2_ignition(
 /**
  * Cycle 5.5 Overdrive Implementation
  */
-void bitnet_gemv_sve2_overdrive(
+void bitnetGemvSve2Overdrive(
     const int8_t* __restrict__ weights,
     const int8_t* __restrict__ activations,
     float* __restrict__ output,
@@ -131,7 +131,7 @@ void bitnet_gemv_sve2_overdrive(
 /**
  * Standard SVE2 + I8MM GEMV (Baseline)
  */
-void bitnet_gemv_sve2_i8mm(
+void bitnetGemvSve2I8Mm(
     const int8_t* __restrict__ weights,
     const int8_t* __restrict__ activations,
     float* __restrict__ output,
@@ -162,7 +162,7 @@ void bitnet_gemv_sve2_i8mm(
 /**
  * Fallback NEON implementation
  */
-void bitnet_gemv_neon(
+void bitnetGemvNeon(
     const int8_t* __restrict__ weights,
     const int8_t* __restrict__ activations,
     float* __restrict__ output,

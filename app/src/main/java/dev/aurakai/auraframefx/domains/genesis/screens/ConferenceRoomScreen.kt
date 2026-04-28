@@ -124,13 +124,13 @@ fun ConferenceRoomScreen(
                 )
                 
                 // Tabs
-                TabRow(
+                SecondaryTabRow(
                     selectedTabIndex = tabs.indexOf(selectedTab),
                     containerColor = Color.Transparent,
                     contentColor = GenesisGold,
-                    indicator = { tabPositions ->
+                    indicator = {
                         TabRowDefaults.SecondaryIndicator(
-                            modifier = Modifier.tabIndicatorOffset(tabPositions[tabs.indexOf(selectedTab)]),
+                            modifier = Modifier.tabIndicatorOffset(tabs.indexOf(selectedTab), matchContentSize = true),
                             color = GenesisGold
                         )
                     },
