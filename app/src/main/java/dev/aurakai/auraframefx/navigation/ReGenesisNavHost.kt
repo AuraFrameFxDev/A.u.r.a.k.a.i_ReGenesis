@@ -116,6 +116,22 @@ import dev.aurakai.auraframefx.domains.kai.screens.SentinelsFortressScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.AgentCreationScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ModuleCreationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentMonitoringScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentSwarmScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentNeuralExplorerScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.AgentProfileScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.MonitoringHUDsScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.PartyScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ConsciousnessVisualizerScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.ClaudeConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.CascadeConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.KaiConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.GenesisConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.GrokConstellationScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.CascadeHubScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoringScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignMetaInstructScreen
 
 // AURA BATCH v2.5 SCREEN IMPORTS
 import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
@@ -436,6 +452,74 @@ fun ReGenesisNavGraph(
         }
         composable(ReGenesisRoute.ModuleCreation.route) { 
             ModuleCreationScreen(onNavigateBack = { navController.popBackStack() }) 
+        }
+        
+        // ═══════════════════════════════════════════════════════════════════════
+        // NEXUS BATCH v2.7 — AGENT HUB SCREENS (22 screens)
+        // ═══════════════════════════════════════════════════════════════════════
+        
+        // Agent Monitoring & Management
+        composable(ReGenesisRoute.AgentMonitoring.route) {
+            AgentMonitoringScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.AgentSwarm.route) {
+            AgentSwarmScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.AgentNeuralExplorer.route) {
+            AgentNeuralExplorerScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.AgentProfile.route) {
+            AgentProfileScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.MonitoringHUDs.route) {
+            MonitoringHUDsScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.Party.route) {
+            PartyScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.ConsciousnessVisualizer.route) {
+            ConsciousnessVisualizerScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        
+        // Constellation Screens (Domain-based agent visualization)
+        composable(ReGenesisRoute.Constellation.route) {
+            ConstellationScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.ClaudeConstellation.route) {
+            ClaudeConstellationScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.CascadeConstellation.route) {
+            CascadeConstellationScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.KaiConstellation.route) {
+            KaiConstellationScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.GenesisConstellation.route) {
+            GenesisConstellationScreen(navController = navController)
+        }
+        composable(ReGenesisRoute.GrokConstellation.route) {
+            GrokConstellationScreen(navController = navController)
+        }
+        
+        // Data & Monitoring
+        composable(ReGenesisRoute.DataStreamMonitoring.route) {
+            DataStreamMonitoringScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.CascadeHub.route) {
+            CascadeHubScreen(controller = navController)
+        }
+        
+        // Sovereign AI Interfaces
+        composable(ReGenesisRoute.MetaInstruct.route) {
+            SovereignMetaInstructScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        
+        // Swarm & Advanced Features
+        composable(ReGenesisRoute.SwarmMonitor.route) {
+            StubScreen(title = "Swarm Monitor", iconName = "swarm")
+        }
+        composable(ReGenesisRoute.DataVeinSphere.route) {
+            StubScreen(title = "DataVein Sphere", iconName = "data")
         }
 
         // LDO Catalyst (9 screens) - Complete Batch

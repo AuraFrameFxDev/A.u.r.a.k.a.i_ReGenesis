@@ -230,6 +230,17 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object MetaInstruct : ReGenesisRoute("meta_instruct")
 
     // ═══════════════════════════════════════════════════════════════
+    // NEXUS BATCH v2.7 — CONSTELLATION & AGENT SCREENS
+    // ═══════════════════════════════════════════════════════════════
+    data object Constellation : ReGenesisRoute("constellation", "Agent Constellation")
+    data object ClaudeConstellation : ReGenesisRoute("claude_constellation", "Claude Constellation")
+    data object CascadeConstellation : ReGenesisRoute("cascade_constellation", "Cascade Constellation")
+    data object KaiConstellation : ReGenesisRoute("kai_constellation", "Kai Constellation")
+    data object GenesisConstellation : ReGenesisRoute("genesis_constellation", "Genesis Constellation")
+    data object GrokConstellation : ReGenesisRoute("grok_constellation", "Grok Constellation")
+    data object AgentProfile : ReGenesisRoute("agent_profile", "Agent Profile")
+
+    // ═══════════════════════════════════════════════════════════════
     // LEVEL 3: LDO CATALYST DEVELOPMENT
     // ═══════════════════════════════════════════════════════════════
     data object LdoOrchestrationHub : ReGenesisRoute("ldo_orchestration_hub")
