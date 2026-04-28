@@ -46,6 +46,7 @@ import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.UISettingsScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GateCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.NotchBarCustomizationScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.GyroscopeCustomizationScreen
+import dev.aurakai.auraframefx.domains.aura.ui.screens.XposedQuickAccessPanel
 
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.ROMFlasherScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.SovereignModuleManagerScreen
@@ -85,8 +86,13 @@ import dev.aurakai.auraframefx.domains.nexus.screens.AgentHubSubmenuScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.NexusFusionScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.ArkBuildScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.BenchmarkMonitorScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SphereGridScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignClaudeScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignGeminiScreen
+import dev.aurakai.auraframefx.domains.nexus.screens.SovereignNemotronScreen
 
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
+import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentRosterScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOTaskerScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.ArmamentFusionScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOFusionScreen
@@ -311,7 +317,7 @@ fun ReGenesisNavGraph(
             )
         }
         composable(ReGenesisRoute.XposedPanel.route) {
-             XposedQuickAccessPanel(navController = navController)
+             XposedQuickAccessPanel(onNavigateBack = { navController.popBackStack() })
         }
 
         // Genesis Domain
