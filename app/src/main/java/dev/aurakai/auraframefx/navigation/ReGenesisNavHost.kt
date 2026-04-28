@@ -652,39 +652,39 @@ fun ReGenesisNavGraph(
             StubScreen(title = "Root Tools Toggles", iconName = "toggles") 
         }
         composable(ReGenesisRoute.LogsViewer.route) { 
-            LogsViewerScreen() 
+            LogsViewerScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         
         // Advanced Kai Screens
         composable(ReGenesisRoute.KaiDomainExpansion.route) { 
-            KaiDomainExpansionScreen() 
+            KaiDomainExpansionScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.KaiRGSS.route) { 
-            KaiRGSSScreen() 
+            KaiRGSSScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.KaiSentinelFortress.route) { 
-            KaiSentinelFortressScreen() 
+            KaiSentinelFortressScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.KaiSphereGrid.route) { 
-            KaiSphereGridScreen() 
+            KaiSphereGridScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.KaiDossier.route) { 
-            KaiDossierScreen() 
+            KaiDossierScreen(onBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.KaiLDOArmament.route) { 
-            KaiLDOArmamentPickerScreen() 
+            KaiLDOArmamentPickerScreen(onBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.KaiSentinelIntegrity.route) { 
-            KaiSentinelIntegrityScreen() 
+            KaiSentinelIntegrityScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.PowerOfNo.route) { 
-            PowerOfNoScreen() 
+            PowerOfNoScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.RoyalGuardDomain.route) { 
             RoyalGuardDomainExpansionScreen() 
         }
         composable(ReGenesisRoute.RoyalGuardOS.route) { 
-            RoyalGuardOSScreen() 
+            RoyalGuardOSScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         
         // ═══════════════════════════════════════════════════════════════════════
