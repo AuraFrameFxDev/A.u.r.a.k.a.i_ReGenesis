@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.ui.screens.aura
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -151,6 +152,9 @@ fun IconifyHubScreen(
     onNavigateBack: () -> Unit = {},
     onNavigateToCategory: (String) -> Unit = {}
 ) {
+    // Handle hardware back button
+    BackHandler(onBack = onNavigateBack)
+
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Home", "Tweaks", "Xposed")
 

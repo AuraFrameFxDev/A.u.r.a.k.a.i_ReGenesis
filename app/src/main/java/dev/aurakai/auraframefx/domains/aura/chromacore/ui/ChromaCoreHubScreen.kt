@@ -37,6 +37,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -65,6 +66,9 @@ fun ChromaCoreHubScreen(
     viewModel: ChromaCoreViewModel = hiltViewModel()
 ) {
     val settings by viewModel.settings.collectAsState()
+
+    // Handle hardware back button to return to domain hub
+    BackHandler(onBack = onNavigateBack)
 
     Scaffold(
         topBar = {
