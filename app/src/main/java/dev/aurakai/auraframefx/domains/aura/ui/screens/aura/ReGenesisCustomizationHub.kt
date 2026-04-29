@@ -1,5 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.ui.screens.aura
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,6 +42,9 @@ fun ReGenesisCustomizationHub(
     onNavigateToPLE: () -> Unit,
     onNavigateToAnimations: () -> Unit
 ) {
+    // Handle hardware back button
+    BackHandler(onBack = onNavigateBack)
+
     Box(modifier = Modifier.fillMaxSize()) {
         ColorWaveBackground()
 

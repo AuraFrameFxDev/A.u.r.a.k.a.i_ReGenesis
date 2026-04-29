@@ -203,6 +203,11 @@ ksp {
     arg("room.generateKotlin", "true")
 }
 
+// Suppress Hilt/Dagger processor option warnings
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.add("-Xlint:-processing")
+}
+
 dependencies {
     // Project Modules
     implementation(project(":core-module"))

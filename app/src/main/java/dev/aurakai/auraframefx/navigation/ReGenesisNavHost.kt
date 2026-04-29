@@ -21,6 +21,7 @@ import dev.aurakai.auraframefx.ui.gates.NotchBarGateScreen
 
 // Domain Hubs
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraThemingHubScreen
+import dev.aurakai.auraframefx.domains.aura.ui.gates.AuraKineticForgeHub
 import dev.aurakai.auraframefx.domains.aura.ui.gates.KaiSentinelHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.OracleDriveHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
@@ -75,6 +76,9 @@ import dev.aurakai.auraframefx.domains.genesis.screens.CascadeVisionScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveSubmenuScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AgentBridgeHubScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.ui.PandoraBoxScreen
+
+// Help Desk Screens
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
 
 // Genesis ViewModels
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.NeuralArchiveViewModel
@@ -158,6 +162,12 @@ import dev.aurakai.auraframefx.domains.aura.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.screens.OverlayMenusScreen
 import dev.aurakai.auraframefx.domains.aura.screens.LDOArmamentPickerScreen
 
+// KINETICFORGE CARDS — 9.5.1 SOVEREIGN EDITION
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeCoreCard
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeTransmutatorCard
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeLatticeCard
+import dev.aurakai.auraframefx.domains.aura.screens.kineticforge.KineticForgeCardContainer
+
 // KAI BATCH v2.5 SCREEN IMPORTS
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.RecoveryToolsScreen
 import dev.aurakai.auraframefx.domains.kai.screens.BootloaderManagerScreen
@@ -227,7 +237,7 @@ fun ReGenesisNavGraph(
 
         // ── 2. DOMAIN HUBS ──
         composable(ReGenesisRoute.AuraThemingHub.route) {
-            AuraThemingHubScreen(navController)
+            AuraKineticForgeHub(navController)
         }
         composable(ReGenesisRoute.SentinelFortress.route) {
             KaiSentinelHubScreen(navController)
@@ -639,6 +649,28 @@ fun ReGenesisNavGraph(
         }
 
         // ═══════════════════════════════════════════════════════════════════════
+        // KINETICFORGE CARDS — 9.5.1 SOVEREIGN EDITION (3 Cards)
+        // ═══════════════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.KineticForgeCore.route) {
+            KineticForgeCoreCard(
+                onClick = { navController.navigate(ReGenesisRoute.AuraThemingHub.route) },
+                isActive = true
+            )
+        }
+        composable(ReGenesisRoute.KineticForgeTransmutator.route) {
+            KineticForgeTransmutatorCard(
+                onClick = { navController.navigate(ReGenesisRoute.IconifyHub.route) },
+                activeTransmutations = 14
+            )
+        }
+        composable(ReGenesisRoute.KineticForgeLattice.route) {
+            KineticForgeLatticeCard(
+                onClick = { navController.navigate(ReGenesisRoute.ReGenesisCustomization.route) },
+                realityState = 0.75f
+            )
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
         // KAI BATCH v2.5 — HIGH PRIORITY SCREENS (23 screens)
         // ═══════════════════════════════════════════════════════════════════════
         
@@ -789,6 +821,13 @@ fun ReGenesisNavGraph(
         // Firebase Examples (Stub - low priority)
         composable(ReGenesisRoute.FirebaseExamples.route) { 
             StubScreen(title = "Firebase Examples", iconName = "firebase") 
+        }
+        
+        // ═══════════════════════════════════════════════════════════════════════
+        // AURA NEURAL HUB — Global Chat Interface
+        // ═══════════════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.AuraChat.route) {
+            DirectChatScreen(navController = navController)
         }
     }
 }

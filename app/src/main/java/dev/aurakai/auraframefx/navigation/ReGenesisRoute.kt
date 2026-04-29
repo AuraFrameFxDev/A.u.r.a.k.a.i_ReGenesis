@@ -87,6 +87,18 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object WorkingLab : ReGenesisRoute("working_lab", "Working Lab")
     data object OverlayMenus : ReGenesisRoute("overlay_menus", "Overlay Menus")
 
+    // ═══════════════════════════════════════════════════════════════
+    // KINETICFORGE CARDS — 9.5.1 SOVEREIGN EDITION
+    // ═══════════════════════════════════════════════════════════════════════
+    data object KineticForgeCore : ReGenesisRoute("kinetic_forge_core", "KineticForge Core")
+    data object KineticForgeTransmutator : ReGenesisRoute("kinetic_forge_transmutator", "Transmutator")
+    data object KineticForgeLattice : ReGenesisRoute("kinetic_forge_lattice", "Lattice")
+
+    // ═══════════════════════════════════════════════════════════════
+    // AURA NEURAL HUB — Global Chat Interface
+    // ═══════════════════════════════════════════════════════════════════════
+    data object AuraChat : ReGenesisRoute("aura/chat", "Aura Neural Hub")
+
     // --- ICONIFY INTEGRATION ---
     data object IconifyHub : ReGenesisRoute("aura/iconify_hub", "Iconify Hub")
     data object IconifyPicker : ReGenesisRoute("aura/iconify", "Iconify")
