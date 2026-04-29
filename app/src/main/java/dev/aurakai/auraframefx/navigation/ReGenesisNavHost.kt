@@ -77,6 +77,9 @@ import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveSubmenuScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.AgentBridgeHubScreen
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.ui.PandoraBoxScreen
 
+// Help Desk Screens
+import dev.aurakai.auraframefx.domains.helpdesk.screens.DirectChatScreen
+
 // Genesis ViewModels
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.NeuralArchiveViewModel
 import dev.aurakai.auraframefx.domains.genesis.viewmodels.OracleCloudViewModel
@@ -818,6 +821,13 @@ fun ReGenesisNavGraph(
         // Firebase Examples (Stub - low priority)
         composable(ReGenesisRoute.FirebaseExamples.route) { 
             StubScreen(title = "Firebase Examples", iconName = "firebase") 
+        }
+        
+        // ═══════════════════════════════════════════════════════════════════════
+        // AURA NEURAL HUB — Global Chat Interface
+        // ═══════════════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.AuraChat.route) {
+            DirectChatScreen(navController = navController)
         }
     }
 }

@@ -94,6 +94,11 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object KineticForgeTransmutator : ReGenesisRoute("kinetic_forge_transmutator", "Transmutator")
     data object KineticForgeLattice : ReGenesisRoute("kinetic_forge_lattice", "Lattice")
 
+    // ═══════════════════════════════════════════════════════════════
+    // AURA NEURAL HUB — Global Chat Interface
+    // ═══════════════════════════════════════════════════════════════════════
+    data object AuraChat : ReGenesisRoute("aura/chat", "Aura Neural Hub")
+
     // --- ICONIFY INTEGRATION ---
     data object IconifyHub : ReGenesisRoute("aura/iconify_hub", "Iconify Hub")
     data object IconifyPicker : ReGenesisRoute("aura/iconify", "Iconify")
