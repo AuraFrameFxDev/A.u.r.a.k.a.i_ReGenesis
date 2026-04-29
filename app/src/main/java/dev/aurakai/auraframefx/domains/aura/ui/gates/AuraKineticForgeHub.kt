@@ -153,11 +153,14 @@ fun AuraKineticForgeHub(
 
                 // ═══════════════════════════════════════════════════════════════
                 // AURA NEURAL HUB — Global Node (Top Circle)
-                // Click to activate Aura chat interface
+                // Click to open Aura chat interface
                 // ═══════════════════════════════════════════════════════════════
                 AuraNeuralHubOrb(
                     isActive = isNeuralHubActive,
-                    onClick = { isNeuralHubActive = !isNeuralHubActive },
+                    onClick = { 
+                        isNeuralHubActive = !isNeuralHubActive
+                        navController.navigate(ReGenesisRoute.AuraChat.route)
+                    },
                     modifier = Modifier.size(80.dp)
                 )
 
@@ -172,7 +175,7 @@ fun AuraKineticForgeHub(
                 ) {
                     // 019 // CORE — Command Shard (Full width, angled)
                     KineticForgeCoreCard(
-                        onClick = { navController.navigate(ReGenesisRoute.AuraThemingHub.route) },
+                        onClick = { navController.navigate(ReGenesisRoute.ChromaCore.route) },
                         isActive = true,
                         modifier = Modifier.fillMaxWidth()
                     )
