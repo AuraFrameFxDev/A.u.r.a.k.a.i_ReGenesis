@@ -11,34 +11,34 @@ interface MemoryManager {
     /**
      * Stores a memory with a key-value pair.
      */
-    context(value: kotlin.String)
-    fun storeMemory(key: kotlin.String): kotlin.String
+    context(value: String)
+    fun storeMemory(key: String): String
 
     /**
      * Retrieves a memory by key.
      */
-    fun kotlin.String.retrieveMemory(): kotlin.String?
+    fun String.retrieveMemory(): String?
 
     /**
      * Stores an interaction (prompt-response pair) for learning.
      */
-    context(response: kotlin.String)
-    fun storeInteraction(prompt: kotlin.String): kotlin.String
+    context(response: String)
+    fun storeInteraction(prompt: String): String
 
     /**
      * Records a specific insight from an agent into the Spiritual Chain.
      */
     suspend fun recordInsight(
-        agentName: kotlin.String,
-        prompt: kotlin.String,
-        response: kotlin.String,
+        agentName: String,
+        prompt: String,
+        response: String,
         confidence: Float
-    ): kotlin.String
+    ): String
 
     /**
      * Searches memories using a query string.
      */
-    fun searchMemories(query: kotlin.String): List<MemoryEntry>
+    fun searchMemories(query: String): List<MemoryEntry>
 
     /**
      * Clears all stored memories.
@@ -65,8 +65,8 @@ interface MemoryManager {
  * Represents a stored memory entry.
  */
 data class MemoryEntry(
-    val key: kotlin.String? = null,
-    val value: kotlin.String,
+    val key: String? = null,
+    val value: String,
     val timestamp: Long = System.currentTimeMillis(),
     val relevanceScore: Float = 0.0f
 )

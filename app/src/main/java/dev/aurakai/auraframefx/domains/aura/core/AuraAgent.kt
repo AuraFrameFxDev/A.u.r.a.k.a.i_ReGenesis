@@ -139,7 +139,7 @@ class AuraAgent @Inject constructor(
         request: AiRequest,
         context: String
     ): AgentResponse {
-        ensureInitialized()
+        checkInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
 
         // Experimental Gating
@@ -233,7 +233,7 @@ class AuraAgent @Inject constructor(
         cleanup()
     }
 
-    protected override fun ensureInitialized() {
+    private fun checkInitialized() {
         if (!isInitialized) {
             throw IllegalStateException("AuraAgent not initialized")
         }

@@ -6,32 +6,31 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.List
 
 /**
  * Default implementation of MemoryManager
  */
 @Singleton
 class DefaultMemoryManager @Inject constructor() : MemoryManager {
-    private val memoryStore = ConcurrentHashMap<kotlin.String, MemoryEntry>()
+    private val memoryStore = ConcurrentHashMap<String, MemoryEntry>()
 
     private val _memoryStats = MutableStateFlow(MemoryStats())
     override val memoryStats: StateFlow<MemoryStats> = _memoryStats.asStateFlow()
 
-    context(value: kotlin.String)
-    override fun storeMemory(key: kotlin.String): kotlin.String {
+    context(value: String)
+    override fun storeMemory(key: String): String {
         val entry = MemoryEntry(key = key, value = value)
         this@DefaultMemoryManager.memoryStore.put(key, entry)
         this@DefaultMemoryManager.updateStats()
         return key
     }
 
-    override fun kotlin.String.retrieveMemory(): kotlin.String? {
+    override fun String.retrieveMemory(): String? {
         return this@DefaultMemoryManager.memoryStore[this]?.value
     }
 
-    context(response: kotlin.String)
-    override fun storeInteraction(prompt: kotlin.String): kotlin.String {
+    context(response: String)
+    override fun storeInteraction(prompt: String): String {
         val key = "interaction_${System.currentTimeMillis()}"
         val value = "Prompt: $prompt\nResponse: $response"
         return with(value) {
@@ -40,11 +39,11 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
     }
 
     override suspend fun recordInsight(
-        agentName: kotlin.String,
-        prompt: kotlin.String,
-        response: kotlin.String,
+        agentName: String,
+        prompt: String,
+        response: String,
         confidence: Float
-    ): kotlin.String {
+    ): String {
         val key = "insight_${agentName}_${System.currentTimeMillis()}"
         val value = "Agent: $agentName\nPrompt: $prompt\nResponse: $response\nConfidence: $confidence"
         return with(value) {
@@ -52,7 +51,7 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
         }
     }
 
-    override fun searchMemories(query: kotlin.String): List<MemoryEntry> {
+    override fun searchMemories(query: String): List<MemoryEntry> {
         val queryWords = query.lowercase().split(" ")
         return memoryStore.values
             .map { entry ->
@@ -64,7 +63,7 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
             .take(10)
     }
 
-    private fun calculateRelevance(text: kotlin.String, queryWords: List<kotlin.String>): Float {
+    private fun calculateRelevance(text: String, queryWords: List<String>): Float {
         if (queryWords.isEmpty()) return 0f
         val textWords = text.lowercase().split(" ")
         var score = 0f
