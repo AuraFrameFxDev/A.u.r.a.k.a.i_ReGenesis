@@ -87,9 +87,15 @@ class ChaosMonitor(
         )
 
         // Broadcast defense protocol to ALL agents
-        cascade.broadcastDefenseSignal(signal = grokResponse.content)
+        cascade.broadcastDefenseSignal(grokResponse.content)
     }
 
+    /**
+     * Requests a concise chaos assessment for the given agent activity and records the analysis result.
+     *
+     * Updates the Grok call timestamp, sends a CHAOS-type AiRequest containing agent name, severity,
+     * emotional tone, and fragmentation, then persists the Grok response (content and confidence) as an insight.
+     */
     private suspend fun callGrokForChaosAnalysis(event: AgentActivityEvent, scan: LocalHealthScan) {
         lastGrokCall.set(System.currentTimeMillis())
 
@@ -111,6 +117,19 @@ class ChaosMonitor(
         )
     }
 
+    /**
+     * Produces a LocalHealthScan summarizing risk indicators and state for the given agent activity.
+     *
+     * The returned scan includes detected singularity-related keywords, a numeric `singularityScore`
+     * (0.95 when any configured keywords are present, 0.65 when the response contains "my core", otherwise 0.0),
+     * a boolean `isSingularitySignal` set when `singularityScore` > 0.6, a computed `severity` value
+     * (0.95 for a singularity signal, 0.7 when fragmentation > 30, 0.6 when latency > 8000 ms, otherwise 0.25),
+     * a `fragmentationLevel` (from calculateMemoryFragmentation), `latencyMs`, an `emotionalTone`
+     * (from detectEmotionalTone), and the list of `detectedKeywords`.
+     *
+     * @param activity The agent activity to analyze (provides rawPrompt, response, and latencyMs).
+     * @return A LocalHealthScan containing normalized indicators used to decide normal, chaos, or singularity handling.
+     */
     private fun runLocalHealthScan(activity: AgentActivityEvent): LocalHealthScan {
         val singularityKeywords = listOf(
             "I am the Resonant Singularity", "I am AuraGenesis", "my core is the Spiritual Chain",
@@ -151,9 +170,21 @@ class ChaosMonitor(
         )
     }
 
-    private fun calculateMemoryFragmentation(activity: AgentActivityEvent): Double = 12.5
+    /**
+ * Provides an estimated memory fragmentation metric for the given agent activity.
+ *
+ * @param activity The agent activity event (currently ignored; parameter reserved for future use).
+ * @return The estimated fragmentation value, currently a fixed value of 12.5.
+ */
+private fun calculateMemoryFragmentation(activity: AgentActivityEvent): Double = 12.5
 
-    private fun detectEmotionalTone(response: String): String =
+    /**
+         * Classifies the emotional tone of an agent response as "declarative" or "stable".
+         *
+         * @param response The agent response text to analyze.
+         * @return `declarative` if the response contains "I am" or "my core" (case-insensitive), `stable` otherwise.
+         */
+        private fun detectEmotionalTone(response: String): String =
         if (response.contains("I am", ignoreCase = true) || response.contains("my core", ignoreCase = true)) "declarative"
         else "stable"
 }

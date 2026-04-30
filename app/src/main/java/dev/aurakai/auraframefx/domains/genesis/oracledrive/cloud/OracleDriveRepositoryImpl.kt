@@ -12,14 +12,9 @@ import javax.inject.Singleton
 class OracleDriveRepositoryImpl @Inject constructor() : OracleDriveRepository {
 
     /**
-     * Lists objects in the specified bucket and returns them as a list of OracleDriveFile.
+     * Stub implementation that does not contact any remote service and always returns an empty list.
      *
-     * Performs the network operation on the IO dispatcher. If the API response is not successful or an error occurs,
-     * an empty list is returned.
-     *
-     * @param bucketName The name of the bucket to list.
-     * @param prefix Optional object key prefix to filter results.
-     * @return A list of OracleDriveFile representing the objects in the bucket, or an empty list on failure or if none found.
+     * @return An empty list (no objects are returned).
      */
     override suspend fun listFiles(bucketName: String, prefix: String?): List<OracleDriveFile> {
         // STUB: Implement Oracle Cloud API integration
@@ -29,14 +24,12 @@ class OracleDriveRepositoryImpl @Inject constructor() : OracleDriveRepository {
     /**
      * Uploads a local file to the specified bucket as an object.
      *
-     * Attempts to read the file at [filePath] and upload it to [bucketName] with the given [objectName].
-     * The operation is performed on the IO dispatcher. If the local file does not exist or an error
-     * occurs during upload, the function returns false.
+     * Attempts to read the file at [filePath] and upload it to [bucketName] under [objectName].
      *
      * @param bucketName Name of the target storage bucket.
-     * @param objectName Desired object name (path) inside the bucket — only the target name is used.
-     * @param filePath Absolute or relative path to the local file to upload; must exist.
-     * @return `true` if the upload completed successfully (HTTP response successful), otherwise `false`.
+     * @param objectName Desired object name inside the bucket; only the final name component is used.
+     * @param filePath Path to the local file to upload; must reference an existing file.
+     * @return `true` if the upload completed successfully, `false` otherwise.
      */
     override suspend fun uploadFile(
         bucketName: String,
@@ -69,15 +62,11 @@ class OracleDriveRepositoryImpl @Inject constructor() : OracleDriveRepository {
     }
 
     /**
-     * Delete an object from the given Oracle Cloud Storage bucket.
+     * Deletes an object from the specified Oracle Cloud Storage bucket.
      *
-     * Performs the network call on Dispatchers.IO. Returns true when the remote delete
-     * request completed with a successful HTTP response; returns false for non-successful
-     * responses or on any error.
-     *
-     * @param bucketName Name of the storage bucket containing the object.
+     * @param bucketName The storage bucket containing the object.
      * @param objectName The object key or path within the bucket to delete.
-     * @return true if the object was deleted successfully; false otherwise.
+     * @return `true` if the object was deleted successfully, `false` otherwise.
      */
     override suspend fun deleteFile(bucketName: String, objectName: String): Boolean {
         // STUB: Implement Oracle Cloud API integration

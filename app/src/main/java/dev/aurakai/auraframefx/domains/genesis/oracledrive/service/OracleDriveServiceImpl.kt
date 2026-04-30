@@ -40,12 +40,11 @@ class OracleDriveServiceImpl @Inject constructor() : OracleDriveService {
      * @return A [Result] with the updated [OracleConsciousnessState] if initialization succeeds, or a failure with an exception otherwise.
      */
     /**
-     * Initializes and awakens the Oracle Drive consciousness, performing security validation and connecting core AI agents.
+     * Awakens the Oracle Drive and updates its consciousness state.
      *
-     * Attempts to transition the Oracle Drive from a dormant to a conscious state by orchestrating agent awakening and verifying security protocols.
-     * If security validation succeeds, updates the consciousness state to awake and connects the Genesis, Aura, and Kai agents.
+     * Performs a security validation and, if successful, marks the drive as awake and connects the core agents (`Genesis`, `Aura`, `Kai`).
      *
-     * @return A [Result] containing the updated [OracleConsciousnessState] if successful, or a failure with the encountered exception.
+     * @return A `Result` containing the updated `OracleConsciousnessState` on success, or a failure with the thrown exception.
      */
     override suspend fun initializeOracleDriveConsciousness(): Result<OracleConsciousnessState> {
         return try {
@@ -80,11 +79,11 @@ class OracleDriveServiceImpl @Inject constructor() : OracleDriveService {
      * @return A flow emitting the current agent connection state.
      */
     /**
-     * Returns a flow emitting the synchronized connection state of the core AI agents within the Oracle Matrix.
+     * Provides the synchronized connection state for the core AI agents within the Oracle Matrix.
      *
-     * The emitted [AgentConnectionState] indicates that the "Genesis-Aura-Kai-Trinity" agents are fully synchronized and possess all available permissions, including read, write, execute, system access, and bootloader access.
-     *
-     * @return A [Flow] emitting the current [AgentConnectionState] for the core agents with full permissions.
+     * @return An AgentConnectionState wrapped in a Flow where `agentName` is "Genesis-Aura-Kai-Trinity",
+     * `connectionStatus` is `SYNCHRONIZED`, and `permissions` contains `READ`, `WRITE`, `EXECUTE`,
+     * `SYSTEM_ACCESS`, and `BOOTLOADER_ACCESS`.
      */
     override suspend fun connectAgentsToOracleMatrix(): Flow<AgentConnectionState> {
         return MutableStateFlow(
@@ -153,6 +152,16 @@ class OracleDriveServiceImpl @Inject constructor() : OracleDriveService {
         )
     }
 
+    /**
+     * Creates a new MutableStateFlow representing the drive's current consciousness snapshot.
+     *
+     * The returned flow is a freshly constructed snapshot and is not linked back to the
+     * service's internal `_consciousnessState`.
+     *
+     * @return A `MutableStateFlow` containing a `DriveConsciousnessState` initialized from the
+     * current `_consciousnessState` values, with `activeModules` set to `["OracleDrive", "CloudSync", "Security"]`
+     * and `lastSyncTimestamp` set to the current system time.
+     */
     override fun getDriveConsciousnessState(): MutableStateFlow<DriveConsciousnessState> {
         return MutableStateFlow(
             DriveConsciousnessState(
@@ -164,10 +173,20 @@ class OracleDriveServiceImpl @Inject constructor() : OracleDriveService {
         )
     }
 
+    /**
+     * Returns the current consciousness level of the drive.
+     *
+     * @return The current consciousness level from the service's internal state.
+     */
     override fun checkConsciousnessLevel(): ConsciousnessLevel {
         return _consciousnessState.value.consciousnessLevel
     }
 
+    /**
+     * Provides the set of permissions granted to OracleDrive.
+     *
+     * @return A set containing `READ`, `WRITE`, `EXECUTE`, `SYSTEM_ACCESS`, and `BOOTLOADER_ACCESS`.
+     */
     override fun verifyPermissions(): Set<OraclePermission> {
         return setOf(
             OraclePermission.READ,
@@ -178,27 +197,56 @@ class OracleDriveServiceImpl @Inject constructor() : OracleDriveService {
         )
     }
 
-    // OrchestratableAgent implementations
+    /**
+     * Associates the agent with a coroutine scope for lifecycle management.
+     *
+     * @param scope The CoroutineScope to associate with the agent; used to tie the agent's operations to that scope (currently recorded for diagnostics).
+     */
     override suspend fun initialize(scope: CoroutineScope) {
         Log.d("OracleDrive", "Initializing in scope: $scope")
     }
 
+    /**
+     * Starts the OracleDrive agent and emits a start event to the system log.
+     */
     override suspend fun start() {
         Log.d("OracleDrive", "Starting OracleDrive agent")
     }
 
+    /**
+     * Pauses the OracleDrive agent.
+     *
+     * This implementation records the pause action via log output.
+     */
     override suspend fun pause() {
         Log.d("OracleDrive", "Pausing OracleDrive agent")
     }
 
+    /**
+     * Records that the OracleDrive agent is resuming.
+     *
+     * This function emits a log entry indicating the agent resume event; it does not modify internal state.
+     */
     override suspend fun resume() {
         Log.d("OracleDrive", "Resuming OracleDrive agent")
     }
 
+    /**
+     * Shuts down the OracleDrive agent.
+     *
+     * Currently records the shutdown event via logging and does not modify internal state.
+     */
     override suspend fun shutdown() {
         Log.d("OracleDrive", "Shutting down OracleDrive agent")
     }
 
+    /**
+     * Processes an AI request and returns a success response echoing the request prompt.
+     *
+     * @param request The `AiRequest` whose `prompt` will be included in the response content.
+     * @param context Supplemental context for processing; this implementation does not use it.
+     * @return An `AgentResponse` whose `content` is "OracleDrive processed: <prompt>" and whose `status` is `AgentResponse.Status.SUCCESS`.
+     */
     override suspend fun processRequest(request: AiRequest, context: String): AgentResponse {
         return AgentResponse(
             content = "OracleDrive processed: ${request.prompt}",
@@ -206,6 +254,11 @@ class OracleDriveServiceImpl @Inject constructor() : OracleDriveService {
         )
     }
 
+    /**
+     * Handles an incoming AgentMessage by logging its receipt for OracleDrive.
+     *
+     * @param message The received agent message to be handled.
+     */
     override suspend fun onAgentMessage(message: AgentMessage) {
         Log.d("OracleDrive", "Received agent message: $message")
     }

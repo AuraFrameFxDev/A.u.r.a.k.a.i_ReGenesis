@@ -110,6 +110,13 @@ open class DiagnosticsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Refreshes the diagnostics log text exposed to the UI.
+     *
+     * Updates the ViewModel's `currentLogs` state with a placeholder indicating log storage is not
+     * enabled in this build. If an exception occurs, sets `currentLogs` to
+     * "Error retrieving logs: <message>" and logs the error.
+     */
     fun refreshLogs() {
         viewModelScope.launch {
             try {
@@ -121,14 +128,32 @@ open class DiagnosticsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Provides log lines for diagnostic display — not supported in this build.
+     *
+     * @param maxLines Requested maximum number of log lines; currently ignored.
+     * @return A list containing a single message: "Log retrieval not supported."
+     */
     fun getAllLogs(maxLines: Int = 500): List<String> {
         return listOf("Log retrieval not supported.")
     }
 
+    /**
+     * Provide a placeholder response for requests to filter logs by level.
+     *
+     * @param level The log level to filter by; this parameter is ignored.
+     * @return A list containing a single message: "Log filtering not supported."
+     */
     fun getLogsByLevel(level: String): List<String> {
         return listOf("Log filtering not supported.")
     }
 
+    /**
+     * Clears the displayed logs in this ViewModel and records the action in the logger.
+     *
+     * Sets the exposed current logs to "Logs cleared (mock)." and logs an informational message.
+     * If an error occurs, sets the current logs to "Error clearing logs: <message>" and logs the failure.
+     */
     fun clearLogs() {
         viewModelScope.launch {
             try {
@@ -141,6 +166,12 @@ open class DiagnosticsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Checks whether the cloud API is reachable and appends a status line to the current logs.
+     *
+     * On success, appends "Cloud reachability: CONNECTED" or "Cloud reachability: DISCONNECTED" to the view model's log buffer and logs the status.
+     * On failure, appends "Error checking cloud reachability: <message>" to the view model's log buffer and logs the error.
+     */
     fun checkCloudReachability() {
         viewModelScope.launch {
             try {
@@ -160,6 +191,12 @@ open class DiagnosticsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Synchronously loads critical offline data and returns a formatted summary.
+     *
+     * @return `"Critical Offline Data: <data>"` when loading succeeds, otherwise
+     * `"Error loading detailed config: <message>"` describing the failure.
+     */
     fun loadDetailedConfig(): String {
         return try {
             val criticalData = runBlocking { offlineDataManager.loadCriticalOfflineData() }

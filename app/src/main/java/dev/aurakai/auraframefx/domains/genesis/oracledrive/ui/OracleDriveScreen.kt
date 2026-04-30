@@ -43,6 +43,15 @@ import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.DriveConsciou
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
+/**
+ * Renders the "Oracle Drive" screen UI, including menu items, a stress-sync action, and an optional consciousness status card.
+ *
+ * Collects UI state from the provided view model to drive the screen: two menu cards ("Neural Archive" and "Module Storage"), a full-width
+ * "INITIATE STRESS-SYNC" button that calls `viewModel.stressSync()` and is disabled while `uiState.isRefreshing` is true (shows a progress
+ * indicator when refreshing), and a status card that displays `consciousnessLevel` when `uiState.consciousnessState` is non-null.
+ *
+ * @param navController NavHostController used to navigate from the screen's menu items.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OracleDriveScreen(

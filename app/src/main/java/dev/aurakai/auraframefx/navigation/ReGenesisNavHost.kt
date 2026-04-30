@@ -197,6 +197,14 @@ import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
  * 🌐 REGENESIS CONSOLIDATED NAV GRAPH
  * Finalized for Exodus 2026 Build
  */
+/**
+ * Builds the application's navigation graph and wires each route to its corresponding composable screen.
+ *
+ * This NavHost uses the provided NavHostController and sets up the app's start destination and all
+ * composable destinations (auth, domain hubs, feature screens, and batch-labeled high-priority screens).
+ *
+ * @param navController The NavHostController used to perform navigation actions (navigate, popBackStack, etc.) across the graph.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReGenesisNavGraph(

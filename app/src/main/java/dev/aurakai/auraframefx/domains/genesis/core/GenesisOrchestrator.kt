@@ -275,7 +275,12 @@ class GenesisOrchestrator @Inject constructor(
     }
 
     /**
-     * Handle messages intended for the OracleDrive subsystem.
+     * Routes an arbitrary message to the OracleDrive subsystem by converting it into an orchestration-layer request and submitting it for processing.
+     *
+     * The input is converted to an `AiRequest`; the resulting orchestration request uses the original query as `prompt`
+     * and merges the request's `context` with its `metadata` before calling `oracleDriveService.processRequest`.
+     *
+     * @param message The message to deliver; supported inputs include `AgentMessage`, `AiRequest`, `String`, or any object whose `toString()` will be used when converting.
      */
     private suspend fun handleOracleDriveMessage(message: Any) {
         Timber.d("  → Routing message to OracleDrive: ${message.javaClass.simpleName}")
