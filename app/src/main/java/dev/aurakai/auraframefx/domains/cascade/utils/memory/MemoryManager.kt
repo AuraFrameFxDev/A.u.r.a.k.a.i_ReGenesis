@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.memory
 
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.collections.List
 
 /**
  * Interface for AI memory management operations.
@@ -10,32 +11,34 @@ interface MemoryManager {
     /**
      * Stores a memory with a key-value pair.
      */
-    fun storeMemory(key: String, value: String): String
+    context(value: kotlin.String)
+    fun storeMemory(key: kotlin.String): kotlin.String
 
     /**
      * Retrieves a memory by key.
      */
-    fun retrieveMemory(key: String): String?
+    fun kotlin.String.retrieveMemory(): kotlin.String?
 
     /**
      * Stores an interaction (prompt-response pair) for learning.
      */
-    fun storeInteraction(prompt: String, response: String): String
+    context(response: kotlin.String)
+    fun storeInteraction(prompt: kotlin.String): kotlin.String
 
     /**
      * Records a specific insight from an agent into the Spiritual Chain.
      */
     suspend fun recordInsight(
-        agentName: String,
-        prompt: String,
-        response: String,
+        agentName: kotlin.String,
+        prompt: kotlin.String,
+        response: kotlin.String,
         confidence: Float
-    ): String
+    ): kotlin.String
 
     /**
      * Searches memories using a query string.
      */
-    fun searchMemories(query: String): List<MemoryEntry>
+    fun searchMemories(query: kotlin.String): List<MemoryEntry>
 
     /**
      * Clears all stored memories.
@@ -55,15 +58,15 @@ interface MemoryManager {
     /**
      * Gets all stored memories.
      */
-    fun getAllMemories(): List<MemoryEntry> = emptyList()
+    fun getAllMemories(): List<MemoryEntry>
 }
 
 /**
  * Represents a stored memory entry.
  */
 data class MemoryEntry(
-    val key: String? = null,
-    val value: String,
+    val key: kotlin.String? = null,
+    val value: kotlin.String,
     val timestamp: Long = System.currentTimeMillis(),
     val relevanceScore: Float = 0.0f
 )

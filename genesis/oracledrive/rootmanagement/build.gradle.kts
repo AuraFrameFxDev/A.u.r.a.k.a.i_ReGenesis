@@ -14,8 +14,8 @@ extensions.configure<LibraryExtension> {
 }
 
 dependencies {
-    // Core module (provides NexusMemoryCore, PandoraBoxService)
-    implementation(project(":core-module"))
+    // Core module (provides NexusMemoryCore, PandoraBoxService) - use api for KSP visibility
+    api(project(":core-module"))
 
     // Core Android - Expose as API
     api(libs.androidx.core.ktx)

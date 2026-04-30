@@ -216,7 +216,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 dependencies {
     // Project Modules
-    implementation(project(":core-module"))
+    api(project(":core-module"))
     implementation(project(":trinity:aura"))
     implementation(project(":aura:reactivedesign:auraslab"))
     implementation(project(":aura:reactivedesign:chromacore"))
@@ -246,6 +246,7 @@ dependencies {
     implementation(project(":utilities"))
     implementation(project(":list"))
     implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.compose.material.core)
 
     // Hilt
     implementation(libs.hilt.android)

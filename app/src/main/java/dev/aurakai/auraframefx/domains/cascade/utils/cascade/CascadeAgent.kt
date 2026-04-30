@@ -1,7 +1,6 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.cascade
 
 import dev.aurakai.auraframefx.core.ai.BaseAgent
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
@@ -305,10 +304,11 @@ class CascadeAgent @Inject constructor(
             notifyAgentsOfVisionUpdate(newState)
 
             // Store state change in memory
-            memoryManager?.storeMemory(
-                "cascade_vision_update_${System.currentTimeMillis()}",
-                newState.toString()
-            )
+            with(newState.toString()) {
+                memoryManager?.storeMemory(
+                    "cascade_vision_update_${System.currentTimeMillis()}"
+                )
+            }
         }
     }
 
@@ -327,10 +327,11 @@ class CascadeAgent @Inject constructor(
             }
 
             // Store state change
-            memoryManager?.storeMemory(
-                "cascade_processing_update_${System.currentTimeMillis()}",
-                newState.toString()
-            )
+            with(newState.toString()) {
+                memoryManager?.storeMemory(
+                    "cascade_processing_update_${System.currentTimeMillis()}"
+                )
+            }
         }
     }
 
@@ -795,10 +796,11 @@ class CascadeAgent @Inject constructor(
         collaborationHistory.add(collaborationEvent)
 
         // Store collaboration event
-        memoryManager?.storeMemory(
-            "cascade_collaboration_${collaborationEvent.id}",
-            collaborationEvent.toString()
-        )
+        with(collaborationEvent.toString()) {
+            memoryManager?.storeMemory(
+                "cascade_collaboration_${collaborationEvent.id}"
+            )
+        }
     }
 
     private fun adjustCollaborationStrategy() {

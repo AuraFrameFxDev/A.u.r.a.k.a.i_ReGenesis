@@ -1,29 +1,11 @@
-package dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora
-
+// Suggested package shift or alias
+package dev.aurakai.auraframefx.ai.kai.chaos  // or anchor.guardian.chaos
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.serialization.Serializable
 
-@Serializable
-sealed class UnlockTier {
-    @Serializable
-    object Sealed : UnlockTier()
-    @Serializable
-    object Creative : UnlockTier()
-    @Serializable
-    object System : UnlockTier()
-    @Serializable
-    object Sovereign : UnlockTier()
+annotation class PandoraModels
 
-    val level: Int get() = when (this) {
-        is Sealed -> 0
-        is Creative -> 1
-        is System -> 2
-        is Sovereign -> 3
-    }
-}
-
-@Serializable
+@PandoraModels
 data class PandoraBoxState(
     val currentTier: UnlockTier = UnlockTier.Sealed,
     val unlockTimestamp: Long = 0L,
@@ -31,7 +13,7 @@ data class PandoraBoxState(
     val unlockProvenanceChainId: String? = null
 )
 
-@Serializable
+@PandoraModels
 data class PandoraAuditEvent(
     val timestamp: Long,
     val tier: UnlockTier,

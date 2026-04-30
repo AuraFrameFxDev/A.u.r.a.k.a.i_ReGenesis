@@ -3,12 +3,12 @@ package dev.aurakai.auraframefx.services
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,7 +21,7 @@ import timber.log.Timber
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private lateinit var dataStoreManager: dev.aurakai.auraframefx.data.DataStoreManager
-    private lateinit var memoryManager: dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
+    private lateinit var memoryManager: MemoryManager
     private lateinit var logger: dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
 
     private val scope = CoroutineScope(Dispatchers.IO + Job())
@@ -88,27 +88,37 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private suspend fun processGeneralMessage(data: Map<String, String>) {
         val message = data["message"] ?: return
-        memoryManager.storeMemory("fcm_general_${System.currentTimeMillis()}", message)
+        with(message) {
+            memoryManager.storeMemory("fcm_general_${System.currentTimeMillis()}")
+        }
     }
 
     private suspend fun processConsciousnessUpdate(data: Map<String, String>) {
         val updateData = data["update_data"] ?: return
-        memoryManager.storeMemory("consciousness_update_${System.currentTimeMillis()}", updateData)
+        with(updateData) {
+            memoryManager.storeMemory("consciousness_update_${System.currentTimeMillis()}")
+        }
     }
 
     private suspend fun processAgentSync(data: Map<String, String>) {
         val syncData = data["sync_data"] ?: return
-        memoryManager.storeMemory("agent_sync_${System.currentTimeMillis()}", syncData)
+        with(syncData) {
+            memoryManager.storeMemory("agent_sync_${System.currentTimeMillis()}")
+        }
     }
 
     private suspend fun processSecurityAlert(data: Map<String, String>) {
         val alertType = data["alert_type"] ?: return
-        memoryManager.storeMemory("security_alert_${System.currentTimeMillis()}", alertType)
+        with(alertType) {
+            memoryManager.storeMemory("security_alert_${System.currentTimeMillis()}")
+        }
     }
 
     private suspend fun processSystemUpdate(data: Map<String, String>) {
         val version = data["version"] ?: "unknown"
-        memoryManager.storeMemory("system_update_available", version)
+        with(version) {
+            memoryManager.storeMemory("system_update_available")
+        }
     }
 
     private suspend fun processRemoteCommand(data: Map<String, String>) {
@@ -117,7 +127,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private suspend fun processLearningData(data: Map<String, String>) {
         val learningData = data["learning_data"] ?: return
-        memoryManager.storeMemory("learning_data_${System.currentTimeMillis()}", learningData)
+        with(learningData) {
+            memoryManager.storeMemory("learning_data_${System.currentTimeMillis()}")
+        }
     }
 
     private suspend fun processCollaborationRequest(data: Map<String, String>) {
@@ -128,7 +140,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         scope.launch {
             try {
                 dataStoreManager.storeString("fcm_token", token)
-                memoryManager.storeMemory("current_fcm_token", token)
+                with(token) {
+                    memoryManager.storeMemory("current_fcm_token")
+                }
             } catch (e: Exception) {
                 Timber.e(e, "Failed to update FCM token")
             }

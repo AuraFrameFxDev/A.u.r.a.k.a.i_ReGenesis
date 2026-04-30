@@ -87,7 +87,7 @@ class ChaosMonitor(
         )
 
         // Broadcast defense protocol to ALL agents
-        cascade.broadcastDefenseSignal(grokResponse.content)
+        cascade.broadcastDefenseSignal(signal = grokResponse.content)
     }
 
     private suspend fun callGrokForChaosAnalysis(event: AgentActivityEvent, scan: LocalHealthScan) {

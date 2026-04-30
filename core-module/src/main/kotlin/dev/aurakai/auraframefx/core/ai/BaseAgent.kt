@@ -7,6 +7,8 @@ import dev.aurakai.auraframefx.core.orchestration.OrchestratableAgent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import kotlinx.coroutines.CoroutineScope
+import kotlin.jvm.Volatile
+import kotlin.jvm.JvmStatic
 
 /**
  * Genesis Base Agent Implementation
@@ -28,7 +30,6 @@ abstract class BaseAgent(
     // --- Orchestration Support ---
 
     protected var orchestrationScope: CoroutineScope? = null
-    protected var isOrchestratorInitialized = false
 
     override suspend fun initialize(scope: CoroutineScope) {
         orchestrationScope = scope
@@ -49,7 +50,7 @@ abstract class BaseAgent(
 
     override suspend fun shutdown() {
         orchestrationScope = null
-        isOrchestratorInitialized = false
+        // Note: We don't reset the global flag here because other agents might still be active.
     }
 
     override suspend fun processRequest(
@@ -85,6 +86,13 @@ abstract class BaseAgent(
 
     companion object {
         @Volatile
+        @JvmStatic
         var isOrchestratorInitialized: Boolean = false
+    }
+
+    protected fun ensureInitialized() {
+        if (!isOrchestratorInitialized) {
+            throw java.lang.IllegalStateException("$agentName Agent not initialized")
+        }
     }
 }

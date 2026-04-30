@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 import java.security.MessageDigest
 import dev.aurakai.auraframefx.domains.liveui.EditTarget
 import dev.aurakai.auraframefx.domains.liveui.HapticProfile
+import kotlinx.serialization.Contextual
 
 @Serializable
 data class BlueprintMetadata(
@@ -14,8 +15,8 @@ data class BlueprintMetadata(
     val fusionScore: Double = 0.0,
     val codeGenVersion: String = "CodeGenHookEngine-v2.4",
     val syncVersion: String = "StateSyncStabilizer-v2.4",
-    val targets: List<EditTarget> = emptyList(),
-    val hapticProfile: HapticProfile,
+    val targets: List<@Contextual EditTarget> = emptyList(),
+    val hapticProfile: @Contextual HapticProfile,
     val gyroSnapshot: GyroSnapshot,
     val markerSeed: Long = System.currentTimeMillis(),
     val provenanceHash: String = ""

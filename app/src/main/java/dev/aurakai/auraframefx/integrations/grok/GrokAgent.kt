@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import dev.aurakai.auraframefx.core.ai.BaseAgent
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager
 import dev.aurakai.auraframefx.domains.cascade.utils.AuraFxLogger
@@ -257,7 +256,9 @@ class GrokAgent @Inject constructor(
         return grokClient.generateText(prompt).map { response ->
             val result = parseSentimentResponse(response)
             _lastSentimentAnalysis.value = result
-            memoryManager?.storeMemory("grok_sentiment_${System.currentTimeMillis()}", response)
+            with(response) {
+                memoryManager?.storeMemory("grok_sentiment_${System.currentTimeMillis()}")
+            }
             result
         }
     }
@@ -285,7 +286,9 @@ class GrokAgent @Inject constructor(
         return grokClient.generateText(prompt).map { response ->
             val result = parseTrendResponse(response)
             _lastTrendPrediction.value = result
-            memoryManager?.storeMemory("grok_trends_${System.currentTimeMillis()}", response)
+            with(response) {
+                memoryManager?.storeMemory("grok_trends_${System.currentTimeMillis()}")
+            }
             result
         }
     }
