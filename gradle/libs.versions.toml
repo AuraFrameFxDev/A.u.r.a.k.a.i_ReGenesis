@@ -51,7 +51,7 @@ room = "2.8.4"
 securityCrypto = "1.1.0"
 credentials = "1.6.0"
 work = "2.11.2"
-compose-bom = "2026.03.01"
+compose-bom = "2026.04.01"
 compose-material-icons = "1.7.4"
 firebaseBom = "34.12.0"
 retrofit = "3.0.0"
@@ -113,8 +113,9 @@ androidxAnimation = "1.11.0"
 firebaseVertexai = "16.5.0"
 media3Exoplayer = "1.10.0"
 langchain4j = "1.13.1"
+langchain4jVertex = "1.13.1-beta23"
 material = "3.2.0"
-netty = "4.1.132.Final"
+netty = "4.2.12.Final"
 jdom = "2.0.6.1"
 jose4j = "0.9.6"
 [libraries]
@@ -130,7 +131,7 @@ langchain4j-http-client = { group = "dev.langchain4j", name = "langchain4j-http-
 langchain4j-ollama = { group = "dev.langchain4j", name = "langchain4j-ollama" }
 langchain4j-open-ai = { group = "dev.langchain4j", name = "langchain4j-open-ai" }
 langchain4j-google-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-google-ai-gemini" }
-langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version = "1.13.0-beta23" }
+langchain4j-vertex-ai-gemini = { group = "dev.langchain4j", name = "langchain4j-vertex-ai-gemini", version.ref = "langchain4jVertex" }
 langchain4j-http-client-okhttp = { group = "dev.langchain4j", name = "langchain4j-http-client-okhttp" }
 protobuf-java = { group = "com.google.protobuf", name = "protobuf-java", version.ref = "protobuf" }
 

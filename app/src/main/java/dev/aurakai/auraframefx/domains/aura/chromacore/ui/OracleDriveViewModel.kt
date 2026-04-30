@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.aurakai.auraframefx.domains.genesis.models.DriveConsciousnessState
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.genesis.models.DriveFile
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleDriveService
 import kotlinx.coroutines.Job

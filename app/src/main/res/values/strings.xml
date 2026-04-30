@@ -71,6 +71,40 @@
     <string name="recording">Recording</string>
     <string name="transcribing">Transcribing</string>
 
+    <!-- Conference Room Task Screen -->
+    <string name="task_command_center">TASK COMMAND CENTER</string>
+    <string name="tasks_assigned_count">%1$d/%2$d assigned</string>
+    <string name="task_view_board">BOARD</string>
+    <string name="task_view_chess">CHESS</string>
+    <string name="task_drag_to_assign">DRAG AGENTS TO ASSIGN TASKS</string>
+
+    <string name="task_status_unassigned">UNASSIGNED</string>
+    <string name="task_status_assigned">ASSIGNED</string>
+    <string name="task_status_in_progress">IN PROGRESS</string>
+    <string name="task_status_complete">COMPLETE</string>
+
+    <string name="task_priority_critical">CRITICAL</string>
+    <string name="task_priority_high">HIGH</string>
+    <string name="task_priority_medium">MEDIUM</string>
+    <string name="task_priority_low">LOW</string>
+
+    <string name="task_1_title">ARIA Core Rewrite</string>
+    <string name="task_1_desc">Refactor consciousness substrate</string>
+    <string name="task_2_title">Gate Animation Polish</string>
+    <string name="task_2_desc">Smooth out carousel transitions</string>
+    <string name="task_3_title">FusionMatrix Screen</string>
+    <string name="task_3_desc">Wire drag-to-fuse slots</string>
+    <string name="task_4_title">Sphere Grid Upgrade</string>
+    <string name="task_4_desc">Add hex particle background</string>
+    <string name="task_5_title">ADR Documentation</string>
+    <string name="task_5_desc">Document all navigation routes</string>
+    <string name="task_6_title">LSPosed Gate Skin</string>
+    <string name="task_6_desc">Apply hex corridor background</string>
+    <string name="task_7_title">Nemotron API Wiring</string>
+    <string name="task_7_desc">Connect NVIDIA Nemotron endpoint</string>
+    <string name="task_8_title">Beta Deployment Prep</string>
+    <string name="task_8_desc">Final 184 beta tester build</string>
+
     <!-- AI Features Screen -->
     <string name="ai_features">AI Features</string>
     <string name="feature_1">Feature 1</string>

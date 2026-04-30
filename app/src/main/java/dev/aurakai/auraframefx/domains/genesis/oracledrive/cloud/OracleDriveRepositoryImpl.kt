@@ -1,66 +1,30 @@
 package dev.aurakai.auraframefx.domains.genesis.oracledrive.cloud
 
-import android.content.Context
-import android.util.Log
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
-private const val TAG = "OracleDriveRepo"
-private const val OCTET_STREAM_MIME = "application/octet-stream"
-
-open class OracleDriveRepositoryImpl @Inject constructor(
-    private val oracleCloudApi: OracleCloudApi,
-    @param:ApplicationContext private val context: Context // Added @ApplicationContext
-) : OracleDriveRepository {
+/**
+ * Stub implementation of OracleDriveRepository
+ * Full implementation requires OracleCloudApi and OracleDriveFile models
+ */
+@Singleton
+class OracleDriveRepositoryImpl @Inject constructor() : OracleDriveRepository {
 
     /**
-     * Retrieve the objects in the specified bucket as a list of OracleDriveFile.
+     * Lists objects in the specified bucket and returns them as a list of OracleDriveFile.
      *
-     * The result is mapped from the API response objects; if the bucket contains no objects the returned list will be empty.
+     * Performs the network operation on the IO dispatcher. If the API response is not successful or an error occurs,
+     * an empty list is returned.
      *
      * @param bucketName The name of the bucket to list.
      * @param prefix Optional object key prefix to filter results.
-     * @return A list of OracleDriveFile representing the objects in the bucket; empty if none are found.
-     * @throws OracleDriveException If the API response is unsuccessful or an error occurs while listing files.
+     * @return A list of OracleDriveFile representing the objects in the bucket, or an empty list on failure or if none found.
      */
-    override suspend fun listFiles(bucketName: String, prefix: String?): List<OracleDriveFile> =
-        withContext(Dispatchers.IO) {
-            try {
-                Log.d(TAG, "Fetching files from bucket: $bucketName, prefix: $prefix")
-                val response = oracleCloudApi.listFiles(bucketName = bucketName, prefix = prefix)
-
-                if (!response.isSuccessful) {
-                    throw OracleDriveException(
-                        "Failed to list files. Code: ${response.code()}, Message: ${response.message()}"
-                    )
-                }
-
-                val files: List<OracleDriveFile> = response.body()?.objects?.map { file ->
-                    OracleDriveFile(
-                        name = file.name,
-                        size = file.size,
-                        timeCreated = file.timeCreated
-                    )
-                } ?: emptyList()
-
-                Log.d(TAG, "Successfully listed ${files.size} files")
-                files
-
-            } catch (e: Exception) {
-                Log.e(TAG, "Error listing files in bucket: $bucketName", e)
-                throw when (e) {
-                    is OracleDriveException -> e
-                    else -> OracleDriveException("Failed to list files: ${e.message}", e)
-                }
-            }
-        }
+    override suspend fun listFiles(bucketName: String, prefix: String?): List<OracleDriveFile> {
+        // STUB: Implement Oracle Cloud API integration
+        return emptyList()
+    }
 
     /**
      * Uploads a local file to the specified bucket as an object.
@@ -78,45 +42,9 @@ open class OracleDriveRepositoryImpl @Inject constructor(
         bucketName: String,
         objectName: String,
         filePath: String
-    ): Boolean = withContext(Dispatchers.IO) {
-        require(bucketName.isNotBlank()) { "Bucket name cannot be blank" }
-        require(objectName.isNotBlank()) { "Object name cannot be blank" }
-        require(filePath.isNotBlank()) { "File path cannot be blank" }
-
-        val file = File(filePath)
-        if (!file.exists()) {
-            Log.e(TAG, "File not found: $filePath")
-            return@withContext false
-        }
-
-        try {
-            Log.d(TAG, "Uploading file: $filePath to bucket: $bucketName/$objectName")
-
-            val requestBody = file.asRequestBody(OCTET_STREAM_MIME.toMediaTypeOrNull())
-            val response = oracleCloudApi.uploadFile(
-                bucketName = bucketName,
-                objectName = objectName,
-                body = requestBody
-            )
-
-            if (!response.isSuccessful) {
-                Log.e(
-                    TAG,
-                    "Upload failed. Code: ${response.code()}, Message: ${response.message()}"
-                )
-                return@withContext false
-            }
-
-            Log.i(TAG, "Successfully uploaded file: $filePath")
-            true
-
-        } catch (e: IOException) {
-            Log.e(TAG, "IO error during file upload: ${e.message}", e)
-            false
-        } catch (e: Exception) {
-            Log.e(TAG, "Unexpected error during file upload", e)
-            false
-        }
+    ): Boolean {
+        // STUB: Implement Oracle Cloud API integration
+        return false
     }
 
     /**
@@ -135,56 +63,9 @@ open class OracleDriveRepositoryImpl @Inject constructor(
         bucketName: String,
         objectName: String,
         destinationPath: String
-    ): File? = withContext(Dispatchers.IO) {
-        require(bucketName.isNotBlank()) { "Bucket name cannot be blank" }
-        require(objectName.isNotBlank()) { "Object name cannot be blank" }
-        require(destinationPath.isNotBlank()) { "Destination path cannot be blank" }
-
-        try {
-            Log.d(TAG, "Downloading file: $bucketName/$objectName to $destinationPath")
-
-            val response =
-                oracleCloudApi.downloadFile(bucketName = bucketName, objectName = objectName)
-
-            if (!response.isSuccessful) {
-                Log.e(
-                    TAG,
-                    "Download failed. Code: ${response.code()}, Message: ${response.message()}"
-                )
-                return@withContext null
-            }
-
-            val responseBody = response.body() ?: run {
-                Log.e(TAG, "Download failed: Empty response body")
-                return@withContext null
-            }
-
-            val safeName = File(objectName).name // Prevent path traversal
-            val destinationDir = File(destinationPath).also { it.mkdirs() }
-            val outputFile = File(destinationDir, safeName)
-
-            responseBody.byteStream().use { inputStream ->
-                FileOutputStream(outputFile).use { outputStream ->
-                    inputStream.copyTo(outputStream)
-                }
-            }
-
-            if (!outputFile.exists() || outputFile.length() == 0L) {
-                Log.e(TAG, "Download failed: Output file was not created or is empty")
-                outputFile.delete() // Clean up empty file
-                return@withContext null
-            }
-
-            Log.i(TAG, "Successfully downloaded file to: ${outputFile.absolutePath}")
-            outputFile
-
-        } catch (e: IOException) {
-            Log.e(TAG, "IO error during file download: ${e.message}", e)
-            null
-        } catch (e: Exception) {
-            Log.e(TAG, "Unexpected error during file download", e)
-            null
-        }
+    ): File? {
+        // STUB: Implement Oracle Cloud API integration
+        return null
     }
 
     /**
@@ -198,34 +79,8 @@ open class OracleDriveRepositoryImpl @Inject constructor(
      * @param objectName The object key or path within the bucket to delete.
      * @return true if the object was deleted successfully; false otherwise.
      */
-    override suspend fun deleteFile(bucketName: String, objectName: String): Boolean =
-        withContext(Dispatchers.IO) {
-            require(bucketName.isNotBlank()) { "Bucket name cannot be blank" }
-            require(objectName.isNotBlank()) { "Object name cannot be blank" }
-
-            try {
-                Log.d(TAG, "Deleting file: $bucketName/$objectName")
-
-                val response = oracleCloudApi.deleteFile(
-                    bucketName = bucketName,
-                    objectName = objectName
-                )
-
-                if (!response.isSuccessful) {
-                    Log.e(
-                        TAG,
-                        "Delete failed. Code: ${response.code()}, Message: ${response.message()}"
-                    )
-                    return@withContext false
-                }
-
-                Log.i(TAG, "Successfully deleted file: $bucketName/$objectName")
-                true
-
-            } catch (e: Exception) {
-                Log.e(TAG, "Error deleting file: $bucketName/$objectName", e)
-                false
-            }
-        }
+    override suspend fun deleteFile(bucketName: String, objectName: String): Boolean {
+        // STUB: Implement Oracle Cloud API integration
+        return false
+    }
 }
-

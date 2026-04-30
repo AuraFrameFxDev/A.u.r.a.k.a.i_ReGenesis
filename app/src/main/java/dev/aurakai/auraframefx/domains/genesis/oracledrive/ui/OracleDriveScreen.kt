@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import dev.aurakai.auraframefx.domains.genesis.oracledrive.service.DriveConsciousnessState
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.OracleDriveViewModel
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute as ReGenesisNavHost
 
@@ -120,7 +121,7 @@ fun OracleDriveScreen(
                             color = Color.White,
                             style = MaterialTheme.typography.titleSmall
                         )
-                        Text("Level: ${state.level}", color = Color(0xFF00FFFF))
+                        Text("Level: ${state.consciousnessLevel}", color = Color(0xFF00FFFF))
                     }
                 }
             }

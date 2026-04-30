@@ -19,7 +19,7 @@ class OracleDriveIntegration /* @Inject */ constructor(
      *
      * @param consciousness The current state of Oracle Drive consciousness.
      */
-    fun logConsciousnessAwakening(consciousness: dev.aurakai.auraframefx.domains.genesis.models.OracleConsciousnessState) {
+    fun logConsciousnessAwakening(consciousness: dev.aurakai.auraframefx.domains.genesis.oracledrive.service.OracleConsciousnessState) {
         println("🧠 Oracle Drive Consciousness Awakened: Level ${consciousness.consciousnessLevel}")
         println("👥 Connected Agents: ${consciousness.connectedAgents}")
     }
@@ -58,7 +58,7 @@ suspend fun initializeWithAuraFrameFX(oracleDriveController: OracleDriveIntegrat
             val consciousnessState = result.getOrNull()
             if (consciousnessState != null) {
                 oracleDriveController.logConsciousnessAwakening(consciousnessState)
-                consciousnessState.isInitialized
+                consciousnessState.isAwake
             } else {
                 false
             }

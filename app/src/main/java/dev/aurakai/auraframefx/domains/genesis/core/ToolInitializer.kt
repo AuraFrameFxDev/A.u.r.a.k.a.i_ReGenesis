@@ -36,8 +36,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class ToolInitializer @Inject constructor(
-    private val toolRegistry: ToolRegistry
-    // private val mcpAdapter: MCPServerAdapter // TODO: Re-add when MCPServerAdapter is fixed
+    private val toolRegistry: ToolRegistry,
+    private val mcpAdapter: MCPServerAdapter
 ) {
 
     private val initScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -133,7 +133,6 @@ class ToolInitializer @Inject constructor(
      * Re-enable when MCPServerAdapter is fixed and can be injected via Hilt.
      */
     private suspend fun registerMCPTools() {
-        /*
         Timber.i("ToolInitializer: Registering MCP tools...")
 
         // Configure MCP adapter (use dev environment by default)
@@ -149,7 +148,6 @@ class ToolInitializer @Inject constructor(
             GetAgentStatusMCPTool(mcpAdapter)
         )
         Timber.d("ToolInitializer: Registered MCP tools (API-backed)")
-        */
     }
 
     /**

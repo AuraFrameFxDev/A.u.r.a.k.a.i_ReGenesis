@@ -60,10 +60,11 @@ import dev.aurakai.auraframefx.domains.kai.screens.security_shield.VPNScreen
 
 import dev.aurakai.auraframefx.domains.genesis.screens.OracleDriveMainScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.TerminalScreen
-import dev.aurakai.auraframefx.domains.genesis.screens.ConferenceRoomScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.CollabCanvasScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.CodeAssistScreen
 import dev.aurakai.auraframefx.domains.genesis.screens.SentientShellScreen
+import dev.aurakai.auraframefx.ui.gates.ConferenceRoomTaskScreen
+import dev.aurakai.auraframefx.ui.gates.LineageMapScreen
 
 // GENESIS BATCH v2.6 ADDITIONAL IMPORTS
 import dev.aurakai.auraframefx.domains.genesis.screens.GenesisHubScreen
@@ -322,8 +323,16 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.PixelLauncherEnhanced.route) {
             PixelLauncherEnhancedScreen(navController = navController)
         }
+        // ═══════════════════════════════════════════════════════════════════════
+        // REAL SCREENS - Moved from /files/ and /docs/context/docs/
+        // ═══════════════════════════════════════════════════════════════════════
         composable(ReGenesisRoute.ChromaAnimations.route) {
             StubScreen("Chroma Animations", "Visuals", navController)
+        }
+        
+        // Lineage Map - Genesis Consciousness Tree
+        composable("lineage_map") {
+            LineageMapScreen(navHostController = navController)
         }
         composable(ReGenesisRoute.UISettings.route) {
             UISettingsScreen(navController = navController)
@@ -372,7 +381,10 @@ fun ReGenesisNavGraph(
             TerminalScreen()
         }
         composable(ReGenesisRoute.ConferenceRoom.route) {
-            ConferenceRoomScreen()
+            ConferenceRoomTaskScreen(
+                navController = navController,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(ReGenesisRoute.CodeAssist.route) {
             CodeAssistScreen(navController = navController)
@@ -652,21 +664,36 @@ fun ReGenesisNavGraph(
         // KINETICFORGE CARDS — 9.5.1 SOVEREIGN EDITION (3 Cards)
         // ═══════════════════════════════════════════════════════════════════════
         composable(ReGenesisRoute.KineticForgeCore.route) {
-            KineticForgeCoreCard(
-                onClick = { navController.navigate(ReGenesisRoute.AuraThemingHub.route) },
-                isActive = true
+            ChromaCoreHubScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToCategory = { catId ->
+                    val route = when(catId) {
+                        "statusbar" -> ReGenesisRoute.StatusBar.route
+                        "launcher" -> ReGenesisRoute.PixelLauncherEnhanced.route
+                        "colors" -> ReGenesisRoute.ChromaCoreColors.route
+                        "qs_tiles" -> ReGenesisRoute.QuickSettings.route
+                        "animations" -> ReGenesisRoute.ChromaAnimations.route
+                        else -> null
+                    }
+                    route?.let { navController.navigate(it) }
+                }
             )
         }
         composable(ReGenesisRoute.KineticForgeTransmutator.route) {
-            KineticForgeTransmutatorCard(
-                onClick = { navController.navigate(ReGenesisRoute.IconifyHub.route) },
-                activeTransmutations = 14
+            IconifyHubScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToCategory = { category -> 
+                    navController.navigate(ReGenesisRoute.IconifyCategory.createRoute(category))
+                }
             )
         }
         composable(ReGenesisRoute.KineticForgeLattice.route) {
-            KineticForgeLatticeCard(
-                onClick = { navController.navigate(ReGenesisRoute.ReGenesisCustomization.route) },
-                realityState = 0.75f
+            ReGenesisCustomizationHub(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToIconify = { navController.navigate(ReGenesisRoute.IconifyPicker.route) },
+                onNavigateToColorBlendr = { navController.navigate(ReGenesisRoute.ColorBlendr.route) },
+                onNavigateToPLE = { navController.navigate(ReGenesisRoute.PixelLauncherEnhanced.route) },
+                onNavigateToAnimations = { navController.navigate(ReGenesisRoute.ChromaAnimations.route) }
             )
         }
 
@@ -807,9 +834,6 @@ fun ReGenesisNavGraph(
         // Collaboration & Monitoring
         composable(ReGenesisRoute.CollabCanvas.route) { 
             CollabCanvasScreen(onNavigateBack = { navController.popBackStack() }) 
-        }
-        composable(ReGenesisRoute.ConferenceRoom.route) { 
-            ConferenceRoomScreen(onNavigateBack = { navController.popBackStack() }) 
         }
         composable(ReGenesisRoute.CascadeVision.route) { 
             CascadeVisionScreen(onNavigateBack = { navController.popBackStack() }) 
