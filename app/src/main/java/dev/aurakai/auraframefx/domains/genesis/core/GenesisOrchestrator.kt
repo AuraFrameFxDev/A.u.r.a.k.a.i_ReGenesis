@@ -281,8 +281,12 @@ class GenesisOrchestrator @Inject constructor(
         Timber.d("  → Routing message to OracleDrive: ${message.javaClass.simpleName}")
         try {
             val request = convertToAiRequest(message)
+            val orchRequest = dev.aurakai.auraframefx.core.orchestration.AiRequest(
+                prompt = request.query,
+                context = request.context + request.metadata
+            )
             val response = oracleDriveService.processRequest(
-                request = request,
+                request = orchRequest,
                 context = "agent_to_agent"
             )
             Timber.i("✓ OracleDrive processed message: ${response.content.take(100)}")

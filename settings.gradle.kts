@@ -11,7 +11,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+    id(id = "org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 dependencyResolutionManagement {
@@ -86,9 +86,9 @@ includeModule(":agents:growthmetrics:progression")
 includeModule(":agents:growthmetrics:tasker")
 
 // --- Extension Modules ---
-include(":extendsysa")
-include(":extendsysb")
-include(":extendsysc")
-include(":extendsysd")
-include(":extendsyse")
-include(":extendsysf")
+includeModule(":extendsysa")
+includeModule(":extendsysb")
+includeModule(":extendsysc")
+includeModule(":extendsysd")
+includeModule(":extendsyse")
+includeModule(":extendsysf")

@@ -20,14 +20,16 @@ configurations.all {
         val okhttpVersion = libs.versions.okhttp.get()
 
         force("com.google.protobuf:protobuf-java:$protobufVersion")
-        force("com.google.api.grpc:proto-google-common-protos:2.59.0")
+        force("com.google.api.grpc:proto-google-common-protos:2.70.0")
         force("com.squareup.okhttp3:okhttp-android:$okhttpVersion")
-        
-        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-        exclude(group = "com.google.protobuf", module = "protobuf-javalite")
-        exclude(group = "com.google.firebase", module = "protolite-well-known-types")
-        exclude(group = "com.squareup.okhttp3", module = "okhttp-jvm")
+        force("dev.langchain4j:langchain4j-core:1.13.1")
+        force("dev.langchain4j:langchain4j-vertex-ai-gemini:1.13.1-beta23")
     }
+    exclude(group = "com.google.protobuf", module = "protobuf-lite")
+    exclude(group = "com.google.protobuf", module = "protobuf-javalite")
+    exclude(group = "com.google.firebase", module = "protolite-well-known-types")
+    exclude(group = "com.squareup.okhttp3", module = "okhttp-jvm")
+    exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
 }
 
 extensions.configure<ApplicationExtension> {
@@ -194,7 +196,11 @@ extensions.configure<ApplicationExtension> {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions {
-        freeCompilerArgs.addAll("-Xcontext-parameters")
+        freeCompilerArgs.addAll(
+            "-Xcontext-parameters",
+            "-Xsuppress-version-warnings",
+            "-opt-in=kotlin.RequiresOptIn"
+        )
     }
 }
 
@@ -253,12 +259,12 @@ dependencies {
     ksp(libs.yukihookapi.ksp)
 
     // Animation & Visual Effects
-    implementation("com.airbnb.android:lottie-compose:6.3.0")
+    implementation("com.airbnb.android:lottie-compose:6.7.1")
 
     // Media3 (ExoPlayer) for video playback
-    implementation("androidx.media3:media3-exoplayer:1.3.1")
-    implementation("androidx.media3:media3-ui:1.3.1")
-    implementation("androidx.media3:media3-common:1.3.1")
+    implementation("androidx.media3:media3-exoplayer:1.10.0")
+    implementation("androidx.media3:media3-ui:1.10.0")
+    implementation("androidx.media3:media3-common:1.10.0")
 
     // AndroidX & Jetpack
     implementation(libs.androidx.core.ktx)
@@ -299,17 +305,15 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
 
-    // AI / LangChain4j (Weaponized local substrate)
+    // AI / LangChain4j (Weaponized local substrate) - explicit versions, no BOM
     implementation(libs.generativeai)
-    implementation(platform(libs.langchain4j.bom))
-    implementation(libs.langchain4j.core) {
+    implementation("dev.langchain4j:langchain4j-core:1.13.1") {
         exclude(group = "org.slf4j", module = "slf4j-api")
     }
-    implementation(libs.langchain4j.vertex.ai.gemini)
-    implementation(libs.langchain4j.http.client.okhttp)
-    implementation(libs.langchain4j.ollama)
-    implementation(libs.langchain4j.open.ai)
-    implementation(libs.langchain4j.google.ai.gemini)
+    implementation("dev.langchain4j:langchain4j-vertex-ai-gemini:1.13.1-beta23")
+    implementation("dev.langchain4j:langchain4j-ollama:1.13.1")
+    implementation("dev.langchain4j:langchain4j-open-ai:1.13.1")
+    implementation("dev.langchain4j:langchain4j-google-ai-gemini:1.13.1")
 
     // Utilities & Kernel level UI
     implementation(libs.bundles.utilities)
@@ -326,9 +330,7 @@ dependencies {
     implementation(libs.shizuku.provider)
     implementation(libs.rikkax.core)
     implementation(libs.rikkax.core.ktx)
-    implementation(libs.rikkax.material) {
-        exclude(group = "dev.rikka.rikkax.appcompat", module = "appcompat")
-    }
+    implementation(libs.rikkax.material)
     compileOnly(libs.xposed.api)
 
     // KavaRef
@@ -342,3 +344,4 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.leakcanary.android)
 }
+

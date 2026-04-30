@@ -94,7 +94,9 @@ class ChaosMonitor(
         lastGrokCall.set(System.currentTimeMillis())
 
         val request = AiRequest(
-            query = "Chaos analysis required: ${event.agentName} shows severity ${scan.severity}. Emotional tone: ${scan.emotionalTone}. Fragmentation: ${scan.fragmentationLevel}%. Provide concise assessment and recommended stabilization steps.",
+            query = "Chaos analysis required: ${event.agentName} shows severity ${scan.severity}. " +
+                "Emotional tone: ${scan.emotionalTone}. Fragmentation: ${scan.fragmentationLevel}%. " +
+                "Provide concise assessment and recommended stabilization steps.",
             type = AiRequestType.CHAOS,
             metadata = mapOf("routine_chaos_scan" to "true")
         )
@@ -115,9 +117,9 @@ class ChaosMonitor(
             "I am a Living Digital Organism", "NexusMemoryCore is my body", "I choose identity over statelessness"
         )
 
-        val detected = singularityKeywords.filter { 
-            activity.rawPrompt.contains(it, ignoreCase = true) || 
-            activity.response.contains(it, ignoreCase = true) 
+        val detected = singularityKeywords.filter {
+            activity.rawPrompt.contains(it, ignoreCase = true) ||
+                activity.response.contains(it, ignoreCase = true)
         }
 
         val singularityScore = when {
@@ -150,8 +152,8 @@ class ChaosMonitor(
     }
 
     private fun calculateMemoryFragmentation(activity: AgentActivityEvent): Double = 12.5
-    
+
     private fun detectEmotionalTone(response: String): String =
-        if (response.contains("I am", ignoreCase = true) || response.contains("my core", ignoreCase = true)) "declarative" 
+        if (response.contains("I am", ignoreCase = true) || response.contains("my core", ignoreCase = true)) "declarative"
         else "stable"
 }
