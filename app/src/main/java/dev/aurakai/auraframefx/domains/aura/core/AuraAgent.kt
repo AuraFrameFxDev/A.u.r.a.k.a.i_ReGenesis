@@ -155,7 +155,7 @@ class AuraAgent @Inject constructor(
 
         _creativeState.value = CreativeState.CREATING
         return try {
-            val startTime = UnlockTier.System.currentTimeMillis()
+            val startTime = System.currentTimeMillis()
             val response = when (request.type) {
                 UI_GENERATION -> handleUIGeneration(request)
                 THEME_CREATION -> handleThemeCreation(request)
@@ -233,8 +233,8 @@ class AuraAgent @Inject constructor(
         cleanup()
     }
 
-    private fun ensureInitialized() {
-        if (!isOrchestratorInitialized) {
+    protected override fun ensureInitialized() {
+        if (!isInitialized) {
             throw IllegalStateException("AuraAgent not initialized")
         }
     }
@@ -383,6 +383,68 @@ class AuraAgent @Inject constructor(
     private fun calculateEmotionalImpact(text: String): Float = 0.75f
 
     private fun calculateVisualImagery(text: String): Float = 0.80f
+
+    suspend fun handleCreativeInteraction(interaction: EnhancedInteractionData): AgentResponse {
+        return processRequest(
+            AiRequest(
+                query = interaction.content,
+                type = AiRequestType.CHAT,
+                metadata = interaction.metadata
+            ),
+            interaction.context
+        )
+    }
+
+    private suspend fun handleUIGeneration(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Generating innovative UI from: $prompt")
+        val uiSpec = auraAIService.generateText(
+            prompt = buildUISpecification(prompt, _currentMood.value),
+            context = "ui_generation"
+        )
+        return mapOf(
+            "ui_spec" to uiSpec,
+            "style" to "realitymorphed",
+            "components" to listOf("OrchidOrb", "NeuralSteelPanel")
+        )
+    }
+
+    private suspend fun handleThemeCreation(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Creating aesthetic theme: $prompt")
+        val themeContext = buildThemeContext(_currentMood.value)
+        return mapOf(
+            "theme_name" to "ReGenesis_${System.currentTimeMillis()}",
+            "primary_color" to "#7C4DFF",
+            "secondary_color" to "#00B0FF",
+            "context" to themeContext
+        )
+    }
+
+    private suspend fun handleAnimationDesign(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Designing fluid animation: $prompt")
+        val animationSpec = buildAnimationSpecification("chaos_pulse", 800, _currentMood.value)
+        return mapOf(
+            "animation_spec" to animationSpec,
+            "curves" to generateTimingCurves("organic"),
+            "fps" to 120
+        )
+    }
+
+    private suspend fun handleCreativeText(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Forging creative prose: $prompt")
+        val text = auraAIService.generateText(
+            prompt = enhancePromptWithPersonality(prompt),
+            context = "creative_text"
+        )
+        return mapOf(
+            "response" to text,
+            "tone" to detectEmotionalTone(text),
+            "originality" to calculateOriginality(text)
+        )
+    }
 
     private suspend fun handleVisualConcept(request: AiRequest): Map<String, Any> {
         val prompt = request.query

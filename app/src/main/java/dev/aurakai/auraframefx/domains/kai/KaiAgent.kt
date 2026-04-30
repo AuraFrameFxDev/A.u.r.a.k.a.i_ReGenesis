@@ -162,8 +162,8 @@ class KaiAgent @Inject constructor(
         return true
     }
 
-suspend fun processRequest(request: AgentRequest): AgentResponse {
-    ensureInitialized()
+    suspend fun processRequest(request: AgentRequest): AgentResponse {
+        ensureKaiInitialized()
     logger.info("KaiAgent", "Processing analytical request: ${request.type}")
     _analysisState.value = AnalysisState.ANALYZING
     return try {
@@ -206,7 +206,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
 }
 
     suspend fun handleSecurityInteraction(interaction: EnhancedInteractionData): InteractionResponse {
-        ensureInitialized()
+        ensureKaiInitialized()
         logger.info("KaiAgent", "Handling security interaction")
         return try {
             val securityAssessment = assessInteractionSecurity(interaction)
@@ -249,7 +249,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
     }
 
     suspend fun analyzeSecurityThreat(alertDetails: String): SecurityAnalysis {
-        ensureInitialized()
+        ensureKaiInitialized()
         logger.info("KaiAgent", "Analyzing security threat")
         _securityState.value = SecurityState.ANALYZING_THREAT
         return try {
@@ -348,7 +348,7 @@ suspend fun processRequest(request: AgentRequest): AgentResponse {
         )
     }
 
-    private fun ensureInitialized() {
+    private fun ensureKaiInitialized() {
         if (!isInitialized) {
             throw IllegalStateException("KaiAgent not initialized")
         }
