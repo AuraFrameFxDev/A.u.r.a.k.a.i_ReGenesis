@@ -350,6 +350,10 @@ class RealitymorphismViewModel @Inject constructor() : ViewModel() {
     fun setActivePanel(panel: ForgePanel) {
         _uiState.update { it.copy(activePanel = panel) }
     }
+
+    fun emergencyReAnchor() {
+        // Placeholder for emergency re-anchor functionality
+    }
 }
 
 // ================= DATA CLASSES =================

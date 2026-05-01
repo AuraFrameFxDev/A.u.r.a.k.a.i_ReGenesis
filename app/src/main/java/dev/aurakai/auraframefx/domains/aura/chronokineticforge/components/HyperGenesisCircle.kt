@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.RealitymorphismViewModel
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 import kotlinx.coroutines.delay
 import kotlin.math.*
@@ -478,22 +479,4 @@ fun HyperGenesisWithState(
 // EXTENSIONS
 // ═════════════════════════════════════════════════════════════════════
 
-private val Float.pow(exponent: Int): Float = this.toDouble().pow(exponent).toFloat()
-
-// Placeholder imports for compilation
-private val androidx.compose.ui.unit.TextUnit.sp: androidx.compose.ui.unit.TextUnit
-    get() = androidx.compose.ui.unit.TextUnit(this.value, androidx.compose.ui.unit.TextUnitType.Sp)
-
-// Placeholder ViewModel
-class RealitymorphismViewModel {
-    val uiState: StateFlow<RealitymorphismState> = MutableStateFlow(RealitymorphismState())
-    fun emergencyReAnchor() {}
-}
-
-data class RealitymorphismState(
-    val atomicSuccessRate: Float = 92.7f
-)
-
-// Placeholder hiltViewModel
-@Composable
-fun hiltViewModel(): RealitymorphismViewModel = RealitymorphismViewModel()
+private fun Float.pow(exponent: Int): Float = this.toDouble().pow(exponent).toFloat()
