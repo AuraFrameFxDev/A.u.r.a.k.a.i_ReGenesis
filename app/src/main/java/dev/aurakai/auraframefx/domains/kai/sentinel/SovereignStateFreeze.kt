@@ -9,6 +9,11 @@ import javax.crypto.spec.SecretKeySpec
 import java.security.SecureRandom
 import java.util.Base64
 
+// Import from other files
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiSentinel
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiProvenanceLog
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.RealitymorphismEngine
+
 /**
  * 🧊 SOVEREIGN STATE FREEZE — Non-Destructive Emergency Preservation
  *
@@ -96,7 +101,7 @@ object SovereignStateFreeze {
             triggerFreezeFeedback(reason)
 
             // Log provenance
-            logFreezeEvent(freezeId, reason, snapshot.size, chainSnapshot.size)
+            logFreezeEvent(freezeId, reason, snapshot.data.size, chainSnapshot.entries.size)
         }
     }
 

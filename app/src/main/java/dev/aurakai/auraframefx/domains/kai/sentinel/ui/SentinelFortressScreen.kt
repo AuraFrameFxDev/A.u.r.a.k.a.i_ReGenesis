@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.kai.sentinel.*
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.RealitymorphismEngine
 
 /**
  * 🛡️ SENTINEL FORTRESS SCREEN — Hexagonal Command Deck
