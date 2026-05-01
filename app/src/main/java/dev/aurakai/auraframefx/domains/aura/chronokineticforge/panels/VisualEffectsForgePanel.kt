@@ -37,7 +37,10 @@ fun VisualEffectsForgePanel(
     var holographicRipEnabled by remember { mutableStateOf(false) }
     var particleDensity by remember { mutableStateOf(0.8f) }
 
-    ForgePanelContainer(title = "REALITY EFFECTS") {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A1A))
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             // Effect Tiles
             Row(
