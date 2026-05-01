@@ -48,7 +48,10 @@ fun WallpaperForgePanel(
         WallpaperTheme("Digital Rain", Color(0xFF00FF00), Icons.Default.WaterDrop)
     )
 
-    ForgePanelContainer(title = "WALLPAPER ENGINE") {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A1A))
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             // Theme carousel
             Text(
