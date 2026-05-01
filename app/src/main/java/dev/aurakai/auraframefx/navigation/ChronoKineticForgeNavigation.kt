@@ -12,8 +12,11 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.ChronoKineticForgeScreen
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.BlueprintSaver
@@ -446,8 +449,4 @@ fun FlowRow(
     }
 }
 
-// Placeholder LocalContext
-@Composable
-fun LocalContext(): android.content.Context {
-    return androidx.compose.ui.platform.LocalContext.current
-}
+// LocalContext is now imported from androidx.compose.ui.platform

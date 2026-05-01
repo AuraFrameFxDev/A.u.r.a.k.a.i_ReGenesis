@@ -20,13 +20,13 @@ fun AIFeaturesScreen() = StubScreen("AI Features")
 fun DeviceOptimizerScreen() = StubScreen("Device Optimizer")
 
 @Composable
-fun CanvasScreen() = StubScreen("Canvas Editor")
-
-@Composable
-fun OverlayScreen() = StubScreen("System Overlays")
+fun CanvasScreen() = StubScreen("Canvas")
 
 @Composable
 fun CanvasEditorScreen() = StubScreen("Canvas Editor")
+
+@Composable
+fun OverlayScreen() = StubScreen("System Overlays")
 
 @Composable
 fun SystemOverlaysScreen() = StubScreen("System Overlays")
