@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -509,7 +508,7 @@ private fun SynthOrbPortal(
             drawPath(
                 path = innerPath,
                 color = Color(0xFF00E5FF).copy(alpha = 0.8f),
-                style = Stroke(width = 4f, cap = StrokeCap.Round, join = StrokeJoin.Round)
+                style = Stroke(width = 4f, cap = StrokeCap.Round, join = androidx.compose.ui.graphics.drawscope.StrokeJoin.Round)
             )
 
             // Center point
