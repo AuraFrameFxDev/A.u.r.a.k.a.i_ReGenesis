@@ -34,7 +34,10 @@ fun QSHeaderForgePanel(
     val uiState by viewModel.uiState.collectAsState()
     var showAIGen by remember { mutableStateOf(false) }
 
-    ForgePanelContainer(title = "QS HEADER FORGE") {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF0A0A1A))
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             // Image selection + AI Gen
             Row(
@@ -77,10 +80,9 @@ fun QSHeaderForgePanel(
                     .clip(RoundedCornerShape(12.dp))
                     .border(2.dp, Color(0xFFFF00FF).copy(alpha = 0.5f), RoundedCornerShape(12.dp))
             ) {
-                BackgroundForgeEngine.BackgroundLayer(
-                    id = "header_preview",
-                    modifier = Modifier.fillMaxSize(),
-                    state = null // TODO: Replace with actual forge state
+                // Background layer placeholder
+                Box(
+                    modifier = Modifier.fillMaxSize()
                 )
 
                 // Overlay label
