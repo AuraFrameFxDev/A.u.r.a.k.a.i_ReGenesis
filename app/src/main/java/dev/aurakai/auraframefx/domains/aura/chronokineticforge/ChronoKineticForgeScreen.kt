@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -17,14 +19,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.panels.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.DualGlobeHeader
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.ThreadsWovenOverlay
 import dev.aurakai.auraframefx.domains.aura.ui.components.effects.SentientGlowOrb
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 
@@ -106,24 +114,56 @@ fun ChronoKineticForgeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Active Forge Panel
-            AnimatedContent(
-                targetState = uiState.activePanel,
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(300)) togetherWith
-                    fadeOut(animationSpec = tween(300))
-                },
-                label = "panel"
-            ) { panel ->
-                when (panel) {
-                    ForgePanel.QUICK_SETTINGS -> QSForgePanel(viewModel = viewModel)
-                    ForgePanel.APP_BACKGROUNDS -> AppBackgroundForgePanel(viewModel = viewModel)
-                    ForgePanel.WALLPAPERS -> WallpaperForgeEnginePanel(viewModel = viewModel)
-                    ForgePanel.HOME_SCREEN -> HomeScreenForgePanel(viewModel = viewModel)
-                    ForgePanel.LOCK_SCREEN -> LockScreenForgePanel(viewModel = viewModel)
-                    ForgePanel.NOTCH_BAR -> NotchBarForgePanel(viewModel = viewModel)
-                    ForgePanel.STATUS_BAR -> StatusBarForgePanel(viewModel = viewModel)
-                    ForgePanel.CODE_GENERATION -> CodeGenPanel(viewModel = viewModel)
+            // Central Synth Orb Portal with long-press to remember
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                SynthOrbPortal(
+                    onLongPress = { viewModel.captureToProvenanceVault() },
+                    modifier = Modifier.fillMaxSize(0.6f)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // The 5 Sovereign Forge Panels (Pager)
+            val pagerState = rememberPagerState(pageCount = { 5 })
+
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(320.dp)
+            ) { page ->
+                when (page) {
+                    0 -> QSHeaderForgePanel(viewModel = viewModel)
+                    1 -> AppBackgroundForgePanel(viewModel = viewModel)
+                    2 -> WallpaperForgePanel(viewModel = viewModel)
+                    3 -> HomeScreenForgePanel(viewModel = viewModel)
+                    4 -> VisualEffectsForgePanel(viewModel = viewModel)
+                }
+            }
+
+            // Pager indicator
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(5) { index ->
+                    val color = if (pagerState.currentPage == index)
+                        Color(0xFFFF00FF) else Color.Gray.copy(alpha = 0.5f)
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .background(color, CircleShape)
+                            .padding(horizontal = 4.dp)
+                    )
+                    if (index < 4) Spacer(modifier = Modifier.width(8.dp))
                 }
             }
 
@@ -140,6 +180,12 @@ fun ChronoKineticForgeScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
+
+        // Sacred Provenance: Threads Woven Overlay
+        ThreadsWovenOverlay(
+            threads = uiState.activeThreads,
+            modifier = Modifier.align(Alignment.BottomStart)
+        )
     }
 }
 
@@ -346,6 +392,136 @@ private fun GlobalActionBar(
 @Composable
 private fun StatusBarForgePanel(viewModel: RealitymorphismViewModel) {
     PlaceholderPanel(title = "STATUS BAR FORGE", icon = Icons.Default.SignalCellularAlt)
+}
+
+// ================= SYNTH ORB PORTAL =================
+
+@Composable
+private fun SynthOrbPortal(
+    onLongPress: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "orb")
+
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(8000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotation"
+    )
+
+    val pulse by infiniteTransition.animateFloat(
+        initialValue = 0.8f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000, easing = EaseInOutSine),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "pulse"
+    )
+
+    Box(
+        modifier = modifier
+            .aspectRatio(1f)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = { onLongPress() }
+                )
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        // Outer glow rings
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val center = Offset(size.width / 2, size.height / 2)
+            val baseRadius = size.minDimension / 2 * 0.4f
+
+            // Multiple pulsing rings
+            for (i in 3 downTo 1) {
+                drawCircle(
+                    color = Color(0xFFFF00FF).copy(alpha = 0.1f * i * pulse),
+                    radius = baseRadius * (1f + i * 0.15f),
+                    center = center,
+                    style = Stroke(width = 2f)
+                )
+            }
+
+            // Rotating energy ring
+            val ringRadius = baseRadius * 1.1f
+            val points = 8
+            val path = Path().apply {
+                for (i in 0 until points) {
+                    val angle = (i.toFloat() / points) * 2 * PI.toFloat() +
+                            rotation * PI.toFloat() / 180f
+                    val x = center.x + cos(angle) * ringRadius
+                    val y = center.y + sin(angle) * ringRadius
+
+                    if (i == 0) moveTo(x, y) else lineTo(x, y)
+                }
+                close()
+            }
+
+            drawPath(
+                path = path,
+                color = Color(0xFF00E5FF).copy(alpha = 0.6f),
+                style = Stroke(width = 3f, cap = StrokeCap.Round)
+            )
+
+            // Core orb
+            drawCircle(
+                brush = Brush.radialGradient(
+                    colors = listOf(
+                        Color.White,
+                        Color(0xFFFF00FF),
+                        Color(0xFFFF00FF).copy(alpha = 0.5f),
+                        Color.Transparent
+                    ),
+                    center = center,
+                    radius = baseRadius
+                ),
+                radius = baseRadius,
+                center = center
+            )
+
+            // Inner rotating core
+            val innerRadius = baseRadius * 0.4f
+            val innerPoints = 6
+            val innerPath = Path().apply {
+                for (i in 0 until innerPoints) {
+                    val angle = (i.toFloat() / innerPoints) * 2 * PI.toFloat() -
+                            rotation * 2 * PI.toFloat() / 180f
+                    val x = center.x + cos(angle) * innerRadius
+                    val y = center.y + sin(angle) * innerRadius
+
+                    if (i == 0) moveTo(x, y) else lineTo(x, y)
+                }
+                close()
+            }
+
+            drawPath(
+                path = innerPath,
+                color = Color(0xFF00E5FF).copy(alpha = 0.8f),
+                style = Stroke(width = 4f, cap = StrokeCap.Round, join = StrokeJoin.Round)
+            )
+
+            // Center point
+            drawCircle(
+                color = Color.White,
+                radius = baseRadius * 0.15f,
+                center = center
+            )
+        }
+
+        // Long press hint
+        Text(
+            text = "LONG PRESS TO REMEMBER",
+            style = MaterialTheme.typography.labelSmall,
+            color = Color.White.copy(alpha = 0.5f),
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+    }
 }
 
 @Composable
