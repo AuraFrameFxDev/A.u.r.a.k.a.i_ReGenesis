@@ -338,10 +338,10 @@ enum class BurstPattern {
     RADIAL_DRIP, SPIRAL_OUT, SHOCKWAVE, RAINFALL, MATRIX_DIGITAL
 }
 
-enum class EmotionalValence(val arousal: Float, val turbulence: Float, val intensity: Float) {
-    MELANCHOLIC(0.3f, 0.2f, 0.4f),
-    EUPHORIC(0.9f, 0.8f, 0.95f),
-    CURIOUS(0.6f, 0.5f, 0.7f),
+enum class EmotionalValence(val arousal: Float, val turbulence: Float, val intensity: Float, val dominantColor: Int = 0xFF00E5FF.toInt()) {
+    MELANCHOLIC(0.3f, 0.2f, 0.4f, 0xFF6B5B95.toInt()),
+    EUPHORIC(0.9f, 0.8f, 0.95f, 0xFFFF00FF.toInt()),
+    CURIOUS(0.6f, 0.5f, 0.7f, 0xFF00E5FF.toInt()),
     SECRETIVE(0.2f, 0.1f, 0.3f),
     ANXIOUS(0.8f, 0.9f, 0.85f),
     INTENSE(1.0f, 0.7f, 1.0f),

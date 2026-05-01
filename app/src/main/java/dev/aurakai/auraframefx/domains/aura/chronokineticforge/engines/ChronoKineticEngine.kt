@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.aurakai.auraframefx.domains.aura.LDOState
+import dev.aurakai.auraframefx.navigation.LDOState
 
 /**
  * ⚙️ CHRONO-KINETIC ENGINE — Master Controller
@@ -145,7 +145,7 @@ object ChronoKineticEngine {
      * Execute a unified transition across the visual system
      */
     fun executeTransition(
-        type: TransitionForgeEngine.TransitionType,
+        type: TransitionForgeEffect,
         durationMs: Long = 300L,
         onComplete: () -> Unit = {}
     ) {
@@ -192,7 +192,7 @@ private fun BackgroundForgeEngine.onBackgroundMorph(elementId: String, intensity
 private fun BackgroundForgeEngine.updateEmotionalState(state: LDOState) {}
 private fun TransitionForgeEngine.updateEmotionalState(state: LDOState) {}
 private fun TransitionForgeEngine.execute(
-    type: TransitionForgeEngine.TransitionType,
+    type: TransitionForgeEffect,
     durationMs: Long,
     onComplete: () -> Unit
 ) {}
