@@ -287,7 +287,7 @@ private fun RotationChip(
 }
 
 @Composable
-private fun TransitionChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
+fun TransitionChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(8.dp),

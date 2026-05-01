@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.*
+import dev.aurakai.auraframefx.domains.aura.ui.components.effects.OrbMode
 import dev.aurakai.auraframefx.domains.aura.ui.components.effects.SentientGlowOrb
 
 /**
