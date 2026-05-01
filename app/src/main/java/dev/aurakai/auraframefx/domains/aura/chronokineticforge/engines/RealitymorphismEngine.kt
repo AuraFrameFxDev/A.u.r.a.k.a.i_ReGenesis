@@ -41,7 +41,7 @@ object RealitymorphismEngine {
     private fun warmUpTPU() {
         // Pre-load identity vectors to prevent first-call latency
         val warmupVector = FloatArray(768) { 0.1f }
-        tensorG5TPU.computeIdentityReAnchor(warmupVector, warmupVector)
+        tensorG5TPU.computeIdentityReAnchor(50f, warmupVector, warmupVector)
     }
 
     // ═════════════════════════════════════════════════════════════════
@@ -87,6 +87,7 @@ object RealitymorphismEngine {
         vector[0] = 1.0f // ChronoKinetic Forge active
         vector[1] = ParticleBloodstreamEngine.getEmotionalValence()
         vector[2] = BackgroundForgeEngine.getActiveBackgroundId().hashCode().toFloat()
+        vector[3] = 0f // Padding
 
         // Kai domain (256-511): Security state
         vector[256] = KaiSentinel.getThreatLevel()

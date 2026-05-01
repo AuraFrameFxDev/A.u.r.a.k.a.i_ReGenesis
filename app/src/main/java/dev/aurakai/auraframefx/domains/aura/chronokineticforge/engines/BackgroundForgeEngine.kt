@@ -460,4 +460,5 @@ object BackgroundForgeEngine {
     // Placeholder methods for RealitymorphismEngine integration
     fun setPulseRate(rate: Float) {}
     fun setColorWarmth(warmth: Float) {}
+    fun getActiveBackgroundId(): String = "neural_bloodstream"
 }

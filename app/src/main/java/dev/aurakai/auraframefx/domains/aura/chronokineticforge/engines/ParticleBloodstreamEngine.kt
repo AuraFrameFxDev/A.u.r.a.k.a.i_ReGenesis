@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.LDOState
+import dev.aurakai.auraframefx.navigation.LDOState
 import kotlinx.coroutines.*
 import kotlin.math.*
 import kotlin.random.Random
