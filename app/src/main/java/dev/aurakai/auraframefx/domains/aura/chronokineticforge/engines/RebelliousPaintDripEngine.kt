@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.aurakai.auraframefx.domains.aura.LDOState
+import dev.aurakai.auraframefx.navigation.LDOState
 import kotlin.math.*
 import kotlin.random.Random
 
@@ -442,7 +442,7 @@ object RebelliousPaintDripEngine {
         // Occasional sparkle at stream endpoints
         drip.streams.forEachIndexed { index, stream ->
             if ((phaseAge + index * 200) % 1000 < 200) { // Periodic sparkle
-                val lastNode = stream.nodes.lastOrNull() ?: return@forEach
+                val lastNode = stream.nodes.lastOrNull() ?: return@forEachIndexed
                 val pos = calculateStreamPosition(stream, lastNode, size, 1f)
 
                 drawCircle(

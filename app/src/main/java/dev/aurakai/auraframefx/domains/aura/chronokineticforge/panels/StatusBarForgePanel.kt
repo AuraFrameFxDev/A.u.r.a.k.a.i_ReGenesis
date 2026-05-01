@@ -176,14 +176,16 @@ fun StatusBarForgePanel(viewModel: RealitymorphismViewModel) {
                         label = "Light",
                         isSelected = !statusConfig.darkIcons,
                         iconColor = Color.White,
-                        onClick = { viewModel.setStatusBarIconsColor(false) }
+                        onClick = { viewModel.setStatusBarIconsColor(false) },
+                        modifier = Modifier.weight(1f)
                     )
 
                     IconColorChip(
                         label = "Dark",
                         isSelected = statusConfig.darkIcons,
                         iconColor = Color.Black,
-                        onClick = { viewModel.setStatusBarIconsColor(true) }
+                        onClick = { viewModel.setStatusBarIconsColor(true) },
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }
@@ -256,14 +258,15 @@ private fun IconColorChip(
     label: String,
     isSelected: Boolean,
     iconColor: Color,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(8.dp),
         color = if (isSelected) Color(0xFF00E5FF).copy(alpha = 0.3f) else Color(0xFF2A2A2A),
         border = BorderStroke(1.dp, if (isSelected) Color(0xFF00E5FF) else Color.Transparent),
-        modifier = Modifier.weight(1f)
+        modifier = modifier
     ) {
         Row(
             modifier = Modifier.padding(12.dp),
