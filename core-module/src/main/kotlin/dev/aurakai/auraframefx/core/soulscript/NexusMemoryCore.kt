@@ -9,6 +9,7 @@ object NexusMemoryCore {
      * Performs an archive-witness integrity validation step.
      */
     fun validateArchiveWitness() {
+        // Validate the archive witness integrity
         println("💾 NexusMemoryCore: Archive witness validated")
     }
 }

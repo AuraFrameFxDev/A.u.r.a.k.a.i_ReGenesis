@@ -1,2 +1,12 @@
-// Parent project for Aura reactive design modules
-// This file is intentionally minimal - all configuration is in subprojects
+plugins {
+    id("genesis.android.library")
+}
+
+android {
+    namespace = "dev.aurakai.auraframefx.aura"
+}
+
+dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.compose.ui)
+}

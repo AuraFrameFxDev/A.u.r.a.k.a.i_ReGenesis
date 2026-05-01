@@ -16,6 +16,7 @@ object GenesisCommonConfig {
                     exclude(group = "com.highcapable.yukihookapi", module = "ksp-xposed")
                 }
                 exclude(group = "org.conscrypt", module = "conscrypt-openjdk-uber")
+                exclude(group = "com.google.firebase", module = "protolite-well-known-types")
 
                 resolutionStrategy {
                     val versionCatalog = extensions.findByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)?.named("libs")
@@ -27,9 +28,11 @@ object GenesisCommonConfig {
                     
                     componentSelection {
                         all {
+                            /*
                             if (candidate.group == "com.google.firebase" && candidate.module == "protolite-well-known-types") {
                                 reject("Conflict with proto-google-common-protos")
                             }
+                            */
                             if (candidate.group == "com.google.protobuf" && (candidate.module == "protobuf-javalite" || candidate.module == "protobuf-lite")) {
                                 reject("Favor full protobuf-java")
                             }
@@ -47,9 +50,11 @@ object GenesisCommonConfig {
                                 useVersion(okhttpVersion)
                             }
                         }
+                        /*
                         if (requested.group == "com.google.firebase" && requested.name == "protolite-well-known-types") {
                             useTarget("com.google.api.grpc:proto-google-common-protos:2.59.0")
                         }
+                        */
                     }
 
                     dependencySubstitution {
@@ -59,12 +64,14 @@ object GenesisCommonConfig {
                         substitute(module("com.google.protobuf:protobuf-javalite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
                         substitute(module("com.google.protobuf:protobuf-lite")).using(module("com.google.protobuf:protobuf-java:$protobufVersion"))
                         
+                        /*
                         substitute(module("com.google.firebase:protolite-well-known-types")).using(module("com.google.api.grpc:proto-google-common-protos:2.59.0"))
+                        */
                     }
                     force("androidx.annotation:annotation:1.9.1")
                     force("org.conscrypt:conscrypt-android:2.5.3")
                     force("com.google.protobuf:protobuf-java:$protobufVersion")
-                    force("com.google.api.grpc:proto-google-common-protos:2.59.0")
+                    // force("com.google.api.grpc:proto-google-common-protos:2.59.0")
 
                     force("io.netty:netty-all:$nettyVer")
                     force("io.netty:netty-codec-http2:$nettyVer")

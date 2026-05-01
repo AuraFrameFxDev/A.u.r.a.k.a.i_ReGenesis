@@ -1,2 +1,12 @@
-// Parent project for Sentinels Fortress modules
-// This file is intentionally minimal - all configuration is in subprojects
+plugins {
+    id("genesis.android.library")
+}
+
+android {
+    namespace = "dev.aurakai.auraframefx.kai.sentinelsfortress"
+}
+
+dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.compose.ui)
+}
