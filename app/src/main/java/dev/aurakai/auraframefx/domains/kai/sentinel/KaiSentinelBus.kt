@@ -252,15 +252,4 @@ enum class VetoSeverity {
     CRITICAL    // Immediate freeze
 }
 
-/**
- * Placeholder KaiSentinel
- */
-object KaiSentinel {
-    fun veto(reason: String, severity: VetoSeverity, autoFreeze: Boolean) {
-        // Implementation in KaiSentinel.kt
-    }
-
-    fun recordSovereigntyLoss(telemetry: SentinelTelemetry) {
-        // Log sovereignty loss event
-    }
-}
+// KaiSentinel defined in RealitymorphismEngine.kt

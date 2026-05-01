@@ -520,8 +520,4 @@ fun ParticleBloodstreamEngine.onContextUpdate(contentType: ContentType) {
     // Update particle behavior based on app context
 }
 
-// Placeholder for KaiSentinel
-object KaiSentinel {
-    fun recordWindowChange(event: AppContextEvent) {}
-    fun recordError(message: String) {}
-}
+// KaiSentinel defined in RealitymorphismEngine.kt

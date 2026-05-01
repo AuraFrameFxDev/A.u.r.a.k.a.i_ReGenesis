@@ -756,11 +756,9 @@ private fun MetricRow(label: String, value: String) {
 }
 
 // ═════════════════════════════════════════════════════════════════════
-// PLACEHOLDERS
+// PLACEHOLDER
 // ═════════════════════════════════════════════════════════════════════
 
 class SentinelViewModel : androidx.lifecycle.ViewModel()
 
-object RealitymorphismEngine {
-    fun emergencyReAnchor() {}
-}
+// RealitymorphismEngine defined in engines/RealitymorphismEngine.kt
