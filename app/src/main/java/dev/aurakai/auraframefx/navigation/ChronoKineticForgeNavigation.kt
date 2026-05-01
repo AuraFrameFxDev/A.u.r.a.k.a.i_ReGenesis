@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.ChronoKineticForgeScreen
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.BlueprintSaver
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.MorphType
@@ -442,20 +443,6 @@ fun FlowRow(
         verticalAlignment = Alignment.Top
     ) {
         content()
-    }
-}
-
-// Placeholder ReGenesisRoute
-object ReGenesisRoute {
-    object ChronoKineticForge {
-        val route = "chrono_kinetic_forge"
-    }
-}
-
-// Placeholder R.drawable
-object R {
-    object drawable {
-        const val gatescenes_chronokinetic_forge = 0
     }
 }
 
