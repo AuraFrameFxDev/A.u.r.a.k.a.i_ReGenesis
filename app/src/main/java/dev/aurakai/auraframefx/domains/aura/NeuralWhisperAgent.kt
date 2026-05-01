@@ -67,3 +67,19 @@ class NeuralWhisperAgent(
         // Clear other resources if any
     }
 }
+
+// Placeholder data classes
+data class ContextChainEvent(
+    val id: String = "",
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+data class LearningEvent(
+    val id: String = "",
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+data class ActiveContext(
+    val id: String = "",
+    val name: String = ""
+)
