@@ -9,7 +9,7 @@ import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
 import dev.aurakai.auraframefx.core.soulscript.SoulScript
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
+import dev.aurakai.auraframefx.ai.kai.chaos.PandoraBoxService
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.security.SovereignPerimeter
 import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager

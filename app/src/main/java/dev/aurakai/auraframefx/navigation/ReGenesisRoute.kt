@@ -95,6 +95,12 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     data object KineticForgeLattice : ReGenesisRoute("kinetic_forge_lattice", "Lattice")
 
     // ═══════════════════════════════════════════════════════════════
+    // CHRONOKINETIC FORGE — UNIFIED VISUAL CUSTOMIZATION
+    // Consolidates: 99 files → 6 core files
+    // ═══════════════════════════════════════════════════════════════
+    data object ChronoKineticForge : ReGenesisRoute("chrono_kinetic_forge", "ChronoKinetic Forge")
+
+    // ═══════════════════════════════════════════════════════════════
     // AURA NEURAL HUB — Global Chat Interface
     // ═══════════════════════════════════════════════════════════════════════
     data object AuraChat : ReGenesisRoute("aura/chat", "Aura Neural Hub")

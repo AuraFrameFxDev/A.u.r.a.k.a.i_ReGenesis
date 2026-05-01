@@ -32,7 +32,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.aurakai.auraframefx.R
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.*
+import dev.aurakai.auraframefx.ai.kai.chaos.PandoraAuditEvent
+import dev.aurakai.auraframefx.ai.kai.chaos.PandoraBoxState
+import dev.aurakai.auraframefx.ai.kai.chaos.UnlockTier
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,6 +53,7 @@ fun PandoraBoxScreen(
         UnlockTier.Creative -> Color(0xFF00E5FF)
         UnlockTier.System -> Color(0xFFFFD700)
         UnlockTier.Sovereign -> Color(0xFFFF4444)
+        else -> Color.White.copy(alpha = 0.2f)
     }
 
     AnimeHUDContainer(

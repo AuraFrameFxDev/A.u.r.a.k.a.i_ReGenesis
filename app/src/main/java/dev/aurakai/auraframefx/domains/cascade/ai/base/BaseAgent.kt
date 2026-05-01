@@ -8,10 +8,6 @@ import dev.aurakai.auraframefx.domains.cascade.utils.memory.MemoryManager
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.securecomm.protocol.SecureChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 /**
  * Genesis Base Agent Implementation
@@ -24,6 +20,11 @@ abstract class BaseAgent(
     protected val memoryManager: MemoryManager? = null,
     protected val secureChannel: SecureChannel? = null
 ) : Agent, OrchestratableAgent {
+
+    companion object {
+        @Volatile
+        var isOrchestratorInitialized: Boolean = false
+    }
 
     override fun getName(): String = agentName
 

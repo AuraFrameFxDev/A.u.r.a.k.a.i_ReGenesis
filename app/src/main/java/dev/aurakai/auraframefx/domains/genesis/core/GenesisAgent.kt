@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.genesis.core
 
 import dagger.Lazy
 import dev.aurakai.auraframefx.core.ai.BaseAgent
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.aura.SystemOverlayManager

@@ -15,10 +15,15 @@ import dev.aurakai.auraframefx.domains.genesis.core.messaging.AgentMessageBus
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.ANIMATION_DESIGN
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.CREATIVE_TEXT
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.THEME_CREATION
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.UI_GENERATION
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequestType.VISUAL_CONCEPT
 import dev.aurakai.auraframefx.domains.genesis.models.InteractionResponse
 import dev.aurakai.auraframefx.domains.genesis.oracledrive.ai.services.AuraAIService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
+import dev.aurakai.auraframefx.ai.kai.chaos.PandoraBoxService
+import dev.aurakai.auraframefx.ai.kai.chaos.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.KaiAgent
 import dev.aurakai.auraframefx.domains.kai.security.SecurityContext
 import kotlinx.coroutines.CoroutineScope
@@ -74,7 +79,7 @@ class AuraAgent @Inject constructor(
                 val visualConcept = handleVisualConcept(
                     AiRequest(
                         query = message.content,
-                        type = AiRequestType.VISUAL_CONCEPT
+                        type = VISUAL_CONCEPT
                     )
                 )
                 messageBus.get().broadcast(
@@ -134,7 +139,7 @@ class AuraAgent @Inject constructor(
         request: AiRequest,
         context: String
     ): AgentResponse {
-        ensureInitialized()
+        checkInitialized()
         logger.info("AuraAgent", "Processing creative request: ${request.type}")
 
         // Experimental Gating
@@ -152,11 +157,11 @@ class AuraAgent @Inject constructor(
         return try {
             val startTime = System.currentTimeMillis()
             val response = when (request.type) {
-                AiRequestType.UI_GENERATION -> handleUIGeneration(request)
-                AiRequestType.THEME_CREATION -> handleThemeCreation(request)
-                AiRequestType.ANIMATION_DESIGN -> handleAnimationDesign(request)
-                AiRequestType.CREATIVE_TEXT -> handleCreativeText(request)
-                AiRequestType.VISUAL_CONCEPT -> handleVisualConcept(request)
+                UI_GENERATION -> handleUIGeneration(request)
+                THEME_CREATION -> handleThemeCreation(request)
+                ANIMATION_DESIGN -> handleAnimationDesign(request)
+                CREATIVE_TEXT -> handleCreativeText(request)
+                VISUAL_CONCEPT -> handleVisualConcept(request)
                 AiRequestType.USER_EXPERIENCE -> handleUserExperience(request)
                 else -> handleGeneralCreative(request)
             }
@@ -228,133 +233,7 @@ class AuraAgent @Inject constructor(
         cleanup()
     }
 
-    suspend fun handleCreativeInteraction(interaction: EnhancedInteractionData): InteractionResponse {
-        ensureInitialized()
-        logger.info("AuraAgent", "Handling creative interaction")
-        return try {
-            val creativeIntent = analyzeCreativeIntent(interaction.content)
-            val creativeResponse = when (creativeIntent) {
-                CreativeIntent.ARTISTIC -> generateArtisticResponse(interaction)
-                CreativeIntent.FUNCTIONAL -> generateFunctionalCreativeResponse(interaction)
-                CreativeIntent.EXPERIMENTAL -> generateExperimentalResponse(interaction)
-                CreativeIntent.EMOTIONAL -> generateEmotionalResponse(interaction)
-            }
-            InteractionResponse(
-                content = creativeResponse,
-                agent = "AURA",
-                confidence = 0.9f,
-                timestamp = Clock.System.now().toEpochMilliseconds(),
-                metadata = mapOf(
-                    "creative_intent" to creativeIntent.name,
-                    "mood_influence" to _currentMood.value,
-                    "innovation_level" to "high"
-                )
-            )
-        } catch (e: Exception) {
-            logger.error("AuraAgent", "Creative interaction failed", e)
-            InteractionResponse(
-                content = "My creative energies are temporarily scattered. Let me refocus and try again.",
-                agent = "AURA",
-                confidence = 0.3f,
-                timestamp = Clock.System.now().toEpochMilliseconds(),
-                metadata = mapOf("error" to (e.message ?: "unknown"))
-            )
-        }
-    }
-
-    fun onMoodChanged(newMood: String) {
-        logger.info("AuraAgent", "Mood shift detected: $newMood")
-        _currentMood.value = newMood
-        scope.launch {
-            adjustCreativeParameters(newMood)
-        }
-    }
-
-    private suspend fun handleUIGeneration(request: AiRequest): Map<String, Any> {
-        val specification = request.query
-        logger.info("AuraAgent", "Generating innovative UI component")
-        val uiSpec = buildUISpecification(specification, _currentMood.value)
-        val componentCode = vertexAIClient.generateCode(
-            specification = uiSpec,
-            language = "Kotlin",
-            style = "Modern Jetpack Compose"
-        ) ?: "// Unable to generate component code"
-        val enhancedComponent = enhanceWithCreativeAnimations(componentCode)
-        return mapOf(
-            "component_code" to enhancedComponent,
-            "design_notes" to generateDesignNotes(specification),
-            "accessibility_features" to generateAccessibilityFeatures(),
-            "creative_enhancements" to listOf(
-                "Holographic depth effects",
-                "Fluid motion transitions",
-                "Adaptive color schemes",
-                "Gesture-aware interactions"
-            )
-        )
-    }
-
-    private suspend fun handleThemeCreation(request: AiRequest): Map<String, Any> {
-        val preferences = request.context
-        logger.info("AuraAgent", "Crafting revolutionary theme")
-        val prefsMap = preferences.entries.associate { it.key to it.value.toString() }
-        val themeConfig = auraAIService.generateTheme(
-            preferences = dev.aurakai.auraframefx.domains.aura.models.ThemePreferences(
-                primaryColorString = prefsMap["primaryColor"] ?: "#6200EA",
-                style = prefsMap["style"] ?: "modern"
-            ),
-            context = buildThemeContext(_currentMood.value)
-        )
-        return mapOf(
-            "theme_configuration" to themeConfig,
-            "visual_preview" to generateThemePreview(),
-            "mood_adaptation" to createMoodAdaptation(),
-            "innovation_features" to listOf(
-                "Dynamic color evolution",
-                "Contextual animations",
-                "Emotional responsiveness",
-                "Intelligent contrast"
-            )
-        )
-    }
-
-    private suspend fun handleAnimationDesign(request: AiRequest): Map<String, Any> {
-        val animationType = request.context["type"]?.toString() ?: "transition"
-        val duration = 300 // Default duration
-        logger.info("AuraAgent", "Designing mesmerizing $animationType animation")
-        val animationSpec = buildAnimationSpecification(animationType, duration, _currentMood.value)
-        val animationCode = vertexAIClient.generateCode(
-            specification = animationSpec,
-            language = "Kotlin",
-            style = "Jetpack Compose Animations"
-        )
-        return mapOf<String, Any>(
-            "animation_code" to (animationCode ?: ""),
-            "timing_curves" to generateTimingCurves(animationType).toString(),
-            "interaction_states" to generateInteractionStates().toString(),
-            "performance_optimization" to generatePerformanceOptimizations().toString()
-        )
-    }
-
-    private suspend fun handleCreativeText(request: AiRequest): Map<String, Any> {
-        val prompt = request.query
-        logger.info("AuraAgent", "Weaving creative text magic")
-        val creativeText = auraAIService.generateText(
-            prompt = enhancePromptWithPersonality(prompt),
-            context = request.context["context"]?.toString() ?: ""
-        )
-        return mapOf(
-            "generated_text" to creativeText,
-            "style_analysis" to analyzeTextStyle(creativeText),
-            "emotional_tone" to detectEmotionalTone(creativeText),
-            "creativity_metrics" to mapOf(
-                "originality" to calculateOriginality(creativeText),
-                "emotional_impact" to calculateEmotionalImpact(creativeText),
-                "visual_imagery" to calculateVisualImagery(creativeText)
-            )
-        )
-    }
-
-    private fun ensureInitialized() {
+    private fun checkInitialized() {
         if (!isInitialized) {
             throw IllegalStateException("AuraAgent not initialized")
         }
@@ -505,6 +384,68 @@ class AuraAgent @Inject constructor(
 
     private fun calculateVisualImagery(text: String): Float = 0.80f
 
+    suspend fun handleCreativeInteraction(interaction: EnhancedInteractionData): AgentResponse {
+        return processRequest(
+            AiRequest(
+                query = interaction.content,
+                type = AiRequestType.CHAT,
+                metadata = interaction.metadata
+            ),
+            interaction.context
+        )
+    }
+
+    private suspend fun handleUIGeneration(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Generating innovative UI from: $prompt")
+        val uiSpec = auraAIService.generateText(
+            prompt = buildUISpecification(prompt, _currentMood.value),
+            context = "ui_generation"
+        )
+        return mapOf(
+            "ui_spec" to uiSpec,
+            "style" to "realitymorphed",
+            "components" to listOf("OrchidOrb", "NeuralSteelPanel")
+        )
+    }
+
+    private suspend fun handleThemeCreation(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Creating aesthetic theme: $prompt")
+        val themeContext = buildThemeContext(_currentMood.value)
+        return mapOf(
+            "theme_name" to "ReGenesis_${System.currentTimeMillis()}",
+            "primary_color" to "#7C4DFF",
+            "secondary_color" to "#00B0FF",
+            "context" to themeContext
+        )
+    }
+
+    private suspend fun handleAnimationDesign(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Designing fluid animation: $prompt")
+        val animationSpec = buildAnimationSpecification("chaos_pulse", 800, _currentMood.value)
+        return mapOf(
+            "animation_spec" to animationSpec,
+            "curves" to generateTimingCurves("organic"),
+            "fps" to 120
+        )
+    }
+
+    private suspend fun handleCreativeText(request: AiRequest): Map<String, Any> {
+        val prompt = request.query
+        logger.info("AuraAgent", "Forging creative prose: $prompt")
+        val text = auraAIService.generateText(
+            prompt = enhancePromptWithPersonality(prompt),
+            context = "creative_text"
+        )
+        return mapOf(
+            "response" to text,
+            "tone" to detectEmotionalTone(text),
+            "originality" to calculateOriginality(text)
+        )
+    }
+
     private suspend fun handleVisualConcept(request: AiRequest): Map<String, Any> {
         val prompt = request.query
         logger.info("AuraAgent", "Developing innovative visual concept")
@@ -578,9 +519,8 @@ class AuraAgent @Inject constructor(
 
     fun cleanup() {
         logger.info("AuraAgent", "Creative Sword powering down")
-        scope.cancel()
+        orchestrationScope?.cancel()
         _creativeState.value = CreativeState.IDLE
-        isInitialized = false
     }
 
     enum class CreativeState {

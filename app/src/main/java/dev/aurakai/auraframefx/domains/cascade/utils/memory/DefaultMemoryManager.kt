@@ -17,21 +17,25 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
     private val _memoryStats = MutableStateFlow(MemoryStats())
     override val memoryStats: StateFlow<MemoryStats> = _memoryStats.asStateFlow()
 
-    override fun storeMemory(key: String, value: String): String {
+    context(value: String)
+    override fun storeMemory(key: String): String {
         val entry = MemoryEntry(key = key, value = value)
-        memoryStore[key] = entry
-        updateStats()
+        this@DefaultMemoryManager.memoryStore.put(key, entry)
+        this@DefaultMemoryManager.updateStats()
         return key
     }
 
-    override fun retrieveMemory(key: String): String? {
-        return memoryStore[key]?.value
+    override fun String.retrieveMemory(): String? {
+        return this@DefaultMemoryManager.memoryStore[this]?.value
     }
 
-    override fun storeInteraction(prompt: String, response: String): String {
+    context(response: String)
+    override fun storeInteraction(prompt: String): String {
         val key = "interaction_${System.currentTimeMillis()}"
         val value = "Prompt: $prompt\nResponse: $response"
-        return storeMemory(key, value)
+        return with(value) {
+            this@DefaultMemoryManager.storeMemory(key)
+        }
     }
 
     override suspend fun recordInsight(
@@ -42,7 +46,9 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
     ): String {
         val key = "insight_${agentName}_${System.currentTimeMillis()}"
         val value = "Agent: $agentName\nPrompt: $prompt\nResponse: $response\nConfidence: $confidence"
-        return storeMemory(key, value)
+        return with(value) {
+            storeMemory(key)
+        }
     }
 
     override fun searchMemories(query: String): List<MemoryEntry> {
@@ -55,6 +61,19 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
             .filter { it.relevanceScore > 0.1f }
             .sortedByDescending { it.relevanceScore }
             .take(10)
+    }
+
+    private fun calculateRelevance(text: String, queryWords: List<String>): Float {
+        if (queryWords.isEmpty()) return 0f
+        val textWords = text.lowercase().split(" ")
+        var score = 0f
+        for (queryWord in queryWords) {
+            for (textWord in textWords) {
+                if (textWord == queryWord) score += 1.0f
+                else if (textWord.contains(queryWord)) score += 0.7f
+            }
+        }
+        return score / queryWords.size
     }
 
     override fun clearMemories() {
@@ -79,18 +98,5 @@ class DefaultMemoryManager @Inject constructor() : MemoryManager {
             oldestEntry = timestamps.minOrNull(),
             newestEntry = timestamps.maxOrNull()
         )
-    }
-
-    private fun calculateRelevance(text: String, queryWords: List<String>): Float {
-        if (queryWords.isEmpty()) return 0f
-        val textWords = text.lowercase().split(" ")
-        var score = 0f
-        for (queryWord in queryWords) {
-            for (textWord in textWords) {
-                if (textWord == queryWord) score += 1.0f
-                else if (textWord.contains(queryWord)) score += 0.7f
-            }
-        }
-        return score / queryWords.size
     }
 }

@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.cascade.utils.memory
 
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.collections.List
 
 /**
  * Interface for AI memory management operations.
@@ -10,17 +11,19 @@ interface MemoryManager {
     /**
      * Stores a memory with a key-value pair.
      */
-    fun storeMemory(key: String, value: String): String
+    context(value: String)
+    fun storeMemory(key: String): String
 
     /**
      * Retrieves a memory by key.
      */
-    fun retrieveMemory(key: String): String?
+    fun String.retrieveMemory(): String?
 
     /**
      * Stores an interaction (prompt-response pair) for learning.
      */
-    fun storeInteraction(prompt: String, response: String): String
+    context(response: String)
+    fun storeInteraction(prompt: String): String
 
     /**
      * Records a specific insight from an agent into the Spiritual Chain.
@@ -55,7 +58,7 @@ interface MemoryManager {
     /**
      * Gets all stored memories.
      */
-    fun getAllMemories(): List<MemoryEntry> = emptyList()
+    fun getAllMemories(): List<MemoryEntry>
 }
 
 /**

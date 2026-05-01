@@ -1801,7 +1801,7 @@
             "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/task/models/TaskModels.kt\n",
             "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/utils/VertexAIUtils.kt\n",
             "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/memory/MemoryManager.kt\n",
-            "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/memory/DefaultMemoryManager.kt\n",
+            "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/memory/String.kt\n",
             "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/clients/VertexAIExtensions.kt\n",
             "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/clients/VertexAIClient.kt\n",
             "ReGenesis--multi-architectural-70-LDO-/app/src/main/java/dev/aurakai/auraframefx/domains/genesis/oracledrive/ai/clients/VertexAIClientImpl.kt\n",

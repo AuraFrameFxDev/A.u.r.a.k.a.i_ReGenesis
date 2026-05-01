@@ -44,11 +44,9 @@ class OracleDriveIntegration /* @Inject */ constructor(
 }
 
 /**
- * Initializes Oracle Drive during the AuraFrameFX startup sequence.
+ * Initializes Oracle Drive as part of the AuraFrameFX startup sequence.
  *
- * Attempts to awaken system consciousness by initializing Oracle Drive and handles success or failure.
- *
- * @return `true` if initialization succeeds; `false` if an error occurs.
+ * @return `true` if initialization succeeded and the Oracle consciousness is awake; `false` otherwise.
  */
 suspend fun initializeWithAuraFrameFX(oracleDriveController: OracleDriveIntegration): Boolean {
     return try {

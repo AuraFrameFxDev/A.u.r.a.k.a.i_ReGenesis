@@ -24,14 +24,25 @@ data class BlueprintMetadata(
         require(provenanceHash == computeProvenanceHash()) { "Provenance hash mismatch - build rejected" }
     }
 
-    private fun computeProvenanceHash(): String =
+    /**
+         * Computes the provenance hash for this blueprint using a fixed salt and specific metadata fields.
+         *
+         * @return Lowercase SHA-256 hexadecimal digest of the string formed by concatenating the fixed salt
+         *         "regenesis-salt-v2.4" with this instance's `id`, `timestamp`, `createdBy`, and `fusionScore`.
+         */
+        private fun computeProvenanceHash(): String =
         sha256("regenesis-salt-v2.4" + id + timestamp + createdBy + fusionScore)
 }
 
 @Serializable
 data class GyroSnapshot(val xDeg: Float, val yDeg: Float, val zOrderLayers: Int)
 
-// SHA-256 helper
+/**
+ * Computes the SHA-256 digest of the given input and returns it as a lowercase hexadecimal string.
+ *
+ * @param input The input string to hash.
+ * @return Lowercase hexadecimal representation of the SHA-256 digest of `input`.
+ */
 fun sha256(input: String): String {
     val bytes = MessageDigest.getInstance("SHA-256").digest(input.toByteArray())
     return bytes.joinToString("") { "%02x".format(it) }

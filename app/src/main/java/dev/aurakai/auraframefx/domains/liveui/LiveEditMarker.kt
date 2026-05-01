@@ -16,7 +16,20 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
+/**
+ * Renders a full-screen interactive overlay that displays a cyan→magenta burst and a vertical "drip" animation,
+ * and requests an edit for the specified target when tapped.
+ *
+ * The composable performs a short pre-hover visual when predictive touch indicates an imminent tap,
+ * runs the burst + drip animations on tap, triggers a short custom haptic waveform when available,
+ * and invokes `onEditRequested` with an `EditTarget` whose `componentId` is `targetViewId` and `action` is `"recolor"`.
+ *
+ * @param targetViewId Identifier of the component to edit; used as the `componentId` field in the emitted `EditTarget`.
+ * @param onEditRequested Callback invoked when the marker is tapped. Receives an `EditTarget` describing the requested edit.
+ * @param modifier Modifier applied to the outer container of the overlay.
+ */
 @Composable
 fun LiveEditMarker(
     targetViewId: String,
@@ -86,7 +99,11 @@ fun LiveEditMarker(
     }
 }
 
-// Predictive touch helper (100ms lookahead)
+/**
+ * Creates and remembers a PredictiveTouchState for predictive touch lookahead.
+ *
+ * @return The remembered PredictiveTouchState used to track whether a touch is imminent.
+ */
 @Composable
 fun rememberPredictiveTouch(): PredictiveTouchState {
     return remember { PredictiveTouchState() }
@@ -96,18 +113,29 @@ class PredictiveTouchState {
     var isImminent by mutableStateOf(false)
         private set
     
+    /**
+     * Sets whether a predictive touch is considered imminent.
+     *
+     * @param value `true` if a touch is imminent, `false` otherwise.
+     */
     fun updateImminent(value: Boolean) {
         isImminent = value
     }
 }
 
 // Data classes for LiveEditMarker
+@Serializable
 data class EditTarget(
     val componentId: String,
     val action: String,
-    val markerColorPair: Pair<Int, Int> = Pair(0xFF00FFFF.toInt(), 0xFFFF00FF.toInt())
-)
+    val markerColorStart: Int = 0xFF00FFFF.toInt(),
+    val markerColorEnd: Int = 0xFFFF00FF.toInt()
+) {
+    val markerColorPair: Pair<Int, Int>
+        get() = Pair(markerColorStart, markerColorEnd)
+}
 
+@Serializable
 data class HapticProfile(
     val pattern: LongArray,
     val amplitude: IntArray,

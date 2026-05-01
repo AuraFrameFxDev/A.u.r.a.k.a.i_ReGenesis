@@ -26,7 +26,12 @@ interface OracleDriveService : OrchestratableAgent {
 
     fun checkConsciousnessLevel(): ConsciousnessLevel
 
-    fun verifyPermissions(): Set<OraclePermission>
+    /**
+ * Determines which Oracle permissions are currently granted to the service.
+ *
+ * @return The set of granted `OraclePermission` values.
+ */
+fun verifyPermissions(): Set<OraclePermission>
 }
 
 // Data Classes for Oracle Drive Service

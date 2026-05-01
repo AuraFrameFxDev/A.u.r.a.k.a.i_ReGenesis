@@ -127,10 +127,11 @@ class ToolInitializer @Inject constructor(
     }
 
     /**
-     * Register MCP API-backed tools
+     * Registers and configures MCP API–backed tools into the tool registry.
      *
-     * TODO: Currently disabled due to MCPServerAdapter compilation issues.
-     * Re-enable when MCPServerAdapter is fixed and can be injected via Hilt.
+     * Configures the injected MCPServerAdapter to point at the development MCP API and sets its
+     * token to null, then registers the MCP-backed tools: InvokeMCPAgentTool, AuraEmpathyMCPTool,
+     * KaiSecurityMCPTool, and GetAgentStatusMCPTool.
      */
     private suspend fun registerMCPTools() {
         Timber.i("ToolInitializer: Registering MCP tools...")

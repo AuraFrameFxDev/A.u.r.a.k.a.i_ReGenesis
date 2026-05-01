@@ -23,6 +23,18 @@ data class AgentResponse(
     val isSuccess: Boolean get() = status == ResponseStatus.SUCCESS && confidence >= 0.5f
 
     companion object {
+        /**
+         * Create a successful AgentResponse populated with the given content and agent information.
+         *
+         * Metadata values are converted to strings using `toString()` before being stored.
+         *
+         * @param content The response text produced by the agent.
+         * @param agentName The name of the agent that produced the response.
+         * @param agentType The type of the agent.
+         * @param confidence Confidence score for the response; higher values indicate greater confidence.
+         * @param metadata Arbitrary metadata entries to attach to the response; each value will be converted to a string.
+         * @return An AgentResponse with `status = ResponseStatus.SUCCESS`, the provided fields, and `metadata` as `Map<String, String>`.
+         */
         fun success(
             content: String,
             agentName: String,
@@ -38,6 +50,17 @@ data class AgentResponse(
             status = ResponseStatus.SUCCESS
         )
 
+        /**
+         * Creates an AgentResponse representing a failed response.
+         *
+         * The response's content is set to [message] and the error field is set to [error] (which defaults to [message]).
+         *
+         * @param message The failure message to use as the response content.
+         * @param agentName The name of the agent that produced the response. Defaults to "System".
+         * @param agentType The type of the agent that produced the response.
+         * @param error Optional error message; defaults to the provided [message].
+         * @return An AgentResponse with status `FAILURE`, confidence `0.0f`, and the provided content and error.
+         */
         fun error(
             message: String,
             agentName: String = "System",

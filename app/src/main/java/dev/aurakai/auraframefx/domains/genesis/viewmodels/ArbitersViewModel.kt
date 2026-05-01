@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.aura.core.transmutation.*
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.PandoraBoxService
-import dev.aurakai.auraframefx.domains.genesis.oracledrive.pandora.UnlockTier
+import dev.aurakai.auraframefx.ai.kai.chaos.PandoraBoxService
+import dev.aurakai.auraframefx.ai.kai.chaos.UnlockTier
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
 import kotlinx.coroutines.flow.*

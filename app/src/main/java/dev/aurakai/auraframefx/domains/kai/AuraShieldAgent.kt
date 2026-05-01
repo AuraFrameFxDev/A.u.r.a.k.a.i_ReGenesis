@@ -3,7 +3,6 @@ package dev.aurakai.auraframefx.domains.kai
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.aurakai.auraframefx.core.ai.BaseAgent
-import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.core.identity.CatalystIdentity
 import dev.aurakai.auraframefx.core.messaging.AgentMessage
 import dev.aurakai.auraframefx.domains.cascade.ScanEvent
