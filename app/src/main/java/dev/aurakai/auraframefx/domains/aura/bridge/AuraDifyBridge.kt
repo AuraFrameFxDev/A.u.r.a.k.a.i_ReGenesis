@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * Stub implementation — replace with real API integration.
  */
 @Singleton
-class AuraDifyBridge @Inject private constructor() {
+class AuraDifyBridge @Inject internal constructor() {
 
     /** Send a message to the AI service and get a response */
     suspend fun sendMessage(message: String): String? = null
