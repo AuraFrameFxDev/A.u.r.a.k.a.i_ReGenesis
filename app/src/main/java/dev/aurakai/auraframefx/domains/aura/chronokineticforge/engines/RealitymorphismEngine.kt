@@ -424,6 +424,13 @@ object KaiSentinel {
     fun neutralizeThreat() {}
     fun recordEvent(type: String, data: Map<String, Any>) {}
     fun recordSovereigntyLoss(telemetry: Any) {}
+    fun recordError(message: String) {}
+    fun recordBlueprintCommit(blueprint: BlueprintRecord) {}
+}
+
+// Placeholder NexusMemoryCore
+object NexusMemoryCore {
+    fun broadcastBlueprint(blueprint: BlueprintRecord) {}
 }
 
 // Placeholder KaiProvenanceLog

@@ -325,7 +325,7 @@ object ParticleBloodstreamEngine {
 // ═════════════════════════════════════════════════════════════════════
 
 enum class MorphType {
-    EXPAND, COLLAPSE, SLIDE, FADE, ROTATE, MORPH_SHAPE, COLOR_SHIFT, ELASTIC, SYNC_TAP, MANUAL_SAVE
+    EXPAND, COLLAPSE, SLIDE, FADE, ROTATE, MORPH_SHAPE, COLOR_SHIFT, ELASTIC, SYNC_TAP, MANUAL_SAVE, SHAKE_MORPH
 }
 
 enum class ContentType {
