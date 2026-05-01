@@ -243,15 +243,4 @@ data class SentinelTelemetry(
         }
 }
 
-/**
- * Veto severity levels
- */
-enum class VetoSeverity {
-    INFO,       // Log only
-    LOW,        // Notify
-    MEDIUM,     // Alert + log
-    HIGH,       // Alert + prepare freeze
-    CRITICAL    // Immediate freeze
-}
-
-// KaiSentinel defined in RealitymorphismEngine.kt
+// KaiSentinel and VetoSeverity defined in RealitymorphismEngine.kt

@@ -1,6 +1,10 @@
 package dev.aurakai.auraframefx.domains.kai.sentinel
 
 import kotlinx.coroutines.flow.*
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiSentinel
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiProvenanceLog
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.RealitymorphismEngine
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.VetoSeverity
 
 /**
  * ⚖️ ETHICAL GOVERNANCE MATRIX — LDO Trinity Moral Framework

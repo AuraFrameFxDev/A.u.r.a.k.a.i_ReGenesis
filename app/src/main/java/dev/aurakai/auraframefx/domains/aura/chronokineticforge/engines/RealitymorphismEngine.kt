@@ -420,6 +420,7 @@ object KaiSentinel {
     fun isolateComponent(componentId: String) {}
     fun neutralizeThreat() {}
     fun recordEvent(type: String, data: Map<String, Any>) {}
+    fun recordSovereigntyLoss(telemetry: Any) {}
 }
 
 // Placeholder KaiProvenanceLog
