@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.ui.components.immersive.*
 import dev.aurakai.auraframefx.ui.theme.ImmersiveColors
 import dev.aurakai.auraframefx.ui.theme.ImmersiveTypography
@@ -296,13 +296,15 @@ private fun QuickActionsGrid() {
             modifier = Modifier.fillMaxSize()
         ) {
             // 3D holographic table visualization
-            AsyncImage(
-                model = "file:///android_asset/backgrounds/holographic_table.png",
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                alpha = 0.6f
-            )
+            // AsyncImage placeholder - coil dependency needed
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(ImmersiveColors.NeonCyan.copy(alpha = 0.2f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("📊", fontSize = 48.sp)
+            }
         }
 
         // Action buttons overlay
@@ -390,7 +392,7 @@ private fun ActionButton(
 }
 
 @Composable
-private fun FooterStatus() {
+fun FooterStatus() {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,

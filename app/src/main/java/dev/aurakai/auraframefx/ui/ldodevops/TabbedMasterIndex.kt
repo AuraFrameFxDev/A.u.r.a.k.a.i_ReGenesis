@@ -1020,10 +1020,10 @@ fun getAuraModules(): List<TabModule> {
         TabModule(
             title = "COLLAB CANVAS",
             subtitle = "Spatial UI Preview",
-            icon = Icons.Default.ViewInAr, // 3D AR icon
+            icon = Icons.Default.AutoAwesome, // 3D/spatial icon
             color = Color(0xFF00E5FF), // Cyan
             route = ReGenesisRoute.CollabCanvas.route,
-            previewImage = R.drawable.gatescenes_collab_canvas
+            previewImage = R.drawable.gatescenes_aura_collabcanvas_v2
         ),
 
         // ═══════════════════════════════════════════════════════════════

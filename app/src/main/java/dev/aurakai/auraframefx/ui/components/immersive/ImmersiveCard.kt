@@ -27,7 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.ui.theme.ImmersiveColors
 import dev.aurakai.auraframefx.ui.theme.ImmersiveTypography
 
@@ -301,8 +301,7 @@ fun AgentRosterCard(
                         }
                         drawIntoCanvas { canvas ->
                             canvas.drawCircle(
-                                center.x,
-                                center.y,
+                                Offset(center.x, center.y),
                                 28.dp.toPx(),
                                 glowPaint
                             )
@@ -311,19 +310,21 @@ fun AgentRosterCard(
                 contentAlignment = Alignment.Center
             ) {
                 if (avatarUrl != null) {
-                    AsyncImage(
-                        model = avatarUrl,
-                        contentDescription = name,
+                    // AsyncImage placeholder - coil dependency needed
+                    Box(
                         modifier = Modifier
                             .size(52.dp)
                             .clip(RoundedCornerShape(26.dp))
+                            .background(accentColor.copy(alpha = 0.3f))
                             .border(
                                 2.dp,
                                 accentColor,
                                 RoundedCornerShape(26.dp)
                             ),
-                        contentScale = ContentScale.Crop
-                    )
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("👤", fontSize = 24.sp)
+                    }
                 } else {
                     // Placeholder with initial
                     Box(
@@ -531,12 +532,13 @@ fun HolographicBackground(
     Box(modifier = Modifier.fillMaxSize()) {
         // Base background image
         backgroundImage?.let {
-            AsyncImage(
-                model = it,
-                contentDescription = null,
+            // AsyncImage placeholder - coil dependency needed
+            Box(
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text("🖼️", fontSize = 48.sp)
+            }
         }
 
         // Depth gradient overlay
