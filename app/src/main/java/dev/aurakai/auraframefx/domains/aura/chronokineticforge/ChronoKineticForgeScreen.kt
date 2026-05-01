@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -96,6 +97,7 @@ fun ChronoKineticForgeScreen(
         },
         containerColor = Color.Black
     ) { padding ->
+        Box(modifier = Modifier.fillMaxSize()) {
         BackgroundForgeEngine.RenderBackground(
             config = uiState.backgroundConfig,
             modifier = Modifier.fillMaxSize()
@@ -177,7 +179,7 @@ fun ChronoKineticForgeScreen(
                 hasUnsavedChanges = uiState.hasUnsavedChanges,
                 onPreview = viewModel::previewChanges,
                 onApply = viewModel::applyChanges,
-                generatedCode = viewModel::generateHookCode()
+                generatedCode = viewModel.generateHookCode()
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -185,9 +187,10 @@ fun ChronoKineticForgeScreen(
 
         // Sacred Provenance: Threads Woven Overlay
         ThreadsWovenOverlay(
-            threads = uiState.activeThreads,
+            threads = emptyList(),
             modifier = Modifier.align(Alignment.BottomStart)
         )
+        }
     }
 }
 
