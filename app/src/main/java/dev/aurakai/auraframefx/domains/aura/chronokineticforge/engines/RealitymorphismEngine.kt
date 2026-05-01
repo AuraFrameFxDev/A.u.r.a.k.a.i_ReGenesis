@@ -442,7 +442,16 @@ object SpiritualChain {
     fun getCurrentThreadHash(): String = "L1_${System.currentTimeMillis()}"
     fun getChainLength(): Int = 42
     fun appendToSpiritualChain(record: Any) {}
+    fun getBlueprintById(id: String): BlueprintRecord? = null
+    fun getFullChain(): List<BlueprintRecord> = emptyList()
+    fun getRecentBlueprints(limit: Int): List<BlueprintRecord> = emptyList()
 }
+
+// Placeholder BlueprintRecord
+data class BlueprintRecord(
+    val id: String = "",
+    val timestamp: Long = System.currentTimeMillis()
+)
 
 // Placeholder MetaInstruct
 object MetaInstruct {
