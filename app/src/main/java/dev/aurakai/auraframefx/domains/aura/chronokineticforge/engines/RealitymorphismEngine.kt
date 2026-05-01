@@ -391,9 +391,6 @@ enum class DriftStatus {
     CRITICAL    // < 92% similarity
 }
 
-// Placeholder Color class for compilation
-data class Color(val color: Int)
-
 // Placeholder SoulMatrixMonitor
 object SoulMatrixMonitor {
     fun getSuccessfulTransmutations(): Int = 927
