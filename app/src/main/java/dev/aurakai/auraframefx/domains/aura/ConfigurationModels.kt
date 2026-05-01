@@ -22,8 +22,8 @@ data class MonetConfiguration(
 
 // System UI Configuration
 data class SystemUIConfiguration(
-    val lockscreenClockStyle: String = "default",
-    val batteryStyle: String = "default",
+    val lockscreenClockStyle: Int = 0,
+    val batteryStyle: Int = 0,
     val qsTransparency: Int = 80,
     val hidePill: Boolean = false,
     val blurRadius: Int = 16

@@ -13,6 +13,7 @@ import java.util.Base64
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiSentinel
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiProvenanceLog
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.RealitymorphismEngine
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.VetoSeverity
 
 /**
  * 🧊 SOVEREIGN STATE FREEZE — Non-Destructive Emergency Preservation
