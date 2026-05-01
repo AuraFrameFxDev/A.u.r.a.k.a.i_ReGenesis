@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines
 
 import android.content.Context
 import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.BlueprintRecord
 import dev.aurakai.auraframefx.navigation.LDOState
 import kotlinx.coroutines.*
 import kotlin.math.*
@@ -446,12 +447,6 @@ object SpiritualChain {
     fun getFullChain(): List<BlueprintRecord> = emptyList()
     fun getRecentBlueprints(limit: Int): List<BlueprintRecord> = emptyList()
 }
-
-// Placeholder BlueprintRecord
-data class BlueprintRecord(
-    val id: String = "",
-    val timestamp: Long = System.currentTimeMillis()
-)
 
 // Placeholder MetaInstruct
 object MetaInstruct {
