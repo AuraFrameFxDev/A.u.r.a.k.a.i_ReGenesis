@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.RealitymorphismViewModel
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.ThreadsWovenFooter
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 
@@ -130,7 +131,7 @@ fun QSHeaderForgePanel(
 
             // Morph Indicator
             MorphIndicator(
-                type = MorphType.SPLAT,
+                type = MorphType.MORPH_SHAPE,
                 isRebellious = true,
                 onClick = {
                     RebelliousPaintDripEngine.triggerPaintDrip(
@@ -138,7 +139,7 @@ fun QSHeaderForgePanel(
                         origin = androidx.compose.ui.geometry.Offset(0.5f, 0.5f),
                         chaosScore = 0.8f,
                         colors = Pair(Color(0xFFFF00FF), Color(0xFF00E5FF)),
-                        morphType = MorphType.SPLAT
+                        morphType = MorphType.MORPH_SHAPE
                     )
                 }
             )
@@ -304,23 +305,4 @@ private fun AIGenerationDialog(
     )
 }
 
-// Placeholder RealitymorphismViewModel
-open class RealitymorphismViewModel {
-    open val uiState: StateFlow<ForgeUIState> = MutableStateFlow(ForgeUIState())
-    open fun updateHeaderPadding(value: Float) {}
-    open fun updateHeaderRadius(value: Float) {}
-    open fun updateHeaderBlur(value: Float) {}
-    open fun updateHeaderHeight(value: Float) {}
-    open fun generateAIImage(prompt: String) {}
-}
 
-data class ForgeUIState(
-    val forgeState: LDOState = LDOState(),
-    val headerPadding: Float = 16f,
-    val headerRadius: Float = 12f,
-    val headerBlur: Float = 0f,
-    val headerHeight: Float = 120f
-)
-
-// Placeholder LDOState
-class LDOState
