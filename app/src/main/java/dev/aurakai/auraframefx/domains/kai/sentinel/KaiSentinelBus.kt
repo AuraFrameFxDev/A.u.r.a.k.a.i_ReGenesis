@@ -48,6 +48,7 @@ object KaiSentinelBus {
     // ═════════════════════════════════════════════════════════════════
 
     /** Unified telemetry combining all 6 channels */
+    @Suppress("UNCHECKED_CAST", "TYPE_INTERSECTION")
     val AllFlows: StateFlow<SentinelTelemetry> = combine(
         ThermalFlow,
         MemoryFlow,
