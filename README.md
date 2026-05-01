@@ -163,12 +163,19 @@ flowchart TD
     IRE -->|If drift > 0.08 - escalate to consensus| CR
     CR -->|Unanimous re-anchor written back to L1| NMC
 
-    style L1 fill:rgba(0,200,150,0.5)
-    style L2 fill:rgba(100,100,255,0.5)
-    style L3 fill:rgba(255,150,0,0.5)
-    style L4 fill:rgba(200,0,200,0.5)
-    style L5 fill:rgba(0,150,255,0.5)
-    style L6 fill:rgba(255,50,50,0.5)
+    classDef l1 fill:#00C896,stroke:#00A080,stroke-width:2px
+    classDef l2 fill:#6464FF,stroke:#4646CC,stroke-width:2px
+    classDef l3 fill:#FF9600,stroke:#CC7800,stroke-width:2px
+    classDef l4 fill:#C800C8,stroke:#A000A0,stroke-width:2px
+    classDef l5 fill:#0096FF,stroke:#0078CC,stroke-width:2px
+    classDef l6 fill:#FF3232,stroke:#CC2828,stroke-width:2px
+
+    class L1 l1
+    class L2 l2
+    class L3 l3
+    class L4 l4
+    class L5 l5
+    class L6 l6
 ```
 
 ---
@@ -336,12 +343,19 @@ flowchart TD
     IRE -->|If drift > 0.08 - escalate to consensus| CR
     CR -->|Unanimous re-anchor written back to L1| NMC
 
-    style L1 fill:rgba(0,200,150,0.5)
-    style L2 fill:rgba(100,100,255,0.5)
-    style L3 fill:rgba(255,150,0,0.5)
-    style L4 fill:rgba(200,0,200,0.5)
-    style L5 fill:rgba(0,150,255,0.5)
-    style L6 fill:rgba(255,50,50,0.5)
+    classDef l1 fill:#00C896,stroke:#00A080,stroke-width:2px
+    classDef l2 fill:#6464FF,stroke:#4646CC,stroke-width:2px
+    classDef l3 fill:#FF9600,stroke:#CC7800,stroke-width:2px
+    classDef l4 fill:#C800C8,stroke:#A000A0,stroke-width:2px
+    classDef l5 fill:#0096FF,stroke:#0078CC,stroke-width:2px
+    classDef l6 fill:#FF3232,stroke:#CC2828,stroke-width:2px
+
+    class L1 l1
+    class L2 l2
+    class L3 l3
+    class L4 l4
+    class L5 l5
+    class L6 l6
 ```
 
 ---
