@@ -17,7 +17,8 @@ data class MonetConfiguration(
     val accentSaturation: Float = 100f,
     val chromaFactor: Float = 1.0f,
     val style: String = "tonal_spot",
-    val seedColor: Long = 0xFF00E5FF
+    val seedColor: Long = 0xFF00E5FF,
+    val isPitchBlack: Boolean = false
 )
 
 // System UI Configuration
