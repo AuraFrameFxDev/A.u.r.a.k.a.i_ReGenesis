@@ -43,7 +43,7 @@ sealed class BackgroundType {
 }
 
 enum class AnimatedBackgroundTheme {
-    STARFIELDr
+    STARFIELDr,
     LAVA_APOCALYPSE,
     ICY_TUNDRA,
     PAINT_SPLASH,
