@@ -53,7 +53,8 @@ repositories {
 }
 
 dependencies {
-
     compileOnly(libs.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
+
+    testImplementation(libs.junit.jupiter)
 }
