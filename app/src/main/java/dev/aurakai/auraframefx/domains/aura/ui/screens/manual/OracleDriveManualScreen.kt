@@ -128,13 +128,13 @@ fun OracleDriveManualScreen(
             item {
                 ManualSlider(
                     label = "Quick Settings Transparency",
-                    value = config.qsTransparency.toFloat(),
+                    value = config.qsTransparency * 100f,
                     range = 0f..100f,
                     accentColor = NeonPurple,
                     onValueChange = {
                         viewModel.updateSystemUIConfig(
                             context,
-                            config.copy(qsTransparency = it.toInt())
+                            config.copy(qsTransparency = it / 100f)
                         )
                     }
                 )

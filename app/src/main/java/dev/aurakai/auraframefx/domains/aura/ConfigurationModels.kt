@@ -8,7 +8,7 @@ package dev.aurakai.auraframefx.domains.aura
 data class LauncherConfiguration(
     val desktopRows: Int = 5,
     val desktopColumns: Int = 4,
-    val iconSize: Int = 48,
+    val iconSize: Float = 1.0f,
     val themedIcons: Boolean = true
 )
 
@@ -19,7 +19,7 @@ data class MonetConfiguration(
     val backgroundLightness: Float = 50f,
     val chromaFactor: Float = 1.0f,
     val style: String = "tonal_spot",
-    val seedColor: Long = 0xFF00E5FF,
+    val seedColor: String = "#00E5FF",
     val isPitchBlack: Boolean = false
 )
 
@@ -27,7 +27,7 @@ data class MonetConfiguration(
 data class SystemUIConfiguration(
     val lockscreenClockStyle: Int = 0,
     val batteryStyle: Int = 0,
-    val qsTransparency: Int = 80,
+    val qsTransparency: Float = 1.0f,
     val hidePill: Boolean = false,
-    val blurRadius: Int = 16
+    val blurRadius: Int = 25
 )

@@ -119,7 +119,7 @@ fun LaunchMatrixManualScreen(
                     onValueChange = {
                         viewModel.updateLauncherConfig(
                             context,
-                            config.copy(iconSize = (it / 100f).toInt())
+                            config.copy(iconSize = it / 100f)
                         )
                     }
                 )

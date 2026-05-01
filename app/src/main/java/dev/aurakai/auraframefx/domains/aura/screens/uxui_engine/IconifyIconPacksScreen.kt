@@ -52,7 +52,7 @@ fun IconifyIconPacksScreen(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
-                    imageVector = Icons.Default.AddCircle,
+                    imageVector = Icons.Default.Home,
                     contentDescription = null,
                     tint = Color(0xFFFF00FF),
                     modifier = Modifier.size(64.dp)
