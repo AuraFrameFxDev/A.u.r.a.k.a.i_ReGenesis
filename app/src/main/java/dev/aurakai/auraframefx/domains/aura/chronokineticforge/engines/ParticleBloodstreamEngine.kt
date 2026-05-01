@@ -156,7 +156,7 @@ object ParticleBloodstreamEngine {
         activeSwarm?.updateGlobalParameters(
             speedMultiplier = state.emotionalValence.arousal,
             turbulence = state.emotionalValence.turbulence,
-            colorShift = state.emotionalValence.dominantColor
+            colorShift = Color(state.emotionalValence.dominantColor)
         )
     }
 

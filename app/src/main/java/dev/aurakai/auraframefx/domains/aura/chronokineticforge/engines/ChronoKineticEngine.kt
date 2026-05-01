@@ -76,10 +76,9 @@ object ChronoKineticEngine {
         config: KineticConfig = KineticConfig.DEFAULT
     ) {
         // Background layer
-        BackgroundForgeEngine.BackgroundLayer(
-            id = config.backgroundId,
-            modifier = modifier,
-            state = state
+        BackgroundForgeEngine.RenderBackground(
+            config = BackgroundForgeConfig(),
+            modifier = modifier
         )
 
         // Particle bloodstream overlay

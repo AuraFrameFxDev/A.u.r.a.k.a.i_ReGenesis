@@ -158,7 +158,8 @@ object BackgroundForgeEngine {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush.copy(alpha = opacity))
+                .background(brush)
+                .graphicsLayer { this.alpha = opacity }
         )
     }
 
