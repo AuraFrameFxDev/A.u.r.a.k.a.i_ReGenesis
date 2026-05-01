@@ -143,18 +143,18 @@ import dev.aurakai.auraframefx.ui.gates.GrokConstellationScreen
 import dev.aurakai.auraframefx.domains.nexus.screens.DataStreamMonitoring
 import dev.aurakai.auraframefx.domains.nexus.screens.SovereignMetaInstructScreen
 
-// AURA BATCH v2.5 SCREEN IMPORTS
-import dev.aurakai.auraframefx.domains.aura.aura.ui.AgentAdvancementScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.FusionModeScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.UIEngineScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.PrivacyGuardScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.ProfileScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.SecureCommScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.SecurityScannerScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.VPNManagerScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.FirewallScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.HomeScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.QuickActions
+// AURA BATCH v2.5 SCREEN IMPORTS — Using stub screens
+import dev.aurakai.auraframefx.ui.screens.AgentAdvancementScreen
+import dev.aurakai.auraframefx.ui.screens.FusionModeScreen
+import dev.aurakai.auraframefx.ui.screens.UIEngineScreen
+import dev.aurakai.auraframefx.ui.screens.PrivacyGuardScreen
+import dev.aurakai.auraframefx.ui.screens.ProfileScreen
+import dev.aurakai.auraframefx.ui.screens.SecureCommScreen
+import dev.aurakai.auraframefx.ui.screens.SecurityScannerScreen
+import dev.aurakai.auraframefx.ui.screens.VPNManagerScreen
+import dev.aurakai.auraframefx.ui.screens.FirewallScreen
+import dev.aurakai.auraframefx.ui.screens.HomeScreen
+import dev.aurakai.auraframefx.ui.screens.QuickActionsScreen
 
 // AURA BATCH v2.8 ADDITIONAL IMPORTS
 import dev.aurakai.auraframefx.domains.aura.screens.AuraSphereGridScreen
@@ -663,7 +663,7 @@ fun ReGenesisNavGraph(
             HomeScreen(navController = navController) 
         }
         composable(ReGenesisRoute.QuickActions.route) { 
-            QuickActions() 
+            QuickActionsScreen() 
         }
         // AURA BATCH v2.8 — ADDITIONAL SCREENS (14 screens)
         composable(ReGenesisRoute.AuraSphereGrid.route) { 

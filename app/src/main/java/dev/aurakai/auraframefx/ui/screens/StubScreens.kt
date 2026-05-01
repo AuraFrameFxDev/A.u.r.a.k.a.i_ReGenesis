@@ -33,7 +33,7 @@ fun SystemOverlaysScreen() = StubScreen("System Overlays")
 
 // Agent/Batch Screens
 @Composable
-fun AgentAdvancementScreen() = StubScreen("Agent Advancement")
+fun AgentAdvancementScreen(onBack: (() -> Unit)? = null) = StubScreen("Agent Advancement")
 
 @Composable
 fun FusionModeScreen() = StubScreen("Fusion Mode")
@@ -60,7 +60,7 @@ fun VPNManagerScreen() = StubScreen("VPN Manager")
 fun FirewallScreen() = StubScreen("Firewall")
 
 @Composable
-fun HomeScreen() = StubScreen("Home")
+fun HomeScreen(navController: Any? = null) = StubScreen("Home")
 
 @Composable
 fun QuickActionsScreen() = StubScreen("Quick Actions")
