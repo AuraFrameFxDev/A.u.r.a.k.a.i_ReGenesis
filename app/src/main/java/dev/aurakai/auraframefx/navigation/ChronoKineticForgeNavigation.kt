@@ -50,14 +50,6 @@ fun MainAuraStudio(
     if (showForge) {
         // Full-screen ChronoKinetic Forge
         ChronoKineticForgeScreen(
-            state = currentLDOState,
-            onSaveBlueprint = {
-                BlueprintSaver.saveCurrentBlueprint(
-                    elementId = "studio_hub",
-                    morphType = MorphType.GENERAL,
-                    context = LocalContext.current
-                )
-            },
             onNavigateBack = { showForge = false }
         )
     } else {

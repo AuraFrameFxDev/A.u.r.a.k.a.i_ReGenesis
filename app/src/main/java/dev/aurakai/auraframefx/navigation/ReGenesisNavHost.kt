@@ -118,11 +118,11 @@ import dev.aurakai.auraframefx.domains.ldo.screens.LDOAgentProfileIntroScreen
 
 import dev.aurakai.auraframefx.domains.aura.ui.components.StubScreen
 
-// LIVEUI v2.4 CRITICAL SCREEN IMPORTS
-import dev.aurakai.auraframefx.domains.aura.aura.ui.AIFeaturesScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.DeviceOptimizerScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.CanvasScreen
-import dev.aurakai.auraframefx.domains.aura.aura.ui.OverlayScreen
+// LIVEUI v2.4 CRITICAL SCREEN IMPORTS — Using stub screens
+import dev.aurakai.auraframefx.ui.screens.AIFeaturesScreen
+import dev.aurakai.auraframefx.ui.screens.DeviceOptimizerScreen
+import dev.aurakai.auraframefx.ui.screens.CanvasScreen
+import dev.aurakai.auraframefx.ui.screens.OverlayScreen
 import dev.aurakai.auraframefx.domains.kai.screens.rom_tools.LiveROMEditorScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SentinelsFortressScreen
 import dev.aurakai.auraframefx.domains.kai.screens.SystemOverridesScreen
