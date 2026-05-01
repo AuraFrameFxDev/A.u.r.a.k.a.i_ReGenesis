@@ -453,10 +453,6 @@ object EncryptedLocalStorage {
     fun getMetadata(key: String): Map<String, String>? = null
 }
 
-object RealitymorphismEngine {
-    fun emergencyReAnchor() {}
-}
-
 object HapticFeedbackEngine {
     fun performTriplePulse() {}
     fun performHeartbeat() {}
@@ -469,14 +465,4 @@ object VisualAlertEngine {
 object ThreatOrb {
     fun pulseRed() {}
     fun pulseCyan() {}
-}
-
-object KaiProvenanceLog {
-    fun recordEvent(type: String, data: Map<String, Any>) {}
-}
-
-enum class VetoSeverity { CRITICAL, HIGH, MEDIUM, LOW, INFO }
-
-object KaiSentinel {
-    fun veto(reason: String, severity: VetoSeverity, autoFreeze: Boolean) {}
 }

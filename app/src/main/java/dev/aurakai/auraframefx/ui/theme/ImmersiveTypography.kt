@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.R
 
@@ -26,30 +27,23 @@ import dev.aurakai.auraframefx.R
  * - LDO: Teal/Green
  */
 
-// Pixel font for titles/headers - REDUCED sizes
+// Pixel font for titles/headers - using available fonts
+// NOTE: copixel.otf used as pixel header font
 val PixelHeader = FontFamily(
-    Font(R.font.pixelifysans_medium, FontWeight.Medium),
-    Font(R.font.pixelifysans_bold, FontWeight.Bold)
+    Font(R.font.copixel, FontWeight.Normal)
 )
 
 // Corpta body font - for immersive readable text
 // Falls back to system sans if not available
 val CorptaBody = try {
-    FontFamily(
-        Font(R.font.corpta_regular, FontWeight.Normal),
-        Font(R.font.corpta_medium, FontWeight.Medium),
-        Font(R.font.corpta_bold, FontWeight.Bold)
-    )
+    FontFamily(Font(R.font.corpta, FontWeight.Normal))
 } catch (e: Exception) {
     // Fallback to system font if Corpta not loaded
     FontFamily.SansSerif
 }
 
-// Monospace for data/technical
-val MonoData = FontFamily(
-    Font(R.font.jetbrains_mono_regular, FontWeight.Normal),
-    Font(R.font.jetbrains_mono_medium, FontWeight.Medium)
-)
+// Monospace for data/technical - using chesstype as tech mono
+val MonoData = FontFamily(Font(R.font.chesstype, FontWeight.Normal))
 
 /**
  * IMMERSIVE TYPOGRAPHY — Reduced sizes for depth perception

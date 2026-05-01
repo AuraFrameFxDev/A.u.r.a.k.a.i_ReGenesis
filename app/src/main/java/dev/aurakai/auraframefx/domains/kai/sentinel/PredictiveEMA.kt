@@ -388,19 +388,5 @@ data class PredictiveMetrics(
 )
 
 // ═════════════════════════════════════════════════════════════════════
-// PLACEHOLDERS
+// KaiSentinel defined in KaiSentinelBus.kt and RealitymorphismEngine.kt
 // ═════════════════════════════════════════════════════════════════════
-
-object KaiSentinel {
-    fun veto(reason: String, severity: VetoSeverity, autoFreeze: Boolean) {
-        // Implementation
-    }
-
-    fun isolateComponent(componentId: String) {
-        // Implementation
-    }
-
-    fun neutralizeThreat() {
-        // Implementation
-    }
-}

@@ -436,19 +436,6 @@ data class GovernanceStatistics(
 )
 
 // ═════════════════════════════════════════════════════════════════════
-// PLACEHOLDERS
+// VetoSeverity enum defined in KaiSentinelBus.kt
+// KaiSentinel, KaiProvenanceLog, RealitymorphismEngine defined in their respective files
 // ═════════════════════════════════════════════════════════════════════
-
-object KaiProvenanceLog {
-    fun recordEvent(type: String, data: Map<String, Any>) {}
-}
-
-object KaiSentinel {
-    fun veto(reason: String, severity: VetoSeverity, autoFreeze: Boolean) {}
-}
-
-enum class VetoSeverity { CRITICAL, HIGH, MEDIUM, LOW, INFO }
-
-object RealitymorphismEngine {
-    fun emergencyReAnchor() {}
-}

@@ -405,7 +405,7 @@ fun getChronoKineticForgeModule(): TabModule {
         icon = Icons.Default.Bolt,
         color = Color(0xFFFF00FF),
         route = ReGenesisRoute.ChronoKineticForge.route,
-        previewImage = R.drawable.gatescenes_chronokinetic_forge
+        previewImage = R.drawable.gatescenes_aura_designstudio_v2
     )
 }
 
