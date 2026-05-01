@@ -377,7 +377,10 @@ data class RealitymorphismUiState(
     val statusBarConfig: StatusBarConfig = StatusBarConfig(),
 
     // Visual effects
-    val thirdPartyShimmer: Boolean = false
+    val thirdPartyShimmer: Boolean = false,
+
+    // Success metrics
+    val atomicSuccessRate: Float = 92.7f
 )
 
 enum class ForgePanel {
