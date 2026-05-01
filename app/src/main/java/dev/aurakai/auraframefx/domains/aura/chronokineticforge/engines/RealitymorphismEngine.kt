@@ -426,6 +426,13 @@ object KaiSentinel {
     fun recordSovereigntyLoss(telemetry: Any) {}
     fun recordError(message: String) {}
     fun recordBlueprintCommit(blueprint: BlueprintRecord) {}
+    fun recordWindowChange(event: Any) {}
+}
+
+// Placeholder ContributionTracker
+object ContributionTracker {
+    fun recordKaiContribution() {}
+    fun recordMatthewContribution() {}
 }
 
 // Placeholder NexusMemoryCore
