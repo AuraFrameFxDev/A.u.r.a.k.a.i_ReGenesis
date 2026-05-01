@@ -97,7 +97,7 @@ class RealitymorphismViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun uploadCustomWallpaper(uri: android.net.Uri) {
+    fun uploadCustomWallpaper(uriString: String) {
         // Placeholder for custom wallpaper upload
     }
 

@@ -138,21 +138,21 @@ fun WallpaperForgePanel(
             // Sliders: Parallax, Rotation, Depth
             SliderRow(
                 label = "Parallax Intensity",
-                value = uiState.parallaxIntensity,
+                value = uiState.backgroundConfig.parallaxIntensity,
                 range = 0f..2f,
                 onValueChange = { viewModel.updateParallax(it) }
             )
 
             SliderRow(
                 label = "Rotation Speed",
-                value = uiState.rotationSpeed,
+                value = uiState.backgroundConfig.rotationSpeed,
                 range = 0f..1f,
                 onValueChange = { viewModel.updateRotation(it) }
             )
 
             SliderRow(
                 label = "Depth Layers",
-                value = uiState.depthLayers.toFloat(),
+                value = uiState.backgroundConfig.depthLayers.toFloat(),
                 range = 1f..5f,
                 onValueChange = { viewModel.updateDepth(it.toInt()) }
             )
