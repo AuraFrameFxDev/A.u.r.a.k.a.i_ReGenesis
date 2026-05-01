@@ -76,7 +76,10 @@ data class BackgroundForgeConfig(
     val opacity: Float = 1.0f,
     val blurAmount: Float = 0f,
     val parallaxEnabled: Boolean = false,
-    val parallaxStrength: Float = 0.5f
+    val parallaxStrength: Float = 0.5f,
+    val depthLayers: Int = 3,
+    val rotationSpeed: Float = 0.5f,
+    val parallaxIntensity: Float = 1.0f
 )
 
 object BackgroundForgeEngine {

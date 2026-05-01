@@ -163,7 +163,7 @@ fun QSHeaderForgePanel(
 }
 
 @Composable
-private fun SliderRow(
+fun SliderRow(
     label: String,
     value: Float,
     range: ClosedFloatingPointRange<Float>,

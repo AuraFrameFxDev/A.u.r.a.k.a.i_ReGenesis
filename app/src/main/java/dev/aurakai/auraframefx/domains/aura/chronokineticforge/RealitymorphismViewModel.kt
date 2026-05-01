@@ -73,6 +73,34 @@ class RealitymorphismViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun updateDepth(layers: Int) {
+        _uiState.update { current ->
+            current.copy(
+                backgroundConfig = current.backgroundConfig.copy(depthLayers = layers)
+            )
+        }
+    }
+
+    fun updateRotation(speed: Float) {
+        _uiState.update { current ->
+            current.copy(
+                backgroundConfig = current.backgroundConfig.copy(rotationSpeed = speed)
+            )
+        }
+    }
+
+    fun updateParallax(intensity: Float) {
+        _uiState.update { current ->
+            current.copy(
+                backgroundConfig = current.backgroundConfig.copy(parallaxIntensity = intensity)
+            )
+        }
+    }
+
+    fun uploadCustomWallpaper(uri: android.net.Uri) {
+        // Placeholder for custom wallpaper upload
+    }
+
     // ================= TRANSITION FORGE =================
 
     fun setHomeScreenTransition(effect: TransitionForgeEffect) {
