@@ -4,8 +4,9 @@ import kotlinx.coroutines.*
 import kotlin.math.abs
 import kotlin.math.pow
 
-// Import KaiSentinel from RealitymorphismEngine
+// Import KaiSentinel and VetoSeverity from RealitymorphismEngine
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.KaiSentinel
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.VetoSeverity
 
 /**
  * 🔮 PREDICTIVE EMA — Grok-Enhanced Proactive Veto
