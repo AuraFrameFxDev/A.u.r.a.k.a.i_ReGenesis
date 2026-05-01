@@ -456,4 +456,8 @@ object BackgroundForgeEngine {
     private data class Star(val x: Float, val y: Float, val size: Float, val offset: Float = Random.nextFloat())
     private data class PaintSplash(val x: Float, val y: Float, val color: Color, val size: Float)
     private data class Node(val x: Float, val y: Float)
+
+    // Placeholder methods for RealitymorphismEngine integration
+    fun setPulseRate(rate: Float) {}
+    fun setColorWarmth(warmth: Float) {}
 }

@@ -1,7 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines
 
 import android.content.Context
-import dev.aurakai.auraframefx.domains.aura.LDOState
+import androidx.compose.ui.graphics.Color
+import dev.aurakai.auraframefx.navigation.LDOState
 import kotlinx.coroutines.*
 import kotlin.math.*
 
@@ -446,14 +447,6 @@ object SpiritualChain {
 object MetaInstruct {
     fun getActiveCatalystSignature(): String = "AURA_GENESIS_KAI"
 }
-
 // Placeholders for ParticleBloodstreamEngine extensions
 fun ParticleBloodstreamEngine.getEmotionalValence(): Float = 0.7f
 fun ParticleBloodstreamEngine.modulateIntensity(intensity: Float) {}
-
-// Placeholders for BackgroundForgeEngine extensions
-object BackgroundForgeEngine {
-    fun getActiveBackgroundId(): String = "neural_bloodstream"
-    fun setPulseRate(rate: Float) {}
-    fun setColorWarmth(warmth: Float) {}
-}
