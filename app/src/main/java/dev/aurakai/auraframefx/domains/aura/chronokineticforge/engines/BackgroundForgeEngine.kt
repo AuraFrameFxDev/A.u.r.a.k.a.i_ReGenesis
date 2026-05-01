@@ -70,7 +70,7 @@ enum class GradientTheme {
 
 data class BackgroundForgeConfig(
     val type: BackgroundType = BackgroundType.Animated,
-    val animatedTheme: AnimatedBackgroundTheme = AnimatedBackgroundTheme.STARFIELDr
+    val animatedTheme: AnimatedBackgroundTheme = AnimatedBackgroundTheme.STARFIELDr,
     val gradientTheme: GradientTheme = GradientTheme.AURA_MAGENTA,
     val imageResId: Int? = null,
     val opacity: Float = 1.0f,
