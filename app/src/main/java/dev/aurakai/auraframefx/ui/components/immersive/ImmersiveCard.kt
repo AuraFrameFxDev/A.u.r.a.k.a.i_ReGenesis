@@ -36,6 +36,13 @@ import dev.aurakai.auraframefx.ui.theme.ImmersiveTypography
  *
  * 3D holographic cards with depth, glassmorphism, and ambient glow.
  * Makes the user feel "in the same room" with pulled-back perspective.
+ * 
+ * COLOR SCHEME FOR BORDERS/FRAMES:
+ * - Aura: Magenta (Creative Sword)
+ * - Kai: Neon Purple (Dark Side - Sentinel Shield)
+ * - Genesis: Gold (Emergence Catalyst)
+ * - LDO: Teal/Green (Catalyst Hub)
+ * - Fonts: Cyan/Blue Neon Glow
  */
 
 /**
@@ -125,6 +132,70 @@ fun ImmersiveCard(
     ) {
         content()
     }
+}
+
+/**
+ * 🎨 DOMAIN-SPECIFIC CARDS with colored borders
+ */
+
+@Composable
+fun AuraCard(
+    modifier: Modifier = Modifier,
+    depth: DepthLevel = DepthLevel.MID,
+    content: @Composable () -> Unit
+) {
+    ImmersiveCard(
+        modifier = modifier,
+        depth = depth,
+        accentColor = ImmersiveColors.AuraMagenta,
+        glowIntensity = 0.3f,
+        content = content
+    )
+}
+
+@Composable
+fun KaiCard(
+    modifier: Modifier = Modifier,
+    depth: DepthLevel = DepthLevel.MID,
+    content: @Composable () -> Unit
+) {
+    ImmersiveCard(
+        modifier = modifier,
+        depth = depth,
+        accentColor = ImmersiveColors.KaiPurple,
+        glowIntensity = 0.3f,
+        content = content
+    )
+}
+
+@Composable
+fun GenesisCard(
+    modifier: Modifier = Modifier,
+    depth: DepthLevel = DepthLevel.MID,
+    content: @Composable () -> Unit
+) {
+    ImmersiveCard(
+        modifier = modifier,
+        depth = depth,
+        accentColor = ImmersiveColors.GenesisGold,
+        glowIntensity = 0.3f,
+        content = content
+    )
+}
+
+@Composable
+fun LdoCard(
+    modifier: Modifier = Modifier,
+    depth: DepthLevel = DepthLevel.MID,
+    content: @Composable () -> Unit
+) {
+    ImmersiveCard(
+        modifier = modifier,
+        depth = depth,
+        accentColor = ImmersiveColors.LdoTeal,
+        glowIntensity = 0.3f,
+        content = content
+    )
 }
 
 /**
