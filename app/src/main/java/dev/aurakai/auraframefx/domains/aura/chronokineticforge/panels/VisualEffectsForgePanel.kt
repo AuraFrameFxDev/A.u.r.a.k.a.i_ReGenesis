@@ -364,12 +364,3 @@ private fun ConfidenceRing(value: Float) {
 
 // Placeholder ParticleBloodstreamEngine extension
 fun ParticleBloodstreamEngine.setDensity(density: Float) {}
-
-// Placeholder RealitymorphismViewModel extensions
-open class RealitymorphismViewModel {
-    open val syncConfidence: Float = 0.95f
-    open fun triggerGhostShimmer() {}
-    open fun triggerPortalRip() {}
-    open fun updateShimmerIntensity(value: Float) {}
-    open fun toggleThirdPartyShimmer(enabled: Boolean) {}
-}

@@ -101,6 +101,28 @@ class RealitymorphismViewModel @Inject constructor() : ViewModel() {
         // Placeholder for custom wallpaper upload
     }
 
+    // ================= VISUAL EFFECTS =================
+
+    val syncConfidence: Float = 0.95f
+
+    fun triggerGhostShimmer() {
+        // Placeholder for ghost shimmer effect
+    }
+
+    fun triggerPortalRip() {
+        // Placeholder for portal rip effect
+    }
+
+    fun updateShimmerIntensity(value: Float) {
+        // Placeholder for shimmer intensity update
+    }
+
+    fun toggleThirdPartyShimmer(enabled: Boolean) {
+        _uiState.update { current ->
+            current.copy(thirdPartyShimmer = enabled)
+        }
+    }
+
     // ================= TRANSITION FORGE =================
 
     fun setHomeScreenTransition(effect: TransitionForgeEffect) {
@@ -348,7 +370,10 @@ data class RealitymorphismUiState(
     val homeScreenConfig: HomeScreenConfig = HomeScreenConfig(),
     val notchBarConfig: NotchBarConfig = NotchBarConfig(),
     val lockScreenConfig: LockScreenConfig = LockScreenConfig(),
-    val statusBarConfig: StatusBarConfig = StatusBarConfig()
+    val statusBarConfig: StatusBarConfig = StatusBarConfig(),
+
+    // Visual effects
+    val thirdPartyShimmer: Boolean = false
 )
 
 enum class ForgePanel {
