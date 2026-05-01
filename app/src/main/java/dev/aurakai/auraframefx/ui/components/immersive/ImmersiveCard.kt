@@ -94,7 +94,7 @@ fun ImmersiveCard(
                             20f,
                             0f,
                             0f,
-                            accentColor.copy(alpha = glowIntensity).toArgb()
+                            (accentColor.copy(alpha = glowIntensity).value shr 32).toInt()
                         )
                     }
                 }
@@ -295,7 +295,7 @@ fun AgentRosterCard(
                                     15f,
                                     0f,
                                     0f,
-                                    accentColor.copy(alpha = 0.5f).toArgb()
+                                    (accentColor.copy(alpha = 0.5f).value shr 32).toInt()
                                 )
                             }
                         }
