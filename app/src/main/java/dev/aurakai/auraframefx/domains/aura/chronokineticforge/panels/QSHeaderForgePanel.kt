@@ -80,7 +80,7 @@ fun QSHeaderForgePanel(
                 BackgroundForgeEngine.BackgroundLayer(
                     id = "header_preview",
                     modifier = Modifier.fillMaxSize(),
-                    state = uiState.forgeState
+                    state = null // TODO: Replace with actual forge state
                 )
 
                 // Overlay label
@@ -101,30 +101,30 @@ fun QSHeaderForgePanel(
             // Controls: Padding, Radius, Blur, Height
             SliderRow(
                 label = "Padding",
-                value = uiState.headerPadding,
+                value = uiState.qsHeaderConfig.padding,
                 range = 0f..48f,
-                onValueChange = { viewModel.updateHeaderPadding(it) }
+                onValueChange = { viewModel.setQSHeaderPadding(it) }
             )
 
             SliderRow(
                 label = "Corner Radius",
-                value = uiState.headerRadius,
+                value = uiState.qsHeaderConfig.cornerRadius,
                 range = 0f..32f,
-                onValueChange = { viewModel.updateHeaderRadius(it) }
+                onValueChange = { viewModel.setQSHeaderCornerRadius(it) }
             )
 
             SliderRow(
                 label = "Blur Strength",
-                value = uiState.headerBlur,
+                value = uiState.qsHeaderConfig.blur,
                 range = 0f..100f,
-                onValueChange = { viewModel.updateHeaderBlur(it) }
+                onValueChange = { viewModel.setQSHeaderBlur(it) }
             )
 
             SliderRow(
                 label = "Height",
-                value = uiState.headerHeight,
+                value = uiState.qsHeaderConfig.height,
                 range = 80f..200f,
-                onValueChange = { viewModel.updateHeaderHeight(it) }
+                onValueChange = { viewModel.setQSHeaderHeight(it) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -156,7 +156,7 @@ fun QSHeaderForgePanel(
         AIGenerationDialog(
             onDismiss = { showAIGen = false },
             onGenerate = { prompt ->
-                viewModel.generateAIImage(prompt)
+                // TODO: Implement AI image generation
                 showAIGen = false
             }
         )
