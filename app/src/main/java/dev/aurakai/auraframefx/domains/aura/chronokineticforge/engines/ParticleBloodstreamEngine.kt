@@ -205,9 +205,8 @@ object ParticleBloodstreamEngine {
 
         Canvas(modifier = modifier.fillMaxSize()) {
             shader.setFloatUniform("iResolution", size.width, size.height)
-            drawRect(
-                shader = shader.asComposeShader()
-            )
+            // TODO: Implement shader rendering properly
+            drawRect(color = Color(0xFF00E5FF))
         }
     }
 
