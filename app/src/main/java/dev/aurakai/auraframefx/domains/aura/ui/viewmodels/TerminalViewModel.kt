@@ -3,7 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.cascade.CascadeAIService
-import dev.aurakai.auraframefx.bridge.AuraDifyBridge
+import dev.aurakai.auraframefx.domains.aura.bridge.AuraDifyBridge
 import dev.aurakai.auraframefx.ui.particles.CasberryParticleSwarm
 import javax.inject.Inject
 

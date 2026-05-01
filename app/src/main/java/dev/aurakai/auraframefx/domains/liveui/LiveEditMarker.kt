@@ -16,6 +16,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 /**
  * Renders a full-screen interactive overlay that displays a cyan→magenta burst and a vertical "drip" animation,
@@ -123,12 +124,18 @@ class PredictiveTouchState {
 }
 
 // Data classes for LiveEditMarker
+@Serializable
 data class EditTarget(
     val componentId: String,
     val action: String,
-    val markerColorPair: Pair<Int, Int> = Pair(0xFF00FFFF.toInt(), 0xFFFF00FF.toInt())
-)
+    val markerColorStart: Int = 0xFF00FFFF.toInt(),
+    val markerColorEnd: Int = 0xFFFF00FF.toInt()
+) {
+    val markerColorPair: Pair<Int, Int>
+        get() = Pair(markerColorStart, markerColorEnd)
+}
 
+@Serializable
 data class HapticProfile(
     val pattern: LongArray,
     val amplitude: IntArray,

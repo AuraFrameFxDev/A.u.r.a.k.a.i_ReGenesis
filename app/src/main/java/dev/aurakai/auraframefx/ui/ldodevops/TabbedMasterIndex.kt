@@ -1000,161 +1000,42 @@ fun getDevOpsModules(): List<TabModule> = listOf(
 
 fun getAuraModules(): List<TabModule> {
     return listOf(
+        // ═══════════════════════════════════════════════════════════════
+        // CHRONOKINETIC FORGE — Unified Visual Customization
+        // Consolidates: Headers, Backgrounds, Wallpapers, Transitions,
+        // QS, Lock Screen, Status Bar, Notch Bar, App BGs
+        // ═══════════════════════════════════════════════════════════════
         TabModule(
-            title = "CHROMA FORGE",
-            subtitle = "RealityMorph Engine",
+            title = "CHRONOKINETIC FORGE",
+            subtitle = "Visual System Sculptor",
             icon = Icons.Default.Palette,
-            color = Color(0xFFFF00FF),
-            route = ReGenesisRoute.ChromaCore.route,
-            previewImage = R.drawable.gatescenes_aura_chromacoregate
-        ),
-        TabModule(
-            "AURA LAB",
-            "Experimental Sandbox",
-            Icons.Default.Science,
-            Color(0xFF00E5FF),
-            ReGenesisRoute.AuraLab.route,
-            R.drawable.gatescenes_aura_auralab
-        ),
-        TabModule(
-            "COLLAB CANVAS",
-            "Synergy Interface",
-            Icons.Default.Brush,
-            Color(0xFF39FF14),
-            ReGenesisRoute.CollabCanvas.route,
-            R.drawable.gatescenes_aura_collabcanvas_v2
+            color = Color(0xFFFF00FF), // Magenta - Aura
+            route = ReGenesisRoute.ChronoKineticForge.route,
+            previewImage = R.drawable.gatescenes_chronokinetic_forge
         ),
 
-        // --- ICONIFY INTEGRATION (High Fidelity Modules) ---
+        // ═══════════════════════════════════════════════════════════════
+        // COLLAB CANVAS — 3D Spatial UI Preview with Gyroscope
+        // ═══════════════════════════════════════════════════════════════
         TabModule(
-            "ICONIFY HOME",
-            "500+ Settings",
-            Icons.Default.GridView,
-            Color(0xFFBB86FC),
-            ReGenesisRoute.IconifyPicker.route,
-            R.drawable.uxuiaura000
-        ),
-        TabModule(
-            "ICON PACKS",
-            "Material Icons",
-            Icons.Default.Apps,
-            Color(0xFF00E5FF),
-            ReGenesisRoute.IconifyIconPacks.route,
-            R.drawable.uxuiaura001
-        ),
-        TabModule(
-            "BATTERY STYLES",
-            "Power Visuals",
-            Icons.Default.BatteryChargingFull,
-            Color(0xFF00FF88),
-            ReGenesisRoute.IconifyBatteryStyles.route,
-            R.drawable.uxuiaura002
-        ),
-        TabModule(
-            "BRIGHTNESS BARS",
-            "Luma Control",
-            Icons.Default.Brightness6,
-            Color(0xFFFFD700),
-            ReGenesisRoute.IconifyBrightnessBars.route,
-            R.drawable.uxuiaura003
-        ),
-        TabModule(
-            "QS PANEL",
-            "Quick Settings",
-            Icons.Default.SettingsInputComponent,
-            Color(0xFF00B0FF),
-            ReGenesisRoute.IconifyQSPanel.route,
-            R.drawable.uxuiaura005
-        ),
-        TabModule(
-            "NOTIFICATIONS",
-            "Shade Tweaks",
-            Icons.Default.Notifications,
-            Color(0xFFFF4081),
-            ReGenesisRoute.IconifyNotifications.route,
-            R.drawable.uxuiaura006
-        ),
-        TabModule(
-            "VOLUME PANEL",
-            "Audio UI",
-            Icons.Default.VolumeUp,
-            Color(0xFFBB86FC),
-            ReGenesisRoute.IconifyVolumePanel.route,
-            R.drawable.uxuiaura007
-        ),
-        TabModule(
-            "NAVIGATION BAR",
-            "Gesture Layout",
-            Icons.Default.Navigation,
-            Color(0xFF03DAC6),
-            ReGenesisRoute.IconifyNavigationBar.route,
-            R.drawable.uxuiaura008
-        ),
-        TabModule(
-            "UI ROUNDNESS",
-            "Corner Radius",
-            Icons.Default.RoundedCorner,
-            Color(0xFFFFD600),
-            ReGenesisRoute.IconifyUIRoundness.route,
-            R.drawable.uxuiaura010
-        ),
-        TabModule(
-            "ICON SHAPE",
-            "Adaptive Masks",
-            Icons.Default.Category,
-            Color(0xFFFF6F00),
-            ReGenesisRoute.IconifyIconShape.route,
-            R.drawable.uxuiaura011
-        ),
-        TabModule(
-            "STATUS BAR",
-            "Neural Layer",
-            Icons.Default.SignalCellularAlt,
-            Color(0xFFBB86FC),
-            ReGenesisRoute.IconifyStatusBar.route,
-            R.drawable.uxuiaura012
-        ),
-        TabModule(
-            "XPOSED FEATURES",
-            "Deep Framework",
-            Icons.Default.Extension,
-            Color(0xFF00E5FF),
-            ReGenesisRoute.IconifyXposedFeatures.route,
-            R.drawable.uxuiaura013
-        ),
-        TabModule(
-            "COLOR ENGINE",
-            "Monet Pro",
-            Icons.Default.ColorLens,
-            Color(0xFFFF00FF),
-            ReGenesisRoute.IconifyColorEngine.route,
-            R.drawable.uxuiaura015
+            title = "COLLAB CANVAS",
+            subtitle = "Spatial UI Preview",
+            icon = Icons.Default.ViewInAr, // 3D AR icon
+            color = Color(0xFF00E5FF), // Cyan
+            route = ReGenesisRoute.CollabCanvas.route,
+            previewImage = R.drawable.gatescenes_collab_canvas
         ),
 
-        // --- COLORBLENDR ---
+        // ═══════════════════════════════════════════════════════════════
+        // AURA LAB — Experimental Unstable Features
+        // ═══════════════════════════════════════════════════════════════
         TabModule(
-            "COLORBLENDR",
-            "Advanced Blending",
-            Icons.Default.Palette,
-            Color(0xFFFF6B6B),
-            ReGenesisRoute.ColorBlendr.route,
-            R.drawable.uxuiaura016
-        ),
-        TabModule(
-            "MONET COLORS",
-            "Dynamic Extraction",
-            Icons.Default.AutoAwesome,
-            Color(0xFF4ECDC4),
-            ReGenesisRoute.ColorBlendrMonet.route,
-            R.drawable.uxuiaura017
-        ),
-        TabModule(
-            "PALETTES",
-            "Saved Collections",
-            Icons.Default.Bookmark,
-            Color(0xFFFFD93D),
-            ReGenesisRoute.ColorBlendrPalette.route,
-            R.drawable.uxuiaura018
+            title = "AURA LAB",
+            subtitle = "Experimental Sandbox",
+            icon = Icons.Default.Science,
+            color = Color(0xFF39FF14), // Green
+            route = ReGenesisRoute.AuraLab.route,
+            previewImage = R.drawable.gatescenes_aura_auralab
         )
     )
 }

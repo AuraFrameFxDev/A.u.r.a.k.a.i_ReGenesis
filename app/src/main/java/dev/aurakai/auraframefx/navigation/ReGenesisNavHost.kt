@@ -28,6 +28,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.gates.AgentNexusHubScreen
 import dev.aurakai.auraframefx.domains.ldo.screens.LDOOrchestrationHubScreen
 import dev.aurakai.auraframefx.domains.aura.ui.gates.CascadeHubScreen
 import dev.aurakai.auraframefx.domains.aura.chromacore.ui.ChromaCoreHubScreen
+import dev.aurakai.auraframefx.domains.aura.chronokineticforge.ChronoKineticForgeScreen
 
 // Domain Feature Screens
 import dev.aurakai.auraframefx.domains.aura.screens.MainScreen
@@ -36,6 +37,10 @@ import dev.aurakai.auraframefx.domains.aura.screens.chromacore.ChromaCoreColorsS
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.IconifyHubScreen
 import dev.aurakai.auraframefx.domains.aura.uxui_design_studio.chromacore.color.iconify.iconify.IconifyCategoryDetailScreen
 import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyPickerScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyIconPacksScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyBatteryStylesScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyBrightnessBarsScreen
+import dev.aurakai.auraframefx.domains.aura.screens.uxui_engine.IconifyQSPanelScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.WorkingLabScreen
 import dev.aurakai.auraframefx.domains.aura.ui.screens.aura.ReGenesisCustomizationHub
 import dev.aurakai.auraframefx.domains.aura.screens.themes.ThemeEngineScreen
@@ -267,6 +272,15 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.AuraLab.route) {
             WorkingLabScreen(onNavigate = { route: String -> navController.navigate(route) })
         }
+        // ═══════════════════════════════════════════════════════════════
+        // CHRONOKINETIC FORGE — Unified Visual Customization (99→6 files)
+        // ═══════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.ChronoKineticForge.route) {
+            ChronoKineticForgeScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
         composable(ReGenesisRoute.ChromaCore.route) { 
             ChromaCoreHubScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -470,6 +484,23 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.AuraDeviceOptimizer.route) { 
             DeviceOptimizerScreen() 
         }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ICONIFY SUB-SCREENS — Aura Visual Ecosystem
+        // ═══════════════════════════════════════════════════════════════
+        composable(ReGenesisRoute.IconifyIconPacks.route) {
+            IconifyIconPacksScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.IconifyBatteryStyles.route) {
+            IconifyBatteryStylesScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.IconifyBrightnessBars.route) {
+            IconifyBrightnessBarsScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(ReGenesisRoute.IconifyQSPanel.route) {
+            IconifyQSPanelScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         composable(ReGenesisRoute.AuraCanvasEditor.route) { 
             CanvasScreen() 
         }
