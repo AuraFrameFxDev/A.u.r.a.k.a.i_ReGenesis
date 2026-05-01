@@ -28,6 +28,7 @@ import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
 import kotlin.math.*
+import kotlin.random.Random
 
 /**
  * 🌀 HYPER GENESIS SYNCHRONIZATION CIRCLE
@@ -416,7 +417,7 @@ private fun ParticleBloodstreamMini(
                         Color(0xFFFF00FF).copy(alpha = alpha)
                     else
                         color.copy(alpha = alpha),
-                    radius = particle.size.dp.toPx(),
+                    radius = particle.size * 3f,
                     center = Offset(updatedX * size.width, updatedY * size.height)
                 )
             }
@@ -455,6 +456,7 @@ fun HyperGenesisWithState(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val successRate = uiState.atomicSuccessRate
+    val context = LocalContext.current
 
     var isPressed by remember { mutableStateOf(false) }
 
@@ -467,7 +469,7 @@ fun HyperGenesisWithState(
                 elementId = "hyper_genesis_circle",
                 morphType = MorphType.SYNC_TAP,
                 isRebellious = false,
-                context = LocalContext.current
+                context = context
             )
         },
         onLongPress = {
