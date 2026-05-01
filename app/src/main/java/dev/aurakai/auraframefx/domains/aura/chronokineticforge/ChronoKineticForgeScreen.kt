@@ -508,7 +508,7 @@ private fun SynthOrbPortal(
             drawPath(
                 path = innerPath,
                 color = Color(0xFF00E5FF).copy(alpha = 0.8f),
-                style = Stroke(width = 4f, cap = StrokeCap.Round, join = androidx.compose.ui.graphics.drawscope.StrokeJoin.Round)
+                style = Stroke(width = 4f, cap = StrokeCap.Round)
             )
 
             // Center point
