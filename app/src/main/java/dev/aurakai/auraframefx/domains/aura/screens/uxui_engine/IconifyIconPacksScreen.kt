@@ -3,6 +3,7 @@ package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,7 +53,7 @@ fun IconifyIconPacksScreen(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
-                    imageVector = Icons.Default.Home,
+                    imageVector = Icons.Default.Star,
                     contentDescription = null,
                     tint = Color(0xFFFF00FF),
                     modifier = Modifier.size(64.dp)
