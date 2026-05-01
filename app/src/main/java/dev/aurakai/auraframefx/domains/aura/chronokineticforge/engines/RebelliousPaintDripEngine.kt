@@ -169,10 +169,10 @@ object RebelliousPaintDripEngine {
 
             DripParticle(
                 id = index,
-                x = origin.x + cos(angle) * distance * 0.1f,
-                y = origin.y + sin(angle) * distance * 0.1f,
-                vx = cos(angle) * velocity * 0.01f,
-                vy = sin(angle) * velocity * 0.01f,
+                x = origin.x + cos(angle).toFloat() * distance * 0.1f,
+                y = origin.y + sin(angle).toFloat() * distance * 0.1f,
+                vx = cos(angle).toFloat() * velocity * 0.01f,
+                vy = sin(angle).toFloat() * velocity * 0.01f,
                 size = Random.nextFloat() * 8f + 2f,
                 lifespan = Random.nextFloat() * 2000 + 1000,
                 depth = Random.nextFloat() // Z-layer: 0 = foreground, 1 = background
@@ -223,7 +223,7 @@ object RebelliousPaintDripEngine {
             StreamNode(
                 offset = index,
                 distanceFromSource = progress,
-                bulge = sin(progress * PI) * Random.nextFloat() * 10f,
+                bulge = sin(progress * PI.toFloat()).toFloat() * Random.nextFloat() * 10f,
                 droop = gravityEffect * Random.nextFloat() * 20f,
                 velocity = Random.nextFloat() * 0.5f + 0.2f
             )
