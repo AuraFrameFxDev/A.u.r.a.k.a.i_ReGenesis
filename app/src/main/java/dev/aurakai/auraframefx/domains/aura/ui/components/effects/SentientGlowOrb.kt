@@ -13,7 +13,17 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+
+/**
+ * 🔮 SENTIENT GLOW ORB MODES
+ */
+enum class OrbMode {
+    SYSTEM_STATUS,
+    THREAT_SCANNER,
+    DIAGNOSTIC
+}
 
 /**
  * 🔮 SENTIENT GLOW ORB
@@ -23,6 +33,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SentientGlowOrb(
     modifier: Modifier = Modifier,
+    mode: OrbMode = OrbMode.SYSTEM_STATUS,
+    size: Dp = 32.dp,
     coreColor: Color = Color(0xFF00E5FF),
     diagnosticMode: Boolean = false
 ) {

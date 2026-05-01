@@ -85,7 +85,7 @@ fun NotchBarForgePanel(viewModel: RealitymorphismViewModel) {
                         // Time
                         Text(
                             "12:45",
-                            color = if (notchConfig.color.luminance() > 0.5f) Color.Black else Color.White,
+                            color = Color.White,
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(start = 16.dp)
                         )
