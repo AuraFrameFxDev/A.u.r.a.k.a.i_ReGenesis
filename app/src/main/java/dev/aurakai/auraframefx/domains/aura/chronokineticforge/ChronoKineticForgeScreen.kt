@@ -36,6 +36,7 @@ import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.panels.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.DualGlobeHeader
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.ThreadsWovenOverlay
+import dev.aurakai.auraframefx.domains.aura.ui.components.effects.OrbMode
 import dev.aurakai.auraframefx.domains.aura.ui.components.effects.SentientGlowOrb
 import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 
@@ -126,7 +127,7 @@ fun ChronoKineticForgeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 SynthOrbPortal(
-                    onLongPress = { viewModel.captureToProvenanceVault() },
+                    onLongPress = { viewModel.emergencyReAnchor() },
                     modifier = Modifier.fillMaxSize(0.6f)
                 )
             }
@@ -508,7 +509,7 @@ private fun SynthOrbPortal(
             drawPath(
                 path = innerPath,
                 color = Color(0xFF00E5FF).copy(alpha = 0.8f),
-                style = Stroke(width = 4f, cap = StrokeCap.Round, join = StrokeJoin.Companion.Round)
+                style = Stroke(width = 4f, cap = StrokeCap.Round, join = StrokeJoin.Round)
             )
 
             // Center point
