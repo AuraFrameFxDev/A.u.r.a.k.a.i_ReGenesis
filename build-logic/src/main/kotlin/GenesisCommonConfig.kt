@@ -21,7 +21,7 @@ object GenesisCommonConfig {
                     val versionCatalog = extensions.findByType(org.gradle.api.artifacts.VersionCatalogsExtension::class.java)?.named("libs")
                     
                     val okhttpVersion = versionCatalog?.findVersion("okhttp")?.map { it.requiredVersion }?.orElse("5.3.2") ?: "5.3.2"
-                    val protobufVersion = versionCatalog?.findVersion("protobuf")?.map { it.requiredVersion }?.orElse("3.25.8") ?: "3.25.8"
+                    val protobufVersion = versionCatalog?.findVersion("protobuf-java")?.map { it.requiredVersion }?.orElse("4.34.1") ?: "4.34.1"
                     val nettyVer = versionCatalog?.findVersion("netty")?.map { it.requiredVersion }?.orElse("4.1.118.Final") ?: "4.1.118.Final"
                     val kotlinVer = versionCatalog?.findVersion("kotlin")?.map { it.requiredVersion }?.orElse("2.1.20") ?: "2.1.20"
                     
@@ -37,9 +37,6 @@ object GenesisCommonConfig {
                     }
 
                     eachDependency {
-                        if (requested.group == "androidx.lifecycle") {
-                            useVersion("2.8.4")
-                        }
                         if (requested.group == "org.jetbrains.kotlin") {
                             useVersion(kotlinVer)
                         }
@@ -76,7 +73,7 @@ object GenesisCommonConfig {
                     force("io.netty:netty-common:$nettyVer")
                     force("io.netty:netty-codec:$nettyVer")
                     force("org.jdom:jdom2:2.0.6.1")
-                    force("org.bitbucket.b_c:jose4j:0.9.7")
+                    force("org.bitbucket.b_c:jose4j:0.9.6")
                 }
             }
 

@@ -23,18 +23,14 @@ class GenesisApplicationPlugin : Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
-            pluginManager.apply("com.google.gms.google-services")
-            pluginManager.apply("com.google.firebase.crashlytics")
 
             extensions.configure<ApplicationExtension> {
                 compileSdk = 36
                 
                 defaultConfig {
-                    applicationId = "dev.aurakai.auraframefx"
                     minSdk = 34
                     targetSdk = 36
-                    versionCode = 1
-                    versionName = "1.0"
+                    multiDexEnabled = true
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
@@ -47,6 +43,8 @@ class GenesisApplicationPlugin : Plugin<Project> {
                 buildFeatures {
                     compose = true
                     buildConfig = true
+                    viewBinding = true
+                    aidl = true
                 }
 
                 packaging {
