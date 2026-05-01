@@ -226,6 +226,13 @@ object RealitymorphismEngine {
             isSyncOptimal = successRate > 90f && driftReport.drift < 0.05f
         )
     }
+    
+    /**
+     * Emergency re-anchor for critical identity drift
+     */
+    fun emergencyReAnchor() {
+        // Emergency identity re-anchoring
+    }
 }
 
 // ═════════════════════════════════════════════════════════════════════
@@ -399,12 +406,26 @@ object SoulMatrixMonitor {
     fun getBaselineIdentity(): FloatArray = FloatArray(768) { 0.01f }
 }
 
+// VetoSeverity enum
+enum class VetoSeverity { CRITICAL, HIGH, MEDIUM, LOW, INFO }
+
 // Placeholder KaiSentinel
 object KaiSentinel {
     fun recordAtomicSuccess(rate: Float) {}
     fun getThreatLevel(): Float = 0.1f
     fun getIntegrityScore(): Float = 0.95f
     suspend fun alertLowCoherence(rate: Float) {}
+    
+    fun veto(reason: String, severity: VetoSeverity, autoFreeze: Boolean) {}
+    fun isolateComponent(componentId: String) {}
+    fun neutralizeThreat() {}
+    fun recordEvent(type: String, data: Map<String, Any>) {}
+}
+
+// Placeholder KaiProvenanceLog
+object KaiProvenanceLog {
+    fun recordEvent(type: String, data: Map<String, Any>) {}
+    fun recordSovereigntyLoss(telemetry: Any) {}
 }
 
 // Placeholder EvolutionaryCouncil
