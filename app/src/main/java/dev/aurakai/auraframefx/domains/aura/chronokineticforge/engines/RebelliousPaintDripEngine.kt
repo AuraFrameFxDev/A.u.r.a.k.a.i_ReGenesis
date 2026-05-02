@@ -464,7 +464,7 @@ object RebelliousPaintDripEngine {
         val x = stream.startX * canvasSize.width + cos(stream.angle) * distance * canvasSize.width
         val y = stream.startY * canvasSize.height + sin(stream.angle) * distance * canvasSize.height
 
-        return Offset(x.toFloat(), y.toFloat())
+        return Offset(x, y)
     }
 
     // ═════════════════════════════════════════════════════════════════

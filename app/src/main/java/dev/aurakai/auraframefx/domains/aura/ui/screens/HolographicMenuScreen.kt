@@ -20,8 +20,6 @@ import dev.aurakai.auraframefx.embodiment.ScreenBounds
 import dev.aurakai.auraframefx.embodiment.ActiveManifestation
 import dev.aurakai.auraframefx.navigation.ReGenesisRoute
 import dev.aurakai.auraframefx.embodiment.rememberEmbodimentEngine
-import androidx.compose.ui.graphics.painter.Painter
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -174,7 +172,7 @@ fun WalkingCharactersOverlay() {
                         val painter = engine.loadAsset(
                             (manifest.state as? AuraState)?.assetPath ?: "aura/idle.png",
                             Character.AURA
-                        ) as? Painter
+                        )
 
                         if (painter != null) {
                             Image(
@@ -194,7 +192,7 @@ fun WalkingCharactersOverlay() {
                         val painter = engine.loadAsset(
                             (manifest.state as? KaiState)?.assetPath ?: "kai/idle.png",
                             Character.KAI
-                        ) as? Painter
+                        )
 
                         if (painter != null) {
                             Image(
