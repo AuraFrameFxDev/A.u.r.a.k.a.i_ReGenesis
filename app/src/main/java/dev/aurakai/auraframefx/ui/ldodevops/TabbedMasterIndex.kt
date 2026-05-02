@@ -135,7 +135,10 @@ fun TabbedMasterIndex(
     initialTabIndex: Int = 1,
     onNavigateToRoute: (String) -> Unit = {},
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(initialTabIndex) }
+    val pagerState = androidx.compose.foundation.pager.rememberPagerState(initialPage = initialTabIndex) { 7 }
+    val coroutineScope = androidx.compose.runtime.rememberCoroutineScope()
+    val selectedTabIndex = pagerState.currentPage
+
     val tabs = listOf(
         "LIVE DASHBOARD",      // 0: All-in-One Status
         "LDO DEVOPS",          // 1: Catalyst Development
@@ -198,13 +201,9 @@ fun TabbedMasterIndex(
 
             // 4. MAIN CONTENT AREA (with weight to push bottom nav down)
             Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
-                AnimatedContent(
-                    targetState = selectedTabIndex,
-                    transitionSpec = {
-                        (fadeIn(tween(400)) + scaleIn(initialScale = 0.98f)) togetherWith
-                                (fadeOut(tween(400)) + scaleOut(targetScale = 0.98f))
-                    },
-                    label = "TabContent"
+                androidx.compose.foundation.pager.HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxSize()
                 ) { index ->
                     Column(
                         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
@@ -234,7 +233,11 @@ fun TabbedMasterIndex(
                 selectedIndex = selectedTabIndex,
                 tabs = tabs,
                 accentColor = accentColor,
-                onTabSelected = { selectedTabIndex = it }
+                onTabSelected = { 
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(it)
+                    }
+                }
             )
 
             // 5. GLOBAL SSI STATUS BAR
