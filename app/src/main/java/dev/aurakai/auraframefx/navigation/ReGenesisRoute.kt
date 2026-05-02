@@ -12,7 +12,9 @@ sealed class ReGenesisRoute(val route: String, val title: String? = null) {
     // LEVEL 1: PRIMARY GATES (Main Entry Points)
     // ═══════════════════════════════════════════════════════════════
     data object MainScreen : ReGenesisRoute("main_screen", "Main Dashboard")
-    data object HomeGateCarousel : ReGenesisRoute("home_gate_carousel", "Home")
+    data object HomeGateCarousel : ReGenesisRoute("home_gate_carousel/{tabIndex}") {
+        fun createRoute(tabIndex: Int = 1) = "home_gate_carousel/$tabIndex"
+    }
     data object DataflowAnalysis : ReGenesisRoute("dataflow_analysis", "Dataflow")
     data object LsposedQuickToggles : ReGenesisRoute("lsposed_quick_toggles", "LSPosed Toggles")
     data object LdoCatalystDevelopment : ReGenesisRoute("ldo_catalyst_development", "LDO Catalyst")

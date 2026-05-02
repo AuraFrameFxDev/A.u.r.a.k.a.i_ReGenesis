@@ -1157,12 +1157,12 @@ fun getDashboardModules(): List<TabModule> = listOf(
         R.drawable.preview_ldo_roster
     ),
     TabModule(
-        "MONITORING HUD",
-        "System Overlay",
-        Icons.Default.Dashboard,
-        Color(0xFF00E5FF),
-        ReGenesisRoute.MonitoringHUDs.route,
-        R.drawable.exodus_hud_lvl1_bg
+        "CHRONOKINETIC FORGE",
+        "Visual Sculptor",
+        Icons.Default.Palette,
+        Color(0xFFFF00FF),
+        ReGenesisRoute.ChronoKineticForge.route,
+        R.drawable.gatescenes_aura_designstudio_v2
     ),
     TabModule(
         "TASK VIEW",

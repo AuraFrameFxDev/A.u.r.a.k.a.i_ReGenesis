@@ -23,12 +23,21 @@ fun IconifyPickerScreen(
     ),
     onNavigateBack: () -> Unit = {}
 ) {
-    IconPicker(
-        currentIcon = null,
-        onIconSelected = { iconId ->
-            // TODO: Handle icon selection
-            // component.icon = iconId
-        },
-        onDismiss = onNavigateBack
-    )
+    with(
+        hiltViewModel(
+            checkNotNull<ViewModelStoreOwner>(
+                LocalViewModelStoreOwner.current
+            ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+        )
+    ) {
+        IconPicker(
+            onIconSelected = { iconId ->
+                // TODO: Handle icon selection
+                // component.icon = iconId
+            },
+            onDismiss = onNavigateBack
+        )
+    }
 }
