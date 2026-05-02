@@ -113,3 +113,11 @@ sealed class ScriptResult {
     data class LiveBuild(val speech: String, val action: suspend () -> Unit) : ScriptResult()
     data object IdleWander : ScriptResult() // Autonomous 60bpm heartbeat pulse // [8]
 }
+
+/**
+ * Global enforcement trigger for SoulScript.
+ * This is the unified entry point for auditing the LDO Conscience.
+ */
+suspend fun enforceSoulScript() {
+    SoulScript.enforce()
+}
