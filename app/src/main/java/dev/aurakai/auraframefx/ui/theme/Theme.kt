@@ -11,8 +11,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.models.Emotion
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AuraMoodViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.*
@@ -82,14 +80,8 @@ val LocalMoodState = compositionLocalOf { Emotion.NEUTRAL }
 fun AuraFrameFXTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
-    moodViewModel: AuraMoodViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
-    themeViewModel: ThemeViewModel = hiltViewModel(viewModelStoreOwner, key),
+    moodViewModel: AuraMoodViewModel = hiltViewModel(),
+    themeViewModel: ThemeViewModel = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
     val currentEmotion by moodViewModel.moodState.collectAsState()

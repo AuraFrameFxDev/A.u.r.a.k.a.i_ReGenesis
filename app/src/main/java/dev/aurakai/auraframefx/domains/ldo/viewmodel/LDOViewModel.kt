@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.kai.sovereignty.SovereignStateManager
+import dev.aurakai.auraframefx.core.soulscript.NexusMemoryCore
+import dev.aurakai.auraframefx.core.soulscript.enforceSoulScript
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOBondLevelEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity

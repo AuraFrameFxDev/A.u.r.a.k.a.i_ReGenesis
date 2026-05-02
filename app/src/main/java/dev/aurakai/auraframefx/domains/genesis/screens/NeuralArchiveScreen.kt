@@ -42,7 +42,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -54,9 +54,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryEntity
 import dev.aurakai.auraframefx.agents.growthmetrics.nexusmemory.data.local.entity.MemoryType
@@ -81,13 +78,7 @@ import java.util.Locale
 @Composable
 fun NeuralArchiveScreen(
     navController: NavController,
-    viewModel: NeuralArchiveViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: NeuralArchiveViewModel = hiltViewModel()
 ) {
     val filteredMemories by viewModel.filteredMemories.collectAsState()
     val memoryStats by viewModel.memoryStats.collectAsState()

@@ -23,13 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.RealitymorphismViewModel
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
-import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import kotlin.math.*
 import kotlin.random.Random
 
@@ -455,13 +452,7 @@ data class MiniParticle(
 @Composable
 fun HyperGenesisWithState(
     modifier: Modifier = Modifier,
-    viewModel: RealitymorphismViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: RealitymorphismViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val successRate = uiState.atomicSuccessRate

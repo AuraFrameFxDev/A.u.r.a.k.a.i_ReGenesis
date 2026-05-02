@@ -1,9 +1,8 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPicker
 import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPickerViewModel
 
@@ -14,24 +13,10 @@ import dev.aurakai.auraframefx.domains.aura.chromacore.iconify.iconify.IconPicke
  */
 @Composable
 fun IconifyPickerScreen(
-    viewModel: IconPickerViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: IconPickerViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {}
 ) {
-    with(
-        hiltViewModel(
-            checkNotNull<ViewModelStoreOwner>(
-                LocalViewModelStoreOwner.current
-            ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-        )
-    ) {
+    with(viewModel) {
         with(Modifier) {
             IconPicker(
                 onIconSelected = { iconId ->

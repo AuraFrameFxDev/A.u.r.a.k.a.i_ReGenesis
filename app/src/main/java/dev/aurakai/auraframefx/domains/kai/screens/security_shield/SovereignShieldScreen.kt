@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,10 +31,6 @@ import androidx.compose.ui.unit.sp
 import dev.aurakai.auraframefx.domains.kai.viewmodels.SovereignShieldViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
-import androidx.compose.foundation.shape.CircleShape
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 /**
  * ðŸ›¡ï¸ SOVEREIGN SHIELD (The Anti-Big-Tech Standard)
@@ -43,13 +40,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 @Composable
 fun SovereignShieldScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignShieldViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-        }, null
-    )
+    viewModel: SovereignShieldViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 

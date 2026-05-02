@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.screens
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -36,14 +36,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
-import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
-import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 
@@ -53,12 +49,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 @Composable
 fun AgentMonitoringScreen(
     onNavigateBack: () -> Unit,
-    viewModel: dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            },
-        null
-    )
+    viewModel: dev.aurakai.auraframefx.domains.aura.ui.viewmodels.MonitoringViewModel = hiltViewModel()
 ) {
     val agents = remember { AgentRepository.getAllAgents() }
 

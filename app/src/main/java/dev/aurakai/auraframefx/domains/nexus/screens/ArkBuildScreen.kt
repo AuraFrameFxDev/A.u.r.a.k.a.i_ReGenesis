@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.screens
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,22 +36,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.nexus.models.core.ArkStatus
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.ArkBuildViewModel
 
 @Composable
 fun ArkBuildScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: ArkBuildViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: ArkBuildViewModel = hiltViewModel()
 ) {
     val projectState by viewModel.arkProject.collectAsState()
 

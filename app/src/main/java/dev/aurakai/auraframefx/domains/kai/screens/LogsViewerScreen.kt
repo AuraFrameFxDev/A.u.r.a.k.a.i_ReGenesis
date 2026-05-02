@@ -34,7 +34,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,8 +46,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
 import dev.aurakai.auraframefx.domains.kai.viewmodels.LogEntry
 
@@ -58,13 +56,7 @@ import dev.aurakai.auraframefx.domains.kai.viewmodels.LogEntry
 @Composable
 fun LogsViewerScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: KaiSystemViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: KaiSystemViewModel = hiltViewModel()
 ) {
     val logsState by viewModel.logsState.collectAsState()
     val logLevels = listOf("All", "DEBUG", "INFO", "WARN", "ERROR", "VERBOSE")

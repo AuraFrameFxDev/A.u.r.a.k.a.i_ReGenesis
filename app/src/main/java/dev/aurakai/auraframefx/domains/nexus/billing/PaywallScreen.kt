@@ -39,8 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 import dev.aurakai.auraframefx.domains.aura.ui.theme.*
 
@@ -49,13 +47,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.*
  */
 @Composable
 fun PaywallDialog(
-    viewModel: SubscriptionViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: SubscriptionViewModel = hiltViewModel(),
     onDismiss: () -> Unit = {}
 ) {
     val context = LocalContext.current

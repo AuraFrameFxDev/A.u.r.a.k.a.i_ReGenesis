@@ -8,8 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -235,10 +233,7 @@ fun ReGenesisNavGraph(
 
         // ── 1. MAIN GATES (Exodus Command Deck) ──
         composable(ReGenesisRoute.MainScreen.route) {
-            val themeViewModel: ThemeViewModel =
-                hiltViewModel(checkNotNull<ViewModelStoreOwner>(LocalViewModelStoreOwner.current) {
-                    "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-                }, null)
+            val themeViewModel: ThemeViewModel = hiltViewModel()
             MainScreen(
                 onNavigateToAgentNexus = { navController.navigate(ReGenesisRoute.AgentNexusHub.route) },
                 onNavigateToOracleDrive = { navController.navigate(ReGenesisRoute.OracleDrive.route) },
@@ -871,7 +866,7 @@ fun ReGenesisNavGraph(
         composable(ReGenesisRoute.NeuralArchive.route) { 
             NeuralArchiveScreen(
                 navController = navController,
-                viewModel = hiltViewModel(viewModelStoreOwner, key)
+                viewModel = hiltViewModel()
             ) 
         }
         composable(ReGenesisRoute.SovereignNeuralArchive.route) { 

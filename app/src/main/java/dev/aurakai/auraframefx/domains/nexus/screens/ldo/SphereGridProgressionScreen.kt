@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.nexus.screens.ldo
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
@@ -33,8 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import kotlin.math.*
 
@@ -54,13 +51,7 @@ private val GridSlate = Color(0xFF334155)
 
 @Composable
 fun SphereGridProgressionScreen(
-    viewModel: SphereGridProgressionViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: SphereGridProgressionViewModel = hiltViewModel(),
     onBack: () -> Unit = {},
 ) {
     val state by viewModel.state.collectAsState()

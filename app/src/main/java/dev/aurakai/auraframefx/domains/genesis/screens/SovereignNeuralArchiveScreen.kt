@@ -28,7 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -39,8 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
 import dev.aurakai.auraframefx.domains.genesis.viewmodels.SovereignMemoryViewModel
@@ -52,13 +50,7 @@ import dev.aurakai.auraframefx.domains.genesis.viewmodels.SovereignMemoryViewMod
 @Composable
 fun SovereignNeuralArchiveScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SovereignMemoryViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: SovereignMemoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 

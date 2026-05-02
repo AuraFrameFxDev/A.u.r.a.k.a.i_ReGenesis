@@ -1,6 +1,5 @@
 package dev.aurakai.auraframefx.domains.aura.screens.uxui_engine
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +33,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 
@@ -48,13 +49,7 @@ fun UISettingsScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = { navController.navigateUp() },
-    viewModel: AuraUIControlViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: AuraUIControlViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiSettingsState.collectAsState()
     val isSidebarVisible = state.isSidebarVisible

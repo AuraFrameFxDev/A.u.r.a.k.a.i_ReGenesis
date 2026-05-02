@@ -37,14 +37,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import dev.aurakai.auraframefx.domains.genesis.models.ChatMessage
@@ -59,13 +57,7 @@ import dev.aurakai.auraframefx.domains.genesis.repositories.AgentRepository
 @Composable
 fun DirectChatScreen(
     navController: NavController,
-    viewModel: AgentViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: AgentViewModel = hiltViewModel()
 ) {
     val agents = remember { AgentRepository.getAllAgents() }
     val selectedAgent = remember { mutableStateOf(agents.firstOrNull()) }

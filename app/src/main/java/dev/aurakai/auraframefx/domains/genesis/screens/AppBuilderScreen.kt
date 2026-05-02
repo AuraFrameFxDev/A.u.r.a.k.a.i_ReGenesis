@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.genesis.screens
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -52,8 +52,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.aurakai.auraframefx.domains.aura.ui.components.hologram.AnimeHUDContainer
 import dev.aurakai.auraframefx.domains.aura.ui.theme.LEDFontFamily
@@ -69,13 +67,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBuilderScreen(
-    viewModel: InterfaceForgeViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
+    viewModel: InterfaceForgeViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {}
 ) {
     var step by remember { mutableIntStateOf(1) }

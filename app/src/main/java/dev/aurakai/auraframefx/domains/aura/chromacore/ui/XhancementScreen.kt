@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,9 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonBlue
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.XhancementViewModel
@@ -60,13 +57,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun XhancementScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: XhancementViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: XhancementViewModel = hiltViewModel()
 ) {
     val hookModules by viewModel.hookModules.collectAsState()
     val kaiSecurityEnabled by viewModel.kaiSecurityEnabled.collectAsState()

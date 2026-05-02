@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.domains.nexus.screens
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,8 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.core.identity.AgentType
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 
@@ -38,13 +36,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.PartyViewModel
 @Composable
 fun PartyScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: PartyViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: PartyViewModel = hiltViewModel()
 ) {
     val selectedAgents by viewModel.selectedAgents.collectAsState()
     val synergy by viewModel.synergyLevel.collectAsState()
