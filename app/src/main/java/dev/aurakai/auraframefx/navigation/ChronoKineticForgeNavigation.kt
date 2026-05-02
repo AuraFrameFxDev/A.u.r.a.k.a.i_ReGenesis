@@ -294,7 +294,7 @@ private fun RecentBlueprintsSection() {
             // Placeholder recent items
             repeat(3) { index ->
                 BlueprintListItem(index = index)
-                if (index < 2) Divider(color = Color.DarkGray.copy(alpha = 0.3f))
+                if (index < 2) HorizontalDivider(color = Color.DarkGray.copy(alpha = 0.3f))
             }
         }
     }

@@ -383,7 +383,7 @@ object RebelliousPaintDripEngine {
                     )
                     val controlX = (prevPos.x + pos.x) / 2
                     val controlY = (prevPos.y + finalY) / 2 + 5f // Slight curve
-                    path.quadraticBezierTo(controlX, controlY, pos.x, finalY)
+                    path.quadraticTo(controlX, controlY, pos.x, finalY)
                 }
 
                 // Bulge at nodes (paint accumulation)

@@ -63,11 +63,11 @@ fun Modifier.auraDrip(
         when (corner) {
             DripCorner.TopLeft -> {
                 dripPath.moveTo(0f, 0f)
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     cornerSize * 0.3f, cornerSize * 1.2f,
                     cornerSize * 0.6f, cornerSize * 0.8f
                 )
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     cornerSize * 0.8f, cornerSize * 1.5f,
                     cornerSize, cornerSize * 0.9f
                 )
@@ -76,11 +76,11 @@ fun Modifier.auraDrip(
             }
             DripCorner.TopRight -> {
                 dripPath.moveTo(size.width, 0f)
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     size.width - cornerSize * 0.3f, cornerSize * 1.2f,
                     size.width - cornerSize * 0.6f, cornerSize * 0.8f
                 )
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     size.width - cornerSize * 0.8f, cornerSize * 1.5f,
                     size.width - cornerSize, cornerSize * 0.9f
                 )
@@ -89,11 +89,11 @@ fun Modifier.auraDrip(
             }
             DripCorner.BottomLeft -> {
                 dripPath.moveTo(0f, size.height)
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     cornerSize * 0.3f, size.height - cornerSize * 1.2f,
                     cornerSize * 0.6f, size.height - cornerSize * 0.8f
                 )
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     cornerSize * 0.8f, size.height - cornerSize * 1.5f,
                     cornerSize, size.height - cornerSize * 0.9f
                 )
@@ -102,11 +102,11 @@ fun Modifier.auraDrip(
             }
             DripCorner.BottomRight -> {
                 dripPath.moveTo(size.width, size.height)
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     size.width - cornerSize * 0.3f, size.height - cornerSize * 1.2f,
                     size.width - cornerSize * 0.6f, size.height - cornerSize * 0.8f
                 )
-                dripPath.quadraticBezierTo(
+                dripPath.quadraticTo(
                     size.width - cornerSize * 0.8f, size.height - cornerSize * 1.5f,
                     size.width - cornerSize, size.height - cornerSize * 0.9f
                 )

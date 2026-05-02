@@ -30,7 +30,7 @@ object LDOModule {
             LDODatabase::class.java,
             "ldo_database"
         )
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
 
     @Provides

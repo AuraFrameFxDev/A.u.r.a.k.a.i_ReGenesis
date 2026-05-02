@@ -56,7 +56,7 @@ import androidx.compose.material.icons.filled.SignalCellular4Bar
 import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.filled.SwipeDown
 import androidx.compose.material.icons.filled.ToggleOn
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.Icons.AutoMirrored.Filled.VolumeUp
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.Card
@@ -693,7 +693,7 @@ private fun ColorBlendrSection(
                 ColorBlendrSettingItem(setting = setting, accentColor = accentColor)
 
                 if (index < settings.lastIndex) {
-                    HorizontalDivider(
+                    HorizontalHorizontalDivider(
                         color = Color.White.copy(alpha = 0.1f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
@@ -1275,7 +1275,7 @@ private fun PLESettingsSection(
                 PLESettingItem(setting = setting)
 
                 if (index < settings.lastIndex) {
-                    HorizontalDivider(
+                    HorizontalHorizontalDivider(
                         color = Color.White.copy(alpha = 0.1f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )

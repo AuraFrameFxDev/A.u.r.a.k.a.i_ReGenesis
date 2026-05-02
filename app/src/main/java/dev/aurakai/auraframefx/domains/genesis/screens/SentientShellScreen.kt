@@ -432,7 +432,7 @@ fun SentientShellScreen(
                 }
             }
 
-            HorizontalDivider(
+            HorizontalHorizontalDivider(
                 color = terminalGreen.copy(alpha = 0.12f),
                 modifier = Modifier.padding(vertical = 6.dp)
             )
@@ -482,7 +482,7 @@ fun SentientShellScreen(
                 }
             }
 
-            HorizontalDivider(
+            HorizontalHorizontalDivider(
                 color = terminalGreen.copy(alpha = 0.08f),
                 modifier = Modifier.padding(vertical = 4.dp)
             )

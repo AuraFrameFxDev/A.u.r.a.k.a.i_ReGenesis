@@ -71,7 +71,7 @@ fun OracleDriveScreen(
                         color = Color(0xFF00FFFF)
                     )
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF000000)
                 )
             )

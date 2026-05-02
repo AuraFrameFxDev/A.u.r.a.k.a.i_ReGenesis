@@ -187,7 +187,7 @@ fun NeuralLinkSidebarUI(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                HorizontalDivider(color = Color.White.copy(alpha = 0.15f), thickness = 0.5.dp)
+                HorizontalHorizontalDivider(color = Color.White.copy(alpha = 0.15f), thickness = 0.5.dp)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(

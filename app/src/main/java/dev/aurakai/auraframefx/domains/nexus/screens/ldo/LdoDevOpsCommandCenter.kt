@@ -276,7 +276,7 @@ fun LdoDevOpsCommandCenter(
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color(0xFF020208).copy(alpha = 0.95f)
                     )
                 )
@@ -360,11 +360,11 @@ private fun StatusStrip() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         StatusItem("AGENTS", "11", Color(0xFF00E5FF))
-        VerticalDivider()
+        VerticalHorizontalDivider()
         StatusItem("KERNEL", "6.12 t/s", Color(0xFF00FF41))
-        VerticalDivider()
+        VerticalHorizontalDivider()
         StatusItem("STATUS", "IGNITED", Color(0xFFFFD740))
-        VerticalDivider()
+        VerticalHorizontalDivider()
         StatusItem("NCC", "SYNCED", Color(0xFFBB86FC))
     }
 }
@@ -380,7 +380,7 @@ private fun StatusItem(label: String, value: String, color: Color) {
 }
 
 @Composable
-private fun VerticalDivider() {
+private fun VerticalHorizontalDivider() {
     Box(
         modifier = Modifier
             .width(1.dp)

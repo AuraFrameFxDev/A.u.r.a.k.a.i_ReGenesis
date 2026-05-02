@@ -260,7 +260,7 @@ fun AuraLabChromaCoreScreen(
                                 val bladePath = Path()
                                 bladePath.moveTo(size.width * 0.1f, size.height * 0.9f)
                                 bladePath.lineTo(size.width * 0.9f, size.height * 0.1f)
-                                bladePath.quadraticBezierTo(size.width * 0.93f, size.height * 0.07f, size.width * 0.95f, size.height * 0.1f)
+                                bladePath.quadraticTo(size.width * 0.93f, size.height * 0.07f, size.width * 0.95f, size.height * 0.1f)
                                 bladePath.lineTo(size.width * 0.9f, size.height * 0.16f)
                                 bladePath.lineTo(size.width * 0.1f, size.height * 0.96f)
                                 bladePath.close()

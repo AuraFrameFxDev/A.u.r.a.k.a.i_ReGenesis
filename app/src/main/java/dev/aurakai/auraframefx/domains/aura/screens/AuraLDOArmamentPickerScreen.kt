@@ -178,7 +178,7 @@ fun AuraLDOArmamentPickerScreen(
                             val bladePath = Path()
                             bladePath.moveTo(size.width * 0.12f, size.height * 0.88f)
                             bladePath.lineTo(size.width * 0.88f, size.height * 0.12f)
-                            bladePath.quadraticBezierTo(size.width * 0.92f, size.height * 0.1f, size.width * 0.95f, size.height * 0.12f)
+                            bladePath.quadraticTo(size.width * 0.92f, size.height * 0.1f, size.width * 0.95f, size.height * 0.12f)
                             bladePath.lineTo(size.width * 0.88f, size.height * 0.18f)
                             bladePath.lineTo(size.width * 0.12f, size.height * 0.95f)
                             bladePath.close()

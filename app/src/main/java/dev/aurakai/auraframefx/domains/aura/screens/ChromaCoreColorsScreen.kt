@@ -36,7 +36,7 @@ fun ChromaCoreColorsScreen(navController: NavController) {
 
             Text("Other color customization options go here.")
 
-            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            HorizontalHorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
 
             Text("Color UI Spacing Controls", style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(8.dp))

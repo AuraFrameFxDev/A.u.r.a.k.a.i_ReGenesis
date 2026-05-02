@@ -34,7 +34,7 @@ object DatabaseModule {
         )
             // Add migrations here if/when schema changes:
             // .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
-            .fallbackToDestructiveMigration() // Placeholder: Consider proper migration strategies for production
+            .fallbackToDestructiveMigration(dropAllTables = true) // Placeholder: Consider proper migration strategies for production
             .build()
     }
 

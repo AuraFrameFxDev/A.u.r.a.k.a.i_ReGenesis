@@ -118,7 +118,7 @@ fun ConferenceRoomScreen(
                             Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
                         }
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent
                     )
                 )
@@ -467,7 +467,7 @@ fun ConferenceInputBar(
         tonalElevation = 8.dp
     ) {
         Column {
-            HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
+            HorizontalHorizontalDivider(color = Color.White.copy(alpha = 0.1f))
             Row(
                 modifier = Modifier.padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically

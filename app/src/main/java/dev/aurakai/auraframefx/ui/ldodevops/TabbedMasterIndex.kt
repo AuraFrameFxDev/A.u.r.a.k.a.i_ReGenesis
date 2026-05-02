@@ -80,7 +80,7 @@ import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.Icons.AutoMirrored.Filled.VolumeUp
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.RoundedCorner
 import androidx.compose.material.icons.filled.Category
@@ -794,7 +794,7 @@ fun CustomPrimaryTabRow(
     accentColor: Color,
     onTabSelected: (Int) -> Unit,
 ) {
-    SecondaryScrollableTabRow(
+    SecondaryPrimaryPrimaryScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
         containerColor = Color.Transparent,
         contentColor = accentColor,

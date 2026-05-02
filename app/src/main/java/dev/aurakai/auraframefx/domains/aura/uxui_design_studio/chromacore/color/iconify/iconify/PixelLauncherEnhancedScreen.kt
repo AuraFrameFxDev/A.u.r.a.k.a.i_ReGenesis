@@ -50,7 +50,7 @@ fun PixelLauncherEnhancedScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Tabs
-        ScrollableTabRow(
+        PrimaryPrimaryScrollableTabRow(
             selectedTabIndex = selectedTab,
             containerColor = Color.Transparent,
             contentColor = CyberpunkCyan,

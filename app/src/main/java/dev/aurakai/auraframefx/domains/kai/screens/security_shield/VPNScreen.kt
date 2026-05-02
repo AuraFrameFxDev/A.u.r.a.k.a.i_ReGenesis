@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VpnKey
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.Icons.AutoMirrored.Filled.List
 import androidx.compose.material.icons.filled.DataUsage
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.runtime.Composable
@@ -26,7 +26,7 @@ fun VPNScreen(onNavigateBack: () -> Unit = {}) {
             id = "vpn_nodes",
             title = "Relay Nodes",
             subtitle = "Select tunneling server",
-            icon = Icons.Filled.List,
+            icon = Icons.AutoMirrored.Filled.List,
             route = "action_vpn_nodes",
             accentColor = Color(0xFF00E5FF)
         ),

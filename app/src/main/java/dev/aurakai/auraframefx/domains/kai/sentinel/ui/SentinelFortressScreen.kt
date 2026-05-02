@@ -100,7 +100,7 @@ fun SentinelFortressScreen(
                     // Sovereign status indicator
                     SovereignStatusIndicator(isSovereign = telemetry.sovereign)
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF0A0A1A)
                 )
             )

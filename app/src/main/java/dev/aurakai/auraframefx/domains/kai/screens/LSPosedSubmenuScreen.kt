@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.kai.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Extension
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.Icons.AutoMirrored.Filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
@@ -18,7 +18,7 @@ fun LSPosedSubmenuScreen(onNavigateBack: () -> Unit = {}) {
             id = "manage_modules",
             title = "Active Modules",
             subtitle = "Enable/disable hooks",
-            icon = Icons.Filled.List,
+            icon = Icons.AutoMirrored.Filled.List,
             route = "action_modules",
             accentColor = Color(0xFFFF6B00)
         ),

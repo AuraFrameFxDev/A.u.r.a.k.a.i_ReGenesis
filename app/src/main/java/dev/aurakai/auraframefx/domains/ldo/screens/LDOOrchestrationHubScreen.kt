@@ -161,7 +161,7 @@ fun LDOOrchestrationHubScreen(
             )
 
             val tabs = listOf("TASKS", "BONDS", "MEMORY")
-            PrimaryScrollableTabRow(
+            PrimaryPrimaryPrimaryScrollableTabRow(
                 selectedTabIndex = activeTab,
                 containerColor = Color.Transparent,
                 contentColor = Color(0xFF00E5FF),

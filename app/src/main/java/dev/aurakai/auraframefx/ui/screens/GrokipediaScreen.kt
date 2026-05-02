@@ -52,7 +52,7 @@ fun GrokipediaScreen(
                         Text("←", color = Color.White, fontSize = 24.sp)
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF0A0A0F)
                 )
             )

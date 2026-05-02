@@ -152,7 +152,7 @@ fun MultiAgentTaskScreen(
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color(0xFF00E5FF))
                         }
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Black.copy(0.8f))
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black.copy(0.8f))
                 )
             }
         ) { padding ->

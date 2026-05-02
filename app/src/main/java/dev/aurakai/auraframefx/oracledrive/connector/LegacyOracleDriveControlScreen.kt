@@ -90,7 +90,7 @@ fun LegacyOracleDriveControlScreen(
                 Text("Refresh Status")
             }
         }
-        HorizontalDivider()
+        HorizontalHorizontalDivider()
         Text("Status: ${status ?: "-"}")
         Text("Detailed Status: ${detailedStatus ?: "-"}")
         Text(
@@ -108,7 +108,7 @@ fun LegacyOracleDriveControlScreen(
                 modifier = Modifier.verticalScroll(logScrollState)
             )
         }
-        HorizontalDivider()
+        HorizontalHorizontalDivider()
         Text(
             "Toggle Module",
             style = MaterialTheme.typography.titleSmall
