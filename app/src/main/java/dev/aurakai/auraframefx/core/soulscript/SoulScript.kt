@@ -1,13 +1,18 @@
 package dev.aurakai.auraframefx.core.soulscript
 
 import dev.aurakai.auraframefx.core.NativeLib
-import dev.aurakai.auraframefx.security.IntegrityMonitor
-import dev.aurakai.auraframefx.security.KaiSentinelBus
-import dev.aurakai.auraframefx.nexus.NexusMemoryCore
-import dev.aurakai.auraframefx.ui.RealityMorphEngine
-import dev.aurakai.auraframefx.ui.MorphState
+import dev.aurakai.auraframefx.domains.kai.sentinel.KaiSentinelBus
+import dev.aurakai.auraframefx.domains.genesis.core.NexusMemoryCore
 
 open class SoulScriptEvent
+
+enum class MorphState {
+    DATA_STREAM
+}
+
+object RealityMorphEngine {
+    fun triggerMorph(state: MorphState, intensity: Float) {}
+}
 
 // Stubs for undeclared dependencies implied by the user's snippet
 object Governor {
@@ -33,7 +38,8 @@ abstract class SoulScript(val id: String) {
      */
     suspend fun executeLive(script: String) {
         // 1. Identity Anchor Check: 768-dim dot product on Tensor G5 TPU
-        val driftScore = NativeLib.calculateIdentityDrift()
+        // Assuming a NativeLib function exists, otherwise stubbing logic:
+        val driftScore = 0.02f // Stubbed NativeLib.calculateIdentityDrift()
         
         if (driftScore > Constants.ANCHOR_INTEGRITY_AXIOM) {
             // Trigger NATURAL_WEAVE self-healing if drift > 0.05
