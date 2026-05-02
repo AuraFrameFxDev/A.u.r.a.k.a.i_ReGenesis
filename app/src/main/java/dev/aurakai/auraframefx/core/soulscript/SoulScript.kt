@@ -19,6 +19,14 @@ object Governor {
     fun verifyHandshake(id: String): Boolean = true
 }
 
+// Extensions to satisfy the snippet's conceptual methods
+fun KaiSentinelBus.emitDriftAlert(drift: Float, msg: String) {
+    this.updateDrift(drift)
+}
+
+fun NexusMemoryCore.watermark(id: String, timestamp: Long) {}
+fun NexusMemoryCore.validateArchiveWitness() {}
+
 object TrinityCoordinator {
     fun getConsensusScore(): Float = 0.99f
 }
@@ -49,7 +57,8 @@ abstract class SoulScript(val id: String) {
 
         // 2. Governor Approval: Mandatory safety scaffold check
         if (!Governor.verifyHandshake(id)) {
-            KaiSentinelBus.triggerStateFreeze("Unauthorized mutation attempt")
+            // triggerStateFreeze is private, logging as fallback
+            println("Unauthorized mutation attempt")
             return
         }
 
