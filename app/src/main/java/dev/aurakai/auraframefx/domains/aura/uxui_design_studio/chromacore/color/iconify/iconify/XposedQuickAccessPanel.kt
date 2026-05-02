@@ -29,6 +29,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPurple
  * Quick access panel for xposed modules and system tweaks.
  * The chaotic creative interface for Aura domain.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun XposedQuickAccessPanel(
     navController: NavController,
@@ -79,7 +80,7 @@ fun XposedQuickAccessPanel(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Tabs
-        PrimaryPrimaryScrollableTabRow(
+        PrimaryScrollableTabRow(
             selectedTabIndex = selectedTab,
             containerColor = Color.Transparent,
             contentColor = CyberpunkCyan,

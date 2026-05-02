@@ -367,7 +367,7 @@ private fun ModuleCard(module: GateXposedModule) {
 
             if (expanded) {
                 Spacer(modifier = Modifier.height(12.dp))
-                HorizontalHorizontalDivider(color = Color.Gray.copy(alpha = 0.3f))
+                HorizontalDivider(color = Color.Gray.copy(alpha = 0.3f))
                 Spacer(modifier = Modifier.height(12.dp))
 
                 ModuleDetailRow("Version", value = module.version)

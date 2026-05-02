@@ -28,6 +28,7 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.CyberpunkPurple
  * Full implementation of the Pixel Launcher theming interface with
  * icon pack selection, grid customization, and gesture configuration.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PixelLauncherEnhancedScreen(
     navController: NavHostController,
@@ -50,7 +51,7 @@ fun PixelLauncherEnhancedScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Tabs
-        PrimaryPrimaryScrollableTabRow(
+        PrimaryScrollableTabRow(
             selectedTabIndex = selectedTab,
             containerColor = Color.Transparent,
             contentColor = CyberpunkCyan,

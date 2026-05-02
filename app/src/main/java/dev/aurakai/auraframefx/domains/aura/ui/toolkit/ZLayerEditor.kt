@@ -208,7 +208,7 @@ fun ZLayerEditorScreen() {
                         }
                     }
 
-                    HorizontalHorizontalDivider(
+                    HorizontalDivider(
                         color = Color.White.copy(alpha = 0.2f),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
@@ -273,7 +273,7 @@ fun ZLayerEditorScreen() {
 
                     // Selected Layer Controls
                     selectedLayer?.let { layer ->
-                        HorizontalHorizontalDivider(
+                        HorizontalDivider(
                             color = Color.White.copy(alpha = 0.2f),
                             modifier = Modifier.padding(vertical = 8.dp)
                         )

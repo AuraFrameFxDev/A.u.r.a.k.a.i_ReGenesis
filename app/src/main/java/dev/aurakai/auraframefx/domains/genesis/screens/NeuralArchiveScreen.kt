@@ -577,7 +577,7 @@ private fun MemoryDetailDialog(
                     color = primaryColor.copy(alpha = 0.6f)
                 )
 
-                HorizontalHorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
+                HorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
 
                 Text(
                     text = memory.content,
@@ -586,7 +586,7 @@ private fun MemoryDetailDialog(
                 )
 
                 if (memory.tags.isNotEmpty()) {
-                    HorizontalHorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
+                    HorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
                     Text("Tags:", color = primaryColor.copy(alpha = 0.7f), fontSize = 12.sp)
                     Text(
                         text = memory.tags.joinToString(", ") { "#$it" },
@@ -595,7 +595,7 @@ private fun MemoryDetailDialog(
                     )
                 }
 
-                HorizontalHorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
+                HorizontalDivider(color = primaryColor.copy(alpha = 0.2f))
                 Text(
                     "Importance: ${(memory.importance * 100).toInt()}%",
                     color = primaryColor.copy(alpha = 0.7f)

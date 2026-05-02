@@ -17,7 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.Icons.AutoMirrored.Filled.Launch
+import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -168,7 +168,7 @@ fun ArkBuildScreen(
                     ),
                     enabled = projectState.status == ArkStatus.DORMANT
                 ) {
-                    Icon(Icons.Default.Launch, contentDescription = null)
+                    Icon(Icons.AutoMirrored.Filled.Launch, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("INITIATE")
                 }

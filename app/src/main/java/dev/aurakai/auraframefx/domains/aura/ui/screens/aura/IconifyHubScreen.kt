@@ -36,7 +36,7 @@ import androidx.compose.material.icons.filled.BlurOn
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Extension
-import androidx.compose.material.Icons.AutoMirrored.Filled.FormatIndentIncrease
+import androidx.compose.material.icons.automirrored.filled.FormatIndentIncrease
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
@@ -933,7 +933,7 @@ private val tweaksCategories = listOf(
         "qs_panel_margin",
         "QS Panel Margin",
         "Modify quick settings margins",
-        Icons.Default.FormatIndentIncrease,
+        Icons.AutoMirrored.Filled.FormatIndentIncrease,
         4,
         Color(0xFF00BCD4)
     ),

@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.domains.kai.screens.security_shield
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VpnKey
-import androidx.compose.material.Icons.AutoMirrored.Filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.DataUsage
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.runtime.Composable

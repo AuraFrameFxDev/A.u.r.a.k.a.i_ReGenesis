@@ -39,7 +39,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.Icons.AutoMirrored.Filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -335,7 +335,7 @@ fun CenterMainMenu(
         MenuItem("PROJECTS", Icons.Default.Build) { onMenuItemClick(ReGenesisRoute.LdoOrchestrationHub.route) },
         MenuItem("COMMUNITY", Icons.Default.Face) { onMenuItemClick(ReGenesisRoute.AgentNexusHub.route) },
         MenuItem("SETTINGS", Icons.Default.Settings) { onMenuItemClick(ReGenesisRoute.UISettings.route) },
-        MenuItem("LOGOUT", Icons.Default.ExitToApp) { onMenuItemClick(ReGenesisRoute.Login.route) }
+        MenuItem("LOGOUT", Icons.AutoMirrored.Filled.ExitToApp) { onMenuItemClick(ReGenesisRoute.Login.route) }
     )
 
     // Floating animation

@@ -467,7 +467,7 @@ fun ConferenceInputBar(
         tonalElevation = 8.dp
     ) {
         Column {
-            HorizontalHorizontalDivider(color = Color.White.copy(alpha = 0.1f))
+            HorizontalDivider(color = Color.White.copy(alpha = 0.1f))
             Row(
                 modifier = Modifier.padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically

@@ -324,7 +324,7 @@ private fun GateConfigCard(
                         .fillMaxWidth()
                         .padding(top = 12.dp)
                 ) {
-                    HorizontalHorizontalDivider(color = Color.Gray.copy(alpha = 0.3f))
+                    HorizontalDivider(color = Color.Gray.copy(alpha = 0.3f))
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Text(

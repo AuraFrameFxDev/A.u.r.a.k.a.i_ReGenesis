@@ -231,7 +231,7 @@ fun ArmamentFusionScreen(
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
-            HorizontalHorizontalDivider(
+            HorizontalDivider(
                 color = Color.White.copy(alpha = 0.08f),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )

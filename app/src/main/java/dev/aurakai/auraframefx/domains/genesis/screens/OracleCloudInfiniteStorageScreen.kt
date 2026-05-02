@@ -8,7 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudCircle
-import androidx.compose.material.Icons.AutoMirrored.Filled.InsertDriveFile
+import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -180,7 +180,7 @@ private fun FileItem(file: dev.aurakai.auraframefx.domains.genesis.viewmodels.St
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.Default.InsertDriveFile, null, tint = Color.White.copy(alpha = 0.5f))
+            Icon(Icons.AutoMirrored.Filled.InsertDriveFile, null, tint = Color.White.copy(alpha = 0.5f))
             Spacer(Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(file.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)

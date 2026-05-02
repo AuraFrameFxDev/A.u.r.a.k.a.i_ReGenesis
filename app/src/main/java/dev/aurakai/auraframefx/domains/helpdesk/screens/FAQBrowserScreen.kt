@@ -334,7 +334,7 @@ private fun FAQCard(faq: FAQ) {
 
             // Answer (expandable)
             if (expanded) {
-                HorizontalHorizontalDivider(color = Color(0xFF4169E1).copy(alpha = 0.3f))
+                HorizontalDivider(color = Color(0xFF4169E1).copy(alpha = 0.3f))
                 Text(
                     text = faq.answer,
                     style = MaterialTheme.typography.bodyMedium,

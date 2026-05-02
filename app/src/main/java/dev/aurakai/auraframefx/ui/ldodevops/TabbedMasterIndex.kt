@@ -80,7 +80,7 @@ import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.Icons.AutoMirrored.Filled.VolumeUp
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.RoundedCorner
 import androidx.compose.material.icons.filled.Category
@@ -94,6 +94,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -794,7 +795,7 @@ fun CustomPrimaryTabRow(
     accentColor: Color,
     onTabSelected: (Int) -> Unit,
 ) {
-    SecondaryPrimaryPrimaryScrollableTabRow(
+    SecondaryScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
         containerColor = Color.Transparent,
         contentColor = accentColor,
@@ -802,7 +803,7 @@ fun CustomPrimaryTabRow(
         divider = {},
         indicator = {
             TabRowDefaults.SecondaryIndicator(
-                modifier = Modifier.tabIndicatorOffset(selectedTabIndex, matchContentSize = true),
+                modifier = Modifier.tabIndicatorOffset(selectedTabIndex),
                 color = accentColor
             )
         }

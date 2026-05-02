@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -36,7 +35,7 @@ fun ChromaCoreColorsScreen(navController: NavController) {
 
             Text("Other color customization options go here.")
 
-            HorizontalHorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
 
             Text("Color UI Spacing Controls", style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(8.dp))

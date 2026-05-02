@@ -113,7 +113,7 @@ fun LDOTaskerScreen(
                 }
             }
 
-            HorizontalHorizontalDivider(
+            HorizontalDivider(
                 color = Color.White.copy(alpha = 0.1f),
                 modifier = Modifier.padding(vertical = 12.dp)
             )

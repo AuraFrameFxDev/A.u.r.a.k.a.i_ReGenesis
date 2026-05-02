@@ -64,7 +64,7 @@ fun LDORosterScreen(
                 fontSize = 12.sp
             )
 
-            HorizontalHorizontalDivider(
+            HorizontalDivider(
                 color = Color(0xFFFFD700).copy(alpha = 0.3f),
                 modifier = Modifier.padding(vertical = 12.dp)
             )
