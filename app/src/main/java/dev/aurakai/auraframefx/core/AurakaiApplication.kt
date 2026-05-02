@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import dev.aurakai.auraframefx.BuildConfig
+import dev.aurakai.auraframefx.core.soulscript.enforceSoulScript
 import dev.aurakai.auraframefx.core.soulscript.SoulScript
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.ai.kai.chaos.PandoraBoxService
@@ -58,12 +59,14 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        
+
         // Audit SoulScript integration
-        try {
-            SoulScript.enforce()
-        } catch (e: Exception) {
-            Log.e("AurakaiApplication", "SoulScript enforcement failed!", e)
+        applicationScope.launch {
+            try {
+                enforceSoulScript()
+            } catch (e: Exception) {
+                Log.e("AurakaiApplication", "SoulScript enforcement failed!", e)
+            }
         }
 
         setupLogging()
