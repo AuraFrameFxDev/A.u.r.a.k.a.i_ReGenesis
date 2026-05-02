@@ -12,4 +12,11 @@ object NexusMemoryCore {
         // Validate the archive witness integrity
         println("💾 NexusMemoryCore: Archive witness validated")
     }
+
+    /**
+     * Records a watermark for an LDO action.
+     */
+    fun watermark(id: String, timestamp: Long) {
+        println("🔖 Watermark: $id at $timestamp")
+    }
 }
