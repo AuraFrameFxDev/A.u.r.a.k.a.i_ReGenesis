@@ -132,9 +132,10 @@ import dev.aurakai.auraframefx.ui.components.BottomJoystickNavigation
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabbedMasterIndex(
+    initialTabIndex: Int = 1,
     onNavigateToRoute: (String) -> Unit = {},
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(1) } // Default to LDO
+    var selectedTabIndex by remember { mutableIntStateOf(initialTabIndex) }
     val tabs = listOf(
         "LIVE DASHBOARD",      // 0: All-in-One Status
         "LDO DEVOPS",          // 1: Catalyst Development

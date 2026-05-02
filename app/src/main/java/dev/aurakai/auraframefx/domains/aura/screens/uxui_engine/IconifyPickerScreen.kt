@@ -32,12 +32,14 @@ fun IconifyPickerScreen(
             }, null
         )
     ) {
-        IconPicker(
-            onIconSelected = { iconId ->
-                // TODO: Handle icon selection
-                // component.icon = iconId
-            },
-            onDismiss = onNavigateBack
-        )
+        with(Modifier) {
+            IconPicker(
+                onIconSelected = { iconId ->
+                    // TODO: Handle icon selection
+                    // component.icon = iconId
+                },
+                onDismiss = onNavigateBack
+            )
+        }
     }
 }

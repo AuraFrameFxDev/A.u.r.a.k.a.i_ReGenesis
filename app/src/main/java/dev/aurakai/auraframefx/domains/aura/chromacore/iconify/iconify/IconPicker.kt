@@ -58,6 +58,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -66,13 +67,12 @@ import coil3.svg.SvgDecoder
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonCyan as CyberpunkCyan
 import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink as CyberpunkPink
 
-context(viewModel: IconPickerViewModel) @OptIn(ExperimentalMaterial3Api::class)
+context(viewModel: IconPickerViewModel, modifier: Modifier) @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IconPicker(
     currentIcon: String? = null,
     onIconSelected: (String) -> Unit,
-    onDismiss: () -> Unit = {},
-    modifier: Modifier = Modifier
+    onDismiss: () -> Unit = {}
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCollection by remember { mutableStateOf<String?>(null) }
@@ -355,7 +355,7 @@ private fun saveRecentIcon(context: Context, iconId: String) {
     currentRecent.remove(iconId)
     currentRecent.add(0, iconId)
     val recentToSave = currentRecent.take(20)
-    prefs.edit().putString("recent_icons", recentToSave.joinToString(",")).apply()
+    prefs.edit { putString("recent_icons", recentToSave.joinToString(",")) }
 }
 
 private fun loadFavoriteIcons(context: Context): List<String> {

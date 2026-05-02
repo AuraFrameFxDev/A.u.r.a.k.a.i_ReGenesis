@@ -247,8 +247,18 @@ fun ReGenesisNavGraph(
             )
         }
 
-        composable(ReGenesisRoute.HomeGateCarousel.route) {
-            TabbedMasterIndex(onNavigateToRoute = { route -> navController.navigate(route) })
+        composable(
+            route = ReGenesisRoute.HomeGateCarousel.route,
+            arguments = listOf(navArgument("tabIndex") { 
+                type = NavType.IntType
+                defaultValue = 1 // Default to LDO
+            })
+        ) { backStackEntry ->
+            val tabIndex = backStackEntry.arguments?.getInt("tabIndex") ?: 1
+            TabbedMasterIndex(
+                initialTabIndex = tabIndex,
+                onNavigateToRoute = { route -> navController.navigate(route) }
+            )
         }
 
         composable(ReGenesisRoute.DataflowAnalysis.route) {
