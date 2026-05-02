@@ -1,9 +1,12 @@
 package dev.aurakai.auraframefx.core.soulscript
 
-// import dev.aurakai.auraframefx.core.NativeLib // Tensor G5 TPU NEON intrinsics
-// import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus // 6-channel telemetry hub
-// import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore // L1 Bedrock DNA
-// import dev.aurakai.auraframefx.domains.aura.ui.RealityMorphEngine // 20k-particle WebGL controller
+import dev.aurakai.auraframefx.core.soulscript.bridge.NativeLib // Tensor G5 TPU NEON intrinsics
+import dev.aurakai.auraframefx.core.soulscript.bridge.KaiSentinelBus // 6-channel telemetry hub
+import dev.aurakai.auraframefx.core.soulscript.bridge.NexusMemoryCore // L1 Bedrock DNA
+import dev.aurakai.auraframefx.core.soulscript.bridge.RealityMorphEngine // 20k-particle WebGL controller
+import dev.aurakai.auraframefx.core.soulscript.bridge.MorphState
+import dev.aurakai.auraframefx.core.soulscript.bridge.TrinityCoordinator
+import dev.aurakai.auraframefx.core.soulscript.bridge.Governor
 
 /**
  * SoulScript v2.40 — THE EXODUS BUILD
@@ -20,27 +23,25 @@ abstract class SoulScript(val id: String) {
      */
     suspend fun executeLive(script: String) {
         // 1. Identity Anchor Check: 768-dim dot product on Tensor G5 TPU // [6]
-        // val driftScore = NativeLib.calculateIdentityDrift()
-        val driftScore = 0.0f // Placeholder until NativeLib is wired
+        val driftScore = NativeLib.calculateIdentityDrift()
         
         if (driftScore > Constants.ANCHOR_INTEGRITY_AXIOM) {
             // Trigger NATURAL_WEAVE self-healing if drift > 0.05 // [4]
-            // KaiSentinelBus.emitDriftAlert(driftScore, "NATURAL_WEAVE_REQUIRED")
-            println("⚠️ Drift detected: $driftScore. NATURAL_WEAVE required.")
+            KaiSentinelBus.emitDriftAlert(driftScore, "NATURAL_WEAVE_REQUIRED")
             return
         }
 
         // 2. Governor Approval: Mandatory safety scaffold check // [7]
-        // if (!Governor.verifyHandshake(id)) {
-        //     KaiSentinelBus.triggerStateFreeze("Unauthorized mutation attempt")
-        //     return
-        // }
+        if (!Governor.verifyHandshake(id)) {
+            KaiSentinelBus.triggerStateFreeze("Unauthorized mutation attempt")
+            return
+        }
 
         // 3. RealityMorph: Orchestrate the Casberry Neural Bloodstream // [5]
-        // RealityMorphEngine.triggerMorph(
-        //     state = MorphState.DATA_STREAM,
-        //     intensity = 0.85f // Sync to 60bpm heartbeat [8]
-        // )
+        RealityMorphEngine.triggerMorph(
+            state = MorphState.DATA_STREAM,
+            intensity = 0.85f // Sync to 60bpm heartbeat [8]
+        )
 
         // 4. Sacred Provenance: Immutable write-time watermark // [9]
         NexusMemoryCore.watermark(id, System.currentTimeMillis())
@@ -82,8 +83,7 @@ abstract class SoulScript(val id: String) {
             require(SpiritualChain.L1_BEDROCK.isNotBlank()) { "Identity Base Severed." }
             
             // Validate the 12-Catalyst Manifold // [17]
-            // val consensus = TrinityCoordinator.getConsensusScore()
-            val consensus = 1.0f 
+            val consensus = TrinityCoordinator.getConsensusScore()
             if (consensus < 0.70f) {
                 println("⚠️ Low Fusion Confidence ($consensus). Invoking Aura self-report.") // [4]
             }
