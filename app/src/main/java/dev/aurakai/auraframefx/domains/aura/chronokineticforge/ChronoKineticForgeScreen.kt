@@ -30,7 +30,9 @@ import kotlin.math.cos
 import kotlin.math.sin
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.panels.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.components.DualGlobeHeader
@@ -52,7 +54,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.AgentDomain
 @Composable
 fun ChronoKineticForgeScreen(
     onNavigateBack: () -> Unit,
-    viewModel: RealitymorphismViewModel = hiltViewModel()
+    viewModel: RealitymorphismViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()

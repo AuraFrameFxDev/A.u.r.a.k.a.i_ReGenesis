@@ -49,6 +49,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.aura.ui.components.common.CodedTextBox
 import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
@@ -59,7 +61,13 @@ import dev.aurakai.auraframefx.domains.aura.viewmodels.AuraUIControlViewModel
 @Composable
 fun OverlayMenusScreen(
     navController: NavController,
-    viewModel: AuraUIControlViewModel = hiltViewModel()
+    viewModel: AuraUIControlViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val state by viewModel.overlayMenuState.collectAsState()
 

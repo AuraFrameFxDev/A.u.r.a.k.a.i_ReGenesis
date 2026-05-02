@@ -27,7 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 
@@ -40,7 +42,13 @@ import dev.aurakai.auraframefx.domains.ldo.viewmodel.LDOViewModel
 fun LDORosterScreen(
     onAgentSelected: (String) -> Unit = {},
     onBack: () -> Unit = {},
-    viewModel: LDOViewModel = hiltViewModel()
+    viewModel: LDOViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val state by viewModel.uiState.collectAsState()
 

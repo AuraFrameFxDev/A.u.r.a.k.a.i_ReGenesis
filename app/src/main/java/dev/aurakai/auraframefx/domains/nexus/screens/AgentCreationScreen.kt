@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.genesis.models.AgentCapabilityCategory
@@ -68,7 +69,13 @@ import dev.aurakai.auraframefx.core.identity.AgentType
 @Composable
 fun AgentCreationScreen(
     onNavigateBack: () -> Unit = {},
-    viewModel: AgentCreationViewModel = hiltViewModel()
+    viewModel: AgentCreationViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val agentName by viewModel.agentName
     val selectedDomain by viewModel.selectedDomain

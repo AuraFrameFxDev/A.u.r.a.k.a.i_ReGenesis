@@ -15,7 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.kai.models.ThreatLevel
 import dev.aurakai.auraframefx.domains.kai.viewmodels.KaiSystemViewModel
 import java.text.SimpleDateFormat
@@ -30,7 +32,13 @@ import java.util.Locale
 @Composable
 fun SecurityCenterScreen(
     onNavigateBack: () -> Unit,
-    viewModel: KaiSystemViewModel = hiltViewModel()
+    viewModel: KaiSystemViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val state by viewModel.systemStatus.collectAsState()
 

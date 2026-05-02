@@ -28,6 +28,8 @@ import dev.aurakai.auraframefx.domains.aura.chronokineticforge.RealitymorphismVi
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.*
 import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import kotlin.math.*
 import kotlin.random.Random
 
@@ -453,7 +455,13 @@ data class MiniParticle(
 @Composable
 fun HyperGenesisWithState(
     modifier: Modifier = Modifier,
-    viewModel: RealitymorphismViewModel = hiltViewModel()
+    viewModel: RealitymorphismViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val successRate = uiState.atomicSuccessRate

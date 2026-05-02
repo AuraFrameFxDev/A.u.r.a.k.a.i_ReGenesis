@@ -34,7 +34,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
@@ -54,7 +56,13 @@ data class FusionSlot(val index: Int, val agent: LDOAgentEntity? = null)
 @Composable
 fun LDOOrchestrationHubScreen(
     controller: NavController,
-    viewModel: LDOViewModel = hiltViewModel()
+    viewModel: LDOViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val agents = uiState.agents

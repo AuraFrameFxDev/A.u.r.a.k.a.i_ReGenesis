@@ -47,6 +47,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.theme.ThemeViewModel
 import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Color as ThemeColor
@@ -59,7 +61,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.service.Color as ThemeColor
 @Composable
 fun InstantColorPickerScreen(
     onNavigateBack: () -> Unit,
-    themeViewModel: ThemeViewModel = hiltViewModel()
+    themeViewModel: ThemeViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     val currentColor by themeViewModel.color.collectAsState()
 

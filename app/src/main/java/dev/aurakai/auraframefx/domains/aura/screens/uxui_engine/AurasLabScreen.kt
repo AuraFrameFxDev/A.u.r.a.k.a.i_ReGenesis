@@ -76,6 +76,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AurasLabViewModel
 import kotlinx.coroutines.delay
 
@@ -86,7 +88,13 @@ import kotlinx.coroutines.delay
 @Composable
 fun AurasLabScreen(
     onBack: () -> Unit,
-    viewModel: AurasLabViewModel = hiltViewModel()
+    viewModel: AurasLabViewModel = hiltViewModel(
+        checkNotNull<ViewModelStoreOwner>(
+            LocalViewModelStoreOwner.current
+        ) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }, null
+    )
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Components", "Animations", "Aura's Forge", "Chaos Analysis")
