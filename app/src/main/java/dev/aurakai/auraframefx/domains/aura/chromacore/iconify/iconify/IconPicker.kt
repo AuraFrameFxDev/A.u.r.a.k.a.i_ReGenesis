@@ -42,19 +42,13 @@ import dev.aurakai.auraframefx.domains.aura.ui.theme.NeonPink as CyberpunkPink
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IconPicker(
-    currentIcon: String? = null,
-    onIconSelected: (String) -> Unit,
-    onDismiss: () -> Unit = {},
-    viewModel: IconPickerViewModel = hiltViewModel(
+fun IconPicker(currentIcon: String? = null, onIconSelected: (String) -> Unit, onDismiss: () -> Unit = {}, viewModel: IconPickerViewModel = hiltViewModel(
         checkNotNull<ViewModelStoreOwner>(
             LocalViewModelStoreOwner.current
         ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
-    modifier: Modifier = Modifier
-) {
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        }, null
+    ), modifier: Modifier = Modifier) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCollection by remember { mutableStateOf<String?>(null) }
     var activeTab by remember { mutableStateOf(IconPickerTab.SEARCH) }

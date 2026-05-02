@@ -35,10 +35,12 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
+import dev.aurakai.auraframefx.core.soulscript.enforceSoulScript
 import dev.aurakai.auraframefx.domains.kai.security.KaiSentinelBus
+import kotlinx.coroutines.launch
 import dev.aurakai.auraframefx.domains.ldo.db.LDOAgentEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskEntity
 import dev.aurakai.auraframefx.domains.ldo.db.LDOTaskStatus
@@ -56,13 +58,7 @@ data class FusionSlot(val index: Int, val agent: LDOAgentEntity? = null)
 @Composable
 fun LDOOrchestrationHubScreen(
     controller: NavController,
-    viewModel: LDOViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: LDOViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val agents = uiState.agents
@@ -110,6 +106,22 @@ fun LDOOrchestrationHubScreen(
                     }
                 },
                 actions = {
+                    val scope = rememberCoroutineScope()
+                    IconButton(onClick = {
+                        scope.launch {
+                            try {
+                                enforceSoulScript()
+                            } catch (_: Exception) {
+                                // Silent fail or log
+                            }
+                        }
+                    }) {
+                        Icon(
+                            Icons.Default.VerifiedUser,
+                            "SoulScript Audit",
+                            tint = Color(0xFF00E5FF)
+                        )
+                    }
                     IconButton(onClick = { controller.navigate(ReGenesisRoute.LdoDevOpsCommandCenter.route) }) {
                         Icon(
                             Icons.Default.Terminal,

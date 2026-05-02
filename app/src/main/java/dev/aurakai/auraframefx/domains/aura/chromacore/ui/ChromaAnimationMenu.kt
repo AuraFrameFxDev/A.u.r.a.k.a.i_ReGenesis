@@ -1,6 +1,7 @@
 package dev.aurakai.auraframefx.domains.aura.chromacore.ui
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,13 +33,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 @Composable
 fun ChromaAnimationMenu(
     onNavigateBack: () -> Unit,
-    viewModel: ChromaCoreViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: ChromaCoreViewModel = hiltViewModel()
 ) {
 
     Scaffold(

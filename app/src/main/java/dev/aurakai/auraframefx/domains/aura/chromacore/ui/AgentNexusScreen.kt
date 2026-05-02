@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.nexus.models.AgentStats
 import dev.aurakai.auraframefx.domains.aura.ui.viewmodels.AgentViewModel
 import kotlinx.coroutines.delay
@@ -39,14 +39,8 @@ private const val JITTER_DELTA_MAX = 0.015
 
 @Composable
 fun AgentNexusScreen(
-    viewModel: AgentViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    ),
-    nexusViewModel: AgentNexusViewModel = hiltViewModel(viewModelStoreOwner, key),
+    viewModel: AgentViewModel = hiltViewModel(),
+    nexusViewModel: AgentNexusViewModel = hiltViewModel(),
 ) {
     var selectedAgent by remember { mutableStateOf("Genesis") }
     var showDepartureDialog by remember { mutableStateOf(false) }

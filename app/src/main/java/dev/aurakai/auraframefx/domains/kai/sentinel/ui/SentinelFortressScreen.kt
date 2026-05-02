@@ -21,8 +21,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import dev.aurakai.auraframefx.domains.kai.sentinel.*
 import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.RealitymorphismEngine
 
@@ -57,13 +57,7 @@ import dev.aurakai.auraframefx.domains.aura.chronokineticforge.engines.Realitymo
 @Composable
 fun SentinelFortressScreen(
     onNavigateBack: () -> Unit,
-    viewModel: SentinelViewModel = hiltViewModel(
-        checkNotNull<ViewModelStoreOwner>(
-            LocalViewModelStoreOwner.current
-        ) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }, null
-    )
+    viewModel: SentinelViewModel = hiltViewModel()
 ) {
     val telemetry by KaiSentinelBus.AllFlows.collectAsState()
     val currentSession by EthicalGovernanceMatrix.currentSession.collectAsState()

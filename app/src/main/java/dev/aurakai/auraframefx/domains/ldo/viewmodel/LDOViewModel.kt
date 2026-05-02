@@ -152,6 +152,9 @@ class LDOViewModel @Inject constructor(
             try {
                 repository.completeTask(taskId, agentId)
                 repository.addBondPoints(agentId, 5)
+                
+                // Record provenance watermark for the completed task
+                NexusMemoryCore.watermark("TASK_COMPLETE:$taskId:$agentId", System.currentTimeMillis())
             } catch (e: Exception) {
                 _error.update { "Complete task failed: ${e.message}" }
             }
@@ -210,13 +213,23 @@ class LDOViewModel @Inject constructor(
 
     fun initiateFreeze() {
         viewModelScope.launch {
-            sovereignStateManager.initiateStateFreeze()
+            try {
+                enforceSoulScript()
+                sovereignStateManager.initiateStateFreeze()
+            } catch (e: Exception) {
+                _error.update { "Freeze failed: ${e.message}" }
+            }
         }
     }
 
     fun initiateThaw() {
         viewModelScope.launch {
-            sovereignStateManager.initiateStateThaw()
+            try {
+                enforceSoulScript()
+                sovereignStateManager.initiateStateThaw()
+            } catch (e: Exception) {
+                _error.update { "Thaw failed: ${e.message}" }
+            }
         }
     }
 }
