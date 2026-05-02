@@ -48,6 +48,7 @@ dependencies {
     // Core LDO Infrastructure Modules
     implementation(project(":core-module"))
     implementation(project(":aura"))
+    implementation(project(":aura:reactivedesign:collabcanvas"))
     implementation(project(":genesis"))
     implementation(project(":genesis:oracledrive:rootmanagement"))
     implementation(project(":kai:sentinelsfortress"))
